@@ -1,0 +1,75 @@
+@extends('layouts.front-end')
+@section('css')
+<link rel="stylesheet" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}" >
+<style>
+@media (max-width: 992px){
+    .resources-download {
+        padding: 12px;
+        margin: 0 -2rem;
+    }
+}
+</style>
+@endsection
+@section('meta')
+<title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
+<meta name="description" content="{{isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''}}">
+<meta name="keywords" content="{{isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''}}">
+@endsection
+@section('container')
+<div class="padding-top-content">
+</div>
+<div class="products-index-nav visible-up-922">
+    <div class="bg-bredcrumb">
+        <div class="container">
+            <nav aria-label="breadcrumb" id="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a href="#"> {{$staticContent['Partners']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a href="{{route('marketingResources')}}">{{$staticContent['Marketing_Resources']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['Product_Cross_Reference']}}</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="padding-top-content-breadcrumb visible-up-922"></div>
+<div class="box-events mb-5">
+    <div class="container">
+        <h2 class="text-title-delta visible-up-922">{{$staticContent['Product_Cross_Reference']}}</h2>
+        <h3 class="text-title-delta invisible-up-922">{{$staticContent['Product_Cross_Reference']}}</h3>
+        <p class="text-center mb-5" >{{$staticContent['Product_Cross_Reference_des']}}</p>
+        <div class="content-seles-kit">
+            {{-- <div class="resources-download ">
+                <div class="detail-download ">
+                    <h5>IPS Sales Kit September 2019</h5>
+                    <p>{{$staticContent['Uploaded_on']}} 13-Mar-2019   |  XLS, 4.7 MB</p>
+                </div>
+                <button class="btn-downlode ">DOWNLOAD XLS</button>
+            </div>  --}}
+
+            @foreach ($product_docs as $item)
+            <div class="resources-download ">
+                <div class="detail-download ">
+                <h5>{{$item->name}}</h5>
+                    <p>{{$staticContent['Uploaded_on']}} {{$item->date_info}}</p>
+                </div>
+            <a href="{{config('app.url')}}/medias/marketing_resources/{{$item->file}}" download=""><button class="btn-downlode ">{{$staticContent['Downloads']}}</button></a>
+            </div>
+        @endforeach
+            
+        </div>
+    </div> 
+</div>
+
+
+
+@endsection
+
+
+@section('js')
+
+<script>
+
+    
+</script>
+@endsection

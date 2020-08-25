@@ -1,0 +1,35 @@
+body{
+    font-family: 'ArialUnicodeMS', Helvetica, sans-serif  !important;
+}
+
+html[lang="cn"] body,
+html[lang="cn"] h1,
+html[lang="cn"] h2,
+html[lang="cn"] h3,
+html[lang="cn"] h4,
+html[lang="cn"] h5,
+html[lang="cn"] a,
+html[lang="cn"] button,
+html[lang="cn"] span,
+html[lang="cn"] .link-nav-first,
+html[lang="cn"] label{  
+  font-family:'ArialUnicodeMS',Helvetica, sans-serif  !important;
+}
+
+
+
+html[lang="tw"] body,
+html[lang="tw"] h1,
+html[lang="tw"] h2,
+html[lang="tw"] h3,
+html[lang="tw"] h4,
+html[lang="tw"] h5,
+html[lang="tw"] a,
+html[lang="tw"] button,
+html[lang="tw"] div,
+html[lang="tw"] span ,
+html[lang="tw"] .link-nav-first,
+html[lang="tw"] label {  
+  font-family:'ArialUnicodeMS', Helvetica, sans-serif !important ;
+}
+

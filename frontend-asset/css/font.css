@@ -1,0 +1,20 @@
+@font-face {
+	font-family: 'Arial';
+	src: url('../fonts/Arial.eot');
+	src: url('../fonts/Arial.woff') format('woff'),
+    url('../fonts/Arial.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'ArialUnicodeMS';
+	src: url('../fonts/ArialUnicodeMS.woff') format('woff'),
+    url('../fonts/ArialUnicodeMS.ttf') format('truetype');
+}
+/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1080">Text with this font applied</p> */
+.fontsforweb_fontid_1080 {
+	font-family: 'ArialUnicodeMS' !important;
+}
+
+
+
+/* Font downloaded from FontsForWeb.com */

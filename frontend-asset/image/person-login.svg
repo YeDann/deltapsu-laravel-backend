@@ -1,0 +1,8 @@
+<svg id="Component_249" data-name="Component 249" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <rect id="Rectangle_57" data-name="Rectangle 57" width="24" height="24" fill="rgba(255,255,255,0)"/>
+  <g id="Layer" transform="translate(3 3.003)">
+    <g id="Vrstva_105" data-name="Vrstva 105" transform="translate(2 0.997)">
+      <path id="Path_117" data-name="Path 117" d="M11.962,8.794a4.363,4.363,0,1,0-5.381,0A7.272,7.272,0,0,0,2,15.542v.727a.727.727,0,0,0,1.454,0v-.727a5.817,5.817,0,1,1,11.635,0v.727a.727.727,0,0,0,1.454,0v-.727a7.272,7.272,0,0,0-4.581-6.748Zm-5.6-3.432A2.909,2.909,0,1,1,9.272,8.271,2.909,2.909,0,0,1,6.363,5.362Z" transform="translate(-2 -0.997)" fill="#444" fill-rule="evenodd"/>
+    </g>
+  </g>
+</svg>
