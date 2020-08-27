@@ -187,10 +187,12 @@ class FrontendController extends Controller
             ->select('p.*', 'pt.*' ,'spt.sub_pro_id as cateid' ,'spt.name as catename' ,'sp.unit_dimension')
             ->orderBy('p.created_at', 'desc')
             ->get();
+            $procheckarr = [];
 
             $data = [];
                  $i = 0;
                 foreach($products as $item){
+                 
                   $prolang = self::checkLang($lang,$item->pro_id);
                     $pro = DB::table('products as p')
                     ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -218,7 +220,9 @@ class FrontendController extends Controller
                     ->orderBy('ph.type_id' ,'asc')
                     ->select('pht.value_text','ph.*','pft.field_name as fieldCate','pf.unit_name')
                     ->get();
+                if(!in_array($pro->pro_id, $procheckarr)){
                     if(self::checkContentPro($pro->pro_id)){
+                        array_push($procheckarr,$pro->pro_id);
                         $data[$i] = [
                             "pro_id"=>$pro->pro_id,
                             "pro_code"=>$pro->pro_code,
@@ -233,6 +237,8 @@ class FrontendController extends Controller
                             "dimensionD"=>$pro->dimensionD,
                         ];
                     }
+                }
+                
              
                     $i++;
                 }
