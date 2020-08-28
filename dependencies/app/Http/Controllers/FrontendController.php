@@ -243,7 +243,7 @@ class FrontendController extends Controller
                     $i++;
                 }
                 $now = date('Y-m-d');
-                $events = DB::table('contents as c')
+                $events_q = DB::table('contents as c')
                 ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
                 ->where('ct.local', $lang)
                 ->where('c.content_type', '=', 'event')
@@ -253,6 +253,21 @@ class FrontendController extends Controller
                 ->orderBy('c.date_publish', 'asc')
                 ->limit(2)
                 ->get();
+
+                if(isset($events) && count($events_q) > 0){
+                    $events =  $events_q;
+                }else{
+                    $events = DB::table('contents as c')
+                    ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
+                    ->where('ct.local', $lang)
+                    ->where('c.content_type', '=', 'event')
+                    ->where('c.status',  1)
+                    ->select('c.*' ,'ct.*')
+                    ->orderBy('c.date_publish', 'desc')
+                    ->limit(2)
+                    ->get();
+                 
+                }
                
                 $news = DB::table('product_news_has_categories as pnc')
                 ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
