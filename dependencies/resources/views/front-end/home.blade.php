@@ -105,6 +105,37 @@
 @section('container')
 <?php $style = 2; ?>
 <!-- banner -->
+
+<?php 
+      function getDateformat($date){
+                                       
+                                       $eng_month_arr = array(
+                                           "0" => "",
+                                           "1" => "Jan",
+                                           "2" => "Feb",
+                                           "3" => "Mar",
+                                           "4" => "Apr",
+                                           "5" => "May",
+                                           "6" => "Jun",
+                                           "7" => "Jul",
+                                           "8" => "Aug",
+                                           "9" => "Sep",
+                                           "10" => "Oct",
+                                           "11" => "Nov",
+                                           "12" => "Dec"
+                                       );
+                                       $publicDate = date_create($date);
+                                       $pDate = explode("-", $publicDate->format('Y-n-d'));
+                                       $datearray = [
+                                           'm' =>  $eng_month_arr[$pDate[1]],
+                                           'd'=>  $pDate[2],
+                                           'y' => $pDate[0]
+
+                                       ];
+                                       return  $datearray;
+         }
+
+?>
 <div class="show-more-769">
     <div class="box-banner">
         <div id="slide-banner" class="owl-carousel owl-theme">
@@ -720,36 +751,7 @@ function retextdata($arr ,$unit){
         </div>
     </div>
 </div>
-<?php 
-    //   function getDateformat($date){
-                                       
-    //                                    $eng_month_arr = array(
-    //                                        "0" => "",
-    //                                        "1" => "Jan",
-    //                                        "2" => "Feb",
-    //                                        "3" => "Mar",
-    //                                        "4" => "Apr",
-    //                                        "5" => "May",
-    //                                        "6" => "Jun",
-    //                                        "7" => "Jul",
-    //                                        "8" => "Aug",
-    //                                        "9" => "Sep",
-    //                                        "10" => "Oct",
-    //                                        "11" => "Nov",
-    //                                        "12" => "Dec"
-    //                                    );
-    //                                    $publicDate = date_create($date);
-    //                                    $pDate = explode("-", $publicDate->format('Y-n-d'));
-    //                                    $datearray = [
-    //                                        'm' =>  $eng_month_arr[$pDate[1]],
-    //                                        'd'=>  $pDate[2],
-    //                                        'y' => $pDate[0]
 
-    //                                    ];
-    //                                    return  $datearray;
-    //      }
-
-?>
 <!-- event -->
 <div class="visible-desk-up">
     <div class="box-events  ">
@@ -767,14 +769,14 @@ function retextdata($arr ,$unit){
                         </a>
                         <div class="news-content w-100">
                             <?php
-                                    //  $date = getDateformat(isset($events[0]->date_publish) ?$events[0]->date_publish :'00:00:00' );
-                                    //  $endDate = getDateformat(isset($events[0]->date_end) ?$events[0]->date_end:'00:00:00' );
+                                     $date = getDateformat(isset($events[0]->date_publish) ?$events[0]->date_publish :'00:00:00' );
+                                     $endDate = getDateformat(isset($events[0]->date_end) ?$events[0]->date_end:'00:00:00' );
                                 ?>
 
                             <div class="post-meta">
                                 <span class="author text-uppercase">
                                         <i class="zmdi zmdi-calendar-alt"></i>
-                                        {{-- {{ $date['m'].' '.$date['d'] .''.(isset($endDate['d'])?' - '.$endDate['d']:'').' '.$date['y']}} --}}
+                                        {{ $date['m'].' '.$date['d'] .''.(isset($endDate['d'])?' - '.$endDate['d']:'').' '.$date['y']}}
                                 </span>
                                 <span class="locations">
                                     &nbsp; <i class="zmdi zmdi-pin"></i> {{$events[0]->location}}
