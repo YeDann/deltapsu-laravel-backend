@@ -765,8 +765,8 @@ function retextdata($arr ,$unit){
                                        return  $datearray;
                                 }
                                
-                                     $date = getDateformat($events[0]->date_publish);
-                                     $endDate = getDateformat($events[0]->date_end);
+                                     $date = getDateformat(isset($events[0]->date_publish) ?$events[0]->date_publish :'00:00:00' );
+                                     $endDate = getDateformat(isset($events[0]->date_end) ?$events[0]->date_end:'00:00:00' );
                                 ?>
 
                             <div class="post-meta">
@@ -810,7 +810,7 @@ function retextdata($arr ,$unit){
                             <?php
                                  $datenew = [];
                                 if(isset($news[0]->date_info)){
-                                    $datenew = getDateformat($news[0]->date_info);
+                                    $datenew = getDateformat(isset($news[0]->date_info)? $news[0]->date_info:'00:00:00');
                                 }
                               
                                 ?>
@@ -945,8 +945,8 @@ function retextdata($arr ,$unit){
                         </a>
                         <div class="news-content w-100">
                             <?php
-                            $date = getDateformat($events[0]->date_publish);
-                            $endDate = getDateformat($events[0]->date_end);
+                            $date = getDateformat(isset($events[0]->date_publish)? $events[0]->date_publish:'00:00:00');
+                            $endDate = getDateformat(isset($events[0]->date_end)? $events[0]->date_end:'00:00:00');
                              ?> 
                           
                             <div class="post-meta">
