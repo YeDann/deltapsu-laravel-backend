@@ -184,7 +184,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-              console.log(data.data.month);
+           
               $('#data_date').val(data.data.month);
               $('#pl_m_id').val(data.data.pl_m_id);
               $('#modal-block-edit').modal('show');

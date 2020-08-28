@@ -166,7 +166,7 @@
 <script src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
 <script src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
 <script src="{{asset('/frontend-asset/js/dropzone.js')}}"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.3/nouislider.min.js"></script>
 <script src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>
 <script src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>

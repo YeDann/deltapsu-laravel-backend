@@ -28,11 +28,48 @@ class FaqController extends Controller
         ->select('f.*' ,'ft.*' ,'fct.name as cateName')
         ->get();
 
+        foreach($faqs as $faq){
+            DB::table('faq')->where('id',$faq->id)->update(
+                [
+                    "url_name" => $this->clean($faq->title),
+                ]
+            );
+        }
+
         return view('faq.index')
             ->with('name', 'Resource')
             ->with('submenu', 'faq_list')
             ->with('menu', 'faq')
             ->with('faqs', $faqs);
+    }
+
+    public function order_faqs(){
+        $faqs = DB::table('faq as f')
+        ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
+        ->join('faq_categories_translations as fct', 'fct.f_cate_id', '=', 'f.cate_id')
+        ->where('ft.local', '=', 'en')
+        ->where('fct.local', '=', 'en')
+        ->select('f.*' ,'ft.*' ,'fct.name as cateName')
+        ->orderBy('order_seq')
+        ->get();
+
+        return view('faq.faq-order')
+        ->with('name', 'Resource')
+        ->with('submenu', 'faq_list')
+        ->with('menu', 'faq')
+        ->with('faqs', $faqs);
+    }
+
+    public function update_order_Faqs(Request $request){
+        $HomeIds = array_filter(explode(",", $request->home_id));
+        $HomeOrders = array_filter(explode(",", $request->home_order));
+        foreach ($HomeIds as $HomeId => $value){
+             DB::table('faq')->where('id', '=', $value)->update(['order_seq'=>$HomeOrders[$HomeId]]);
+        }
+        return response()->json([
+            'order' => $request->home_order
+        ],200);
+        
     }
 
     /**
@@ -78,6 +115,7 @@ class FaqController extends Controller
                 [
                     "status" => $request->status,
                     "cate_id" => $request->faq_categories,
+                    'url_name' =>$this->clean($request->name),
                     "created_at" => \Carbon\Carbon::now(),
                     "updated_at" => \Carbon\Carbon::now(),
                 ]
@@ -165,6 +203,7 @@ class FaqController extends Controller
            DB::table('faq')->where('id',$id)->update(
                 [
                     "status" => $request->status,
+                    'url_name' =>$this->clean($name['en']),
                     "cate_id" => $request->faq_categories,
                     "updated_at" => \Carbon\Carbon::now(),
                 ]

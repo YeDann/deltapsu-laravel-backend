@@ -657,6 +657,39 @@ class GetDataController extends Controller
 
     }
 
+    public function CheckApiMail(Request $request){
+        $datamacht = [];
+        $notmacht = [];
+        $macht = [];
+     if ($request->hasFile('file')) {
+         $extension = File::extension($request->file->getClientOriginalName());
+         if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
+             $path = $request->file->getRealPath();
+             $data = Excel::load($path, function ($reader) {})->get();
+         }
+         // return dd($data);
+            if(!empty($data) && $data->count()) {
+             foreach ($data as $key => $value) {
+                 // $key = $value['country'];
+                 DB::table('mail_chimp_country')->insert(
+                     [
+                         "name" => $value['country'],
+                         "created_at" => \Carbon\Carbon::now(),
+                         "updated_at" => \Carbon\Carbon::now(),
+                     ]
+                 );
+              
+             }
+           }
+
+  
+
+         return redirect()->route('products.index')->with('flash_message', 'create data Successfully');
+       }
+       return redirect()->route('products.index')->with('error_message', 'No file');
+
+ }
+
 
 
 }

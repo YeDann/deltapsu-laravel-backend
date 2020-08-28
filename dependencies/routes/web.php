@@ -32,6 +32,7 @@ Route::group([
         ], function() {
 
 Route::get('/{page?}','FrontendController@index')->name('index');
+Route::get('/download/{doc?}','FrontendController@index')->name('index');
 Route::get('/tools/configurable-product-selection','FrontendController@configurableProduct')->name('configurableproduct');
 Route::get('/configurable-power/details','FrontendController@configurableProductDetail')->name('configurableProductDetail');
 Route::get('/products/series/{cate?}','FrontendController@oldlinkSeries')->name('oldlinkSeries');
@@ -53,7 +54,7 @@ Route::get('/searchByTag/{key?}','FrontendController@searchByTag')->name('search
 Route::post('/loadpdf','FrontendController@loadPdffile')->name('loadPdffile');
 Route::post('savepdfConfig','FrontendController@savepdfConfig')->name('savepdfConfig');
 Route::get('/user/login','FrontendController@loginpartner')->name('loginpartner');
-
+Route::get('/faq/detail/{name?}','FrontendController@faq_detail')->name('faq_detail');
 
 Route::get('/partners/marketing-resources/configurable-history','FrontendController@confighistory')->name('confighistory');
 Route::get('/partners/marketing-resources/product-launch-schedule','FrontendController@productLaunchSchedule')->name('productLaunchSchedule');
@@ -102,7 +103,7 @@ Route::post('loadnewPerti','FrontendController@loadnewPerti')->name('loadnewPert
 Route::post('clearproductsection','FrontendController@clearproductsection')->name('clearproductsection');
 Route::post('setlocaltion','FrontendController@setlocaltion')->name('setlocaltion');
 Route::get('/etc/imagelink/showimage/{name?}','FrontendController@imagelink')->name('imagelink');
-
+Route::post('tag_product','FrontendController@tag_product')->name('tag_product');
 
 });
 
@@ -139,6 +140,7 @@ Route::get('ProductSelection','ProductsController@ProductSelection')->name('Prod
 Route::get('unSetting/{id?}','ProductsController@unSetting')->name('unSetting');
 Route::get('updateProSection/{id?}','ProductsController@updateProSection')->name('updateProSection');
 Route::post('update_order_productselect','ProductsController@update_order_productselect')->name('update_order_productselect');
+Route::post('update_order_seriesLeast','ProductsController@update_order_seriesLeast')->name('update_order_seriesLeast');
 
 //video products
 Route::get('videos_images/{id?}','ProductVideoImageController@index')->name('videos_images');
@@ -316,6 +318,8 @@ Route::resource('Faq', 'FaqController');
 Route::get('editFaq/{id?}','FaqController@edit')->name('editFaq');
 Route::post('updateFaq','FaqController@update')->name('updateFaq');
 Route::post('deleteFaq','FaqController@destroy')->name('deleteFaq');
+Route::get('order_faqs','FaqController@order_faqs')->name('order_faqs');
+Route::post('update_order_Faqs','FaqController@update_order_Faqs')->name('update_order_Faqs');
 
 Route::resource('MarketResourceCategories', 'MarketResourceCateController');
 Route::get('editMarketResourceCategories/{id?}','MarketResourceCateController@edit')->name('editMarketResourceCategories');

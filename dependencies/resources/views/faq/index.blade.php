@@ -41,6 +41,7 @@
                 
                 </div>
                 <div class="block-options-item">
+                    <a href="{{route('order_faqs')}}" class="btn btn-primary">Order FAQs</a>
                     <a href="{{route('Faq.create')}}" class="btn btn-success">Create</a>
       
                 </div>

@@ -188,11 +188,12 @@
 @endsection
 @section('js')
 <script>
-    $(document).on('change', '#file_input', function () {
+    $(document).on('change', '.custom-file-input', function () {
         // alert(this.files[0].size);
         var FileSize = this.files[0].size / 1024 / 1024; // in MB
         if (FileSize > 20) {
             alert("File size exceeds 20 MB!");
+            $('.custom-file-label').text('Choose file');
             this.value = "";
         };
     });

@@ -77,4 +77,11 @@ class Controller extends BaseController
          return $check_text3;
         } else exit("Error returned" . $result_txt);
        }
+
+       protected function clean($string) {
+        $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+       
+        return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+       }
+
 }

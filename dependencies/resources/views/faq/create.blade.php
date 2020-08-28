@@ -68,7 +68,7 @@
                             </div>
                             <div class="text-center form-group">
                                 <button class="btn btn-success" type="submit">Create </button>
-                                <a href="{{route('FaqCategories.index')}}" class="btn btn-secondary">
+                                <a href="{{route('Faq.index')}}" class="btn btn-secondary">
                                     Cancel
                                 </a>
                             </div>

@@ -104,6 +104,15 @@
    .select2-container--default .select2-selection--single .select2-selection__arrow b{
        display: none;
    }
+   .text-tag-link span{
+       color:#0087DC;
+       font-size: 14px;
+       cursor: pointer;
+   }
+   .text-tag-link span:hover{
+       color: #444444;
+      text-decoration: underline;
+   }
 
 </style>
 @endsection

@@ -506,7 +506,7 @@
                        
                         ?>
                         @foreach ($news as $item)
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-md-6 col-lg-4 mb-4">
                             <div class="card">
                                 <a href="{{route('updateNewsDetail',['name'=> $item->slug])}}">
                                 <div class="post-image">

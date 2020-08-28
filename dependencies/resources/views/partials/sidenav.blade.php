@@ -35,7 +35,7 @@
                     </li>
                     <li class="nav-main-item">
                             <a class="nav-main-link {{(isset($menu) && $menu == 'featureProduct')?"active":""}}" href="{{route('featureProduct')}}">
-                                <span class="nav-main-link-name">Feature Products</span>
+                                <span class="nav-main-link-name">The latest Series</span>
                             </a>
                         </li>
                         {{-- <li class="nav-main-item">
