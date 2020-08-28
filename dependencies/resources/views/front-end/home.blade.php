@@ -809,9 +809,9 @@ function retextdata($arr ,$unit){
                         <div class="news-content w-100">
                             <?php
                                  $datenew = [];
-                                if(isset($news[0]->date_info)){
-                                    $datenew = getDateformat(isset($news[0]->date_info)? $news[0]->date_info:'00:00:00');
-                                }
+                                // if(isset($news[0]->date_info)){
+                                //     $datenew = getDateformat(isset($news[0]->date_info)? $news[0]->date_info:'00:00:00');
+                                // }
                               
                                 ?>
                             <div class="post-meta">
@@ -824,7 +824,7 @@ function retextdata($arr ,$unit){
                                 <span class="author text-uppercase">
                                         <i class="zmdi zmdi-calendar-alt"></i>
                                         @if(isset($datenew) && count($datenew) > 0)
-                                            {{ $datenew['m'].' '.$datenew['d'] .' '.$datenew['y']}}
+                                            {{ isset($datenew['m'])? $datenew['m']:''.' '.isset($datenew['d'])? $datenew['d']:'': .' '.$datenew['y']}}
                                         @endif
                                       
                                    
@@ -946,12 +946,12 @@ function retextdata($arr ,$unit){
                         <div class="news-content w-100">
                             <?php
                             $date = getDateformat(isset($events[0]->date_publish)? $events[0]->date_publish:'00:00:00');
-                            $endDate = getDateformat(isset($events[0]->date_end)? $events[0]->date_end:'00:00:00');
+                             $endDate = getDateformat(isset($events[0]->date_end)? $events[0]->date_end:'00:00:00');
                              ?> 
                           
                             <div class="post-meta">
                                 <span class="author text-uppercase">
-                                        <i class="zmdi zmdi-calendar-alt"></i>    {{ $date['m'].' '.$date['d'] .''.(isset($endDate['d'])?' - '.$endDate['d']:'').' '.$date['y']}}
+                                        {{-- <i class="zmdi zmdi-calendar-alt"></i>    {{ $date['m'].' '.$date['d'] .''.(isset($endDate['d'])?' - '.$endDate['d']:'').' '.$date['y']}} --}}
                                 </span>
                            
                                 @if(isset($events[0]->location))
