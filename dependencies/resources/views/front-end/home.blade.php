@@ -737,6 +737,7 @@ function retextdata($arr ,$unit){
                         </a>
                         <div class="news-content w-100">
                             <?php
+                            
                                 // function getDateformat($date){
                                        
                                 //        $eng_month_arr = array(
