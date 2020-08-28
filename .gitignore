@@ -21,6 +21,7 @@ dependencies/storage/logs/laravel.log
 /dependencies/Homestead.yaml
 /dependencies/Homestead.json
 /.vagrant
+/.htaccess
 /upload
 /uploads_delta
 /media
