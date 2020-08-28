@@ -445,283 +445,77 @@ function retextdata($arr ,$unit){
 }
 
 ?>
-<div class="visible-tablets-up">
+<div class="">
     <div class="box-pp">
         <div class="container">
             <div class="text-center">
-                <h2 class="text-title-delta-home">{{$staticContent['Featured_Products']}}</h2>
+                <h2 class="text-title-delta-home">The latest Series</h2>
             </div>
             <div id="producttype" class="owl-carousel owl-theme  ft-products-body">
-                @foreach ($featePros as $pro)
-                <div class="item card">
-                    <?php 
-                       $color = '';
-                       $name_sta = '';
-                      $stat = $pro['status_product'];
-                        if($stat == 2){
-                            $color = '#76B900';
-                            $name_sta = 'NEW';
-                        }else if($stat == 3){
-                            $color = '#337ab7';
-                            $name_sta = 'UPDATED';
-                        }else if($stat == 4){
-                            $color = '#f0ad4e';
-                            $name_sta = 'EOL';
-                        }
-                        ?>
-                          <?php 
-                          $datacheck1 = [
-                           $pro['content'][1]->data_1,
-                           $pro['content'][1]->data_2,
-                           $pro['content'][1]->data_3,
-                           $pro['content'][1]->data_4,
-                           $pro['content'][1]->data_5,
-                           $pro['content'][1]->data_6,
-                           $pro['content'][1]->data_7,
-                           $pro['content'][1]->data_8,
-                           $pro['content'][1]->data_9,
-                           $pro['content'][1]->data_10,
-                           $pro['content'][1]->data_11,
-                           $pro['content'][1]->data_12,
-                                  ];
-                   
-                           $datacheck2 = [
-                            $pro['content'][2]->data_1,
-                            $pro['content'][2]->data_2,
-                            $pro['content'][2]->data_3,
-                            $pro['content'][2]->data_4,
-                            $pro['content'][2]->data_5,
-                            $pro['content'][2]->data_6,
-                            $pro['content'][2]->data_7,
-                            $pro['content'][2]->data_8,
-                            $pro['content'][2]->data_9,
-                            $pro['content'][2]->data_10,
-                            $pro['content'][2]->data_11,
-                            $pro['content'][2]->data_12,
-                                   ];
-
-                           $datacheck3 = [
-                            $pro['content'][0]->data_1,
-                            $pro['content'][0]->data_2,
-                            $pro['content'][0]->data_3,
-                            $pro['content'][0]->data_4,
-                            $pro['content'][0]->data_5,
-                            $pro['content'][0]->data_6,
-                            $pro['content'][0]->data_7,
-                            $pro['content'][0]->data_8,
-                            $pro['content'][0]->data_9,
-                            $pro['content'][0]->data_10,
-                            $pro['content'][0]->data_11,
-                            $pro['content'][0]->data_12,
-                                   ];
-                                   ?>
-                    <div class="new-tag" style="background-color:{{$color}}">{{$name_sta}}</div>
-                    <div class="card-body ft-products-item">
-                        <a href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $pro['catename']) ,'pro_code' => setTextpro($pro['pro_code']) ])}}">
-                        @if(isset($pro['picture']))
-                        <img src="{{config('app.url')}}/upload/thumbs/{{$pro['picture']}}" class="product-cat mb-2" alt=""
-                            style="width:70%;">
-                        @else
-                         <img src="{{asset('frontend-asset/image/blank.png')}}" class="product-cat mb-2" alt=""
-                        style="width:70%;">
-                        @endif
-                        <h4 class="text-title-ft">{{$pro['pro_code']}}</h4>
-                        </a>
-                        <div class="row m-d-t">
-                            <div class="col-6">
-                                <div class="out-volt">
-                                    <h6 class="text-title-ft-sub">{{$staticContent['Output_Voltage']}}</h6>
-                                    <p class="text-ft-sub text-one">
-                                       
-                                        @if($pro['content'][1]->status_input == 3)
-                                        @if($pro['content'][1]->data_1 != null && $pro['content'][1]->data_2 != null)
-                                        {{$pro['content'][1]->data_1}}-{{$pro['content'][1]->data_2}}{{$pro['content'][1]->unit_name}}      
-                                         @else 
-                                        -
-                                        @endif
-                                         @else
-                                         @if($pro['content'][1]->data_1 != null)
-                                        <?php echo join(",",retextdata($datacheck1 , $pro['content'][1]->unit_name));?>
-                                        @else 
-                                        -
-                                        @endif
-                                        @endif
-                                    </p>
-                                </div>
-                                <div class="out-power">
-                                    <h6 class="text-title-ft-sub">{{$staticContent['Output_Power']}}</h6>
-                                    <p class="text-ft-sub text-one">
-                                        {{-- @if($pro['content'][2]->data_1 != null)
-                                        {{$pro['content'][2]->data_1}}{{$pro['content'][2]->unit_name}}
-                                        @else 
-                                        -
-                                        @endif --}}
-                                        @if($pro['content'][2]->status_input == 3)
-                                        @if($pro['content'][2]->data_1 != null && $pro['content'][2]->data_2 != null)
-                                             {{$pro['content'][2]->data_1}}-{{$pro['content'][2]->data_2}}{{$pro['content'][2]->unit_name}}      
-                                        @else 
-                                        -
-                                        @endif
-                                        @else
-                                            @if($pro['content'][2]->data_1 != null)
-                                         <?php echo join(",",retextdata($datacheck2 , $pro['content'][2]->unit_name));?>
-                                             @else 
-                                             -
-                                             @endif
-                                        @endif
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="out-current">
-                                    <h6 class="text-title-ft-sub">{{$staticContent['Output_Current']}}</h6>
-                                    <p class="text-ft-sub text-one">
-                                        {{-- @if($pro['content'][0]->data_1 != null)
-                                        {{$pro['content'][0]->data_1}}{{$pro['content'][0]->unit_name}}
-                                        @else 
-                                        -
-                                        @endif --}}
-
-                                        @if($pro['content'][0]->status_input == 3)
-                                        @if($pro['content'][0]->data_1 != null && $pro['content'][0]->data_2 != null)
-                                             {{$pro['content'][0]->data_1}}-{{$pro['content'][0]->data_2}}{{$pro['content'][0]->unit_name}}      
-                                        @else 
-                                        -
-                                        @endif
-                                        @else
-                                          @if($pro['content'][0]->data_1 != null)
-                                         <?php echo join(",",retextdata($datacheck3 , $pro['content'][0]->unit_name));?>
-                                         @else 
-                                         -
-                                         @endif
-                                        @endif
-                                    </p>
-                                </div>
-                                <div class="in-volt">
-                                    <h6 class="text-title-ft-sub">{{$staticContent['Input_Voltage']}}</h6>
-                                    <p class="text-ft-sub text-one"> {!! iconv_substr(strip_tags($pro['content'][3]->value_text),0,60,'UTF-8') !!}</p>
-                                   
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="dimension">
-                            <h6 class="text-title-ft-sub">{{$staticContent['Dimensions']}} (L x W x {{$pro['unit_dimension']}}) </h6>
-                            @if(isset($pro['dimensionD']))
-                            <p class="text-ft-sub text-one">{{$pro['dimensionL']}} x {{$pro['dimensionW']}} x
-                                {{$pro['dimensionD']}} mm</p>
-                            <p class="text-ft-sub text-one">
-                                {{number_format($pro['dimensionL']* 0.0393701 ,2)}}” x
-                                {{number_format($pro['dimensionW']* 0.0393701 ,2)}}” x
-                                {{number_format($pro['dimensionD']* 0.0393701 ,2)}}”</p>
-                            @else
-                            <p class="text-ft-sub text-one">{{$pro['dimensionL']}}</p>
-                            @endif
-                            <div  class="btn btn-ft mt-2" onclick="showNavCoparison({{$pro['pro_id']}} ,{{$pro['cateid']}})">+ {{$staticContent['Add_to_Compare']}}</div>
-                        </div>
-                        
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-</div>
-<div class="visible-mobile">
-    <div class="box-pp  ">
-        <div class="container mr-lr-feture">
-            <div class="text-center">
-                <h2 class="text-title-delta-home ">{{$staticContent['Featured_Products']}}</h2>
-            </div>
-            <div id="producttype-mobile" class="owl-carousel owl-theme  ft-products-body">
-
-                @foreach ($featePros as $pro)
-                <div class="item card">
-                    <?php 
-                    $color = '';
-                    $name_sta = '';
-                   $stat = $pro['status_product'];
-                     if($stat == 2){
-                         $color = '#76B900';
-                         $name_sta = 'NEW';
-                     }else if($stat == 3){
-                         $color = '#337ab7';
-                         $name_sta = 'UPDATED';
-                     }else if($stat == 4){
-                         $color = '#f0ad4e';
-                         $name_sta = 'EOL';
-                     }
-                     ?>
-                 <div class="new-tag" style="background-color:{{$color}}">{{$name_sta}}</div>
-                    <div class="card-body ft-products-item">
-                        <a href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $pro['catename']) ,'pro_code' => setTextpro($pro['pro_code']) ])}}">
-                            @if(isset($pro['picture']))
-                            <img src="{{config('app.url')}}/upload/thumbs/{{$pro['picture']}}" class="product-cat mb-2" alt=""
-                                style="width:70%;">
-                            @else
-                             <img src="{{asset('frontend-asset/image/blank.png')}}" class="product-cat mb-2" alt=""
-                            style="width:70%;">
-                            @endif
-                        <h6 class="text-title-ft">{{$pro['pro_code']}}</h6>
-                        </a>
-                        <div class="flex-row">
-                            <div class="out-volt mt-1">
-                                <p class="text-title-ft-sub text-two">{{$staticContent['Output_Voltage']}}</p>
-                                <p class="text-ft-sub text-two">
-                                    @if($pro['content'][1]->data_1 != null)
-                                    {{$pro['content'][1]->data_1}}{{$pro['content'][1]->unit_name}} 
-                                    @else 
-                                    -
-                                    @endif
-                                </p>
-                            </div>
-                            <div class="out-power mt-2">
-                                <p class="text-title-ft-sub text-two">{{$staticContent['Output_Power']}}</p>
-                                <p class="text-ft-sub text-two">
-                                    @if($pro['content'][2]->data_1 != null)
-                                    {{$pro['content'][2]->data_1}}{{$pro['content'][2]->unit_name}}
-                                    @else 
-                                    -
-                                    @endif
-                                </p>
-                            </div>
-
-                            <div class="out-current mt-2">
-                                <p class="text-title-ft-sub text-two">{{$staticContent['Output_Current']}}</p>
-                                <p class="text-ft-sub text-two">
-                                    @if($pro['content'][0]->data_1 != null)
-                                    {{$pro['content'][0]->data_1}}{{$pro['content'][0]->unit_name}}
-                                    @else 
-                                    -
-                                    @endif
-                                </p>
-                            </div>
-                            <div class="in-volt mt-2">
-                                <p class="text-title-ft-sub text-two">{{$staticContent['Input_Voltage']}}</p>
-                                <p class="text-ft-sub text-one"> {!! iconv_substr(strip_tags($pro['content'][3]->value_text),0,60,'UTF-8') !!} ...</p>
-                            </div>
-                            <div class="dimension mt-2">
-                                <p class="text-title-ft-sub text-two">{{$staticContent['Dimensions']}}  (L x W x {{$pro['unit_dimension']}})  </p>
-                                @if(isset($pro['dimensionD']))
-                                <p class="text-ft-sub text-two">{{$pro['dimensionL']}} x {{$pro['dimensionW']}} x
-                                    {{$pro['dimensionD']}} mm</p>
-                                <p class="text-ft-sub text-two">
-                                    {{number_format($pro['dimensionL']* 0.0393701 ,2)}}” x
-                                    {{number_format($pro['dimensionW']* 0.0393701 ,2)}}” x
-                                    {{number_format($pro['dimensionD']* 0.0393701 ,2)}}”</p>
+                @foreach ($series as $serie)
+                <div class="series-list-home">
+                    <div class="">
+                        <div class="d-block ">
+                            <div class="m-auto series-img" >
+                                @if($serie->se_id == 26)
+                                <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                 @else
-                                <p class="text-ft-sub text-two">{!! iconv_substr(strip_tags($pro['dimensionL']),0,60,'UTF-8') !!} ...</p>
+                                <a style="color:inherit;" class="" href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                 @endif
+                                    @if(isset($serie->image))
+                                    <img class="img-fluid m-auto"
+                                        src="{{config('app.url')}}/medias/categories/{{$serie->image}}" alt="">
+                                    @else
+                                    <img class="img-fluid m-auto" src="{{asset('frontend-asset/image/blank.png')}}" alt="">
+                                    @endif
+                                </a>
                             </div>
                         </div>
+                        <div class="series-text text-center">
+                            <div class="d-flex h-title">
+                                @if($serie->se_id == 26)
+                                <a style="color:inherit;"  class="m-auto" href="{{route('configurableProductDetail')}}">
+                                 @else 
+                                 <a style="color:inherit;" class="m-auto" href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                 @endif
+                                    <h3 class="text-dark  m-0">{{$serie->title}}</h3>
+                                </a>
+                            </div>
+                            @if($serie->se_id == 26)
+                            <a style="color:inherit;"  class="m-auto" href="{{route('configurableProductDetail')}}">
+                             @else 
+                            <a style="color:inherit;" class="m-auto" href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                             @endif
+                            <div class="series-text-detail">
+                                {!! $serie->overview_content !!}
+                            </div>
+                             </a>
+                        </div>
                     </div>
-                    <div  class="btn btn-ft " onclick="showNavCoparison({{$pro['pro_id']}} ,{{$pro['cateid']}})">+ {{$staticContent['Add_to_Compare']}}</div>
-                </div>
+                    <div class="series-icon ">
+                        <div class="icon-app-detail">
+                            @foreach ($series_has_application as $item)
+                            @if($item->se_id == $serie->se_id)
+                                <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->id.'-'.$item->name)])}}"  data-toggle="tooltip" data-placement="top" title="{{$item->name}}" class="icon btn-icon-app itemhorver{{$item->id}}"
+                                    style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
+                                   <script>
+                                       $(".itemhorver{{$item->id}}").hover(function(){
+                                            $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
+                                            }, function(){
+                                            $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->icon}}')");
+                                            });
+                                    </script>                             
+                           @endif
+                           @endforeach
+                        </div>
+                    </div>
+                </div>   
                 @endforeach
             </div>
         </div>
     </div>
 </div>
+
 
 <!-- event -->
 <div class="visible-desk-up">
