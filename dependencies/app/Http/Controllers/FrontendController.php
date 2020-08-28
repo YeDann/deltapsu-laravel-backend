@@ -187,10 +187,12 @@ class FrontendController extends Controller
             ->select('p.*', 'pt.*' ,'spt.sub_pro_id as cateid' ,'spt.name as catename' ,'sp.unit_dimension')
             ->orderBy('p.created_at', 'desc')
             ->get();
+            $procheckarr = [];
 
             $data = [];
                  $i = 0;
                 foreach($products as $item){
+                 
                   $prolang = self::checkLang($lang,$item->pro_id);
                     $pro = DB::table('products as p')
                     ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -218,7 +220,9 @@ class FrontendController extends Controller
                     ->orderBy('ph.type_id' ,'asc')
                     ->select('pht.value_text','ph.*','pft.field_name as fieldCate','pf.unit_name')
                     ->get();
+                if(!in_array($pro->pro_id, $procheckarr)){
                     if(self::checkContentPro($pro->pro_id)){
+                        array_push($procheckarr,$pro->pro_id);
                         $data[$i] = [
                             "pro_id"=>$pro->pro_id,
                             "pro_code"=>$pro->pro_code,
@@ -233,11 +237,13 @@ class FrontendController extends Controller
                             "dimensionD"=>$pro->dimensionD,
                         ];
                     }
+                }
+                
              
                     $i++;
                 }
                 $now = date('Y-m-d');
-                $events = DB::table('contents as c')
+                $events_q = DB::table('contents as c')
                 ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
                 ->where('ct.local', $lang)
                 ->where('c.content_type', '=', 'event')
@@ -247,8 +253,24 @@ class FrontendController extends Controller
                 ->orderBy('c.date_publish', 'asc')
                 ->limit(2)
                 ->get();
+
+                if(isset($events) && count($events_q) > 0){
+                    $events =  self::getDataNew($events_q ,'events');
+                }else{
+                    $events_q2 = DB::table('contents as c')
+                    ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
+                    ->where('ct.local', $lang)
+                    ->where('c.content_type', '=', 'event')
+                    ->where('c.status',  1)
+                    ->select('c.*' ,'ct.*')
+                    ->orderBy('c.date_publish', 'desc')
+                    ->limit(2)
+                    ->get();
+                    $events =  self::getDataNew($events_q2,'events');
+                 
+                }
                
-                $news = DB::table('product_news_has_categories as pnc')
+                $news_q = DB::table('product_news_has_categories as pnc')
                 ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
                 ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
                 ->join('news_type as nt' ,'nt.id' ,'=','pnc.categories_id')
@@ -261,6 +283,7 @@ class FrontendController extends Controller
                 ->orderBy('c.date_publish', 'desc')
                 ->limit(2)
                 ->get();
+                $news =  self::getDataNew($news_q,'news');
 
                 $teachni = DB::table('article_has_categories as anc')
                 ->join('contents as c' ,'c.id' ,'=','anc.content_id')
@@ -406,6 +429,7 @@ class FrontendController extends Controller
         if($page == 'product-notice'){
             return  view('front-end.product-notice');
         }
+
 
         if($page =='faqs'){
             $lang = App::getLocale();
@@ -659,10 +683,82 @@ class FrontendController extends Controller
             }
             return redirect()->route('contactSupport'); 
         } 
+        if($page == 'testFunction'){
+            $events = DB::table('contents as c')
+            ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
+            ->where('ct.local', $lang)
+            ->where('c.content_type', '=', 'event')
+            ->where('c.status',  1)
+            ->select('c.*' ,'ct.*')
+            ->orderBy('c.date_publish', 'desc')
+            ->limit(2)
+            ->get();
+            return view('front-end.test')->with('events',$events); 
+        }
   
         abort(404);
          
     }
+    private function getDataNew($query ,$type){
+        $content = [];
+    
+        foreach($query as $item){
+            $data_date = '';
+            if($type == 'events'){
+                $date = self::getDateformat(isset($item->date_publish) ?$item->date_publish :'00:00:00' );
+                $endDate = self::getDateformat(isset($item->date_end) ?$item->date_end:'00:00:00' );
+                $data_date = $date['m'].' '.$date['d'] .''.(isset($endDate['d'])?' - '.$endDate['d']:'').' '.$date['y'];
+                $color_type =  '';
+                $cateName =  '';
+            }else if($type == 'news'){
+                $datenew = self::getDateformat(isset($item->date_info)? $item->date_info:'00:00:00');
+                $data_date =  $datenew['m'].' '.$datenew['d'].' '.$datenew['y'];
+                $color_type =  $item->color_type;
+                $cateName =  $item->cateName;
+
+            }
+                $content[] = array(
+                    "id"=>$item->id, 
+                    "slug"=>$item->slug, 
+                    "title"=>$item->title, 
+                    "content"=> $item->content, 
+                    "location"=> $item->location, 
+                    "thumb"=>$item->thumb, 
+                    "date"=>$data_date,
+                    "color_type"=>$color_type,
+                    "cateName"=>$cateName,
+                );
+        }
+        return $content;
+    }
+
+    private function getDateformat($date){
+                                       
+        $eng_month_arr = array(
+            "0" => "",
+            "1" => "Jan",
+            "2" => "Feb",
+            "3" => "Mar",
+            "4" => "Apr",
+            "5" => "May",
+            "6" => "Jun",
+            "7" => "Jul",
+            "8" => "Aug",
+            "9" => "Sep",
+            "10" => "Oct",
+            "11" => "Nov",
+            "12" => "Dec"
+        );
+        $publicDate = date_create($date);
+        $pDate = explode("-", $publicDate->format('Y-n-d'));
+        $datearray = [
+            'm' =>  $eng_month_arr[$pDate[1]],
+            'd'=>  $pDate[2],
+            'y' => $pDate[0]
+
+        ];
+        return  $datearray;
+  }
     public function loginpartner(){
         $sectionId = session('partner_id');
         if($sectionId == null){
