@@ -5,6 +5,7 @@
 @section('meta')
 @endsection
 @section('container')
+
 <?php 
       function getDateformat($date){
                                        
@@ -40,6 +41,9 @@
  $date = getDateformat(isset($events[0]->date_publish) ?$events[0]->date_publish :'00:00:00' );
  $endDate = getDateformat(isset($events[0]->date_end) ?$events[0]->date_end:'00:00:00' );
 ?>
+<div class="" style="margin-top: 90px;">
+
+</div>
 {{ $date['m'].' '.$date['d'] .''.(isset($endDate['d'])?' - '.$endDate['d']:'').' '.$date['y']}}
 @endsection
 @section('js')
