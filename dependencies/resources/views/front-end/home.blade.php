@@ -825,9 +825,9 @@ function retextdata($arr ,$unit){
                                     <img class="line-symbol"src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
                                 <span class="author text-uppercase">
                                         <i class="zmdi zmdi-calendar-alt"></i>
-                                        @if(isset($datenew) && count($datenew) > 0)
+                                        {{-- @if(isset($datenew) && count($datenew) > 0)
                                             {{ isset($datenew['m'])? $datenew['m']:''.' '.isset($datenew['d'])? $datenew['d']:'': .' '.$datenew['y']}}
-                                        @endif
+                                        @endif --}}
                                       
                                    
                                 </span>
