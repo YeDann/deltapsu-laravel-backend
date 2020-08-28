@@ -105,6 +105,8 @@
 @section('container')
 <?php $style = 2; ?>
 <!-- banner -->
+
+
 <div class="show-more-769">
     <div class="box-banner">
         <div id="slide-banner" class="owl-carousel owl-theme">
@@ -720,6 +722,7 @@ function retextdata($arr ,$unit){
         </div>
     </div>
 </div>
+
 <!-- event -->
 <div class="visible-desk-up">
     <div class="box-events  ">
@@ -729,67 +732,36 @@ function retextdata($arr ,$unit){
                     <h2 class="text-title-delta-home">{{$staticContent['Upcoming_Event']}}</h2>
                     @if(isset($events[0]))
                     <div class="card">
-                        <a href="{{route('updateEventDetail',$events[0]->slug)}}">
+                        <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
                         <div class="post-image">
-                            <img src="{{config('app.url')}}/uploads_delta/{{$events[0]->thumb}}" alt=""
+                            <img src="{{config('app.url')}}/uploads_delta/{{$events[0]['thumb']}}" alt=""
                                 class="img-responsive">
                         </div>
                         </a>
                         <div class="news-content w-100">
-                            <?php
-                                function getDateformat($date){
-                                       
-                                       $eng_month_arr = array(
-                                           "0" => "",
-                                           "1" => "Jan",
-                                           "2" => "Feb",
-                                           "3" => "Mar",
-                                           "4" => "Apr",
-                                           "5" => "May",
-                                           "6" => "Jun",
-                                           "7" => "Jul",
-                                           "8" => "Aug",
-                                           "9" => "Sep",
-                                           "10" => "Oct",
-                                           "11" => "Nov",
-                                           "12" => "Dec"
-                                       );
-                                       $publicDate = date_create($date);
-                                       $pDate = explode("-", $publicDate->format('Y-n-d'));
-                                       $datearray = [
-                                           'm' =>  $eng_month_arr[$pDate[1]],
-                                           'd'=>  $pDate[2],
-                                           'y' => $pDate[0]
 
-                                       ];
-                                       return  $datearray;
-                                }
-                               
-                                     $date = getDateformat($events[0]->date_publish);
-                                     $endDate = getDateformat($events[0]->date_end);
-                                ?>
 
                             <div class="post-meta">
                                 <span class="author text-uppercase">
                                         <i class="zmdi zmdi-calendar-alt"></i>
-                                        {{ $date['m'].' '.$date['d'] .''.(isset($endDate['d'])?' - '.$endDate['d']:'').' '.$date['y']}}
+                                        {{$events[0]['date']}} 
                                 </span>
                                 <span class="locations">
-                                    &nbsp; <i class="zmdi zmdi-pin"></i> {{$events[0]->location}}
+                                    &nbsp; <i class="zmdi zmdi-pin"></i> {{$events[0]['location']}}
                                 </span>
                             </div>
                          
                             <h4 class="post-header title-new">
-                                <a href="{{route('updateEventDetail',$events[0]->slug)}}">
-                                {{$events[0]->title}}
+                                <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
+                                {{$events[0]['title']}}
                                </a>
                             </h4>
                           
                             <p>
-                                {!! iconv_substr(strip_tags($events[0]->content),0,90,'UTF-8') !!} ...
+                                {!! iconv_substr(strip_tags($events[0]['content']),0,90,'UTF-8') !!} ...
                             </p>
                         </div>
-                        <a href="{{route('updateEventDetail',$events[0]->slug)}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                        <a href="{{route('updateEventDetail',$events[0]['slug'])}}" class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                     @endif
                     <div class="box-btn-boxen">
@@ -800,50 +772,43 @@ function retextdata($arr ,$unit){
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
                     <div class="card">
-                        <a href="{{route('updateNewsDetail',$news[0]->slug)}}">
+                        <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
                         <div class="post-image">
-                            <img src="{{config('app.url')}}/uploads_delta/{{$news[0]->thumb}}" alt=""
+                            <img src="{{config('app.url')}}/uploads_delta/{{$news[0]['thumb']}}" alt=""
                                 class="img-responsive">
                         </div>
                         </a>
                         <div class="news-content w-100">
-                            <?php
-                                 $datenew = [];
-                                if(isset($news[0]->date_info)){
-                                    $datenew = getDateformat($news[0]->date_info);
-                                }
-                              
-                                ?>
+                   
                             <div class="post-meta">
-                                <a href="{{route('updateNewsDetail',['name'=> $news[0]->slug])}}" >
-                                    <span class="sub-news" style="color:{{$news[0]->color_type}}">
-                                            {{$news[0]->cateName}}
+                                <a href="{{route('updateNewsDetail',['name'=> $news[0]['slug']])}}" >
+                                    <span class="sub-news" style="color:{{$news[0]['color_type']}}">
+                                            {{$news[0]['cateName']}}
                                     </span>
                                     </a>
+                                 
                                     <img class="line-symbol"src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
                                 <span class="author text-uppercase">
-                                        <i class="zmdi zmdi-calendar-alt"></i>
-                                        @if(isset($datenew) && count($datenew) > 0)
-                                            {{ $datenew['m'].' '.$datenew['d'] .' '.$datenew['y']}}
-                                        @endif
-                                      
+                                    {{$news[0]['date']}}  <i class="zmdi zmdi-calendar-alt"></i>
+                                
+                                     
                                    
                                 </span>
-                                @if(isset($news[0]->location))
+                                @if(isset($news[0]['location']))
                                 <span class="locations">
-                                    &nbsp;    <i class="zmdi zmdi-pin"></i> {{$news[0]->location}}
+                                    &nbsp;    <i class="zmdi zmdi-pin"></i> {{$news[0]['location']}}
                                 </span>
                                 @endif
                             </div>
                             <h4 class="post-header title-new">
-                                <a href="{{route('updateNewsDetail',$news[0]->slug)}}">
-                                {{$news[0]->title}}
+                                <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
+                                {{$news[0]['title']}}
                                 </a>
                             </h4>
-                            <p> {!! iconv_substr(strip_tags($news[0]->content),0,90,'UTF-8') !!} ...
+                            <p> {!! iconv_substr(strip_tags($news[0]['content']),0,90,'UTF-8') !!} ...
                             </p>
                         </div>
-                        <a href="{{route('updateNewsDetail',$news[0]->slug)}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                        <a href="{{route('updateNewsDetail',$news[0]['slug'])}}" class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                     @endif
                     <div class="box-btn-boxen">
@@ -932,10 +897,10 @@ function retextdata($arr ,$unit){
                     <h2 class="text-title-delta-home">{{$staticContent['Upcoming_Event']}}</h2>
                     @if(isset($events[0]))
                     <div class="card">
-                        <a href="{{route('updateEventDetail',$events[0]->slug)}}">
+                        <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
                         <div class="post-image">
-                            @if(isset($events[0]->thumb))
-                            <img src="{{config('app.url')}}/uploads_delta/{{$events[0]->thumb}}" alt=""
+                            @if(isset($events[0]['thumb']))
+                            <img src="{{config('app.url')}}/uploads_delta/{{$events[0]['thumb']}}" alt=""
                                 class="img-responsive">
                              @else 
                              <img src="{{config('app.url')}}/frontend-asset/image/upcoming-img.png" alt=""
@@ -945,31 +910,31 @@ function retextdata($arr ,$unit){
                         </a>
                         <div class="news-content w-100">
                             <?php
-                            $date = getDateformat($events[0]->date_publish);
-                            $endDate = getDateformat($events[0]->date_end);
+                            // $date = getDateformat(isset($events[0]->date_publish)? $events[0]->date_publish:'00:00:00');
+                            //  $endDate = getDateformat(isset($events[0]->date_end)? $events[0]->date_end:'00:00:00');
                              ?> 
                           
                             <div class="post-meta">
                                 <span class="author text-uppercase">
-                                        <i class="zmdi zmdi-calendar-alt"></i>    {{ $date['m'].' '.$date['d'] .''.(isset($endDate['d'])?' - '.$endDate['d']:'').' '.$date['y']}}
+                                        {{-- <i class="zmdi zmdi-calendar-alt"></i>    {{ $date['m'].' '.$date['d'] .''.(isset($endDate['d'])?' - '.$endDate['d']:'').' '.$date['y']}} --}}
                                 </span>
                            
-                                @if(isset($events[0]->location))
+                                @if(isset($events[0]['location']))
                                 <span class="locations">
-                                        <i class="zmdi zmdi-pin"></i> {{$events[0]->location}}
+                                        <i class="zmdi zmdi-pin"></i> {{$events[0]['location']}}
                                 </span>
                                 @endif
                             </div>
                             <h4 class="post-header title-new">
-                                <a href="{{route('updateEventDetail',$events[0]->slug)}}">
-                                {{$events[0]->title}}
+                                <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
+                                {{$events[0]['title']}}
                                 </a>
                             </h4>
                             {{-- <p> {!! iconv_substr(strip_tags($events[0]->content),0,90,'UTF-8') !!} ...
                             </p> --}}
 
                         </div>
-                        <a href="{{route('updateEventDetail',$events[0]->slug)}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                        <a href="{{route('updateEventDetail',$events[0]['slug'])}}" class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                     @endif
                     <div class="box-btn-boxen">
@@ -980,10 +945,10 @@ function retextdata($arr ,$unit){
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
                     <div class="card">
-                        <a href="{{route('updateNewsDetail',$news[0]->slug)}}">
+                        <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
                         <div class="post-image">
-                            @if(isset($news[0]->thumb))
-                            <img src="{{config('app.url')}}/uploads_delta/{{$news[0]->thumb}}" alt=""
+                            @if(isset($news[0]['thumb']))
+                            <img src="{{config('app.url')}}/uploads_delta/{{$news[0]['thumb']}}" alt=""
                                 class="img-responsive">
                             @else 
                             <img src="{{config('app.url')}}/frontend-asset/image/upcoming-img.png" alt=""
@@ -993,35 +958,33 @@ function retextdata($arr ,$unit){
                         </a>
                         <div class="news-content w-100">
                             <div class="post-meta">
-                                <a href="{{route('updateNewsDetail',['name'=> $news[0]->slug])}}" >
-                                    <span class="sub-news" style="color:{{$news[0]->color_type}}">
-                                            {{$news[0]->cateName}}
+                                <a href="{{route('updateNewsDetail',['name'=> $news[0]['slug']])}}" >
+                                    <span class="sub-news" style="color:{{$news[0]['color_type']}}">
+                                            {{$news[0]['cateName']}}
                                     </span>
                                     </a>
                                     <img class="line-symbol"src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
                                 <span class="author text-uppercase">
                                         <i class="zmdi zmdi-calendar-alt"></i> 
-                                        @if(count($datenew) > 0)
-                                         {{ $datenew['m'].' '.$datenew['d'] .' '.$datenew['y']}}
-                                         @endif
+                                    
+                                         {{$news[0]['date']}}
                                 </span>
-                                @if(isset($news[0]->location))
+                                @if(isset($news[0]['location']))
                                 <span class="locations">
-                                        <i class="zmdi zmdi-pin"></i>{{$news[0]->location}}
+                                        <i class="zmdi zmdi-pin"></i>{{$news[0]['location']}}
                                 </span>
                                 @endif
                             </div>
                            
                             <h4 class="post-header title-new">
-                                <a href="{{route('updateNewsDetail',$news[0]->slug)}}">
-                                {{$news[0]->title}}
+                                <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
+                                {{$news[0]['title']}}
                                 </a>
                             </h4>
-                            {{-- <p> {!! iconv_substr(strip_tags($news[0]->content),0,90,'UTF-8') !!} ...
-                            </p> --}}
+                       
 
                         </div>
-                        <a href="{{route('updateNewsDetail',$news[0]->slug)}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                        <a href="{{route('updateNewsDetail',$news[0]['slug'])}}" class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                     @endif
                     <div class="box-btn-boxen">
