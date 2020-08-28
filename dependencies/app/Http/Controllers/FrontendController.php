@@ -680,6 +680,18 @@ class FrontendController extends Controller
             }
             return redirect()->route('contactSupport'); 
         } 
+        if($page == 'testFunction'){
+            $events = DB::table('contents as c')
+            ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
+            ->where('ct.local', $lang)
+            ->where('c.content_type', '=', 'event')
+            ->where('c.status',  1)
+            ->select('c.*' ,'ct.*')
+            ->orderBy('c.date_publish', 'desc')
+            ->limit(2)
+            ->get();
+            return view('front-end.test')->with('events',$events); 
+        }
   
         abort(404);
          
