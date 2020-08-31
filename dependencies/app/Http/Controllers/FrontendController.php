@@ -3326,7 +3326,13 @@ class FrontendController extends Controller
         $company = $this->validateInput($request->company,'text',true);
         $email = $this->validateInput($request->email,'text',true);
         $tel = $this->validateInput($request->tel,'text',true);
-        $acept = $this->validateInput($request->data_conf,'number',true ,0);
+        $ac_data = 0;
+        if(isset($request->data_conf)){
+            $ac_data  = $request->data_conf;
+        }
+        $acept = $this->validateInput($ac_data,'number',true ,0);
+
+        // return dd( $acept);
        
         // return dd($acept);
         $filename = $this->validateInput($request->fileguidownload,'text',true);
