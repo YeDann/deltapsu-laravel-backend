@@ -75,6 +75,9 @@ class Controller extends BaseController
          $check_text2 = str_replace('&amp;','', $result_txt); 
          $check_text3 = str_replace('amp;','', $result_txt);
          return $check_text3;
-        } else exit("Error returned" . $result_txt);
+        } else{
+          abort(400, 'Bed Request');
+        }
+
        }
 }
