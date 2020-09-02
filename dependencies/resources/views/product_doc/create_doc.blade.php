@@ -52,7 +52,7 @@
                                     name="name" placeholder="Enter name...">
                             </div>
                             <div class="form-group">
-                                <label for="example-select">File <span class="req-fed">* Max File Size 60 MB</span></label>
+                                <label for="example-select">File <span class="req-fed">* Max File Size 80 MB</span></label>
                                 <div class="custom-file " style="width:100%;">
                                     <input type="file" class="custom-file-input" id="file_input{{$item->name}}" onchange="checkmaxsize(`file_inputen` ,'file_lableen')" name="fileGU[en]"
                                         data-toggle="custom-file-input">
