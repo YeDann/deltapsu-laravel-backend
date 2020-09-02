@@ -45,7 +45,7 @@
                                 <div class="custom-file " style="width:100%;">
                                     <input type="file" class="custom-file-input file_input"  name="file"
                                         data-toggle="custom-file-input">
-                                    <label class="custom-file-label" id="file_lable" for="file">Choose file</label>
+                                    <label class="custom-file-label" id="file_lable"  for="file">Choose file</label>
                                 </div>
                             </div>
                             <div class="form-group">
