@@ -3142,6 +3142,8 @@ class FrontendController extends Controller
         //   return dd($request->config_id);
           $path = null;
           $filepdf = null;
+
+           //Enquiry Pdf
           if($request->config_id != null && $request->enquireStatus == 0){
        
               $data = DB::table('configuration_history')->where('id',$request->config_id)->get();
@@ -3161,9 +3163,9 @@ class FrontendController extends Controller
                     );
                 $path =  base_path('../config_history/').$data[0]->file; 
                 $filepdf = $data[0]->file;
-                Mail::to($email)->send(new SendPDF($request->except('_token') ,$path,$data[0]->factory_model));
+                Mail::to($email)->send(new SendPDFFromFeedBack($request->except('_token'),$path ,$data[0]->factory_model));
               } 
-           
+           //Send Pdf to me 
           }else if($request->config_id != null && $request->enquireStatus == 3){
             $data = DB::table('configuration_history')->where('id',$request->config_id)->get();
             if(isset($data) && count($data) > 0 ){
@@ -3182,7 +3184,8 @@ class FrontendController extends Controller
                 );
               $path =  base_path('../config_history/').$data[0]->file; 
               $filepdf = $data[0]->file;
-              Mail::to($email)->send(new SendPDFFromFeedBack($request->except('_token'),$path ,$data[0]->factory_model));
+        
+              Mail::to($email)->send(new SendPDF($request->except('_token') ,$path,$data[0]->factory_model));
             }
           }
 
