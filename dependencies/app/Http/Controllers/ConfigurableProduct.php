@@ -274,7 +274,7 @@ public  function getHistoryConfig(){
 
     $con_his = DB::table('configuration_history as ch')
         ->select('ch.*')
-        ->whereIn('type_his',[0 ,1])
+        ->whereIn('type_his',[0,3])
         ->orderBy('created_at','desc')
         ->get();
 
@@ -287,7 +287,7 @@ public  function getEnquiryContact(){
 
     $con_his = DB::table('configuration_history as ch')
         ->select('ch.*')
-        ->where('type_his' ,3)
+        ->where('type_his' ,1)
         ->orderBy('created_at','desc')
         ->get();
 
