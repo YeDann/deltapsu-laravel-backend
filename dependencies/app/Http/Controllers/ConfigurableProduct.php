@@ -278,8 +278,8 @@ public  function getHistoryConfig(){
         ->orderBy('created_at','desc')
         ->get();
 
- DB::table('contacts')->where('email','claire@degitobangkok.com')->delete();
-   DB::table('contacts')->where('email','chai@degitobangkok.com')->delete();
+//    DB::table('contacts')->where('email','claire@degitobangkok.com')->delete();
+//    DB::table('contacts')->where('email','chai@degitobangkok.com')->delete();
 
     return view('configurableProduct.historyConfig')
     ->with('name','config_products')
