@@ -63,6 +63,7 @@
                     <td class="d-none d-sm-table-cell">{{$item->name}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->model}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->created_at}}</td>
+                    
                     <td class="text-center">
                     <a href="{{config('app.url')}}/config_history/{{$item->file}}"   target="_blank" class="btn btn-outline-primary">View</a>
                     </td>
