@@ -3142,6 +3142,8 @@ class FrontendController extends Controller
         //   return dd($request->config_id);
           $path = null;
           $filepdf = null;
+
+           //Enquiry Pdf
           if($request->config_id != null && $request->enquireStatus == 0){
        
               $data = DB::table('configuration_history')->where('id',$request->config_id)->get();
@@ -3161,9 +3163,9 @@ class FrontendController extends Controller
                     );
                 $path =  base_path('../config_history/').$data[0]->file; 
                 $filepdf = $data[0]->file;
-                Mail::to($email)->send(new SendPDF($request->except('_token') ,$path,$data[0]->factory_model));
+                Mail::to($email)->send(new SendPDFFromFeedBack($request->except('_token'),$path ,$data[0]->factory_model));
               } 
-           
+           //Send Pdf to me 
           }else if($request->config_id != null && $request->enquireStatus == 3){
             $data = DB::table('configuration_history')->where('id',$request->config_id)->get();
             if(isset($data) && count($data) > 0 ){
@@ -3182,7 +3184,8 @@ class FrontendController extends Controller
                 );
               $path =  base_path('../config_history/').$data[0]->file; 
               $filepdf = $data[0]->file;
-              Mail::to($email)->send(new SendPDFFromFeedBack($request->except('_token'),$path ,$data[0]->factory_model));
+        
+              Mail::to($email)->send(new SendPDF($request->except('_token') ,$path,$data[0]->factory_model));
             }
           }
 
@@ -3326,7 +3329,13 @@ class FrontendController extends Controller
         $company = $this->validateInput($request->company,'text',true);
         $email = $this->validateInput($request->email,'text',true);
         $tel = $this->validateInput($request->tel,'text',true);
-        $acept = $this->validateInput($request->data_conf,'number',true ,0);
+        $ac_data = 0;
+        if(isset($request->data_conf)){
+            $ac_data  = $request->data_conf;
+        }
+        $acept = $this->validateInput($ac_data,'number',true ,0);
+
+        // return dd( $acept);
        
         // return dd($acept);
         $filename = $this->validateInput($request->fileguidownload,'text',true);

@@ -52,11 +52,11 @@
                                     name="name" placeholder="Enter name...">
                             </div>
                             <div class="form-group">
-                                <label for="example-select">File <span class="req-fed">* Max File Size 20 MB</span></label>
+                                <label for="example-select">File <span class="req-fed">* Max File Size 80 MB</span></label>
                                 <div class="custom-file " style="width:100%;">
-                                    <input type="file" class="custom-file-input" name="fileGU[en]"
+                                    <input type="file" class="custom-file-input" id="file_input{{$item->name}}" onchange="checkmaxsize(`file_inputen` ,'file_lableen')" name="fileGU[en]"
                                         data-toggle="custom-file-input">
-                                    <label class="custom-file-label" for="fileImage">Choose file</label>
+                                    <label class="custom-file-label file_lableen" for="fileImage">Choose file</label>
                                 </div>
                             </div>
                     </div>
@@ -90,14 +90,23 @@
 @endsection
 @section('js')
 <script>
-    $(document).on('change', '#file_input', function () {
-        // alert(this.files[0].size);
-        var FileSize = this.files[0].size / 1024 / 1024; // in MB
-        if (FileSize > 20) {
-            alert("File size exceeds 20 MB!");
-            this.value = "";
+    function checkmaxsize(id ,lableid){
+        console.log(lableid);
+       var file =  $('#'+id)[0].files[0];
+       var FileSize = file.size / 1024 / 1024; // in MB
+       
+        if (FileSize > 80) {
+          alert("File size exceeds 80 MB!");
+         
+         
+          $('#'+id).val('');
+          $('.'+lableid).text('Choose file');
         };
-    });
+
+    }
+    </script>
+<script>
+
 
     function selectDocCate() {
       var cateid = $("#catedocId").val();

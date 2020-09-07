@@ -53,6 +53,7 @@
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Name</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Model</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Created_at</th>
+                        <th class="d-none d-sm-table-cell" style="width: 10%;">Action Type</th>
                         <th style="width: 20%;" class="text-center">Manage</th>
                     </tr>
                 </thead>
@@ -63,6 +64,7 @@
                     <td class="d-none d-sm-table-cell">{{$item->name}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->model}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->created_at}}</td>
+                    <td class="d-none d-sm-table-cell">{{$item->type_his == 3?'Send pdf to me':'No action'}}</td>
                     <td class="text-center">
                     <a href="{{config('app.url')}}/config_history/{{$item->file}}"   target="_blank" class="btn btn-outline-primary">View</a>
                     </td>
