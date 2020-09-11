@@ -317,7 +317,7 @@ a:hover {
 
 .slide {
   background-size: cover !important;
-  background-position: center bottom !important;
+  background-position: center !important;
   background-repeat: no-repeat !important;
 }
 

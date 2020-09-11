@@ -835,6 +835,7 @@
             html += '<input name="inputNumber['+id+'][m]['+(numItems+1)+']" type="number" step="any"  class="form-control">';
             html += '<span class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+id+','+(numItems+1)+');">-</span></div>';
             html += '</div>';
+
             $('.mulltiple-box'+id).append(html)
             $('.mulltiple-box'+id +' .btn-add-input').insertAfter('.mulltiple-box'+id+' .product-custom-field:last-child')
 
@@ -850,7 +851,7 @@
         $.each($('.mulltiple-box'+id+ ' .product-custom-field'),function(index,val){
             $(val).addClass('addfield'+(index+1))
             $(val).children('.input-group').children('.input-group-addon.p-l').text(index+1);
-            $(val).children('.input-group').children('input').attr('name','inputNumber['+id+']['+(index+1)+']')
+            $(val).children('.input-group').children('input').attr('name','inputNumber['+id+'][m]['+(index+1)+']')
             $(val).children('.input-group').children('.input-group-addon.number_type_remove.p-r').attr('onclick','deletemutifield('+id+','+(index+1)+');')
         })
     }
