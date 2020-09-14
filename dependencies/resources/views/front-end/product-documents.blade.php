@@ -232,10 +232,10 @@
                     <div class="image-datasheet mb-2" id="content_pro">
                     </div>
                     <div>
-                        <h6 class="text-title-ft-sub mt-2">Tags</h6>
-                        <div id="content_tags_pro">
+                        {{-- <h6 class="text-title-ft-sub mt-2">Tags</h6> --}}
+                        {{-- <div id="content_tags_pro">
 
-                        </div>
+                        </div> --}}
                     
                     </div>
             </div>
@@ -335,7 +335,7 @@
          model_id = $('#model_id_key').val()
           getContentByModel(2);
         }
-        gettags(model_id);
+        // gettags(model_id);
             var html = '';
             products.filter(function(data) {
                 if(data['pro_id'] == model_id){
