@@ -449,7 +449,7 @@ function retextdata($arr ,$unit){
     <div class="box-pp">
         <div class="container">
             <div class="text-center">
-                <h2 class="text-title-delta-home">The latest Series</h2>
+                <h2 class="text-title-delta-home">The Latest Series</h2>
             </div>
             <div id="producttype" class="owl-carousel owl-theme  ft-products-body">
                 @foreach ($series as $serie)
@@ -498,7 +498,7 @@ function retextdata($arr ,$unit){
                             @if($item->se_id == $serie->se_id)
                                 <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->id.'-'.$item->name)])}}"  data-toggle="tooltip" data-placement="top" title="{{$item->name}}" class="icon btn-icon-app itemhorver{{$item->id}}"
                                     style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
-                                   <script>
+                                  <script>
                                        $(".itemhorver{{$item->id}}").hover(function(){
                                             $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
                                             }, function(){
