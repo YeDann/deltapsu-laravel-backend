@@ -15,6 +15,17 @@
      .text-editor b{
         font-weight: bold;
      }
+     .faqs-type .faqs-list:after {
+        font-family: 'Material-Design-Iconic-Font';
+        content: "";
+        float: right;
+        font-size: 24px;
+        color: #444444;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(-50%, -50%);
+   }
 </style>
 @endsection
 @section('meta')
