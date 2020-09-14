@@ -315,7 +315,28 @@ class FrontendController extends Controller
                 }
                 $metatag = DB::table('meta_tag_page as mtp')->where('id',1)->get();
 
+                $series = DB::table('least_series_product as ls')
+                ->join('series as s' ,'s.se_id' ,'=' ,'ls.series_id')
+                ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
+                ->join('sub_pro_categories as sp' ,'sp.sub_pro_id' ,'=' ,'ls.cate_id')
+                ->join('sub_pro_categories_translation as spt' ,'spt.sub_pro_id' ,'=' ,'sp.sub_pro_id')
+                ->where('st.local' ,'en')
+                ->where('spt.local' ,'en')
+                ->where('s.status' ,1)
+                ->select('s.*' ,'ls.*','st.title','st.overview_content','sp.url_item','sp.sub_pro_id as cate_id','spt.name as cateName')
+                ->orderBy('ls.order_seq' ,'asc')
+                ->get();
+                
+                $series_has_application = DB::table('series_has_application as shp')
+                ->join('application as app', 'app.id', '=', 'shp.app_id')
+                ->join('application_translation as appt' ,'appt.app_id' ,'=' ,'app.id')
+                ->where('appt.local' ,'en')
+                ->select('shp.app_id','app.*' ,'appt.name','shp.se_id' )
+                ->get();
+
             return  view('front-end.home')
+            ->with('series_has_application',$series_has_application)
+            ->with('series',$series)
             ->with('faqbanner',$faqbanner)
             ->with('metatag',$metatag)
             ->with('static_content',$static_content)
@@ -444,6 +465,7 @@ class FrontendController extends Controller
             ->where('ft.local', '=',  $lang)
             ->where('f.status', 1)
             ->select('f.*' ,'ft.*')
+            ->orderBy('order_seq')
             ->get();
             $metatag = DB::table('meta_tag_page as mtp')->where('id',14)->get();
             
@@ -1278,6 +1300,7 @@ class FrontendController extends Controller
         
           
             $data_other = [];
+            $data_check_poOther = [];
                  $j = 0;
                 foreach($product_related as $pro){
                     $arraysub = [];
@@ -1292,7 +1315,8 @@ class FrontendController extends Controller
                     ->orderBy('ph.type_id' ,'asc')
                     ->select('pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
                     ->get();
-                  if(self::checkContentPro($pro->pro_id)){
+                if(!in_array($pro->pro_id, $data_check_poOther) && self::checkContentPro($pro->pro_id)){
+                    array_push($data_check_poOther,$pro->pro_id);
                     $data_other[$j] = [
                         "pro_id"=>$pro->pro_id,
                         "pro_code"=>$pro->pro_code,
@@ -2317,22 +2341,51 @@ class FrontendController extends Controller
        {
           $keysearch = $this->validateInput($keysearchParm,'text',true);
           $keypro  = str_replace("@", "/", $keysearch);
-        //   return dd($keypro);
+          //return dd($keypro);
+          $checkSpece =  preg_match('/\s/',$keypro);
+          $checkdash =  preg_match('/-/',$keypro);
+    //    return dd($checkdesh);
+        
+
            $lang = App::getLocale();
            $checkArr = [];
-           $products  = DB::table('products as p')
+           $query = DB::table('products as p')
            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
            ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
            ->where('spt.local' ,$lang)
            ->where('st.local' ,$lang)
-           ->where('p.enable_pro' ,1)
-           ->where('p.pro_code', 'LIKE', '%'.$keypro.'%')
-           ->select('p.*','spt.name as catename' ,'sp.url_item' ,'phc.categories_id' ,'st.title as seName')
-           ->get();
+           ->where('p.enable_pro' ,1);
 
-        //    return dd( $products);
+      
+            if($checkSpece){
+            $keyarr = explode(" ",$keypro);   
+            if(isset($keyarr[0])){
+            $query->where('p.pro_code', 'LIKE', '%'.$keyarr[0].'%');
+            }
+            if(isset($keyarr[1])){
+             $query->where('p.pro_code', 'LIKE', '%'.$keyarr[1].'%');
+            }
+            }else if($checkdash){
+            $keyarr2 = explode("-",$keypro);   
+            if(isset($keyarr2[0])){
+             $query->where('p.pro_code', 'LIKE', '%'.$keyarr2[0].'%');
+            }
+            if(isset($keyarr2[1])){
+             $query->where('p.pro_code', 'LIKE', '%'.$keyarr2[1].'%');
+             }  
+             }else{
+              $query->where('p.pro_code', 'LIKE', '%'.$keypro.'%');
+             }
+        
+
+
+        //    $query->Orwhere('st.title', 'LIKE', '%'.$keypro.'%')
+           $query->select('p.*','spt.name as catename' ,'sp.url_item' ,'phc.categories_id' ,'st.title as seName');
+
+           $products = $query->get();
+
 
            $data = [];
            $i = 0;
@@ -2379,6 +2432,66 @@ class FrontendController extends Controller
               }
               $i++;
           }
+
+          $query2 = DB::table('products as p')
+          ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+          ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+          ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+          ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+          ->where('spt.local' ,$lang)
+          ->where('st.local' ,$lang)
+          ->where('p.enable_pro' ,1)
+          ->where('st.title', 'LIKE', '%'.$keypro.'%');
+          $query2->select('p.*','spt.name as catename' ,'sp.url_item' ,'phc.categories_id' ,'st.title as seName');
+
+          $products_se = $query2->get();
+
+
+          $data_series = [];
+          $i = 0;
+         foreach($products_se as $pro){
+             $arraysub = [];
+             $tags = [];
+
+             $arraysub = DB::table('product_has_property as ph')
+             ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
+             ->join('product_field as pf','pf.id' ,'=','ph.type_id')
+             ->join('product_field_translation as pft','ph.type_id' ,'=','pft.product_field_id')
+             ->where('ph.product_id',$pro->pro_id)
+             ->where('pht.local' ,$lang)
+             ->where('pft.local' ,$lang)
+             ->whereIn('ph.type_id',[4,3,8,31])
+             ->orderBy('ph.type_id' ,'asc')
+             ->select('pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
+             ->get();
+
+             $tags = DB::table('product_tags as ptag')
+             ->where('ptag.product_id' ,$pro->pro_id)
+             ->select('ptag.*')
+             ->get();
+            if (!in_array($pro->pro_id, $checkArr) && self::checkContentPro($pro->pro_id)){
+                 array_push($checkArr, $pro->pro_id);
+                   $data_series[$i] = [
+                       "pro_id"=>$pro->pro_id,
+                       "tag_m"=>'',
+                       "url_item"=>$pro->url_item,
+                       "pro_code"=>$pro->pro_code,
+                       "catename"=>$pro->catename,
+                       "cateid"=>$pro->categories_id,
+                       "picture"=>$pro->picture,
+                       "status_product"=>$pro->status_product,
+                       "content" =>$arraysub,
+                       "tags" =>$tags,
+                       "dimensionL"=>$pro->dimensionL,
+                       "dimensionW"=>$pro->dimensionW,
+                       "dimensionD"=>$pro->dimensionD,
+                   ];
+              
+             }
+             $i++;
+         }
+
+         $pro_collec = array_merge($data, $data_series);
 
           $Protags  = DB::table('product_tags as ptag')
            ->join('products as p', 'p.pro_id', '=', 'ptag.product_id')
@@ -2436,7 +2549,7 @@ class FrontendController extends Controller
               $i++;
           }
           $pro_results  = [];
-          $pro_results = array_merge($data, $data1); 
+          $pro_results = array_merge($pro_collec, $data1); 
 
         //   return dd($pro_results);
 
@@ -3683,7 +3796,26 @@ class FrontendController extends Controller
         return response()->file($path);
       }
 
-   
+      public function tag_product(Request $request){
+        $pro_id =  $request->proid;
+         $tags =  DB::table('product_tags')->where('product_id',$pro_id)->get();
+        return response()->json([
+          'data' =>$tags 
+              ], 200);
+    }
+    public function faq_detail($name){
+      $lang = App::getLocale();
+      $name = $this->validateInput($name,'text',true);
+      $faqs = DB::table('faq as f')
+      ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
+      ->join('faq_categories_translations as fct', 'fct.f_cate_id', '=', 'f.cate_id')
+      ->where('f.url_name',$name)
+      ->where('ft.local', '=', $lang)
+      ->where('fct.local', '=', $lang)
+      ->select('f.*' ,'ft.*' ,'fct.name as cateName')
+      ->get();
+      return view('front-end.faq-detail')->with('faqs',$faqs);
+    }
   
        
 

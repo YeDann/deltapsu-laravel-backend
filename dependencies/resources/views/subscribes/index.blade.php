@@ -39,7 +39,8 @@
             </h3>
             <div class="block-options">
                 {{-- <a href="{{route('getpageSubscriber')}}" class="btn btn-primary">Import Data</a> --}}
-                    <a href="{{route('exportSubscribes')}}" class="btn btn-primary">Export Data</a>
+                <a href="{{route('getpageSubscriber')}}" class="btn btn-primary">Import data country mail</a>
+                <a href="{{route('exportSubscribes')}}" class="btn btn-primary">Export Data</a>
                     
                
             </div>

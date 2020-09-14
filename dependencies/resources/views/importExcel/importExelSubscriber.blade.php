@@ -24,7 +24,7 @@
         </div>
         <div class="block-content">
             {{-- <form action="{{route('importProdoctCate')}}" method="POST" enctype="multipart/form-data"> --}}
-        <form action="{{route('importSubscriber')}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('CheckApiMail')}}" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
                 <div class="row push">
                     <div class="col-lg-4">

@@ -1,0 +1,195 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <link rel="shortcut icon" href="<?php echo e(asset('/frontend-asset/image/icon/delta_favicon.ico')); ?>" type="image/x-icon">
+    <link rel="icon" href="<?php echo e(asset('/frontend-asset/image/icon/delta_favicon.ico')); ?>" type="image/x-icon">
+    <title>DeltaPSU | Backend</title>
+
+
+    <link rel="stylesheet" href="<?php echo e(asset('backend-asset/js/plugins/datatables/dataTables.bootstrap4.css')); ?>">
+    <link rel="stylesheet"
+        href="<?php echo e(asset('backend-asset/js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css')); ?>">
+    <link rel="stylesheet"
+        href="<?php echo e(asset('backend-asset/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')); ?>">
+    <link rel="stylesheet"
+        href="<?php echo e(asset('backend-asset/js/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('backend-asset/js/plugins/summernote/summernote-bs4.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('backend-asset/js/plugins/select2/css/select2.min.css')); ?>">
+    <link rel="stylesheet" id="css-main" href="<?php echo e(asset('backend-asset/css/dashmix.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/font.css')); ?>" media="screen" />
+    
+    <?php echo $__env->yieldContent('style'); ?>
+    <style>
+        #page-container.page-header-dark #page-header {
+            color: #cad4e7;
+            background-color: #0087DC;
+        }
+
+        .req-fed {
+            color: red !important;
+        }
+
+        .res-image {
+            width: 38%;
+        }
+
+        .content-side {
+            padding: 1.25rem 0.25rem 1px;
+        }
+
+        .warrning-text {
+            color: #000;
+        }
+
+        .loader {
+            position: fixed;
+            z-index: 99;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader>img {
+            width: 100px;
+        }
+
+        .loader.hidden {
+            animation: fadeOut 1s;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes  fadeOut {
+            100% {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .thumb {
+            height: 100px;
+            border: 1px solid black;
+            margin: 10px;
+        }
+
+        .note-fontname {
+            visibility: hidden;
+            display: block;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="page-container" class="sidebar-o enable-page-overlay side-scroll page-header-fixed page-header-dark ">
+        <!-- Sidebar -->
+        <?php echo $__env->make('partials.sidenav', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        <!-- END Sidebar -->
+
+        <!-- Header -->
+        <?php echo $__env->make('partials.header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        <!-- END Header -->
+
+        <!-- Main Container -->
+        <main id="main-container">
+
+            <!-- Page Content -->
+            <?php echo $__env->yieldContent('content'); ?>
+            <!-- END Page Content -->
+            
+    </main>
+    
+    <!-- END Main Container -->
+
+    </div>
+    <script src="<?php echo e(asset('backend-asset/js/sweetalert.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/jquery.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/jquery.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/dashmix.core.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/dashmix.app.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/plugins/jquery-validation/jquery.validate.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/pages/op_auth_signin.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/plugins/datatables/jquery.dataTables.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/plugins/datatables/dataTables.bootstrap4.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/plugins/datatables/buttons/dataTables.buttons.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/plugins/select2/js/select2.full.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/pages/be_tables_datatables.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/plugins/summernote/summernote-bs4.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('backend-asset/js/plugins/dropzone/dropzone.min.js')); ?>"></script>
+    <script>
+        jQuery(function () {
+            Dashmix.helpers(['datepicker', 'colorpicker', 'select2', 'summernote']);
+        });
+
+    </script>
+
+
+    <?php echo $__env->yieldContent('js'); ?>
+
+    <script>
+        $(document).on('change', '.note-image-input', function () {
+
+            var FileSize = this.files[0].size / 1024 / 1024; // in MB
+            if (FileSize > 1) {
+                alert("File size exceeds 1 MB!");
+                this.value = "";
+            };
+        });
+
+    </script>
+    
+    <script>
+        $(document).ready(function () {
+            $('.jsnotenew').summernote({
+                height: 400,
+                callbacks: {
+                    onImageUpload: function (files) {
+                        that = $(this);
+                        sendFile(files[0], that);
+                    }
+                }
+            });
+
+            function sendFile(file, that) {
+
+                var data = new FormData();
+                data.append("file", file);
+                $.ajax({
+                    data: data,
+                    type: "POST",
+                    url: "<?php echo e(route('uploadtoTexteditor')); ?>",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (url) {
+                        $(that).summernote('insertImage', url.url, '');
+                    }
+                });
+            }
+        });
+
+    </script>
+
+
+</body>
+
+</html>
+<?php /**PATH C:\xampp\htdocs\Deltapsu_Production\dependencies\resources\views\layouts\admin.blade.php ENDPATH**/ ?>

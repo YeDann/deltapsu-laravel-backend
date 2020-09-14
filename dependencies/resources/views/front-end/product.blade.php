@@ -215,6 +215,18 @@
        display: none;
    }
 
+       /* Zoom In #1 */
+       .hover01 figure img {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-transition: .3s ease-in-out;
+        transition: .3s ease-in-out;
+    }
+    .hover01 figure:hover img {
+        -webkit-transform: scale(1.12);
+        transform: scale(1.12);
+    }
+
 </style>
 @endsection
 @section('meta')

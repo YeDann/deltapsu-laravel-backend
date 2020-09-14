@@ -116,18 +116,12 @@
               $.each(faqs, function(index,faq){
                 if(faq['cate_id'] == id){
                 html += '<div class="box-for-collap">';
-                html += '<div class="faqs-list collapsed  hide-box d-flex justify-content-between" data-toggle="collapse" data-parent="#faqs-type"';
-                html += 'href="#collapse-question'+faq['id'] +'" >';
-                html += '<p class="text-bold text-colour-delta m-0 p-l-18">';
+                html += '<div class="faqs-list hide-box d-flex justify-content-between">';
+                html += '<a href="{{route('faq_detail')}}/'+faq['url_name']+'">';
+                html += '<p class="text-bold  m-0 p-l-18">';
                 html += faq['title'];  
                 html += '</p>';
-                html += '</div>';
-                html += '<div id="collapse-question'+faq['id'] +'" class="faqs-list-sub collapse" data-parent="#faqs-type">';
-                html += ' <div class="force-overflow">';
-                html += '<div class="text-editor">';
-                html += faq['content'];
-                html += '</div>'
-                html += '</div>';
+                html += '</a>';
                 html += '</div>';
                 html +='</div>';
                 }
@@ -141,18 +135,12 @@
               var  html = '';
               $.each(faqs, function(index,faq){
                 html += '<div class="box-for-collap">';
-                html += '<div class="faqs-list collapsed  hide-box d-flex justify-content-between" data-toggle="collapse" data-parent="#faqs-type"';
-                html += 'href="#collapse-question'+faq['id'] +'" >';
-                html += '<p class="text-bold text-colour-delta m-0 p-l-18">';
-                html += faq['title']; 
-                html += '</p>';    
-                html += '</div>';
-                html += '<div id="collapse-question'+faq['id'] +'" class="faqs-list-sub collapse" data-parent="#faqs-type">';
-                html += ' <div class="force-overflow">';
-                html += '<div class="text-editor">';
-                html += faq['content'];
-                html += '</div>'
-                html += '</div>';
+                html += '<div class="faqs-list   hide-box d-flex justify-content-between">';
+                html += '<a href="{{route('faq_detail')}}/'+faq['url_name']+'">';
+                html += '<p class="text-bold  m-0 p-l-18">';
+                html += faq['title'];  
+                html += '</p>';
+                html += '</a>';
                 html += '</div>';
                 html +='</div>';
               });

@@ -188,14 +188,13 @@
 @endsection
 @section('js')
 <script>
-    function checkmaxsize(id ,lableid){
-        console.log(lableid);
-       var file =  $('#'+id)[0].files[0];
-       var FileSize = file.size / 1024 / 1024; // in MB
-        if (FileSize > 80) {
-          alert("File size exceeds 80 MB!");
-          $('#'+id).val('');
-          $('.'+lableid).text('Choose file');
+    $(document).on('change', '.custom-file-input', function () {
+        // alert(this.files[0].size);
+        var FileSize = this.files[0].size / 1024 / 1024; // in MB
+        if (FileSize > 20) {
+            alert("File size exceeds 20 MB!");
+            $('.custom-file-label').text('Choose file');
+            this.value = "";
         };
     }
 </script>
