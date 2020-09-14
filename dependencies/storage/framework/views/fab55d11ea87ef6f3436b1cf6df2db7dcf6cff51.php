@@ -349,7 +349,7 @@ function retextdata($arr ,$unit){
     <div class="box-pp">
         <div class="container">
             <div class="text-center">
-                <h2 class="text-title-delta-home">The latest Series</h2>
+                <h2 class="text-title-delta-home">The Latest Series</h2>
             </div>
             <div id="producttype" class="owl-carousel owl-theme  ft-products-body">
                 <?php $__currentLoopData = $series; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $serie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -399,7 +399,7 @@ function retextdata($arr ,$unit){
                             <?php if($item->se_id == $serie->se_id): ?>
                                 <a href="<?php echo e(route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->id.'-'.$item->name)])); ?>"  data-toggle="tooltip" data-placement="top" title="<?php echo e($item->name); ?>" class="icon btn-icon-app itemhorver<?php echo e($item->id); ?>"
                                     style="background-image: url('<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($item->icon); ?>'); "></a>
-                                   <script>
+                                  <script>
                                        $(".itemhorver<?php echo e($item->id); ?>").hover(function(){
                                             $(this).css("background-image", "url('<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($item->blue_outline_icon); ?>')");
                                             }, function(){
