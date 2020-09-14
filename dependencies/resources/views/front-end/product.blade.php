@@ -214,9 +214,8 @@
    .select2-container--default .select2-selection--single .select2-selection__arrow b{
        display: none;
    }
-
-       /* Zoom In #1 */
-       .hover01 figure img {
+    /* Zoom In #1 */
+    .hover01 figure img {
         -webkit-transform: scale(1);
         transform: scale(1);
         -webkit-transition: .3s ease-in-out;
@@ -226,7 +225,6 @@
         -webkit-transform: scale(1.12);
         transform: scale(1.12);
     }
-
 </style>
 @endsection
 @section('meta')
@@ -1235,7 +1233,7 @@
         if(pro['status_product'] != 1){
         html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
         }
-        html += '<div class="card-body ft-products-item"><img src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'" class="product-cat mb-2" style="width:70%;">';
+        html += '<div class="card-body ft-products-item hover01"><figure><img src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'" class="product-cat mb-2" style="width:70%;"></figure>';
         html += '<div class="">';
         html += '<h4 class="text-title-ft">'+pro['pro_code']+'</h4>';
         html += '</a>';
@@ -1320,7 +1318,7 @@
             if(pro['status_product'] != 1){
         html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
             }
-        html += '<div class="card-body ft-products-item"><img src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'" class="product-cat mb-2" style="width:70%;">';
+        html += '<div class="card-body ft-products-item hover01"><figure><img src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'" class="product-cat mb-2" style="width:70%;"></figure>';
         html += '<div class="">';
         html += '<h6 class="text-title-ft">'+pro['pro_code']+'</h6>';
         html += '</a>';
@@ -1459,13 +1457,13 @@
         html1 += '<tr class="box-cardlist row_table" style="display: none;">';
         html1 += '<td>';
         html1 += '<div class="cardlist-toadd">';
-        html1 += '<div class="cardlist-view">';
+        html1 += '<div class="cardlist-view hover01">';
         html1 += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
             if(pro['status_product'] != 1){
         html1 += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="text-over-cardlist"> '+ statuspro(pro['status_product'])+'';
         html1 += '</div>';
             }
-        html1 += '   <img class="img-card-list" src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'">';
+        html1 += '<figure><img class="img-card-list" src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'"></figure>';
         html1 += '</div>';
         html1 += '<div class="cardlist-text">';
         html1 += '<h5 class="text-title-ft-listv">'+pro['pro_code']+'</h5>';
