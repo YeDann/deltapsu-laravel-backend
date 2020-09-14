@@ -464,6 +464,8 @@ public function update(Request $request){
     $validate = Validator::make($request->all(), [
         'productCode' => 'required',
     ]);
+
+    // return dd($status_input[6], $inputNumber[6]['m'][6] ,$productfieldNumbers );
  
     if ($validate->fails()) {
         return redirect()->back()->withErrors($validate->errors());
@@ -589,15 +591,7 @@ public function update(Request $request){
            
             foreach($productfieldNumbers as $fieldNumid){
               
-                $data4 = null;
-                $data5 = null;
-              if(isset($inputNumber[$fieldNumid]['m'][4])){
-                $data4 = $inputNumber[$fieldNumid]['m'][4];
-              }
            
-              if(isset($inputNumber[$fieldNumid]['m'][5])){
-                $data5 = $inputNumber[$fieldNumid]['m'][5];
-              }
               if($status_input[$fieldNumid] == 1){
                 $pro_id_perty = DB::table('product_has_property')->insertGetID(
                     [
@@ -617,9 +611,9 @@ public function update(Request $request){
                         'type_id'=> $fieldNumid,
                         'type_value'=>'number',
                         'status_input'=>$status_input[$fieldNumid],
-                        'data_1'=>$inputNumber[$fieldNumid]['m'][1],
-                        'data_2'=>$inputNumber[$fieldNumid]['m'][2],
-                        'data_3'=>$inputNumber[$fieldNumid]['m'][3],
+                        'data_1'=>isset($inputNumber[$fieldNumid]['m'][1])?$inputNumber[$fieldNumid]['m'][1]:null,
+                        'data_2'=>isset($inputNumber[$fieldNumid]['m'][2])?$inputNumber[$fieldNumid]['m'][2]:null,
+                        'data_3'=>isset($inputNumber[$fieldNumid]['m'][3])?$inputNumber[$fieldNumid]['m'][3]:null,
                         'data_4'=>isset($inputNumber[$fieldNumid]['m'][4])?$inputNumber[$fieldNumid]['m'][4]:null,
                         'data_5'=>isset($inputNumber[$fieldNumid]['m'][5])?$inputNumber[$fieldNumid]['m'][5]:null,
                         'data_6'=>isset($inputNumber[$fieldNumid]['m'][6])?$inputNumber[$fieldNumid]['m'][6]:null,
@@ -661,6 +655,7 @@ public function update(Request $request){
             return redirect()->route('products.index')->with('flash_message', 'Update Data successfully');
     }
 }
+
 public function deleteProduct(Request $request){
    $itemId = $request->itemId;
 
