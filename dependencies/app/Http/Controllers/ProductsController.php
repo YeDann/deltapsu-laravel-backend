@@ -465,7 +465,7 @@ public function update(Request $request){
         'productCode' => 'required',
     ]);
 
-    // return dd($status_input[6], $inputNumber[6]['m'][6] ,$productfieldNumbers );
+
  
     if ($validate->fails()) {
         return redirect()->back()->withErrors($validate->errors());
