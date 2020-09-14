@@ -26,6 +26,12 @@
         right: 0;
         transform: translate(-50%, -50%);
    }
+
+.faqs-list a:hover p {
+    color: #0087DC;
+    text-decoration: underline;
+}
+
 </style>
 @endsection
 @section('meta')
@@ -127,7 +133,7 @@
               $.each(faqs, function(index,faq){
                 if(faq['cate_id'] == id){
                 html += '<div class="box-for-collap">';
-                html += '<div class="faqs-list hide-box d-flex justify-content-between">';
+                html += '<div class="faqs-list hide-box d-flex justify-content-between hover13">';
                 html += '<a href="{{route('faq_detail')}}/'+faq['url_name']+'">';
                 html += '<p class="text-bold  m-0 p-l-18">';
                 html += faq['title'];  
@@ -146,7 +152,7 @@
               var  html = '';
               $.each(faqs, function(index,faq){
                 html += '<div class="box-for-collap">';
-                html += '<div class="faqs-list   hide-box d-flex justify-content-between">';
+                html += '<div class="faqs-list   hide-box d-flex justify-content-between hover13">';
                 html += '<a href="{{route('faq_detail')}}/'+faq['url_name']+'">';
                 html += '<p class="text-bold  m-0 p-l-18">';
                 html += faq['title'];  
