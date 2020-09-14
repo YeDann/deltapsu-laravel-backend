@@ -269,7 +269,7 @@ top: -9px;
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{App::getLocale()}}
                 <i class="zmdi zmdi-chevron-down"></i></a>
             <div class="dropdown-menu" aria-labelledby="about-us">
-              
+              @if(isset($language))
                 @foreach ($language as $item)
                 <?php 
                 $current = null;
@@ -282,6 +282,7 @@ top: -9px;
                ?>
              <a onclick="setlocaltion('{{$current}}','{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}');" class="dropdown-item lang-drop-down text-uppercase cur-link {{App::getLocale()== $current ? 'active' : ''}}"  >{{$current }}</a>
                 @endforeach
+                @endif
             </div>
 
         </div>
@@ -295,7 +296,7 @@ top: -9px;
             </a>
             <a class="nav-search nav-link" 
                 id="dropdown08" >
-                <div class="nav-search-btn"> {{$staticContent['Search']}} <i class="fa fa-search"></i>
+                <div class="nav-search-btn"> {{isset($staticContent['Search'])?$staticContent['Search'] :''}} <i class="fa fa-search"></i>
                 </div>
             </a>
 

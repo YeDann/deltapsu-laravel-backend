@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <?php echo $__env->yieldContent('meta'); ?>
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" media="screen"/>
+    <link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/bootstrap.min.css')); ?>"  media="screen"/>
     <link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/header-front.css')); ?>" media="screen"/>
     <link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/container.css')); ?>" media="screen"/>
     <link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/home.css')); ?>" media="screen"/>
@@ -27,17 +27,12 @@
     <link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/owl.carousel.min.css')); ?>" media="screen"/>
     <link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/product.css')); ?>" media="screen"/>
     <link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/font-awesome.css')); ?>" media="screen"/>
-    
     <link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/datatables.css')); ?>" media="screen"/>
-    
     <link rel="stylesheet" href="<?php echo e(asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')); ?>">
-    
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" media="screen"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.3/nouislider.min.css" rel="stylesheet" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/slick.css')); ?>" media="screen"/>
+    <link href="<?php echo e(asset('/frontend-asset/css/nouislider.min.css')); ?>" rel="stylesheet" media="screen"/>
     <link href="<?php echo e(asset('/frontend-asset/css/jquery.datepicker.css')); ?>" rel="stylesheet" type="text/css" />
-    
     <link href="<?php echo e(asset('/frontend-asset/css/zabuto_calendar.css')); ?>" rel="stylesheet" type="text/css" />
-    
    
 
 
@@ -142,7 +137,7 @@
   </style>
     <!-- Fonts -->
     <!-- Styles -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="<?php echo e(asset('/frontend-asset/js/jquery-3.4.1.min.js')); ?>"></script>
      <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-67607418-1"></script>
       <script>
@@ -157,17 +152,17 @@
     <?php echo $__env->make('layouts.header-front', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <?php echo $__env->yieldContent('container'); ?>
     <?php echo $__env->make('layouts.footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+<script src="<?php echo e(asset('/frontend-asset/js/popper.min.js')); ?>" ></script>
+<script src="<?php echo e(asset('/frontend-asset/js/bootstrap.min.js')); ?>" ></script>
+<script src="<?php echo e(asset('/frontend-asset/js/bootstrap-select.min.js')); ?>"></script>
 <script src="<?php echo e(asset('/frontend-asset/js/map.js')); ?>"></script>
 <script src="<?php echo e(asset('/frontend-asset/js/product.js')); ?>"></script>
 <script src="<?php echo e(asset('/frontend-asset/js/owl.carousel.js')); ?>"></script>
 <script src="<?php echo e(asset('/frontend-asset/js/owl.carousel.min.js')); ?>"></script>
 <script src="<?php echo e(asset('/frontend-asset/js/datatables.min.js')); ?>"></script>
 <script src="<?php echo e(asset('/frontend-asset/js/dropzone.js')); ?>"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.3/nouislider.min.js"></script>
+<script type="text/javascript" src="<?php echo e(asset('/frontend-asset/js/slick.min.js')); ?>"></script>
+<script src="<?php echo e(asset('/frontend-asset/js/nouislider.min.js')); ?>"></script>
 <script src="<?php echo e(asset('/frontend-asset/js/jspdf.debug.js')); ?>"></script>
 <script src="<?php echo e(asset('/frontend-asset/js/zabuto_calendar.min.js')); ?>"></script>
 <script src="<?php echo e(asset('/frontend-asset/js/mb5.js')); ?>"></script>
@@ -547,13 +542,7 @@ if (!Array.prototype.findIndex) {
           
         }
 
-              /* function deleteCoparison(i){
-        $('#list-to-comparison-'+i).addClass('d-none');
-        $('#list-to-comparison-none-'+i).removeClass('d-none');
-        
-      } */
         function bigImg(image ,id){
-          // console.log(image);
            if(image != ''){
             $('.imageNav'+id).attr('src' ,'<?php echo e(config('app.url')); ?>/medias/categories/'+image);
            }else {
@@ -562,14 +551,11 @@ if (!Array.prototype.findIndex) {
            }
         }
         function mainCate(id){
-          // console.log(id);
           if(id == 'sub1'){
             $('.imageNav2').attr('src' ,"<?php echo e(asset('frontend-asset/image/Industrial_Power_Supplies.png')); ?>");
           }else if(id == 'sub2'){
             $('.imageNav1').attr('src' ,"<?php echo e(asset('frontend-asset/image/Medical-Power-Supplies.png')); ?>");
           }
-        
-        
           $('.sub-menu').removeClass('active')
           $('#'+id).addClass('active');
         }

@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 ## EXPIRES CACHING ##
 <IfModule mod_expires.c>
     ExpiresActive On
@@ -16,7 +14,6 @@
     ExpiresDefault "access 1 month"
 </IfModule>
 ## EXPIRES CACHING ##
->>>>>>> 0927021b61f8dfabb690cb02781788b9c20f9d23
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
@@ -24,28 +21,14 @@
 
     RewriteEngine On
 
-<<<<<<< HEAD
-    # Handle Authorization Header
-    RewriteCond %{HTTP:Authorization} .
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-
-    # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
-=======
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]
->>>>>>> 0927021b61f8dfabb690cb02781788b9c20f9d23
 
     # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
-<<<<<<< HEAD
-</IfModule>
-=======
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
@@ -56,4 +39,3 @@
     RewriteCond %{HTTP_HOST} ^subdomain\.
     RewriteRule .* http://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
->>>>>>> 0927021b61f8dfabb690cb02781788b9c20f9d23

@@ -272,7 +272,7 @@ top: -9px;
 
                 <i class="zmdi zmdi-chevron-down"></i></a>
             <div class="dropdown-menu" aria-labelledby="about-us">
-              
+              <?php if(isset($language)): ?>
                 <?php $__currentLoopData = $language; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <?php 
                 $current = null;
@@ -285,6 +285,7 @@ top: -9px;
                ?>
              <a onclick="setlocaltion('<?php echo e($current); ?>','<?php echo e(LaravelLocalization::getLocalizedURL($current, null, [], true)); ?>');" class="dropdown-item lang-drop-down text-uppercase cur-link <?php echo e(App::getLocale()== $current ? 'active' : ''); ?>"  ><?php echo e($current); ?></a>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php endif; ?>
             </div>
 
         </div>
@@ -298,7 +299,7 @@ top: -9px;
             </a>
             <a class="nav-search nav-link" 
                 id="dropdown08" >
-                <div class="nav-search-btn"> <?php echo e($staticContent['Search']); ?> <i class="fa fa-search"></i>
+                <div class="nav-search-btn"> <?php echo e(isset($staticContent['Search'])?$staticContent['Search'] :''); ?> <i class="fa fa-search"></i>
                 </div>
             </a>
 
