@@ -10,32 +10,30 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('meta')
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}"  media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/header-front.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/container.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/home.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/news.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/login.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/details.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/result-page.css')}}">
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/product-comparison.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}" media="screen"/>
-    <link href="{{asset('/frontend-asset/css/fontello.css')}}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/font.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/owl.theme.default.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/product.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/font-awesome.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/datatables.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}"  media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/header-front.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/container.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/home.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/news.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/login.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/details.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/result-page.css')}}" media="screen">
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product-comparison.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello.css')}}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/font.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.theme.default.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/font-awesome.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/datatables.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}" media="screen">
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/slick.css')}}" media="screen"/>
-    <link href="{{asset('/frontend-asset/css/nouislider.min.css')}}" rel="stylesheet" media="screen"/>
-    <link href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" rel="stylesheet" type="text/css" />
-   
-
-
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}"  media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}"  media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" media="screen"  />
+  
     @yield('css')
     <style>
       /* select */
@@ -137,7 +135,7 @@
   </style>
     <!-- Fonts -->
     <!-- Styles -->
-    <script src="{{asset('/frontend-asset/js/jquery-3.4.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/jquery-3.4.1.min.js')}}"></script>
      <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-67607418-1"></script>
       <script>
@@ -152,21 +150,21 @@
     @include('layouts.header-front')
     @yield('container')
     @include('layouts.footer')
-<script src="{{asset('/frontend-asset/js/popper.min.js')}}" ></script>
-<script src="{{asset('/frontend-asset/js/bootstrap.min.js')}}" ></script>
-<script src="{{asset('/frontend-asset/js/bootstrap-select.min.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/map.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/product.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/dropzone.js')}}"></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/popper.min.js')}}" ></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap.min.js')}}" ></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap-select.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/map.js')}}"></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/product.js')}}"></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/dropzone.js')}}"></script>
 <script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
-<script src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en"
+<script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
+<script type="text/javascript" src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en"
 async defer>
 </script>
 <script type="text/javascript">
