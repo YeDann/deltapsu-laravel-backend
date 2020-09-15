@@ -589,10 +589,11 @@ public function update(Request $request){
                 }
             }
            
+            #return  dd($status_input ,$productfieldNumbers);
             foreach($productfieldNumbers as $fieldNumid){
               
            
-              if($status_input[$fieldNumid] == 1){
+              if(isset($status_input[$fieldNumid]) && $status_input[$fieldNumid] == 1){
                 $pro_id_perty = DB::table('product_has_property')->insertGetID(
                     [
                         'product_id'=>$pro_id,
@@ -603,7 +604,7 @@ public function update(Request $request){
                     ]
                 );
 
-              }else if($status_input[$fieldNumid] == 2){
+              }else if(isset($status_input[$fieldNumid]) && $status_input[$fieldNumid] == 2){
               
                 $pro_id_perty = DB::table('product_has_property')->insertGetID(
                     [
@@ -626,7 +627,7 @@ public function update(Request $request){
                     ]
                 );
 
-              }else if($status_input[$fieldNumid] == 3){
+              }else if(isset($status_input[$fieldNumid]) && $status_input[$fieldNumid] == 3){
 
                 $pro_id_perty = DB::table('product_has_property')->insertGetID(
                     [
