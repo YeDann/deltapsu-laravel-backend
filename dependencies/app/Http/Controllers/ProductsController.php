@@ -464,6 +464,8 @@ public function update(Request $request){
     $validate = Validator::make($request->all(), [
         'productCode' => 'required',
     ]);
+
+
  
     if ($validate->fails()) {
         return redirect()->back()->withErrors($validate->errors());
@@ -586,19 +588,11 @@ public function update(Request $request){
                     );
                 }
             }
-           
+   
             foreach($productfieldNumbers as $fieldNumid){
               
-                $data4 = null;
-                $data5 = null;
-              if(isset($inputNumber[$fieldNumid]['m'][4])){
-                $data4 = $inputNumber[$fieldNumid]['m'][4];
-              }
            
-              if(isset($inputNumber[$fieldNumid]['m'][5])){
-                $data5 = $inputNumber[$fieldNumid]['m'][5];
-              }
-              if($status_input[$fieldNumid] == 1){
+              if(isset($status_input[$fieldNumid]) && $status_input[$fieldNumid] == 1){
                 $pro_id_perty = DB::table('product_has_property')->insertGetID(
                     [
                         'product_id'=>$pro_id,
@@ -609,7 +603,7 @@ public function update(Request $request){
                     ]
                 );
 
-              }else if($status_input[$fieldNumid] == 2){
+              }else if(isset($status_input[$fieldNumid]) && $status_input[$fieldNumid] == 2){
               
                 $pro_id_perty = DB::table('product_has_property')->insertGetID(
                     [
@@ -617,9 +611,9 @@ public function update(Request $request){
                         'type_id'=> $fieldNumid,
                         'type_value'=>'number',
                         'status_input'=>$status_input[$fieldNumid],
-                        'data_1'=>$inputNumber[$fieldNumid]['m'][1],
-                        'data_2'=>$inputNumber[$fieldNumid]['m'][2],
-                        'data_3'=>$inputNumber[$fieldNumid]['m'][3],
+                        'data_1'=>isset($inputNumber[$fieldNumid]['m'][1])?$inputNumber[$fieldNumid]['m'][1]:null,
+                        'data_2'=>isset($inputNumber[$fieldNumid]['m'][2])?$inputNumber[$fieldNumid]['m'][2]:null,
+                        'data_3'=>isset($inputNumber[$fieldNumid]['m'][3])?$inputNumber[$fieldNumid]['m'][3]:null,
                         'data_4'=>isset($inputNumber[$fieldNumid]['m'][4])?$inputNumber[$fieldNumid]['m'][4]:null,
                         'data_5'=>isset($inputNumber[$fieldNumid]['m'][5])?$inputNumber[$fieldNumid]['m'][5]:null,
                         'data_6'=>isset($inputNumber[$fieldNumid]['m'][6])?$inputNumber[$fieldNumid]['m'][6]:null,
@@ -632,7 +626,7 @@ public function update(Request $request){
                     ]
                 );
 
-              }else if($status_input[$fieldNumid] == 3){
+              }else if(isset($status_input[$fieldNumid]) && $status_input[$fieldNumid] == 3){
 
                 $pro_id_perty = DB::table('product_has_property')->insertGetID(
                     [
@@ -661,6 +655,7 @@ public function update(Request $request){
             return redirect()->route('products.index')->with('flash_message', 'Update Data successfully');
     }
 }
+
 public function deleteProduct(Request $request){
    $itemId = $request->itemId;
 
@@ -1005,29 +1000,58 @@ public function featureProduct(){
     ->orderBy('p.created_at', 'desc')
     ->get();
 
+
+    $subCategories = DB::table('sub_pro_categories as sc')
+    ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
+    ->where('sct.local' ,'en')
+    ->select('sc.*', 'sct.*')
+    ->orderBy('sc.created_at', 'desc')
+    ->get();
+
+
+    $Allseries = DB::table('series as s')
+    ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
+    ->where('st.local' ,'en')
+    ->where('s.status' ,1)
+    ->select('s.*' ,'st.*')
+    ->orderBy('order_seq' ,'asc')
+    ->get();
+    
+    $series = DB::table('least_series_product as ls')
+    ->join('series as s' ,'s.se_id' ,'=' ,'ls.series_id')
+    ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
+    ->join('sub_pro_categories as sp' ,'sp.sub_pro_id' ,'=' ,'ls.cate_id')
+    ->join('sub_pro_categories_translation as spt' ,'spt.sub_pro_id' ,'=' ,'sp.sub_pro_id')
+    ->where('st.local' ,'en')
+    ->where('spt.local' ,'en')
+    ->where('s.status' ,1)
+    ->select('s.*' ,'ls.*','st.title','sp.url_item','sp.sub_pro_id as cate_id','spt.name as cateName')
+    ->orderBy('ls.order_seq' ,'asc')
+    ->get();
+
     return view('product.feature_products')
     ->with('name','Home')
     ->with('menu','featureProduct')
+    ->with('subCategories',$subCategories)
+    ->with('Allseries',$Allseries)
+    ->with('series',$series)
     ->with('products',$products)
     ->with('Allproducts',$Allproducts);
 }
     public function setFeatureproducts(Request $request){
-
-        // return dd('55');
-        $id = $request->pro_id;
-        DB::table('products')->where('pro_id',$id)->update(
+        $id = $request->se_id;
+        $cate = $request->cateId;
+        DB::table('least_series_product')->insert(
             [
-                "feature_product" => 1,
+                "series_id" => $id,
+                "cate_id" =>$cate,
+                "created_at" => \Carbon\Carbon::now(),
             ]
         );
         return back()->with('flash_message', 'Setting Data successfully');
     }
     public function unSetting($id){
-        DB::table('products')->where('pro_id',$id)->update(
-            [
-                "feature_product" => 0,
-            ]
-        );
+        DB::table('least_series_product')->where('id',$id)->delete();
         return back()->with('flash_message', 'UnSetting Data successfully');
     }
     public function ProductSelection(){
@@ -1042,6 +1066,18 @@ public function featureProduct(){
                     ->with('name','Home')
                     ->with('menu','ProductSection')
                     ->with('subCategories', $subCategories);
+    }
+
+    public function update_order_seriesLeast(Request $request){
+        $HomeIds = array_filter(explode(",", $request->home_id));
+        $HomeOrders = array_filter(explode(",", $request->home_order));
+        foreach ($HomeIds as $HomeId => $value){
+             DB::table('least_series_product')->where('id', '=', $value)->update(['order_seq'=>$HomeOrders[$HomeId]]);
+        }
+        return response()->json([
+            'order' => $request->home_order
+        ],200);
+
     }
     public function update_order_productselect(Request $request){
         $HomeIds = array_filter(explode(",", $request->home_id));
