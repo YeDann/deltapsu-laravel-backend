@@ -719,6 +719,13 @@ class FrontendController extends Controller
         }
         if($page == "checkPro"){
             $arrcheck = [];
+            $products = DB::table('products as p')
+            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+            ->where('pt.local' ,'en')
+            ->select('p.*', 'pt.*' )
+            ->orderBy('pt.showstatus' ,'desc')
+            ->orderBy('p.created_at', 'desc')
+            ->get();
             foreach($products  as $pro){
               $propertys = DB::table('product_has_property as ph')
                ->where('type_value','text')
