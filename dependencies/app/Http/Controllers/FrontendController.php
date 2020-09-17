@@ -736,7 +736,7 @@ class FrontendController extends Controller
                 array_push($arrcheck , $pro->pro_id);
                }
             }
-            return dd($arrcheck);
+            return dd($arrcheck ,'ok');
         }
   
         abort(404);
