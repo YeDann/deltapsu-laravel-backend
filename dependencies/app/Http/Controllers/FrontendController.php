@@ -717,7 +717,7 @@ class FrontendController extends Controller
             ->get();
             return view('front-end.test')->with('events',$events); 
         }
-        if($page == "checkPro"){
+        if($page == "checkPro2"){
             $arrcheck = [];
             $products = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
