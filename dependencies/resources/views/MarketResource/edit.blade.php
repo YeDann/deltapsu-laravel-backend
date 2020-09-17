@@ -143,10 +143,10 @@
 @section('js')
   <script>
       function checkmaxsize(id ,lableid){
-          console.log(lableid);
+        
          var file =  $('#'+id)[0].files[0];
          var FileSize = file.size / 1024 / 1024; // in MB
-         
+        //  console.log(FileSize);
           if (FileSize > 80) {
             alert("File size exceeds 80 MB!");
            

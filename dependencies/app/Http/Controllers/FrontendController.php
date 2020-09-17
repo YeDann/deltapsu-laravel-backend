@@ -34,7 +34,7 @@ class FrontendController extends Controller
         // session()->forget('lang_down');
     $lang = App::getLocale();
     session(['lang_down' =>  App::getLocale()]);
-    view()->share('language', DB::table("language")->where('status',1)->orderBy('order_seq','asc')->get());
+    view()->share('language', DB::table("language")->where('status',1)->whereIn('name',['en','cn'])->orderBy('order_seq','asc')->get());
     view()->share('navcategories',  DB::table('categories_has_main_pro as chmp')
     ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
     ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
@@ -605,7 +605,7 @@ class FrontendController extends Controller
                 ->get();
 
                 $language = DB::table('language as lang')->whereIn('lang.name',['en','cn'])->get();
-                $othersL = DB::table('other_lang_document')->get();
+                #$othersL = DB::table('other_lang_document')->get();
                 $showlang = [];
                 $showlangOb = [];
                 foreach($language as $langal){
@@ -616,14 +616,14 @@ class FrontendController extends Controller
                     array_push($showlang , $langal->name);
                     array_push($showlangOb ,$data);
                 }
-                foreach($othersL as $lan){
-                    $data2 = [
-                        "langName"=>$lan->name,
-                        "langFull"=>$lan->full_name
-                    ];
-                    array_push($showlang , $lan->name);
-                    array_push($showlangOb ,$data2);
-                }
+                // foreach($othersL as $lan){
+                //     $data2 = [
+                //         "langName"=>$lan->name,
+                //         "langFull"=>$lan->full_name
+                //     ];
+                //     array_push($showlang , $lan->name);
+                //     array_push($showlangOb ,$data2);
+                // }
                 // return dd($showlangOb);
               
                 $documents = DB::table('product_has_documents as phd')

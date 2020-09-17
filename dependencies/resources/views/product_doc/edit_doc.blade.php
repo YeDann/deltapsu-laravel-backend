@@ -147,11 +147,7 @@
                                         <div class="form-group">
                                             <label for="example-select">New File <span class="req-fed">* Max File Size 80 MB</span></label>
                                             <div class="custom-file " style="width:100%;">
-<<<<<<< HEAD
-                                                <input type="file"  class="custom-file-input" name="fileGU[{{$item3->name}}]"
-=======
                                                 <input type="file" class="custom-file-input" id="file_input{{$item3->name}}" onchange="checkmaxsize(`file_input{{$item3->name}}` ,'file_lable{{$item3->name}}')" name="fileGU[{{$item3->name}}]"
->>>>>>> master
                                                     data-toggle="custom-file-input">
                                                 <label class="custom-file-label file_lable{{$item3->name}}" for="fileImage">Choose file</label>
                                             </div>
@@ -192,15 +188,6 @@
 @endsection
 @section('js')
 <script>
-<<<<<<< HEAD
-    $(document).on('change', '.custom-file-input', function () {
-        // alert(this.files[0].size);
-        var FileSize = this.files[0].size / 1024 / 1024; // in MB
-        if (FileSize > 20) {
-            alert("File size exceeds 20 MB!");
-            this.value = "";
-            $('.custom-file-label').text('Choose file');
-=======
     function checkmaxsize(id ,lableid){
         console.log(lableid);
        var file =  $('#'+id)[0].files[0];
@@ -209,7 +196,6 @@
           alert("File size exceeds 80 MB!");
           $('#'+id).val('');
           $('.'+lableid).text('Choose file');
->>>>>>> master
         };
     }
 </script>

@@ -96,11 +96,11 @@
                                                         <?php endif; ?>
                                             </div>
                                         <div class="form-group">
-                                            <label for="example-select">New File <span class="req-fed">* Max File Size 20 MB</span></label>
+                                            <label for="example-select">New File <span class="req-fed">* Max File Size 80 MB</span></label>
                                             <div class="custom-file " style="width:100%;">
-                                                <input type="file" class="custom-file-input" name="fileGU[<?php echo e($item2->name); ?>]"
+                                                <input type="file" class="custom-file-input" id="file_input<?php echo e($item2->name); ?>" onchange="checkmaxsize(`file_input<?php echo e($item2->name); ?>` ,'file_lable<?php echo e($item2->name); ?>')" name="fileGU[<?php echo e($item2->name); ?>]"
                                                     data-toggle="custom-file-input">
-                                                <label class="custom-file-label" for="fileImage">Choose file</label>
+                                                <label class="custom-file-label file_lable<?php echo e($item2->name); ?>" for="fileImage">Choose file</label>
                                             </div>
                                         </div>
                                     </div>
@@ -147,11 +147,11 @@
                                                 </div>
                                                 
                                         <div class="form-group">
-                                            <label for="example-select">New File <span class="req-fed">* Max File Size 20 MB</span></label>
+                                            <label for="example-select">New File <span class="req-fed">* Max File Size 80 MB</span></label>
                                             <div class="custom-file " style="width:100%;">
-                                                <input type="file"  class="custom-file-input" name="fileGU[<?php echo e($item3->name); ?>]"
+                                                <input type="file" class="custom-file-input" id="file_input<?php echo e($item3->name); ?>" onchange="checkmaxsize(`file_input<?php echo e($item3->name); ?>` ,'file_lable<?php echo e($item3->name); ?>')" name="fileGU[<?php echo e($item3->name); ?>]"
                                                     data-toggle="custom-file-input">
-                                                <label class="custom-file-label" for="fileImage">Choose file</label>
+                                                <label class="custom-file-label file_lable<?php echo e($item3->name); ?>" for="fileImage">Choose file</label>
                                             </div>
                                         </div>
                                     </div>
@@ -188,15 +188,19 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('js'); ?>
 <script>
-    $(document).on('change', '.custom-file-input', function () {
-        // alert(this.files[0].size);
-        var FileSize = this.files[0].size / 1024 / 1024; // in MB
-        if (FileSize > 20) {
-            alert("File size exceeds 20 MB!");
-            this.value = "";
-            $('.custom-file-label').text('Choose file');
+    function checkmaxsize(id ,lableid){
+        console.log(lableid);
+       var file =  $('#'+id)[0].files[0];
+       var FileSize = file.size / 1024 / 1024; // in MB
+        if (FileSize > 80) {
+          alert("File size exceeds 80 MB!");
+          $('#'+id).val('');
+          $('.'+lableid).text('Choose file');
         };
-    });
+    }
+</script>
+<script>
+ 
     var doc_has_pros = <?= json_encode($doc_has_pros);?>;
     $(document).ready(function() {
            selectDocCate();
