@@ -728,7 +728,7 @@ class FrontendController extends Controller
             ->get();
             foreach($products  as $pro){
               $propertys = DB::table('product_has_property as ph')
-               ->where('type_value','text')
+               ->where('type_value','number')
                ->where('type_id',4)
                ->where('product_id',$pro->pro_id)
                ->get();
