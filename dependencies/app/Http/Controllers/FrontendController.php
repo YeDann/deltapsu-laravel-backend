@@ -717,6 +717,20 @@ class FrontendController extends Controller
             ->get();
             return view('front-end.test')->with('events',$events); 
         }
+        if($page == "checkPro"){
+            $arrcheck = [];
+            foreach($products  as $pro){
+              $propertys = DB::table('product_has_property as ph')
+               ->where('type_value','text')
+               ->where('type_id',4)
+               ->where('product_id',$pro->pro_id)
+               ->get();
+               if(count($propertys) > 2){
+                array_push($arrcheck , $pro->pro_id);
+               }
+            }
+            return dd($arrcheck);
+        }
   
         abort(404);
          
