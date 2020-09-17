@@ -373,6 +373,7 @@ public function edit($id){
     ->where('ph.product_id',$id)
     ->select('ph.*', 'pht.*','ph.type_id as pd_field_id'  ,'pf.type as type' ,'pft.field_name' ,'pf.section_id' )
     ->orderBy('ph.type_id' ,'asc')
+    ->distinct()
     ->get();
 
     foreach($propertys as $pro){
