@@ -717,7 +717,7 @@ class FrontendController extends Controller
             ->get();
             return view('front-end.test')->with('events',$events); 
         }
-        if($page == "checkPro2"){
+        if($page == "checkPro3"){
             $arrcheck = [];
             $products = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -732,7 +732,7 @@ class FrontendController extends Controller
                ->where('type_id',4)
                ->where('product_id',$pro->pro_id)
                ->get();
-               if(count($propertys) > 2){
+               if(count($propertys) >= 2){
                 array_push($arrcheck , $pro->pro_id);
                }
             }
