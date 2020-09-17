@@ -470,6 +470,7 @@
         
         
          function getHtmlContent(lang){
+            $('#contenttdata').empty();
               var typearray = [];
             var html2 = '';
                   html2 += '<div id="accordion_input">';
