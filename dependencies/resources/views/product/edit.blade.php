@@ -514,7 +514,7 @@
                         html2 +=  '<div class="custom-control custom-radio custom-control-inline custom-control-primary">';
                         html2 +=  '<input type="radio" class="custom-control-input" onchange="selectinputtype('+proper['pd_field_id']+',1);"';
                         html2 +=  'id="status_input_sig'+proper['pd_field_id']+'" name="status_input['+proper['pd_field_id']+']"';
-                        html2 +=  'value="1"  '+ ((proper['status_input'] == 1)  ? "checked" : " ") + '>';
+                        html2 +=  'value="1"  '+ ((proper['status_input'] == 1  || proper['data_1'] == null )  ? "checked" : " ") + '>';
                         html2 +=  '<label class="custom-control-label"for="status_input_sig'+proper['pd_field_id']+'">Single</label>';
                         html2 +=  '</div>';
                         html2 +=  '<div class="custom-control custom-radio custom-control-inline custom-control-primary">'
@@ -682,7 +682,7 @@
                         html2 += '</div>';
                         html2 += ' </div>';
                         html2 += ' </div>';
-                        html2 += ' <div class="single-box'+proper['pd_field_id']+' '+ ((proper['status_input'] == 1)  ? "d-block" : "d-none") + '">';
+                        html2 += ' <div class="single-box'+proper['pd_field_id']+' '+ ((proper['status_input'] == 1 || proper['data_1'] == null)  ? "d-block" : "d-none") + '">';
                         html2 += '<div class="product-custom-field-min">';
                         html2 +=  '<div class="form-group input-group ">';
                         html2 +=  '<input name="inputNumber['+proper['pd_field_id']+'][s][1]" type="number"  value="'+proper['data_1']+'" step="any" ';

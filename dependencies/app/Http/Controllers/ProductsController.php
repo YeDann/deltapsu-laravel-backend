@@ -452,7 +452,7 @@ public function update(Request $request){
     $content = $request->content;
     $status = $request->status;
     $productfieldText = $request->productfieldText;
-    $productfieldNumbers = $request->productfieldNumbers;
+    $productfieldNumInput = $request->productfieldNumbers;
     $inputText = $request->inputText;
     $inputNumber = $request->inputNumber;
     $status_input = $request->status_input;
@@ -461,6 +461,7 @@ public function update(Request $request){
     $tags  = $request->tag;
     $relatePros  = $request->relatePro;
     $pro_categories = $request->pro_categories;
+    $productfieldNumbers = array_unique($productfieldNumInput);
     $validate = Validator::make($request->all(), [
         'productCode' => 'required',
     ]);
@@ -1009,49 +1010,30 @@ public function featureProduct(){
     ->get();
 
 
-    $Allseries = DB::table('series as s')
-    ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
-    ->where('st.local' ,'en')
-    ->where('s.status' ,1)
-    ->select('s.*' ,'st.*')
-    ->orderBy('order_seq' ,'asc')
-    ->get();
-    
-    $series = DB::table('least_series_product as ls')
-    ->join('series as s' ,'s.se_id' ,'=' ,'ls.series_id')
-    ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
-    ->join('sub_pro_categories as sp' ,'sp.sub_pro_id' ,'=' ,'ls.cate_id')
-    ->join('sub_pro_categories_translation as spt' ,'spt.sub_pro_id' ,'=' ,'sp.sub_pro_id')
-    ->where('st.local' ,'en')
-    ->where('spt.local' ,'en')
-    ->where('s.status' ,1)
-    ->select('s.*' ,'ls.*','st.title','sp.url_item','sp.sub_pro_id as cate_id','spt.name as cateName')
-    ->orderBy('ls.order_seq' ,'asc')
-    ->get();
+
 
     return view('product.feature_products')
     ->with('name','Home')
     ->with('menu','featureProduct')
     ->with('subCategories',$subCategories)
-    ->with('Allseries',$Allseries)
-    ->with('series',$series)
     ->with('products',$products)
     ->with('Allproducts',$Allproducts);
 }
     public function setFeatureproducts(Request $request){
-        $id = $request->se_id;
-        $cate = $request->cateId;
-        DB::table('least_series_product')->insert(
+        $id = $request->pro_id;
+        DB::table('products')->where('pro_id',$id)->update(
             [
-                "series_id" => $id,
-                "cate_id" =>$cate,
-                "created_at" => \Carbon\Carbon::now(),
+                "feature_product" => 1,
             ]
         );
         return back()->with('flash_message', 'Setting Data successfully');
     }
     public function unSetting($id){
-        DB::table('least_series_product')->where('id',$id)->delete();
+        DB::table('products')->where('pro_id',$id)->update(
+            [
+                "feature_product" => 0,
+            ]
+        );
         return back()->with('flash_message', 'UnSetting Data successfully');
     }
     public function ProductSelection(){
