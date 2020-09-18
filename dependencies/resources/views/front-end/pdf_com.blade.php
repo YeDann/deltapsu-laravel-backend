@@ -55,7 +55,6 @@ tbody >tr > td:first-child{
     border: 2px solid transparent;
     margin-left: 2px;
     margin-right: 2px;
-    font-weight: bold;
     padding-left: 8px;
 }
 .text-title-twentyfour-delta{
