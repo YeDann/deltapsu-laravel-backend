@@ -73,7 +73,6 @@ tbody >tr > td:first-child{
 .texttype{
     text-align: center;
     font-size: 16px;
-    font-weight: bold;
     padding: 5px;
 }
 .d-none{
