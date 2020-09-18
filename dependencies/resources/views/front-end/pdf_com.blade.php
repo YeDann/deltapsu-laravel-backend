@@ -27,7 +27,6 @@ tbody > tr > td{
 tbody >tr > td:first-child{
     width: 10%;
     color: #444444;
-    font-weight: bold;
 }
 .head {background-color: #ddd;   border: none;}
 
@@ -42,7 +41,6 @@ tbody >tr > td:first-child{
     text-align: center;
     padding: 10px;
     font-size: 24px;
-    font-weight: bold;
 }
 
 .table-coparision-detail{
@@ -60,13 +58,11 @@ tbody >tr > td:first-child{
 .text-title-twentyfour-delta{
     color: #0087DC;
     font-size: 16px;
-    font-weight: bold;
     margin-top: 0;
     word-break: break-all;
 }
 .text-center.text-dark{
     font-size: 14px;
-    font-weight: bold;
     margin: 0;
     word-break: break-all;
 }
@@ -157,6 +153,3 @@ tbody >tr > td:first-child{
 </body>
 
 </html>
-
-
-
