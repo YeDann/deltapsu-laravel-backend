@@ -270,6 +270,7 @@ class FrontendController extends Controller
                  
                 }
                
+                return dd($events);
                 $news_q = DB::table('product_news_has_categories as pnc')
                 ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
                 ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
