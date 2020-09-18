@@ -5,7 +5,6 @@
  
  <style type="text/css" media="all">
        *{
-           font-family: Arial, Helvetica, sans-serif;
            font-size: 14px;
            color: #444444;
        }
@@ -45,9 +44,7 @@ tbody >tr > td:first-child{
     font-size: 24px;
     font-weight: bold;
 }
-.body{
-    font-family: Arial, Helvetica, sans-serif;
-}
+
 .table-coparision-detail{
     width: 100%;
 }
