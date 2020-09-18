@@ -87,12 +87,12 @@ tbody >tr > td:first-child{
  </style>
    <style type="text/css">
     @font-face {
-       font-family: SimHei;
-       src: url('{{asset('/frontend-asset/fonts/fontpfdcn.ttf')}}') format('truetype');
+       font-family:KaiBold;
+       src: url('{{asset('/frontend-asset/fonts/wts11.ttf')}}') format('truetype');
     }
     
     * {
-      font-family: SimHei;
+      font-family: KaiBold;
     }
     </style>
 </head>
