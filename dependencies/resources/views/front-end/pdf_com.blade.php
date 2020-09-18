@@ -5,7 +5,6 @@
  
  <style type="text/css" media="all">
        *{
-           font-family: Arial, Helvetica, sans-serif;
            font-size: 14px;
            color: #444444;
        }
@@ -45,9 +44,7 @@ tbody >tr > td:first-child{
     font-size: 24px;
     font-weight: bold;
 }
-.body{
-    font-family: Arial, Helvetica, sans-serif;
-}
+
 .table-coparision-detail{
     width: 100%;
 }
@@ -58,7 +55,6 @@ tbody >tr > td:first-child{
     border: 2px solid transparent;
     margin-left: 2px;
     margin-right: 2px;
-    font-weight: bold;
     padding-left: 8px;
 }
 .text-title-twentyfour-delta{
@@ -77,7 +73,6 @@ tbody >tr > td:first-child{
 .texttype{
     text-align: center;
     font-size: 16px;
-    font-weight: bold;
     padding: 5px;
 }
 .d-none{
@@ -85,7 +80,16 @@ tbody >tr > td:first-child{
     display:none;
 }
  </style>
-
+   <style type="text/css">
+    @font-face {
+       font-family:ArialUnicodeMS;
+       src: url('{{asset('/frontend-asset/fonts/ArialUnicodeMS.ttf')}}') format('truetype');
+    }
+    
+    * {
+      font-family:ArialUnicodeMS;
+    }
+    </style>
 </head>
 <body >
     <div class="textcenter"> 
@@ -153,6 +157,3 @@ tbody >tr > td:first-child{
 </body>
 
 </html>
-
-
-
