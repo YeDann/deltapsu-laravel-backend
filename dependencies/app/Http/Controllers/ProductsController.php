@@ -453,7 +453,7 @@ public function update(Request $request){
     $content = $request->content;
     $status = $request->status;
     $productfieldText = $request->productfieldText;
-    $productfieldNumbers = $request->productfieldNumbers;
+    $inputfiledNum = $request->productfieldNumbers;
     $inputText = $request->inputText;
     $inputNumber = $request->inputNumber;
     $status_input = $request->status_input;
@@ -462,12 +462,11 @@ public function update(Request $request){
     $tags  = $request->tag;
     $relatePros  = $request->relatePro;
     $pro_categories = $request->pro_categories;
+    $productfieldNumbers = array_unique($inputfiledNum);
     $validate = Validator::make($request->all(), [
         'productCode' => 'required',
     ]);
 
-
- 
     if ($validate->fails()) {
         return redirect()->back()->withErrors($validate->errors());
     } else {
