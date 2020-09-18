@@ -85,7 +85,16 @@ tbody >tr > td:first-child{
     display:none;
 }
  </style>
-
+   <style type="text/css">
+    @font-face {
+       font-family: SimHei;
+       src: url('{{asset('/frontend-asset/fonts/fontpfdcn.ttf')}}') format('truetype');
+    }
+    
+    * {
+      font-family: SimHei;
+    }
+    </style>
 </head>
 <body >
     <div class="textcenter"> 
