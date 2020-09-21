@@ -393,18 +393,24 @@
         pro1 = comArr[0];
         pro2  = comArr[1];
         pro3  = 0;
+        comArr[2] = 0;
         $('#nextdata').addClass('d-none');
         $('#predata').addClass('d-none');
       }else if(comArr.length == 1){
         pro1 = comArr[0];
         pro2  = 0;
         pro3  = 0;
+        comArr[1]  = 0;
+        comArr[2]  = 0;
         $('#nextdata').addClass('d-none');
         $('#predata').addClass('d-none');
       }else{
         pro1 = 0;
         pro2  = 0;
         pro3  = 0;
+        comArr[0]  = 0;
+        comArr[1]  = 0;
+        comArr[2]  = 0;
         $('#nextdata').addClass('d-none');
         $('#predata').addClass('d-none');
       }
@@ -412,6 +418,7 @@
        
         setAllFrist(pro1 ,pro2 , pro3)
         contentLoad();
+        // console.log(comArr);
      
     });
     function clearProduct(){
@@ -539,12 +546,11 @@
 
     function onSelectPromobile2(){
       var newpro2 = $('#procom-mobile2').val();
- 
       if(chedup(newpro2)){
         pushtoArr(newpro2 ,fidoldpo(pro2));
         pro2 = newpro2;
-        $("#procom-mobile2 option[value="+pro2+"]").prop('selected', true);
-        loadSetImageMobile(pro2,2);
+        $("#procom-mobile2 option[value="+newpro2+"]").prop('selected', true);
+        loadSetImageMobile(newpro2,2);
         contentLoad();
       }else{
      
