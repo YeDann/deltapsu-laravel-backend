@@ -104,6 +104,8 @@ Route::post('clearproductsection','FrontendController@clearproductsection')->nam
 Route::post('setlocaltion','FrontendController@setlocaltion')->name('setlocaltion');
 Route::get('/etc/imagelink/showimage/{name?}','FrontendController@imagelink')->name('imagelink');
 Route::post('tag_product','FrontendController@tag_product')->name('tag_product');
+Route::post('getProById','FrontendController@getProById')->name('getProById');
+
 
 });
 

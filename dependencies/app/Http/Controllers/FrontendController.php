@@ -269,6 +269,7 @@ class FrontendController extends Controller
                     $events =  self::getDataNew($events_q2,'events');
                  
                 }
+                // return dd($events);
                
                 $news_q = DB::table('product_news_has_categories as pnc')
                 ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
@@ -3837,6 +3838,52 @@ class FrontendController extends Controller
       ->select('f.*' ,'ft.*' ,'fct.name as cateName')
       ->get();
       return view('front-end.faq-detail')->with('faqs',$faqs);
+    }
+    public function getProById(Request $request){
+        $proid = $request->proId;
+        $proid = $this->validateInput($proid,'number',true);
+  
+        $products = DB::table('products as p')
+        ->where('p.pro_id' ,$proid)
+        ->select('p.*')
+        ->orderBy('p.created_at', 'desc')
+        ->first();
+        if(isset($products)){
+            $dimemsion = '';
+        if(isset($products->dimensionL) && is_numeric($products->dimensionL)  && is_numeric($products->dimensionD)  && is_numeric($products->dimensionW) && isset($products->dimensionW) && isset($products->dimensionD)){
+            $dimemsion = $products->dimensionL.' x '.$products->dimensionW.' x '.$products->dimensionD.' mm'.'<br>'.number_format($products->dimensionL* 0.0393701 ,2).'” x '.number_format($products->dimensionW * 0.0393701 ,2).'” x '.number_format($products->dimensionD* 0.0393701 ,2).'”' ;
+        }else{
+            $dimemsion = $products->dimensionL;
+        }
+
+        $sum  = 0;
+        $dataUnitw = '';
+        if(isset($products->unit_weight)){
+            $number = substr($products->unit_weight , 0, -2);
+            $float = (float)$number;
+            $sum = ($float*2.2046244202);       
+            $dataUnitw  =  $products->unit_weight.' ('.number_format($sum,2).' lb)';
+        }
+        
+            $data = [
+                'unitwight' => $dataUnitw,
+                'dimension' => $dimemsion,
+                'status' => true,
+            ];  
+        }else{
+            $data = [
+                'unitwight' => '-',
+                'dimension' => '-',
+                'status' => false,
+            ]; 
+        }
+       
+
+        
+
+        return response()->json([
+            'data' =>$data 
+                ], 200);
     }
   
        
