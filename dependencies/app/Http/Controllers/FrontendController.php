@@ -1723,6 +1723,7 @@ class FrontendController extends Controller
         ->join('series_translations as st' ,'st.series_id' ,'=' ,'sp.se_id')
         ->where('sp.app_id','=',$id)
         ->where('st.local' ,'en')
+        ->where('s.status' ,1)
         ->select('s.image','sp.*','st.title' ,'st.overview_content')
         ->orderBy('sp.order_sq' ,'asc')
         ->get();
