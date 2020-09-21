@@ -775,7 +775,7 @@
 			<?php echo e(csrf_field()); ?>
 
 			<input type="hidden" name="config_id" id="con_id">
-			<input type="hidden" name="enquireStatus" id="enquireStatus" value="0">
+			<input type="hidden" name="enquireStatus" id="enquireStatus" value="3">
 			<input type="hidden" id="subject" name="subject" value="Configurable Power PDF Download">
 			<input type="hidden" name="type_name" id="type_name" value="Configurable Power">
 			<input type="hidden" name="model_name" id="model_name" >

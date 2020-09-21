@@ -1303,7 +1303,7 @@ e.search-filter-action {
         padding: 2rem 5px;
         margin-bottom: -2px;
         position: relative;
-        color: #444444;
+        
     }
     .p-l-18{
         padding-right: 25px;
@@ -1618,18 +1618,7 @@ e.search-filter-action {
     display: none;
     visibility: hidden;
 }
-.series-list-home{
-    border: 2px solid #E3EFF8;
-    height: 362px;
-    position: relative;
-    margin:12px;
-    background-color: #ffffff;
-   
-}
-.series-list-home:hover .series-img{
-    display: none;
-    visibility: hidden;
-}
+
 .max-h{
     max-height: 200px;
 }
@@ -1670,15 +1659,6 @@ e.search-filter-action {
    text-decoration: none !important;
    color: #0087DC !important;
 }
-.series-list-home:hover .series-text-detail{
-    visibility: visible;
-    display: block;
-   opacity: 1;
-}
-.series-list-home:hover .text-dark{
-    text-decoration: none !important;
-    color: #0087DC !important;
- } 
 .text-more_detail{
     color:#000;
     font-weight: bold;
