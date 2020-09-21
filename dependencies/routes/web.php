@@ -32,7 +32,7 @@ Route::group([
         ], function() {
 
 Route::get('/{page?}','FrontendController@index')->name('index');
-Route::get('/download/{doc?}','FrontendController@index')->name('downloadDocData');
+// Route::get('/download/{doc?}','FrontendController@index')->name('downloadDocData');
 Route::get('/tools/configurable-product-selection','FrontendController@configurableProduct')->name('configurableproduct');
 Route::get('/configurable-power/details','FrontendController@configurableProductDetail')->name('configurableProductDetail');
 Route::get('/products/series/{cate?}','FrontendController@oldlinkSeries')->name('oldlinkSeries');
