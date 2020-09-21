@@ -269,6 +269,7 @@ class FrontendController extends Controller
                     $events =  self::getDataNew($events_q2,'events');
                  
                 }
+                // return dd($events);
                
                 $news_q = DB::table('product_news_has_categories as pnc')
                 ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
@@ -1744,6 +1745,7 @@ class FrontendController extends Controller
         ->join('series_translations as st' ,'st.series_id' ,'=' ,'sp.se_id')
         ->where('sp.app_id','=',$id)
         ->where('st.local' ,'en')
+        ->where('s.status' ,1)
         ->select('s.image','sp.*','st.title' ,'st.overview_content')
         ->orderBy('sp.order_sq' ,'asc')
         ->get();
@@ -3846,15 +3848,33 @@ class FrontendController extends Controller
         ->select('p.*')
         ->orderBy('p.created_at', 'desc')
         ->first();
-        if(isset( $products)){
+        if(isset($products)){
+            $dimemsion = '';
+        if(isset($products->dimensionL) && is_numeric($products->dimensionL)  && is_numeric($products->dimensionD)  && is_numeric($products->dimensionW) && isset($products->dimensionW) && isset($products->dimensionD)){
+            $dimemsion = $products->dimensionL.' x '.$products->dimensionW.' x '.$products->dimensionD.' mm'.'<br>'.number_format($products->dimensionL* 0.0393701 ,2).'” x '.number_format($products->dimensionW * 0.0393701 ,2).'” x '.number_format($products->dimensionD* 0.0393701 ,2).'”' ;
+        }else{
+            $dimemsion = $products->dimensionL;
+        }
+
+        $sum  = 0;
+        $dataUnitw = '';
+        if(isset($products->unit_weight)){
+            $number = substr($products->unit_weight , 0, -2);
+            $float = (float)$number;
+            $sum = ($float*2.2046244202);       
+            $dataUnitw  =  $products->unit_weight.' ('.number_format($sum,2).' lb)';
+        }
+        
             $data = [
-                'unitwight' => $products->unit_weight,
-                'dimension' => $products->dimensionD.''.$products->dimensionL.''.$products->dimensionW,
+                'unitwight' => $dataUnitw,
+                'dimension' => $dimemsion,
+                'status' => true,
             ];  
         }else{
             $data = [
-                'unitwight' => null,
-                'dimension' => null
+                'unitwight' => '-',
+                'dimension' => '-',
+                'status' => false,
             ]; 
         }
        

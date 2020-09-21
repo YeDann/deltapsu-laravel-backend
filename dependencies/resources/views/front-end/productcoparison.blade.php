@@ -680,6 +680,7 @@
         comArr = [pro1 ,pro2, pro3 ];
         contentLoad();
         var mobileType =  $('#proType_mobile').val();
+        $("#proType option[value="+mobileType+"]").prop('selected', true);
         $.ajax({
            url: "{{route('getProductByType')}}",
            data: {
@@ -763,8 +764,8 @@
         loadnewPerti();  
     }
     function contentloadDesk(){
-
-        html = '';
+          var arrType3 = [];
+           html = '';
            $.each(section, function(index,section){
            html += '<div class="box-for-collap">';
            html += '<div class="comparison-list   hide-box text-delta" data-toggle="collapse"  data-parent="#comparison-type"';
@@ -778,40 +779,55 @@
 
             $.each(pd_field, function(index2,pd_val){
             if(section['id'] == pd_val['section_id']){
+
                if(checkdata(pd_val['id'],pro1,pd_val['type'] ,pd_val['unit_name']) && pro1 != 0
                 || checkdata(pd_val['id'],pro2,pd_val['type'] ,pd_val['unit_name']) && pro2 != 0
                 || checkdata(pd_val['id'],pro3,pd_val['type'] ,pd_val['unit_name']) && pro3 != 0){
-                html += ' <tr>';
+                    if(section['id'] == 3){
+                        arrType3.push(index2);
+                        var lastindex = arrType3[arrType3.length - 1];
+                      
+                    }
+                html += ' <tr id="addhtml'+lastindex+'">';
+
                }else{
                 html += ' <tr class="d-none">';  
                }
        
-           html += ' <td class="col-1 col-xs-3">'+pd_val['field_name']+'</td>';
+           html += ' <td class="col-1 col-xs-3 '+index2+'">'+pd_val['field_name']+'</td>';
            html += '<td class="col-xs-3">'+search(pd_val['id'],pro1,pd_val['type'] ,pd_val['unit_name']) +'</td>';
            html += ' <td class="col-xs-3">'+search(pd_val['id'],pro2,pd_val['type'] ,pd_val['unit_name']) +'</td>';
            html += '<td class="col-xs-3">'+search(pd_val['id'],pro3,pd_val['type'] ,pd_val['unit_name']) +'</td>'
            html += '</tr>';
-          }else if(section['id'] == 3){
-                if( pro1 != 0
-                || pro2 != 0
-                || pro3 != 0){
-                html += ' <tr>';
-               }else{
-                html += ' <tr class="d-none">';  
-               }
-            if(index2 == 0){
-                getCalweight(pro1);
-                html += ' <td class="col-1 col-xs-3">Unit Weight</td>';
-           html += '<td class="col-xs-3">ttt</td>';
-           html += ' <td class="col-xs-3">58558</td>';
-           html += '<td class="col-xs-3">5858</td>'
-           html += '</tr>';
-            }
+           }
+        //    else if(section['id'] == 3){
          
-            }
+        //     if( pro1 != 0
+        //       || pro2 != 0
+        //       || pro3 != 0){
+        //      if(index2 == 0){
+        //         html += '<tr id="addhtml3"></tr>'; 
+        //         html += '<tr id="addhtmldi3"></tr>'; 
+        //       }
+        //       }
+        //     }
 
-
-            });
+            // if( pro1 != 0
+            //     || pro2 != 0
+            //     || pro3 != 0){
+            //     html += ' <tr>';
+            //    }else{
+            //     html += ' <tr class="d-none">';  
+            //    }
+            // if(index2 == 0){
+            //   html += ' <td class="col-1 col-xs-3">Dimensions</td>';
+            //   html += '<td class="col-xs-3">'+getDimansion(pro1)+'</td>';
+            //   html += ' <td class="col-xs-3">'+getDimansion(pro2) +'</td>';
+            //   html += '<td class="col-xs-3">'+getDimansion(pro3)+'</td>'
+            //   html += '</tr>';
+            // }
+         
+         });
            html += '</tbody>';
            html += '</table>'; 
            html += '</div>';
@@ -819,6 +835,10 @@
            html += '</div>';
            });
            $('#comparison').html(html);
+           var lastindex = arrType3[arrType3.length - 1];
+           addHtmlUnitweight(lastindex);
+         addHtmlDimen(lastindex);
+        //    console.log(arrType3);
            if(pro1 != 0 || pro2 != 0 || pro3 != 0){
             $.each(section, function(index,section){
                 $('#collapse-headCom'+section['id']).addClass('show');
@@ -827,7 +847,31 @@
     }
     function getCalweight(proId){
        var data = getProduct(proId);
-       console.log(data);
+       return data['unitwight'];
+    }
+    function getDimansion(proId){
+       var data = getProduct(proId);
+       return data['dimension'];
+    }
+    function addHtmlUnitweight(index){
+              html ='';
+              html +='<tr>';
+              html += ' <td class="col-1 col-xs-3">Unit Weight</td>';
+              html += '<td class="col-xs-3">'+getCalweight(pro1)+'</td>';
+              html += ' <td class="col-xs-3">'+getCalweight(pro2) +'</td>';
+              html += '<td class="col-xs-3">'+getCalweight(pro3)+'</td>'
+              html +='</tr>';
+              $('#addhtml'+index).after(html);
+    }
+    function addHtmlDimen(index){
+              html ='';
+              html +='<tr>';
+              html += ' <td class="col-1 col-xs-3">Dimensions</td>';
+              html += '<td class="col-xs-3">'+getDimansion(pro1)+'</td>';
+              html += ' <td class="col-xs-3">'+getDimansion(pro2) +'</td>';
+              html += '<td class="col-xs-3">'+getDimansion(pro3)+'</td>'
+              html +='</tr>';
+              $('#addhtml'+index).after(html);
     }
     function getProduct(id){
        var data =  [];
@@ -860,6 +904,12 @@
             html += '<div id="collapse-headCom_mobile'+section['id']+'" class="comparison-collapse-detail collapse show" >';
          $.each(pd_field, function(index2,pd_val){
             if(section['id'] == pd_val['section_id']){
+                      if(checkdata(pd_val['id'],pro1,pd_val['type'] ,pd_val['unit_name']) && pro1 != 0
+                || checkdata(pd_val['id'],pro2,pd_val['type'] ,pd_val['unit_name']) && pro2 != 0){
+                html += ' <div>';
+               }else{
+                html += ' <div class="d-none">';  
+               }
             html += ' <div class="comparison-heading">';
             html += ' <h6 class="text-center">'+pd_val['field_name']+'</h6>'
             html += '</div>';
@@ -873,7 +923,41 @@
             html += ' </div>';
             html +=  ' </div>';
             html +=   '</div>';
-            }
+            html +=   '</div>';
+            }else if(section['id'] == 3){
+            if(pro1 != 0 || pro2 != 0){
+             if(index2 == 0){
+                html += ' <div class="comparison-heading">';
+                html += ' <h6 class="text-center">Unit Weight</h6>'
+                html += '</div>';
+                html += '<div class="comparison-detail">';
+                html +=  '<div class="container comparison-detail-content">';
+                html +=  ' <div class="comparison-detail-item mr-2">';
+                html +=  '   <p class="text-two">'+getCalweight(pro1) +'</p>';
+                html +=  '</div>';
+                html +=  ' <div class="comparison-detail-item ml-2">';
+                html +=     ' <p class="text-two">'+getCalweight(pro2) +'</p>';
+                html += ' </div>';
+                html +=  ' </div>';
+                html +=   '</div>';
+             } 
+             if(index2 == 0){
+                html += ' <div class="comparison-heading">';
+                html += ' <h6 class="text-center">Dimensions</h6>'
+                html += '</div>';
+                html += '<div class="comparison-detail">';
+                html +=  '<div class="container comparison-detail-content">';
+                html +=  ' <div class="comparison-detail-item mr-2">';
+                html +=  '   <p class="text-two">'+getDimansion(pro1) +'</p>';
+                html +=  '</div>';
+                html +=  ' <div class="comparison-detail-item ml-2">';
+                html +=     ' <p class="text-two">'+getDimansion(pro2) +'</p>';
+                html += ' </div>';
+                html +=  ' </div>';
+                html +=   '</div>';
+             } 
+          }
+        }
          
             });
 
