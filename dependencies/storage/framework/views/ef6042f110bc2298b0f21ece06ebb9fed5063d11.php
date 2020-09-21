@@ -987,4 +987,4 @@ function retextdata($arr ,$unit){
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.front-end', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Deltapsu_Production\dependencies\resources\views/front-end/home.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.front-end', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Deltapsu_Production\dependencies\resources\views\front-end\home.blade.php ENDPATH**/ ?>

@@ -1,1 +1,0 @@
-<?php /**PATH /var/www/html/deltaPSU/dependencies/resources/views/front-end/subcribes.blade.php ENDPATH**/ ?>
