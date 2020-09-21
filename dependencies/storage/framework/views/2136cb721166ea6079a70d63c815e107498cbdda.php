@@ -103,16 +103,7 @@
    .select2-container--default .select2-selection--single .select2-selection__arrow b{
        display: none;
    }
-   .text-tag-link span{
-       color:#0087DC;
-       font-size: 14px;
-       cursor: pointer;
-       padding-right: 3px;
-   }
-   .text-tag-link span:hover{
-       color: #444444;
-      text-decoration: underline;
-   }
+
 </style>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('meta'); ?>
@@ -172,10 +163,7 @@
                         <div class="search-filter-action-btn text-center">
                             <button onclick="keySearch();" class="btn-filters btn-search"><?php echo e($staticContent['Search']); ?></button>
                         </div>
-
-
-                          </div>
-                          
+                    </div>
                     <h5 class="text-center pad-12px"><?php echo e($staticContent['Or']); ?></h5>
                     <div class="datasheet-select border-2px">
                         <p class="text-dark text-bold mr-b-1"><?php echo e($staticContent['Type']); ?></p>
@@ -207,21 +195,14 @@
             <div class="col-xl-3 col-lg-3 col-md-12">
                     <div class="image-datasheet mb-2" id="content_pro">
                     </div>
-                    <div>
-                        <h6 class="text-title-ft-sub mt-2">Tags</h6>
-                        <div id="content_tags_pro">
-
-                        </div>
                     
-                    </div>
             </div>
-
         
             <div class="col-xl-6 col-lg-5 col-md-12 pl-2 collapse-padding-mobile">
                 <div class="invisible-up-922 text-center">
                     <h3 class="text-color-delta text-bold my-5"><?php echo e($staticContent['Downloads']); ?></h3>
                 </div>
-                <div id="pro_docType" class="product-document-type" >
+                <div id="pro_docType" class="product-document-type" id="product-document-type">
                 </div>
             </div>
         </div>
@@ -237,10 +218,7 @@
 <script>
     $('.js-example-basic-single').select2({
         placeholder: '<?php echo e($staticContent['Search_By_Model_Name']); ?>'
-    });
-    $('#key_tag_input').select2({
-        placeholder: 'Search By Tag'
-    });
+});
 </script>
 <script>
         var series =  <?= json_encode($series);?>;
@@ -305,13 +283,12 @@
           
         var model_id;
         if(method == 1){
-         model_id = $('#model_id').val();
-         getContentByModel(1);
+        model_id = $('#model_id').val();
+        getContentByModel(1);
         }else{
-         model_id = $('#model_id_key').val()
-          getContentByModel(2);
+        model_id = $('#model_id_key').val()
+        getContentByModel(2);
         }
-        gettags(model_id);
             var html = '';
             products.filter(function(data) {
                 if(data['pro_id'] == model_id){
@@ -338,32 +315,6 @@
             $('#content_pro').html(html);
          
         }
-        function gettags(id){
-            $.ajax({
-           url: "<?php echo e(route('tag_product')); ?>",
-           data: {
-          'proid': id,
-           },
-           type: 'POST',
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           success: function (res) {
-              //console.log(res['data']);
-              var html = '';
-              $.each(res['data'], function(index,tag){
-              html += '<a class="text-tag-link"><span  onclick="viewKey('+"'"+tag['tag']+"'"+');">'+tag['tag']+ '</span></a>';
-              });
-              $('#content_tags_pro').html(html);
-           }
-           });
-
-        }
-        function viewKey(key){
-            var newkey = key.replace('/', '@');
-              event.preventDefault();
-              window.location = '<?php echo e(route('searchByTag')); ?>/'+newkey;
-       }
         function getContentByModel(method){
             var model_id;
             if(method == 1){
@@ -472,6 +423,7 @@
                 html2 += ' </div>';
                 html2 += ' </div>';
               
+            
 
                 html2 += ' <div class="box-for-collap">'
                 html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';

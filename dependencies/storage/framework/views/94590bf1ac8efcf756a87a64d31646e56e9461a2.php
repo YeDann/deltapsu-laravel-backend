@@ -762,6 +762,7 @@
            html += ' <td class="col-xs-3">'+search(pd_val['id'],pro2,pd_val['type'] ,pd_val['unit_name']) +'</td>';
            html += '<td class="col-xs-3">'+search(pd_val['id'],pro3,pd_val['type'] ,pd_val['unit_name']) +'</td>'
            html += '</tr>';
+<<<<<<< HEAD
           }else if(section['id'] == 3){
                 if( pro1 != 0
                 || pro2 != 0
@@ -782,6 +783,9 @@
             }
 
 
+=======
+            }
+>>>>>>> bug_master
             });
            html += '</tbody>';
            html += '</table>'; 
@@ -796,6 +800,7 @@
            });
            }
     }
+<<<<<<< HEAD
     function getCalweight(proId){
        var data = getProduct(proId);
        console.log(data);
@@ -818,6 +823,8 @@
         });
        return data;
     }
+=======
+>>>>>>> bug_master
     
     function contentloadMobile(){
         var html = '';

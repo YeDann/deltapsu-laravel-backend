@@ -345,78 +345,277 @@ function retextdata($arr ,$unit){
 }
 
 ?>
-<div class="">
+<div class="visible-tablets-up">
     <div class="box-pp">
         <div class="container">
             <div class="text-center">
-                <h2 class="text-title-delta-home">The Latest Series</h2>
+                <h2 class="text-title-delta-home"><?php echo e($staticContent['Featured_Products']); ?></h2>
             </div>
             <div id="producttype" class="owl-carousel owl-theme  ft-products-body">
-                <?php $__currentLoopData = $series; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $serie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <div class="series-list-home">
-                    <div class="">
-                        <div class="d-block ">
-                            <div class="m-auto series-img" >
-                                <?php if($serie->se_id == 26): ?>
-                                <a class="color:inherit;" href="<?php echo e(route('configurableProductDetail')); ?>">
-                                <?php else: ?>
-                                <a style="color:inherit;" class="" href="<?php echo e(route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])); ?>">
-                                <?php endif; ?>
-                                    <?php if(isset($serie->image)): ?>
-                                    <img class="img-fluid m-auto"
-                                        src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($serie->image); ?>" alt="">
-                                    <?php else: ?>
-                                    <img class="img-fluid m-auto" src="<?php echo e(asset('frontend-asset/image/blank.png')); ?>" alt="">
-                                    <?php endif; ?>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="series-text text-center">
-                            <div class="d-flex h-title">
-                                <?php if($serie->se_id == 26): ?>
-                                <a style="color:inherit;"  class="m-auto" href="<?php echo e(route('configurableProductDetail')); ?>">
-                                 <?php else: ?> 
-                                 <a style="color:inherit;" class="m-auto" href="<?php echo e(route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])); ?>">
-                                 <?php endif; ?>
-                                    <h3 class="text-dark  m-0"><?php echo e($serie->title); ?></h3>
-                                </a>
-                            </div>
-                            <?php if($serie->se_id == 26): ?>
-                            <a style="color:inherit;"  class="m-auto" href="<?php echo e(route('configurableProductDetail')); ?>">
-                             <?php else: ?> 
-                            <a style="color:inherit;" class="m-auto" href="<?php echo e(route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])); ?>">
-                             <?php endif; ?>
-                            <div class="series-text-detail">
-                                <?php echo $serie->overview_content; ?>
+                <?php $__currentLoopData = $featePros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="item card">
+                    <?php 
+                       $color = '';
+                       $name_sta = '';
+                      $stat = $pro['status_product'];
+                        if($stat == 2){
+                            $color = '#76B900';
+                            $name_sta = 'NEW';
+                        }else if($stat == 3){
+                            $color = '#337ab7';
+                            $name_sta = 'UPDATED';
+                        }else if($stat == 4){
+                            $color = '#f0ad4e';
+                            $name_sta = 'EOL';
+                        }
+                        ?>
+                          <?php 
+                          $datacheck1 = [
+                           $pro['content'][1]->data_1,
+                           $pro['content'][1]->data_2,
+                           $pro['content'][1]->data_3,
+                           $pro['content'][1]->data_4,
+                           $pro['content'][1]->data_5,
+                           $pro['content'][1]->data_6,
+                           $pro['content'][1]->data_7,
+                           $pro['content'][1]->data_8,
+                           $pro['content'][1]->data_9,
+                           $pro['content'][1]->data_10,
+                           $pro['content'][1]->data_11,
+                           $pro['content'][1]->data_12,
+                                  ];
+                   
+                           $datacheck2 = [
+                            $pro['content'][2]->data_1,
+                            $pro['content'][2]->data_2,
+                            $pro['content'][2]->data_3,
+                            $pro['content'][2]->data_4,
+                            $pro['content'][2]->data_5,
+                            $pro['content'][2]->data_6,
+                            $pro['content'][2]->data_7,
+                            $pro['content'][2]->data_8,
+                            $pro['content'][2]->data_9,
+                            $pro['content'][2]->data_10,
+                            $pro['content'][2]->data_11,
+                            $pro['content'][2]->data_12,
+                                   ];
 
+                           $datacheck3 = [
+                            $pro['content'][0]->data_1,
+                            $pro['content'][0]->data_2,
+                            $pro['content'][0]->data_3,
+                            $pro['content'][0]->data_4,
+                            $pro['content'][0]->data_5,
+                            $pro['content'][0]->data_6,
+                            $pro['content'][0]->data_7,
+                            $pro['content'][0]->data_8,
+                            $pro['content'][0]->data_9,
+                            $pro['content'][0]->data_10,
+                            $pro['content'][0]->data_11,
+                            $pro['content'][0]->data_12,
+                                   ];
+                                   ?>
+                    <div class="new-tag" style="background-color:<?php echo e($color); ?>"><?php echo e($name_sta); ?></div>
+                    <div class="card-body ft-products-item">
+                        <a href="<?php echo e(route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $pro['catename']) ,'pro_code' => setTextpro($pro['pro_code']) ])); ?>">
+                        <?php if(isset($pro['picture'])): ?>
+                        <img src="<?php echo e(config('app.url')); ?>/upload/thumbs/<?php echo e($pro['picture']); ?>" class="product-cat mb-2" alt=""
+                            style="width:70%;">
+                        <?php else: ?>
+                         <img src="<?php echo e(asset('frontend-asset/image/blank.png')); ?>" class="product-cat mb-2" alt=""
+                        style="width:70%;">
+                        <?php endif; ?>
+                        <h4 class="text-title-ft"><?php echo e($pro['pro_code']); ?></h4>
+                        </a>
+                        <div class="row m-d-t">
+                            <div class="col-6">
+                                <div class="out-volt">
+                                    <h6 class="text-title-ft-sub"><?php echo e($staticContent['Output_Voltage']); ?></h6>
+                                    <p class="text-ft-sub text-one">
+                                       
+                                        <?php if($pro['content'][1]->status_input == 3): ?>
+                                        <?php if($pro['content'][1]->data_1 != null && $pro['content'][1]->data_2 != null): ?>
+                                        <?php echo e($pro['content'][1]->data_1); ?>-<?php echo e($pro['content'][1]->data_2); ?><?php echo e($pro['content'][1]->unit_name); ?>      
+                                         <?php else: ?> 
+                                        -
+                                        <?php endif; ?>
+                                         <?php else: ?>
+                                         <?php if($pro['content'][1]->data_1 != null): ?>
+                                        <?php echo join(",",retextdata($datacheck1 , $pro['content'][1]->unit_name));?>
+                                        <?php else: ?> 
+                                        -
+                                        <?php endif; ?>
+                                        <?php endif; ?>
+                                    </p>
+                                </div>
+                                <div class="out-power">
+                                    <h6 class="text-title-ft-sub"><?php echo e($staticContent['Output_Power']); ?></h6>
+                                    <p class="text-ft-sub text-one">
+                                        
+                                        <?php if($pro['content'][2]->status_input == 3): ?>
+                                        <?php if($pro['content'][2]->data_1 != null && $pro['content'][2]->data_2 != null): ?>
+                                             <?php echo e($pro['content'][2]->data_1); ?>-<?php echo e($pro['content'][2]->data_2); ?><?php echo e($pro['content'][2]->unit_name); ?>      
+                                        <?php else: ?> 
+                                        -
+                                        <?php endif; ?>
+                                        <?php else: ?>
+                                            <?php if($pro['content'][2]->data_1 != null): ?>
+                                         <?php echo join(",",retextdata($datacheck2 , $pro['content'][2]->unit_name));?>
+                                             <?php else: ?> 
+                                             -
+                                             <?php endif; ?>
+                                        <?php endif; ?>
+                                    </p>
+                                </div>
                             </div>
-                             </a>
+                            <div class="col-6">
+                                <div class="out-current">
+                                    <h6 class="text-title-ft-sub"><?php echo e($staticContent['Output_Current']); ?></h6>
+                                    <p class="text-ft-sub text-one">
+                                        
+
+                                        <?php if($pro['content'][0]->status_input == 3): ?>
+                                        <?php if($pro['content'][0]->data_1 != null && $pro['content'][0]->data_2 != null): ?>
+                                             <?php echo e($pro['content'][0]->data_1); ?>-<?php echo e($pro['content'][0]->data_2); ?><?php echo e($pro['content'][0]->unit_name); ?>      
+                                        <?php else: ?> 
+                                        -
+                                        <?php endif; ?>
+                                        <?php else: ?>
+                                          <?php if($pro['content'][0]->data_1 != null): ?>
+                                         <?php echo join(",",retextdata($datacheck3 , $pro['content'][0]->unit_name));?>
+                                         <?php else: ?> 
+                                         -
+                                         <?php endif; ?>
+                                        <?php endif; ?>
+                                    </p>
+                                </div>
+                                <div class="in-volt">
+                                    <h6 class="text-title-ft-sub"><?php echo e($staticContent['Input_Voltage']); ?></h6>
+                                    <p class="text-ft-sub text-one"> <?php echo iconv_substr(strip_tags($pro['content'][3]->value_text),0,60,'UTF-8'); ?></p>
+                                   
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="series-icon ">
-                        <div class="icon-app-detail">
-                            <?php $__currentLoopData = $series_has_application; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php if($item->se_id == $serie->se_id): ?>
-                                <a href="<?php echo e(route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->id.'-'.$item->name)])); ?>"  data-toggle="tooltip" data-placement="top" title="<?php echo e($item->name); ?>" class="icon btn-icon-app itemhorver<?php echo e($item->id); ?>"
-                                    style="background-image: url('<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($item->icon); ?>'); "></a>
-                                  <script>
-                                       $(".itemhorver<?php echo e($item->id); ?>").hover(function(){
-                                            $(this).css("background-image", "url('<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($item->blue_outline_icon); ?>')");
-                                            }, function(){
-                                            $(this).css("background-image", "url('<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($item->icon); ?>')");
-                                            });
-                                    </script>                             
-                           <?php endif; ?>
-                           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                        <div class="dimension">
+                            <h6 class="text-title-ft-sub"><?php echo e($staticContent['Dimensions']); ?> (L x W x <?php echo e($pro['unit_dimension']); ?>) </h6>
+                            <?php if(isset($pro['dimensionD'])): ?>
+                            <p class="text-ft-sub text-one"><?php echo e($pro['dimensionL']); ?> x <?php echo e($pro['dimensionW']); ?> x
+                                <?php echo e($pro['dimensionD']); ?> mm</p>
+                            <p class="text-ft-sub text-one">
+                                <?php echo e(number_format($pro['dimensionL']* 0.0393701 ,2)); ?>” x
+                                <?php echo e(number_format($pro['dimensionW']* 0.0393701 ,2)); ?>” x
+                                <?php echo e(number_format($pro['dimensionD']* 0.0393701 ,2)); ?>”</p>
+                            <?php else: ?>
+                            <p class="text-ft-sub text-one"><?php echo e($pro['dimensionL']); ?></p>
+                            <?php endif; ?>
+                            <div  class="btn btn-ft mt-2" onclick="showNavCoparison(<?php echo e($pro['pro_id']); ?> ,<?php echo e($pro['cateid']); ?>)">+ <?php echo e($staticContent['Add_to_Compare']); ?></div>
                         </div>
+                        
                     </div>
-                </div>   
+                </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
         </div>
     </div>
 </div>
+<div class="visible-mobile">
+    <div class="box-pp  ">
+        <div class="container mr-lr-feture">
+            <div class="text-center">
+                <h2 class="text-title-delta-home "><?php echo e($staticContent['Featured_Products']); ?></h2>
+            </div>
+            <div id="producttype-mobile" class="owl-carousel owl-theme  ft-products-body">
 
+                <?php $__currentLoopData = $featePros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="item card">
+                    <?php 
+                    $color = '';
+                    $name_sta = '';
+                   $stat = $pro['status_product'];
+                     if($stat == 2){
+                         $color = '#76B900';
+                         $name_sta = 'NEW';
+                     }else if($stat == 3){
+                         $color = '#337ab7';
+                         $name_sta = 'UPDATED';
+                     }else if($stat == 4){
+                         $color = '#f0ad4e';
+                         $name_sta = 'EOL';
+                     }
+                     ?>
+                 <div class="new-tag" style="background-color:<?php echo e($color); ?>"><?php echo e($name_sta); ?></div>
+                    <div class="card-body ft-products-item">
+                        <a href="<?php echo e(route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $pro['catename']) ,'pro_code' => setTextpro($pro['pro_code']) ])); ?>">
+                            <?php if(isset($pro['picture'])): ?>
+                            <img src="<?php echo e(config('app.url')); ?>/upload/thumbs/<?php echo e($pro['picture']); ?>" class="product-cat mb-2" alt=""
+                                style="width:70%;">
+                            <?php else: ?>
+                             <img src="<?php echo e(asset('frontend-asset/image/blank.png')); ?>" class="product-cat mb-2" alt=""
+                            style="width:70%;">
+                            <?php endif; ?>
+                        <h6 class="text-title-ft"><?php echo e($pro['pro_code']); ?></h6>
+                        </a>
+                        <div class="flex-row">
+                            <div class="out-volt mt-1">
+                                <p class="text-title-ft-sub text-two"><?php echo e($staticContent['Output_Voltage']); ?></p>
+                                <p class="text-ft-sub text-two">
+                                    <?php if($pro['content'][1]->data_1 != null): ?>
+                                    <?php echo e($pro['content'][1]->data_1); ?><?php echo e($pro['content'][1]->unit_name); ?> 
+                                    <?php else: ?> 
+                                    -
+                                    <?php endif; ?>
+                                </p>
+                            </div>
+                            <div class="out-power mt-2">
+                                <p class="text-title-ft-sub text-two"><?php echo e($staticContent['Output_Power']); ?></p>
+                                <p class="text-ft-sub text-two">
+                                    <?php if($pro['content'][2]->data_1 != null): ?>
+                                    <?php echo e($pro['content'][2]->data_1); ?><?php echo e($pro['content'][2]->unit_name); ?>
+
+                                    <?php else: ?> 
+                                    -
+                                    <?php endif; ?>
+                                </p>
+                            </div>
+
+                            <div class="out-current mt-2">
+                                <p class="text-title-ft-sub text-two"><?php echo e($staticContent['Output_Current']); ?></p>
+                                <p class="text-ft-sub text-two">
+                                    <?php if($pro['content'][0]->data_1 != null): ?>
+                                    <?php echo e($pro['content'][0]->data_1); ?><?php echo e($pro['content'][0]->unit_name); ?>
+
+                                    <?php else: ?> 
+                                    -
+                                    <?php endif; ?>
+                                </p>
+                            </div>
+                            <div class="in-volt mt-2">
+                                <p class="text-title-ft-sub text-two"><?php echo e($staticContent['Input_Voltage']); ?></p>
+                                <p class="text-ft-sub text-one"> <?php echo iconv_substr(strip_tags($pro['content'][3]->value_text),0,60,'UTF-8'); ?> ...</p>
+                            </div>
+                            <div class="dimension mt-2">
+                                <p class="text-title-ft-sub text-two"><?php echo e($staticContent['Dimensions']); ?>  (L x W x <?php echo e($pro['unit_dimension']); ?>)  </p>
+                                <?php if(isset($pro['dimensionD'])): ?>
+                                <p class="text-ft-sub text-two"><?php echo e($pro['dimensionL']); ?> x <?php echo e($pro['dimensionW']); ?> x
+                                    <?php echo e($pro['dimensionD']); ?> mm</p>
+                                <p class="text-ft-sub text-two">
+                                    <?php echo e(number_format($pro['dimensionL']* 0.0393701 ,2)); ?>” x
+                                    <?php echo e(number_format($pro['dimensionW']* 0.0393701 ,2)); ?>” x
+                                    <?php echo e(number_format($pro['dimensionD']* 0.0393701 ,2)); ?>”</p>
+                                <?php else: ?>
+                                <p class="text-ft-sub text-two"><?php echo iconv_substr(strip_tags($pro['dimensionL']),0,60,'UTF-8'); ?> ...</p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div  class="btn btn-ft " onclick="showNavCoparison(<?php echo e($pro['pro_id']); ?> ,<?php echo e($pro['cateid']); ?>)">+ <?php echo e($staticContent['Add_to_Compare']); ?></div>
+                </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- event -->
 <div class="visible-desk-up">
