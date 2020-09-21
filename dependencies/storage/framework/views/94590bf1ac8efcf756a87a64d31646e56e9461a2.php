@@ -1,5 +1,4 @@
-@extends('layouts.front-end')
-@section('css')
+<?php $__env->startSection('css'); ?>
 <style>
 
     td .select-selected{
@@ -81,13 +80,13 @@
    }
 
 </style>
-@endsection
-@section('meta')
-<title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
-<meta name="description" content="{{isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''}}">
-<meta name="keywords" content="{{isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''}}">
-@endsection
-@section('container')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('meta'); ?>
+<title><?php echo e(isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''); ?></title>
+<meta name="description" content="<?php echo e(isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''); ?>">
+<meta name="keywords" content="<?php echo e(isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''); ?>">
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('container'); ?>
 <div class="padding-top-content">
 </div>
 <div class="invisible-nav-minimize">
@@ -97,18 +96,18 @@
                 <nav aria-label="breadcrumb" id="breadcrumb">
                   
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                        <li class="breadcrumb-item text-breadcrumb-home"><a href="<?php echo e(route('index','home')); ?>"><?php echo e($staticContent['Home']); ?></a></li>
                         <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a
-                                href="#" data-toggle="dropdown" id="tools-dropdown"> {{$staticContent['Tools']}}</a>
+                                href="#" data-toggle="dropdown" id="tools-dropdown"> <?php echo e($staticContent['Tools']); ?></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Tools']}}</a></li>
+                                    <li><a href="#" id="tools-dropdown" class="text-bold"><?php echo e($staticContent['Tools']); ?></a></li>
                                     <hr>
-                                    <li><a href="{{route('productFinder')}}">{{$staticContent['Product_Selector']}}</a></li>
-                                <li><a href="{{route('configurableproduct')}}">{{$staticContent['configurable_power_selector']}}</a></li>
-                                <li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a></li>
+                                    <li><a href="<?php echo e(route('productFinder')); ?>"><?php echo e($staticContent['Product_Selector']); ?></a></li>
+                                <li><a href="<?php echo e(route('configurableproduct')); ?>"><?php echo e($staticContent['configurable_power_selector']); ?></a></li>
+                                <li><a href="<?php echo e(route('productCoparison')); ?>"><?php echo e($staticContent['product_comparison']); ?></a></li>
                                 </ul>   
                         </li>
-                        <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['product_comparison']}}</a></li>
+                        <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#"><?php echo e($staticContent['product_comparison']); ?></a></li>
                     </ol>
                 </nav>
             </div>
@@ -121,15 +120,15 @@
                 <thead>
                     <tr class="mr-12px">
                         <td class="col-xs-3">
-                                <h3 class="">{{$staticContent['product_comparison']}}</h3>
+                                <h3 class=""><?php echo e($staticContent['product_comparison']); ?></h3>
                         </td>
                         <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
                             <div >
                                 <select onchange="selectprocom1('procomnav1')" id="procomnav1" class="form-control w-100 pr-4 onchagetype ">
                                     <option value="0">Please Select*</option>
-                                    @foreach ($products as $item)
-                                    <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($item->pro_id); ?>"><?php echo e($item->pro_code); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                         </td>
@@ -137,9 +136,9 @@
                             <div >
                                 <select onchange="selectprocom2('procomnav2')" id="procomnav2" class="form-control w-100 pr-4 onchagetype">
                                     <option value="0">Please Select*</option>
-                                    @foreach ($products as $item)
-                                    <option  value="{{$item->pro_id}}">{{$item->pro_code}}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option  value="<?php echo e($item->pro_id); ?>"><?php echo e($item->pro_code); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                         </td>
@@ -147,9 +146,9 @@
                             <div class="">
                                 <select onchange="selectprocom3('procomnav3')" id="procomnav3" class="form-control w-100 pr-4 onchagetype">
                                     <option value="0">Please Select*</option>
-                                    @foreach ($products as $item)
-                                    <option  value="{{$item->pro_id}}">{{$item->pro_code}}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option  value="<?php echo e($item->pro_id); ?>"><?php echo e($item->pro_code); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                         </td>
@@ -161,21 +160,22 @@
     </div>
     <div id="contentLodpdf" class="box-comparison mb-5">
         <div class="container">
-            <h2 class="text-title-delta">{{$staticContent['product_comparison']}}</h2>
-            <p class="text-center text-sixteen-dark">{{$staticContent['Type']}}</p>
+            <h2 class="text-title-delta"><?php echo e($staticContent['product_comparison']); ?></h2>
+            <p class="text-center text-sixteen-dark"><?php echo e($staticContent['Type']); ?></p>
             <div class="d-flex mb-3">
                 <div class="mx-auto">
                     <select id="proType" class="form-control pr-4" onchange="chageProductType();">
-                        <option value="0">{{$staticContent['Please_Select']}}*</option>
-                        @foreach ($Categories as $item)
-                    <option {{($item->sub_pro_id == $cateid ?"selected":"")}} value="{{$item->sub_pro_id}}">{{$item->name}}</option>
-                        @endforeach
+                        <option value="0"><?php echo e($staticContent['Please_Select']); ?>*</option>
+                        <?php $__currentLoopData = $Categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option <?php echo e(($item->sub_pro_id == $cateid ?"selected":"")); ?> value="<?php echo e($item->sub_pro_id); ?>"><?php echo e($item->name); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
                 </div>
              
-            <button onclick="loadhtml();"  class="downloade-pdf btn btn-subscribe">{{$staticContent['Download_AS_PDF']}}</button>
-            <form id="ContentCompare" action="{{route('loadPdffile')}}" method="POST">
-                {{csrf_field()}}
+            <button onclick="loadhtml();"  class="downloade-pdf btn btn-subscribe"><?php echo e($staticContent['Download_AS_PDF']); ?></button>
+            <form id="ContentCompare" action="<?php echo e(route('loadPdffile')); ?>" method="POST">
+                <?php echo e(csrf_field()); ?>
+
                 <input type="hidden" name="datacon" id="comtentcompare" >
                 <input  type="hidden" name="arr_con" id="arr_con" >
                 <input  type="hidden" name="type_name" id="typename" >
@@ -190,16 +190,7 @@
                         <tr >
                             <td class="col-xs-3">&nbsp;</td>
 
-                        {{-- @foreach ($data_re as $result)
-                        <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
-                            <img class="w-100" src="{{config('app.url')}}/upload/thumbs/{{$result->picture}}" alt="" >
-                            <p class="text-center text-dark">{{$result->seName}}</p>
-                            <p class="text-title-twentyfour-delta text-center">{{$result->pro_code}}</p>
-                            <div class="btn-center">
-                                <button class="btn-enquiry">ENQUIRY</button>
-                            </div>
-                        </td>
-                        @endforeach --}}
+                        
 
                         <td id="imagepro_com1" class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
                         
@@ -215,34 +206,34 @@
                     </tbody>
                     <thead>
                             <tr>
-                            <td class="col-xs-3 text-center"><div onclick="clearProduct();" class="clr-com">{{$staticContent['Clear_All']}}</div></td>
+                            <td class="col-xs-3 text-center"><div onclick="clearProduct();" class="clr-com"><?php echo e($staticContent['Clear_All']); ?></div></td>
                             <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
                             <div  >
                                 <select onchange="selectprocom1('procom1')" id="procom1" class="form-control w-100 pr-4 onchagetype ">
-                                    <option value="0">{{$staticContent['Please_Select']}}*</option>
-                                    @foreach ($products as $item)
-                                    <option  value="{{$item->pro_id}}">{{$item->pro_code}}</option>
-                                    @endforeach
+                                    <option value="0"><?php echo e($staticContent['Please_Select']); ?>*</option>
+                                    <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option  value="<?php echo e($item->pro_id); ?>"><?php echo e($item->pro_code); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
                             </td>
                             <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
                                 <div >
                                     <select onchange="selectprocom2('procom2')" id="procom2" class="form-control w-100 pr-4 onchagetype">
-                                        <option value="0">{{$staticContent['Please_Select']}}*</option>
-                                        @foreach ($products as $item)
-                                        <option  value="{{$item->pro_id}}">{{$item->pro_code}}</option>
-                                        @endforeach
+                                        <option value="0"><?php echo e($staticContent['Please_Select']); ?>*</option>
+                                        <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option  value="<?php echo e($item->pro_id); ?>"><?php echo e($item->pro_code); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
                             </td>
                             <td class="col-xs-3 cc-box" style="padding-right:0px !important;  position:relative">
                                 <div >
                                     <select onchange="selectprocom3('procom3')" id="procom3" class="form-control w-100 pr-4 onchagetype">
-                                        <option value="0">{{$staticContent['Please_Select']}}*</option>
-                                        @foreach ($products as $item)
-                                    <option  value="{{$item->pro_id}}">{{$item->pro_code}}</option>
-                                        @endforeach
+                                        <option value="0"><?php echo e($staticContent['Please_Select']); ?>*</option>
+                                        <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option  value="<?php echo e($item->pro_id); ?>"><?php echo e($item->pro_code); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
                             </td>
@@ -255,17 +246,7 @@
                 </div> 
         </div>
     </div>
-    {{-- <div class="box-need-compare-product "
-        style=" background: url('{{asset('frontend-asset/image/Find-Product-BG.jpg')}}');">
-        <div class="container">
-            <div class="box-need-compare-product-all">
-                <h3 class="text-title-subscribe mb-5">{{$staticContent['Need_to_compare_other_product']}}</h3>
-                <button class="btn btn-subscribe" onclick="selectNewProductByType();">{{$staticContent['Select_Product']}}</button>
-            </div>
-            
-         <img  class="image-doc" src="{{asset('frontend-asset/image/NEEDCOMPAREOTHERPRODUCTS.png')}}" alt=""> 
-        </div>
-    </div> --}}
+    
 </div>
 <div class="visible-nav-minimize">
     <div class="nav-enquiry-mobile">
@@ -281,30 +262,30 @@
         </div>
     </div>
     <div class="container">
-        <h3 class="text-title-delta">{{$staticContent['product_comparison']}}</h3>
-        <h5 class="text-center">{{$staticContent['Type']}}</h5>
+        <h3 class="text-title-delta"><?php echo e($staticContent['product_comparison']); ?></h3>
+        <h5 class="text-center"><?php echo e($staticContent['Type']); ?></h5>
         <div class="d-flex justify-content-center mb-2">
             <select id="proType_mobile" class="form-control w-100 pr-4" onchange="chageProductTypeMobile();">
-                <option value="0">{{$staticContent['Please_Select']}}*</option>
-                @foreach ($Categories as $item)
-            <option {{($item->sub_pro_id == $cateid ?"selected":"")}} value="{{$item->sub_pro_id}}">{{$item->name}}</option>
-                @endforeach
+                <option value="0"><?php echo e($staticContent['Please_Select']); ?>*</option>
+                <?php $__currentLoopData = $Categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <option <?php echo e(($item->sub_pro_id == $cateid ?"selected":"")); ?> value="<?php echo e($item->sub_pro_id); ?>"><?php echo e($item->name); ?></option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </select>
         </div>
-        <h5 class="text-center">{{$staticContent['Model']}}</h5>
+        <h5 class="text-center"><?php echo e($staticContent['Model']); ?></h5>
         <div class="d-flex justify-content-between mb-2" >
             <select onchange="onSelectPromobile()"  id="procom-mobile1" class="form-control w-100 pr-4 mr-2 onchagetype_mobile ">
-                <option value="0">{{$staticContent['Please_Select']}}*</option>
-                @foreach ($products as $item)
-                <option value="{{$item->pro_id}}" >{{$item->pro_code}}</option>
-                @endforeach
+                <option value="0"><?php echo e($staticContent['Please_Select']); ?>*</option>
+                <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option value="<?php echo e($item->pro_id); ?>" ><?php echo e($item->pro_code); ?></option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </select>
             <input type="hidden" id="mobileindex" name="mobileindex" value="">
             <select onchange="onSelectPromobile2()" id="procom-mobile2" class="form-control w-100 pr-4 ml-2 onchagetype_mobile ">
-                <option value="0">{{$staticContent['Please_Select']}}*</option>
-                @foreach ($products as $item)
-                <option value="{{$item->pro_id}}" >{{$item->pro_code}}</option>
-                @endforeach
+                <option value="0"><?php echo e($staticContent['Please_Select']); ?>*</option>
+                <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <option value="<?php echo e($item->pro_id); ?>" ><?php echo e($item->pro_code); ?></option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </select>
             <input type="hidden" id="mobileindex2"  name="mobileindex2" value="">
         </div>
@@ -313,13 +294,7 @@
                 <a id="predata" onclick="BackData()" class="p-4" ><i class="zmdi zmdi-chevron-left" aria-hidden="true"></i></a>
             </div>
             <div  class="d-flex justify-content-between mb-3 ">
-                {{-- <div class="text-center mr-2">
-                    <img class="img-fluid w-75 mb-2" src="{{asset('frontend-asset/image/pro1.png')}}" alt="">
-                    <p class="text-two">CHROME 24V 91W</p>
-                    <h5 class="text-color-delta">DRC-24V100W1AZ</h5>
-                    <a class="btn btn-enquiry w-100" href="">ENQUIRY</a>
-                </div>
-                --}}
+                
                 <div id="imagepro_com_mobile1" class="text-center mr-2"> 
                 </div>
                 <div id="imagepro_com_mobile2" class="text-center  ml-2"> 
@@ -334,23 +309,19 @@
     </div>
     <div class="download-pdf-mobile py-3">
         <div class="container">
-            <div href="" class="btn btn-subscribe w-100 text-upercase" onclick="loadhtml();" >{{$staticContent['Download_AS_PDF']}}</div>
+            <div href="" class="btn btn-subscribe w-100 text-upercase" onclick="loadhtml();" ><?php echo e($staticContent['Download_AS_PDF']); ?></div>
         </div>
     </div>
     <div id="comparison_mobile" class="comparison-collapse">
     </div>
-    {{-- <div class="box-need-to-comparison" style="background-image: url('{{asset('frontend-asset/image/Find-Product-BG@2x.png')}}');">
-        <h3 class="text-color-delta mb-5">{{$staticContent['Need_to_compare_other_product']}}</h3>
-        <button onclick="selectNewProductByType();" class="btn btn-subscribe center">{{$staticContent['Select_Product']}}</button>
-        <img class="img-fluid w-75 mb-2" src="{{asset('frontend-asset/image/NEEDCOMPAREOTHERPRODUCTS.png')}}" alt="">
-    </div> --}}
+    
 </div>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('js')
+<?php $__env->startSection('js'); ?>
  
 
 <script>
@@ -422,7 +393,7 @@
         $('#predata').addClass('d-none');
         setAllFrist(pro1 ,pro2 , pro3)
         $.ajax({
-           url: "{{route('clearproductsection')}}",
+           url: "<?php echo e(route('clearproductsection')); ?>",
            data: {
           'arr_pro': [ pro1 ,pro2 , pro3 ],
            },
@@ -455,7 +426,7 @@
      function selectNewProductByType(){
         var typename = $( "#proType option:selected" ).text();
         var type_id = $('#proType').val();
-        window.open('{{route('producsList')}}/'+typename+'/'+type_id);
+        window.open('<?php echo e(route('producsList')); ?>/'+typename+'/'+type_id);
      }
 
     function setAllFrist(pro1 ,pro2 , pro3){
@@ -579,14 +550,14 @@
                   pro = 0 ;
               }
             var arr = [pro];
-            var url = '{{config('app.url')}}/upload/thumbs/';
+            var url = '<?php echo e(config('app.url')); ?>/upload/thumbs/';
             var html2 = '';
             var html3  = '';
   
            var t_id = $('#proType_mobile').val();
            var t_name = $('#proType_mobile option:selected').text();
            $.ajax({
-           url: "{{route('loadImageProByArr')}}",
+           url: "<?php echo e(route('loadImageProByArr')); ?>",
            data: {
           'arr_pro': arr,
           'typeid':t_id,
@@ -603,12 +574,12 @@
                 html2 += '<a target="_blank" href="'+link+'/'+t_name.replace(/ /g,"_")+'/'+val['pro_code']+'">';    
                 html2 +=    '<h5 class="text-color-delta">'+val['pro_code']+'</h5>';
                 html2 +=    '</a>';
-                html2 += '   <a class="btn btn-enquiry w-100" href="{{route('LinktoEnquiry')}}/'+t_id+'/'+t_name+'/'+val['pro_code']+'">{{$staticContent['Enquiry']}}</a>';
+                html2 += '   <a class="btn btn-enquiry w-100" href="<?php echo e(route('LinktoEnquiry')); ?>/'+t_id+'/'+t_name+'/'+val['pro_code']+'"><?php echo e($staticContent['Enquiry']); ?></a>';
                 html2 += '</div>';     
 
                 html3 += ' <p class="text-two">'+val['seName'] +'</p>';
                 html3 += ' <h5 class="text-color-delta">'+val['pro_code']+'</h5>';
-                html3 += '<a class="btn btn-enquiry w-100" href="{{route('LinktoEnquiry')}}/'+t_id+'/'+t_name+'/'+val['pro_code']+'">{{$staticContent['Enquiry']}}</a>'    
+                html3 += '<a class="btn btn-enquiry w-100" href="<?php echo e(route('LinktoEnquiry')); ?>/'+t_id+'/'+t_name+'/'+val['pro_code']+'"><?php echo e($staticContent['Enquiry']); ?></a>'    
             });
                
 
@@ -622,7 +593,7 @@
         contentLoad();
         var typeId  =  $('#proType').val();
         $.ajax({
-           url: "{{route('getProductByType')}}",
+           url: "<?php echo e(route('getProductByType')); ?>",
            data: {
           'typeId': typeId,
            },
@@ -652,7 +623,7 @@
         var typeId  =  $('#proType').val();
         $("#proType_mobile option[value="+typeId+"]").prop('selected', true);
         $.ajax({
-           url: "{{route('getProductByType')}}",
+           url: "<?php echo e(route('getProductByType')); ?>",
            data: {
           'typeId': typeId,
            },
@@ -681,7 +652,7 @@
         contentLoad();
         var mobileType =  $('#proType_mobile').val();
         $.ajax({
-           url: "{{route('getProductByType')}}",
+           url: "<?php echo e(route('getProductByType')); ?>",
            data: {
           'typeId': mobileType,
            },
@@ -832,7 +803,7 @@
     function getProduct(id){
        var data =  [];
         $.ajax({
-           url: "{{route('getProById')}}",
+           url: "<?php echo e(route('getProById')); ?>",
            data: {
           'proId': id,
            },
@@ -882,7 +853,7 @@
         $('#comparison_mobile').html(html);
 
     }
-    var link = '{{route('productsDetailsByType')}}';
+    var link = '<?php echo e(route('productsDetailsByType')); ?>';
     function viewKey(key){
             var newkey = key.replace('/', '@');
            return newkey;
@@ -892,12 +863,12 @@
                   pro = 0 ;
               }
             var arr = [pro];
-            var url = '{{config('app.url')}}/upload/thumbs/';
+            var url = '<?php echo e(config('app.url')); ?>/upload/thumbs/';
             var html2 = '';
             var t_id = $('#proType').val();
             var t_name = $('#proType option:selected').text();
            $.ajax({
-           url: "{{route('loadImageProByArr')}}",
+           url: "<?php echo e(route('loadImageProByArr')); ?>",
            data: {
           'arr_pro': arr,
           'typeid': t_id,
@@ -914,8 +885,8 @@
              html2 += '<p class="text-title-twentyfour-delta text-center">'+val['pro_code']+'</p>'
              html2 += '</a>';    
              html2 += '<div class="btn-center">'; 
-             html2 += '<a href="{{route('LinktoEnquiry')}}/'+t_id+'/'+t_name+'/'+viewKey(val['pro_code'])+'">';    
-             html2 += '<button class="btn-enquiry">{{$staticContent['Enquiry']}}</button>';
+             html2 += '<a href="<?php echo e(route('LinktoEnquiry')); ?>/'+t_id+'/'+t_name+'/'+viewKey(val['pro_code'])+'">';    
+             html2 += '<button class="btn-enquiry"><?php echo e($staticContent['Enquiry']); ?></button>';
              html2 += '</a>';    
              html2 += ' </div>';          
             });
@@ -1055,7 +1026,7 @@
     }
     function  loadnewPerti(){
         $.ajax({
-           url: "{{route('loadnewPerti')}}",
+           url: "<?php echo e(route('loadnewPerti')); ?>",
            data: {
           'arrpro': comArr,
            },
@@ -1091,4 +1062,5 @@
 
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.front-end', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Deltapsu_Production\dependencies\resources\views/front-end/productcoparison.blade.php ENDPATH**/ ?>

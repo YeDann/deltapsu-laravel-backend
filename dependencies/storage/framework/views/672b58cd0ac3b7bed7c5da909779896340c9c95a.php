@@ -206,7 +206,7 @@
     -moz-appearance: none;
     background-position: right 50%;
     background-repeat: no-repeat;
-    background-image: url(http://localhost/deltaPSU/frontend-asset/image/arrow-down.svg);
+    background-image: url(<?php echo e(asset('frontend-asset/image/arrow-down.svg')); ?>);
     top: 6px;
   
    }

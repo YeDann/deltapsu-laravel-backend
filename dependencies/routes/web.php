@@ -32,7 +32,7 @@ Route::group([
         ], function() {
 
 Route::get('/{page?}','FrontendController@index')->name('index');
-Route::get('/download/{doc?}','FrontendController@index')->name('index');
+ Route::get('/download/{doc?}','FrontendController@index')->name('downloadDocData');
 Route::get('/tools/configurable-product-selection','FrontendController@configurableProduct')->name('configurableproduct');
 Route::get('/configurable-power/details','FrontendController@configurableProductDetail')->name('configurableProductDetail');
 Route::get('/products/series/{cate?}','FrontendController@oldlinkSeries')->name('oldlinkSeries');
@@ -104,6 +104,8 @@ Route::post('clearproductsection','FrontendController@clearproductsection')->nam
 Route::post('setlocaltion','FrontendController@setlocaltion')->name('setlocaltion');
 Route::get('/etc/imagelink/showimage/{name?}','FrontendController@imagelink')->name('imagelink');
 Route::post('tag_product','FrontendController@tag_product')->name('tag_product');
+Route::post('getProById','FrontendController@getProById')->name('getProById');
+
 
 });
 

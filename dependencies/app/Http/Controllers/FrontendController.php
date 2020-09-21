@@ -3837,6 +3837,34 @@ class FrontendController extends Controller
       ->get();
       return view('front-end.faq-detail')->with('faqs',$faqs);
     }
+    public function getProById(Request $request){
+        $proid = $request->proId;
+        $proid = $this->validateInput($proid,'number',true);
+  
+        $products = DB::table('products as p')
+        ->where('p.pro_id' ,$proid)
+        ->select('p.*')
+        ->orderBy('p.created_at', 'desc')
+        ->first();
+        if(isset( $products)){
+            $data = [
+                'unitwight' => $products->unit_weight,
+                'dimension' => $products->dimensionD.''.$products->dimensionL.''.$products->dimensionW,
+            ];  
+        }else{
+            $data = [
+                'unitwight' => null,
+                'dimension' => null
+            ]; 
+        }
+       
+
+        
+
+        return response()->json([
+            'data' =>$data 
+                ], 200);
+    }
   
        
 
