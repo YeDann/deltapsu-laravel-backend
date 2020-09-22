@@ -2221,7 +2221,7 @@ hr {
 
 @media only screen and (min-width: 1223px)and (max-width:1360px) {
   .grid-container {
-    grid-gap: 24px;
+    grid-gap: 0px;
   }
 
 }
