@@ -375,6 +375,18 @@ public function edit($id){
     ->orderBy('ph.type_id' ,'asc')
     ->distinct()
     ->get();
+    //  return dd($propertys);
+    $arrcheckuni = [];
+    $KeepResult = [];
+    foreach($propertys as $props){
+        $value = $props->type_id.$props->local;
+        if(!in_array($value, $arrcheckuni)){
+            array_push($KeepResult ,$props );
+            array_push($arrcheckuni ,$value );
+        }
+    
+    }
+    // return dd(count($arrcheckuni) , count($propertys));
 
     foreach($propertys as $pro){
        array_push($arrayInfeild ,$pro->type_id);
@@ -436,7 +448,7 @@ public function edit($id){
     ->with('arrtags',$arrtags)
     ->with('proInarr',$proInarr)
     ->with('cerpros',$cerpros)
-    ->with('propertys' ,$propertys)
+    ->with('propertys' ,$KeepResult)
     ->with('allLang' ,$allLang)
     ->with('language' ,$addLang)
     ->with('pd_fields' ,$pd_fields)
