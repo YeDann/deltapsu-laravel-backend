@@ -39,7 +39,7 @@ class LanguageController extends Controller
          'application_translation',
          'section_translation',
          'products_translation',
-         'product_has_property_translation (Wait about 15 minutes)',
+         'product_ducument_translations',
          'main_pro_categories_translations',
          'series_translations',
          'static_content_translations',
@@ -61,7 +61,6 @@ class LanguageController extends Controller
          'subpro_has_profilter_translation',
          'tech_type_translation',
          'about_us_translations',
-         'product_ducument_translations'
         ];
         // return dd(count($taskNameArr));
          return view('language.copy_lang')
@@ -115,7 +114,21 @@ class LanguageController extends Controller
             $new_local = $name;  
             $create_language = false;
         
-     
+            $propertys = DB::table('product_has_property_translation as php')
+            ->select('php.*' )
+            ->where('php.local' ,'en')
+            ->get();
+
+            foreach($propertys as $per){
+                DB::table('product_has_property_translation')->insert(
+                            [
+                                "per_fk_id" => $per->per_fk_id,
+                                "product_id" => $per->product_id,
+                                "value_text" => $per->value_text,
+                                "local" =>$new_local,
+                            ]
+                        );
+                }
 
                 $create_language = DB::table('language')->insert(
                     [
@@ -319,20 +332,22 @@ class LanguageController extends Controller
                 }
               
                 if($task == 8){
-                    $propertys = DB::table('product_has_property_translation as php')
-                    ->select('php.*' )
-                    ->where('php.local' ,'en')
-                    ->get();
-
-                    foreach($propertys as $per){
-                        DB::table('product_has_property_translation')->insert(
+                        $pro_doc_translations = DB::table('product_ducument_translations as pdt')
+                        ->where('pdt.local', '=', 'en')
+                        ->select('pdt.*')
+                        ->get();
+    
+                        if(count($pro_doc_translations) > 0){
+                            foreach($pro_doc_translations as $pdt){
+                                DB::table('product_ducument_translations')->insert(
                                     [
-                                        "per_fk_id" => $per->per_fk_id,
-                                        "product_id" => $per->product_id,
-                                        "value_text" => $per->value_text,
+                                        "doc_fk_id" =>$pdt->doc_fk_id,
+                                        "name" =>$pdt->name,
+                                        "file" =>$pdt->file,
                                         "local" =>$new_local,
                                     ]
                                 );
+                           }
                         }
                     }
                     if($task == 9){
@@ -775,27 +790,7 @@ class LanguageController extends Controller
                         }
                     }
                 }
-                if($task == 30){
-
-                    $pro_doc_translations = DB::table('product_ducument_translations as pdt')
-                    ->where('pdt.local', '=', 'en')
-                    ->select('pdt.*')
-                    ->get();
-
-                    if(count($pro_doc_translations) > 0){
-                        foreach($pro_doc_translations as $pdt){
-                            DB::table('product_ducument_translations')->insert(
-                                [
-                                    "doc_fk_id" =>$pdt->doc_fk_id,
-                                    "name" =>$pdt->name,
-                                    "file" =>$pdt->file,
-                                    "local" =>$new_local,
-                                ]
-                            );
-                       }
-                    }
-
-                }
+           
 
                 return true;
     }
