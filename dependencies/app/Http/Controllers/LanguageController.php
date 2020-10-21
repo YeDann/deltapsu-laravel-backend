@@ -39,8 +39,8 @@ class LanguageController extends Controller
          'application_translation',
          'section_translation',
          'products_translation',
-         'product_has_property_translation (Wait about 15 minutes)',
-         'main_pro_categories_translations',
+         'product_has_property_translation (text) (Wait about 10 minutes)',
+         'product_has_property_translation (number)  (Wait about 10 minutes)',
          'series_translations',
          'static_content_translations',
          'cproducts',
@@ -61,7 +61,8 @@ class LanguageController extends Controller
          'subpro_has_profilter_translation',
          'tech_type_translation',
          'about_us_translations',
-         'product_ducument_translations'
+         'product_ducument_translations',
+         'main_pro_categories_translations'
         ];
         // return dd(count($taskNameArr));
          return view('language.copy_lang')
@@ -318,9 +319,11 @@ class LanguageController extends Controller
                 }
               
                 if($task == 8){
-                    $propertys = DB::table('product_has_property_translation as php')
-                    ->select('php.*' )
-                    ->where('php.local' ,'en')
+                    $propertys = DB::table('product_has_property as ph')
+                    ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
+                    ->select('pht.*' )
+                    ->where('ph.type_value','text')
+                    ->where('pht.local' ,'en')
                     ->get();
 
                     foreach($propertys as $per){
@@ -335,29 +338,26 @@ class LanguageController extends Controller
                         }
                     }
                     if($task == 9){
-                     $mainCategories = DB::table('main_pro_categories_translations as mpt')
-                     ->where('mpt.local', '=', 'en')
-                     ->select('mpt.*')
-                     ->get();
- 
-                     if(count($mainCategories) > 0){
-                         foreach($mainCategories as $main){
-                             $checkMin1_dup =  DB::table('main_pro_categories_translations as mpt')
-                             ->where('mpt.main_pro_id', '=', $main->main_pro_id)
-                             ->where('mpt.local', '=', $new_local)
-                             ->select('mpt.*')
-                             ->get();
-                             if(count($checkMin1_dup) == 0){
-                                DB::table('main_pro_categories_translations')->insert(
-                                    [
-                                        "main_pro_id" => $main->main_pro_id,
-                                        "name" => $main->name,
-                                        "local" => $new_local,
-                                    ]
-                                );
-                             }
-                         }
-                     }
+
+                        $propertys = DB::table('product_has_property as ph')
+                        ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
+                        ->select('pht.*' )
+                        ->where('ph.type_value','number')
+                        ->where('pht.local' ,'en')
+                        ->get();
+    
+                        foreach($propertys as $per){
+                            DB::table('product_has_property_translation')->insert(
+                                        [
+                                            "per_fk_id" => $per->per_fk_id,
+                                            "product_id" => $per->product_id,
+                                            "value_text" => $per->value_text,
+                                            "local" =>$new_local,
+                                        ]
+                                    );
+                            }
+
+             
                     }
                     if($task == 10){
                      $series =  DB::table('series_translations as st')
@@ -794,6 +794,31 @@ class LanguageController extends Controller
                        }
                     }
 
+                }
+                if($task == 31){
+                    $mainCategories = DB::table('main_pro_categories_translations as mpt')
+                    ->where('mpt.local', '=', 'en')
+                    ->select('mpt.*')
+                    ->get();
+
+                    if(count($mainCategories) > 0){
+                        foreach($mainCategories as $main){
+                            $checkMin1_dup =  DB::table('main_pro_categories_translations as mpt')
+                            ->where('mpt.main_pro_id', '=', $main->main_pro_id)
+                            ->where('mpt.local', '=', $new_local)
+                            ->select('mpt.*')
+                            ->get();
+                            if(count($checkMin1_dup) == 0){
+                               DB::table('main_pro_categories_translations')->insert(
+                                   [
+                                       "main_pro_id" => $main->main_pro_id,
+                                       "name" => $main->name,
+                                       "local" => $new_local,
+                                   ]
+                               );
+                            }
+                        }
+                    }
                 }
 
                 return true;
