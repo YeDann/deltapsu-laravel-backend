@@ -121,6 +121,8 @@ Route::resource('doc_download', 'Doc_DownloadController');
 Route::resource('language', 'LanguageController');
 Route::get('languageDestroy/{id?}','LanguageController@destroy')->name('languageDestroy');
 Route::get('updateLangStatus/{id?}','LanguageController@updateLangStatus')->name('updateLangStatus');
+Route::get('copyToLang/{newlang?}','LanguageController@copyToLang')->name('copyToLang');
+Route::post('copyDataActionReq','LanguageController@copyDataActionReq')->name('copyDataActionReq');
 //products
 Route::resource('products', 'ProductsController');
 Route::get('searhSeries','ProductsController@searhSeries')->name('searhSeries');

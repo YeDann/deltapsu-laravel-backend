@@ -244,7 +244,6 @@
         var domainUrl = '{{config('app.url')}}';
         $(document).ready(function () {
             selectType();
-          
         });
         function selectType(){
             var id = $('#type_id').val();
@@ -343,6 +342,7 @@
             if(method == 1){
             model_id = $('#model_id').val();
             $('#modelme1').val(model_id);
+          
          
            
             }else{
@@ -374,6 +374,7 @@
                     if(doc['file'] != null && doc['file'] != '' ){
                   if(doc['product_id'] == model_id){ 
                    if(doc['cate_id'] == 1 || doc['cate_id'] == 46 ){
+               
                      html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
                      html2 += '<div class="detail-downlode">';
                      html2 += '<p class="text-dark text-bold">'+doc['catename']+'</p>';
@@ -416,6 +417,7 @@
                 if(doc['local'] == lang){
                     if(doc['file'] != null && doc['file'] != '' ){
                   if(doc['product_id'] == model_id){ 
+             
                    if(doc['cate_id'] == cate_doc['id']){
                      html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
                      html2 += '<div class="detail-downlode">';
@@ -442,7 +444,7 @@
                 html2 += ' </div>';
               }
             });
-           
+    
             $('#pro_docType').html(html2);
         }
 
@@ -483,22 +485,19 @@
             // console.log(showlang);
             $.each(showlang, function(indexlang,lan){
                 var arrlang = [];
-                $.each(documents_cate, function(index,cate_doc){
-                    if(cate_doc['id'] == 1 || cate_doc['id'] == 2){
                         $.each(documents, function(index,doc){  
+                            if(doc['cate_id'] == 1 || doc['cate_id'] == 2){
                             if(doc['local'] == lan.langName){
                                 if(doc['product_id'] == model_id){ 
-                                if(doc['file'] != null && doc['file'] != '' ){
-                                    arrlang.push(lan.langName);
-                                }
+                                    if(doc['file'] != null && doc['file'] != '' ){
+                                        arrlang.push(lan.langName);
+                                    }
                                
                                 }
                             }
+                            }
                         });
-                     
-                    }
-               });
-            //    console.log(arrlang.length);
+            //    console.log(arrlang.length,arrlang);
                if(arrlang.length == 0){
                      $('#tabdata'+lan.langName).addClass('d-none');
                 }else{

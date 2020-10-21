@@ -977,9 +977,11 @@ function selectCountry(){
 	var ss_a = [45,45,45,45,45,45,42,25,25,25,21.4,20,16.7,15,12.5,10.7,10,9.4,8.3,7.1,6.3,5.5,5];
 	var ts_a = [100,100,100,85.7,73.3,61.1,53,50,42.8,33.3,34.4,33.3,28.6,25,22.2,20];
 	var do_a = [5,5,5,5,5,5,5,5,5,5,5,4,4,4];
+
 	var code = '';
 	selectionGenerate();
-	// console.log(do_a.length ,ss_a.length )
+
+	console.log(do_a.length ,ss_a.length);
 	$(function () {
 		$('[data-toggle="tooltip"]').tooltip()
 	})
@@ -1143,8 +1145,8 @@ function selectCountry(){
 	}
 
 	function addSlotOutput(){
-		// console.log(checkSlotMax());
-		// console.log(checkSlotMax());
+		// console.log(checkSlotMax() ,'addSlot');
+		// // console.log(checkSlotMax());
 		if(checkSlotMax()){
 			var index = $('#model').children("option:selected").val();
 			alert('You have reached maximum slot of '+model_alldata[index]['product_code']+' ('+model_alldata[index]['max_slot']+' slots)');
@@ -1240,7 +1242,7 @@ function selectCountry(){
 		$(_this).parent().parent().parent().children('input[name=index]').val(index);
 		setValueSlot($(_this).parent().parent().parent());
 		$(_this).parent().parent().parent().children('input[name=slot]').val(1);
-		$(_this).parent().parent().parent().children('.col-3').children('b').html('SLOT '+index);
+		$(_this).parent().parent().parent().children('.col-3').children('p').html('Slot '+index);
 		$(_this).parent().parent().parent().append(text);
 		setHeight();
 		setModelPreview();
@@ -1262,11 +1264,20 @@ function selectCountry(){
 	}
 
 	function getSelectCurrent(_this,type){
+		 var ts_a_700 = [78.7,70,58.3,50,46.7,38.9,35,29.2,25,23.3,21.9,19.4,16.7,14.6,13,11.7];
+     	 var do_a_700 = [5,5,5,5,5,5,5,5,5,5,4.5,3.7,3.2,3];
+		 var index = $('#model').children("option:selected").val();
+		 if(model_alldata[index]['max_power'] == 700){
+			do_a = do_a_700;
+			ts_a = ts_a_700;
+		 }
+
 		var parent = $(_this).parent().parent();
 		var value = $(_this).children("option:selected").val();
 		var text = '';
 		var array_v = (type == 1) ? ss_v : do_v;
 		var array_a = (type == 1) ? ss_a : do_a;
+		
 		
 		text += '<select class="form-control" onchange="currentChange(this,'+type+')" >';
 		text += '<option value="'+array_a[value]+'">';
@@ -1306,12 +1317,12 @@ function selectCountry(){
 		var current = $(_this).children('option:selected').val();
 		var array_v = (type == 1) ? ss_v : do_v;
 		parent.children('.input').children('input').val(parseFloat(array_v[value]*current).toFixed(0));
-
+		
 		setValueSlot($(_this).parent().parent().parent());
 		setModelPreview();
 		setModelPreviewToSum();
 		checkSumwatt();
-	
+		checkSlotMax();
 		
 	}
 
@@ -1323,10 +1334,10 @@ function selectCountry(){
 		if(amp >= 800){
 			// console.log(!checkSlotMax(2));
 			// console.log(countSlot()+2);
-			// console.log(!checkSlotMax(2));
+			// console.log(!checkSlotMax(2) ,'Slot more than 800');
 			if(!checkSlotMax(2)){
 				parent.children('input[name=slot]').val(3);
-				parent.children('.col-3').children('b').html('{{$staticContent['Slot']}}'+_index+' - '+(_index+2));
+				parent.children('.col-3').children('p').html('{{$staticContent['Slot']}}'+_index+' - '+(_index+2));
 				var lastindex = $('.slot .child-slot:last-child input[name=index]').val();
 				if(_index < lastindex){
 					var this_val = 0;
@@ -1336,8 +1347,9 @@ function selectCountry(){
 							this_val = parseInt($(value).children('input[name=index]').val())+2;
 							$(value).prop('id','child-'+this_val);
 							$(value).children('input[name=index]').val(this_val);
+							// $(value).children('p').text(this_val);
 							this_index = ($(value).children('input[name=slot]').val() != 1) ? this_val+' - '+(this_val+2) : this_val;
-							$(value).children('.col-3').children('b').html('Slot '+this_index);
+							$(value).children('.col-3').children('p').html('Slot '+this_index);
 							$(value).children('.select-box').children('.col-3:last-child').children('.btn-undo-icon').attr('onclick','resetData('+this_val+')');
 							
 							$(value).children('.col-9').children('.form-check:first-child').children('input').attr('name','slot-type-'+this_val);
@@ -1359,14 +1371,14 @@ function selectCountry(){
 			}
 		}else{
 			if(parent.children('input[name=slot]').val() == 3){
-				parent.children('.col-3').children('b').html('{{$staticContent['Slot']}} '+_index);
+				parent.children('.col-3').children('p').html('{{$staticContent['Slot']}}'+_index);
 				$.each($('.slot .child-slot'),function(index,value){
 					if($(value).children('input[name=index]').val() > _index){
 						this_val = parseInt($(value).children('input[name=index]').val())-2;
 						$(value).prop('id','child-'+this_val);
 						$(value).children('input[name=index]').val(this_val);
 						this_index = ($(value).children('input[name=slot]').val() != 1) ? this_val+' - '+(this_val+2) : this_val;
-						$(value).children('.col-3').children('b').html('{{$staticContent['Slot']}} '+this_index);
+						$(value).children('.col-3').children('p').html('{{$staticContent['Slot']}} '+this_index);
 						$(value).children('.select-box').children('.col-3:last-child').children('.btn-undo-icon').attr('onclick','resetData('+this_val+')');
 					}
 				});
@@ -1437,6 +1449,7 @@ function selectCountry(){
 	function setModelPreview(){
 		var index = $('#model').children("option:selected").val();
 		var max_slot = model_alldata[index]['max_slot'];
+		// console.log(max_slot);
 		var checked = false;
 		var text = '';
 		var _value = null;
@@ -1550,8 +1563,7 @@ function selectCountry(){
 				if($(value).children('input[name=index]').val() == (index + slot_add + 1) && _index !=  (countSlot()+1)){
 									
 					_index += parseInt($(value).children('input[name=slot]').val());
-					
-					 
+
 				}
 				slot_add += parseInt($(value).children('input[name=slot]').val()-1);
 				
@@ -1570,6 +1582,7 @@ function selectCountry(){
 		if(addon == undefined || addon == 'undefined' ){
 			addon = 0;
 		}
+	
 		var index = $('#model').children("option:selected").val();
 		if(countSlot()+addon > model_alldata[index]['max_slot']){
 			return true;
@@ -1616,7 +1629,8 @@ function selectCountry(){
 				amp_next_index = parseFloat($('#child-'+(i+1)+' .select-box .current select').val());
 				watt_index = voltage_index*amp_index;
 				watt_next_index = voltage_next_index*amp_next_index;
-				if(watt_index == watt_next_index){
+				if(voltage_index == voltage_next_index && amp_index == amp_next_index ){
+					console.log(String.fromCharCode(64+i));
 					$('#parallel'+String.fromCharCode(64+i)+' input[name=parallel]').removeAttr('disabled');
 					$('#parallel'+String.fromCharCode(64+i)+' .line').addClass('active');
 				}

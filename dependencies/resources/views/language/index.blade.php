@@ -71,19 +71,11 @@
                             </div>
                     </td>
                     <td class="text-center">
-                        @if($item->name == 'en')
                         <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-danger"  onclick="deleteLanguage({{$item->id}})" disabled>
+                            <button type="button" class="btn btn-sm btn-danger"  onclick="deleteLanguage({{$item->id}})" {{$item->name == 'en'?'disabled':''}} >
                                 Delete 
                             </button>
                         </div>
-                        @else 
-                        <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-danger"  onclick="deleteLanguage({{$item->id}})">
-                                    Delete 
-                                </button>
-                            </div>
-                        @endif
                     </td>
                
                     </tr>

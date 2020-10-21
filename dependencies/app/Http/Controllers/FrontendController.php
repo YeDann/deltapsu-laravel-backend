@@ -372,7 +372,6 @@ class FrontendController extends Controller
             ->distinct()
             ->get();
 
-            // return dd($news);
             $metatag = DB::table('meta_tag_page as mtp')->where('id',6)->get();
             return  view('front-end.new')
             ->with('metatag' ,$metatag)
@@ -627,8 +626,9 @@ class FrontendController extends Controller
                 ->distinct()
                 ->get();
 
-                $language = DB::table('language as lang')->whereIn('lang.name',['en','cn'])->get();
-                $othersL = DB::table('other_lang_document')->get();
+                $language = DB::table('language as lang')->whereIn('lang.name',['en','cn','jp'])->get();
+              
+                //$othersL = DB::table('other_lang_document')->get();
                 $showlang = [];
                 $showlangOb = [];
                 foreach($language as $langal){
@@ -639,14 +639,14 @@ class FrontendController extends Controller
                     array_push($showlang , $langal->name);
                     array_push($showlangOb ,$data);
                 }
-                foreach($othersL as $lan){
-                    $data2 = [
-                        "langName"=>$lan->name,
-                        "langFull"=>$lan->full_name
-                    ];
-                    array_push($showlang , $lan->name);
-                    array_push($showlangOb ,$data2);
-                }
+                // foreach($othersL as $lan){
+                //     $data2 = [
+                //         "langName"=>$lan->name,
+                //         "langFull"=>$lan->full_name
+                //     ];
+                //     array_push($showlang , $lan->name);
+                //     array_push($showlangOb ,$data2);
+                // }
                 // return dd($showlangOb);
               
                 $documents = DB::table('product_has_documents as phd')
@@ -950,13 +950,14 @@ class FrontendController extends Controller
     $products = [];
     foreach($searchPro as $pro){
         $product_has_prm = DB::table('product_has_property as ph')
-        ->whereIn('ph.type_id',[4,3,8])
+        ->whereIn('ph.type_id',[4,3,8,31])
         ->where('ph.product_id',$pro->pro_id)
         ->orderBy('ph.type_id' ,'asc')
         ->select('ph.*')
         ->get();
+        // return dd(count($product_has_prm));
         //Check Eror input content product
-        if(count($product_has_prm) > 0){
+        if(count($product_has_prm) >= 4){
             array_push($arrproid, $pro->pro_id);
             $prolang =  self::checkLang($lang,$pro->pro_id);
             $datapro = DB::table('products as p')

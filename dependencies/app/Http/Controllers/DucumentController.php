@@ -178,7 +178,7 @@ class DucumentController extends Controller
         //   return dd($itemName);
           DB::table('other_lang_document')->where('id',$id)->delete();
           DB::table('product_ducument_translations')->where('local',$itemName)->delete();
-          
+          return redirect()->route('SpecialLang')->with('flash_message', 'Delete Data successfully');
       }
 
     public function getDucumentType(){

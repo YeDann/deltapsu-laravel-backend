@@ -1275,7 +1275,7 @@
         html += '</div>';
         html += '<div class="in-volt">';
         html += '<h6 class="text-title-ft-sub">{{$staticContent['Input_Voltage']}}</h6>';
-        if(content[3]['value_text'] != null && content[3]['value_text'] != 'null'){
+        if(typeof content[3]['value_text'] != 'undefined' && content[3]['value_text'] != null && content[3]['value_text'] != 'null'){
         html += '<div class="text-ft-sub text-one">'+content[3]['value_text'].substr(0, 14)+'</div>';
         }else{
             html += '<div class="text-ft-sub text-one">-</div>'; 
@@ -1491,7 +1491,7 @@
         html1 += ' <td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon1,content[1]['unit_name'] ,content[1]['status_input'])+'</div></td>';
         html1 += '<td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon2,content[0]['unit_name'] ,content[0]['status_input'])+'</div></td>';
         html1 += ' <td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon3,content[2]['unit_name'] ,content[2]['status_input'])+'</div></td>';
-        if(content[3]['value_text'] != null && content[3]['value_text'] !='' && content[3]['value_text'] != 'null'){
+        if(typeof content[3]['value_text']  != 'undefined' && content[3]['value_text'] != null && content[3]['value_text'] !='' && content[3]['value_text'] != 'null'){
             html1 += ' <td class="text-middle-td">'+ stringfor(content[3]['value_text'])+'</td>';
         }else if(content[3]['value_text'] != null && content[3]['value_text'] != 'null'){
             html1 += ' <td class="text-middle-td">'+content[3]['value_text']+'</td>';
@@ -1735,7 +1735,7 @@
                   if(fil_con['field_id'] == ppt['type_id']){
                     var object  = {};
                     var text = null;
-                    if(ppt['value_text'] != null){
+                    if(ppt['value_text'] != null && typeof ppt['value_text']  != 'undefined'){
                         text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
                        
                     }
@@ -1787,7 +1787,7 @@
                        
                             html3 += '</div>' ; 
                         }
-                    }else if(ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != ''){
+                    }else if(ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != '' && typeof ppt['value_text']  != 'undefined'){
                         if(containsObjectText(object, data_text)){
                             data_text.push(object);
                             html3 += '<div onchange="fillerInputText('+"'"+fil_con['field_id']+"'"+','+"'"+ppt['value_text']+"'"+');" class="box-input-checkbox">';
@@ -1895,7 +1895,7 @@
                   if(fil_con['field_id'] == ppt['type_id']){
                     var object  = {};
                     var text = null;
-                    if(ppt['value_text'] != null){
+                    if(ppt['value_text'] != null && typeof ppt['value_text']  != 'undefined'){
                         text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
                     }
                     object = {
@@ -1942,7 +1942,7 @@
                             html3 += '</div>' ; 
                            
                         }
-                    }else if(ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != ''){
+                    }else if(ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != '' && typeof ppt['value_text']  != 'undefined'){
                         if(containsObjectText(object, data_text)){
                             data_text.push(object);
                             html3 += '<div class="box-input-checkbox">';
@@ -2424,7 +2424,7 @@
                   if(ppt['type_id'] == ppt['type_id']){
                     var object  = {};
                     var text = null;
-                    if(ppt['value_text'] != null){
+                    if(ppt['value_text'] != null && typeof ppt['value_text']  != 'undefined'){
                         text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
                       
                     }
@@ -2536,7 +2536,7 @@
                   if(ppt['type_id'] == ppt['type_id']){
                     var object  = {};
                     var text = null;
-                    if(ppt['value_text'] != null){
+                    if(ppt['value_text'] != null && typeof ppt['value_text']  != 'undefined'){
                         text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
                       
                     }
@@ -2547,7 +2547,7 @@
                        'text':text,
                     }
                
-                    if(ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != ''){
+                    if(ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != '' && typeof ppt['value_text']  != 'undefined'){
                         if(containsObjectText(object, data_text)){
                             data_text.push(object);
                             html3 += '<div onchange="fillerInputText('+"'"+ppt['type_id']+"'"+','+"'"+ppt['value_text']+"'"+');" class="box-input-checkbox">';
@@ -2627,7 +2627,7 @@
                          if(data.value_text == null){
                             data.value_text = '';
                          }
-                         if(element['value_text'] == null){
+                         if(element['value_text'] == null && typeof element['value_text']  != 'undefined'){
                             data.value_text = '';
                          }
                         if(data.value_text.trim() == element['value_text'].trim()){
