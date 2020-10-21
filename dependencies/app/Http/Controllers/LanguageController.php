@@ -31,7 +31,6 @@ class LanguageController extends Controller
             ->with('language', $language);
     }
     public function copyToLang($lang){
-         $taskarr = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28];
          $taskNameArr = [
          'product_field_translation',
          'static_keyword_translations',
@@ -62,6 +61,7 @@ class LanguageController extends Controller
          'subpro_has_profilter_translation',
          'tech_type_translation',
          'about_us_translations',
+         'product_ducument_translations'
         ];
         // return dd(count($taskNameArr));
          return view('language.copy_lang')
@@ -121,6 +121,7 @@ class LanguageController extends Controller
                     [
                         "name" => $name,
                         "abbreviation" => $abbreviation,
+                        "status" => 0,
                         "created_at" => \Carbon\Carbon::now(),
                         "updated_at" => \Carbon\Carbon::now(),
                     ]
