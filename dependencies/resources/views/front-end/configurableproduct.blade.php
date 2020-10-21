@@ -978,6 +978,9 @@ function selectCountry(){
 	var ts_a = [100,100,100,85.7,73.3,61.1,53,50,42.8,33.3,34.4,33.3,28.6,25,22.2,20];
 	var do_a = [5,5,5,5,5,5,5,5,5,5,5,4,4,4];
 
+	var ts_a_gobal = [100,100,100,85.7,73.3,61.1,53,50,42.8,33.3,34.4,33.3,28.6,25,22.2,20];
+	var do_a_gobal = [5,5,5,5,5,5,5,5,5,5,5,4,4,4];
+
 	var code = '';
 	selectionGenerate();
 
@@ -1139,6 +1142,16 @@ function selectCountry(){
 			$('#bg-slot02').removeClass("bg-sixslot");
 			$('#bg-slot02').addClass("bg-fourslot");
 		}
+	     var ts_a_700 = [78.7,70,58.3,50,46.7,38.9,35,29.2,25,23.3,21.9,19.4,16.7,14.6,13,11.7];
+     	 var do_a_700 = [5,5,5,5,5,5,5,5,5,5,4.5,3.7,3.2,3];
+		 var index = $('#model').children("option:selected").val();
+		 if(model_alldata[index]['max_power'] == 700){
+			do_a = do_a_700;
+			ts_a = ts_a_700;
+		 }else{
+			do_a = do_a_gobal;
+			ts_a = ts_a_gobal;	 
+		 }
 		//addMoreOutput();
 		$('.slot').empty();
 		addSlotOutput();
@@ -1264,14 +1277,6 @@ function selectCountry(){
 	}
 
 	function getSelectCurrent(_this,type){
-		 var ts_a_700 = [78.7,70,58.3,50,46.7,38.9,35,29.2,25,23.3,21.9,19.4,16.7,14.6,13,11.7];
-     	 var do_a_700 = [5,5,5,5,5,5,5,5,5,5,4.5,3.7,3.2,3];
-		 var index = $('#model').children("option:selected").val();
-		 if(model_alldata[index]['max_power'] == 700){
-			do_a = do_a_700;
-			ts_a = ts_a_700;
-		 }
-
 		var parent = $(_this).parent().parent();
 		var value = $(_this).children("option:selected").val();
 		var text = '';
