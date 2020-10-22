@@ -3749,10 +3749,10 @@ class FrontendController extends Controller
                     ),
                 );  
                 
-                  return response()->make(file_get_contents($publicfile), 200, [
-                      'Content-Type' => $mime,
-                      'Content-Disposition' => 'inline; filename="'.$filename.'"'
-                  ]);
+                return response()->make(file_get_contents($publicfile ,false, stream_context_create($arrContextOptions) ), 200, [
+                    'Content-Type' => $mime,
+                    'Content-Disposition' => 'inline; filename="'.$filename.'"'
+                ]);
             
             }
 
