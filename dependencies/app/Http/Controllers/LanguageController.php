@@ -297,12 +297,6 @@ class LanguageController extends Controller
                 ->where('pt.local','en')
                 ->get();
                   foreach($products as $pro){
-                    $check1_dup = DB::table('products_translation as pt')
-                    ->select('pt.*')
-                    ->where('pt.product_id',$pro->product_id)
-                    ->where('pt.local',$new_local)
-                    ->get();
-                    if(count($check1_dup) == 0){
                         $products_translation = DB::table('products_translation')->insert(
                             [
                                 "product_id" => $pro->product_id,
@@ -312,11 +306,10 @@ class LanguageController extends Controller
                                 "local" => $new_local,
                             ]
                         );
-                    }
-                     $propertys = DB::table('product_has_property as ph')
-                      ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
+                    
+                     $propertys = DB::table('product_has_property_translation as pht')
                       ->select('pht.*' )
-                      ->where('ph.product_id',$pro->product_id)
+                      ->where('pht.product_id',$pro->product_id)
                       ->where('pht.local' ,'en')
                       ->get();
                         foreach($propertys as $per){
