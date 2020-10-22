@@ -3739,12 +3739,21 @@ class FrontendController extends Controller
                 // So it will create another folder called "storage/" inside ZIP, and put the file there.
                 $zip->addFile($path, $filename);
                 $zip->close();
-                return response()->download($zip_file);
+                return response()->download($zip_file)->deleteFileAfterSend(true);
             }else{
-                return response()->make(file_get_contents($publicfile), 200, [
-                    'Content-Type' => $mime,
-                    'Content-Disposition' => 'inline; filename="'.$filename.'"'
-                ]);
+
+                $arrContextOptions=array(
+                    "ssl"=>array(
+                        "verify_peer"=>false,
+                        "verify_peer_name"=>false,
+                    ),
+                );  
+                
+                  return response()->make(file_get_contents($publicfile ,false, stream_context_create($arrContextOptions) ), 200, [
+                      'Content-Type' => $mime,
+                      'Content-Disposition' => 'inline; filename="'.$filename.'"'
+                  ]);
+            
             }
 
             }else{
@@ -3796,7 +3805,14 @@ class FrontendController extends Controller
               $zip->close();
               return response()->download($zip_file)->deleteFileAfterSend(true);
           }else{
-              return response()->make(file_get_contents($publicfile), 200, [
+            $arrContextOptions=array(
+                "ssl"=>array(
+                    "verify_peer"=>false,
+                    "verify_peer_name"=>false,
+                ),
+            );  
+            
+              return response()->make(file_get_contents($publicfile ,false, stream_context_create($arrContextOptions) ), 200, [
                   'Content-Type' => $mime,
                   'Content-Disposition' => 'inline; filename="'.$filename.'"'
               ]);
