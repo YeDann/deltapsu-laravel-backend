@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Illuminate\Http\Request;
+use App\ProductPropertyTranslation;
 
 class LanguageController extends Controller
 {
@@ -22,8 +23,7 @@ class LanguageController extends Controller
     {
         $language = DB::table('language')->get();
      
-
-        // return dd($contents_e);
+     
 
         return view('language.index')
             ->with('name', 'setting')
@@ -39,7 +39,7 @@ class LanguageController extends Controller
          'application_translation',
          'section_translation',
          'products_translation',
-         'main_pro_categories_translations',
+         'product_has_property_translation',
          'product_ducument_translations',
          'series_translations',
          'static_content_translations',
@@ -61,6 +61,7 @@ class LanguageController extends Controller
          'subpro_has_profilter_translation',
          'tech_type_translation',
          'about_us_translations',
+         'main_pro_categories_translations'
         ];
         // return dd(count($taskNameArr));
          return view('language.copy_lang')
@@ -113,8 +114,7 @@ class LanguageController extends Controller
         } else {
             $new_local = $name;  
             $create_language = false;
-        
-
+       
                 $create_language = DB::table('language')->insert(
                     [
                         "name" => $name,
@@ -306,52 +306,25 @@ class LanguageController extends Controller
                                 "local" => $new_local,
                             ]
                         );
-                    
-                     $propertys = DB::table('product_has_property_translation as pht')
-                      ->select('pht.*' )
-                      ->where('pht.product_id',$pro->product_id)
-                      ->where('pht.local' ,'en')
-                      ->get();
-                        foreach($propertys as $per){
-                        DB::table('product_has_property_translation')->insert(
-                                    [
-                                        "per_fk_id" => $per->per_fk_id,
-                                        "product_id" => $per->product_id,
-                                        "value_text" => $per->value_text,
-                                        "local" =>$new_local,
-                                    ]
-                                );
-                        }
-
+                
                   }
 
 
                 }
               
                   if($task == 8){
-                    $mainCategories = DB::table('main_pro_categories_translations as mpt')
-                    ->where('mpt.local', '=', 'en')
-                    ->select('mpt.*')
-                    ->get();
 
-                    if(count($mainCategories) > 0){
-                        foreach($mainCategories as $main){
-                            $checkMin1_dup =  DB::table('main_pro_categories_translations as mpt')
-                            ->where('mpt.main_pro_id', '=', $main->main_pro_id)
-                            ->where('mpt.local', '=', $new_local)
-                            ->select('mpt.*')
-                            ->get();
-                            if(count($checkMin1_dup) == 0){
-                               DB::table('main_pro_categories_translations')->insert(
-                                   [
-                                       "main_pro_id" => $main->main_pro_id,
-                                       "name" => $main->name,
-                                       "local" => $new_local,
-                                   ]
-                               );
-                            }
-                        }
+                    $ProductPropertyTran = ProductPropertyTranslation::where('local' ,'en')->get();
+                    foreach($ProductPropertyTran as $per) {
+                        $per->create([
+                            "per_fk_id" => $per->per_fk_id,
+                            "product_id" => $per->product_id,
+                            "value_text" => $per->value_text,
+                            "local" => $new_local,
+                        ]);
                     }
+        
+             
 
                
                     }
@@ -789,6 +762,31 @@ class LanguageController extends Controller
                                     "local" => $new_local,
                                 ]
                             );
+                        }
+                    }
+                }
+                if($task == 30){
+                    $mainCategories = DB::table('main_pro_categories_translations as mpt')
+                    ->where('mpt.local', '=', 'en')
+                    ->select('mpt.*')
+                    ->get();
+
+                    if(count($mainCategories) > 0){
+                        foreach($mainCategories as $main){
+                            $checkMin1_dup =  DB::table('main_pro_categories_translations as mpt')
+                            ->where('mpt.main_pro_id', '=', $main->main_pro_id)
+                            ->where('mpt.local', '=', $new_local)
+                            ->select('mpt.*')
+                            ->get();
+                            if(count($checkMin1_dup) == 0){
+                               DB::table('main_pro_categories_translations')->insert(
+                                   [
+                                       "main_pro_id" => $main->main_pro_id,
+                                       "name" => $main->name,
+                                       "local" => $new_local,
+                                   ]
+                               );
+                            }
                         }
                     }
                 }
