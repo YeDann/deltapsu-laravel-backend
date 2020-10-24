@@ -127,6 +127,22 @@
       html[lang="tw"] label {  
         font-family:'ArialUnicodeMS', Helvetica, sans-serif !important ;
       }
+
+      
+      html[lang="jp"] body,
+      html[lang="jp"] h1,
+      html[lang="jp"] h2,
+      html[lang="jp"] h3,
+      html[lang="jp"] h4,
+      html[lang="jp"] h5,
+      html[lang="jp"] a,
+      html[lang="jp"] button,
+      html[lang="jp"] div,
+      html[lang="jp"] span ,
+      html[lang="jp"] .link-nav-first,
+      html[lang="jp"] label {  
+        font-family:'Tazugane Gothic StdN','ArialUnicodeMS', Helvetica, sans-serif !important ;
+      }
       .color-yellow{
         background-color: #252A2C;
         color: #fff;

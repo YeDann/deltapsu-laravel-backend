@@ -10,6 +10,17 @@
 	src: url('../fonts/ArialUnicodeMS.woff') format('woff'),
     url('../fonts/ArialUnicodeMS.ttf') format('truetype');
 }
+@font-face {
+    font-family: 'Tazugane Gothic StdN';
+    src: url('../fonts/TazuganeGothicStdN-Regular.eot');
+    src: url('../fonts/TazuganeGothicStdN-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/TazuganeGothicStdN-Regular.woff2') format('woff2'),
+        url('../fonts/TazuganeGothicStdN-Regular.woff') format('woff'),
+        url('../fonts/TazuganeGothicStdN-Regular.ttf') format('truetype'),
+        url('../fonts/TazuganeGothicStdN-Regular.svg#TazuganeGothicStdN-Regular') format('svg');
+    font-display: swap;
+}
+
 /* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1080">Text with this font applied</p> */
 .fontsforweb_fontid_1080 {
 	font-family: 'ArialUnicodeMS' !important;
