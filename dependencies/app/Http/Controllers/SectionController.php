@@ -154,7 +154,7 @@ class SectionController extends Controller
             ));
 
         }
-        return dd($section);
+        // return dd($section);
         return redirect()->route('section.index')->with('flash_message', 'Update Data successfully');
     }
     /**
