@@ -34,7 +34,7 @@ class FrontendController extends Controller
         // session()->forget('lang_down');
     $lang = App::getLocale();
     session(['lang_down' =>  App::getLocale()]);
-    view()->share('language', DB::table("language")->where('status',1)->orderBy('order_seq','asc')->get());
+    view()->share('language', DB::table("language")->where('status',1)->orderBy('created_at','asc')->get());
     view()->share('navcategories',  DB::table('categories_has_main_pro as chmp')
     ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
     ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
