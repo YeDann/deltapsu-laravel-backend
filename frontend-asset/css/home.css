@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   background-color: #ebebeb;
-  z-index: 9;
+  z-index: 9999;
   display: none;
   visibility: hidden;
 }
@@ -1724,23 +1724,44 @@ a .title-new {
 }
 
 .bg-sixslot {
-  background-image: url('../image/cproduct_201805071525686565843631.jpg');
+  /* background-image: url('../image/cproduct_201805071525686565843631.jpg'); */
   height: 200px;
+
 }
 
+.fix-col-box1 {
+  background-image: url('../image/Config1.svg');
+    width: 27px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.fix-col-box2 {
+  background-image: url('../image/Config2.svg');
+  width: 49px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 .bg-fourslot {
   background-image: url('../image/cproduct_201805071525686481866603.jpg');
   height: 280px;
 }
+.bg-sixslot #port{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  bottom: 15px;
+  height: 100%;
+  max-height: 178px;
+}
 
-.bg-sixslot #port,
+
 .bg-sixslot #port02 {
   position: absolute;
   bottom: 15px;
   left: 38px;
   height: 100%;
   max-height: 178px;
-  width: 100%;
 }
 
 .bg-fourslot #port,
@@ -1759,7 +1780,7 @@ a .title-new {
 }
 
 .bg-sixslot .blank {
-  width: 13.5%;
+  width: 78px;
   margin-right: 2px;
   font-size: 14px;
 }

@@ -1,9 +1,8 @@
-@extends('layouts.front-end')
-@section('css')
-<link rel="stylesheet" href="{{asset('/frontend-asset/css/jquery.steps.css')}}">
+<?php $__env->startSection('css'); ?>
+<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/jquery.steps.css')); ?>">
 
-<link rel="stylesheet" href="{{asset('/frontend-asset/css/procompare.css')}}">
-{{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> --}}
+<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/procompare.css')); ?>">
+
 <style type="text/css">
   #configurable-t-0::after{
 	content: "\f2fb";
@@ -120,7 +119,7 @@
   }
 }
 
-@keyframes dots {
+@keyframes  dots {
   0% {
     left: -10px;
   }
@@ -142,7 +141,7 @@
     margin-right: 10px;
   }
 }
-@keyframes show-dot {
+@keyframes  show-dot {
   0%,20% {
     width: 0px;
     height: 0px;
@@ -164,7 +163,7 @@
     left: 200px;
   }
 }
-@keyframes dot-fall-left {
+@keyframes  dot-fall-left {
   0%, 5% {
     left: 0px;
   }
@@ -180,7 +179,7 @@
     top: 50vh;
   }
 }
-@keyframes dot-fall-top {
+@keyframes  dot-fall-top {
   0%, 5% {
     top: 0px;
   }
@@ -197,13 +196,13 @@
 
 
 </style>
-@endsection
-@section('meta')
-<title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
-<meta name="description" content="{{isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''}}">
-<meta name="keywords" content="{{isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''}}">
-@endsection
-@section('container')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('meta'); ?>
+<title><?php echo e(isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''); ?></title>
+<meta name="description" content="<?php echo e(isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''); ?>">
+<meta name="keywords" content="<?php echo e(isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''); ?>">
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('container'); ?>
 <div class="padding-top-content">
 	</div>
 	<div class="products-index-nav visible-up-922">
@@ -211,18 +210,18 @@
 			<div class="container">
 				<nav aria-label="breadcrumb" id="breadcrumb">
 					<ol class="breadcrumb">
-						<li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+						<li class="breadcrumb-item text-breadcrumb-home"><a href="<?php echo e(route('index','home')); ?>"><?php echo e($staticContent['Home']); ?></a></li>
                         <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a
-                                href="#" data-toggle="dropdown" id="tools-dropdown"> {{$staticContent['Tools']}}</a>
+                                href="#" data-toggle="dropdown" id="tools-dropdown"> <?php echo e($staticContent['Tools']); ?></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Tools']}}</a></li>
+                                    <li><a href="#" id="tools-dropdown" class="text-bold"><?php echo e($staticContent['Tools']); ?></a></li>
                                     <hr>
-                                    <li><a href="{{route('productFinder')}}">{{$staticContent['Product_Selector']}}</a></li>
-                                <li><a href="{{route('configurableproduct')}}">{{$staticContent['configurable_power_selector']}}</a></li>
-                                <li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a></li>
+                                    <li><a href="<?php echo e(route('productFinder')); ?>"><?php echo e($staticContent['Product_Selector']); ?></a></li>
+                                <li><a href="<?php echo e(route('configurableproduct')); ?>"><?php echo e($staticContent['configurable_power_selector']); ?></a></li>
+                                <li><a href="<?php echo e(route('productCoparison')); ?>"><?php echo e($staticContent['product_comparison']); ?></a></li>
                                 </ul>   
                         </li>
-						<li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['configurable_power_selector']}}</a></li>
+						<li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#"><?php echo e($staticContent['configurable_power_selector']); ?></a></li>
 					</ol>
 				</nav>
 			</div>
@@ -231,16 +230,16 @@
 	<div class="padding-top-content-breadcrumb visible-up-922"></div>
 <div class="box-config mb-5">
 	<div class="container">
-		<h2 class="text-title-delta visible-up-922">{{$staticContent['configurable_power_selector']}}</h2>
-		<h3 class="text-title-delta invisible-up-922">{{$staticContent['configurable_power_selector']}}</h3>
+		<h2 class="text-title-delta visible-up-922"><?php echo e($staticContent['configurable_power_selector']); ?></h2>
+		<h3 class="text-title-delta invisible-up-922"><?php echo e($staticContent['configurable_power_selector']); ?></h3>
 		<div id="configurable">
-			<h3><b class="font-size-24 ">01</b><br>{{$staticContent['Select_Model']}}</h3>
+			<h3><b class="font-size-24 ">01</b><br><?php echo e($staticContent['Select_Model']); ?></h3>
 			<section >
 				<div class="heading-for-mobile text-center invisible-up-922 mb-4">
-					<img class="img-fluid mb-2 img-step" src="{{asset('/frontend-asset/image/icon/Step1.svg')}}">
-					<h4 class="text-color-delta">{{$staticContent['Select_Model']}}</h4>
+					<img class="img-fluid mb-2 img-step" src="<?php echo e(asset('/frontend-asset/image/icon/Step1.svg')); ?>">
+					<h4 class="text-color-delta"><?php echo e($staticContent['Select_Model']); ?></h4>
 				</div>
-				<h5 class="text-center visible-up-922" >{{$staticContent['Select_Model']}}</h5>
+				<h5 class="text-center visible-up-922" ><?php echo e($staticContent['Select_Model']); ?></h5>
 				<div class="row justify-content-center">
 					<div class="col-12">
 						<div class="row justify-content-center">
@@ -255,14 +254,14 @@
 					</div>
 					<div class="col-lg-4 col-md-12">
 						<div class="content">
-							<p class="mb-1"><b class="text-sixteen-delta">{{$staticContent['Highlights_Features']}}</b></p>
+							<p class="mb-1"><b class="text-sixteen-delta"><?php echo e($staticContent['Highlights_Features']); ?></b></p>
 							<div class="text-info">
 							</div>
-							{{-- <p class="my-1"><b>LOBORTIS CONSEQUAT LIGULA</b></p> --}}
-							<p class="m-0"><span class="text-sixteen-delta c_delta"><b>{{$staticContent['Unit_Weight']}}</b></span></p>
+							
+							<p class="m-0"><span class="text-sixteen-delta c_delta"><b><?php echo e($staticContent['Unit_Weight']); ?></b></span></p>
 							<p class="c_delta_weight text-detail-describe m-0"></p>
 							<br>
-							<p class="m-0"><span class="text-sixteen-delta c_delta"><b>{{$staticContent['Dimensions']}} (L x W x H)</b></span></p>
+							<p class="m-0"><span class="text-sixteen-delta c_delta"><b><?php echo e($staticContent['Dimensions']); ?> (L x W x H)</b></span></p>
 							<p class="c_delta_mm text-detail-describe m-0"></p>
 							<p class="c_delta_inc text-detail-describe m-0"></p>
 							
@@ -271,38 +270,40 @@
 					</div>
 					<div class="col-12">
 					<p class="text-center mt-5">
-					*{{$staticContent['If_you_need_the_frame_or_module_only']}}
+					*<?php echo e($staticContent['If_you_need_the_frame_or_module_only']); ?>
+
 					</p>
 					</div>
 				</div>
 			</section>
-			<h3><b class="font-size-24 ">02</b><br>{{$staticContent['Select_Output(s)']}}</h3>
+			<h3><b class="font-size-24 ">02</b><br><?php echo e($staticContent['Select_Output(s)']); ?></h3>
 			<section> 
 				<div class="heading-for-mobile text-center invisible-up-922">
-					<img class="img-fluid mb-2 img-step" src="{{asset('/frontend-asset/image/icon/Step2.svg')}}">
-					<h4 class="text-color-delta">{{$staticContent['Select_Output(s)']}}</h4>
+					<img class="img-fluid mb-2 img-step" src="<?php echo e(asset('/frontend-asset/image/icon/Step2.svg')); ?>">
+					<h4 class="text-color-delta"><?php echo e($staticContent['Select_Output(s)']); ?></h4>
 				</div>
 				<div class="row add-space-mobile reverse-on-mobile ">
 					
 					<div class="col-lg-12 col-md-12 order-lg-2">
 						<div class="row  mt-lg-5">
                           <div class="col-lg-6">
-							<h5 class="visible-up-922">{{$staticContent['Select_Output(s)']}}</h5>
+							<h5 class="visible-up-922"><?php echo e($staticContent['Select_Output(s)']); ?></h5>
 							<div class="slot ">
 							</div>
 							<button class="btn btn-subscribe btn-xs mt-2 ml-mobile-6px" id="addmore" onclick="addSlotOutput()">
 								<i class="zmdi zmdi-plus"></i>
-								{{$staticContent['Add_More_Output']}}
+								<?php echo e($staticContent['Add_More_Output']); ?>
+
 							</button>
 						  </div>
 						  <div class="col-lg-6">
 							<div class="row mt-3 pt-2 add-space-mobile border-t-2px">
 								<div class="col-4 column-total">
-									<label for="output_total"><h5>{{$staticContent['Total_No_of_Output']}}</h5></label>
+									<label for="output_total"><h5><?php echo e($staticContent['Total_No_of_Output']); ?></h5></label>
 									<input type="text" id="output_total" name="output_total" class="form-control" value="1" disabled="disabled">
 								</div>
 								<div class="col-4 offset-4 column-total">
-									<label for="power"><h5>{{$staticContent['Total_Output_Power']}}</h5></label>
+									<label for="power"><h5><?php echo e($staticContent['Total_Output_Power']); ?></h5></label>
 									<input type="text" id="power" name="power" class="form-control" value="" disabled="disabled" placeholder="Total Power">
 								</div>
 							</div>
@@ -310,9 +311,10 @@
 						<div class="row  add-space-mobile">
 							<div class="col-lg-6 col-md-12 mt-3">
 								<label for="">
-									<h5>{{$staticContent['Option']}}
+									<h5><?php echo e($staticContent['Option']); ?>
+
 									<span class="wrp-icons">
-										<img class="align-baseline" src="{{asset('frontend-asset/image/tooltip.svg')}}" data-toggle="tooltip" data-placement="top" title="{{$staticContent['Inlet_Type_description']}}">
+										<img class="align-baseline" src="<?php echo e(asset('frontend-asset/image/tooltip.svg')); ?>" data-toggle="tooltip" data-placement="top" title="<?php echo e($staticContent['Inlet_Type_description']); ?>">
 									</span></h5>
 								</label>
 								<select class="form-control" id="terminal" onchange="getToSummary()">
@@ -323,9 +325,10 @@
 							</div>
 							<div class="col-lg-6 col-md-12 mt-3">
 								<label for="">
-									<h5>{{$staticContent['Communication']}}
+									<h5><?php echo e($staticContent['Communication']); ?>
+
 									<span class="wrp-icons">
-										<img  class="align-baseline" src="{{asset('frontend-asset/image/tooltip.svg')}}" data-toggle="tooltip" data-placement="top" title="{{$staticContent['Communication_description']}}">
+										<img  class="align-baseline" src="<?php echo e(asset('frontend-asset/image/tooltip.svg')); ?>" data-toggle="tooltip" data-placement="top" title="<?php echo e($staticContent['Communication_description']); ?>">
 									</span></h5>
 								</label>
 								<select class="form-control" id="bus" onchange="getToSummary()">
@@ -340,16 +343,17 @@
 						<div class="row mt-3 add-space-mobile">
 							<div class="col-12">
 								<label for="">
-									<h5>{{$staticContent['Control_Code']}}
+									<h5><?php echo e($staticContent['Control_Code']); ?>
+
 									<span class="wrp-icons">
-										<img  class="align-baseline"  src="{{asset('frontend-asset/image/tooltip.svg')}}" data-toggle="tooltip" data-placement="top" title="{{$staticContent['Control_Code_description']}}">
+										<img  class="align-baseline"  src="<?php echo e(asset('frontend-asset/image/tooltip.svg')); ?>" data-toggle="tooltip" data-placement="top" title="<?php echo e($staticContent['Control_Code_description']); ?>">
 									</span></h5>
 								</label>
 								<select class="form-control" id="logic" onchange="getToSummary()">
-									<option  selected="selected" value="0">{{$staticContent['Nomal_Logic_&_Normal_Fan_Direction']}} </option>
-									<option value="1">{{$staticContent['Reversed_Logic_&_Normal_Fan_Direction']}}</option>
-									<option value="2">{{$staticContent['Nomal_Logic_&_Reversed_Fan_Direction']}} </option>
-									<option value="3">{{$staticContent['Reversed_Logic_&_Reversed_Fan_Direction']}}</option>
+									<option  selected="selected" value="0"><?php echo e($staticContent['Nomal_Logic_&_Normal_Fan_Direction']); ?> </option>
+									<option value="1"><?php echo e($staticContent['Reversed_Logic_&_Normal_Fan_Direction']); ?></option>
+									<option value="2"><?php echo e($staticContent['Nomal_Logic_&_Reversed_Fan_Direction']); ?> </option>
+									<option value="3"><?php echo e($staticContent['Reversed_Logic_&_Reversed_Fan_Direction']); ?></option>
 								</select>
 							</div>
 						</div>
@@ -360,7 +364,7 @@
 				
 					</div>
 					<div class="col-lg-12 col-md-12 order-lg-1" style="padding-left:24px;">
-					<h4 class=" text-center text-dark visible-up-922">{{$staticContent['Module_Preview']}}</h4>
+					<h4 class=" text-center text-dark visible-up-922"><?php echo e($staticContent['Module_Preview']); ?></h4>
 						<div id="bg-slot">
 							<div class="preview row " id="port">
 							</div>
@@ -370,19 +374,20 @@
 					</div>
 				</div>
 			</section>
-			<h3><b class="font-size-24 ">03</b><br>{{$staticContent['Select_Parallel']}}</h3>
+			<h3><b class="font-size-24 ">03</b><br><?php echo e($staticContent['Select_Parallel']); ?></h3>
 			<section>
 				<div class="heading-for-mobile text-center invisible-up-922">
-					<img class="img-fluid mb-2 img-step" src="{{asset('/frontend-asset/image/icon/Step3.svg')}}">
-					<h4 class="text-color-delta">{{$staticContent['Select_Parallel_Connection(s)']}}<span class="wrp-icons">
-						<img class="img-tooltip" src="{{asset('frontend-asset/image/tooltip.svg')}}" data-toggle="tooltip" data-placement="top" title="Select Logic for remote on/off function. Normal logic is power supply default on, reserved logic is default off.">
+					<img class="img-fluid mb-2 img-step" src="<?php echo e(asset('/frontend-asset/image/icon/Step3.svg')); ?>">
+					<h4 class="text-color-delta"><?php echo e($staticContent['Select_Parallel_Connection(s)']); ?><span class="wrp-icons">
+						<img class="img-tooltip" src="<?php echo e(asset('frontend-asset/image/tooltip.svg')); ?>" data-toggle="tooltip" data-placement="top" title="Select Logic for remote on/off function. Normal logic is power supply default on, reserved logic is default off.">
 					</span></h4>
 				</div>
 				<div class="row justify-content-center add-space-mobile">
 					<div class="col-lg-8 col-md-12">
-						<h5 class="text-center visible-up-922">{{$staticContent['Select_Parallel_Connection(s)']}}
+						<h5 class="text-center visible-up-922"><?php echo e($staticContent['Select_Parallel_Connection(s)']); ?>
+
 							<span class="wrp-icons">
-								<img src="{{asset('frontend-asset/image/tooltip.svg')}}" data-toggle="tooltip" data-placement="top" title="Select Logic for remote on/off function. Normal logic is power supply default on, reserved logic is default off.">
+								<img src="<?php echo e(asset('frontend-asset/image/tooltip.svg')); ?>" data-toggle="tooltip" data-placement="top" title="Select Logic for remote on/off function. Normal logic is power supply default on, reserved logic is default off.">
 							</span>
 						</h5>
 						<table class="w-100 parallel">
@@ -390,12 +395,12 @@
 								<tr class="header-td">
 									<td></td>
 									<td>Code</td>
-									<td>{{$staticContent['Slot']}}1</td>
-									<td>{{$staticContent['Slot']}}2</td>
-									<td>{{$staticContent['Slot']}}3</td>
-									<td>{{$staticContent['Slot']}}4</td>
-									<td>{{$staticContent['Slot']}}5</td>
-									<td>{{$staticContent['Slot']}}6</td>
+									<td><?php echo e($staticContent['Slot']); ?>1</td>
+									<td><?php echo e($staticContent['Slot']); ?>2</td>
+									<td><?php echo e($staticContent['Slot']); ?>3</td>
+									<td><?php echo e($staticContent['Slot']); ?>4</td>
+									<td><?php echo e($staticContent['Slot']); ?>5</td>
+									<td><?php echo e($staticContent['Slot']); ?>6</td>
 								</tr>
 							</thead>
 							<tbody>
@@ -534,72 +539,72 @@
 					</div>
 				</div>
 			</section>
-			<h3><b class="font-size-24 t">04</b><br>{{$staticContent['Summary']}}</h3>
+			<h3><b class="font-size-24 t">04</b><br><?php echo e($staticContent['Summary']); ?></h3>
 			<section class="summary-body config-conten" id="sumbb">
 				<div class="heading-for-mobile text-center invisible-up-922">
-					<img class="img-fluid mb-2 img-step" src="{{asset('/frontend-asset/image/icon/Step4.svg')}}">
-					<h4 class="text-color-delta">{{$staticContent['Summary']}}</h4>
+					<img class="img-fluid mb-2 img-step" src="<?php echo e(asset('/frontend-asset/image/icon/Step4.svg')); ?>">
+					<h4 class="text-color-delta"><?php echo e($staticContent['Summary']); ?></h4>
 				</div>
 				<div id="configurable-summary">
 					<div class="d-flex flex-wrap border-2px-unmobile"  id="savethis">
-						{{-- <div class="col-12"> --}}
+						
 							<div class="summary-subbody" >
-								<h5 class="text-color-delta">{{$staticContent['Factory_Model_Name']}} :</h5>
+								<h5 class="text-color-delta"><?php echo e($staticContent['Factory_Model_Name']); ?> :</h5>
 								<h3 class="factory text-normal"></h3>
 
-								<h5 class="text-color-delta">{{$staticContent['Customer_Model_Name']}} :</h5>
+								<h5 class="text-color-delta"><?php echo e($staticContent['Customer_Model_Name']); ?> :</h5>
 								<h3 class="customer text-normal"></h3>
 							</div>
 							<div class="summary-subbody d-flex flex-wrap justify-content-start">
 								<div class="col-lg-3 col-md-12" id="img-summary"></div>
 								<div class="col-lg-9 col-md-12" id="text-summary">
 									<div class="col-lg-4 col-md-12">
-										<p class="mb-1"><b class="text-sixteen-delta">{{$staticContent['Highlights_Features']}}</b></p>
+										<p class="mb-1"><b class="text-sixteen-delta"><?php echo e($staticContent['Highlights_Features']); ?></b></p>
 										<div class="text-info"></div>
-										<p class="m-0"><span class="text-sixteen-delta c_delta"><b>{{$staticContent['Unit_Weight']}}</b></span></p>
+										<p class="m-0"><span class="text-sixteen-delta c_delta"><b><?php echo e($staticContent['Unit_Weight']); ?></b></span></p>
 										<p class="c_delta_weight text-detail-describe m-0"></p>
 										<br>
-										<p class="m-0"><span class="text-sixteen-delta c_delta"><b>{{$staticContent['Dimensions']}} (L x W x D)</b></span></p>
+										<p class="m-0"><span class="text-sixteen-delta c_delta"><b><?php echo e($staticContent['Dimensions']); ?> (L x W x D)</b></span></p>
 										<p class="c_delta_mm text-detail-describe m-0"></p>
 										<p class="c_delta_inc text-detail-describe m-0"></p>
 									</div>
 								</div>
 							</div>
 							<div class="summary-subbody w-100">
-								<h3>{{$staticContent['General_Description']}}</h3>
+								<h3><?php echo e($staticContent['General_Description']); ?></h3>
 								<div class="row add-space-mobile"style="">
 									<div class="col-lg-6 col-md-12">
 										<div class="describe-list">
-											<p class="text-sixteen-delta">{{$staticContent['Total_Output_Power']}} :</p>
+											<p class="text-sixteen-delta"><?php echo e($staticContent['Total_Output_Power']); ?> :</p>
 											<p class="text-detail-describe" id="sumpower">-</p>	
 										</div>
 										<div class="describe-list">
-											<p class="text-sixteen-delta">{{$staticContent['Configuration_Modular_Parts']}}:</p>
+											<p class="text-sixteen-delta"><?php echo e($staticContent['Configuration_Modular_Parts']); ?>:</p>
 											<p class="text-detail-describe" id="customer"></p>
 											<p class="text-detail-describe" id="model-fac"></p>
 											<p class="text-detail-describe" id="factory"></p>
 											
 										</div>
 										<div class="describe-list">
-											<p class="text-sixteen-delta"># {{$staticContent['of_slots']}}  :</p>
+											<p class="text-sixteen-delta"># <?php echo e($staticContent['of_slots']); ?>  :</p>
 											<p class="text-detail-describe" id="numoutput"></p>
 										</div>
 										<div class="describe-list">
-											<p class="text-sixteen-delta">{{$staticContent['Inlet_Type']}} :</p>
+											<p class="text-sixteen-delta"><?php echo e($staticContent['Inlet_Type']); ?> :</p>
 											<p class="text-detail-describe" id="inlet"></p>
 										</div>
 										<div class="describe-list">
-											<p class="text-sixteen-delta">{{$staticContent['Communication']}} :</p>
+											<p class="text-sixteen-delta"><?php echo e($staticContent['Communication']); ?> :</p>
 											<p class="text-detail-describe" id="commu" ></p>
 										</div>
 										<div class="describe-list">
-											<p class="text-sixteen-delta">{{$staticContent['Control_Code']}}:</p>
+											<p class="text-sixteen-delta"><?php echo e($staticContent['Control_Code']); ?>:</p>
 											<p class="text-detail-describe" id="control-code"></p>
 										</div> 
 									</div>
 									<div class="col-lg-6 col-md-12 column-model" >
 										<div class="describe-list">
-											<p class="text-sixteen-delta">{{$staticContent['Module(s)']}} :</p>
+											<p class="text-sixteen-delta"><?php echo e($staticContent['Module(s)']); ?> :</p>
 											<div id="list-slot" class="text-detail-describe"></div>
 										</div> 
 										<div id="bg-slot02">
@@ -608,18 +613,18 @@
 										</div>
 										<div class="w-100">
 												<div class=""style="margin-top:24px;">
-													<p class="text-sixteen-delta" >{{$staticContent['Parallel_Detail']}}</p>
+													<p class="text-sixteen-delta" ><?php echo e($staticContent['Parallel_Detail']); ?></p>
 													<table class="w-100 parallel"style="margin-top:12px;">
 														<thead>
 															<tr class="header-td">
 																<td ></td>
 																<td>Code</td>
-																<td>{{$staticContent['Slot']}}1</td>
-																<td>{{$staticContent['Slot']}}2</td>
-																<td>{{$staticContent['Slot']}}3</td>
-																<td>{{$staticContent['Slot']}}4</td>
-																<td>{{$staticContent['Slot']}}5</td>
-																<td>{{$staticContent['Slot']}}6</td>
+																<td><?php echo e($staticContent['Slot']); ?>1</td>
+																<td><?php echo e($staticContent['Slot']); ?>2</td>
+																<td><?php echo e($staticContent['Slot']); ?>3</td>
+																<td><?php echo e($staticContent['Slot']); ?>4</td>
+																<td><?php echo e($staticContent['Slot']); ?>5</td>
+																<td><?php echo e($staticContent['Slot']); ?>6</td>
 															</tr>
 														</thead>
 														<tbody>
@@ -761,7 +766,7 @@
 								</div>
 							</div>
 							
-						{{-- </div> --}}
+						
 					</div>
 				</div>
 				<button id="savedataauto" onclick="addToiframe(), convertToPDF();" class="d-none">Save to pdf</button>
@@ -781,10 +786,11 @@
           <span aria-hidden="true">&times;</span>
         </button>
 	  </div>
-	  <form id="submitSupport" name="configform" action="{{route('SubmitContact')}}" onsubmit="return checkConfigFilefrom()" method="POST">
+	  <form id="submitSupport" name="configform" action="<?php echo e(route('SubmitContact')); ?>" onsubmit="return checkConfigFilefrom()" method="POST">
       <div class="modal-body">
 	
-			{{csrf_field()}}
+			<?php echo e(csrf_field()); ?>
+
 			<input type="hidden" name="config_id" id="con_id">
 			<input type="hidden" name="enquireStatus" id="enquireStatus" value="3">
 			<input type="hidden" id="subject" name="subject" value="Configurable Power PDF Download">
@@ -795,10 +801,10 @@
 				<label for="country" class=""> <h6> Country <span style="color: red">*</span> :</h6></label>
 				<div class="">
 					<select name="country" class="form-control" onchange="selectCountry();" id="countryemailId" required>
-                        <option value="0">{{$staticContent['Select']}} {{$staticContent['Country']}}</option>
-                        @foreach ($countryemails as $email)
-                          <option value="{{$email->country}}">{{$email->country}}</option>
-                        @endforeach
+                        <option value="0"><?php echo e($staticContent['Select']); ?> <?php echo e($staticContent['Country']); ?></option>
+                        <?php $__currentLoopData = $countryemails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $email): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <option value="<?php echo e($email->country); ?>"><?php echo e($email->country); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
 				</div>
 			</div>
@@ -806,7 +812,7 @@
 				<label for="city" class=" "><h6>City / State </h6> </label>
 				<div class="">
 					<select name="state" class="form-control" id="stateId" >
-                        <option value="" data-color="red">{{$staticContent['Select']}} {{$staticContent['City_State']}}</option>
+                        <option value="" data-color="red"><?php echo e($staticContent['Select']); ?> <?php echo e($staticContent['City_State']); ?></option>
                     </select>
 				</div>
 			</div>
@@ -889,9 +895,9 @@
 	</div>
  </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 
 <script type="text/javascript">
 	var verifyCallback = function(response) {
@@ -915,20 +921,20 @@
 	  event.preventDefault();
    });
 
-       @if(Session::has('message_eror'))
+       <?php if(Session::has('message_eror')): ?>
         $(document).ready(function() {
              $("#downloadgui-modal-failures").modal();
           });
-        @endif
+        <?php endif; ?>
 
 </script>
-<script src="{{asset('/frontend-asset/js/jquery.steps.min.js')}}"></script>
+<script src="<?php echo e(asset('/frontend-asset/js/jquery.steps.min.js')); ?>"></script>
 <script>
-	    @if(Session::has('message'))
+	    <?php if(Session::has('message')): ?>
         $(document).ready(function() {
              $("#sendConfigpdf").modal();
           });
-        @endif
+        <?php endif; ?>
 	
 function checkdata(){
 	if($('#checkdataSub').val() == 0){
@@ -941,7 +947,7 @@ function checkdata(){
 function selectCountry(){
        var countryname = $('#countryemailId').val();
        $.ajax({
-            url: "{{(route('searhstate'))}}",
+            url: "<?php echo e((route('searhstate'))); ?>",
             data: {
             'countryname': countryname,
            },
@@ -1016,14 +1022,14 @@ function selectCountry(){
 			if(currentIndex === 0){
 				$('.wizard > .actions').attr('style', 'border: 2px solid transparent;');
 				$('a[href$="previous"]').attr('style', 'display:none');
-				$('a[href$="next"]').text('{{$staticContent['Select_Output(s)']}}');
+				$('a[href$="next"]').text('<?php echo e($staticContent['Select_Output(s)']); ?>');
 			
 			}
 			if(currentIndex === 1){
 				$('.wizard > .actions').attr('style', 'border: 2px solid transparent;');
 				$('a[href$="previous"]').attr('style', 'display:block');
-				$('a[href$="previous"]').text('{{$staticContent['Select_Model']}}');
-                $('a[href$="next"]').text('{{$staticContent['Select_Parallel']}}');
+				$('a[href$="previous"]').text('<?php echo e($staticContent['Select_Model']); ?>');
+                $('a[href$="next"]').text('<?php echo e($staticContent['Select_Parallel']); ?>');
 				$('a[href$="previous"]').removeClass("btn-enquiry");
 				$('a[href$="previous"]').addClass("btn-previous-border");
             }
@@ -1032,8 +1038,8 @@ function selectCountry(){
 				$('.wizard > .actions').attr('style', 'border: 2px solid transparent;');
 				$('.wizard > .content').attr('style', 'border-bottom: 2px solid #E3EFF8;');
 				$('a[href$="previous"]').attr('style', 'display:block');
-				$('a[href$="previous"]').text('{{$staticContent['Select_Output(s)']}}');
-				$('a[href$="next"]').text('{{$staticContent['Summary']}}');
+				$('a[href$="previous"]').text('<?php echo e($staticContent['Select_Output(s)']); ?>');
+				$('a[href$="next"]').text('<?php echo e($staticContent['Summary']); ?>');
 				$('a[href$="previous"]').removeClass("btn-enquiry");
 				$('a[href$="previous"]').addClass("btn-previous-border");
 				// $('.wizard > .content').height($('section.current').height()+60);
@@ -1044,12 +1050,12 @@ function selectCountry(){
 				$('.wizard > .actions').attr('style', 'border: 2px solid #E3EFF8;');
 				$('.wizard > .content').attr('style', 'border-bottom: unset;');
 				$('a[href$="previous"]').attr('style', 'display:block');
-				$('a[href$="previous"]').text('{{$staticContent['Enquiry']}}');
+				$('a[href$="previous"]').text('<?php echo e($staticContent['Enquiry']); ?>');
 				$('a[href$="previous"]').removeClass("btn-previous-border");
 				$('a[href$="previous"]').addClass("btn-enquiry");
 				$('a[href$="previous"]').addClass("resetenqu");
 				$('a[href$="previous"]').attr('id','submitenquiry'); 
-				$('a[href$="previous"]').html('<button class="btn-enquiry" onclick="linktosupport();">{{$staticContent['Enquiry']}}</button>'); 
+				$('a[href$="previous"]').html('<button class="btn-enquiry" onclick="linktosupport();"><?php echo e($staticContent['Enquiry']); ?></button>'); 
 				$('a[href$="previous"]').attr("href" ,'#');
 			
 		      
@@ -1069,8 +1075,8 @@ function selectCountry(){
 		
 		/* enableFinishButton: false, */
 		labels: {
-			next: "{{$staticContent['Select_Output(s)']}}",
-			finish: "{{$staticContent['Send']}} PDF"
+			next: "<?php echo e($staticContent['Select_Output(s)']); ?>",
+			finish: "<?php echo e($staticContent['Send']); ?> PDF"
 		}
 	});
 	
@@ -1084,7 +1090,7 @@ function selectCountry(){
 	function linktosupport(){
 		$('#stateSelectbth').val(1);
 		if(checkvalueConfOnly()){
-			window.location  = "{{route('contactSupport')}}";
+			window.location  = "<?php echo e(route('contactSupport')); ?>";
 		}else{
 			$('#loaderSavefile').css("display",'block');
 		}
@@ -1132,10 +1138,10 @@ function selectCountry(){
 		$('#slot').empty();
 		var index = $('#model').children("option:selected").val();
 		$('.text-info').html(model_alldata[index]['description']);
-		$('#img').html('<img class="img-model " src="{{config('app.url') }}/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
-		$('#img-summary').html('<img class="img-fluid" src="{{config('app.url') }}/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
-		$('#img-summary-pdf').html('<img class="img-model" src="{{config('app.url') }}/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
-		$('#certificate').html('<img class="float-right" src="{{config('app.url') }}/media/model/'+model_alldata[index]['certificate_img']+'" alt="">');
+		$('#img').html('<img class="img-model " src="<?php echo e(config('app.url')); ?>/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
+		$('#img-summary').html('<img class="img-fluid" src="<?php echo e(config('app.url')); ?>/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
+		$('#img-summary-pdf').html('<img class="img-model" src="<?php echo e(config('app.url')); ?>/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
+		$('#certificate').html('<img class="float-right" src="<?php echo e(config('app.url')); ?>/media/model/'+model_alldata[index]['certificate_img']+'" alt="">');
 		var l = parseFloat(model_alldata[index]['dimensions']);
 		var w = parseFloat(model_alldata[index]['dimen_w']);
 		var d = parseFloat(model_alldata[index]['dimen_d']);
@@ -1192,16 +1198,16 @@ function selectCountry(){
 		text +='<input type="hidden" name="index" value="'+index+'"/>';
 		text +='<input type="hidden" name="slot" value="1"/>';
 		text +='<div class="col-3">';
-		text +='<p class="">{{$staticContent['Slot']}} '+index+'</p>';
+		text +='<p class=""><?php echo e($staticContent['Slot']); ?> '+index+'</p>';
 		text +='</div>';
 		text +='<div class="col-9">';
 		text +='<div class="form-check form-check-inline">';
 		text +='<input class="form-check-input" type="radio" onchange="getSelecter(this);" name="slot-type-'+index+'" id="single'+index+'" value="1">';
-		text +='<label class="form-check-label" for="single'+index+'">{{$staticContent['Single_Slot']}}</label>';
+		text +='<label class="form-check-label" for="single'+index+'"><?php echo e($staticContent['Single_Slot']); ?></label>';
 		text +='</div>';
 		text +='<div class="form-check form-check-inline">';
 		text +='<input class="form-check-input" type="radio" onchange="getSelecter(this);" name="slot-type-'+index+'" id="dual'+index+'" value="2">';
-		text +='<label class="form-check-label" for="dual'+index+'">{{$staticContent['Dual_Slot']}}</label>';
+		text +='<label class="form-check-label" for="dual'+index+'"><?php echo e($staticContent['Dual_Slot']); ?></label>';
 		text +='</div>';
 		text +='</div>';
 		text +='</div>'
@@ -1361,7 +1367,7 @@ function selectCountry(){
 			// console.log(!checkSlotMax(2) ,'Slot more than 800');
 			if(!checkSlotMax(2)){
 				parent.children('input[name=slot]').val(3);
-				parent.children('.col-3').children('p').html('{{$staticContent['Slot']}}'+_index+' - '+(_index+2));
+				parent.children('.col-3').children('p').html('<?php echo e($staticContent['Slot']); ?>'+_index+' - '+(_index+2));
 				var lastindex = $('.slot .child-slot:last-child input[name=index]').val();
 				if(_index < lastindex){
 					var this_val = 0;
@@ -1395,14 +1401,14 @@ function selectCountry(){
 			}
 		}else{
 			if(parent.children('input[name=slot]').val() == 3){
-				parent.children('.col-3').children('p').html('{{$staticContent['Slot']}}'+_index);
+				parent.children('.col-3').children('p').html('<?php echo e($staticContent['Slot']); ?>'+_index);
 				$.each($('.slot .child-slot'),function(index,value){
 					if($(value).children('input[name=index]').val() > _index){
 						this_val = parseInt($(value).children('input[name=index]').val())-2;
 						$(value).prop('id','child-'+this_val);
 						$(value).children('input[name=index]').val(this_val);
 						this_index = ($(value).children('input[name=slot]').val() != 1) ? this_val+' - '+(this_val+2) : this_val;
-						$(value).children('.col-3').children('p').html('{{$staticContent['Slot']}} '+this_index);
+						$(value).children('.col-3').children('p').html('<?php echo e($staticContent['Slot']); ?> '+this_index);
 						$(value).children('.select-box').children('.col-3:last-child').children('.btn-undo-icon').attr('onclick','resetData('+this_val+')');
 					}
 				});
@@ -1429,7 +1435,7 @@ function selectCountry(){
 			_value = $('.slot #child-'+i);
 			text = '';
 			if($(_value).children('.select-box').length > 0){
-			text += '<img src="{{asset('frontend-asset/image/bullet.svg')}}" >';
+			text += '<img src="<?php echo e(asset('frontend-asset/image/bullet.svg')); ?>" >';
 			}
 			if($(_value).children('.select-box').length > 0){
 				$.each($(_value).children('.select-box'),function(index,value){
@@ -1493,7 +1499,7 @@ function selectCountry(){
 					i+=2;
 				}
 				text += '<div class="fix-height '+class_col+'bg-gray  order-'+(12-i)+'" id="port'+(i)+'">';
-				text += '<p>{{$staticContent['Slot']}}'+$(_value).children('input[name=index]').val()+'</p>';
+				text += '<p><?php echo e($staticContent['Slot']); ?>'+$(_value).children('input[name=index]').val()+'</p>';
 				$.each($(_value).children('.select-box'),function(index,value){
 					if($(value).children('.input').children('input').val() > 0){
 						if(index > 1){
@@ -1792,14 +1798,14 @@ function selectCountry(){
 	 doc.write(
             '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional //EN" "http://www.w3.org/TR/html4/loose.dtd">'+
             '<html><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">'+
-			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/font.css')}}">'+
-			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/embepdf.css')}}">'+
-		    '<link rel="stylesheet" href="{{asset('/frontend-asset/css/header-front.css')}}">'+
-			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/container.css')}}">'+
-			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/home.css')}}">'+
-			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/product.css')}}">'+
-			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/procompare.css')}}">'+
-			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/bulltetpdf.css')}}">'+
+			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/font.css')); ?>">'+
+			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/embepdf.css')); ?>">'+
+		    '<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/header-front.css')); ?>">'+
+			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/container.css')); ?>">'+
+			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/home.css')); ?>">'+
+			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/product.css')); ?>">'+
+			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/procompare.css')); ?>">'+
+			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/bulltetpdf.css')); ?>">'+
 			'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC&display=swap">'+
 			'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap">'+
 			'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap">'+
@@ -1843,7 +1849,7 @@ function selectCountry(){
 
 	function savedatadataPdf(data){
 		$.ajax({
-					url: "{{route('savepdfConfig')}}",
+					url: "<?php echo e(route('savepdfConfig')); ?>",
 					data: data,
 					processData: false,
 					contentType: false,
@@ -1866,4 +1872,5 @@ function selectCountry(){
 </script>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.front-end', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Deltapsu_Production\dependencies\resources\views/front-end/configurableproduct.blade.php ENDPATH**/ ?>
