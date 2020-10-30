@@ -3894,16 +3894,23 @@ class FrontendController extends Controller
                 'status' => false,
             ]; 
         }
-       
-
-        
 
         return response()->json([
             'data' =>$data 
                 ], 200);
     }
   
-       
+    function loadparallercon(Request $request){
+        $model_id = $request->model_id;
+        $Parallels =  DB::table('parallel_connections as pc')
+        ->where('pc.model_id','=',$model_id)
+        ->select('pc.*')
+        ->get();
+
+        return response()->json([
+            'data' =>$Parallels 
+                ], 200);
+    }
 
        
        

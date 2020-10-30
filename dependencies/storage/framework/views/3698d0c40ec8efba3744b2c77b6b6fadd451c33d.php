@@ -1,8 +1,7 @@
-@extends('layouts.admin')
-@section('style')
+<?php $__env->startSection('style'); ?>
 
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <!-- Nav -->
 <div class="bg-body-light">
     <div class="content content-full">
@@ -20,18 +19,20 @@
 <!-- Content -->
 <div class="content">
 
-    @if(Session::has('flash_message'))
+    <?php if(Session::has('flash_message')): ?>
     <div class="alert alert-success" role="alert">
         <button class="close" data-dismiss="alert"></button>
-        {!! Session('flash_message') !!}
+        <?php echo Session('flash_message'); ?>
+
     </div>
-    @endif
-    @if(Session::has('error_message'))
+    <?php endif; ?>
+    <?php if(Session::has('error_message')): ?>
     <div class="alert alert-danger" role="alert">
         <button class="close" data-dismiss="alert"></button>
-        {!! Session('error_message') !!}
+        <?php echo Session('error_message'); ?>
+
     </div>
-    @endif
+    <?php endif; ?>
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
             <h3 class="block-title">
@@ -41,8 +42,8 @@
                 
                 </div>
                 <div class="block-options-item">
-                    <a href="{{route('createConfigProduct')}}" class="btn btn-success">Create</a>
-                    <a href="{{route('exportConfigable')}}" class="btn btn-primary">Export</a>
+                    <a href="<?php echo e(route('createConfigProduct')); ?>" class="btn btn-success">Create</a>
+                    <a href="<?php echo e(route('exportConfigable')); ?>" class="btn btn-primary">Export</a>
                 </div>
             </div>
         </div>
@@ -58,21 +59,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if(isset($cproducts) and !empty($cproducts))
-                    @foreach ($cproducts as $item)
-                    <td class="text-center">{{$loop->iteration}}</td>
-                    <td class="d-none d-sm-table-cell">{{$item->product_code}}</td>
-                    <td class="d-none d-sm-table-cell">{{($item->status == 1) ? 'show':'hide'}}</td>
-                    <td class="d-none d-sm-table-cell">{{$item->time_create}}</td>
+                    <?php if(isset($cproducts) and !empty($cproducts)): ?>
+                    <?php $__currentLoopData = $cproducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <td class="text-center"><?php echo e($loop->iteration); ?></td>
+                    <td class="d-none d-sm-table-cell"><?php echo e($item->product_code); ?></td>
+                    <td class="d-none d-sm-table-cell"><?php echo e(($item->status == 1) ? 'show':'hide'); ?></td>
+                    <td class="d-none d-sm-table-cell"><?php echo e($item->time_create); ?></td>
                     <td class="text-center">
-                        <a href="{{route('ParallelConnection' ,$item->translate_id)}}" class="btn btn-primary">Parallel Connection(s)</a>
-                            <a href="{{route('editConfigProduct' ,$item->translate_id)}}" class="btn btn-primary">Edit</a>
-                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->translate_id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                        <a href="<?php echo e(route('ParallelConnection' ,$item->translate_id)); ?>" class="btn btn-primary">Parallel Connection(s)</a>
+                            <a href="<?php echo e(route('editConfigProduct' ,$item->translate_id)); ?>" class="btn btn-primary">Edit</a>
+                            <button type="button" class="btn btn-danger" onclick="ondelelete(<?php echo e($item->translate_id); ?>);" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
                        
                     </td>
                     </tr>
-                    @endforeach
-                    @endif
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
@@ -91,8 +92,9 @@
                             </button>
                         </div>
                     </div>
-                    <form action="{{route('deleteConfigProduct')}}" method="POST" >
-                        {{csrf_field()}}
+                    <form action="<?php echo e(route('deleteConfigProduct')); ?>" method="POST" >
+                        <?php echo e(csrf_field()); ?>
+
                       
                     <div class="block-content">
                         <input type="hidden" name="itemId" id="itemId">
@@ -110,8 +112,8 @@
     <!-- END Vertically Centered Block Modal -->
 
 
-@endsection
-@section('js')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('js'); ?>
 <script>
 
 
@@ -121,4 +123,6 @@
     }
 
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Deltapsu_Production\dependencies\resources\views/configurableProduct/index.blade.php ENDPATH**/ ?>

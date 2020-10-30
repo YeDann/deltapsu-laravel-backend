@@ -357,6 +357,85 @@ public function exportConfigable(){
 
 }
 
+ public function ParallelCon($id){
+    $cproducts = DB::table('cproducts')
+    ->where('language','=','en')
+    ->where('cproducts.id','=',$id)
+    ->select('cproducts.*')
+    ->first();
+    $Parallels =  DB::table('parallel_connections as pc')
+    ->where('pc.model_id','=',$id)
+    ->select('pc.*')
+    ->get();
+
+     return view('configurableProduct.parallelCon')
+     ->with('cproducts',$cproducts)
+     ->with('Parallels',$Parallels)
+     ->with('name','config_products')
+     ->with('menu','config_products_model');
+ }
+ public function storeParallel(Request $request){
+   $model_id = $request->model_id;
+   $max_slot = $request->max_slot;
+   $arrUsing = $request->use_slot;
+   $arrSpaceUsing  = [];
+
+   for($i = 1;$i <= $max_slot;$i++){
+       if(in_array($i, $arrUsing)){
+        array_push( $arrSpaceUsing ,1);
+       }else{
+        array_push( $arrSpaceUsing ,0);
+       }
+   }
+   $textspeceusing = implode(",",$arrSpaceUsing);
+   $textuse_slot = implode(",",$arrUsing);
+   $condition_para  = $request->condition;
+   $code  = $request->code;
+   $itemId_edit = $request->itemId_edit;
+   if($itemId_edit == 0){
+        DB::table('parallel_connections')->insert(
+            [
+                'code'=>$code,
+                'model_id'=>$model_id,
+                'slot_using'=>$textuse_slot,
+                'condition_slot'=>$condition_para,
+                'space_using'=>$textspeceusing,
+            ]
+        );
+   }else{
+        DB::table('parallel_connections')->where('id',$itemId_edit)->update(
+            [
+                'code'=>$code,
+                'model_id'=>$model_id,
+                'slot_using'=>$textuse_slot,
+                'condition_slot'=>$condition_para,
+                'space_using'=>$textspeceusing,
+            ]
+        );
+   }
+
+
+    return redirect()->route('ParallelConnection' ,$model_id)->with('flash_message', 'Save Data Success');
+ }
+
+ public function deleteParalle(Request $request){
+     $itemId = $request->itemId;
+     $model_id = $request->model_id;
+    DB::table('parallel_connections')->where('id',$itemId)->delete();
+    return redirect()->route('ParallelConnection' ,$model_id)->with('flash_message', 'Insert Data Success');
+ }
+
+ public function editParallel(Request $request){
+    $id = $request->id;
+    $Parallels =  DB::table('parallel_connections as pc')
+    ->where('pc.id','=',$id)
+    ->select('pc.*')
+    ->get();
+    return response()->json([
+        'data' =>$Parallels
+            ], 200);
+ }
+
 
 }
 ?>

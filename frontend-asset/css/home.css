@@ -1228,6 +1228,7 @@ a .title-new {
     width: 50%;
     bottom: 0;
   }
+ 
 }
 
 .btn-subscribe {
@@ -1724,23 +1725,54 @@ a .title-new {
 }
 
 .bg-sixslot {
-  background-image: url('../image/cproduct_201805071525686565843631.jpg');
+  /* background-image: url('../image/cproduct_201805071525686565843631.jpg'); */
   height: 200px;
+
 }
 
+.fix-col-box1 {
+  background-image: url('../image/Config1.svg');
+  width: 25px;
+  background-size: cover;
+    background-repeat: no-repeat;
+}
+.fix-col-box2 {
+  background-image: url('../image/Config2.svg');
+  width: 49px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 .bg-fourslot {
   background-image: url('../image/cproduct_201805071525686481866603.jpg');
   height: 280px;
 }
+.bg-sixslot #port{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  bottom: 15px;
+  height: 100%;
+  max-height: 178px;
+}
 
-.bg-sixslot #port,
+.order-15{
+  order: 15;
+}
+.order-14{
+  order: 14;
+}
+.order-13{
+  order: 13;
+}
+
+
 .bg-sixslot #port02 {
   position: absolute;
   bottom: 15px;
-  left: 38px;
+  left: 12px;
   height: 100%;
   max-height: 178px;
-  width: 100%;
 }
 
 .bg-fourslot #port,
@@ -1759,13 +1791,13 @@ a .title-new {
 }
 
 .bg-sixslot .blank {
-  width: 13.5%;
+  width: 78px;
   margin-right: 2px;
   font-size: 14px;
 }
 
 .bg-sixslot .blank-large {
-  width: 41%;
+  width:234px;
   margin-right: 2px;
 }
 
@@ -2250,8 +2282,30 @@ hr {
   .box-events .card {
     height: 305px;
    }
+   
 }
-
+@media  (max-width:1090px){
+    .bg-sixslot #port {
+      top: 0 !important;
+      left: 0  !important;
+      transform: translate(0,0)  !important;
+      position: absolute;
+      bottom: 15px;
+      height: 100%;
+      max-height: 178px;
+  }
+  .bg-sixslot{
+     overflow: auto !important;
+  }
+  .bg-sixslot #port02 {
+    position: absolute;
+    bottom: 15px;
+    left: 12px;
+    height: 100%;
+    max-height: 178px;
+    top: 0;
+  }
+}
 /* banner  */
 @media only screen and (min-width:0px)and (max-width:335px) {
   .show-more-769{
@@ -2331,6 +2385,9 @@ hr {
   .box-events .card .post-image img {
       max-width: 100%;
       width: 100%;
+  }
+  .p-msite0{
+    padding: 0 0 !important;
   }
 }
 @media only screen and (min-width:658px)and (max-width:768px) {
