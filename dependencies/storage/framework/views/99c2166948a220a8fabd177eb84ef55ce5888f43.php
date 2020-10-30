@@ -1,16 +1,15 @@
-@extends('layouts.admin')
-@section('style')
+<?php $__env->startSection('style'); ?>
 
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <!-- Nav -->
 <div class="bg-body-light">
     <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Configurable Power Selection </h1>
+            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Enquiry Contact </h1>
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">All Modal</li>
+                    <li class="breadcrumb-item active" aria-current="page">Enquiry Contact</li>
                 </ol>
             </nav>
         </div>
@@ -20,18 +19,20 @@
 <!-- Content -->
 <div class="content">
 
-    @if(Session::has('flash_message'))
+    <?php if(Session::has('flash_message')): ?>
     <div class="alert alert-success" role="alert">
         <button class="close" data-dismiss="alert"></button>
-        {!! Session('flash_message') !!}
+        <?php echo Session('flash_message'); ?>
+
     </div>
-    @endif
-    @if(Session::has('error_message'))
+    <?php endif; ?>
+    <?php if(Session::has('error_message')): ?>
     <div class="alert alert-danger" role="alert">
         <button class="close" data-dismiss="alert"></button>
-        {!! Session('error_message') !!}
+        <?php echo Session('error_message'); ?>
+
     </div>
-    @endif
+    <?php endif; ?>
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
             <h3 class="block-title">
@@ -41,8 +42,7 @@
                 
                 </div>
                 <div class="block-options-item">
-                    <a href="{{route('createConfigProduct')}}" class="btn btn-success">Create</a>
-                    <a href="{{route('exportConfigable')}}" class="btn btn-primary">Export</a>
+                    
                 </div>
             </div>
         </div>
@@ -51,28 +51,27 @@
                 <thead>
                     <tr>
                         <th class="text-center" style="width: 5%;">No.</th>
-                        <th class="d-none d-sm-table-cell" style="width: 20%;">Product Code</th>
-                        <th class="d-none d-sm-table-cell" style="width: 10%;">status</th>
-                        <th class="d-none d-sm-table-cell" style="width: 10%;">create</th>
+                        <th class="d-none d-sm-table-cell" style="width: 10%;">Email</th>
+                        <th class="d-none d-sm-table-cell" style="width: 10%;">Name</th>
+                        <th class="d-none d-sm-table-cell" style="width: 10%;">Model</th>
+                        <th class="d-none d-sm-table-cell" style="width: 10%;">Created_at</th>
                         <th style="width: 20%;" class="text-center">Manage</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if(isset($cproducts) and !empty($cproducts))
-                    @foreach ($cproducts as $item)
-                    <td class="text-center">{{$loop->iteration}}</td>
-                    <td class="d-none d-sm-table-cell">{{$item->product_code}}</td>
-                    <td class="d-none d-sm-table-cell">{{($item->status == 1) ? 'show':'hide'}}</td>
-                    <td class="d-none d-sm-table-cell">{{$item->time_create}}</td>
+                    <?php if(isset($con_his) and !empty($con_his)): ?>
+                    <?php $__currentLoopData = $con_his; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <td class="text-center"><?php echo e($loop->iteration); ?></td>
+                    <td class="d-none d-sm-table-cell"><?php echo e($item->email); ?></td>
+                    <td class="d-none d-sm-table-cell"><?php echo e($item->name); ?></td>
+                    <td class="d-none d-sm-table-cell"><?php echo e($item->model); ?></td>
+                    <td class="d-none d-sm-table-cell"><?php echo e($item->created_at); ?></td>
                     <td class="text-center">
-                        <a href="{{route('ParallelConnection' ,$item->translate_id)}}" class="btn btn-primary">Parallel Connection(s)</a>
-                            <a href="{{route('editConfigProduct' ,$item->translate_id)}}" class="btn btn-primary">Edit</a>
-                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->translate_id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
-                       
+                    <a href="<?php echo e(config('app.url')); ?>/config_history/<?php echo e($item->file); ?>"   target="_blank" class="btn btn-outline-primary">View</a>
                     </td>
                     </tr>
-                    @endforeach
-                    @endif
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
@@ -91,8 +90,9 @@
                             </button>
                         </div>
                     </div>
-                    <form action="{{route('deleteConfigProduct')}}" method="POST" >
-                        {{csrf_field()}}
+                    <form action="<?php echo e(route('deleteConfigProduct')); ?>" method="POST" >
+                        <?php echo e(csrf_field()); ?>
+
                       
                     <div class="block-content">
                         <input type="hidden" name="itemId" id="itemId">
@@ -110,8 +110,8 @@
     <!-- END Vertically Centered Block Modal -->
 
 
-@endsection
-@section('js')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('js'); ?>
 <script>
 
 
@@ -121,4 +121,6 @@
     }
 
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Deltapsu_Production\dependencies\resources\views/configurableProduct/enquiryContact.blade.php ENDPATH**/ ?>

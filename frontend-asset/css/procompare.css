@@ -340,7 +340,7 @@ tbody tr{
     width: 100%;
 }
 #certificate img{
-    width: 40%;
+    width: 270px;
 }
 input[type=text],input[type=email]{
     background-image:unset;
@@ -386,6 +386,7 @@ input[type=text],input[type=email]{
     .img-model{
         float: unset;
         margin: auto;
+        height: 250px;
     }
     .reverse-on-mobile{
         flex-direction: column-reverse;
@@ -427,6 +428,7 @@ input[type=text],input[type=email]{
     .summary-subbody, .summary-subbody-last{
         padding: 1rem 0 !important;
     }
+  
 }
 @media (max-width: 768px){
     .fix-height{

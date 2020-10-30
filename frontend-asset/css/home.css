@@ -1228,6 +1228,7 @@ a .title-new {
     width: 50%;
     bottom: 0;
   }
+ 
 }
 
 .btn-subscribe {
@@ -1731,8 +1732,8 @@ a .title-new {
 
 .fix-col-box1 {
   background-image: url('../image/Config1.svg');
-    width: 27px;
-    background-size: contain;
+  width: 25px;
+  background-size: cover;
     background-repeat: no-repeat;
 }
 .fix-col-box2 {
@@ -1755,11 +1756,21 @@ a .title-new {
   max-height: 178px;
 }
 
+.order-15{
+  order: 15;
+}
+.order-14{
+  order: 14;
+}
+.order-13{
+  order: 13;
+}
+
 
 .bg-sixslot #port02 {
   position: absolute;
   bottom: 15px;
-  left: 38px;
+  left: 12px;
   height: 100%;
   max-height: 178px;
 }
@@ -1786,7 +1797,7 @@ a .title-new {
 }
 
 .bg-sixslot .blank-large {
-  width: 41%;
+  width:234px;
   margin-right: 2px;
 }
 
@@ -2271,8 +2282,30 @@ hr {
   .box-events .card {
     height: 305px;
    }
+   
 }
-
+@media  (max-width:1090px){
+    .bg-sixslot #port {
+      top: 0 !important;
+      left: 0  !important;
+      transform: translate(0,0)  !important;
+      position: absolute;
+      bottom: 15px;
+      height: 100%;
+      max-height: 178px;
+  }
+  .bg-sixslot{
+     overflow: auto !important;
+  }
+  .bg-sixslot #port02 {
+    position: absolute;
+    bottom: 15px;
+    left: 12px;
+    height: 100%;
+    max-height: 178px;
+    top: 0;
+  }
+}
 /* banner  */
 @media only screen and (min-width:0px)and (max-width:335px) {
   .show-more-769{
@@ -2352,6 +2385,9 @@ hr {
   .box-events .card .post-image img {
       max-width: 100%;
       width: 100%;
+  }
+  .p-msite0{
+    padding: 0 0 !important;
   }
 }
 @media only screen and (min-width:658px)and (max-width:768px) {

@@ -192,6 +192,9 @@
 		border-top: none;
 	}
 }
+.d-p-cal{
+	display: table-cell !important;
+}
 
 
 
@@ -366,10 +369,10 @@
 					<div class="col-lg-12 col-md-12 order-lg-1" style="padding-left:24px;">
 					<h4 class=" text-center text-dark visible-up-922"><?php echo e($staticContent['Module_Preview']); ?></h4>
 						<div id="bg-slot">
-							<div class="preview row " id="port">
+							<div class="preview d-flex" id="port">
 							</div>
 						</div>
-						<div id="certificate">
+						<div id="certificate" class="text-center">
 						</div>
 					</div>
 				</div>
@@ -382,160 +385,17 @@
 						<img class="img-tooltip" src="<?php echo e(asset('frontend-asset/image/tooltip.svg')); ?>" data-toggle="tooltip" data-placement="top" title="Select Logic for remote on/off function. Normal logic is power supply default on, reserved logic is default off.">
 					</span></h4>
 				</div>
-				<div class="row justify-content-center add-space-mobile">
-					<div class="col-lg-8 col-md-12">
+				<div class="row justify-content-center add-space-mobile p-0">
+					<div class="col-lg-8 col-md-12" >
 						<h5 class="text-center visible-up-922"><?php echo e($staticContent['Select_Parallel_Connection(s)']); ?>
 
-							<span class="wrp-icons">
-								<img src="<?php echo e(asset('frontend-asset/image/tooltip.svg')); ?>" data-toggle="tooltip" data-placement="top" title="Select Logic for remote on/off function. Normal logic is power supply default on, reserved logic is default off.">
-							</span>
+						<span class="wrp-icons">
+						<img src="<?php echo e(asset('frontend-asset/image/tooltip.svg')); ?>" data-toggle="tooltip" data-placement="top" title="Select Logic for remote on/off function. Normal logic is power supply default on, reserved logic is default off.">
+						</span>
 						</h5>
-						<table class="w-100 parallel">
-							<thead>
-								<tr class="header-td">
-									<td></td>
-									<td>Code</td>
-									<td><?php echo e($staticContent['Slot']); ?>1</td>
-									<td><?php echo e($staticContent['Slot']); ?>2</td>
-									<td><?php echo e($staticContent['Slot']); ?>3</td>
-									<td><?php echo e($staticContent['Slot']); ?>4</td>
-									<td><?php echo e($staticContent['Slot']); ?>5</td>
-									<td><?php echo e($staticContent['Slot']); ?>6</td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr id="parallel0">
-									<td class="d-flex"><input type="radio" value="0" name="parallel" checked="checked"><label></label></td>
-									<td>0</td>
-									<td colspan="6"></td>
-								</tr>
-								<tr id="parallelA">
-									<td class="input d-flex"><input type="radio" value="A" name="parallel"><label></label></td>
-									<td>A</td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="4"></td>
-								</tr>
-								<tr id="parallelB">
-									<td class="input d-flex"><input type="radio" value="B" name="parallel"><label></label></td>
-									<td>B</td>
-									<td colspan="1"></td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="3"></td>
-								</tr>
-								<tr id="parallelC">
-									<td class="input d-flex"><input type="radio" value="C" name="parallel"><label></label></td>
-									<td>C</td>
-									<td colspan="2"></td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="2"></td>
-								</tr>
-								<tr id="parallelD">
-									<td class="input d-flex"><input type="radio" value="D" name="parallel"><label></label></td>
-									<td>D</td>
-									<td colspan="3"></td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="1"></td>
-								</tr>
-								<tr id="parallelE">
-									<td class="input d-flex"><input type="radio" value="E" name="parallel"><label></label></td>
-									<td>E</td>
-									<td colspan="4"></td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-								</tr>
-								<tr id="parallelF">
-									<td class="input d-flex"><input type="radio" value="F" name="parallel"><label></label></td>
-									<td>F</td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="2"></td>
-								</tr>
-								<tr id="parallelG">
-									<td class="input d-flex"><input type="radio" value="G" name="parallel"><label></label></td>
-									<td>G</td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="1"></td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="1"></td>
-								</tr>
-								<tr id="parallelH">
-									<td class="input d-flex"><input type="radio" value="H" name="parallel"><label></label></td>
-									<td>H</td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="2"></td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-								</tr>
-								<tr id="parallelI">
-									<td class="input d-flex"><input type="radio" value="I" name="parallel"><label></label></td>
-									<td>I</td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-								</tr>
-								<tr id="parallelJ">
-									<td class="input d-flex"><input type="radio" value="J" name="parallel"><label></label></td>
-									<td>J</td>
-									<td colspan="1"></td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="1"></td>
-								</tr>
-								<tr id="parallelK">
-									<td class="input d-flex"><input type="radio" value="K" name="parallel"><label></label></td>
-									<td>K</td>
-									<td colspan="1"></td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="1"></td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-								</tr>
-								<tr id="parallelL">
-									<td  class="input d-flex"><input type="radio" value="L" name="parallel"><label></label></td>
-									<td>L</td>
-									<td colspan="2"></td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-									<td colspan="2" class="line">
-										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+						<div id="data_tableslot"></div>
+						
+						
 					</div>
 				</div>
 			</section>
@@ -582,7 +442,7 @@
 											<p class="text-sixteen-delta"><?php echo e($staticContent['Configuration_Modular_Parts']); ?>:</p>
 											<p class="text-detail-describe" id="customer"></p>
 											<p class="text-detail-describe" id="model-fac"></p>
-											<p class="text-detail-describe" id="factory"></p>
+											<p class="text-detail-describe"style="display:none;"id="factory"></p>
 											
 										</div>
 										<div class="describe-list">
@@ -607,159 +467,19 @@
 											<p class="text-sixteen-delta"><?php echo e($staticContent['Module(s)']); ?> :</p>
 											<div id="list-slot" class="text-detail-describe"></div>
 										</div> 
+									</div>
+									<div class="col-lg-12 col-md-12 column-model" >
+									
 										<div id="bg-slot02">
-											<div class="preview row " id="port02">
+											<div class="preview d-flex " id="port02">
 											</div>
 										</div>
 										<div class="w-100">
 												<div class=""style="margin-top:24px;">
 													<p class="text-sixteen-delta" ><?php echo e($staticContent['Parallel_Detail']); ?></p>
-													<table class="w-100 parallel"style="margin-top:12px;">
-														<thead>
-															<tr class="header-td">
-																<td ></td>
-																<td>Code</td>
-																<td><?php echo e($staticContent['Slot']); ?>1</td>
-																<td><?php echo e($staticContent['Slot']); ?>2</td>
-																<td><?php echo e($staticContent['Slot']); ?>3</td>
-																<td><?php echo e($staticContent['Slot']); ?>4</td>
-																<td><?php echo e($staticContent['Slot']); ?>5</td>
-																<td><?php echo e($staticContent['Slot']); ?>6</td>
-															</tr>
-														</thead>
-														<tbody>
-															<tr id="parallel0">
-																<td><input type="radio" value="0" name="parallel-2" checked="checked"><label></label></td>
-																<td>0</td>
-																<td colspan="6"></td>
-															</tr>
-															<tr id="parallelA">
-																<td class="input"><input type="radio" value="A" name="parallel-2"><label></label></td>
-																<td>A</td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="4"></td>
-															</tr>
-															<tr id="parallelB">
-																<td class="input"><input type="radio" value="B" name="parallel-2"><label></label></td>
-																<td>B</td>
-																<td colspan="1"></td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="3"></td>
-															</tr>
-															<tr id="parallelC">
-																<td class="input"><input type="radio" value="C" name="parallel-2"><label></label></td>
-																<td>C</td>
-																<td colspan="2"></td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="2"></td>
-															</tr>
-															<tr id="parallelD">
-																<td class="input"><input type="radio" value="D" name="parallel-2"><label></label></td>
-																<td>D</td>
-																<td colspan="3"></td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="1"></td>
-															</tr>
-															<tr id="parallelE">
-																<td class="input"><input type="radio" value="E" name="parallel-2"><label></label></td>
-																<td>E</td>
-																<td colspan="4"></td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-															</tr>
-															<tr id="parallelF">
-																<td class="input"><input type="radio" value="F" name="parallel-2"><label></label></td>
-																<td>F</td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="2"></td>
-															</tr>
-															<tr id="parallelG">
-																<td class="input"><input type="radio" value="G" name="parallel-2"><label></label></td>
-																<td>G</td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="1"></td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="1"></td>
-															</tr>
-															<tr id="parallelH">
-																<td class="input"><input type="radio" value="H" name="parallel-2"><label></label></td>
-																<td>H</td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="2"></td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-															</tr>
-															<tr id="parallelI">
-																<td class="input"><input type="radio" value="I" name="parallel-2"><label></label></td>
-																<td>I</td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-															</tr>
-															<tr id="parallelJ">
-																<td class="input"><input type="radio" value="J" name="parallel-2"><label></label></td>
-																<td>J</td>
-																<td colspan="1"></td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="1"></td>
-															</tr>
-															<tr id="parallelK">
-																<td class="input"><input type="radio" value="K" name="parallel-2"><label></label></td>
-																<td>K</td>
-																<td colspan="1"></td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="1"></td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-															</tr>
-															<tr id="parallelL">
-																<td class="input"><input type="radio" value="L" name="parallel-2"><label></label></td>
-																<td>L</td>
-																<td colspan="2"></td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-																<td colspan="2" class="line">
-																	<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-																</td>
-															</tr>
-														</tbody>
-													</table>
+													<div id="data_table2_con"></div>
+													
+													
 												</div>
 										</div>
 									</div>
@@ -994,6 +714,7 @@ function selectCountry(){
 	});
 	var model_name = <?=$model?>;
 	var model_alldata = <?=$model_alldata?>;
+	var paralls_cons = [];
 	var ss_v = [2,2.4,3,3.3,5,5.5,6,8,10,12,14,15,18,20,24,28,30,32,36,42,48,54,60];
 	var do_v = [3.3,5,5.5,6,8,10,12,14,15,18,20,24,28,30];
 
@@ -1006,8 +727,7 @@ function selectCountry(){
 
 	var code = '';
 	selectionGenerate();
-
-	console.log(do_a.length ,ss_a.length);
+	//console.log(do_a.length ,ss_a.length);
 	$(function () {
 		$('[data-toggle="tooltip"]').tooltip()
 	})
@@ -1141,7 +861,7 @@ function selectCountry(){
 		$('#img').html('<img class="img-model " src="<?php echo e(config('app.url')); ?>/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
 		$('#img-summary').html('<img class="img-fluid" src="<?php echo e(config('app.url')); ?>/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
 		$('#img-summary-pdf').html('<img class="img-model" src="<?php echo e(config('app.url')); ?>/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
-		$('#certificate').html('<img class="float-right" src="<?php echo e(config('app.url')); ?>/media/model/'+model_alldata[index]['certificate_img']+'" alt="">');
+		$('#certificate').html('<img class="" src="<?php echo e(config('app.url')); ?>/media/model/'+model_alldata[index]['certificate_img']+'" alt="">');
 		var l = parseFloat(model_alldata[index]['dimensions']);
 		var w = parseFloat(model_alldata[index]['dimen_w']);
 		var d = parseFloat(model_alldata[index]['dimen_d']);
@@ -1155,18 +875,18 @@ function selectCountry(){
 		for(var i = 0 ; i < model_alldata[index]['max_slot']; i++){
 			$('#port').append('<div class="fix-height col-2  bg-gray" id="port1">Blank</div>');
 		}
-	
-		if(model_alldata[index]['max_slot'] === 6){
-			$('#bg-slot').addClass("bg-sixslot");
-			$('#bg-slot').removeClass("bg-fourslot");
-			$('#bg-slot02').addClass("bg-sixslot");
-			$('#bg-slot02').removeClass("bg-fourslot");
-		}else if(model_alldata[index]['max_slot'] === 4){
-			$('#bg-slot').removeClass("bg-sixslot");
-			$('#bg-slot').addClass("bg-fourslot");
-			$('#bg-slot02').removeClass("bg-sixslot");
-			$('#bg-slot02').addClass("bg-fourslot");
-		}
+		$('#bg-slot').addClass("bg-sixslot");
+		$('#bg-slot02').addClass("bg-sixslot");
+		// if(model_alldata[index]['max_slot'] === 6){
+		// 	$('#bg-slot').removeClass("bg-fourslot");
+		// 	$('#bg-slot02').addClass("bg-sixslot");
+		// 	$('#bg-slot02').removeClass("bg-fourslot");
+		// }else if(model_alldata[index]['max_slot'] === 4){
+		// 	$('#bg-slot').removeClass("bg-sixslot");
+		// 	$('#bg-slot').addClass("bg-fourslot");
+		// 	$('#bg-slot02').removeClass("bg-sixslot");
+		// 	$('#bg-slot02').addClass("bg-fourslot");
+		// }
 	     var ts_a_700 = [78.7,70,58.3,50,46.7,38.9,35,29.2,25,23.3,21.9,19.4,16.7,14.6,13,11.7];
      	 var do_a_700 = [5,5,5,5,5,5,5,5,5,5,4.5,3.7,3.2,3];
 		 var index = $('#model').children("option:selected").val();
@@ -1177,9 +897,32 @@ function selectCountry(){
 			do_a = do_a_gobal;
 			ts_a = ts_a_gobal;	 
 		 }
+		 loadparallel(model_alldata[index]['id'] ,model_alldata[index]['max_slot']);
+	
 		//addMoreOutput();
 		$('.slot').empty();
 		addSlotOutput();
+	
+	}
+	function loadparallel(id, max_slot){
+		$.ajax({
+					url: "<?php echo e(route('loadparallercon')); ?>",
+					data: {'model_id': id},
+					type: 'POST',
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					success: function(data){
+						paralls_cons = data.data;
+						// console.log(paralls_cons);
+						renderTable(max_slot,'parallel',paralls_cons,'data_tableslot');
+						renderTable(max_slot,'parallel-2',paralls_cons,'data_table2_con');
+					},
+					error: function(data){
+						console.log(data);
+						}
+			});
+
 	}
 
 	function addSlotOutput(){
@@ -1230,7 +973,7 @@ function selectCountry(){
 		}
 		$('.slot #child-'+index+' #single'+index+'').click();
 		$('.slot #child-'+index+' #single'+index+'').attr('checked', 'checked');
-		$('#numoutput').text(index);
+		// $('#numoutput').text(index);
 		checkSlotMax();
 	
 	}
@@ -1286,6 +1029,7 @@ function selectCountry(){
 		setModelPreview();
 		setModelPreviewToSum();
 	
+	
 	}
 	function getToSummary02(i){
 		// alert("55555555555");
@@ -1323,16 +1067,17 @@ function selectCountry(){
 		parent.children('.current').empty();
 		parent.children('.current').append(text);
 
-		parent.children('.input').children('input').val(parseFloat(array_a[value]*array_v[value]).toFixed(0));
+		parent.children('.input').children('input').val(parseFloat(array_a[value]*array_v[value]).toFixed(1));
 		setValueSlot(parent.parent());
 		setModelPreview();
 		setModelPreviewToSum();
 		checkSumwatt();
+		checkSlotMax();
 	}
 	function checkSumwatt(){
 		var sum_watt = sumWatt();
 		var index = $('#model').children("option:selected").val();
-		console.log(sum_watt , model_alldata[index]['max_power']);
+		// console.log(sum_watt , model_alldata[index]['max_power']);
 	    if(sum_watt > model_alldata[index]['max_power']){
 				alert('Total output power is over '+model_alldata[index]['max_power']+'W(Maximum). Please confirm actual total power needed is within PSU limit and continue the configuration');
 				$('input[name=power]').val(model_alldata[index]['max_power']);
@@ -1361,7 +1106,13 @@ function selectCountry(){
 		var amp = parent.children().children('.input').children('input').val();
 		
 		var _index = parseInt(parent.children('input[name=index]').val());
-		if(amp >= 800){
+		var maxvalue  = 800;
+		var indexmo_ = $('#model').children("option:selected").val();
+		var max_slot = model_alldata[indexmo_]['max_slot'];
+		if(max_slot == 3){
+			maxvalue = 630;
+		}
+		if(amp >= maxvalue){
 			// console.log(!checkSlotMax(2));
 			// console.log(countSlot()+2);
 			// console.log(!checkSlotMax(2) ,'Slot more than 800');
@@ -1498,7 +1249,7 @@ function selectCountry(){
 					class_col = ' blank-large ';
 					i+=2;
 				}
-				text += '<div class="fix-height '+class_col+'bg-gray  order-'+(12-i)+'" id="port'+(i)+'">';
+				text += '<div class="fix-height '+class_col+'bg-gray  order-'+(15-i)+'" id="port'+(i)+'">';
 				text += '<p><?php echo e($staticContent['Slot']); ?>'+$(_value).children('input[name=index]').val()+'</p>';
 				$.each($(_value).children('.select-box'),function(index,value){
 					if($(value).children('.input').children('input').val() > 0){
@@ -1521,13 +1272,15 @@ function selectCountry(){
 				});
 				text += '</div>';
 			}else{
-				text += '<div class="fix-height blank  bg-gray order-'+(12-i)+'" id="port'+(i)+'">Blank</div>';
+				text += '<div class="fix-height blank  bg-gray order-'+(15-i)+'" id="port'+(i)+'">Blank</div>';
 			}
 		
 			
 			$('#port').html(text);
 			$('#port02').html(text);
 			$('input[name=output_total]').val(countSlot());
+			console.log(countSlot() ,'numberslot');
+			$('#numoutput').text(countSlot());
 			
 			var sum_watt = sumWatt();
 			// console.log(sum_watt);
@@ -1543,8 +1296,8 @@ function selectCountry(){
 			}
 			
 		}
-		$('#port').append('<div class="fix-col-box2 order-12"></div>');
-		$('#port02').append('<div class="fix-col-box2 order-12"></div>');
+		$('#port').append('<div class="fix-col-box2 order-15"></div>');
+		$('#port02').append('<div class="fix-col-box2 order-15"></div>');
 	}
 
 	function resetData(index){
@@ -1611,6 +1364,51 @@ function selectCountry(){
 		return _index;
 	}
 	// var addon = 0;
+    function renderTable(slot,name,paralles,where_is){
+		// console.log(paralles);
+    var html = '';
+	    html += '<table class="w-100 parallel"style="margin-top:12px;">';
+	    html += '<thead>';
+		html += '<tr class="header-td">';
+		html +=	'<td ></td>';
+		html +=	'<td>Code</td>';
+        for(var i = 1; i <= slot ;i++){
+	     html +=	'<td><?php echo e($staticContent['Slot']); ?>'+i+'</td>';
+	    }
+		html +=	'</tr>';
+		html +=	'</thead>';
+		html +=	'<tbody>';
+
+		html += '<tr id="parallel0">';
+		html +='<td style=""><input class="d-p-cal" type="radio" value="0" name="'+name+'" checked="checked"><label></label></td>';
+		html +=	'<td>0</td>';
+		html +=	'<td colspan="'+slot+'"></td>';
+		html +=	'</tr>';
+		$.each(paralles,function(index,value){
+		html +=	'<tr id="parallel'+value['code']+'">';
+		html +=	'<td class="input"><input class="d-p-cal" type="radio" value="'+value['code']+'" name="'+name+'"><label></label></td>';
+		html +=	'<td>'+value['code']+'</td>'
+        var arrche  = value['space_using'].split(',');
+       for(var j = 0 ; j < arrche.length ;j++ ){
+		// console.log(j);
+		   if(arrche[j] == 1 && typeof arrche[j+1] != 'undefined' && arrche[j+1] == 1){
+				html +=	'<td colspan="2" class="line">'
+				html +=	'<div class="bg-box h-25 w-75 mx-auto rounded"></div>'
+				html +=	'</td>';
+				j = j+1;
+		   }else{
+			    html +='<td colspan="1"></td>';
+		   }
+		
+	   }
+		html +=	'</tr>';
+		});
+		html += '</tbody>';
+		html +=	'</table>';
+
+		$('#'+where_is).html(html);
+		
+	}
 	function checkSlotMax(addon){
 	   
 		if(addon == undefined || addon == 'undefined' ){
@@ -1621,6 +1419,7 @@ function selectCountry(){
 		if(countSlot()+addon > model_alldata[index]['max_slot']){
 			return true;
 		}
+		console.log(countSlot(),addon ,model_alldata[index]['max_slot']);
 		if(countSlot()+addon >= model_alldata[index]['max_slot']){
 			$('#addmore').addClass('d-none');
 		}else{
@@ -1655,51 +1454,113 @@ function selectCountry(){
 		var watt_next_index = 0;
 		$('input[name=parallel]').attr('disabled','disabled');
 		$('#parallel0 input[name=parallel]').removeAttr('disabled');
-		for(var i = 1 ; i <  model_alldata[index]['max_slot'] ; i++){
-			if($('#child-'+i+' input[name=slot-type-'+i+']').val() == 1){
+        //console.log(paralls_cons);
+		
+		$.each(paralls_cons,function(indexPar,valuePar){
+			var arrcheck = [];
+			for(var i = 1 ; i <  model_alldata[index]['max_slot'] ; i++){
+				// console.log($('#child-'+i+' input[name=slot-type-'+i+']:checked' ).val());
+		    if($('#child-'+i+' input[name=slot-type-'+i+']:checked').val() == 1){
 				voltage_index = parseFloat(ss_v[$('#child-'+i+' .select-box .voltage select').val()]);
 				voltage_next_index = parseFloat(ss_v[$('#child-'+(i+1)+' .select-box .voltage select').val()]);
 				amp_index = parseFloat($('#child-'+i+' .select-box .current select').val());
 				amp_next_index = parseFloat($('#child-'+(i+1)+' .select-box .current select').val());
 				watt_index = voltage_index*amp_index;
 				watt_next_index = voltage_next_index*amp_next_index;
-				if(voltage_index == voltage_next_index && amp_index == amp_next_index ){
-					console.log(String.fromCharCode(64+i));
-					$('#parallel'+String.fromCharCode(64+i)+' input[name=parallel]').removeAttr('disabled');
-					$('#parallel'+String.fromCharCode(64+i)+' .line').addClass('active');
-				}
+					if(voltage_index == voltage_next_index && amp_index == amp_next_index ){
+						arrcheck.push(i.toString()+(i+1).toString());
+						// arrcheck.push(i+1);
+					}
+		     	}
+				
+				 
+		    }
+			     var slot_using  = valuePar['slot_using'].split(',');
+			     var Canparallel = checkAllSlot(arrcheck,slot_using);
+				//console.log(Canparallel,arrcheck, slot_using);
+					if(Canparallel){
+							$('#parallel'+valuePar['code']+' input[name=parallel]').removeAttr('disabled');
+							$('#parallel'+valuePar['code']+' .line').addClass('active');
+					}
+		
+		
+		});
+
+
+
+
+		// for(var i = 1 ; i <  model_alldata[index]['max_slot'] ; i++){
+		// 	if($('#child-'+i+' input[name=slot-type-'+i+']').val() == 1){
+		// 		voltage_index = parseFloat(ss_v[$('#child-'+i+' .select-box .voltage select').val()]);
+		// 		voltage_next_index = parseFloat(ss_v[$('#child-'+(i+1)+' .select-box .voltage select').val()]);
+		// 		amp_index = parseFloat($('#child-'+i+' .select-box .current select').val());
+		// 		amp_next_index = parseFloat($('#child-'+(i+1)+' .select-box .current select').val());
+		// 		watt_index = voltage_index*amp_index;
+		// 		watt_next_index = voltage_next_index*amp_next_index;
+		// 		if(voltage_index == voltage_next_index && amp_index == amp_next_index ){
+		// 			//console.log(String.fromCharCode(64+i));
+		// 			$('#parallel'+String.fromCharCode(64+i)+' input[name=parallel]').removeAttr('disabled');
+		// 			$('#parallel'+String.fromCharCode(64+i)+' .line').addClass('active');
+		// 		}
+		// 	}
+		// }
+
+		// if(!$('#parallelA input[name=parallel]').is(":disabled") && !$('#parallelC input[name=parallel]').is(":disabled")){
+		// 	$('#parallelF input[name=parallel]').removeAttr('disabled');
+		// 	$('#parallelF .line').addClass('active');
+		// }
+		// if(!$('#parallelA input[name=parallel]').is(":disabled") && !$('#parallelD input[name=parallel]').is(":disabled")){
+		// 	$('#parallelG input[name=parallel]').removeAttr('disabled');
+		// 	$('#parallelG .line').addClass('active');
+		// }
+		// if(!$('#parallelA input[name=parallel]').is(":disabled") && !$('#parallelE input[name=parallel]').is(":disabled")){
+		// 	$('#parallelH input[name=parallel]').removeAttr('disabled');
+		// 	$('#parallelH .line').addClass('active');
+		// }
+		// if(!$('#parallelA input[name=parallel]').is(":disabled") && !$('#parallelC input[name=parallel]').is(":disabled") && !$('#parallelE input[name=parallel]').is(":disabled")){
+		// 	$('#parallelI input[name=parallel]').removeAttr('disabled');
+		// 	$('#parallelI .line').addClass('active');
+		// }
+		// if(!$('#parallelB input[name=parallel]').is(":disabled") && !$('#parallelD input[name=parallel]').is(":disabled")){
+		// 	$('#parallelJ input[name=parallel]').removeAttr('disabled');
+		// 	$('#parallelJ .line').addClass('active');
+		// }
+		// if(!$('#parallelB input[name=parallel]').is(":disabled") && !$('#parallelE input[name=parallel]').is(":disabled")){
+		// 	$('#parallelK input[name=parallel]').removeAttr('disabled');
+		// 	$('#parallelK .line').addClass('active');
+		// }
+		// if(!$('#parallelC input[name=parallel]').is(":disabled") && !$('#parallelE input[name=parallel]').is(":disabled")){
+		// 	$('#parallelL input[name=parallel]').removeAttr('disabled');
+		// 	$('#parallelL .line').addClass('active');
+		// }
+	}
+	function checkAllSlot(arrHas , arrUsing){
+		var checkre = false;
+		var cherow = [];
+		for(var j = 0 ; j < arrUsing.length ;j++ ){
+			if(typeof arrUsing[j+1] != 'undefined'){
+				// console.log(val+arrUsing[index+1] ,arrHas);
+				checkre = includes_data(arrHas,(arrUsing[j]+arrUsing[j+1]).toString());
+				cherow.push(checkre);
+				j = j+1;
 			}
 		}
 
-		if(!$('#parallelA input[name=parallel]').is(":disabled") && !$('#parallelC input[name=parallel]').is(":disabled")){
-			$('#parallelF input[name=parallel]').removeAttr('disabled');
-			$('#parallelF .line').addClass('active');
+		var chKR = includes_data(cherow,false);
+		if(chKR){
+			checkre = false;
 		}
-		if(!$('#parallelA input[name=parallel]').is(":disabled") && !$('#parallelD input[name=parallel]').is(":disabled")){
-			$('#parallelG input[name=parallel]').removeAttr('disabled');
-			$('#parallelG .line').addClass('active');
-		}
-		if(!$('#parallelA input[name=parallel]').is(":disabled") && !$('#parallelE input[name=parallel]').is(":disabled")){
-			$('#parallelH input[name=parallel]').removeAttr('disabled');
-			$('#parallelH .line').addClass('active');
-		}
-		if(!$('#parallelA input[name=parallel]').is(":disabled") && !$('#parallelC input[name=parallel]').is(":disabled") && !$('#parallelE input[name=parallel]').is(":disabled")){
-			$('#parallelI input[name=parallel]').removeAttr('disabled');
-			$('#parallelI .line').addClass('active');
-		}
-		if(!$('#parallelB input[name=parallel]').is(":disabled") && !$('#parallelD input[name=parallel]').is(":disabled")){
-			$('#parallelJ input[name=parallel]').removeAttr('disabled');
-			$('#parallelJ .line').addClass('active');
-		}
-		if(!$('#parallelB input[name=parallel]').is(":disabled") && !$('#parallelE input[name=parallel]').is(":disabled")){
-			$('#parallelK input[name=parallel]').removeAttr('disabled');
-			$('#parallelK .line').addClass('active');
-		}
-		if(!$('#parallelC input[name=parallel]').is(":disabled") && !$('#parallelE input[name=parallel]').is(":disabled")){
-			$('#parallelL input[name=parallel]').removeAttr('disabled');
-			$('#parallelL .line').addClass('active');
-		}
+	//   console.log(cherow ,chKR ,arrHas ,arrUsing );
+		return checkre;
 	}
+	function includes_data(container, value) {
+			var returnValue = false;
+			var pos = container.indexOf(value);
+			if (pos >= 0) {
+				returnValue = true;
+			}
+			return returnValue;
+    }
 
 	function setCode(){
 		code = '';
@@ -1812,7 +1673,6 @@ function selectCountry(){
             '<\/style><\/head><body><\/body><\/html>'
         );
         doc.close();
-
         doc.body.innerHTML= data_pdf;
 
 }

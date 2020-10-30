@@ -105,8 +105,7 @@ Route::post('setlocaltion','FrontendController@setlocaltion')->name('setlocaltio
 Route::get('/etc/imagelink/showimage/{name?}','FrontendController@imagelink')->name('imagelink');
 Route::post('tag_product','FrontendController@tag_product')->name('tag_product');
 Route::post('getProById','FrontendController@getProById')->name('getProById');
-
-
+Route::post('/loadparallercon','FrontendController@loadparallercon')->name('loadparallercon');
 });
 
 Route::prefix('/backend')->group(function () {
@@ -208,6 +207,10 @@ Route::get('configuration_history','ConfigurableProduct@getHistoryConfig')->name
 Route::get('exportConfigable','ConfigurableProduct@exportConfigable')->name('exportConfigable');
 Route::get('enquiryContact','ConfigurableProduct@getEnquiryContact')->name('getEnquiryContact');
 
+Route::get('ParallelConnection/{id?}','ConfigurableProduct@ParallelCon')->name('ParallelConnection');
+Route::post('storeParallel','ConfigurableProduct@storeParallel')->name('storeParallel');
+Route::post('deleteParalle','ConfigurableProduct@deleteParalle')->name('deleteParalle');
+Route::post('editParallel','ConfigurableProduct@editParallel')->name('editParallel');
 //Section
 Route::resource('section', 'SectionController');
 Route::post('sectionUpdate','SectionController@update')->name('sectionUpdate');
