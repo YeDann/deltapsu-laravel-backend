@@ -332,10 +332,10 @@
 									</span></h5>
 								</label>
 								<select class="form-control" id="bus" onchange="getToSummary()">
-									<option selected="selected" value="0">Default PMBus</option>
+									{{-- <option selected="selected" value="0">Default PMBus</option>
 									<option value="1">RS232 adapter</option>
 									<option value="2">USB adapter</option>
-									<option value="3">RS485 adapter</option>
+									<option value="3">RS485 adapter</option> --}}
 								</select>
 							</div>
 							
@@ -1177,9 +1177,16 @@ function selectCountry(){
 		 if(model_alldata[index]['max_power'] == 700){
 			do_a = do_a_700;
 			ts_a = ts_a_700;
+			$('#bus').empty();
+			$("#bus").append(new Option("Default N/A", "0"));
 		 }else{
 			do_a = do_a_gobal;
 			ts_a = ts_a_gobal;	 
+			$('#bus').empty();
+			$("#bus").append(new Option("Default PMBus", "0"));
+			$("#bus").append(new Option("RS232 adapter", "1"));
+			$("#bus").append(new Option("USB adapter", "2"));
+			$("#bus").append(new Option("RS485 adapter", "3"));
 		 }
 		 loadparallel(model_alldata[index]['id'] ,model_alldata[index]['max_slot']);
 	
