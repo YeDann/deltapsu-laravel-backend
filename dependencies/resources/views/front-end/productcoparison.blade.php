@@ -862,7 +862,7 @@
     function addHtmlUnitweight(index){
               html ='';
               html +='<tr>';
-              html += ' <td class="col-1 col-xs-3">Unit Weight</td>';
+              html += ' <td class="col-1 col-xs-3">{{$staticContent['Unit_Weight']}}</td>';
               html += '<td class="col-xs-3">'+getCalweight(pro1)+'</td>';
               html += ' <td class="col-xs-3">'+getCalweight(pro2) +'</td>';
               html += '<td class="col-xs-3">'+getCalweight(pro3)+'</td>'
@@ -872,7 +872,7 @@
     function addHtmlDimen(index){
               html ='';
               html +='<tr>';
-              html += ' <td class="col-1 col-xs-3">Dimensions</td>';
+              html += ' <td class="col-1 col-xs-3">{{$staticContent['Dimensions']}}</td>';
               html += '<td class="col-xs-3">'+getDimansion(pro1)+'</td>';
               html += ' <td class="col-xs-3">'+getDimansion(pro2) +'</td>';
               html += '<td class="col-xs-3">'+getDimansion(pro3)+'</td>'
@@ -934,7 +934,7 @@
             if(pro1 != 0 || pro2 != 0){
              if(index2 == 0){
                 html += ' <div class="comparison-heading">';
-                html += ' <h6 class="text-center">Unit Weight</h6>'
+                html += ' <h6 class="text-center">{{$staticContent['Unit_Weight']}}</h6>'
                 html += '</div>';
                 html += '<div class="comparison-detail">';
                 html +=  '<div class="container comparison-detail-content">';
@@ -949,7 +949,7 @@
              } 
              if(index2 == 0){
                 html += ' <div class="comparison-heading">';
-                html += ' <h6 class="text-center">Dimensions</h6>'
+                html += ' <h6 class="text-center">{{$staticContent['Dimensions']}}</h6>'
                 html += '</div>';
                 html += '<div class="comparison-detail">';
                 html +=  '<div class="container comparison-detail-content">';

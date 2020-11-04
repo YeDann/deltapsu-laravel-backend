@@ -252,19 +252,19 @@
                                 @foreach ($products as $item)
                                 @if($loop->iteration == 1)
                                 <li class="nav-item">
-                                    <a class="nav-link active" onclick="selectlang('{{$item->local}}')" href="#btabs-alt-static-{{$item->local}}"
+                                    <a class="nav-link active"  href="#btabs-alt-static-{{$item->local}}"
                                         style="text-transform: capitalize;">{{$item->local}}</a>
                                 </li>
                                 @else
                                 <li class="nav-item">
-                                    <a class="nav-link " onclick="selectlang('{{$item->local}}')" href="#btabs-alt-static-{{$item->local}}"
+                                    <a class="nav-link "  href="#btabs-alt-static-{{$item->local}}"
                                         style="text-transform: capitalize;">{{$item->local}}</a>
                                 </li>
                                 @endif
                                 @endforeach
                                 @foreach ($language as $alang)
                                 <li class="nav-item">
-                                        <a class="nav-link " onclick="selectlang('{{$alang->name}}')" href="#btabs-alt-static-{{$alang->name}}"
+                                        <a class="nav-link "  href="#btabs-alt-static-{{$alang->name}}"
                                             style="text-transform: capitalize;">{{$alang->name}}</a>
                                     </li>
                                 @endforeach
@@ -858,9 +858,9 @@
         })
     }
 
-    function selectlang(lang){
-        getHtmlContent(lang);
-    }
+    // function selectlang(lang){
+    //     getHtmlContent(lang);
+    // }
 
         $( document ).ready(function() {
             selectProductcategories();

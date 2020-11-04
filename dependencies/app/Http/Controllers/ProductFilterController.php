@@ -168,7 +168,56 @@ class ProductFilterController extends Controller
         DB::table('default_filter')->where('id' ,$item)->delete();
         return redirect()->route('default_filer')->with('flash_message', 'Delete Data successfully');
     }
+    public function editFilterSelector($id){
+      $defaut = DB::table('default_filter')->where('id' ,$id)->get();
+      $language = DB::table('language as l')->select('l.name')->get();
+      $arrLang = [];
+      foreach($language as $lang){
+        $item = DB::table('sub_pro_has_product_filter as st')
+        ->join('subpro_has_profilter_translation as stt','st.id','=','stt.fk_sub_pro_id')
+        ->select('stt.local','stt.title','st.field_id')
+        ->where('st.field_id',$defaut[0]->filter_id)
+        ->where('stt.local',$lang->name)
+        ->first();
+        if($item != null){
+          array_push($arrLang,$item);
+        }
+        
+      }
+      // return dd($arrLang);
+      if(count($arrLang) == 0 ){
+        return redirect()->route('default_filer')->with('error_message', 'Please Setting Filter in each Categories Before');
+      }else{
+        return view('product.editFilterallType')
+        ->with('arrLang_datas', $arrLang)
+         ->with('name', 'product')
+         ->with('menu', 'subCategories');
+      }
+    }
 
+    public function updateFilterSection(Request $request){
+        $name = $request->name;
+        $Filter_id = $request->Filter_id;
+        $lang_loop = $request->lang_loop;
+    
+
+        $allFilters = DB::table('sub_pro_has_product_filter as st')
+        ->select('st.field_id','st.id')
+        ->where('st.field_id',$Filter_id)
+        ->get();
+
+          // return dd($allFilters);
+        foreach($allFilters as $filters){
+            foreach($lang_loop as $lang){
+               DB::table('subpro_has_profilter_translation')->where('fk_sub_pro_id',$filters->id)->where('local',$lang)->update(
+                 [
+                    'title'=> $name[$lang],
+                 ]
+               );
+            }
+        }
+        return redirect()->route('default_filer')->with('flash_message', 'Update Data successfully');
+    }
 
 
 

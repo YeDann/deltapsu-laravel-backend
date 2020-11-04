@@ -247,6 +247,9 @@ Route::post('update_order_filer','ProductFilterController@update_order_filer')->
 Route::get('default_filer','ProductFilterController@default_filer')->name('default_filer');
 Route::post('storedefault_filer','ProductFilterController@storeDefaultfiler')->name('storeDefaultfiler');
 Route::post('deleteDefaultfilter','ProductFilterController@deleteDefaultfilter')->name('deleteDefaultfilter');
+Route::get('editFilterSelector/{id?}','ProductFilterController@editFilterSelector')->name('editFilterSelector');
+Route::post('updateFilterSection','ProductFilterController@updateFilterSection')->name('updateFilterSection');
+
 
 Route::get('createSeries/{id?}','ProductCategoriesController@createSeries')->name('createSeries');
 Route::get('editSeries/{id?}/{cateId?}','ProductCategoriesController@editSeries')->name('editSeries');

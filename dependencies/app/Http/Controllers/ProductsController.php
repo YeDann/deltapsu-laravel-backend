@@ -589,16 +589,16 @@ public function update(Request $request){
 
                     ]
                 );
-                foreach($langs as $lang){
+
                     $products_translation = DB::table('product_has_property_translation')->insert(
                         [
                             "per_fk_id" => $pro_id_perty,
                             "product_id" => $pro_id,
-                            "value_text" => isset($inputText[$fieldTextid][$lang]) ? $inputText[$fieldTextid][$lang]:null ,
-                            "local" => $lang,
+                            "value_text" => isset($inputText[$fieldTextid]['en']) ? $inputText[$fieldTextid]['en']:null ,
+                            "local" => 'en',
                         ]
                     );
-                }
+                
             }
            
             #return  dd($status_input ,$productfieldNumbers);
@@ -653,15 +653,15 @@ public function update(Request $request){
                 );
                   
               }
-                foreach($langs as $lang){
+           
                     $products_translation = DB::table('product_has_property_translation')->insert(
                         [
                             "per_fk_id" => $pro_id_perty,
                             "product_id" => $pro_id,
-                            "local" => $lang,
+                            "local" => 'en',
                         ]
                     );
-                }
+                
 
             }
  

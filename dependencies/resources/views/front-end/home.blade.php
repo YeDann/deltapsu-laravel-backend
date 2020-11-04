@@ -449,7 +449,7 @@ function retextdata($arr ,$unit){
     <div class="box-pp">
         <div class="container">
             <div class="text-center">
-                <h2 class="text-title-delta-home">The Latest Series</h2>
+                <h2 class="text-title-delta-home">{{$staticContent['The_Latest_Series']}}</h2>
             </div>
             <div id="producttype" class="owl-carousel owl-theme  ft-products-body">
                 @foreach ($series as $serie)
