@@ -387,7 +387,15 @@
             var newkey = key.replace('/', '@');
               event.preventDefault();
               window.location = '{{route('searchByTag')}}/'+newkey;
-       }
+         }
+         function searchName(id, myArray ){
+            for (var i=0; i < myArray.length; i++) {
+                if (myArray[i].id === id) {
+                    return myArray[i].lable;
+                }
+            }
+           }
+
         function getContentByModel(method){
             var model_id;
             if(method == 1){
@@ -446,8 +454,8 @@
                 html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image1">';
-                html2 += '<h5 class="invisible-up-922">Manual</h5>';
-                html2 += '<h4 class="visible-up-922">Manual</h4>';    
+                html2 += '<h5 class="invisible-up-922">'+searchName(1,documents_cate) +'</h5>';
+                html2 += '<h4 class="visible-up-922">'+searchName(1,documents_cate) +'</h4>';    
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image1" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
