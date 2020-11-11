@@ -1188,7 +1188,7 @@ function selectCountry(){
 			$("#bus").append(new Option("USB adapter", "2"));
 			$("#bus").append(new Option("RS485 adapter", "3"));
 		 }
-		 loadparallel(model_alldata[index]['id'] ,model_alldata[index]['max_slot']);
+		 loadparallel(model_alldata[index]['translate_id'] ,model_alldata[index]['max_slot']);
 	
 		//addMoreOutput();
 		$('.slot').empty();
@@ -1205,7 +1205,7 @@ function selectCountry(){
 					},
 					success: function(data){
 						paralls_cons = data.data;
-						// console.log(paralls_cons);
+						console.log(paralls_cons , max_slot , id);
 						renderTable(max_slot,'parallel',paralls_cons,'data_tableslot');
 						renderTable(max_slot,'parallel-2',paralls_cons,'data_table2_con');
 					},
