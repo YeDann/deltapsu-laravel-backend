@@ -960,7 +960,7 @@ function selectCountry(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-                console.log(data);
+              
                 var options = '';
 
                 for (var i = 0; i < data['results'].length; i++) {
@@ -1011,7 +1011,6 @@ function selectCountry(){
 
 	var code = '';
 	selectionGenerate();
-	//console.log(do_a.length ,ss_a.length);
 	$(function () {
 		$('[data-toggle="tooltip"]').tooltip()
 	})
@@ -1205,7 +1204,6 @@ function selectCountry(){
 					},
 					success: function(data){
 						paralls_cons = data.data;
-						console.log(paralls_cons , max_slot , id);
 						renderTable(max_slot,'parallel',paralls_cons,'data_tableslot');
 						renderTable(max_slot,'parallel-2',paralls_cons,'data_table2_con');
 					},
@@ -1217,8 +1215,6 @@ function selectCountry(){
 	}
 
 	function addSlotOutput(){
-		// console.log(checkSlotMax() ,'addSlot');
-		// // console.log(checkSlotMax());
 		if(checkSlotMax()){
 			var index = $('#model').children("option:selected").val();
 			alert('You have reached maximum slot of '+model_alldata[index]['product_code']+' ('+model_alldata[index]['max_slot']+' slots)');
@@ -1570,7 +1566,7 @@ function selectCountry(){
 			$('#port').html(text);
 			$('#port02').html(text);
 			$('input[name=output_total]').val(countSlot());
-			console.log(countSlot() ,'numberslot');
+			
 			$('#numoutput').text(countSlot());
 			
 			var sum_watt = sumWatt();
@@ -1710,7 +1706,7 @@ function selectCountry(){
 		if(countSlot()+addon > model_alldata[index]['max_slot']){
 			return true;
 		}
-		console.log(countSlot(),addon ,model_alldata[index]['max_slot']);
+	
 		if(countSlot()+addon >= model_alldata[index]['max_slot']){
 			$('#addmore').addClass('d-none');
 		}else{
@@ -1722,7 +1718,6 @@ function selectCountry(){
 	}
 	function checkOutputMax(){
 	    var ouput =	$('#power').val();
-		console.log(ouput);
 	}
 
 	function sumWatt(){
