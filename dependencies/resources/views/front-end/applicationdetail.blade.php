@@ -75,6 +75,7 @@
         padding: 24px;
         border: 2px solid #E3EFF8;
         margin-bottom: 20px;
+        
     }
     .other-applications-list img{
         width: 64px;
@@ -84,17 +85,16 @@
         flex-wrap: wrap;
     }
     .other-applications-grid-mobile-list{
-        min-height: 150px;
-        max-height: 250px;
-        padding: 24px;
         border: 2px solid #E3EFF8;
+        display: block;
+        margin:12px 0;
     }
     @media only screen and (max-width:1365px) {
     
     .other-applications-list{
         flex: 0 0 0 30%;
-        width:30%;
         margin: 12px;
+        padding: 10px;
     }
     
 }
@@ -102,38 +102,25 @@
     
         .other-applications-list{
             flex: 0 0 0 30%;
-            width:30%;
             margin: 12px;
+            padding: 10px;
         }
         
     }
     @media only screen and (max-width:992px) {
     
     .other-applications-grid-mobile-list{
-        flex: 0 0 0 29%;
-        width:29%;
-        margin: 12px;
+
+
     }
     
  }
- @media only screen and (max-width:769px) {
-    
-    .other-applications-grid-mobile-list{
-        flex: 0 0 0 45%;
-        width:45%;
-        margin: 12px;
-    }
-    
- }
+
     @media (max-width:560px){
         .other-applications-grid-mobile{
             grid-template-columns: 1fr;
         }
-        .other-applications-grid-mobile-list{
-            flex: 0 0 0 100%;
-            width:100%;
-            margin: 12px 0px;
-        }
+   
         #related-product-mobile{
             padding-left: 10px;
             padding-right: 10px;
@@ -412,17 +399,21 @@
         <a href="{{route('contactSupport')}}"class="btn btn-border-delta mb-3">{{$staticContent['contact_us']}}</a>
         </div>
         <h3 class="text-title-delta">{{$staticContent['Other_Application']}}</h3>
-        <div class="other-applications-grid-mobile">
-            @foreach ($otherapp as $app)
-            <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}" class="other-applications-grid-mobile-list">
-           
-                <img class="center my-2" src="{{config('app.url')}}/medias/categories/{{$app->color_icon}}" >
-                <h5 class="text-title-dark text-center">{{$app->name}}</h5>
-              
-               
-            </a>
-            @endforeach
+        <div class="container">
+             <div  class="row">
+                @foreach ($otherapp as $app)
+                
+                <div class="col-md-6">
+                    <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}" class="other-applications-grid-mobile-list">
+                        <img class="center my-2" src="{{config('app.url')}}/medias/categories/{{$app->color_icon}}" >
+                        <h5 class="text-title-dark text-center">{{$app->name}}</h5>
+                    </a>
+                </div>
+        
+                @endforeach
+             </div>
         </div>
+      
     </div> 
     
 </div>

@@ -266,7 +266,14 @@ top: -9px;
             </a> 
             <span class="fs-front">|</span>
             <a class="lang-space link-nav-first dropdown-toggle text-uppercase" id="dropdown06"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{App::getLocale()}}
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                @if(App::getLocale() == 'cn')
+                SC
+                @elseif(App::getLocale() == 'tw')
+                TC
+                @else 
+                {{App::getLocale()}}
+                @endif
                 <i class="zmdi zmdi-chevron-down"></i></a>
             <div class="dropdown-menu" aria-labelledby="about-us">
               
@@ -280,7 +287,15 @@ top: -9px;
                     }
                 }
                ?>
-             <a onclick="setlocaltion('{{$current}}','{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}');" class="dropdown-item lang-drop-down text-uppercase cur-link {{App::getLocale()== $current ? 'active' : ''}}"  >{{$current }}</a>
+             <a onclick="setlocaltion('{{$current}}','{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}');" class="dropdown-item lang-drop-down text-uppercase cur-link {{App::getLocale()== $current ? 'active' : ''}}"  >
+              @if($current == 'cn')
+              SC
+              @elseif($current == 'tw')
+              TC
+              @else 
+              {{$current}}
+              @endif
+             </a>
                 @endforeach
             </div>
 
@@ -522,7 +537,15 @@ top: -9px;
                         }
                         ?>
                       {{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}
-                      <option  value="{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }},{{$current}}" {{App::getLocale() == $current?'selected':'' }}>{{  strtoupper($current) }}</option>
+                      <option  value="{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }},{{$current}}" {{App::getLocale() == $current?'selected':'' }}>
+                      @if($current == 'cn')
+                      SC
+                      @elseif($current == 'tw')
+                      TC
+                      @else 
+                        {{strtoupper($current)}}
+                      @endif
+                      </option>
                         @endforeach
                     </select>
                 </div>                
