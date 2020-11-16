@@ -268,9 +268,9 @@ top: -9px;
             <a class="lang-space link-nav-first dropdown-toggle text-uppercase" id="dropdown06"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                 @if(App::getLocale() == 'cn')
-                SC
+                简中
                 @elseif(App::getLocale() == 'tw')
-                TC
+                繁中
                 @else 
                 {{App::getLocale()}}
                 @endif
@@ -289,9 +289,9 @@ top: -9px;
                ?>
              <a onclick="setlocaltion('{{$current}}','{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}');" class="dropdown-item lang-drop-down text-uppercase cur-link {{App::getLocale()== $current ? 'active' : ''}}"  >
               @if($current == 'cn')
-              SC
+              简中
               @elseif($current == 'tw')
-              TC
+              繁中
               @else 
               {{$current}}
               @endif
@@ -539,9 +539,9 @@ top: -9px;
                       {{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}
                       <option  value="{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }},{{$current}}" {{App::getLocale() == $current?'selected':'' }}>
                       @if($current == 'cn')
-                      SC
+                      简中
                       @elseif($current == 'tw')
-                      TC
+                      繁中
                       @else 
                         {{strtoupper($current)}}
                       @endif
