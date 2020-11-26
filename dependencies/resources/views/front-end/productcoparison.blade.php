@@ -974,7 +974,7 @@
     }
     var link = '{{route('productsDetailsByType')}}';
     function viewKey(key){
-            var newkey = key.replace('/', '@');
+            var newkey = key.replaceAll('/', '@');
            return newkey;
     }
      function setproimage(pro ,id){

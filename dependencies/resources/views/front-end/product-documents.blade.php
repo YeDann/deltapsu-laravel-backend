@@ -384,7 +384,7 @@
 
         }
         function viewKey(key){
-            var newkey = key.replace('/', '@');
+            var newkey = key.replaceAll('/', '@');
               event.preventDefault();
               window.location = '{{route('searchByTag')}}/'+newkey;
          }
@@ -634,7 +634,7 @@
         }
 
         function productKey(key){
-            var newkey = key.replace('/', '@');
+            var newkey = key.replaceAll('/', '@');
             return newkey;
         }
         function setformatdate(val){

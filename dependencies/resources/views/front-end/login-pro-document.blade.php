@@ -473,7 +473,7 @@
         }
 
         function productKey(key){
-            var newkey = key.replace('/', '@');
+            var newkey = key.replaceAll('/', '@');
             return newkey;
         }
 

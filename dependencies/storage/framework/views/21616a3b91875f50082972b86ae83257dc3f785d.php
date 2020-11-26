@@ -268,8 +268,15 @@ top: -9px;
             </a> 
             <span class="fs-front">|</span>
             <a class="lang-space link-nav-first dropdown-toggle text-uppercase" id="dropdown06"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <?php echo e(App::getLocale()); ?>
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                <?php if(App::getLocale() == 'cn'): ?>
+                简中
+                <?php elseif(App::getLocale() == 'tw'): ?>
+                繁中
+                <?php else: ?> 
+                <?php echo e(App::getLocale()); ?>
 
+                <?php endif; ?>
                 <i class="zmdi zmdi-chevron-down"></i></a>
             <div class="dropdown-menu" aria-labelledby="about-us">
               
@@ -283,7 +290,16 @@ top: -9px;
                     }
                 }
                ?>
-             <a onclick="setlocaltion('<?php echo e($current); ?>','<?php echo e(LaravelLocalization::getLocalizedURL($current, null, [], true)); ?>');" class="dropdown-item lang-drop-down text-uppercase cur-link <?php echo e(App::getLocale()== $current ? 'active' : ''); ?>"  ><?php echo e($current); ?></a>
+             <a onclick="setlocaltion('<?php echo e($current); ?>','<?php echo e(LaravelLocalization::getLocalizedURL($current, null, [], true)); ?>');" class="dropdown-item lang-drop-down text-uppercase cur-link <?php echo e(App::getLocale()== $current ? 'active' : ''); ?>"  >
+              <?php if($current == 'cn'): ?>
+              简中
+              <?php elseif($current == 'tw'): ?>
+              繁中
+              <?php else: ?> 
+              <?php echo e($current); ?>
+
+              <?php endif; ?>
+             </a>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
@@ -522,7 +538,16 @@ top: -9px;
                         ?>
                       <?php echo e(LaravelLocalization::getLocalizedURL($current, null, [], true)); ?>
 
-                      <option  value="<?php echo e(LaravelLocalization::getLocalizedURL($current, null, [], true)); ?>,<?php echo e($current); ?>" <?php echo e(App::getLocale() == $current?'selected':''); ?>><?php echo e(strtoupper($current)); ?></option>
+                      <option  value="<?php echo e(LaravelLocalization::getLocalizedURL($current, null, [], true)); ?>,<?php echo e($current); ?>" <?php echo e(App::getLocale() == $current?'selected':''); ?>>
+                      <?php if($current == 'cn'): ?>
+                      简中
+                      <?php elseif($current == 'tw'): ?>
+                      繁中
+                      <?php else: ?> 
+                        <?php echo e(strtoupper($current)); ?>
+
+                      <?php endif; ?>
+                      </option>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
                 </div>                

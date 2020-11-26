@@ -276,7 +276,7 @@ top: -9px;
                 @endif
                 <i class="zmdi zmdi-chevron-down"></i></a>
             <div class="dropdown-menu" aria-labelledby="about-us">
-              
+              @if(isset($language))
                 @foreach ($language as $item)
                 <?php 
                 $current = null;
@@ -297,6 +297,7 @@ top: -9px;
               @endif
              </a>
                 @endforeach
+                @endif
             </div>
 
         </div>
@@ -526,7 +527,8 @@ top: -9px;
                         <i class="fa fa-search icon-serch" aria-hidden="true"></i>
                     </div>
                     <select name="" id="select-mobile-lang" onchange="changeLangLocationmobile();" class="select-language text-uppercase">
-                        @foreach ($language as $item)
+                      @if(isset($language))
+                      @foreach ($language as $item)
                         <?php 
                         $current = null;
                         foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties) { 
@@ -547,6 +549,7 @@ top: -9px;
                       @endif
                       </option>
                         @endforeach
+                        @endif
                     </select>
                 </div>                
             

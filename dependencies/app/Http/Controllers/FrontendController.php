@@ -2369,8 +2369,7 @@ class FrontendController extends Controller
           $checkSpece =  preg_match('/\s/',$keypro);
           $checkdash =  preg_match('/-/',$keypro);
     //    return dd($checkdesh);
-        
-
+    
            $lang = App::getLocale();
            $checkArr = [];
            $query = DB::table('products as p')
@@ -2709,7 +2708,11 @@ class FrontendController extends Controller
             ->where('mrt.name', 'LIKE', '%'.$keysearch.'%')
             ->select('mr.*' ,'mrt.*')
             ->get();
+               
+
           
+
+      
            return  view('front-end.resultsearch')
            ->with('applications',$applications)
            ->with('margetCate',$margetCate)

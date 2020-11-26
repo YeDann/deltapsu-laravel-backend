@@ -349,7 +349,7 @@ function retextdata($arr ,$unit){
     <div class="box-pp">
         <div class="container">
             <div class="text-center">
-                <h2 class="text-title-delta-home">The Latest Series</h2>
+                <h2 class="text-title-delta-home"><?php echo e($staticContent['The_Latest_Series']); ?></h2>
             </div>
             <div id="producttype" class="owl-carousel owl-theme  ft-products-body">
                 <?php $__currentLoopData = $series; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $serie): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

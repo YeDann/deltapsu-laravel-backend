@@ -626,14 +626,14 @@ if (!Array.prototype.findIndex) {
        <script>
          $( "#formseachall" ).submit(function( event ) {
               var key = $('#searchinput').val();
-              var newkey = key.replace('/', '@');
+              var newkey = key.replaceAll('/', '@');
             //  console.log();
               event.preventDefault();
               window.location = '{{route('searchAll')}}/'+newkey;
          });
          $( "#formseachall_mobile" ).submit(function( event ) {
               var key = $('#searchinput-mobile').val();
-              var newkey = key.replace('/', '@');
+              var newkey = key.replaceAll('/', '@');
               event.preventDefault();
               window.location = '{{route('searchAll')}}/'+newkey;
          });
