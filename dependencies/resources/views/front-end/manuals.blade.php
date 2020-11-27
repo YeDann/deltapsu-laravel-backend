@@ -465,7 +465,7 @@
        }
 
        function productKey(key){
-            var newkey = key.replaceAll('/', '@');
+            var newkey = key.replace(/[/]/g,'@');
             return newkey;
         }
 

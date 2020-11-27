@@ -1219,7 +1219,7 @@ font-size: 50px;
 @section('js')
 <script>
     function viewKey(key){
-            var newkey = key.replaceAll('/', '@');
+            var newkey = key.replace(/[/]/g,'@');
               event.preventDefault();
               window.location = '{{route('searchByTag')}}/'+newkey;
     }
