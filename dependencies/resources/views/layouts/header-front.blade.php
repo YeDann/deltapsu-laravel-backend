@@ -233,6 +233,13 @@ top: -9px;
 .cur-link{
   cursor: pointer;
 }
+.cur-lang-new-g{
+  cursor: pointer;
+}
+.img-icon-golang{
+  height: 20px;
+  margin-top: 4px;
+}
 
 </style>
 
@@ -265,7 +272,7 @@ top: -9px;
             </div>
             </a> 
             <span class="fs-front">|</span>
-            <a class="lang-space link-nav-first dropdown-toggle text-uppercase" id="dropdown06"
+            <a class="lang-space link-nav-first dropdown-toggle text-uppercase" 
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                 @if(App::getLocale() == 'cn')
                 简中
@@ -299,8 +306,20 @@ top: -9px;
                 @endforeach
                 @endif
             </div>
-
+            <span class="fs-front">|</span>
+            <div class="dropdown">
+              <a class="dropdown-toggle cur-lang-new-g"  data-toggle="dropdown">
+                <img class="img-icon-golang" src="{{asset('frontend-asset/image/icon/globe.svg')}}">
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="https://www.deltapsu.com">Global</a></li>
+                <li><a href="https://www.deltapsu.cn" target="_blank">China-简体中文</a></li>
+              </ul>
+              </div>
+            </div>
+         
         </div>
+ 
 
     </div>
     <div class="nav-position scrolled">
@@ -496,6 +515,7 @@ top: -9px;
                         </div>
                     </li>
                     </ul>
+                 
                 </div>
             </nav>
     </div>
@@ -551,7 +571,9 @@ top: -9px;
                         @endforeach
                         @endif
                     </select>
-                </div>                
+                    
+                </div>    
+                    
             
                         
         </div> 
@@ -608,6 +630,17 @@ top: -9px;
             </div>
             <div class="d-flex">
                 <img src="{{asset('frontend-asset/image/sub-new-dark.svg')}}" alt=""  class="mr-2"><a class="a-link-hover" tabindex="-1" onclick="subscribe()" data-toggle="modal" data-target="#subscribe-modal" > {{$staticContent['Subscribe']}}</a>
+            </div>
+            <div class="d-flex">
+            <div class="dropdown">
+              <a class="dropdown-toggle cur-lang-new-g"  data-toggle="dropdown">   
+                    <img class="img-icon-golang" src="{{asset('frontend-asset/image/icon/globe.svg')}}">
+                  </a>
+              <ul class="dropdown-menu">
+                <li><a href="https://www.deltapsu.com">Global</a></li>
+                <li><a href="https://www.deltapsu.cn" target="_blank">China-简体中文</a></li>
+              </ul>
+              </div> 
             </div>
             
         </div>
