@@ -237,8 +237,7 @@ top: -9px;
   cursor: pointer;
 }
 .img-icon-golang{
-  height: 20px;
-  margin-top: 4px;
+  height: 28px;
 }
 
 </style>
