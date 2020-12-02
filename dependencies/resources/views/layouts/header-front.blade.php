@@ -233,9 +233,6 @@ top: -9px;
 .cur-link{
   cursor: pointer;
 }
-.cur-lang-new-g{
-  cursor: pointer;
-}
 .img-icon-golang{
   height: 28px;
 }
@@ -247,7 +244,7 @@ top: -9px;
     <div class="nav-firts ">
       <div class="alert-browser" id="alert-browser-check" style="display: none;">
         <div class="color-yellow" >
-            You seem to be using an unsupported browser. We recommend using the latest version of Chrome, Firefox or Safari.
+           We recommend using the latest version of internet explorer, Chrome, Firefox or Safari.
         </div>
       </div>
         <div class="container">
@@ -271,15 +268,16 @@ top: -9px;
             </div>
             </a> 
             <span class="fs-front">|</span>
-            <a class="lang-space link-nav-first dropdown-toggle text-uppercase" 
+            <a class="lang-space link-nav-first dropdown-toggle text-uppercase" id="dropdown06"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                 @if(App::getLocale() == 'cn')
                 简中
                 @elseif(App::getLocale() == 'tw')
                 繁中
-                @else 
-                {{App::getLocale()}}
-                @endif
+              @else 
+              {{App::getLocale()}}
+              @endif
+             
                 <i class="zmdi zmdi-chevron-down"></i></a>
             <div class="dropdown-menu" aria-labelledby="about-us">
               @if(isset($language))
@@ -294,10 +292,10 @@ top: -9px;
                 }
                ?>
              <a onclick="setlocaltion('{{$current}}','{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}');" class="dropdown-item lang-drop-down text-uppercase cur-link {{App::getLocale()== $current ? 'active' : ''}}"  >
-              @if($current == 'cn')
-              简中
-              @elseif($current == 'tw')
-              繁中
+                @if($current == 'cn')
+                简中
+                @elseif($current == 'tw')
+                繁中
               @else 
               {{$current}}
               @endif
@@ -311,14 +309,12 @@ top: -9px;
                 <img class="img-icon-golang" src="{{asset('frontend-asset/image/icon/globe.svg')}}">
               </a>
               <ul class="dropdown-menu">
-                <li><a href="https://www.deltapsu.com">Global</a></li>
-                <li><a href="https://www.deltapsu.cn" target="_blank">China-简体中文</a></li>
+                <li><a href="https://www.deltapsu.com" >Global</a></li>
+                <li><a href="https://www.deltapsu.cn"  target="_blank">China-简体中文</a></li>
               </ul>
               </div>
-            </div>
-         
+
         </div>
- 
 
     </div>
     <div class="nav-position scrolled">
@@ -329,7 +325,7 @@ top: -9px;
             </a>
             <a class="nav-search nav-link" 
                 id="dropdown08" >
-                <div class="nav-search-btn"> {{$staticContent['Search']}} <i class="fa fa-search"></i>
+                <div class="nav-search-btn"> {{isset($staticContent['Search'])?$staticContent['Search'] :''}} <i class="fa fa-search"></i>
                 </div>
             </a>
 
@@ -514,7 +510,6 @@ top: -9px;
                         </div>
                     </li>
                     </ul>
-                 
                 </div>
             </nav>
     </div>
@@ -546,8 +541,7 @@ top: -9px;
                         <i class="fa fa-search icon-serch" aria-hidden="true"></i>
                     </div>
                     <select name="" id="select-mobile-lang" onchange="changeLangLocationmobile();" class="select-language text-uppercase">
-                      @if(isset($language))
-                      @foreach ($language as $item)
+                        @foreach ($language as $item)
                         <?php 
                         $current = null;
                         foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties) { 
@@ -559,20 +553,18 @@ top: -9px;
                         ?>
                       {{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}
                       <option  value="{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }},{{$current}}" {{App::getLocale() == $current?'selected':'' }}>
-                      @if($current == 'cn')
-                      简中
-                      @elseif($current == 'tw')
-                      繁中
-                      @else 
-                        {{strtoupper($current)}}
-                      @endif
+                        @if($current == 'cn')
+                            简中
+                        @elseif($current == 'tw')
+                            繁中
+                        @else 
+                        {{strtoupper($current) }}
+                        @endif
+                      
                       </option>
                         @endforeach
-                        @endif
                     </select>
-                    
-                </div>    
-                    
+                </div>                
             
                         
         </div> 
@@ -632,14 +624,14 @@ top: -9px;
             </div>
             <div class="d-flex">
             <div class="dropdown">
-              <a class="dropdown-toggle cur-lang-new-g"  data-toggle="dropdown">   
-                    <img class="img-icon-golang" src="{{asset('frontend-asset/image/icon/globe.svg')}}">
-                  </a>
+              <a class="dropdown-toggle cur-lang-new-g"  data-toggle="dropdown">
+                <img class="img-icon-golang" src="{{asset('frontend-asset/image/icon/globe.svg')}}">
+              </a>
               <ul class="dropdown-menu">
                 <li><a href="https://www.deltapsu.com">Global</a></li>
-                <li><a href="https://www.deltapsu.cn" target="_blank">China-简体中文</a></li>
+                <li><a href="https://www.deltapsu.cn"  target="_blank">China-简体中文</a></li>
               </ul>
-              </div> 
+              </div>
             </div>
             
         </div>
@@ -833,10 +825,7 @@ top: -9px;
                       </svg></span><span>{{$staticContent['Sign_up_for_newsletter']}}</span></label>
           </div>
           <input type="hidden" id="keyrecapGui" name="keyresponseCap" >
-          <form action="?" method="POST" >
-            <div class="mt-4" id="recap_vertifygetGui"></div>
-            <br>
-          </form>
+          <div class="h-captcha" data-sitekey="2f8c529f-2aca-4ed0-bd8b-c1c6801fdfe7"></div>
        
         <button type="submit" class="btn btn-subscribe">Download</button>
       </div>
@@ -884,6 +873,24 @@ top: -9px;
         <div class="modal-body px-4 mb-4">
             <div class="text-center">
                 <h4 class="text-color-delta">Sorry, Can't send email</h4>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade p-1" id="downloadgui-modal-failures-Api" tabindex="-1" role="dialog" aria-labelledby="subscribe-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content ">
+        <div class="modal-header pl-4">
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body px-4 mb-4">
+            <div class="text-center">
+                <h4 class="text-color-delta">Sorry, Can't send email,There are something eror on data</h4>
             </div>
         </div>
       </div>
