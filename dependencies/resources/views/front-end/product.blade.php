@@ -644,6 +644,7 @@
            },
            success: function (res) {
             pro_perti =  res['data'];
+            //console.log(res['data']);
            },
            async: false,
            });
@@ -1739,10 +1740,26 @@
                         text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
                        
                     }
+
+                    var dataarr = [
+                                ppt['data_1'],
+                                ppt['data_2'],
+                                ppt['data_3'],
+                                ppt['data_4'],
+                                ppt['data_5'],
+                                ppt['data_6'],
+                                ppt['data_7'],
+                                ppt['data_8'],
+                                ppt['data_9'],
+                                ppt['data_10'],
+                                ppt['data_11'],
+                                ppt['data_12'],
+                    ];
+
                     object = {
                        'id':index_per,
                        'type':fil_con['field_id'],
-                       'data':ppt['data_1'],
+                       'data':checkNull(dataarr,ppt['unit_name'],ppt['status_input']),
                        'status_input':ppt['status_input'],
                        'text':text,
                     }
@@ -1765,26 +1782,7 @@
                             html3 += '<label class="cbx" for="cx-normalnum'+fil_con['field_id']+index_per+'"><span>';
                             html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                             html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
-                            if(ppt['status_input'] == 2 || ppt['status_input'] == 1 ){
-                                if(ppt['data_2'] != null && ppt['data_3'] != null && ppt['data_4'] != null && ppt['data_5'] != null ){
-                                html3 += '</svg></span><span>'+ppt['data_1'] +ppt['unit_name']+','+ppt['data_2'] +ppt['unit_name'] +','+ppt['data_3'] +ppt['unit_name']+','+ppt['data_4'] +ppt['unit_name']+','+ppt['data_5'] +ppt['unit_name']+'</span></label>';
-                            }else if(ppt['data_2'] != null && ppt['data_3'] != null && ppt['data_4'] != null  ){
-                                html3 += '</svg></span><span>'+ppt['data_1'] +ppt['unit_name']+','+ppt['data_2'] +ppt['unit_name'] +','+ppt['data_3'] +ppt['unit_name']+','+ppt['data_4'] +ppt['unit_name']+'</span></label>';
-                            }else if(ppt['data_2'] != null && ppt['data_3'] != null  ){
-                                html3 += '</svg></span><span>'+ppt['data_1'] +ppt['unit_name']+','+ppt['data_2'] +ppt['unit_name'] +','+ppt['data_3'] +ppt['unit_name']+'</span></label>';
-                            }else if(ppt['data_2'] != null ){
-                                html3 += '</svg></span><span>'+ppt['data_1'] +ppt['unit_name']+','+ppt['data_2'] +ppt['unit_name'] +'</span></label>';
-                            }else{
-                                html3 += '</svg></span><span>'+ppt['data_1'] +ppt['unit_name'] +'</span></label>';
-                             }
-                            }else if(ppt['status_input'] == 3){
-                                if(ppt['data_1'] != null &&  ppt['data_2'] != null){
-                                    html3 += '</svg></span><span>'+ppt['data_1']+'-'+ppt['data_2']+' '+ppt['unit_name'] +'</span></label>';
-                                }
-                               
-                            }
-                         
-                       
+                            html3 += '</svg></span ><span class="'+ppt['product_id']+'">'+ checkNull(dataarr,ppt['unit_name'],ppt['status_input']) +'</span></label>';
                             html3 += '</div>' ; 
                         }
                     }else if(ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != '' && typeof ppt['value_text']  != 'undefined'){
@@ -1898,10 +1896,25 @@
                     if(ppt['value_text'] != null && typeof ppt['value_text']  != 'undefined'){
                         text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
                     }
+
+                    var dataarr = [
+                                ppt['data_1'],
+                                ppt['data_2'],
+                                ppt['data_3'],
+                                ppt['data_4'],
+                                ppt['data_5'],
+                                ppt['data_6'],
+                                ppt['data_7'],
+                                ppt['data_8'],
+                                ppt['data_9'],
+                                ppt['data_10'],
+                                ppt['data_11'],
+                                ppt['data_12'],
+                    ];
                     object = {
                        'id':index_per,
                        'type':fil_con['field_id'],
-                       'data':ppt['data_1'],
+                       'data':checkNull(dataarr,ppt['unit_name'],ppt['status_input']),
                        'status_input':ppt['status_input'],
                        'text':text,
                     }
@@ -1919,7 +1932,7 @@
                         }
                         if(containsObject(object, data_1)){
                             data_1.push(object);
-                            html3 += '<div class="box-input-checkbox">';
+                            html3 += '<div class="box-input-checkbox ">';
                             html3 += '<input onchange="fillerNumber('+"'"+fil_con['field_id']+"'"+','
                             +ppt['data_1']+','+ppt['data_2']+','+ppt['data_3'] +','+ppt['data_4'] +','+ppt['data_5']+','+ppt['data_6']+','+ppt['data_7']
                             +','+ppt['data_8']+','+ppt['data_9']+','+ppt['data_10']+','+ppt['data_11']+','+ppt['data_12']+
@@ -1927,18 +1940,7 @@
                             html3 += '<label class="cbx" for="cx-normalnumber'+fil_con['field_id']+index_per+'_mobile"><span>';
                             html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                             html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
-                            if(ppt['data_2'] != null && ppt['data_3'] != null && ppt['data_4'] != null && ppt['data_5'] != null ){
-                                html3 += '</svg></span><span>'+ppt['data_1'] +ppt['unit_name']+','+ppt['data_2'] +ppt['unit_name'] +','+ppt['data_3'] +ppt['unit_name']+','+ppt['data_4'] +ppt['unit_name']+','+ppt['data_5'] +ppt['unit_name']+'</span></label>';
-                            }else if(ppt['data_2'] != null && ppt['data_3'] != null && ppt['data_4'] != null  ){
-                                html3 += '</svg></span><span>'+ppt['data_1'] +ppt['unit_name']+','+ppt['data_2'] +ppt['unit_name'] +','+ppt['data_3'] +ppt['unit_name']+','+ppt['data_4'] +ppt['unit_name']+'</span></label>';
-                            }else if(ppt['data_2'] != null && ppt['data_3'] != null  ){
-                                html3 += '</svg></span><span>'+ppt['data_1'] +ppt['unit_name']+','+ppt['data_2'] +ppt['unit_name'] +','+ppt['data_3'] +ppt['unit_name']+'</span></label>';
-                            }else if(ppt['data_2'] != null ){
-                                html3 += '</svg></span><span>'+ppt['data_1'] +ppt['unit_name']+','+ppt['data_2'] +ppt['unit_name'] +'</span></label>';
-                            }else{
-                                html3 += '</svg></span><span>'+ppt['data_1'] +ppt['unit_name'] +'</span></label>';
-                             }
-                       
+                            html3 += '</svg></span ><span class="'+ppt['product_id']+'">'+ checkNull(dataarr,ppt['unit_name'],ppt['status_input']) +'</span></label>';
                             html3 += '</div>' ; 
                            
                         }
@@ -2428,10 +2430,24 @@
                         text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
                       
                     }
+                    var dataarr = [
+                                ppt['data_1'],
+                                ppt['data_2'],
+                                ppt['data_3'],
+                                ppt['data_4'],
+                                ppt['data_5'],
+                                ppt['data_6'],
+                                ppt['data_7'],
+                                ppt['data_8'],
+                                ppt['data_9'],
+                                ppt['data_10'],
+                                ppt['data_11'],
+                                ppt['data_12'],
+                    ];
                     object = {
                        'id':index_per,
                        'type':ppt['type_id'],
-                       'data':ppt['data_1'],
+                       'data':checkNull(dataarr,ppt['unit_name'],ppt['status_input']) ,
                        'status_input':ppt['status_input'],
                        'text':text,
                     }
@@ -2458,22 +2474,8 @@
                             html3 += '<label class="cbx" for="cx-'+ppt['type_id']+index_per+'"><span>';
                             html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                             html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
-                             var dataarr = [
-                                ppt['data_1'],
-                                ppt['data_2'],
-                                ppt['data_3'],
-                                ppt['data_4'],
-                                ppt['data_5'],
-                                ppt['data_6'],
-                                ppt['data_7'],
-                                ppt['data_8'],
-                                ppt['data_9'],
-                                ppt['data_10'],
-                                ppt['data_11'],
-                                ppt['data_12'],
-                             ]
-                             
-                            html3 += '</svg></span><span>'+ checkNull(dataarr,ppt['unit_name'],ppt['status_input']) +'</span></label>';
+
+                            html3 += '</svg></span ><span class="'+ppt['product_id']+'">'+ checkNull(dataarr,ppt['unit_name'],ppt['status_input']) +'</span></label>';
                             html3 += '</div>' ;
                             htmlmobile += '<div onchange="fillerNumber('+"'"+ppt['type_id']+"'"+','+ppt['data_1']+','+ppt['data_2']+','+ppt['data_3'] +','+ppt['data_4'] +','+ppt['data_5']
                             +','+ppt['data_6']+','+ppt['data_7']+','+ppt['data_8'] +','+ppt['data_9'] +','+ppt['data_10'] +','+ppt['data_11'] +','+ppt['data_12']
@@ -2482,7 +2484,7 @@
                             htmlmobile += '<label class="cbx" for="cx-mobile'+ppt['type_id']+index_per+'"><span>';
                             htmlmobile += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                             htmlmobile += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
-                            htmlmobile += '</svg></span><span>'+ checkNull(dataarr,ppt['unit_name'],ppt['status_input']) +'</span></label>';
+                            htmlmobile += '</svg></span ><span>'+ checkNull(dataarr,ppt['unit_name'],ppt['status_input']) +'</span></label>';
                             htmlmobile += '</div>' ; 
                             $('.dataserchfilter'+ppt['type_id']).append(html3);
                             $('.dataserchfiltermobile'+ppt['type_id']).append(htmlmobile);
@@ -2605,8 +2607,12 @@
     function checkNull(dataarr,unit,status){
         var string = '';
         var arrstri = [];
+        var data_fi =  dataarr.sort( 
+                   function(a, b){
+                       return a > b ? 1 : -1;
+                    });
        if(status == 1 || status == 2 || status == 3){
-        $.each(dataarr, function(index,data){
+        $.each(data_fi, function(index,data){
             if(data != null && data != ''){
               arrstri.push(data+unit);
             }
