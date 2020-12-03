@@ -235,6 +235,7 @@ top: -9px;
 }
 .img-icon-golang{
   height: 28px;
+  margin-top: -2px;
 }
 
 </style>
