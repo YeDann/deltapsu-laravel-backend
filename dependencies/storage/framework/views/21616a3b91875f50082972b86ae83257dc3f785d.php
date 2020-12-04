@@ -233,6 +233,10 @@ top: -9px;
 .cur-link{
   cursor: pointer;
 }
+.img-icon-golang{
+  height: 28px;
+  margin-top: -2px;
+}
 
 </style>
 
@@ -241,7 +245,7 @@ top: -9px;
     <div class="nav-firts ">
       <div class="alert-browser" id="alert-browser-check" style="display: none;">
         <div class="color-yellow" >
-            You seem to be using an unsupported browser. We recommend using the latest version of Chrome, Firefox or Safari.
+           We recommend using the latest version of internet explorer, Chrome, Firefox or Safari.
         </div>
       </div>
         <div class="container">
@@ -273,13 +277,14 @@ top: -9px;
                 简中
                 <?php elseif(App::getLocale() == 'tw'): ?>
                 繁中
-                <?php else: ?> 
-                <?php echo e(App::getLocale()); ?>
+              <?php else: ?> 
+              <?php echo e(App::getLocale()); ?>
 
-                <?php endif; ?>
+              <?php endif; ?>
+             
                 <i class="zmdi zmdi-chevron-down"></i></a>
             <div class="dropdown-menu" aria-labelledby="about-us">
-              
+              <?php if(isset($language)): ?>
                 <?php $__currentLoopData = $language; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <?php 
                 $current = null;
@@ -291,17 +296,28 @@ top: -9px;
                 }
                ?>
              <a onclick="setlocaltion('<?php echo e($current); ?>','<?php echo e(LaravelLocalization::getLocalizedURL($current, null, [], true)); ?>');" class="dropdown-item lang-drop-down text-uppercase cur-link <?php echo e(App::getLocale()== $current ? 'active' : ''); ?>"  >
-              <?php if($current == 'cn'): ?>
-              简中
-              <?php elseif($current == 'tw'): ?>
-              繁中
+                <?php if($current == 'cn'): ?>
+                简中
+                <?php elseif($current == 'tw'): ?>
+                繁中
               <?php else: ?> 
               <?php echo e($current); ?>
 
               <?php endif; ?>
              </a>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php endif; ?>
             </div>
+            <span class="fs-front">|</span>
+            <div class="dropdown">
+              <a class="dropdown-toggle cur-lang-new-g"  data-toggle="dropdown">
+                <img class="img-icon-golang" src="<?php echo e(asset('frontend-asset/image/icon/Global.svg')); ?>">
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="https://www.deltapsu.com" >Global</a></li>
+                <li><a href="https://www.deltapsu.cn"  target="_blank">China - 简体中文</a></li>
+              </ul>
+              </div>
 
         </div>
 
@@ -314,7 +330,7 @@ top: -9px;
             </a>
             <a class="nav-search nav-link" 
                 id="dropdown08" >
-                <div class="nav-search-btn"> <?php echo e($staticContent['Search']); ?> <i class="fa fa-search"></i>
+                <div class="nav-search-btn"> <?php echo e(isset($staticContent['Search'])?$staticContent['Search'] :''); ?> <i class="fa fa-search"></i>
                 </div>
             </a>
 
@@ -539,14 +555,15 @@ top: -9px;
                       <?php echo e(LaravelLocalization::getLocalizedURL($current, null, [], true)); ?>
 
                       <option  value="<?php echo e(LaravelLocalization::getLocalizedURL($current, null, [], true)); ?>,<?php echo e($current); ?>" <?php echo e(App::getLocale() == $current?'selected':''); ?>>
-                      <?php if($current == 'cn'): ?>
-                      简中
-                      <?php elseif($current == 'tw'): ?>
-                      繁中
-                      <?php else: ?> 
+                        <?php if($current == 'cn'): ?>
+                            简中
+                        <?php elseif($current == 'tw'): ?>
+                            繁中
+                        <?php else: ?> 
                         <?php echo e(strtoupper($current)); ?>
 
-                      <?php endif; ?>
+                        <?php endif; ?>
+                      
                       </option>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </select>
@@ -606,6 +623,17 @@ top: -9px;
             </div>
             <div class="d-flex">
                 <img src="<?php echo e(asset('frontend-asset/image/sub-new-dark.svg')); ?>" alt=""  class="mr-2"><a class="a-link-hover" tabindex="-1" onclick="subscribe()" data-toggle="modal" data-target="#subscribe-modal" > <?php echo e($staticContent['Subscribe']); ?></a>
+            </div>
+            <div class="d-flex">
+            <div class="dropdown">
+              <a class="dropdown-toggle cur-lang-new-g"  data-toggle="dropdown">
+                <img class="img-icon-golang" src="<?php echo e(asset('frontend-asset/image/icon/Global.svg')); ?>">
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="https://www.deltapsu.com">Global</a></li>
+                <li><a href="https://www.deltapsu.cn"  target="_blank">China - 简体中文</a></li>
+              </ul>
+              </div>
             </div>
             
         </div>
@@ -790,10 +818,7 @@ top: -9px;
                       </svg></span><span><?php echo e($staticContent['Sign_up_for_newsletter']); ?></span></label>
           </div>
           <input type="hidden" id="keyrecapGui" name="keyresponseCap" >
-          <form action="?" method="POST" >
-            <div class="mt-4" id="recap_vertifygetGui"></div>
-            <br>
-          </form>
+          <div class="h-captcha" data-sitekey="2f8c529f-2aca-4ed0-bd8b-c1c6801fdfe7"></div>
        
         <button type="submit" class="btn btn-subscribe">Download</button>
       </div>
@@ -841,6 +866,24 @@ top: -9px;
         <div class="modal-body px-4 mb-4">
             <div class="text-center">
                 <h4 class="text-color-delta">Sorry, Can't send email</h4>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade p-1" id="downloadgui-modal-failures-Api" tabindex="-1" role="dialog" aria-labelledby="subscribe-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content ">
+        <div class="modal-header pl-4">
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body px-4 mb-4">
+            <div class="text-center">
+                <h4 class="text-color-delta">Sorry, Can't send email,There are something eror on data</h4>
             </div>
         </div>
       </div>

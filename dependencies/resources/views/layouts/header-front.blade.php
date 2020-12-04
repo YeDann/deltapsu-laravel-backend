@@ -304,7 +304,7 @@ top: -9px;
                 @endforeach
                 @endif
             </div>
-            <span class="fs-front">|</span>
+            {{-- <span class="fs-front">|</span>
             <div class="dropdown">
               <a class="dropdown-toggle cur-lang-new-g"  data-toggle="dropdown">
                 <img class="img-icon-golang" src="{{asset('frontend-asset/image/icon/Global.svg')}}">
@@ -313,7 +313,7 @@ top: -9px;
                 <li><a href="https://www.deltapsu.com" >Global</a></li>
                 <li><a href="https://www.deltapsu.cn"  target="_blank">China - 简体中文</a></li>
               </ul>
-              </div>
+              </div> --}}
 
         </div>
 
@@ -624,7 +624,7 @@ top: -9px;
                 <img src="{{asset('frontend-asset/image/sub-new-dark.svg')}}" alt=""  class="mr-2"><a class="a-link-hover" tabindex="-1" onclick="subscribe()" data-toggle="modal" data-target="#subscribe-modal" > {{$staticContent['Subscribe']}}</a>
             </div>
             <div class="d-flex">
-            <div class="dropdown">
+            {{-- <div class="dropdown">
               <a class="dropdown-toggle cur-lang-new-g"  data-toggle="dropdown">
                 <img class="img-icon-golang" src="{{asset('frontend-asset/image/icon/Global.svg')}}">
               </a>
@@ -632,7 +632,7 @@ top: -9px;
                 <li><a href="https://www.deltapsu.com">Global</a></li>
                 <li><a href="https://www.deltapsu.cn"  target="_blank">China - 简体中文</a></li>
               </ul>
-              </div>
+              </div> --}}
             </div>
             
         </div>

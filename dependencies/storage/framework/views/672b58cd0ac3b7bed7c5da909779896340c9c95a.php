@@ -1,5 +1,4 @@
-@extends('layouts.front-end')
-@section('css')
+<?php $__env->startSection('css'); ?>
 
 <style>
    
@@ -11,7 +10,7 @@
 		border-radius: 0;
 		border: 1px solid #444444; background-position: right 50%;
 		background-repeat: no-repeat;
-		background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
+		background-image: url('<?php echo e(asset('frontend-asset/image/arrow-down.svg')); ?>');
         padding-right: 24px;
 	}
 	.form-control:disabled, .form-control[readonly] {
@@ -207,7 +206,7 @@
     -moz-appearance: none;
     background-position: right 50%;
     background-repeat: no-repeat;
-    background-image: url({{asset('frontend-asset/image/arrow-down.svg')}});
+    background-image: url(<?php echo e(asset('frontend-asset/image/arrow-down.svg')); ?>);
     top: 6px;
   
    }
@@ -226,13 +225,13 @@
         transform: scale(1.12);
     }
 </style>
-@endsection
-@section('meta')
-<title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
-<meta name="description" content="{{isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''}}">
-<meta name="keywords" content="{{isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''}}">
-@endsection
-@section('container')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('meta'); ?>
+<title><?php echo e(isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''); ?></title>
+<meta name="description" content="<?php echo e(isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''); ?>">
+<meta name="keywords" content="<?php echo e(isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''); ?>">
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('container'); ?>
 <div class="padding-top-content">
 </div>
 <div class="products-index-banner visible-upper-mobile" id="products-index-banner-type">
@@ -242,10 +241,10 @@
                 <nav aria-label="breadcrumb" id="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item text-breadcrumb-home">
-                            <a href="{{route('index','home')}}">{{$staticContent['Home']}}</a>
+                            <a href="<?php echo e(route('index','home')); ?>"><?php echo e($staticContent['Home']); ?></a>
                         </li>
                         <li class="breadcrumb-item active text-breadcrumb" aria-current="page">
-                            <a  href="#">{{$staticContent['Products']}}</a>
+                            <a  href="#"><?php echo e($staticContent['Products']); ?></a>
                         </li>
                     </ol>
                 </nav>
@@ -254,71 +253,70 @@
     </div>
     <div class="padding-top-content-breadcrumb"></div>
     <div class="banner-type-product-all item"
-        style="background-image: url('{{asset('frontend-asset/image/Categories@2x.png')}}');">
-        {{-- style="background-color: #818181;background-image: url('');" --}}
+        style="background-image: url('<?php echo e(asset('frontend-asset/image/Categories@2x.png')); ?>');">
+        
         <div class="container">
-            @foreach ($subCategories as $subCate)
+            <?php $__currentLoopData = $subCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subCate): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="box-banner-pro-type-all">
                         <div class="text-middle">
-                            <h1 class="text-title-banner">{{$subCate->name}}</h1>
-                            <div class="text-p-banner my-2">{!!$subCate->content!!}</div>
-                                @if(isset($subCate->file))
-                                <a class="text-color-delta text-bold" href="{{config('app.url')}}/medias/categories/{{$subCate->file}}" download="{{$subCate->name}}_selection_guide"><img
-                                    class="align-baseline mr-2"  src="{{asset('frontend-asset/image/icon/download-icon.svg')}}" alt="">
-                                     {{$staticContent['Download_selection_guide']}}
+                            <h1 class="text-title-banner"><?php echo e($subCate->name); ?></h1>
+                            <div class="text-p-banner my-2"><?php echo $subCate->content; ?></div>
+                                <?php if(isset($subCate->file)): ?>
+                                <a class="text-color-delta text-bold" href="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($subCate->file); ?>" download="<?php echo e($subCate->name); ?>_selection_guide"><img
+                                    class="align-baseline mr-2"  src="<?php echo e(asset('frontend-asset/image/icon/download-icon.svg')); ?>" alt="">
+                                     <?php echo e($staticContent['Download_selection_guide']); ?>
+
                                 </a>
-                                @else
-                                {{-- <a class="text-color-delta text-bold" href="#"><img class="align-baseline mr-1" src="{{asset('frontend-asset/image/icon/download-icon.svg')}}" alt=""> Empty
-                                    selection
-                                    guide
-                                </a> --}}
-                                @endif
+                                <?php else: ?>
+                                
+                                <?php endif; ?>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 banner-products-pic ">
-                    {{-- <img src="{{asset('frontend-asset/image/DIN RAIL POWER SUPPLY@2x.png')}}" alt=""> --}}
-                    @if(isset($subCate->image))
+                    
+                    <?php if(isset($subCate->image)): ?>
                     <img class="img-fluid middle-img" 
-                        src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
-                    @else
+                        src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($subCate->image); ?>" alt="">
+                    <?php else: ?>
                     <img class="img-fluid middle-img" 
-                        src="{{asset('frontend-asset/image/blank.png')}}" alt="">
-                    @endif
+                        src="<?php echo e(asset('frontend-asset/image/blank.png')); ?>" alt="">
+                    <?php endif; ?>
                 </div>
             </div>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 </div>
 <div class="products-index-banner-tablet-down visible-mobile-only">
-    @foreach ($subCategories as $subCate)
+    <?php $__currentLoopData = $subCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subCate): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
     <div class="banner-type-product-all-tablet-down"
-        style="background-image: url('{{asset('frontend-asset/image/Categories@2x.png')}}');">
+        style="background-image: url('<?php echo e(asset('frontend-asset/image/Categories@2x.png')); ?>');">
         <div class="container">
             <div class="py-xl-5 py-2 text-center">
-                <p class="text-delta text-bold mt-5">{{$subCate->name}}</p>
-                    @if(isset($subCate->file))
-                    <a href="{{config('app.url')}}/medias/categories/{{$subCate->file}}" download="{{$staticContent['Download_selection_guide']}}_{{$subCate->name}}"><img class="align-baseline mr-1" src="{{asset('frontend-asset/image/icon/download-icon.svg')}}" alt="">
-                        {{$staticContent['Download_selection_guide']}}
+                <p class="text-delta text-bold mt-5"><?php echo e($subCate->name); ?></p>
+                    <?php if(isset($subCate->file)): ?>
+                    <a href="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($subCate->file); ?>" download="<?php echo e($staticContent['Download_selection_guide']); ?>_<?php echo e($subCate->name); ?>"><img class="align-baseline mr-1" src="<?php echo e(asset('frontend-asset/image/icon/download-icon.svg')); ?>" alt="">
+                        <?php echo e($staticContent['Download_selection_guide']); ?>
+
                     </a>
-                    @else
-                    @endif
+                    <?php else: ?>
+                    <?php endif; ?>
             </div>
             <div class="">
-                @if(isset($subCate->image))
+                <?php if(isset($subCate->image)): ?>
                 <img class="m-auto img-res-prolis" style=""
-                    src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
-                @else
+                    src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($subCate->image); ?>" alt="">
+                <?php else: ?>
                 <img class="m-auto  img-res-prolis" style=""
-                    src="{{asset('frontend-asset/image/blank.png')}}" alt="">
-                @endif
+                    src="<?php echo e(asset('frontend-asset/image/blank.png')); ?>" alt="">
+                <?php endif; ?>
             </div>
         </div>
     </div>
-    @endforeach
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </div>
 <div class="bg-menu-filler visible-upper-mobile">
     <div class="container">
@@ -326,35 +324,36 @@
             <div class="col-lg-2 pr-0 col-xl-4 col-md-2 my-auto">
                 <div id="showfiler">
                     <a href="#sidebar" data-toggle="collapse" onclick="onclickshow(2);">
-                    <img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt="">
-                    {{$staticContent['Show_Filters']}}
+                    <img src="<?php echo e(asset('frontend-asset/image/icon/filter-icon.svg')); ?>" alt="">
+                    <?php echo e($staticContent['Show_Filters']); ?>
+
                      </a>
                 </div>
             </div>
             <div class="col-lg-10 col-xl-8 col-md-10 col-right my-auto">
                 <div class="row mr-0 ml-0">
                     <div class="text-lable my-auto">
-                        {{$staticContent['Display_Options']}} :
+                        <?php echo e($staticContent['Display_Options']); ?> :
                     </div>
                     <div class="grid-icon icon-grid" onclick="onclickGridViewloadData();">
-                        <img src="{{asset('frontend-asset/image/icon/grid-icon.svg')}}" alt="">
-                        {{-- <i class="fa fa-th icon-size-grid"></i> --}} {{-- Grid View --}}
+                        <img src="<?php echo e(asset('frontend-asset/image/icon/grid-icon.svg')); ?>" alt="">
+                         
                     </div>
                     
                     <div class="grid-icon icon-list visible-upper-mobile" onclick="onclickListViewloadData();">
-                        <img src="{{asset('frontend-asset/image/icon/list-icon.svg')}}" alt="">
-                        {{-- <i class="fa fa-list icon-size-grid"></i> --}} {{-- List View --}}
+                        <img src="<?php echo e(asset('frontend-asset/image/icon/list-icon.svg')); ?>" alt="">
+                         
                     </div>
                     <div class="text-lable my-auto">
-                         {{$staticContent['Sort_by']}} :
+                         <?php echo e($staticContent['Sort_by']); ?> :
                     </div>
                     <div class="input-label">                      
                         <select id="selectSortDestop" onchange="onselectSortDestop();" class="form-control ">
-                            <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
-                            <option value="2">{{$staticContent['Output_Voltage_low_to_high']}}</option>
-                            <option value="3">{{$staticContent['Output_Current _low_to_high']}}</option>
-                            <option value="4">{{$staticContent['Output_Power_low_to_high']}}</option>
-                            <option value="5">{{$staticContent['Modifired_Date_newest_to_oldest']}}</option>
+                            <option value="1"><?php echo e($staticContent['Model_Name_A-Z']); ?></option>
+                            <option value="2"><?php echo e($staticContent['Output_Voltage_low_to_high']); ?></option>
+                            <option value="3"><?php echo e($staticContent['Output_Current _low_to_high']); ?></option>
+                            <option value="4"><?php echo e($staticContent['Output_Power_low_to_high']); ?></option>
+                            <option value="5"><?php echo e($staticContent['Modifired_Date_newest_to_oldest']); ?></option>
                         </select>
                     </div>
                 </div>
@@ -365,48 +364,41 @@
 <div class="visible-mobile-only">
     <div class="menu-filler-mobile">
         <div class="menu-filler-mobile-search ">
-            <label class="text-dark text-bold mt-2">{{$staticContent['Search_By_Model_Name']}}</label>
+            <label class="text-dark text-bold mt-2"><?php echo e($staticContent['Search_By_Model_Name']); ?></label>
             <div class="d-flex justify-content-between">
-                {{-- <div class=" search-box-product-mobile mr-2">
-                    <div class="box-search-filters-icon ">
-                        <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
-                    </div>
-                    <label for="key_mobile" class="searchinput-filters">
-                        <input type="text" id="key_mobile" placeholder="eg. DRC-24V100W1AZ">
-                    </label>
-                    </div> --}}
+                
                     <div class="box-search-input  mr-3">
                         <div class="box-search-icon">
-                            <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
+                            <img src="<?php echo e(asset('frontend-asset/image/search-filters-icon.svg')); ?>" alt="">
                         </div>
                         <label for="key_mobile" class="searchinput-filters-input">
-                            {{-- <input type="text" id="key_mobile" placeholder="{{$staticContent['Search_By_Model_Name']}}"> --}}
+                            
                             <select id="key_mobile" class="js-example-basic-single form-control" >
                                 <option></option>
-                                @foreach ($products as $pro)
-                                <option value="{{$pro->pro_code}}" >{{$pro->pro_code}}</option> 
-                                @endforeach
+                                <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($pro->pro_code); ?>" ><?php echo e($pro->pro_code); ?></option> 
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </label>
                     </div>
-                <button onclick="onsearchProductMobile();" class="btn-filters btn-search search-btn-product-mobile">{{$staticContent['Search']}}</button>
+                <button onclick="onsearchProductMobile();" class="btn-filters btn-search search-btn-product-mobile"><?php echo e($staticContent['Search']); ?></button>
             </div>
             
         </div>
         <div class="menu-filler-mobile-filter ">
             <div class=" d-flex justify-content-between h-100"> 
                 <div id="showfiler-mobile" class="my-auto">
-                    <div style="color:#fff;" id="filterMobile-btn" onclick="OpenFiiter();" class="filter-mobile-link text-bold"><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt="">Filters</div>
+                    <div style="color:#fff;" id="filterMobile-btn" onclick="OpenFiiter();" class="filter-mobile-link text-bold"><img src="<?php echo e(asset('frontend-asset/image/icon/filter-icon.svg')); ?>" alt="">Filters</div>
                 </div>
                 <div class="d-flex">
                     <p class="text-white my-auto mr-2 text-card-detial text-bold">Sort by:</p>
                     <div class="input-label my-auto">                      
                         <select onchange="onselectSort();" class="form-control selectSort">
-                            <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
-                            <option value="2">{{$staticContent['Output_Voltage_low_to_high']}}</option>
-                            <option value="3">{{$staticContent['Output_Current _low_to_high']}}</option>
-                            <option value="4">{{$staticContent['Output_Power_low_to_high']}}</option>
-                            <option value="5">{{$staticContent['Modifired_Date_newest_to_oldest']}}</option>
+                            <option value="1"><?php echo e($staticContent['Model_Name_A-Z']); ?></option>
+                            <option value="2"><?php echo e($staticContent['Output_Voltage_low_to_high']); ?></option>
+                            <option value="3"><?php echo e($staticContent['Output_Current _low_to_high']); ?></option>
+                            <option value="4"><?php echo e($staticContent['Output_Power_low_to_high']); ?></option>
+                            <option value="5"><?php echo e($staticContent['Modifired_Date_newest_to_oldest']); ?></option>
                         </select>
                     </div>
                 </div> 
@@ -423,10 +415,10 @@
                   
                     <div class="box-btn-filters btn-box-addremove-filer text-center">
                         <button class="btn-filters btn-addremove-filer" data-toggle="modal"
-                            data-target="#btn-addremove-filer-model">{{$staticContent['add']}} / {{$staticContent['Remove_Filter']}}</button>
+                            data-target="#btn-addremove-filer-model"><?php echo e($staticContent['add']); ?> / <?php echo e($staticContent['Remove_Filter']); ?></button>
                     </div>
                     <div class="box-btn-filters btn-box-clear-filer text-center">
-                        <button class="btn-filters btn-clear-filer" onclick="resetAllTab();" >{{$staticContent['Clear_Filters']}}</button>
+                        <button class="btn-filters btn-clear-filer" onclick="resetAllTab();" ><?php echo e($staticContent['Clear_Filters']); ?></button>
                     </div>
              </div>
         </div>
@@ -441,7 +433,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="title-cx" id="ModalLongTitle">{{$staticContent['add']}} /  {{$staticContent['Remove_Filter']}}</h4>
+                    <h4 class="title-cx" id="ModalLongTitle"><?php echo e($staticContent['add']); ?> /  <?php echo e($staticContent['Remove_Filter']); ?></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -450,8 +442,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <span disabled="disabled" data-dismiss="modal" class="btn btn-sm btn-primary reset">{{$staticContent['Reset']}} </span>
-                    <span data-dismiss="modal"  class="btn btn-sm btn-primary btn-done"> {{$staticContent['Done']}} </span>
+                    <span disabled="disabled" data-dismiss="modal" class="btn btn-sm btn-primary reset"><?php echo e($staticContent['Reset']); ?> </span>
+                    <span data-dismiss="modal"  class="btn btn-sm btn-primary btn-done"> <?php echo e($staticContent['Done']); ?> </span>
                 </div>
 
             </div>
@@ -465,24 +457,24 @@
                 <div id="accordion" class="accordion visible-upper-mobile">
                     <div class="search-filter">
                         <div class="search-filter-action border-2px">
-                            <p class="text-sixteen-dark">{{$staticContent['Search_By_Model_Name']}}</p>
+                            <p class="text-sixteen-dark"><?php echo e($staticContent['Search_By_Model_Name']); ?></p>
                             <div class="box-search-input  mr-3">
                                 <div class="box-search-icon">
-                                    <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
+                                    <img src="<?php echo e(asset('frontend-asset/image/search-filters-icon.svg')); ?>" alt="">
                                 </div>
                                 <label for="key_destop" class="searchinput-filters-input">
-                                    {{-- <input type="text" id="key_destop" placeholder="{{$staticContent['Search_By_Model_Name']}}"> --}}
+                                    
                                     <select id="key_destop" class="js-example-basic-single form-control" >
                                         <option></option>
-                                        @foreach ($products as $pro)
-                                        <option value="{{$pro->pro_code}}" >{{$pro->pro_code}}</option> 
-                                        @endforeach
+                                        <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($pro->pro_code); ?>" ><?php echo e($pro->pro_code); ?></option> 
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
 
                                 </label>
                             </div>
                             <div class="search-filter-action-btn text-center">
-                                <button  onclick="onsearchProduct();" class="btn-filters btn-search">{{$staticContent['Search']}}</button>
+                                <button  onclick="onsearchProduct();" class="btn-filters btn-search"><?php echo e($staticContent['Search']); ?></button>
                             </div>
                             
 
@@ -493,15 +485,13 @@
                         
                     </div>
 
-                    {{-- <div class="box-btn-filters btn-box-use-filer text-center">
-                        <button class="btn-filters btn-use-filer">USE FILTERS</button>
-                    </div> --}}
+                    
                     <div class="box-btn-filters btn-box-addremove-filer text-center">
                         <button class="btn-filters btn-addremove-filer" data-toggle="modal"
-                            data-target="#btn-addremove-filer-model"> {{$staticContent['add']}} / {{$staticContent['Remove_Filter']}}</button>
+                            data-target="#btn-addremove-filer-model"> <?php echo e($staticContent['add']); ?> / <?php echo e($staticContent['Remove_Filter']); ?></button>
                     </div>
                     <div class="box-btn-filters btn-box-clear-filer text-center">
-                        <button class="btn-filters btn-clear-filer" onclick="resetAllTab();"> {{$staticContent['Clear_Filters']}}</button>
+                        <button class="btn-filters btn-clear-filer" onclick="resetAllTab();"> <?php echo e($staticContent['Clear_Filters']); ?></button>
                     </div>
                 </div>
             </div>
@@ -516,14 +506,14 @@
 <input type="hidden" id="current_method" value="0">
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 <script>
     $('.js-example-basic-single').select2({
-        placeholder: '{{$staticContent['Search_By_Model_Name']}}'
+        placeholder: '<?php echo e($staticContent['Search_By_Model_Name']); ?>'
 });
 </script>
 <script type="text/javascript">
@@ -560,14 +550,14 @@
 
             var html = '';
             html =
-                '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(1);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> Hide Filters</a>';
+                '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(1);" ><img src="<?php echo e(asset('frontend-asset/image/icon/filter-icon.svg')); ?>" alt=""> Hide Filters</a>';
             document.getElementById("showfiler").innerHTML = html;
 
         } else {
 
             var html = '';
             html =
-                '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(2);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt="">Show Filters</a>';
+                '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(2);" ><img src="<?php echo e(asset('frontend-asset/image/icon/filter-icon.svg')); ?>" alt="">Show Filters</a>';
             document.getElementById("showfiler").innerHTML = html;
         }
 
@@ -576,8 +566,8 @@
     var products = <?= json_encode($products);?>;
     var product_has_property = <?= json_encode($product_has_property);?>;
     var filter_pro = <?= json_encode($filter_pro);?>;
-    var domainUrl = '{{config('app.url')}}';
-    var series_id = '{{$se_id}}';
+    var domainUrl = '<?php echo e(config('app.url')); ?>';
+    var series_id = '<?php echo e($se_id); ?>';
     var series =  <?= json_encode($series);?>;
     var section =  <?= json_encode($section);?>;
     var unit_dimension =  <?= json_encode($subCategories[0]->unit_dimension);?>;
@@ -633,7 +623,7 @@
             arrproid.push(pro['pro_id']);  
          });
         $.ajax({
-           url: "{{route('loadPropoperty')}}",
+           url: "<?php echo e(route('loadPropoperty')); ?>",
            data: {
           'data': arr,
           'proid':arrproid
@@ -659,7 +649,7 @@
             if(arr_same.indexOf(fil_con['section_id']) == -1 ){
                 arr_same.push(fil_con['section_id']);
                 if(fil_con['section_id'] == null){
-                    html2  += '<h6 class="title-cx" style="margin-top: 10px;">{{$staticContent['Other']}}</h6>'
+                    html2  += '<h6 class="title-cx" style="margin-top: 10px;"><?php echo e($staticContent['Other']); ?></h6>'
                     html2  += ' <hr>';
                     html2  +='<div id="settingFilter0"></div>';
                 }else{
@@ -1138,7 +1128,7 @@
         var proarr = [];
         var values = [];
         $.ajax({
-           url: "{{route('loaddocumentPro')}}",
+           url: "<?php echo e(route('loaddocumentPro')); ?>",
            data: {
           'data': arr_safety,
            },
@@ -1224,12 +1214,12 @@
         html += '<div class="GridView visible-upper-mobile" id="GridView">';
         html += '<div class="margin-top-card">';
         html += '<div class="count-products">';
-        html += '<span class="countproduct"></span> {{$staticContent['Product(s)']}}';
+        html += '<span class="countproduct"></span> <?php echo e($staticContent['Product(s)']); ?>';
         html += '</div>';
         html += '<div id="cardGridList" class="row">';
         $.each(productarray, function(index_pro,pro){
         html += '<div class=" col-xl-3 col-lg-4 col-md-4">';
-        html += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
+        html += '<a href="<?php echo e(route('productsDetailsByType')); ?>/<?php echo e(preg_replace('/\s+/', '-', $subCate->url_item)); ?>/'+viewKey(pro['pro_code']) +'">';
         html += '<div class=" margin-p-left-card item card moreBox"  style="display: none;">';
         if(pro['status_product'] != 1){
         html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
@@ -1241,7 +1231,7 @@
         html += '<div class="d-flex flex-wrap" >';
         html += '<div class="mr-3">';
         html += '<div class="out-volt ">';
-        html += '<h6 class="text-title-ft-sub">{{$staticContent['Output_Voltage']}}</h6>';
+        html += '<h6 class="text-title-ft-sub"><?php echo e($staticContent['Output_Voltage']); ?></h6>';
         var content = onlycontent(pro['content']);
         // if(content[0]['data_1'] != null){
         //    html += '<div class="text-ft-sub text-one">'+content[1]['data_1']+content[1]['unit_name']+'</div>';
@@ -1264,18 +1254,18 @@
         html += '<div class="text-ft-sub text-one">'+checkNullShow(arrcon1,content[1]['unit_name'],content[1]['status_input']).substr(0, 19) +'</div>';
         html += '</div>';
         html += '<div class="out-power">';
-        html += '<h6 class="text-title-ft-sub"> {{$staticContent['Output_Power']}}</h6>';
+        html += '<h6 class="text-title-ft-sub"> <?php echo e($staticContent['Output_Power']); ?></h6>';
         html += '<div class="text-ft-sub text-one">'+checkNullShow(arrcon2,content[2]['unit_name'],content[2]['status_input']).substr(0, 19)+'</div>';
      
         html += '</div>';
         html += '</div>';
         html += '<div class="">';
         html += '<div class="out-current">';
-        html += '<h6 class="text-title-ft-sub">{{$staticContent['Output_Current']}}</h6>';
+        html += '<h6 class="text-title-ft-sub"><?php echo e($staticContent['Output_Current']); ?></h6>';
         html += '<div class="text-ft-sub text-one">'+checkNullShow(arrcon3,content[0]['unit_name'],content[0]['status_input']).substr(0, 19) +'</div>'; 
         html += '</div>';
         html += '<div class="in-volt">';
-        html += '<h6 class="text-title-ft-sub">{{$staticContent['Input_Voltage']}}</h6>';
+        html += '<h6 class="text-title-ft-sub"><?php echo e($staticContent['Input_Voltage']); ?></h6>';
         if(typeof content[3]['value_text'] != 'undefined' && content[3]['value_text'] != null && content[3]['value_text'] != 'null'){
         html += '<div class="text-ft-sub text-one">'+content[3]['value_text'].substr(0, 14)+'</div>';
         }else{
@@ -1285,7 +1275,7 @@
         html += '</div>';
         html += '</div>';
         html += '<div class="dimension">';
-        html += '<h6 class="text-title-ft-sub text-one">{{$staticContent['Dimensions']}} (L x W x '+unit_dimension+') </h6>';
+        html += '<h6 class="text-title-ft-sub text-one"><?php echo e($staticContent['Dimensions']); ?> (L x W x '+unit_dimension+') </h6>';
         if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 && ['dimensionW'] != '' && pro['dimensionD'] != ''){
         html += '<p class="text-ft-sub text-one">'+pro['dimensionL']+'x'+pro['dimensionW']+'x'+pro['dimensionD']+' mm</p>';
         html += '<p class="text-ft-sub text-one">'+mmtonich(pro['dimensionL'])+'”x'+mmtonich(pro['dimensionW'])+'”x'+mmtonich(pro['dimensionD'])+'”</p>';
@@ -1295,7 +1285,7 @@
         html += '<p class="text-ft-sub text-one">-</p>';
         }
         html += '</div>';
-        html += '<div href="#" class="btn btn-ft mt-2" onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" >+{{$staticContent['Add_to_Compare']}}</div>';
+        html += '<div href="#" class="btn btn-ft mt-2" onclick="showNavCoparison('+pro['pro_id']+' ,<?php echo e($cateid); ?>)" >+<?php echo e($staticContent['Add_to_Compare']); ?></div>';
         html += '</div>';
         html += '</div>';
         html += '</div>';
@@ -1304,7 +1294,7 @@
         html += '</div>';
         html += '</div>';
         html += ' <div class="text-center mb-2" id="loadMore" style="" onclick="loadeMore(event,4)">';
-        html += '<a href="#"  class="btn btn-boxen"> {{$staticContent['See_More']}}</a>';
+        html += '<a href="#"  class="btn btn-boxen"> <?php echo e($staticContent['See_More']); ?></a>';
         html += '</div>';
         html += '</div>';
       
@@ -1315,7 +1305,7 @@
         $.each(productarray, function(index_pro,pro){
         html += '<div class="margin-p-left-card column-grid-card-mobile moreBox_mobile"  style="display: none;">';
         html += '<div class="item card">';
-        html += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
+        html += '<a href="<?php echo e(route('productsDetailsByType')); ?>/<?php echo e(preg_replace('/\s+/', '-', $subCate->url_item)); ?>/'+viewKey(pro['pro_code']) +'">';
             if(pro['status_product'] != 1){
         html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
             }
@@ -1327,7 +1317,7 @@
         html += '<div class="mr-5">';
         html += '<div class="out-volt mt-1">';
         var content = onlycontent(pro['content']);
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Voltage']}}</p>';
+        html += '<p class="text-title-ft-sub text-two"><?php echo e($staticContent['Output_Voltage']); ?></p>';
             var arrcon1 = [content[1]['data_1'],content[1]['data_2'],content[1]['data_3'],content[1]['data_4'],content[1]['data_5'],
             content[1]['data_6'],content[1]['data_7'],content[1]['data_8'],content[1]['data_9'],content[1]['data_10'],content[1]['data_11'],
             content[1]['data_12']
@@ -1345,18 +1335,18 @@
  
         html += '</div>';
         html += '<div class="out-power mt-2">';
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Power']}}</p>';
+        html += '<p class="text-title-ft-sub text-two"><?php echo e($staticContent['Output_Power']); ?></p>';
         html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon2,content[2]['unit_name'],content[2]['status_input']).substr(0, 19)+'</div>'; 
         html += '</div>';
         html += '</div>';
         html += '<div class="">';
         html += '<div class="out-current mt-2">';
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Current']}}</p>';
+        html += '<p class="text-title-ft-sub text-two"><?php echo e($staticContent['Output_Current']); ?></p>';
         html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon3,content[0]['unit_name'],content[0]['status_input']).substr(0, 19)+'</div>';
       
         html += '</div>';
         html += '<div class="in-volt mt-2">';
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Input_Voltage']}}</p>';
+        html += '<p class="text-title-ft-sub text-two"><?php echo e($staticContent['Input_Voltage']); ?></p>';
         if(content[3]['value_text'] != null && content[3]['value_text'] != 'null'){
         html += '<div class="text-ft-sub text-two">'+content[3]['value_text'].substr(0, 18)+'</div>';
         }else{
@@ -1366,7 +1356,7 @@
         html += '</div>';
         html += '</div>';
         html += '<div class="dimension mt-2">';
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Dimensions']}} (L X W X '+unit_dimension+')</p>';
+        html += '<p class="text-title-ft-sub text-two"><?php echo e($staticContent['Dimensions']); ?> (L X W X '+unit_dimension+')</p>';
         if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 && pro['dimensionW'] != '' && pro['dimensionD'] != ''){
         html += '<p class="text-ft-sub text-two">'+pro['dimensionL']+'x'+pro['dimensionW']+'x'+pro['dimensionD']+' mm</p>';
         html += '<p class="text-ft-sub text-two">'+mmtonich(pro['dimensionL'])+'”x'+mmtonich(pro['dimensionW'])+'”x'+mmtonich(pro['dimensionD'])+'”</p>';
@@ -1378,14 +1368,14 @@
         html += '</div>';
         html += '</div>';
         html += '</div>'; 
-        html += '<div  class="btn btn-ft rounded-0" onclick="showNavCoparison('+pro['pro_id']+',{{$cateid}})">+ {{$staticContent['Add_to_Compare']}} </div>';
+        html += '<div  class="btn btn-ft rounded-0" onclick="showNavCoparison('+pro['pro_id']+',<?php echo e($cateid); ?>)">+ <?php echo e($staticContent['Add_to_Compare']); ?> </div>';
         html += '</div>';
         html += '</div>';
        });
         html += '</div>';
         html += '</div>';
         html += ' <div class="text-center my-3" id="loadMore_mobile" style="" onclick="loadeMoreMobile(event,4)">';
-        html += '<a href="#"  class="btn btn-boxen"> {{$staticContent['See_More']}} </a>';
+        html += '<a href="#"  class="btn btn-boxen"> <?php echo e($staticContent['See_More']); ?> </a>';
         html += '</div>';
         html += '</div>';
     
@@ -1405,17 +1395,17 @@
         var html1 = '';
         html1 += '<div class="ListView visible-upper-mobile" id="ListView">';
         html1 += '<div class="count-products">';
-        html1 += '<span class="countproduct"></span> {{$staticContent['Product(s)']}}';
+        html1 += '<span class="countproduct"></span> <?php echo e($staticContent['Product(s)']); ?>';
         html1 += '</div>';
         html1 += '<table id="dtBasicExample" class="table" cellspacing="5em" width="100%">';
         html1 += '<thead>';
         html1 += '<tr class="headder-bg-table">';
-        html1 += '<th id="sortdata1" class="th-sm header-font-table w-tabfix" onclick="selectTable(1)">{{$staticContent['Model_Name']}}</th>';
-        html1 += '<th id="sortdata2" class="th-sm header-font-table w-tabfix" onclick="selectTable(2)"><span>{{$staticContent['Output_Voltage']}} </span></th>';
-        html1 += '<th id="sortdata3" class="th-sm header-font-table w-tabfix" onclick="selectTable(3)">{{$staticContent['Output_Current']}}</th>';
-        html1 += '<th id="sortdata4" class="th-sm header-font-table w-tabfix"onclick="selectTable(4)">{{$staticContent['Output_Power']}} </th>';
-        html1 += '<th id="sortdata5" class="th-sm header-font-table w-tabfix" onclick="selectTable(5)">{{$staticContent['Input_Voltage']}}</th>';
-        html1 += '<th id="sortdata6" class="th-sm header-font-table w-tabfix"onclick="selectTable(6)" >{{$staticContent['Dimensions']}} (L x W x '+unit_dimension+')</th>';
+        html1 += '<th id="sortdata1" class="th-sm header-font-table w-tabfix" onclick="selectTable(1)"><?php echo e($staticContent['Model_Name']); ?></th>';
+        html1 += '<th id="sortdata2" class="th-sm header-font-table w-tabfix" onclick="selectTable(2)"><span><?php echo e($staticContent['Output_Voltage']); ?> </span></th>';
+        html1 += '<th id="sortdata3" class="th-sm header-font-table w-tabfix" onclick="selectTable(3)"><?php echo e($staticContent['Output_Current']); ?></th>';
+        html1 += '<th id="sortdata4" class="th-sm header-font-table w-tabfix"onclick="selectTable(4)"><?php echo e($staticContent['Output_Power']); ?> </th>';
+        html1 += '<th id="sortdata5" class="th-sm header-font-table w-tabfix" onclick="selectTable(5)"><?php echo e($staticContent['Input_Voltage']); ?></th>';
+        html1 += '<th id="sortdata6" class="th-sm header-font-table w-tabfix"onclick="selectTable(6)" ><?php echo e($staticContent['Dimensions']); ?> (L x W x '+unit_dimension+')</th>';
         html1 += '</tr>';
         html1 += '</thead>';
         html1 += '<tbody id="listcardList">';
@@ -1423,7 +1413,7 @@
         html1 += ' </table>';
         html1 += '</div>';
         html1 += ' <div class="text-center mb-2" id="loadlistview" style="" onclick="loadlistview(event,4)">';
-        html1 += '<a href="#"  class="btn btn-boxen">{{$staticContent['See_More']}}</a>';
+        html1 += '<a href="#"  class="btn btn-boxen"><?php echo e($staticContent['See_More']); ?></a>';
         html1 += '</div>';
         $('#contentProList').html(html1);
         listviewCard(productarray);
@@ -1459,7 +1449,7 @@
         html1 += '<td>';
         html1 += '<div class="cardlist-toadd">';
         html1 += '<div class="cardlist-view hover01">';
-        html1 += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
+        html1 += '<a href="<?php echo e(route('productsDetailsByType')); ?>/<?php echo e(preg_replace('/\s+/', '-', $subCate->url_item)); ?>/'+viewKey(pro['pro_code']) +'">';
             if(pro['status_product'] != 1){
         html1 += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="text-over-cardlist"> '+ statuspro(pro['status_product'])+'';
         html1 += '</div>';
@@ -1471,7 +1461,7 @@
         html1 += '</div>';
         html1 += '</a>';
         html1 += '<div class="w-100">';
-        html1 += '<div class="btn btn-ft" onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})"> + {{$staticContent['Add_to_Compare']}}</div>';
+        html1 += '<div class="btn btn-ft" onclick="showNavCoparison('+pro['pro_id']+' ,<?php echo e($cateid); ?>)"> + <?php echo e($staticContent['Add_to_Compare']); ?></div>';
         html1 += '</div>';
         html1 += '</div>';
         html1 += '</td>';
@@ -1666,7 +1656,7 @@
        property_load = pro_perti;
        var doc_safety = documents_cate;
         var status = [ {id:2,name:'New'}, {id:3,name:'Updated'},{id:4,name:'EOL'}];
-        var certificates = [ {id:1,name:'{{$staticContent['Industrial_filter']}}'}, {id:2,name:'{{$staticContent['Medical_filter']}}'},{id:3,name:'{{$staticContent['Lighting_Signage_filter']}}'}];
+        var certificates = [ {id:1,name:'<?php echo e($staticContent['Industrial_filter']); ?>'}, {id:2,name:'<?php echo e($staticContent['Medical_filter']); ?>'},{id:3,name:'<?php echo e($staticContent['Lighting_Signage_filter']); ?>'}];
         var data_1 = [];
         var data_text = [];
         var html3 = '';
@@ -1809,7 +1799,7 @@
              }
              
             html3 += '</div>';
-            html3 += '<button onclick="resetformById('+"'"+fil_con['field_id']+"'"+');" class="btn-reset" type="button">{{$staticContent['Clear']}}</button>';
+            html3 += '<button onclick="resetformById('+"'"+fil_con['field_id']+"'"+');" class="btn-reset" type="button"><?php echo e($staticContent['Clear']); ?></button>';
             html3 +=  '</form>';
             if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['type'] == 'number'  ){
             html3 +=  '<div class="slidebar-value-box mb-4 mt-4">';
@@ -1832,7 +1822,7 @@
        var doc_safety = [{id:2,name:'ABS'}, {id:3,name:'ATEX'},{id:4,name:'BSMI'}];
        property_load = pro_perti;
         var status = [ {id:2,name:'NEW'}, {id:3,name:'UPDATED'},{id:4,name:'EOL'}];
-        var certificates = [ {id:1,name:'{{$staticContent['Industrial_filter']}}'}, {id:2,name:'{{$staticContent['Medical_filter']}}'},{id:3,name:'{{$staticContent['Lighting_Signage_filter']}}'}];
+        var certificates = [ {id:1,name:'<?php echo e($staticContent['Industrial_filter']); ?>'}, {id:2,name:'<?php echo e($staticContent['Medical_filter']); ?>'},{id:3,name:'<?php echo e($staticContent['Lighting_Signage_filter']); ?>'}];
         var data_1 = [];
         var data_text = [];
         var html3 = '';
@@ -2006,7 +1996,7 @@
             $("#cx-series01"+series_id+"_mobile").prop("checked" ,true);
             $("#sidebar").addClass("show");
             onclickshow(2);
-            ser_arr.push({{$se_id}});
+            ser_arr.push(<?php echo e($se_id); ?>);
         }else{
             $.each(series, function(index,val){
             ser_arr.push(val['se_id']);
@@ -2136,7 +2126,7 @@
         var proarr = [];
         var values = [];
         $.ajax({
-           url: "{{route('loaddocumentPro')}}",
+           url: "<?php echo e(route('loaddocumentPro')); ?>",
            data: {
           'data': arr_safety,
            },
@@ -3331,4 +3321,5 @@ function loadeMore(event,i){
 
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.front-end', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Deltapsu_Production\dependencies\resources\views/front-end/product.blade.php ENDPATH**/ ?>
