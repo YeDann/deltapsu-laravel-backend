@@ -2301,7 +2301,19 @@
        var  index = arr_type_an_val.findIndex(
            function(x){
             //    return  x.value1 === value1;
-               return parseInt(x.type) ===  parseInt(type)  && x.value1 === value1;
+               return parseInt(x.type) ===  parseInt(type)  
+               && x.value1 === value1 
+               &&  x.value2 === value2
+               &&  x.value3 === value3
+               &&  x.value4 === value4
+               &&  x.value5 === value5
+               &&  x.value6 === value6
+               &&  x.value7 === value7
+               &&  x.value8 === value8
+               &&  x.value9 === value9
+               &&  x.value10 === value10
+               &&  x.value11 === value11
+               &&  x.value12 === value12;
            })
              if(index == -1){
                 arr_type_an_val.push(obj);  
@@ -2423,10 +2435,11 @@
                  var checklooparr = [];
                var property =  fieldFilter.sort( 
                    function(a, b){
+            
                        if(a.data_1 < b.data_1){
                            if(a.data_2 &&  b.data_2 &&  a.data_2 < b.data_2 ){
                             return -1;
-                           }
+                            }
                             return -1;
                        }else{
                         return 1;
@@ -2629,21 +2642,23 @@
     function checkNull(dataarr,unit,status){
         var string = '';
         var arrstri = [];
-        var data_fi =  dataarr.sort( 
+        var filsort_data = dataarr;
+        var data_fi =  filsort_data.sort( 
                    function(a, b){
-                       return a > b ? 1 : -1;
+                       return a > b && a && b ? 1 : -1;
                     });
-       if(status == 1 || status == 2 || status == 3){
+                
+       if(status == 1 || status == 2 ){
         $.each(data_fi, function(index,data){
             if(data != null && data != ''){
               arrstri.push(data+unit);
             }
         });
         string = arrstri.join(', ');
+       }else if(status == 3   ){
+
+        string = dataarr[0]+'-'+dataarr[1]+unit;
        }
-    //    }else if(status == 3){
-    //     string = dataarr[0]+'-'+dataarr[1]+unit;
-    //    }
          return  string;
     }
     function filAllTypeInputText(){
