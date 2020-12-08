@@ -993,10 +993,13 @@ class ProductCategoriesController extends Controller
        DB::table('series_translations')->where('series_id',$itemId)->delete();
        DB::table('series_has_application')->where('se_id' ,$itemId)->delete();
        DB::table('series_has_pro_categories')->where('se_id' ,$itemId)->delete();
-       $file_pointer = base_path('/../medias/categories/').$series->image;
-       if (file_exists($file_pointer) && !empty($series->image)) {
-           unlink($file_pointer);
+       if(isset($series->image)){
+            $file_pointer = base_path('/../medias/categories/').$series->image;
+            if (file_exists($file_pointer) && !empty($series->image)) {
+                unlink($file_pointer);
+            }
        }
+  
        if($pro_cate_id != 0){
         return redirect()->route('series_index',$pro_cate_id)->with('flash_message', 'Delete Data successfully');
        }else{
