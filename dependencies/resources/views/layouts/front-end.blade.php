@@ -737,7 +737,7 @@ if (!Array.prototype.findIndex) {
             }
         }
         function submitsubscribe(){
-          if(document.frmMr.accept.value == 0 || document.frmMr.accept.value == null) {
+          if(document.frmMr.accept.value == 0 || document.frmMr.accept.value == null || document.frmMr.accept.value == "") {
             alert("Please accept the privacy policy.");
             return false;
           } else {

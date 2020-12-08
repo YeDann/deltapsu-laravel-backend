@@ -2980,6 +2980,7 @@ class FrontendController extends Controller
        }
        public function subscribe(Request $request){
             $mailch = $this->validateInput($request->email,'text',true);
+            $accept = $this->validateInput($request->accept,'number',true , 0);
  
             $strmlo = strtolower($mailch);
             // Get an array of all available lists:
@@ -2991,7 +2992,8 @@ class FrontendController extends Controller
             // return dd($request->country);
             $name = $this->validateInput($request->name,'text',true);
             $country = $this->validateInput($request->country,'text',true);
-            $accept = $this->validateInput($request->accept,'number',true , 0);
+           
+
             
          if($checkmailC){
             return redirect()->back()->with('subscribes_already', 'already subscribes');

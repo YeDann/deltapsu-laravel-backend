@@ -419,7 +419,7 @@
           <h6> {{$staticContent['Marketing_Permissions']}}<span class="red">*</span></h6>
           <p class="text-one">{{$staticContent['DeltaPSU_will_use_the information_you']}}</p>
           <div class="box-input-checkbox my-3 p-3 bg-light-blue">
-              <input name="accept" value="1"  class="inp-cbx" id="cxacceptPrivacy_data" type="checkbox" 
+              <input name="accept" value="0"  class="inp-cbx" id="cxacceptPrivacy_data"  onclick="checkacceptPolicy();" type="checkbox" 
                   style="display: none;" />
               <label class="cbx w-100" for="cxacceptPrivacy_data">
                   <span class="">
