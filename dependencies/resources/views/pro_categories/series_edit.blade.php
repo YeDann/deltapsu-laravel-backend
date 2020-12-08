@@ -132,7 +132,7 @@
                     <div class="col-lg-8 pt-2">
                         <div class="form-group">
                                 <label for="example-select">Main Categories</label>
-                                <select class="js-select2 form-control" id="example-select2-multiple" name="mainCategories[]" style="width: 100%;" data-placeholder="Choose many.." multiple>
+                                <select class="js-select2 form-control" id="example-select2-multiple" name="mainCategories[]" style="width: 100%;" data-placeholder="Choose many.." multiple required>
                                     <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
                                     @foreach ($mainCategories as $item)
                                     <option value="{{$item->main_id}}"  >{{$item->name}}</option>
@@ -156,7 +156,7 @@
                     <div class="col-lg-8 pt-2">
                             <div class="form-group">
                                     <label for="example-select">Product Categories</label>
-                                    <select class="js-select2 form-control" id="example-select2-multiple" name="productCategories[]" style="width: 100%;" data-placeholder="Choose many.." multiple>
+                                    <select class="js-select2 form-control" id="example-select2-multiple" name="productCategories[]" style="width: 100%;" data-placeholder="Choose many.." multiple required>
                                         <option></option><!-- Required for data-placeholder attribute to work with Select2 plugin -->
                                         @foreach ($subCategories as $item)
                                         <option value="{{$item->sub_pro_id}}" >{{$item->name}}</option>
