@@ -1361,7 +1361,7 @@ class FrontendController extends Controller
                 $section = DB::table('section as st')
                 ->join('section_translation as stt','st.id','=','stt.section_id')
                 ->where('stt.local',$lang)
-                ->where('st.status', 1)
+                // ->where('st.status', 1)
                 ->select('st.id', 'stt.sortname','stt.name')
                 ->get(); 
 
