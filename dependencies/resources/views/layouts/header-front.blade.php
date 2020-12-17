@@ -245,7 +245,7 @@ top: -9px;
     <div class="nav-firts ">
       <div class="alert-browser" id="alert-browser-check" style="display: none;">
         <div class="color-yellow" >
-           We recommend using the latest version of internet explorer, Chrome, Firefox or Safari.
+           We recommend using the latest version of Chrome, Firefox or Safari.
         </div>
       </div>
         <div class="container">
