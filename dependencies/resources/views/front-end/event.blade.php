@@ -311,7 +311,7 @@
     var years;
 
     const picker = ["00", "01", "02", "03", "04", "05",
-       "06", "07", "08", "09", "10", "14"
+       "06", "07", "08", "09", "10", "11"
          ];
     // Returns an array of dates between the two dates
     var getDatesBett = function(startDate, endDate) {
