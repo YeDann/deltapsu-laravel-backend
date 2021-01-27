@@ -825,8 +825,12 @@ top: -9px;
                           <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
                       </svg></span><span>{{$staticContent['Sign_up_for_newsletter']}}</span></label>
           </div>
+          <form action="?" method="POST" >
+            <div class="mt-4" id="recap_vertifygetGui"></div>
+            <br>
+          </form>
           <input type="hidden" id="keyrecapGui" name="keyresponseCap" >
-          <div class="h-captcha" data-sitekey="2f8c529f-2aca-4ed0-bd8b-c1c6801fdfe7"></div>
+    
        
         <button type="submit" class="btn btn-subscribe">Download</button>
       </div>
