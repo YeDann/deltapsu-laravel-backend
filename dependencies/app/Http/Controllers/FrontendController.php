@@ -3466,25 +3466,11 @@ class FrontendController extends Controller
          ], 200);
        }
        public function downloadGui(Request $request){
-
-        $name = $this->validateInput($request->name,'text',true);
-        $company = $this->validateInput($request->company,'text',true);
-        $email = $this->validateInput($request->email,'text',true);
-        $tel = $this->validateInput($request->tel,'text',true);
-        $ac_data = 0;
-        if(isset($request->data_conf)){
-            $ac_data  = $request->data_conf;
-        }
-        $acept = $this->validateInput($ac_data,'number',true ,0);
-
-        // return dd( $acept);
-       
-        // return dd($acept);
-        $filename = $this->validateInput($request->fileguidownload,'text',true);
-        $country = $this->validateInput($request->country,'text',true);
-        
-        $path =  base_path('../upload/product_files/').$filename; 
-        $emailsend = [];
+        $name = $this->validateInput($request->name_gui,'text',true);
+        $company = $this->validateInput($request->company_gui,'text',true);
+        $checkname  =  preg_match('/[^a-zA-Zก-ฮ]/', $name);
+    
+        if(!$checkname){
           $client = new Client();
           $response = $client->post(
               'https://www.recaptcha.net/recaptcha/api/siteverify',
@@ -3497,51 +3483,69 @@ class FrontendController extends Controller
           );
       
           $body = json_decode((string)$response->getBody());
-       
           if($body->success){  
-          DB::table('gui_downloads_email')->insert(
-            [
-                'name' => $name,
-                'tel' => $tel,
-                'email' => $email,
-                'company' =>$company,
-                'country' =>$country,
-                'filename' =>$filename,
-                'accept' =>$acept,
-                "created_at" => \Carbon\Carbon::now(),
-            ]
-          );
-    
-        if($acept == 1){
-            self::subCheckBox($request);
+         
+        
+            $email = $this->validateInput($request->email_gui,'text',true);
+            $tel = $this->validateInput($request->tel,'text',true);
+            $ac_data = 0;
+            if(isset($request->data_conf)){
+                $ac_data  = $request->data_conf;
+            }
+            $acept = $this->validateInput($ac_data,'number',true ,0);
+            $filename = $this->validateInput($request->fileguidownload,'text',true);
+            $country = $this->validateInput($request->country,'text',true);
             
-        }
+            $path =  base_path('../upload/product_files/').$filename; 
+            $emailsend = [];
 
-         $emailSg1 =  DB::table('email_notification as et')
-          ->select('et.*')
-          ->where('et.country',$country)
-          ->where('et.type', 1)
-          ->orderBy('et.country', 'asc')
-          ->first();
-          if(isset($emailSg1)){
-            $emailg1 = explode(",", $emailSg1->email_gui);
-             if(count($emailg1) > 0){
-                 foreach($emailg1 as $em){
-                    if (!in_array(trim($em), $emailsend)) {
-                     array_push($emailsend ,trim($em));
+
+            DB::table('gui_downloads_email')->insert(
+                [
+                    'name' => $name,
+                    'tel' => $tel,
+                    'email' => $email,
+                    'company' =>$company,
+                    'country' =>$country,
+                    'filename' =>$filename,
+                    'accept' =>$acept,
+                    "created_at" => \Carbon\Carbon::now(),
+                ]
+            );
+        
+            if($acept == 1){
+                self::subCheckBox($request);
+            }
+
+            $emailSg1 =  DB::table('email_notification as et')
+            ->select('et.*')
+            ->where('et.country',$country)
+            ->where('et.type', 1)
+            ->orderBy('et.country', 'asc')
+            ->first();
+            if(isset($emailSg1)){
+                $emailg1 = explode(",", $emailSg1->email_gui);
+                if(count($emailg1) > 0){
+                    foreach($emailg1 as $em){
+                        if (!in_array(trim($em), $emailsend)) {
+                        array_push($emailsend ,trim($em));
+                        }
                     }
-                 }
-             }
-          }
+                }
+            }
 
-        $email = Mail::to($emailsend)->send(new DowloadGui($request->except('_token')));
-         if (Mail::failures()) {
-            return \Redirect::back()->with("errorSendMail","ErorSendMail");
-         }
+             $email = Mail::to($emailsend)->send(new DowloadGui($request->except('_token')));
+            if (Mail::failures()) {
+                return \Redirect::back()->with("errorSendMail","ErorSendMail");
+            }
             return \Redirect::back()->with("messageGUI",$filename);
          }else{
             return \Redirect::back()->with("errorSendMail","ErorSendMail");
          }
+
+        }else{
+            return \Redirect::back()->with("errorSendMail","ErorSendMail");
+        }
 
        }
        public function checkLang($lang ,$id){

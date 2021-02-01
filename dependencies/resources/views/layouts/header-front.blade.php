@@ -789,15 +789,15 @@ top: -9px;
           <img class="brand-image my-3" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
           <div class="input-label w-100 my-4">
             <h6 class="mb-0" ><label class="text-dark">Firstname, Lastname<span class="red">*</span></label></h6>
-            <input type="text" class="form-control" name="name"  pattern="[A-Za-zก-๏\s]+"  placeholder="Name" required>
+            <input type="text" class="form-control" name="name_gui"  pattern="[A-Za-zก-๏\s]+"  placeholder="Name" required>
           </div>
           <div class="input-label w-100 my-4">
             <h6 class="mb-0" ><label class="text-dark">{{$staticContent['Company']}}<span class="red">*</span></label></h6>
-            <input type="text" class="form-control" name="company"  pattern="[A-Za-zก-๏\s]+"  placeholder="{{$staticContent['Company']}}" required>
+            <input type="text" class="form-control" name="company_gui"  pattern="[A-Za-zก-๏\s().]+"  placeholder="{{$staticContent['Company']}}" required>
           </div>
           <div class="input-label w-100 my-4">
             <h6 class="mb-0" ><label class="text-dark">{{$staticContent['Email_Address']}}<span class="red">*</span></label></h6>
-            <input type="email" class="form-control" name="email"  placeholder="Email Address" required>
+            <input type="email" class="form-control" name="email_gui"  placeholder="Email Address" required>
             {{-- <label for="email">Email Address</label> --}}
         </div>
         <input type="hidden" name="fileguidownload" id="fileguidownload">
@@ -829,7 +829,7 @@ top: -9px;
             <div class="mt-4" id="recap_vertifygetGui"></div>
             <br>
           </form>
-          <input type="hidden" id="keyrecapGui" name="keyresponseCap" >
+          {{-- <input type="hidden" id="keyrecapGui" name="keyresponseCap" > --}}
     
        
         <button type="submit" class="btn btn-subscribe">Download</button>

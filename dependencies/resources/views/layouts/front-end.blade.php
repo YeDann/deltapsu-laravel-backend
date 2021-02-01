@@ -192,7 +192,8 @@ async defer>
 </script>
 <script type="text/javascript">
   var verifyCallback = function(response) {
-    $('#keyrecapGui').val(response);
+    // $('#keyrecapGui').val(response);
+    $('#submitGuiDownload').prepend('<input type="hidden" name="keyresponseCap" value="' + response + '">');
   };
   var onloadCallback = function() {
     grecaptcha.render('recap_vertifygetGui', {
