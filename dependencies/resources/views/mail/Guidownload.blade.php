@@ -832,19 +832,19 @@
                                                         @if(isset($contactForm['name']))
                                                         <tr>
                                                             <td style="width: 100px;">Name :</td>
-                                                            <td>{{$contactForm['name']}}</td>
+                                                            <td>{{$contactForm['name_gui']}}</td>
                                                         </tr>
                                                         @endif
                                                         <tr>
                                                             <td style="width: 100px;">Email : </td>
-                                                            <td>{{$contactForm['email']}}</td>
+                                                            <td>{{$contactForm['email_gui']}}</td>
                                                         </tr>
                                                     
                                                       
                                                         @if(isset($contactForm['company']))
                                                         <tr>
                                                             <td style="width: 100px;">Company : </td>
-                                                            <td>{{$contactForm['company']}}</td>
+                                                            <td>{{$contactForm['company_gui']}}</td>
                                                         </tr>
                                                         @endif
                                                         @if(isset($contactForm['country']))
