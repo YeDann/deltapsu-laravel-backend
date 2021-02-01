@@ -3469,7 +3469,6 @@ class FrontendController extends Controller
         $name = $this->validateInput($request->name_gui,'text',true);
         $company = $this->validateInput($request->company_gui,'text',true);
         $checkname  =  preg_match('/[^a-zA-Zก-ฮ]/', $name);
-    
         if(!$checkname){
           $client = new Client();
           $response = $client->post(
