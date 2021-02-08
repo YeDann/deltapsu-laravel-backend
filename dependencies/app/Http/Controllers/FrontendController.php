@@ -3543,7 +3543,7 @@ class FrontendController extends Controller
          }
 
         }else{
-            return \Redirect::back()->with("errorSendMail","ErorSendMail");
+            return \Redirect::back()->with("vertifynotrobot_gui","ErorSendMail-vertifynotrobot");
         }
 
        }

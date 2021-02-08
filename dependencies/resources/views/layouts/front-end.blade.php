@@ -761,6 +761,13 @@ if (!Array.prototype.findIndex) {
           });
         @endif
 
+        @if(Session::has('vertifynotrobot_gui'))
+        $(document).ready(function() {
+             $("#downloadgui-vertifynot-robot").modal();
+             
+          });
+        @endif
+
       </script>
       <script>
         navigator.sayswho= (function(){
