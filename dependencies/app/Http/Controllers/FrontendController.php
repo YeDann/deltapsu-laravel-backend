@@ -3539,11 +3539,11 @@ class FrontendController extends Controller
             }
             return \Redirect::back()->with("messageGUI",$filename);
          }else{
-            return \Redirect::back()->with("errorSendMail","ErorSendMail");
+            return \Redirect::back()->with("vertifynotrobot_gui","ErorSendMail-vertifynotrobot");
          }
 
         }else{
-            return \Redirect::back()->with("vertifynotrobot_gui","ErorSendMail-vertifynotrobot");
+            return \Redirect::back()->with("errorSendMail","ErorSendMail");
         }
 
        }
