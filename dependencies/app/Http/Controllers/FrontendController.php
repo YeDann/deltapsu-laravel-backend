@@ -321,8 +321,8 @@ class FrontendController extends Controller
                 ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
                 ->join('sub_pro_categories as sp' ,'sp.sub_pro_id' ,'=' ,'ls.cate_id')
                 ->join('sub_pro_categories_translation as spt' ,'spt.sub_pro_id' ,'=' ,'sp.sub_pro_id')
-                ->where('st.local' ,'en')
-                ->where('spt.local' ,'en')
+                ->where('st.local' , $lang)
+                ->where('spt.local' , $lang)
                 ->where('s.status' ,1)
                 ->select('s.*' ,'ls.*','st.title','st.overview_content','sp.url_item','sp.sub_pro_id as cate_id','spt.name as cateName')
                 ->orderBy('ls.order_seq' ,'asc')
@@ -331,7 +331,7 @@ class FrontendController extends Controller
                 $series_has_application = DB::table('series_has_application as shp')
                 ->join('application as app', 'app.id', '=', 'shp.app_id')
                 ->join('application_translation as appt' ,'appt.app_id' ,'=' ,'app.id')
-                ->where('appt.local' ,'en')
+                ->where('appt.local' , $lang)
                 ->select('shp.app_id','app.*' ,'appt.name','shp.se_id' )
                 ->get();
 
