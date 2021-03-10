@@ -3843,6 +3843,15 @@ class FrontendController extends Controller
         $path =  base_path('../frontend-asset/image/').$image ; 
         return response()->file($path);
       }
+      public function marketingLink($image){
+        $path =  base_path('../medias/marketing_resources/').$image; 
+        if(file_exists($path)){
+            return response()->file($path);
+        }else{
+            return abort(404);
+        }
+       
+      }
 
       public function tag_product(Request $request){
         $pro_id =  $request->proid;

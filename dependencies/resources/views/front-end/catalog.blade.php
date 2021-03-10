@@ -145,9 +145,10 @@ function getDateformat($date){
                                ?>
                                 <p>{{$staticContent['Uploaded_on']}} {{$date['d'].'-'.$date['m'].'-'.$date['y']}} </p>
                             </div>
-                        <a href="{{config('app.url')}}/medias/marketing_resources/{{$marget->file}}" download="{{$marget->name}}" >
-                            <button class="btn-downlode">{{$staticContent['Downloads']}}</button>
+                            <a href="{{route('marketingLink',$marget->file)}}" target="_blank"  >
+                                <button class="btn-downlode">{{$staticContent['Downloads']}}</button>
                             </a>
+
                         </div>
                         @endif
                         @endforeach
