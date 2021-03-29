@@ -1120,7 +1120,7 @@ function selectCountry(){
 				$('a[href$="previous"]').removeClass("btn-enquiry");
 				$('a[href$="previous"]').addClass("btn-previous-border");
 				loadparallel(model_alldata[index_pr]['translate_id'] ,model_alldata[index_pr]['max_slot']);
-            }
+        }
 			if(currentIndex === 2){
 				setActive();
 				$('.wizard > .actions').attr('style', 'border: 2px solid transparent;');
