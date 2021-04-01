@@ -1573,7 +1573,7 @@ function selectCountry(){
 			// console.log(sum_watt);
 		
 			if(sum_watt > 0){
-				$('input[name=power]').val(sumWatt());
+				$('input[name=power]').val(sumWatt().toFixed(1));
 				$("#sumpower").text(sumWatt()+"W");
 				$("#sumpower-pdf").text(sumWatt()+"W");
 			}else{
