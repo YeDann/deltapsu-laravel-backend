@@ -3424,7 +3424,7 @@ class FrontendController extends Controller
            }
 
          }else{
-            return \Redirect::back()->with("message_eror","Can not send");
+            return \Redirect::back()->with("message_eror_notvertify","Can not send");
          }
         
        }

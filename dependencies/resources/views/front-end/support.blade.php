@@ -411,6 +411,11 @@ textarea{
              $("#downloadgui-modal-failures").modal();
           });
         @endif
+        @if(Session::has('message_eror_notvertify'))
+        $(document).ready(function() {
+             $("#downloadgui-modal-vetify-robot").modal();
+          });
+        @endif
 
 </script>
 @endsection
