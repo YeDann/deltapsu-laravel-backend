@@ -30,15 +30,16 @@
                 <!-- Basic Elements -->
                 <div class="row">
                     <div class="col-md-12">
-                             @foreach ($language as $item)
-                             @if($item->name != 'en')
-                             <input type="hidden" name="langloop[]" value="{{$item->name}}" >
-                             @endif
-                             @endforeach
+                        @foreach ($language as $item)
+                        @if($item->name != 'en')
+                        <input type="hidden" name="langloop[]" value="{{$item->name}}">
+                        @endif
+                        @endforeach
 
                         <div class="form-group">
                             <label for="example-select">Product Code <span class="req-fed">*</span></label>
-                            <input type="text" class="form-control {{ $errors->has('productCode') ? 'is-invalid' : '' }}"
+                            <input type="text"
+                                class="form-control {{ $errors->has('productCode') ? 'is-invalid' : '' }}"
                                 name="productCode" placeholder="Enter Product Code...">
                         </div>
 
@@ -51,87 +52,141 @@
                             <p class="req-fed">( Choice A: Use numeric value for simple display L x W x D. Choice B: Use
                                 HTML to display any free text and ignore dimensionW and dimensionD )</p>
                             <input type="text" class="form-control {{ $errors->has('dimensionL') ? 'is-invalid' : '' }}"
-                                name="dimensionL" placeholder="" >
+                                name="dimensionL" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="example-select">Dimension W (mm.)</label>
 
                             <input type="text" class="form-control {{ $errors->has('dimensionW') ? 'is-invalid' : '' }}"
-                                name="dimensionW" placeholder="" >
+                                name="dimensionW" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="example-select">Dimension D (mm.)</label>
 
                             <input type="text" class="form-control {{ $errors->has('dimensionD') ? 'is-invalid' : '' }}"
-                                name="dimensionD" placeholder="" >
+                                name="dimensionD" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="example-select">Unit Weight</label>
 
-                            <input type="text" class="form-control {{ $errors->has('unitwWeight') ? 'is-invalid' : '' }}"
-                                name="unitwWeight" placeholder="" >
+                            <input type="text"
+                                class="form-control {{ $errors->has('unitwWeight') ? 'is-invalid' : '' }}"
+                                name="unitwWeight" placeholder="">
                         </div>
                         <div class="form-group">
-                                <label for="example-select">Panel</label>
-    
-                                <input type="text" class="form-control {{ $errors->has('panel') ? 'is-invalid' : '' }}"
-                                    name="panel" placeholder="" >
+                            <label for="example-select">Panel</label>
+
+                            <input type="text" class="form-control {{ $errors->has('panel') ? 'is-invalid' : '' }}"
+                                name="panel" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="example-select">Frame</label>
+
+                            <input type="text" class="form-control {{ $errors->has('frame') ? 'is-invalid' : '' }}"
+                                name="frame" placeholder="">
+                        </div>
+                        <div class="form-group">
+                            <label for="example-select">MaxPower <span class="req-fed">*( Numeric only )</span></label>
+
+                            <input type="number" class="form-control {{ $errors->has('maxPower') ? 'is-invalid' : '' }}"
+                                name="maxPower" placeholder="" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="example-select">Max Slot <span class="req-fed">*</span></label>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-1" name="max_slot" value="1"
+                                    required>
+                                <label class="custom-control-label" for="status-1">1</label>
                             </div>
-                            <div class="form-group">
-                                    <label for="example-select">Frame</label>
-        
-                                    <input type="text" class="form-control {{ $errors->has('frame') ? 'is-invalid' : '' }}"
-                                        name="frame" placeholder="" >
-                                </div>
-                                <div class="form-group">
-                                        <label for="example-select">MaxPower <span class="req-fed">*( Numeric only )</span></label>
-            
-                                        <input type="number" class="form-control {{ $errors->has('maxPower') ? 'is-invalid' : '' }}"
-                                            name="maxPower" placeholder="" required>
-                                    </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-2" name="max_slot" value="2"
+                                    required>
+                                <label class="custom-control-label" for="status-2">2</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-3" name="max_slot" value="3"
+                                    required>
+                                <label class="custom-control-label" for="status-3">3</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-4" name="max_slot" value="4"
+                                    required>
+                                <label class="custom-control-label" for="status-4">4</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-5" name="max_slot" value="5"
+                                    required>
+                                <label class="custom-control-label" for="status-5">5</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-6" name="max_slot" value="6"
+                                    required>
+                                <label class="custom-control-label" for="status-6">6</label>
+                            </div>
 
-                                    <div class="form-group">
-                                            <label for="example-select">Max Slot <span class="req-fed">*</span></label>
-                                    </div>
-                                    <div class="form-group">
-                                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input" id="status-1" name="max_slot" value="1" required>
-                                                    <label class="custom-control-label" for="status-1">1</label>
-                                                </div>
-                                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input" id="status-2" name="max_slot" value="2" required>
-                                                    <label class="custom-control-label" for="status-2">2</label>
-                                                </div>
-                                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                        <input type="radio" class="custom-control-input" id="status-3" name="max_slot" value="3" required >
-                                                        <label class="custom-control-label" for="status-3">3</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                            <input type="radio" class="custom-control-input" id="status-4" name="max_slot" value="4"  required>
-                                                            <label class="custom-control-label" for="status-4">4</label>
-                                                        </div>
-                                                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                                <input type="radio" class="custom-control-input" id="status-5" name="max_slot" value="5" required>
-                                                                <label class="custom-control-label" for="status-5">5</label>
-                                                            </div>
-                                                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                                    <input type="radio" class="custom-control-input" id="status-6" name="max_slot" value="6" required>
-                                                                    <label class="custom-control-label" for="status-6">6</label>
-                                                                </div>
-                                        </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-7" name="max_slot" value="7"
+                                    required>
+                                <label class="custom-control-label" for="status-7">7</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-8" name="max_slot" value="8"
+                                    required>
+                                <label class="custom-control-label" for="status-8">8</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-9" name="max_slot" value="9"
+                                    required>
+                                <label class="custom-control-label" for="status-9">9</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-10" name="max_slot"
+                                    value="10" required>
+                                <label class="custom-control-label" for="status-10">10</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-11" name="max_slot"
+                                    value="11" required>
+                                <label class="custom-control-label" for="status-11">11</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-12" name="max_slot"
+                                    value="12" required>
+                                <label class="custom-control-label" for="status-12">12</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-13" name="max_slot"
+                                    value="13" required>
+                                <label class="custom-control-label" for="status-13">13</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-14" name="max_slot"
+                                    value="14" required>
+                                <label class="custom-control-label" for="status-14">14</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-15" name="max_slot"
+                                    value="15" required>
+                                <label class="custom-control-label" for="status-15">15</label>
+                            </div>
+                        </div>
 
-                                        <div class="form-group">
-                                            <label for="example-select">Status</label>
-                                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                 <input type="radio" class="custom-control-input" id="status_1" name="status" value="1" checked>
-                                             <label class="custom-control-label" for="status_1">Show</label>
-                                                </div>
-                                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                              <input type="radio" class="custom-control-input" id="status_2" name="status" value="0" >
-                                                <label class="custom-control-label" for="status_2">Hide</label>
-                                                </div>
-                                        </div>
-    
+                        <div class="form-group">
+                            <label for="example-select">Status</label>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status_1" name="status" value="1"
+                                    checked>
+                                <label class="custom-control-label" for="status_1">Show</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status_2" name="status" value="0">
+                                <label class="custom-control-label" for="status_2">Hide</label>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="col-md-12">
                         <input type="hidden" name="filename[thumbnail]" value="thumbnail">

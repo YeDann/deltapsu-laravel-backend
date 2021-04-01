@@ -166,7 +166,6 @@
                 line-height: 63px !important
             }
         }
-
     </style>
     <style type="text/css">
         body {
@@ -696,13 +695,11 @@
             font-size: 64px !important;
             line-height: 63px !important;
         }
-
     </style>
 
     <!--[if !mso]><!-->
     <style type="text/css">
         @import url(https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic);
-
     </style>
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic" rel="stylesheet"
         type="text/css" />
@@ -766,7 +763,6 @@
         .mso .footer__share-button p {
             font-family: Arial, Helvetica, sans-serif;
         }
-
     </style>
     <meta name="robots" content="noindex,nofollow" />
     <meta property="og:title" content="My First Campaign" />
@@ -787,7 +783,9 @@
                     <div role="section">
                         <div class="layout one-col fixed-width"
                             style="Margin: 0 auto;max-width: 100%;min-width: 100%; width: 100%;width: calc(28000% - 167400px);overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;">
-                            <div class="layout__inner"  style="border-collapse: collapse;display: table;width: 100%;background-color: #ffffff;" emb-background-style>
+                            <div class="layout__inner"
+                                style="border-collapse: collapse;display: table;width: 100%;background-color: #ffffff;"
+                                emb-background-style>
                                 <!--[if (mso)|(IE)]><table align="center" cellpadding="0" cellspacing="0" role="presentation"><tr class="layout-fixed-width" emb-background-style><td style="width: 600px" class="w560"><![endif]-->
                                 <div class="column"
                                     style="text-align: left;color: #444444;font-size: 16px;line-height: 24px;font-family: Arial, Helvetica, sans-serif;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);">
@@ -801,10 +799,10 @@
                                         <div style="mso-line-height-rule: exactly;mso-text-raise: 4px;">
                                             <h3
                                                 style="Margin-top: 0;Margin-bottom: 0;font-style: normal;font-weight: normal;color: #444444;font-size: 30px;line-height: 38px;text-align: left;">
-                                                
+
                                                 <strong>{{$header}}</strong>
                                             </h3>
-                                        
+
                                         </div>
                                     </div>
 
@@ -829,7 +827,7 @@
                                                             <td>{{$contactForm['procodeGui']}}</td>
                                                         </tr>
                                                         @endif
-                                                        @if(isset($contactForm['name']))
+                                                        @if(isset($contactForm['name_gui']))
                                                         <tr>
                                                             <td style="width: 100px;">Name :</td>
                                                             <td>{{$contactForm['name_gui']}}</td>
@@ -839,9 +837,9 @@
                                                             <td style="width: 100px;">Email : </td>
                                                             <td>{{$contactForm['email_gui']}}</td>
                                                         </tr>
-                                                    
-                                                      
-                                                        @if(isset($contactForm['company']))
+
+
+                                                        @if(isset($contactForm['company_gui']))
                                                         <tr>
                                                             <td style="width: 100px;">Company : </td>
                                                             <td>{{$contactForm['company_gui']}}</td>
@@ -853,7 +851,7 @@
                                                             <td>{{$contactForm['country']}}</td>
                                                         </tr>
                                                         @endif
-                                                       
+
                                                         @if(isset($contactForm['tel']))
                                                         <tr>
                                                             <td style="width: 100px;">Phone : </td>
@@ -864,11 +862,12 @@
                                                         @if(isset($contactForm['checkData']))
                                                         <tr>
                                                             <td style="width: 150px;">Signup newsletter : </td>
-                                                            <td>{{isset($contactForm['checkData']) && $contactForm['checkData'] == 1 ?'Yes':'No'}}</td>
+                                                            <td>{{isset($contactForm['checkData']) && $contactForm['checkData'] == 1 ?'Yes':'No'}}
+                                                            </td>
                                                         </tr>
                                                         @endif
-                                                     
-                                                    
+
+
                                                 </table>
                                             </p>
                                         </div>
@@ -882,7 +881,7 @@
             </tr>
         </tbody>
     </table>
-     
+
 </body>
 
 </html>
