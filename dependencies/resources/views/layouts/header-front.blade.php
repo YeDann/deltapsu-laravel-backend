@@ -895,7 +895,7 @@ top: -9px;
         </div>
         <div class="modal-body px-4 mb-4">
             <div class="text-center">
-                <h4 class="text-color-delta">Sorry, Please vertify im'not robot</h4>
+                <h4 class="text-color-delta">Sorry, Please verify im'not robot</h4>
             </div>
         </div>
       </div>
@@ -915,7 +915,7 @@ top: -9px;
         </div>
         <div class="modal-body px-4 mb-4">
             <div class="text-center">
-                <h4 class="text-color-delta">Sorry, Can't send email,There are something eror on data</h4>
+                <h4 class="text-color-delta">Sorry, Can't send email,There are something error on data</h4>
             </div>
         </div>
       </div>
@@ -1039,7 +1039,7 @@ top: -9px;
         </div>
         <div class="modal-body px-4 mb-4">
             <div class="text-center">
-                <h4 class="text-color-delta">Sorry, Please vertify i'm not robot </h4>
+                <h4 class="text-color-delta">Sorry, Please verify i'm not robot </h4>
             </div>
         </div>
       </div>
