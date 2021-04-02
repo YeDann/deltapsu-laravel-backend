@@ -96,6 +96,9 @@
             padding-left: 20px;
             padding-right: 20px;
    }
+   .btn-subscribe{
+       z-index: 999;
+   }
 
 </style>
 @endsection
