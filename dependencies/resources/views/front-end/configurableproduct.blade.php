@@ -243,6 +243,9 @@
 	.d-p-cal {
 		display: table-cell !important;
 	}
+	#PDFconfigurable{
+		display: none;
+	}
 </style>
 @endsection
 @section('meta')
