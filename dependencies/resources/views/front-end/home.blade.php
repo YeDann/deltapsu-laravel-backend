@@ -87,6 +87,15 @@
     bottom: 70px;
     transform: translate(-50%, 50%);
    }
+   .padd-mobile-slide{
+             background: linear-gradient(to bottom, #fff, transparent, transparent), url('../image/jean-philippe-delberghe-75xPHEQBmvA-unsplash.png') no-repeat center;
+            background-size: cover;
+            background-position: top center, bottom center;
+            background-size: 100% 100%;
+            padding-bottom: 2%;
+            padding-left: 20px;
+            padding-right: 20px;
+   }
 
 </style>
 @endsection
@@ -445,7 +454,7 @@ function retextdata($arr ,$unit){
 }
 
 ?>
-<div class="">
+<div class="visible-desk-up">
     <div class="box-pp">
         <div class="container">
             <div class="text-center">
@@ -516,6 +525,77 @@ function retextdata($arr ,$unit){
     </div>
 </div>
 
+
+<div class="visible-mobile">
+    <div class="padd-mobile-slide">
+        <div class="">
+            <div class="text-center">
+                <h2 class="text-title-delta-home">{{$staticContent['The_Latest_Series']}}</h2>
+            </div>
+            <div id="producttype" class="owl-carousel owl-theme  ft-products-body">
+                @foreach ($series as $serie)
+                <div class="series-list-home">
+                    <div class="">
+                        <div class="d-block ">
+                            <div class="m-auto series-img" >
+                                @if($serie->se_id == 26)
+                                <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
+                                @else
+                                <a style="color:inherit;" class="" href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                @endif
+                                    @if(isset($serie->image))
+                                    <img class="img-fluid m-auto"
+                                        src="{{config('app.url')}}/medias/categories/{{$serie->image}}" alt="">
+                                    @else
+                                    <img class="img-fluid m-auto" src="{{asset('frontend-asset/image/blank.png')}}" alt="">
+                                    @endif
+                                </a>
+                            </div>
+                        </div>
+                        <div class="series-text text-center">
+                            <div class="d-flex h-title">
+                                @if($serie->se_id == 26)
+                                <a style="color:inherit;"  class="m-auto" href="{{route('configurableProductDetail')}}">
+                                 @else 
+                                 <a style="color:inherit;" class="m-auto" href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                 @endif
+                                    <h3 class="text-dark  m-0">{{$serie->title}}</h3>
+                                </a>
+                            </div>
+                            @if($serie->se_id == 26)
+                            <a style="color:inherit;"  class="m-auto" href="{{route('configurableProductDetail')}}">
+                             @else 
+                            <a style="color:inherit;" class="m-auto" href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                             @endif
+                            <div class="series-text-detail">
+                                {!! $serie->overview_content !!}
+                            </div>
+                             </a>
+                        </div>
+                    </div>
+                    <div class="series-icon ">
+                        <div class="icon-app-detail">
+                            @foreach ($series_has_application as $item)
+                            @if($item->se_id == $serie->se_id)
+                                <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->id.'-'.$item->name)])}}"  data-toggle="tooltip" data-placement="top" title="{{$item->name}}" class="icon btn-icon-app itemhorver{{$item->id}}"
+                                    style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
+                                  <script>
+                                       $(".itemhorver{{$item->id}}").hover(function(){
+                                            $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
+                                            }, function(){
+                                            $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->icon}}')");
+                                            });
+                                    </script>                             
+                           @endif
+                           @endforeach
+                        </div>
+                    </div>
+                </div>   
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- event -->
 <div class="visible-desk-up">
