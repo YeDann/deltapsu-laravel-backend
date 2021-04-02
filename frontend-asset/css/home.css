@@ -1450,7 +1450,7 @@ a .title-new {
 }
 
 .box-pp {
-  background: linear-gradient(to bottom, #fff, transparent, transparent), url('../image/jean-philippe-delberghe-75xPHEQBmvA-unsplash.png') no-repeat center;
+  background: linear-gradient(to bottom, #fff, transparent, transparent);
   background-size: cover;
   background-position: top center, bottom center;
   background-size: 100% 100%;

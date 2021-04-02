@@ -88,7 +88,7 @@
     transform: translate(-50%, 50%);
    }
    .padd-mobile-slide{
-             background: linear-gradient(to bottom, #fff, transparent, transparent), url('../image/jean-philippe-delberghe-75xPHEQBmvA-unsplash.png') no-repeat center;
+             background: linear-gradient(to bottom, #fff, transparent, transparent);
             background-size: cover;
             background-position: top center, bottom center;
             background-size: 100% 100%;
@@ -214,63 +214,13 @@
                         <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$sub->name}}</h4>
                     </div>
                     </a>
-                    {{-- <div class="text-hover">
-                        {!! iconv_substr(strip_tags($sub->content),0,90,'UTF-8') !!}...
-                    </div> --}}
+              
                 </div>
                 
             </div>
             @endforeach
         </div>
-        {{--  <div class="row">
-            <div class="product-selector d-flex justify-content-between text-center">
-                @foreach($subCategories as $sub)
-                <div class="product-selector-list border-2px ">
-                    @if($sub->image != null)
-                    <img class="img-fluid-80" src="{{config('app.url')}}/medias/categories/{{$sub->image}}" alt="">
-        @else
-        <img class="img-fluid-80" src="{{asset('frontend-asset/image/CliQ VA@2x.png')}}" alt="">
-        @endif
-        <h4 class="text-title-dark">{{$sub->name}}</h4>
-        <div class="text-hover">
-
-            {!! iconv_substr(strip_tags($sub->content),0,90,'UTF-8') !!}...
-        </div>
-    </div>
-    @endforeach --}}
-    {{-- <div class="product-selector-list border-2px ">
-                    <img class="img-fluid-80" src="{{asset('frontend-asset/image/Lyte@2x.png')}}" alt="">
-    <h4 class="text-title-dark">Panel Mount</h4>
-    <p class="text-hover">Delta offers many series
-        of panel mount power supplies for different needs.</p>
-</div>
-<div class="product-selector-list border-2px ">
-    <img class="img-fluid-80" src="{{asset('frontend-asset/image/Chrome@2x.png')}}" alt="">
-    <h4 class="text-title-dark">Open Frame</h4>
-    <p class="text-hover">Delta offers many series
-        of panel mount power supplies for different needs.</p>
-</div>
-<div class="product-selector-list border-2px ">
-    <img class="img-fluid-80" src="{{asset('frontend-asset/image/Sync@2x.png')}}" alt="">
-    <h4 class="text-title-dark">Adapter</h4>
-    <p class="text-hover">Delta offers many series
-        of panel mount power supplies for different needs.</p>
-</div>
-<div class="product-selector-list border-2px ">
-    <img class="img-fluid-80" src="{{asset('frontend-asset/image/CliQ VA@2x.png')}}" alt="">
-    <h4 class="text-title-dark">Configurable Power</h4>
-    <p class="text-hover">Duis rhoncus dui venenatis consequat porttitor. Etiam aliquet
-        congue consequat. In posuere, nunc sit amet laoreet blan..</p>
-</div>
-<div class="product-selector-list border-2px ">
-    <img class="img-fluid-80" src="{{asset('frontend-asset/image/CliQ VA@2x.png')}}" alt="">
-    <h4 class="text-title-dark">LED Driver</h4>
-    <p class="text-hover">Duis rhoncus dui venenatis consequat porttitor. Etiam aliquet
-        congue consequat. In posuere, nunc sit amet laoreet blan..</p>
-</div> --}}
-{{-- </div>
-        </div> --}}
-</div>
+     </div>
 </div>
 <div class="visible-mobile">
     <div class="box-product-selector padd-left-rbox">
@@ -290,67 +240,12 @@
                             <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$sub->name}}</h4>
                         </div>
                         </a>
-                        {{-- <div class="text-hover">
-
-                            {!! iconv_substr(strip_tags($sub->content),0,90,'UTF-8') !!}...
-                        </div> --}}
                     </div>
                 </div>
-                
-                
             </div>
             @endforeach
         </div>
-        {{-- <div class="box-product-selector  ">
-        <div class="container ">
-            <h2 class="text-title-delta-home ">PRODUCT SELECTOR</h2>
-            <div class="d-flex justify-content-between mr-b-24px">
-                <div class="product-selector-mobile border-2px pad-ar-12px  mr-r-12px">
-                    <img class="img-fluid-80" src="{{asset('frontend-asset/image/CliQ VA@2x.png')}}" alt="">
-        <h6 class="text-title-dark">DIN Rail</h6>
-        <p class="text-hover">Duis rhoncus dui venenatis consequat porttitor. Etiam aliquet
-            congue consequat. In posuere, nunc sit amet laoreet blan..</p>
-    </div>
-    <div class="product-selector-mobile border-2px pad-ar-12px mr-l-12px">
-        <img class="img-fluid-80" src="{{asset('frontend-asset/image/Lyte@2x.png')}}" alt="">
-        <h6 class="text-title-dark">Panel Mount</h6>
-        <p class="text-hover">Delta offers many series
-            of panel mount power supplies for different needs.</p>
-    </div>
-</div>
-<div class="d-flex justify-content-between mr-b-24px">
-    <div class="product-selector-mobile border-2px pad-ar-12px mr-r-12px">
-        <img class="img-fluid-80" src="{{asset('frontend-asset/image/Chrome@2x.png')}}" alt="">
-        <h6 class="text-title-dark">Open Frame</h6>
-        <p class="text-hover">Delta offers many series
-            of panel mount power supplies for different needs.</p>
-    </div>
-    <div class="product-selector-mobile border-2px pad-ar-12px mr-l-12px">
-        <img class="img-fluid-80" src="{{asset('frontend-asset/image/Sync@2x.png')}}" alt="">
-        <h6 class="text-title-dark">Adapter</h6>
-        <p class="text-hover">Delta offers many series
-            of panel mount power supplies for different needs.</p>
-    </div>
-</div>
-<div class="d-flex justify-content-between mr-b-24px">
-    <div class="product-selector-mobile border-2px pad-ar-12px mr-r-12px">
-        <img class="img-fluid-80" src="{{asset('frontend-asset/image/CliQ VA@2x.png')}}" alt="">
-        <h6 class="text-title-dark">Configurable Power</h6>
-        <p class="text-hover">Duis rhoncus dui venenatis consequat porttitor. Etiam aliquet
-            congue consequat. In posuere, nunc sit amet laoreet blan..</p>
-    </div>
-    <div class="product-selector-mobile border-2px pad-ar-12px mr-l-12px">
-        <img class="img-fluid-80" src="{{asset('frontend-asset/image/CliQ VA@2x.png')}}" alt="">
-        <h6 class="text-title-dark">LED Driver</h6>
-        <p class="text-hover">Duis rhoncus dui venenatis consequat porttitor. Etiam aliquet
-            congue consequat. In posuere, nunc sit amet laoreet blan..</p>
-    </div>
-</div>
-
-
-
-</div>--}}
-</div>
+   </div>
 </div>
 <!-- application -->
 <div class="visible-tablets-up">
@@ -454,7 +349,7 @@ function retextdata($arr ,$unit){
 }
 
 ?>
-<div class="visible-desk-up">
+<div class="visible-tablets-up">
     <div class="box-pp">
         <div class="container">
             <div class="text-center">
@@ -524,15 +419,13 @@ function retextdata($arr ,$unit){
         </div>
     </div>
 </div>
-
-
 <div class="visible-mobile">
     <div class="padd-mobile-slide">
         <div class="">
             <div class="text-center">
                 <h2 class="text-title-delta-home">{{$staticContent['The_Latest_Series']}}</h2>
             </div>
-            <div id="producttype" class="owl-carousel owl-theme  ft-products-body">
+            <div id="producttype-mobile" class="owl-carousel owl-theme  ft-products-body">
                 @foreach ($series as $serie)
                 <div class="series-list-home">
                     <div class="">
@@ -1118,17 +1011,13 @@ function retextdata($arr ,$unit){
 
         $("#producttype-mobile").owlCarousel({
             loop: false,
-            margin: 1,
+            margin: 24,
             dotsEach: 3,
-            /* autoWidth:true, */
             nav: true,
             responsive: {
                 0: {
                     items: 1
 
-                },
-                500:{
-                    items: 2
                 },
                 600: {
                     items: 2
