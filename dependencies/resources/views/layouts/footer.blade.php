@@ -443,7 +443,7 @@
            <div class="col-lg-12 p-3 text-center">
             {{$staticContent['We_use_cookies_to_provide']}}
             <a href="{{route('privacyPolicy')}}" class="text-underline text-bold"> {{$staticContent['Privacy_Policy']}}</a>.</p>
-              <a class="btn btn-subscribe" onclick="setcokie();" href="#">{{$staticContent['Accept']}}</a>
+              <a class="btn btn-subscribe" onclick="setcokie();" href="#" >{{$staticContent['Accept']}}</a>
            </div>
        </div>
     </div>
