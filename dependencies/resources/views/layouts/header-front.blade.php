@@ -569,7 +569,7 @@ top: -9px;
             
                         
         </div> 
-        <div id="search-box-mobile" class="search-box-mobile" >
+        <div id="search-box-mobile" class="search-box-mobile" style="display:none;" >
             <div class="nav-btn-search">
                 <div class="box-search">
                     <i class="fa fa-search"></i>
@@ -580,7 +580,8 @@ top: -9px;
                 </label>
                 </form>
                 <div class="icon-clear">
-                    <a onclick="document.getElementById('searchinput').value = ''">
+  
+                      <a id="btn-close-search" href="#">
                         <i class="zmdi zmdi-close icon-size-close"></i>
                     </a>
                 </div>

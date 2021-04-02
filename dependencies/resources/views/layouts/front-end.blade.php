@@ -373,6 +373,11 @@ if (!Array.prototype.findIndex) {
 
                 document.getElementById("fgrgr-mobile").focus();
               });
+              $("#btn-close-search").click(function(){
+                document.getElementById('searchinput-mobile').value = '';
+                $("#search-box-mobile").toggle();
+                closeNav();
+              });
             });
 
     
