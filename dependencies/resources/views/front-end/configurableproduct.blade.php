@@ -1266,8 +1266,7 @@ function selectCountry(){
 			ts_a = ts_a_700;
 			$('#bus').empty();
 			$("#bus").append(new Option("Default N/A", "0"));
-			$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description_MEG-3K0A9']}}');
-			// document.getElementById("option_ti").setAttribute("title", "democlass");
+
 		 }else{
 			do_a = do_a_gobal;
 			ts_a = ts_a_gobal;	 
@@ -1287,8 +1286,8 @@ function selectCountry(){
 				$('#logic').empty();
 				$("#logic").append(new Option("Nomal Logic & Normal Fan Direction", "0"));
 				$("#logic").append(new Option("Reversed Logic & Normal Fan Direction", "1"));
-
-
+				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description_MEG-3K0A9']}}');
+               
 				}else{
 
 				$('#terminal').empty();
@@ -1301,7 +1300,7 @@ function selectCountry(){
 				$("#logic").append(new Option("Reversed Logic & Normal Fan Direction", "1"));
 				$("#logic").append(new Option("Normal Logic & Reversed Fan Direction ", "2"));
 				$("#logic").append(new Option("Reversed Logic & Reversed Fan Direction", "3"));
-
+				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description']}}');
 
 			}
 
