@@ -371,8 +371,8 @@
 									<div class="col-lg-6 col-md-12 mt-3">
 										<label for="">
 											<h5>{{$staticContent['Option']}}
-												<span class="wrp-icons">
-													<img class="align-baseline" src="{{asset('frontend-asset/image/tooltip.svg')}}"
+												<span  class="wrp-icons">
+													<img id="option_ti"  class="align-baseline" src="{{asset('frontend-asset/image/tooltip.svg')}}"
 														data-toggle="tooltip" data-placement="top"
 														title="{{$staticContent['Inlet_Type_description']}}">
 												</span></h5>
@@ -380,7 +380,7 @@
 										<select class="form-control" id="terminal" onchange="getToSummary()">
 											<option value="1">T for American terminal</option>
 											<option value="2">E for European terminal</option>
-											<option value="3">C for C14 terminal</option>
+											<option value="3">C for C14</option>
 										</select>
 									</div>
 									<div class="col-lg-6 col-md-12 mt-3">
@@ -1266,6 +1266,8 @@ function selectCountry(){
 			ts_a = ts_a_700;
 			$('#bus').empty();
 			$("#bus").append(new Option("Default N/A", "0"));
+			$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description_MEG-3K0A9']}}');
+			// document.getElementById("option_ti").setAttribute("title", "democlass");
 		 }else{
 			do_a = do_a_gobal;
 			ts_a = ts_a_gobal;	 
@@ -1292,13 +1294,14 @@ function selectCountry(){
 				$('#terminal').empty();
 				$("#terminal").append(new Option("T for American terminal", "1"));
 				$("#terminal").append(new Option("E for European terminal", "2"));
-				$("#terminal").append(new Option("C for C14 terminal", "3"));
+				$("#terminal").append(new Option("C for C14", "3"));
 
 				$('#logic').empty();
 				$("#logic").append(new Option("Nomal Logic & Normal Fan Direction", "0"));
 				$("#logic").append(new Option("Reversed Logic & Normal Fan Direction", "1"));
 				$("#logic").append(new Option("Normal Logic & Reversed Fan Direction ", "2"));
 				$("#logic").append(new Option("Reversed Logic & Reversed Fan Direction", "3"));
+
 
 			}
 
