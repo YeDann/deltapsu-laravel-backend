@@ -3019,34 +3019,35 @@ class FrontendController extends Controller
     
        private  function subCheckBox($request){
         $email = $request->email;
-        if(isset($email) || $email == '' ||  $email == null ){
+         //GUI download
+        if($email == '' ||  $email == null ){
             $email = $request->email_gui;
         }
-        $mailch = $this->validateInput($email,'text',true);
-        $strmlo = strtolower($mailch);
-        $mailchimdata =  Mailchimp::getLists();
-
-        $checkmailC = Mailchimp::check($mailchimdata[0]['id'], trim($strmlo));
-        $checkmailsta  =  Mailchimp::status($mailchimdata[0]['id'],trim($strmlo));
-        $alreadysub =  DB::table('subscribes')->where('email',trim($strmlo))->get();
-
-        if($checkmailC){
-        }else{
-             if(count($alreadysub) == 0){
-                DB::table('subscribes')->insert(
-                   [
-                       "country_name" => $request->country,
-                       "email" => $strmlo,
-                       "name" => $request->name,
-                       "accept" => 1,
-                       "created_at" => \Carbon\Carbon::now(),
-                   ]
-               );
-            }
-            Mailchimp::subscribe($mailchimdata[0]['id'], trim($strmlo),['NAME' => $request->name, 'COUNTRY' => $request->country] ,true);
-        }
-
+        if($email != null){
+            $mailch = $this->validateInput($email,'text',true);
+            $strmlo = strtolower($mailch);
+            $mailchimdata =  Mailchimp::getLists();
     
+            $checkmailC = Mailchimp::check($mailchimdata[0]['id'], trim($strmlo));
+            $checkmailsta  =  Mailchimp::status($mailchimdata[0]['id'],trim($strmlo));
+            $alreadysub =  DB::table('subscribes')->where('email',trim($strmlo))->get();
+    
+            if($checkmailC){
+            }else{
+                 if(count($alreadysub) == 0){
+                    DB::table('subscribes')->insert(
+                       [
+                           "country_name" => $request->country,
+                           "email" => $strmlo,
+                           "name" => $request->name,
+                           "accept" => 1,
+                           "created_at" => \Carbon\Carbon::now(),
+                       ]
+                   );
+                }
+                Mailchimp::subscribe($mailchimdata[0]['id'], trim($strmlo),['NAME' => $request->name, 'COUNTRY' => $request->country] ,true);
+            }
+        }
 
        }
 
@@ -3470,6 +3471,7 @@ class FrontendController extends Controller
          ], 200);
        }
        public function downloadGui(Request $request){
+        
         $name = $this->validateInput($request->name_gui,'text',true);
         $company = $this->validateInput($request->company_gui,'text',true);
         $checkname  =  preg_match('/\\s[^a-zA-Zก-ฮ]/', $name);
