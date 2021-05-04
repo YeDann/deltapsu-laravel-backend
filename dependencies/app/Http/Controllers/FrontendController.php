@@ -3019,7 +3019,7 @@ class FrontendController extends Controller
     
        private  function subCheckBox($request){
         $email = $request->email;
-        if(isset($email) || $email != '' ||  $email != null ){
+        if(isset($email) || $email == '' ||  $email == null ){
             $email = $request->email_gui;
         }
         $mailch = $this->validateInput($email,'text',true);
