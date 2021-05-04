@@ -3018,7 +3018,11 @@ class FrontendController extends Controller
        }
     
        private  function subCheckBox($request){
-        $mailch = $this->validateInput($request->email,'text',true);
+        $email = $request->email;
+        if(isset($email) || $email != '' ||  $email != null ){
+            $email = $request->email_gui;
+        }
+        $mailch = $this->validateInput($email,'text',true);
         $strmlo = strtolower($mailch);
         $mailchimdata =  Mailchimp::getLists();
 
