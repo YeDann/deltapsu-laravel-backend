@@ -122,14 +122,14 @@
             
             ?>
             <div class="content row">
-                <div class="col-lg-6 image-event order-2 order-lg-1">
+                <div class="col-lg-6 image-event  order-lg-1">
                         <img class="w-100" src="{{config('app.url')}}/uploads_delta/{{isset($contents[0]->thumb)?$contents[0]->thumb:'' }}" alt="">
                         {{-- <div class="gmap_canvas">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3242.2171281810674!2d140.03250051555025!3d35.64702173945416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6022821fd52ebfdf%3a0xcec0c09c4bed45e0!2smakuhari%20messe%20event%20hall!5e0!3m2!1sen!2sth!4v1573466921112!5m2!1sen!2sth" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
                         </div> --}}
                        
                 </div>
-                <div class="col-lg-6 text-event order-1 order-lg-2">
+                <div class="col-lg-6 text-event mt-2 order-1 order-lg-2">
                     <div class="media">
                         <img src="{{asset('/frontend-asset/image/calendar-icon.svg')}}" class="mr-3" alt="...">
                         <div class="media-body">
