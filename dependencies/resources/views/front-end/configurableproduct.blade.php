@@ -243,9 +243,9 @@
 	.d-p-cal {
 		display: table-cell !important;
 	}
-	#PDFconfigurable{
+	/* #PDFconfigurable{
 		display: none;
-	}
+	} */
 </style>
 @endsection
 @section('meta')
@@ -996,8 +996,8 @@
 	};
 	var onloadCallback = function() {
 	  grecaptcha.render('recap_vertify', {
-	   //'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-        'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
+	   'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
+        // 'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
 		'callback' : verifyCallback,
 		'theme' : 'light'
 	  });
