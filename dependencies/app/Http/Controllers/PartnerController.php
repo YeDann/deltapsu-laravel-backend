@@ -35,12 +35,12 @@ class PartnerController extends Controller
         ->select('old_users.*')
         ->get();
         // return dd($olduser);
-        foreach($olduser as $user){
-            DB::table('partner')->where('old_user_id', $user->id)->update([
-                    'country' => $user->country,
-            ]);
-        }
-       return dd('ok');
+        // foreach($olduser as $user){
+        //     DB::table('partner')->where('old_user_id', $user->id)->update([
+        //             'country' => $user->country,
+        //     ]);
+        // }
+    //    return dd('ok');
      
        
         $language = DB::table('language')->get();
@@ -361,6 +361,7 @@ class PartnerController extends Controller
                       'No',
                       'Firstname',
                       'Lastname',
+                      'Email',
                       'Position',
                       'CompanyName',
                       'Phone',
@@ -382,6 +383,7 @@ class PartnerController extends Controller
                               $j,
                               $user->firstname,
                               $user->lastname,
+                              $user->email,
                               $user->position,
                               $user->companyName,
                               $user->phone,
