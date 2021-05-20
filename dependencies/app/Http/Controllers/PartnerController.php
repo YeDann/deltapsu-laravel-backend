@@ -371,8 +371,9 @@ class PartnerController extends Controller
                       'created_at'
                   ]);
                   $i = 2;
+                  $j = 1;
                   foreach ($users as $user) {
-                      $j = 1;
+                  
                        
                          if($user->role == 1){
                              $role = 'Distributor';
