@@ -30,6 +30,18 @@ class PartnerController extends Controller
         $users = DB::table('partner')
             ->select('partner.*')
             ->get();
+
+        $olduser =  DB::table('old_users')
+        ->select('old_users.*')
+        ->get();
+        // return dd($olduser);
+        foreach($olduser as $user){
+            DB::table('partner')->where('old_user_id', $user->id)->update([
+                    'country' => $user->country,
+            ]);
+        }
+       return dd('ok');
+     
        
         $language = DB::table('language')->get();
 
@@ -83,6 +95,7 @@ class PartnerController extends Controller
                     'fax' => $request->fax,
                     'role' => $request->role,
                     'email' => $request->email,
+                    'country' => $request->country,
                     'password' => Hash::make($request->password),
                     "created_at" => \Carbon\Carbon::now(),
                     "updated_at" => \Carbon\Carbon::now(),
@@ -145,6 +158,7 @@ class PartnerController extends Controller
                     'fax' => $request->fax,
                     'role' => $request->role,
                     'email' => $request->email,
+                    'country' => $request->country,
                     'password' => Hash::make($request->password),
                     "updated_at" => \Carbon\Carbon::now(),
                 ]);
@@ -157,6 +171,7 @@ class PartnerController extends Controller
                     'phone' => $request->phone,
                     'fax' => $request->fax,
                     'role' => $request->role,
+                    'country' => $request->country,
                     'email' => $request->email,
                     "updated_at" => \Carbon\Carbon::now(),
                 ]);
