@@ -1287,8 +1287,18 @@ function selectCountry(){
 				$("#logic").append(new Option("Nomal Logic & Normal Fan Direction", "0"));
 				$("#logic").append(new Option("Reversed Logic & Normal Fan Direction", "1"));
 				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description_MEG-3K0A9']}}');
-               
-				}else{
+		}else if(model_alldata[index]['max_power'] == 700){
+		    	$('#terminal').empty();
+				$("#terminal").append(new Option("T for American terminal", "1"));
+				$("#terminal").append(new Option("E for European terminal", "2"));
+				$("#terminal").append(new Option("C for C14", "3"));
+
+				$('#logic').empty();
+				$("#logic").append(new Option("Nomal Logic & Normal Fan Direction", "0"));
+				$("#logic").append(new Option("Reversed Logic & Normal Fan Direction", "1"));
+				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description']}}');
+		   
+		}else{
 
 				$('#terminal').empty();
 				$("#terminal").append(new Option("T for American terminal", "1"));

@@ -44,7 +44,7 @@
         <div class="row add-space-mobile">
             <div class="col-xl-4  col-md-12">
                 <div class="d-flex mb-4">
-                    <img class="img-fluid m-auto w-100" src="{{asset('frontend-asset/image/Configurable-Power.png')}}" alt="">
+                    <img class="img-fluid m-auto w-100" src="{{asset('frontend-asset/image/Configurable-Power750.png')}}" alt="">
                 </div>
                 <div class="d-flex justify-content-center mb-4">
                
