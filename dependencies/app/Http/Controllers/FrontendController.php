@@ -1800,6 +1800,9 @@ class FrontendController extends Controller
         ->orderBy('c.created_at', 'desc')
         ->get();
         // return dd($contents);
+        if(count($contents) != 0){
+            abort(404);
+        }
         $otherNews = [];
 
         if(count($contents) != 0 ){
