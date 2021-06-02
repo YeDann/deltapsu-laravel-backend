@@ -81,10 +81,10 @@ class Controller extends BaseController
 
        }
 
+    
        protected function clean($string) {
-        $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
-       
-        return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+        $string  =  str_replace(' ', '-', $string);
+        return preg_replace('/[^A-Za-z0-9ก-๙\-]/u', '',str_replace('&', '-and-', $string));
        }
 
 }

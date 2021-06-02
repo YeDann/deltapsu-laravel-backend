@@ -217,7 +217,7 @@ class NewsController extends Controller
             $langloop = $request->langloop;
             $re1 = str_replace("/","_",$title);
             $key = str_replace(" ","-",$re1);
-            $key2 = str_replace("%","percentage",$key);
+            $key2 = $this->clean($key);
             $slug  =  $key2;
 
                     $id = DB::table('contents')->insertGetID(
@@ -345,7 +345,7 @@ class NewsController extends Controller
         $imageName  = $oldfilethumb;
         $re1 = str_replace("/","_",$title['en']);
         $key = str_replace(" ","-",$re1);
-        $key2 = str_replace("%","percentage",$key);
+        $key2 = $this->clean($key);
         $slug  =  $key2;
        
         if ($request->hasFile("thumb")) {
