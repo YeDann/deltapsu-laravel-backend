@@ -61,7 +61,7 @@
     <link rel="shortcut icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
     <link rel="icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
     <title>DeltaPSU | Backend</title>
-
+    <meta name="robots" content="index, follow">
 
     <link rel="stylesheet" href="{{asset('backend-asset/js/plugins/datatables/dataTables.bootstrap4.css')}}">
     <link rel="stylesheet"
