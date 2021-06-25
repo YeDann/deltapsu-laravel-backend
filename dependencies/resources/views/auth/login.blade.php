@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Backend | deltaPSU</title>
-    <meta name="robots" content="index, follow">
     <link rel="stylesheet" id="css-main" href="{{asset('backend-asset/css/dashmix.min.css')}}">
 </head>
 <body>
