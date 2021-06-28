@@ -76,6 +76,8 @@
     <link rel="stylesheet" href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}">
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/font.css')}}" media="screen" />
     {{-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> --}}
+    <link rel="stylesheet" href="{{asset('/backend-asset/addons/css/datatables.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/backend-asset/addons/css/datatables-select.min.css')}}">
     @yield('style')
     <style>
         #page-container.page-header-dark #page-header {
@@ -200,6 +202,8 @@
         });
 
     </script>
+        <script src="{{asset('/admin-assets/addons/js/datatables.min.js')}}"></script>
+        <script src="{{asset('/admin-assets/addons/js/datatables-select.min.js')}}"></script>
 
 
     @yield('js')

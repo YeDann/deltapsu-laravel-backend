@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="block-content block-content-full">
-            <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
+            <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
                         <th class="text-center" style="width: 5%;">No.</th>
@@ -153,6 +153,10 @@
          $('#itemId').val(id);
 
     }
+
+    $(document).ready(function () {
+            $('#dtBasicExample').DataTable();
+        });
 
 </script>
 @endsection
