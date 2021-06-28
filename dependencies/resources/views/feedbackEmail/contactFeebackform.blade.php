@@ -64,6 +64,7 @@
             </div>
         </div>
         <div class="block-content block-content-full">
+            <div class="table-responsive">
             <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
@@ -101,6 +102,7 @@
                     @endif
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </div>
