@@ -67,15 +67,15 @@
             <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th class="text-center" style="width: 5%;">No.</th>
-                        <th class="d-none d-sm-table-cell" style="width: 5%;">Subject</th>
-                        <th class="d-none d-sm-table-cell" style="width: 5%;">Email</th>
-                        <th class="d-none d-sm-table-cell" style="width: 5%;">Name</th>
-                        <th class="d-none d-sm-table-cell" style="width: 5%;">Country</th>
-                        <th class="d-none d-sm-table-cell" style="width: 5%;">Type</th>
-                        <th class="d-none d-sm-table-cell" style="width: 10%;">Model</th>
-                        <th class="d-none d-sm-table-cell" style="width: 10%;">Created_at</th>
-                        <th style="width: 5%;" class="text-center">Config file</th>
+                        <th class="text-center">No.</th>
+                        <th class="d-none d-sm-table-cell" >Subject</th>
+                        <th class="d-none d-sm-table-cell">Email</th>
+                        <th class="d-none d-sm-table-cell" >Name</th>
+                        <th class="d-none d-sm-table-cell" >Country</th>
+                        <th class="d-none d-sm-table-cell" >Type</th>
+                        <th class="d-none d-sm-table-cell" >Model</th>
+                        <th class="d-none d-sm-table-cell" >Created_at</th>
+                        <th class="text-center">Config file</th>
                     </tr>
                 </thead>
                 <tbody>
