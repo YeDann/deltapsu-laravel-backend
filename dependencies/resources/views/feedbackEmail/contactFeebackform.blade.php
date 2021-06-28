@@ -63,20 +63,20 @@
                 </div>
             </div>
         </div>
-        <div class="block-content block-content-full">
+        <div class="block-content block-content-full" >
             <div class="table-responsive">
-            <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <table id="dtBasicExample"  class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th class="text-center">No.</th>
-                        <th class="d-none d-sm-table-cell" >Subject</th>
-                        <th class="d-none d-sm-table-cell">Email</th>
-                        <th class="d-none d-sm-table-cell" >Name</th>
-                        <th class="d-none d-sm-table-cell" >Country</th>
-                        <th class="d-none d-sm-table-cell" >Type</th>
-                        <th class="d-none d-sm-table-cell" >Model</th>
-                        <th class="d-none d-sm-table-cell" >Created_at</th>
-                        <th class="text-center">Config file</th>
+                        <th class="th-sm">No.</th>
+                        <th class="th-sm">Subject</th>
+                        <th class="th-sm">Email</th>
+                        <th class="th-sm">Name</th>
+                        <th class="th-sm">Country</th>
+                        <th class="th-sm">Type</th>
+                        <th class="th-sm">Model</th>
+                        <th class="th-sm">Created_at</th>
+                        <th class="th-sm">Config file</th>
                     </tr>
                 </thead>
                 <tbody>
