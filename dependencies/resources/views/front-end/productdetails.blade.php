@@ -424,7 +424,7 @@ font-size: 50px;
                                 
                             }
                             ?>
-                            <p class="text-one">{{$product[0]['unit_weight']}} ({{number_format($sum,2)}} lb)</p>
+                            <p class="text-one">{!!$product[0]['unit_weight']!!} ({{number_format($sum,2)}} lb)</p>
                           
                         </div>
                     </div>
