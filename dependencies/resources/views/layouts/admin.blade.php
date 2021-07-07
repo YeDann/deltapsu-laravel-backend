@@ -213,7 +213,7 @@
 
             var FileSize = this.files[0].size / 1024 / 1024; // in MB
             if (FileSize > 1) {
-                alert("File size exceeds 1 MB!");
+                alert("File size exceeds 1 MB! ");
                 this.value = "";
             };
         });

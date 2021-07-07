@@ -659,7 +659,7 @@ font-size: 50px;
                         </div>
                         <div class="col-6 box-product-detail">
                             <h5 class="text-color-delta mb-2">{{$staticContent['Unit_Weight']}}</h5>
-                            <p class="text-one">{{$product[0]['unit_weight']}} ({{number_format($sum,2)}} lb)</p>
+                            <p class="text-one">{!!$product[0]['unit_weight']!!} ({{number_format($sum,2)}} lb)</p>
                         </div>
                     </div>
                     <div class="d-flex justify-content-center mt-3">
@@ -996,7 +996,7 @@ font-size: 50px;
                             <td >
                                 <div class="col-md-3 subject-detail "><b>{{$staticContent['Unit_Weight']}}</b></div>
                                 <div class="col-md-9 explain-detail ">
-                                    {{$product[0]['unit_weight']}} ({{number_format($sum,2)}} lb)
+                                    {!!$product[0]['unit_weight']!!} ({{number_format($sum,2)}} lb)
                                 </div>
                             </td>
                             <td >
