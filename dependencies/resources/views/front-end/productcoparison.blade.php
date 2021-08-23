@@ -978,6 +978,7 @@
            return newkey;
     }
      function setproimage(pro ,id){
+        console.log(pro ,id ,'setimage1');
              if(pro == null || ''){
                   pro = 0 ;
               }
@@ -997,6 +998,7 @@
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            },
            success: function (res) {
+               console.log(res['data']);
             $.each(res['data'], function(index,val){
              html2 += '<img class="w-100" src="'+url+val['picture']+'" alt="" >';
              html2 += '<p class="text-center text-dark">'+val['seName'] +'</p>'; 
