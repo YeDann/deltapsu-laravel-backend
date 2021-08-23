@@ -987,6 +987,7 @@
             var html2 = '';
             var t_id = $('#proType').val();
             var t_name = $('#proType option:selected').text();
+            console.log(arr ,t_id);
            $.ajax({
            url: "{{route('loadImageProByArr')}}",
            data: {
