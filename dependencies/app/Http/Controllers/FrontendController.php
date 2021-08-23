@@ -706,7 +706,7 @@ class FrontendController extends Controller
             }
             return redirect()->route('contactSupport'); 
         } 
-        if($page == 'testFunction'){
+        if($page == 'testFunction2'){
             // $events = DB::table('contents as c')
             // ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
             // ->where('ct.local', $lang)
