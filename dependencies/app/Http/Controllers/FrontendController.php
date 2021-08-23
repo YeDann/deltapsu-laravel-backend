@@ -706,34 +706,18 @@ class FrontendController extends Controller
             }
             return redirect()->route('contactSupport'); 
         } 
-        if($page == 'testFunction2'){
-            // $events = DB::table('contents as c')
-            // ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
-            // ->where('ct.local', $lang)
-            // ->where('c.content_type', '=', 'event')
-            // ->where('c.status',  1)
-            // ->select('c.*' ,'ct.*')
-            // ->orderBy('c.date_publish', 'desc')
-            // ->limit(2)
-            // ->get();
-            // return view('front-end.test')->with('events',$events); 
-
-            $products = DB::table('products as p')
-            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-            ->where('pt.local' ,'en')
-            ->where('spt.local' ,'en')
-            ->where('st.local' ,'en')
-            ->where('pt.showstatus' ,1)
-            ->whereIn('p.pro_id' ,[683])
-            ->where('phc.categories_id',5)
-            ->select('p.*', 'pt.*','spt.name as catename','st.title as seName')
-            ->orderBy('p.created_at', 'desc')
+        if($page == 'testFunction3'){
+            $events = DB::table('contents as c')
+            ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
+            ->where('ct.local', $lang)
+            ->where('c.content_type', '=', 'event')
+            ->where('c.status',  1)
+            ->select('c.*' ,'ct.*')
+            ->orderBy('c.date_publish', 'desc')
+            ->limit(2)
             ->get();
+            return view('front-end.test')->with('events',$events); 
 
-             return dd($products);
 
         }
         if($page == "checkPro3"){
