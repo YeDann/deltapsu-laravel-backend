@@ -727,7 +727,7 @@ class FrontendController extends Controller
             ->where('spt.local' ,'en')
             ->where('st.local' ,'en')
             ->where('pt.showstatus' ,1)
-            ->whereIn('p.pro_id' ,['683'])
+            ->whereIn('p.pro_id' ,[683])
             ->where('phc.categories_id',5)
             ->select('p.*', 'pt.*','spt.name as catename','st.title as seName')
             ->orderBy('p.created_at', 'desc')
