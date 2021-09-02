@@ -47,7 +47,8 @@
             </div>
         </div>
         <div class="block-content block-content-full">
-            <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
+            <p class="warrning-text">*Can draggable order Item </p>
+            <table class="table table-bordered table-striped table-vcenter ">
                 <thead>
                     <tr>
                         <th class="text-center" style="width: 5%;">No.</th>
@@ -58,6 +59,7 @@
                 <tbody>
                     @if(isset($continents) and !empty($continents))
                     @foreach ($continents as $item)
+                    <tr class="odd order-list" data-id="{{$item->id}}">
                     <td class="text-center">{{$loop->iteration}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->name}}</td>
                     <td class="text-center">
@@ -111,9 +113,12 @@
     </div>
     <!-- END Vertically Centered Block Modal -->
 
-
+    <!-- END Vertically Centered Block Modal -->
+    <div id="order-input" style="display: none;"></div>
+    <div id="order-index" style="display: none;"></div>
 @endsection
 @section('js')
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 
 
@@ -121,6 +126,39 @@
          $('#itemId').val(id);
 
     }
+
+</script>
+<script>
+    $( function() {
+      $( "#sortable" ).sortable();
+      $( "#sortable" ).disableSelection();
+    } );
+    var orderdata;
+    $('tbody').sortable({
+
+        stop: function (event, ui) {
+            $('.order-list').each(function (index) {
+                var term = $(this).data('id');
+                $("#order-index").append(parseInt(index) + 1 + ",");
+                $("#order-input").append(term + ",");
+            });
+            var formData = {
+                'home_id': $("#order-input").html(),
+                'home_order': $("#order-index").html()
+            };
+            $.ajax({
+                url: "{{route('update_order_Continent')}}",
+                type: 'post',
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (res) {
+                    location.reload();
+                }
+            })
+        }
+    });
 
 </script>
 @endsection

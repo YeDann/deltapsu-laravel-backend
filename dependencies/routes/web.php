@@ -351,6 +351,8 @@ Route::get('editContinent/{id?}/{type_id?}','ContinentsController@edit')->name('
 Route::post('deleteContinent','ContinentsController@destroy')->name('deleteContinent');
 Route::post('updateContinent','ContinentsController@update')->name('updateContinent');
 
+Route::post('update_order_Continent','ContinentsController@update_order_Continent')->name('update_order_Continent');
+
 Route::get('getOffices/{conId?}/{type_id?}','OfficeController@index')->name('getOffices');
 Route::get('createOffices/{conId?}/{type_id?}','OfficeController@create')->name('createOffices');
 Route::get('editOffices/{id?}/{conId?}/{type_id?}','OfficeController@edit')->name('editOffices');

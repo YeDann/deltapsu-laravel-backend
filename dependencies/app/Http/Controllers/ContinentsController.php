@@ -25,6 +25,7 @@ class ContinentsController extends Controller
             ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
             ->where('type_id' ,$id)
             ->where('ct.local', '=', 'en')
+            ->orderBy('c.order_seq','asc')
             ->select('c.*' ,'ct.*')
             ->get();
         }else{
@@ -32,6 +33,7 @@ class ContinentsController extends Controller
             ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
             ->where('type_id' ,$id)
             ->where('ct.local',$userdata->lang)
+            ->orderBy('c.order_seq','asc')
             ->select('c.*' ,'ct.*')
             ->get();
         }
@@ -248,6 +250,18 @@ class ContinentsController extends Controller
         DB::table('continents_translations')->where('cont_id', '=', $id)->delete();
     
         return back()->with('flash_message', 'Delete Data successfully');
+    }
+
+    public function update_order_Continent(Request $request){
+        $HomeIds = array_filter(explode(",", $request->home_id));
+        $HomeOrders = array_filter(explode(",", $request->home_order));
+        foreach ($HomeIds as $HomeId => $value){
+             DB::table('continents')->where('id', '=', $value)->update(['order_seq'=>$HomeOrders[$HomeId]]);
+        }
+        return response()->json([
+            'order' => $request->home_order
+        ],200);
+        
     }
 
 }

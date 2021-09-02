@@ -1954,6 +1954,7 @@ class FrontendController extends Controller
         ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
         ->where('type_id' ,1)
         ->where('ct.local', '=', $lang)
+        ->orderBy('c.order_seq','asc')
         ->select('c.*' ,'ct.*')
         ->get();
 
