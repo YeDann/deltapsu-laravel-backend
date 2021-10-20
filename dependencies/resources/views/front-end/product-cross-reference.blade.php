@@ -37,7 +37,7 @@
     <div class="container">
         <h2 class="text-title-delta visible-up-922">{{$staticContent['Product_Cross_Reference']}}</h2>
         <h3 class="text-title-delta invisible-up-922">{{$staticContent['Product_Cross_Reference']}}</h3>
-        <p class="text-center mb-5" >{{$staticContent['Product_Cross_Reference_des']}}</p>
+
         <div class="content-seles-kit">
             {{-- <div class="resources-download ">
                 <div class="detail-download ">
