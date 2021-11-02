@@ -524,7 +524,7 @@ class NewsController extends Controller
         ->where('content_id' ,$id)
         ->select('ct.file')
         ->get();
-        return dd($id, $con_trans);
+      
          if(isset($con_trans[0]->file) && count($con_trans) > 0){
           DB::table('contents_translations')->where('content_id',$id)->update(
             [
