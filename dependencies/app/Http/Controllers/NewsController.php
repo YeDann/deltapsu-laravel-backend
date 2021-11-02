@@ -543,7 +543,7 @@ class NewsController extends Controller
            }
            return back()->with('flash_message', 'Delete File successfully');
      }else{
-           return back()->with('flash_message_error', 'Can Not Detete File');
+           return back()->with('error_message', 'Can Not Detete File');
      }
 
    }

@@ -13,6 +13,18 @@
 </style>
 @endsection
 @section('content')
+@if(Session::has('flash_message'))
+    <div class="alert alert-success" role="alert">
+        <button class="close" data-dismiss="alert"></button>
+        {!! Session('flash_message') !!}
+    </div>
+    @endif
+    @if(Session::has('error_message'))
+    <div class="alert alert-danger" role="alert">
+        <button class="close" data-dismiss="alert"></button>
+        {!! Session('error_message') !!}
+    </div>
+    @endif
 <!-- Nav -->
 <div class="bg-body-light">
     <div class="content content-full">
