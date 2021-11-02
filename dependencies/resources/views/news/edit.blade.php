@@ -91,7 +91,7 @@
                                     <a target="_blank" href="{{config('app.url')}}/uploads_delta/{{isset($current->file) ? $current->file :''}}">{{isset($current->file) ? $current->file :''}}</a>
                                        <input type="hidden" name="oldFile[{{$item->name}}]" value="{{isset($current->file) ? $current->file :''}}" >
                                        @if(isset($current->file))
-                                                    <a href="{{route('removeFileNewsDoc',[$item->name,$item->id])}}" target="_blank" class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
+                                                    <a href="{{route('removeFileNewsDoc',[$item->name,$contents[0]->id])}}" target="_blank" class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
                                                         @endif
                                 </div>
                                 <div class="form-group w-50">
