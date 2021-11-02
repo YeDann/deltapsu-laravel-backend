@@ -519,4 +519,32 @@ class NewsController extends Controller
 
         return redirect()->route('news.index')->with('flash_message', 'Copy Data successfully');
     }
+   Public function removeFileNewsDoc($name , $id){
+        $con_trans = DB::table('contents_translations as ct')
+        ->where('content_id' ,$id)
+        ->select('ct.file')
+        ->get();
+        return dd($id);
+         if(isset($con_trans[0]->file) && count($con_trans) > 0){
+          DB::table('contents_translations')->where('content_id',$id)->update(
+            [
+                'file' => '',
+            ]
+           );
+
+           foreach($con_trans  as $cot){
+            if($cot->file != null && $cot->file != '' ){
+               $file_pointer = base_path('/../uploads_delta').$cot->file;
+               if (file_exists($file_pointer) && isset($cot->file)) {
+                   unlink($file_pointer);
+               }
+        
+            }
+           }
+           return back()->with('flash_message', 'Delete File successfully');
+     }else{
+           return back()->with('flash_message_error', 'Can Not Detete File');
+     }
+
+   }
 }

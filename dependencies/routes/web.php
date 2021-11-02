@@ -275,7 +275,7 @@ Route::post('deleteNews','NewsController@deleteNews')->name('deleteNews');
 Route::get('destroyNews/{id?}','NewsController@destroy')->name('destroyNews');
 Route::post('copyNewssingle','NewsController@copyNewssingle')->name('copyNewssingle');
 Route::post('copyNews','NewsController@copyNews')->name('copyNews');
-
+Route::get('removefileDocNews/{name?}/{id?}','NewsController@removeFileNewsDoc')->name('removeFileNewsDoc');
 //Event
 Route::resource('event','EventController');
 Route::post('eventUpdate','EventController@update')->name('eventUpdate');
