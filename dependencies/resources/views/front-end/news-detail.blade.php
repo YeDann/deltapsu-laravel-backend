@@ -118,7 +118,7 @@
                 @endif      
             </div>
              <div class="">
-            @if(isset($contents[0]->file))
+            @if(isset($contents[0]->file) &&  $contents[0]->file != '')
              <a target="_blank" href="{{config('app.url')}}/uploads_delta/{{$contents[0]->file}}">
                   <button class="btn btn-subscribe">Download PDF</button>
                 </a>
