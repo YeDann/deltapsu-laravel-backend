@@ -23,6 +23,7 @@ class NewstypeController extends Controller
         ->join('news_type_translation as ntt' ,'ntt.fk_nt_id' ,'=','nt.id')
         ->select('ntt.*' ,'nt.*')
         ->where('ntt.local','en')
+        ->orderBy('nt.order_seq','asc')
         ->get();
         // return dd($contents);
 
