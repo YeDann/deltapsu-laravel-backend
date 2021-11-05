@@ -83,7 +83,10 @@
                                 </div>
                                 @endforeach
                             </div>
-                       
+                            <div class="form-group">
+                            <label for="example-select">Order_Seq</label>
+                            <input type="text" class="form-control" name="order_seq" value="{{$contents[0]->order_seq}}" placeholder="Number" >
+                             </div>
                         <div class="form-group">
                             <button class="btn btn-success" type="submit" >Update</button>
                             <a href="{{route('newstype.index')}}"  class="btn btn-secondary">

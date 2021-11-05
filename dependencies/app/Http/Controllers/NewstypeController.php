@@ -141,6 +141,7 @@ class NewstypeController extends Controller
             // return dd($name);
             DB::table('news_type')->where('id','=',$request->type_id)->update(array(
                 "color_type" =>$request->color_type,
+                "order_seq" =>$request->order_seq,
                 "updated_at" => \Carbon\Carbon::now()
             ));
             foreach($langloop as $lang){
