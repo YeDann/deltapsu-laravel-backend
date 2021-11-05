@@ -356,6 +356,7 @@ class FrontendController extends Controller
             ->join('news_type_translation as ntt' ,'ntt.fk_nt_id' ,'=','nt.id')
             ->select('nt.*','ntt.title as typename')
             ->where('ntt.local',$lang)
+            ->orderBy('nt.order_seq','asc')
             ->get();
          
             $news = DB::table('product_news_has_categories as pnc')
