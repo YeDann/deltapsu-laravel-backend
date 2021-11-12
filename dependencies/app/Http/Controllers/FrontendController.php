@@ -372,11 +372,33 @@ class FrontendController extends Controller
             ->orderBy('c.date_publish', 'desc')
             ->distinct()
             ->get();
+            
+            $status = false;
+            $currentdate = date('Y-m-d');
+            if(count($news) > 0){
+                if($news[0]->typeId == 12){
+                    $date1 = $currentdate;
+                    $date2 = $news[0]->date_publish;
+    
+                    $diff = abs(strtotime($date2) - strtotime($date1));
+    
+                    $years = floor($diff / (365*60*60*24));
+                    $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+                    $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+                    
+                    if($days > 0 && $days <= 30){
+                        $status = true;
+                    }
+                }
+                
+            }
+            // return dd($status,$days,$news[0]);
 
             $metatag = DB::table('meta_tag_page as mtp')->where('id',6)->get();
             return  view('front-end.new')
             ->with('metatag' ,$metatag)
             ->with('news_type' ,$news_type)
+            ->with('status_eol' ,$status)
             ->with('news' ,$news);
         }
         if($page == 'login'){

@@ -24,6 +24,16 @@
     #select-news{
         text-transform: capitalize;
     }
+    .bg-new-alert{
+        background-color: green;
+        padding: 4px 8px;
+        border-radius: 50%;
+        color: #fff;
+        margin-top: -25px;
+        margin-left: 20px;
+        position: absolute;
+        display: block;
+    }
 </style>
 @endsection
 @section('meta')
@@ -73,7 +83,9 @@
                             role="tab" aria-controls="pop0" aria-selected="true" data-val="0">{{$staticContent['All']}}</a>
                         @foreach ($news_type as $type)
                         <a class="nav-item nav-link font-size-tab " onclick="clicktab({{$type->id}});" id="pop{{$type->id}}-tab" data-toggle="tab" href="#pop{{$type->id}}"
-                        role="tab" aria-controls="pop{{$type->id}}"  aria-selected="true" data-val="0">{{$type->typename}}</a>  
+                        role="tab" aria-controls="pop{{$type->id}}"  aria-selected="true" data-val="0">{{$type->typename}}
+                        @if($type->typename == 'EOL' && $status_eol)<div class="bg-new-alert">N</div>@endif
+                    </a>  
                         @endforeach
 
                 </div>
