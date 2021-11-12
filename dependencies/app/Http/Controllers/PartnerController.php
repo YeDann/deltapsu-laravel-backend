@@ -30,19 +30,6 @@ class PartnerController extends Controller
         $users = DB::table('partner')
             ->select('partner.*')
             ->get();
-
-        $olduser =  DB::table('old_users')
-        ->select('old_users.*')
-        ->get();
-        // return dd($olduser);
-        // foreach($olduser as $user){
-        //     DB::table('partner')->where('old_user_id', $user->id)->update([
-        //             'country' => $user->country,
-        //     ]);
-        // }
-    //    return dd('ok');
-     
-       
         $language = DB::table('language')->get();
 
         return view('user.partner')

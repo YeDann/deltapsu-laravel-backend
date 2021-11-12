@@ -41,80 +41,80 @@ class TechnicalController extends Controller
             ->with('language', $language)
             ->with('contents',$contents);
     }
-    public function ImportArticle($type){
-        $contents = DB::table('old_contents')
-        ->where('type', '=', $type)
-        ->orderBy('translate_id', 'asc')
-        ->orderBy('id', 'asc')
-        ->get();
+    // public function ImportArticle($type){
+    //     $contents = DB::table('old_contents')
+    //     ->where('type', '=', $type)
+    //     ->orderBy('translate_id', 'asc')
+    //     ->orderBy('id', 'asc')
+    //     ->get();
           
-        $Translation = [];
-        $newId  = [];
-        $checkcate = [];
-        foreach($contents as $data){
-            if(!in_array($data->translate_id, $Translation)){
-                $newId  = [];
-                   array_push($Translation ,$data->translate_id);
-                 $id = DB::table('contents')->insertGetID(
-                        [
-                            "content_type" => "blog",
-                            "thumb" => $data->thumb,
-                            "created_at" => $data->created_at,
-                            "updated_at" => $data->updated_at,
-                            "date_publish" => $data->ext_2,
-                            "date_info" => $data->ext_2,
-                            "date_end" => $data->ext_4,
-                            "slug" => preg_replace('/[^A-Za-z0-9\-]/', '', $data->slug),
-                            "status" => $data->status,
-                        ]
-                    );
-                    array_push($newId ,$id);
-                    $cate_id = DB::table('contents_cat4s')
-                    ->where('contents_id', '=',$data->id)
-                    ->select('categorys_id')
-                    ->get();
+    //     $Translation = [];
+    //     $newId  = [];
+    //     $checkcate = [];
+    //     foreach($contents as $data){
+    //         if(!in_array($data->translate_id, $Translation)){
+    //             $newId  = [];
+    //                array_push($Translation ,$data->translate_id);
+    //              $id = DB::table('contents')->insertGetID(
+    //                     [
+    //                         "content_type" => "blog",
+    //                         "thumb" => $data->thumb,
+    //                         "created_at" => $data->created_at,
+    //                         "updated_at" => $data->updated_at,
+    //                         "date_publish" => $data->ext_2,
+    //                         "date_info" => $data->ext_2,
+    //                         "date_end" => $data->ext_4,
+    //                         "slug" => preg_replace('/[^A-Za-z0-9\-]/', '', $data->slug),
+    //                         "status" => $data->status,
+    //                     ]
+    //                 );
+    //                 array_push($newId ,$id);
+    //                 $cate_id = DB::table('contents_cat4s')
+    //                 ->where('contents_id', '=',$data->id)
+    //                 ->select('categorys_id')
+    //                 ->get();
                 
-                    array_push($checkcate ,$data->id ,count($cate_id));
-                  if(count($cate_id) != 0){
-                    $catenew_id;
-                    if($cate_id[0]->categorys_id == 679){
-                        $catenew_id = 1;
-                    }else if($cate_id[0]->categorys_id == 686){
-                        $catenew_id = 2;
-                    }else if($cate_id[0]->categorys_id == 688){
-                        $catenew_id = 3;
-                    }else if($cate_id[0]->categorys_id == 690){
-                        $catenew_id = 4;
-                    }else if($cate_id[0]->categorys_id == 746){
-                        $catenew_id = 5;
-                    }
+    //                 array_push($checkcate ,$data->id ,count($cate_id));
+    //               if(count($cate_id) != 0){
+    //                 $catenew_id;
+    //                 if($cate_id[0]->categorys_id == 679){
+    //                     $catenew_id = 1;
+    //                 }else if($cate_id[0]->categorys_id == 686){
+    //                     $catenew_id = 2;
+    //                 }else if($cate_id[0]->categorys_id == 688){
+    //                     $catenew_id = 3;
+    //                 }else if($cate_id[0]->categorys_id == 690){
+    //                     $catenew_id = 4;
+    //                 }else if($cate_id[0]->categorys_id == 746){
+    //                     $catenew_id = 5;
+    //                 }
 
-                    DB::table('article_has_categories')->insert(
-                        [
-                            "content_id" => $newId[0],
-                            "categories_id" => $catenew_id,
-                        ]
-                    );
-                  }
-             }
+    //                 DB::table('article_has_categories')->insert(
+    //                     [
+    //                         "content_id" => $newId[0],
+    //                         "categories_id" => $catenew_id,
+    //                     ]
+    //                 );
+    //               }
+    //          }
 
-             DB::table('contents_translations')->insert(
-                [
-                    "content_id" =>$newId[0],
-                    "title" => $data->title,
-                    "content" => $data->content,
-                    "description" => $data->description,
-                    "meta_title" => $data->meta_title,
-                    "meta_description" =>$data->meta_description,
-                    "meta_keywords" =>$data->meta_keywords,
-                    'file' => $data->ext_10,
-                    "local"=>$data->language,
-                ]
-            );
+    //          DB::table('contents_translations')->insert(
+    //             [
+    //                 "content_id" =>$newId[0],
+    //                 "title" => $data->title,
+    //                 "content" => $data->content,
+    //                 "description" => $data->description,
+    //                 "meta_title" => $data->meta_title,
+    //                 "meta_description" =>$data->meta_description,
+    //                 "meta_keywords" =>$data->meta_keywords,
+    //                 'file' => $data->ext_10,
+    //                 "local"=>$data->language,
+    //             ]
+    //         );
 
-        }
-        return redirect()->route('technical.index')->with('flash_message', 'Insert Data successfully');
-    }
+    //     }
+    //     return redirect()->route('technical.index')->with('flash_message', 'Insert Data successfully');
+    // }
 
     /**
      * Show the form for creating a new resource.

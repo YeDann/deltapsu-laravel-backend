@@ -42,9 +42,7 @@
             <h3 class="block-title">
               
             </h3>
-            {{-- <a class="mr-2" href="{{route('getAllProducts')}}">
-                <button type="button" class="btn btn-success">Get Products</button>
-            </a> --}}
+           
             {{-- <a class="mr-2" href="{{route('getfeatureProduct')}}">
                     <button type="button" class="btn btn-success">Get featureProduct </button>
                 </a>
@@ -52,9 +50,9 @@
             <a class="mr-2" href="{{route('getCreateDataFilter')}}">
                 <button type="button" class="btn btn-success">Set Default filter</button>
             </a>
-            <a class="mr-2" href="{{route('getAllSeries')}}">
+            <!-- <a class="mr-2" href="{{route('getAllSeries')}}">
                     <button type="button" class="btn btn-success">Get Series</button>
-                </a>
+                </a> -->
              
                     <a class="mr-2" href="{{route('getProductFildData')}}">
                         <button type="button" class="btn btn-success">Get ProductFild</button>

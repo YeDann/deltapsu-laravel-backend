@@ -287,244 +287,244 @@ class GetDataController extends Controller
 
     }
 
-    public function getAllProduct(){
+    // public function getAllProduct(){
 
-        $series =  DB::table('series_has_pro_categories as sc')
-        ->join('series as s' ,'sc.se_id' ,'=' ,'s.se_id')
-        ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
-        ->where('s.old_id',790)
-        ->where('st.local' ,'en')
-        ->select('s.*' ,'st.*' ,'sc.pro_categories_id')
-        ->get();
+    //     $series =  DB::table('series_has_pro_categories as sc')
+    //     ->join('series as s' ,'sc.se_id' ,'=' ,'s.se_id')
+    //     ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
+    //     ->where('s.old_id',790)
+    //     ->where('st.local' ,'en')
+    //     ->select('s.*' ,'st.*' ,'sc.pro_categories_id')
+    //     ->get();
         
-        // return  dd($series);
+    //     // return  dd($series);
 
-        $productall = DB::table('old_products as p')
-        ->where('p.language' ,'en')
-        ->select('p.*')
-        ->OrderBy('p.time_create','asc')
-        ->get();
-        $language = DB::table('language')->get();
-        $arrdatapro  = [];
-        $seriesarr  = [];
-        $productId  = [];
-        foreach($productall as $pro){
+    //     $productall = DB::table('old_products as p')
+    //     ->where('p.language' ,'en')
+    //     ->select('p.*')
+    //     ->OrderBy('p.time_create','asc')
+    //     ->get();
+    //     $language = DB::table('language')->get();
+    //     $arrdatapro  = [];
+    //     $seriesarr  = [];
+    //     $productId  = [];
+    //     foreach($productall as $pro){
 
-            $series =  DB::table('series_has_pro_categories as sc')
-            ->join('series as s' ,'sc.se_id' ,'=' ,'s.se_id')
-            ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
-            ->where('s.old_id',$pro->serie)
-            ->where('st.local' ,'en')
-            ->select('s.*' ,'st.*' ,'sc.pro_categories_id')
-            ->get();    
+    //         $series =  DB::table('series_has_pro_categories as sc')
+    //         ->join('series as s' ,'sc.se_id' ,'=' ,'s.se_id')
+    //         ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
+    //         ->where('s.old_id',$pro->serie)
+    //         ->where('st.local' ,'en')
+    //         ->select('s.*' ,'st.*' ,'sc.pro_categories_id')
+    //         ->get();    
 
-            if(count($series) == 0){
-               array_push($arrdatapro ,$pro->product_code);
-               array_push($seriesarr ,$pro->serie);
-               array_push($productId ,$pro->id);
-            }
-                $filename = substr($pro->picture_1, 22);
-                $id = DB::table('products')->insertGetID(
-                    [
-                        'picture' =>$filename,
-                        'pro_code'=>$pro->product_code,
-                        'old_id'=>$pro->id,
-                        'series_id'=> isset($series[0]->se_id) ? $series[0]->se_id:null,
-                        'status_product'=>1,
-                        'dimensionL'=>$pro->dimensions,
-                        'dimensionW'=>$pro->dimen_w,
-                        'dimensionD'=>$pro->dimen_d,
-                        'unit_weight'=>$pro->weight,
-                        "created_at" => $pro->time_create,
-                        "updated_at" =>$pro->time_update,
-                    ]
-                );
-                    foreach($language as $lang){
-                        if($lang == 'cn'){
-                            $traslatePro = DB::table('old_products as p')
-                            ->where('p.language' ,'cn')
-                            ->where('translate_id',$pro->id)
-                            ->select('p.*')
-                            ->get();
-                            $products_translation = DB::table('products_translation')->insert(
-                                [
-                                    "product_id" => $id,
-                                    "content_1" => $traslatePro[0]->description,
-                                    "showstatus"=>$pro->status,
-                                    "local" => $lang->name,
-                                ]
-                            );
-                        }else{
-                            $products_translation = DB::table('products_translation')->insert(
-                                [
-                                    "product_id" => $id,
-                                    "content_1" => $pro->description,
-                                    "showstatus"=>$pro->status,
-                                    "local" => $lang->name,
-                                ]
-                            );
-                        }
-                    }
+    //         if(count($series) == 0){
+    //            array_push($arrdatapro ,$pro->product_code);
+    //            array_push($seriesarr ,$pro->serie);
+    //            array_push($productId ,$pro->id);
+    //         }
+    //             $filename = substr($pro->picture_1, 22);
+    //             $id = DB::table('products')->insertGetID(
+    //                 [
+    //                     'picture' =>$filename,
+    //                     'pro_code'=>$pro->product_code,
+    //                     'old_id'=>$pro->id,
+    //                     'series_id'=> isset($series[0]->se_id) ? $series[0]->se_id:null,
+    //                     'status_product'=>1,
+    //                     'dimensionL'=>$pro->dimensions,
+    //                     'dimensionW'=>$pro->dimen_w,
+    //                     'dimensionD'=>$pro->dimen_d,
+    //                     'unit_weight'=>$pro->weight,
+    //                     "created_at" => $pro->time_create,
+    //                     "updated_at" =>$pro->time_update,
+    //                 ]
+    //             );
+    //                 foreach($language as $lang){
+    //                     if($lang == 'cn'){
+    //                         $traslatePro = DB::table('old_products as p')
+    //                         ->where('p.language' ,'cn')
+    //                         ->where('translate_id',$pro->id)
+    //                         ->select('p.*')
+    //                         ->get();
+    //                         $products_translation = DB::table('products_translation')->insert(
+    //                             [
+    //                                 "product_id" => $id,
+    //                                 "content_1" => $traslatePro[0]->description,
+    //                                 "showstatus"=>$pro->status,
+    //                                 "local" => $lang->name,
+    //                             ]
+    //                         );
+    //                     }else{
+    //                         $products_translation = DB::table('products_translation')->insert(
+    //                             [
+    //                                 "product_id" => $id,
+    //                                 "content_1" => $pro->description,
+    //                                 "showstatus"=>$pro->status,
+    //                                 "local" => $lang->name,
+    //                             ]
+    //                         );
+    //                     }
+    //                 }
     
-                $data_filds =  DB::table('product_datas as pd')
-                ->where('pd.product_id',$pro->id)
-                ->select('*')
-                ->get();
+    //             $data_filds =  DB::table('product_datas as pd')
+    //             ->where('pd.product_id',$pro->id)
+    //             ->select('*')
+    //             ->get();
                    
-                foreach($data_filds as $data){
-                        $pd_field = DB::table('product_field as pf')
-                        ->where('pf.old_id', '=', $data->product_field_id)
-                        ->select('pf.*')
-                        ->get();
-                    if(count($pd_field) != 0){
-                        if($data->product_field_type != null){
-                        if($data->product_field_type == 't'){
-                            $pro_id_perty = DB::table('product_has_property')->insertGetID(
-                                [
-                                    'product_id'=>$id,
-                                    'type_id'=> $pd_field[0]->id,
-                                    'type_value'=>'text',
-                                    'type_data'=> $data->product_field_type,
-                                ]
-                            );
-                            foreach($language as $lang){
-                                if($lang == 'cn'){
-                                    $products_translation = DB::table('product_has_property_translation')->insert(
-                                        [
-                                            "per_fk_id" => $pro_id_perty,
-                                            "value_text" => $data->data_text_cn,
-                                            "product_id" => $id,
-                                            "local" => $lang,
-                                        ]
-                                    );
-                                }else{
-                                    $products_translation = DB::table('product_has_property_translation')->insert(
-                                        [
-                                            "per_fk_id" => $pro_id_perty,
-                                            "value_text" => $data->data_text,
-                                            "product_id" => $id,
-                                            "local" => $lang->name,
-                                        ]
-                                    );
-                                }
-                            }
+    //             foreach($data_filds as $data){
+    //                     $pd_field = DB::table('product_field as pf')
+    //                     ->where('pf.old_id', '=', $data->product_field_id)
+    //                     ->select('pf.*')
+    //                     ->get();
+    //                 if(count($pd_field) != 0){
+    //                     if($data->product_field_type != null){
+    //                     if($data->product_field_type == 't'){
+    //                         $pro_id_perty = DB::table('product_has_property')->insertGetID(
+    //                             [
+    //                                 'product_id'=>$id,
+    //                                 'type_id'=> $pd_field[0]->id,
+    //                                 'type_value'=>'text',
+    //                                 'type_data'=> $data->product_field_type,
+    //                             ]
+    //                         );
+    //                         foreach($language as $lang){
+    //                             if($lang == 'cn'){
+    //                                 $products_translation = DB::table('product_has_property_translation')->insert(
+    //                                     [
+    //                                         "per_fk_id" => $pro_id_perty,
+    //                                         "value_text" => $data->data_text_cn,
+    //                                         "product_id" => $id,
+    //                                         "local" => $lang,
+    //                                     ]
+    //                                 );
+    //                             }else{
+    //                                 $products_translation = DB::table('product_has_property_translation')->insert(
+    //                                     [
+    //                                         "per_fk_id" => $pro_id_perty,
+    //                                         "value_text" => $data->data_text,
+    //                                         "product_id" => $id,
+    //                                         "local" => $lang->name,
+    //                                     ]
+    //                                 );
+    //                             }
+    //                         }
                        
-                          }else{
-                                $status = 1;
-                              if($data->product_field_type == 'r'){
-                                $status = 3;
-                              }else if($data->product_field_type == 'm'){
-                                $status = 2;
-                              }else if($data->product_field_type == 's'){
-                                $status = 1;
-                              }
-                              $pro_id_perty = DB::table('product_has_property')->insertGetID(
-                                [
-                                    'product_id'=>$id,
-                                    'type_id'=> $pd_field[0]->id,
-                                    'type_value'=>'number',
-                                    'type_data'=> $data->product_field_type,
-                                    'status_input'=>$status,
-                                    'data_1'=>$data->data_1,
-                                    'data_2'=>$data->data_2,
-                                    'data_3'=>$data->data_3,
-                                    'data_4'=>$data->data_4,
-                                    'data_5'=>$data->data_5,
-                                ]
-                            );
-                                 foreach($language as $lang){
-                                    $products_translation = DB::table('product_has_property_translation')->insert(
-                                        [
-                                            "per_fk_id" => $pro_id_perty,
-                                            "value_text" => $data->data_text,
-                                            "product_id" => $id,
-                                            "local" => $lang->name,
-                                        ]
-                                    );
-                                 }
-                            }
-                        }
-                    }
-                 }
+    //                       }else{
+    //                             $status = 1;
+    //                           if($data->product_field_type == 'r'){
+    //                             $status = 3;
+    //                           }else if($data->product_field_type == 'm'){
+    //                             $status = 2;
+    //                           }else if($data->product_field_type == 's'){
+    //                             $status = 1;
+    //                           }
+    //                           $pro_id_perty = DB::table('product_has_property')->insertGetID(
+    //                             [
+    //                                 'product_id'=>$id,
+    //                                 'type_id'=> $pd_field[0]->id,
+    //                                 'type_value'=>'number',
+    //                                 'type_data'=> $data->product_field_type,
+    //                                 'status_input'=>$status,
+    //                                 'data_1'=>$data->data_1,
+    //                                 'data_2'=>$data->data_2,
+    //                                 'data_3'=>$data->data_3,
+    //                                 'data_4'=>$data->data_4,
+    //                                 'data_5'=>$data->data_5,
+    //                             ]
+    //                         );
+    //                              foreach($language as $lang){
+    //                                 $products_translation = DB::table('product_has_property_translation')->insert(
+    //                                     [
+    //                                         "per_fk_id" => $pro_id_perty,
+    //                                         "value_text" => $data->data_text,
+    //                                         "product_id" => $id,
+    //                                         "local" => $lang->name,
+    //                                     ]
+    //                                 );
+    //                              }
+    //                         }
+    //                     }
+    //                 }
+    //              }
 
             
       
            
-        }
-        return dd($arrdatapro ,$seriesarr ,$productId);
+    //     }
+    //     return dd($arrdatapro ,$seriesarr ,$productId);
 
-        return back()->with('flash_message', 'Get Data successfully');
+    //     return back()->with('flash_message', 'Get Data successfully');
        
-    }
+    // }
   
-    public function getAllSeries()
-    {
-        // return dd('Empty series , series_translations ?');
-        $arr  = [];
+    // public function getAllSeries()
+    // {
+    //     // return dd('Empty series , series_translations ?');
+    //     $arr  = [];
 
-        $series =  DB::table('series as s')
-        ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
-        ->where('st.local' ,'en')
-        ->select('s.*' ,'st.*')
-        ->distinct()
-        ->get();
+    //     $series =  DB::table('series as s')
+    //     ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
+    //     ->where('st.local' ,'en')
+    //     ->select('s.*' ,'st.*')
+    //     ->distinct()
+    //     ->get();
         
-        foreach($series as $se){
-            $categorys = DB::table('categorys as c')
-            ->where('c.language' ,'en')
-            ->where('c.type' ,'cat2')
-            ->where('c.id',$se->old_id)
-            ->select('c.*')
-            ->get();
-            if(count($categorys) == 0){
-                array_push($arr ,$se->title);
-            }
+    //     foreach($series as $se){
+    //         $categorys = DB::table('categorys as c')
+    //         ->where('c.language' ,'en')
+    //         ->where('c.type' ,'cat2')
+    //         ->where('c.id',$se->old_id)
+    //         ->select('c.*')
+    //         ->get();
+    //         if(count($categorys) == 0){
+    //             array_push($arr ,$se->title);
+    //         }
             
-        }
-        return dd($arr);
+    //     }
+    //     return dd($arr);
         
-        $language = DB::table('language')->get();
+    //     $language = DB::table('language')->get();
 
-        foreach($categorys as $cate){
+    //     foreach($categorys as $cate){
 
-            $id = DB::table('series')->insertGetID(
-                [
-                    'status'=>$cate->status,
-                    'old_id'=>$cate->id,
-                    "created_at" => \Carbon\Carbon::now(),
-                    "updated_at" => \Carbon\Carbon::now(),
-                ]
-            );
+    //         $id = DB::table('series')->insertGetID(
+    //             [
+    //                 'status'=>$cate->status,
+    //                 'old_id'=>$cate->id,
+    //                 "created_at" => \Carbon\Carbon::now(),
+    //                 "updated_at" => \Carbon\Carbon::now(),
+    //             ]
+    //         );
 
-            foreach($language as $lang){
-                DB::table('series_translations')->insert(
-                     [
-                         "series_id" => $id,
-                         "title" => $cate->title,
-                         "overview_content" => $cate->content,
-                         "local" => $lang->name,
-                     ]
-                 );
-             }
+    //         foreach($language as $lang){
+    //             DB::table('series_translations')->insert(
+    //                  [
+    //                      "series_id" => $id,
+    //                      "title" => $cate->title,
+    //                      "overview_content" => $cate->content,
+    //                      "local" => $lang->name,
+    //                  ]
+    //              );
+    //          }
             
-             $subCategories = DB::table('sub_pro_categories as sp')
-             ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
-             ->where('spt.local', '=', 'en')
-             ->select('sp.*', 'spt.*')
-             ->where('sp.old_id', '=', $cate->parent_id)
-             ->get();
+    //          $subCategories = DB::table('sub_pro_categories as sp')
+    //          ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
+    //          ->where('spt.local', '=', 'en')
+    //          ->select('sp.*', 'spt.*')
+    //          ->where('sp.old_id', '=', $cate->parent_id)
+    //          ->get();
 
-                 DB::table('series_has_pro_categories')->insert(
-                     [
-                         'se_id'=>$id,
-                         'pro_categories_id'=>$subCategories[0]->sub_pro_id,
-                     ]
-                 );
+    //              DB::table('series_has_pro_categories')->insert(
+    //                  [
+    //                      'se_id'=>$id,
+    //                      'pro_categories_id'=>$subCategories[0]->sub_pro_id,
+    //                  ]
+    //              );
             
-        }
+    //     }
 
-        return back()->with('flash_message', 'Get Data successfully');
-    }
+    //     return back()->with('flash_message', 'Get Data successfully');
+    // }
 
     public function getProductFildData(){
           return dd('Empty database product_field , product_field_translation ?');

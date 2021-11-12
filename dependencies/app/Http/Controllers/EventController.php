@@ -35,58 +35,58 @@ class EventController extends Controller
         ->with('language',$language)
         ->with('contents',$contents);
     }
-    public function ImportEvent($type){
+    // public function ImportEvent($type){
 
-        $contents = DB::table('old_contents')
-        ->where('type', '=', $type)
-        ->orderBy('translate_id', 'asc')
-        ->orderBy('id', 'asc')
-        ->get();
+    //     $contents = DB::table('old_contents')
+    //     ->where('type', '=', $type)
+    //     ->orderBy('translate_id', 'asc')
+    //     ->orderBy('id', 'asc')
+    //     ->get();
           
-        $Translation = [];
-        $newId  = [];
-        $checkcate = [];
-        foreach($contents as $data){
-            if(!in_array($data->translate_id, $Translation)){
-                $newId  = [];
-                   array_push($Translation ,$data->translate_id);
-                 $id = DB::table('contents')->insertGetID(
-                        [
-                            "content_type" => "event",
-                            "thumb" => $data->thumb,
-                            "created_at" => $data->created_at,
-                            "updated_at" => $data->updated_at,
-                            "date_publish" => $data->ext_2,
-                            "date_info" => $data->ext_2,
-                            "date_end" => $data->ext_4,
-                            "date_end" => $data->ext_4,
-                            "slug" => preg_replace('/[^A-Za-z0-9\-]/', '', $data->slug),
-                            "status" => $data->status,
-                        ]
-                    );
-                    array_push($newId ,$id);
+    //     $Translation = [];
+    //     $newId  = [];
+    //     $checkcate = [];
+    //     foreach($contents as $data){
+    //         if(!in_array($data->translate_id, $Translation)){
+    //             $newId  = [];
+    //                array_push($Translation ,$data->translate_id);
+    //              $id = DB::table('contents')->insertGetID(
+    //                     [
+    //                         "content_type" => "event",
+    //                         "thumb" => $data->thumb,
+    //                         "created_at" => $data->created_at,
+    //                         "updated_at" => $data->updated_at,
+    //                         "date_publish" => $data->ext_2,
+    //                         "date_info" => $data->ext_2,
+    //                         "date_end" => $data->ext_4,
+    //                         "date_end" => $data->ext_4,
+    //                         "slug" => preg_replace('/[^A-Za-z0-9\-]/', '', $data->slug),
+    //                         "status" => $data->status,
+    //                     ]
+    //                 );
+    //                 array_push($newId ,$id);
 
-             }
+    //          }
 
-             DB::table('contents_translations')->insert(
-                [
-                    "content_id" =>$newId[0],
-                    "title" => $data->title,
-                    "content" => $data->content,
-                    "description" => $data->description,
-                    "meta_title" => $data->meta_title,
-                    "meta_description" =>$data->meta_description,
-                    "meta_keywords" =>$data->meta_keywords,
-                    "location" =>$data->ext_3,
-                    'file' => $data->ext_10,
-                    "local"=>$data->language,
-                ]
-            );
+    //          DB::table('contents_translations')->insert(
+    //             [
+    //                 "content_id" =>$newId[0],
+    //                 "title" => $data->title,
+    //                 "content" => $data->content,
+    //                 "description" => $data->description,
+    //                 "meta_title" => $data->meta_title,
+    //                 "meta_description" =>$data->meta_description,
+    //                 "meta_keywords" =>$data->meta_keywords,
+    //                 "location" =>$data->ext_3,
+    //                 'file' => $data->ext_10,
+    //                 "local"=>$data->language,
+    //             ]
+    //         );
 
-        }
-        return redirect()->route('event.index')->with('flash_message', 'Insert Data successfully');
+    //     }
+    //     return redirect()->route('event.index')->with('flash_message', 'Insert Data successfully');
       
-    }
+    // }
 
     /**
      * Show the form for creating a new resource.

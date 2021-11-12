@@ -41,7 +41,7 @@
                 </div> --}}
                 <div class="block-options-item">
                     <a href="{{route('event.create')}}" class="btn btn-success"><i class="fa fa-plus"></i> Create </a>
-                    {{-- <a href="{{route('ImportEvent','event')}}" class="btn btn-info" > GET Data </a> --}}
+                   
                 </div>
             </div>
         </div>

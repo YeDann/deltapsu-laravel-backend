@@ -260,47 +260,47 @@ class ImportController extends Controller
       })->export('csv');
       }
     }
-    public function getExportOldProduct(){
+    // public function getExportOldProduct(){
 
-      $products = DB::table('old_products as op')
-      ->where('op.language' ,'en')
-      ->select('op.*')
-      ->get();
+    //   $products = DB::table('old_products as op')
+    //   ->where('op.language' ,'en')
+    //   ->select('op.*')
+    //   ->get();
 
-      $arrNotfound = [];
-      if(isset($products)){
+    //   $arrNotfound = [];
+    //   if(isset($products)){
  
-        Excel::create('products', function ($excel) use ($products ,$arrNotfound)  {
-          $excel->sheet('products', function ($sheet) use ($products,$arrNotfound) {
-            $arr1 = array("pro_code", "content_en", "content_cn","content_de", "content_ru" ,"content_tw" ); 
+    //     Excel::create('products', function ($excel) use ($products ,$arrNotfound)  {
+    //       $excel->sheet('products', function ($sheet) use ($products,$arrNotfound) {
+    //         $arr1 = array("pro_code", "content_en", "content_cn","content_de", "content_ru" ,"content_tw" ); 
 
-              $sheet->row(1,$arr1);
-              $i = 2;
-              foreach ($products as $pro) {
-                $arrcon1  =  [
-                  $pro->product_code,
-                ];
+    //           $sheet->row(1,$arr1);
+    //           $i = 2;
+    //           foreach ($products as $pro) {
+    //             $arrcon1  =  [
+    //               $pro->product_code,
+    //             ];
 
-                $arrcon2 = [];
+    //             $arrcon2 = [];
 
-                $trandata = DB::table('old_products as op')
-                ->where('op.translate_id',$pro->id)
-                ->select('op.*')
-                ->get();
+    //             $trandata = DB::table('old_products as op')
+    //             ->where('op.translate_id',$pro->id)
+    //             ->select('op.*')
+    //             ->get();
 
-                foreach($trandata as $tran){
-                 array_push($arrcon2,$tran->description);
-                }
+    //             foreach($trandata as $tran){
+    //              array_push($arrcon2,$tran->description);
+    //             }
                
-                $arrcon1 = array_merge($arrcon1, $arrcon2);  
-                      $sheet->row($i,$arrcon1);
-                      $i++;
-              }
-          });
-      })->export('csv');
-      }
+    //             $arrcon1 = array_merge($arrcon1, $arrcon2);  
+    //                   $sheet->row($i,$arrcon1);
+    //                   $i++;
+    //           }
+    //       });
+    //   })->export('csv');
+    //   }
         
-    }
+    // }
     public function getExcelProductCerti(){
        return view('product.importfileCerti')
        ->with('menu', "products")
@@ -446,93 +446,89 @@ public function importStatusProduct(Request $request){
 }
 
 
-public function importSuccessStory(Request $request){
+// public function importSuccessStory(Request $request){
   
-  if ($request->hasFile('file')) {
+//   if ($request->hasFile('file')) {
  
-    $extension = File::extension($request->file->getClientOriginalName());
-    if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
-        $path = $request->file->getRealPath();
-        $data = Excel::load($path, function ($reader) {})->get();
-    }
-    // return dd($data);
-       $arr_chek = [];
-       if(!empty($data) && $data->count()) {
-        foreach ($data as $key => $value) {
+//     $extension = File::extension($request->file->getClientOriginalName());
+//     if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
+//         $path = $request->file->getRealPath();
+//         $data = Excel::load($path, function ($reader) {})->get();
+//     }
+//     // return dd($data);
+//        $arr_chek = [];
+//        if(!empty($data) && $data->count()) {
+//         foreach ($data as $key => $value) {
 
-          $old_userfound = DB::table('old_users')
-          ->where('username', '=', trim($value->username))
-          ->get();
+//           $old_userfound = DB::table('old_users')
+//           ->where('username', '=', trim($value->username))
+//           ->get();
         
-          if(count($old_userfound) == 0){
-           array_push($value->username, $arr_chek);
-            }else{
-              if(trim($value->partner_role) == 'Distributor'){
-                $role = 1;
-              }else if(trim($value->partner_role) == 'FES'){
-                $role = 2;
-              }
-                DB::table('partner')->insert([
-                  'old_user_id' => $old_userfound[0]->id,
-                  'firstname' => $old_userfound[0]->first_name,
-                  'lastname' => $old_userfound[0]->last_name,
-                  'position' => $old_userfound[0]->position,
-                  'companyName' => $old_userfound[0]->company,
-                  'phone' => $old_userfound[0]->phone,
-                  'fax' => $old_userfound[0]->fax,
-                  'role' => $role,
-                  'email' => $old_userfound[0]->email,
-                  'password' => Hash::make(12345678),
-                  "created_at" => \Carbon\Carbon::now(),
-                  "updated_at" => \Carbon\Carbon::now(),
-              ]);
-            }
-         }
+//           if(count($old_userfound) == 0){
+//            array_push($value->username, $arr_chek);
+//             }else{
+//               if(trim($value->partner_role) == 'Distributor'){
+//                 $role = 1;
+//               }else if(trim($value->partner_role) == 'FES'){
+//                 $role = 2;
+//               }
+//                 DB::table('partner')->insert([
+//                   'old_user_id' => $old_userfound[0]->id,
+//                   'firstname' => $old_userfound[0]->first_name,
+//                   'lastname' => $old_userfound[0]->last_name,
+//                   'position' => $old_userfound[0]->position,
+//                   'companyName' => $old_userfound[0]->company,
+//                   'phone' => $old_userfound[0]->phone,
+//                   'fax' => $old_userfound[0]->fax,
+//                   'role' => $role,
+//                   'email' => $old_userfound[0]->email,
+//                   'password' => Hash::make(12345678),
+//                   "created_at" => \Carbon\Carbon::now(),
+//                   "updated_at" => \Carbon\Carbon::now(),
+//               ]);
+//             }
+//          }
 
        
-    }
-    return dd($arr_chek);
-    return redirect()->route('successStory')->with('flash_message', 'create data Successfully');
-  }
-  return redirect()->route('successStory')->with('error_message', 'No file');
+//     }
+//     return dd($arr_chek);
+//     return redirect()->route('successStory')->with('flash_message', 'create data Successfully');
+//   }
+//   return redirect()->route('successStory')->with('error_message', 'No file');
   
-}
+// }
 
-public function getImportpageSuc(){
-  return view('importExcel.importExelStory')
-       ->with('menu', "")
-       ->with('name', "");
-}
-public function getOldDataSuccess(){
-  $contents = DB::table('old_contents')
-  ->where('type', '=', 'success-story')
-  ->orderBy('translate_id', 'asc')
-  ->orderBy('id', 'asc')
-  ->where('language','en')
-  ->get();
 
-  // return dd($contents);
-  foreach($contents as $story){
-          $partner = DB::table('partner')
-          ->where('old_user_id',$story->user_id)
-          ->get();
+// public function getOldDataSuccess(){
+//   $contents = DB::table('old_contents')
+//   ->where('type', '=', 'success-story')
+//   ->orderBy('translate_id', 'asc')
+//   ->orderBy('id', 'asc')
+//   ->where('language','en')
+//   ->get();
 
-        DB::table('success_storys')->insert(
-          [
-              'modelname' =>  $story->description,
-              'application' => $story->title,
-              'endCustomer' => $story->ext_3,
-              'message' => $story->content,
-              'user_id'=> isset($partner[0]->id)?$partner[0]->id:0,
-              'country' => $story->ext_6,
-              'status' => 1,
-              "updated_at" => $story->updated_at,
-              "created_at" => $story->created_at,
-          ]
-      );
-  }
-  return redirect()->route('successStory')->with('flash_message', 'GET data Successfully');
-}
+//   // return dd($contents);
+//   foreach($contents as $story){
+//           $partner = DB::table('partner')
+//           ->where('old_user_id',$story->user_id)
+//           ->get();
+
+//         DB::table('success_storys')->insert(
+//           [
+//               'modelname' =>  $story->description,
+//               'application' => $story->title,
+//               'endCustomer' => $story->ext_3,
+//               'message' => $story->content,
+//               'user_id'=> isset($partner[0]->id)?$partner[0]->id:0,
+//               'country' => $story->ext_6,
+//               'status' => 1,
+//               "updated_at" => $story->updated_at,
+//               "created_at" => $story->created_at,
+//           ]
+//       );
+//   }
+//   return redirect()->route('successStory')->with('flash_message', 'GET data Successfully');
+// }
 public  function getpageSubscriber(){
 
   return view('importExcel.importExelSubscriber')

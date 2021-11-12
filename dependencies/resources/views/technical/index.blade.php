@@ -49,7 +49,7 @@
                 </div>
                 <div class="block-options-item">
                     <a href="{{route('technical.create')}}" class="btn btn-success">Create</a>
-                    {{-- <a href="{{route('ImportArticle','blog')}}" class="btn btn-info" > GET Data </a> --}}
+                   
                 </div>
             </div>
         </div>
