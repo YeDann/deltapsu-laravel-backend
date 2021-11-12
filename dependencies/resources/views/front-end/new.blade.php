@@ -25,14 +25,21 @@
         text-transform: capitalize;
     }
     .bg-new-alert{
-        background-color: green;
-        padding: 4px 8px;
+        background-color: #76B900;
+        /*padding: 4px 8px;*/
         border-radius: 50%;
         color: #fff;
-        margin-top: -25px;
-        margin-left: 20px;
+       /* margin-top: -25px;
+        margin-left: 20px;*/
+        right: -16px;
+        top: -16px;
         position: absolute;
         display: block;
+        width: 24px;
+        height: 24px;
+        text-align: center;
+        font-size: 12px;
+        padding-top: 2px;
     }
 </style>
 @endsection
@@ -81,11 +88,24 @@
                 <div class="nav nav-tabs d-flex justify-content-center border-b-2px visible-up-922 mb-5" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link font-size-tab active" onclick="clicktabFist(0);" id="pop0-tab" data-toggle="tab" href="#pop0"
                             role="tab" aria-controls="pop0" aria-selected="true" data-val="0">{{$staticContent['All']}}</a>
+
+                        @if(App::getLocale() == "jp")
+                        <style>
+                          /*For IE And Lang JP*/
+                          @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+                            .bg-new-alert{
+                              padding-top: 5px;
+                            }
+                          }
+                        </style>
+                        @endif
                         @foreach ($news_type as $type)
-                        <a class="nav-item nav-link font-size-tab " onclick="clicktab({{$type->id}});" id="pop{{$type->id}}-tab" data-toggle="tab" href="#pop{{$type->id}}"
+                        <a class="nav-item nav-link font-size-tab position-relative" onclick="clicktab({{$type->id}});" id="pop{{$type->id}}-tab" data-toggle="tab" href="#pop{{$type->id}}"
                         role="tab" aria-controls="pop{{$type->id}}"  aria-selected="true" data-val="0">{{$type->typename}}
-                        @if($type->typename == 'EOL' && $status_eol)<div class="bg-new-alert">N</div>@endif
-                    </a>  
+                        @if($type->typename == 'Lebensdauer' || $type->typename == 'EOL' || 
+                        $type->typename == "下架产品" || $type->typename == "停產產品"
+                        && $status_eol)<div class="bg-new-alert"><span>N</span></div>@endif
+                        </a>  
                         @endforeach
 
                 </div>
