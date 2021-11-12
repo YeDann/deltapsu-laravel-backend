@@ -153,9 +153,9 @@ Route::post('SaveImagePro','ProductVideoImageController@SaveImagePro')->name('Sa
 Route::post('getProImageContent','ProductVideoImageController@getProImageContent')->name('getProImageContent');
 Route::post('deleteVideImagePro','ProductVideoImageController@deleteVideImagePro')->name('deleteVideImagePro');
 
-Route::get('getAllProduct','GetDataController@getAllProduct')->name('getAllProducts');
+//Route::get('getAllProduct','GetDataController@getAllProduct')->name('getAllProducts');
 Route::get('getAllSubCategories','GetDataController@getAllSubCategories')->name('getAllSubCategories');
-Route::get('getAllSeries','GetDataController@getAllSeries')->name('getAllSeries');
+//Route::get('getAllSeries','GetDataController@getAllSeries')->name('getAllSeries');
 Route::get('getProductFildData','GetDataController@getProductFildData')->name('getProductFildData');
 Route::get('getfeatureProduct','GetDataController@getfeatureProduct')->name('getfeatureProduct');
 Route::get('getCreateDataFilter','GetDataController@getCreateDataFilter')->name('getCreateDataFilter');
@@ -316,8 +316,8 @@ Route::post('deleteImage','ApplicationView@deleteImage')->name('deleteImage');
 Route::post('uploadImagemultiple', 'ApplicationView@uploadImagemultiple')->name('uploadImagemultiple');
 
 Route::get('ImportNewsData/{type?}','NewsController@ImportNewsData')->name('ImportNewsData');
-Route::get('ImportEvent/{type?}','EventController@ImportEvent')->name('ImportEvent');
-Route::get('ImportArticle/{type?}','TechnicalController@ImportArticle')->name('ImportArticle');
+//Route::get('ImportEvent/{type?}','EventController@ImportEvent')->name('ImportEvent');
+//Route::get('ImportArticle/{type?}','TechnicalController@ImportArticle')->name('ImportArticle');
 Route::get('ImportOldProduct/{type?}','ProductsController@ImportOldProduct')->name('ImportOldProduct');
 
 Route::resource('FaqCategories', 'FaqCategoriesController');
@@ -436,12 +436,10 @@ Route::post('importStatusProduct','ImportController@importStatusProduct')->name(
 Route::get('getpageSubscriber','ImportController@getpageSubscriber')->name('getpageSubscriber');
 Route::post('importSubscriber','ImportController@importSubscriber')->name('importSubscriber');
 
-Route::get('getExportOldProduct','ImportController@getExportOldProduct')->name('getExportOldProduct');
-
-
-Route::get('getImportpageSuc','ImportController@getImportpageSuc')->name('getImportpageSuc');
-Route::post('importSuccessStory','ImportController@importSuccessStory')->name('importSuccessStory');
-Route::get('getOldDataSuccess','ImportController@getOldDataSuccess')->name('getOldDataSuccess');
+//Route::get('getExportOldProduct','ImportController@getExportOldProduct')->name('getExportOldProduct');
+ 
+//Route::post('importSuccessStory','ImportController@importSuccessStory')->name('importSuccessStory');
+//Route::get('getOldDataSuccess','ImportController@getOldDataSuccess')->name('getOldDataSuccess');
 
 
 Route::get('subscribers/index','SubscribeController@index')->name('subscribers_index');

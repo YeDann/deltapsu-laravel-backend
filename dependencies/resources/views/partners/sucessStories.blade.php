@@ -43,7 +43,7 @@
                 <div class="block-options-item">
                     {{-- <a href="{{route('partner_page_create')}}" class="btn btn-success">Create</a> --}}
                     
-                    {{-- <a href="{{route('getImportpageSuc')}}" class="btn btn-primary">Import Partner</a>
+                    {{-- 
                     <a href="{{route('getOldDataSuccess')}}" class="btn btn-primary">Get Success Story</a> --}}
                 </div>
             </div>
