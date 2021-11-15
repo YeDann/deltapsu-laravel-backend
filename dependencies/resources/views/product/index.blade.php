@@ -52,7 +52,6 @@
                        {{-- <a href="{{route('getExcelProTag')}}" class="btn btn-outline-primary">Import Product Tags</a> --}}
 
                     <a href="{{route('getExportProduct')}}" class="btn btn-outline-primary">Export Products</a>
-                    <!-- <a href="{{route('getExportOldProduct')}}" class="btn btn-outline-primary">Export Old Products</a> -->
                     
                 </div>
             </div>
