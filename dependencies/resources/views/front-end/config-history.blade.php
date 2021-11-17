@@ -64,6 +64,20 @@
     <div class="container">
         <h2 class="text-title-delta visible-up-922">{{$staticContent['Configurable_History']}} </h2>
         <h3 class="text-title-delta invisible-up-922">{{$staticContent['Configurable_History']}} </h3>
+        <div class="row mb-4">
+            <div class="col-lg-9 col-md-6"></div>
+            <div class="col-lg-3 col-md-6">
+                <div class="form-group">
+                    <select class="form-control" id="filterData" onchange="filterData(this.value)">
+                        <option value="">Default</option>
+                        <option value="desc">Newest - Oldest</option>
+                        <option value="asc">Oldest - Newest</option>
+<!--                         <option value="name_asc">Model Name A-Z</option>
+                        <option value="name_desc">Model Name Z-A</option> -->
+                    </select>
+                </div>
+            </div>
+        </div>
         @foreach ($con_his as $item)
         <div class="row mb-4 m-0 moreBox"  style="display: none;">
             <div class="col-md-3 p-0 bg-back"> 
@@ -201,7 +215,39 @@
       if ($(".moreBox:hidden").length == 0) {
         $("#loadMore").fadeOut('hide');
       }
-  }
-    
+    }
+
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+        return false;
+    };
+
+    var sortName = getUrlParameter('sort');
+
+    $(`#filterData option[value=${sortName}]`).attr("selected",true);
+
+    function filterData(order){
+
+        if(order == ""){
+            window.history.pushState("myhistory", "Title", `?reset=1`)
+            window.location.reload()
+        }else{
+            window.history.pushState("myhistory", "Title", `?sort=${order}`)
+            window.location.reload()
+        }
+
+    }
+        
 </script>
 @endsection

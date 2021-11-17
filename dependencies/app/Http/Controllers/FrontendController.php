@@ -2165,16 +2165,42 @@ class FrontendController extends Controller
         return  view('front-end.video-guideline')->with('static_content' ,$static_content);
     }
 
-    public function confighistory(){
+    public function confighistory(Request $request){
+
+        $params = $request->query->all();
         $lang = App::getLocale();
-        $con_his = DB::table('configuration_history as ch')
-        ->select('ch.*')
-        ->get();
+
+        $order = 'desc';
+
+        if(array_key_exists('sort',$params)){
+
+            if($params['sort'] == "asc" || $params['sort'] == 'desc'){
+                $order = $params['sort'];
+            }
+
+        }
+
+        if($order == "name_asc" || $order == "name_desc"){
+
+            $con_his = DB::table('configuration_history as ch')
+            ->select('ch.*')
+            ->orderBy('ch.customer_model',$order == "name_asc" ? 'asc':'desc')
+            ->get();
+        }else{
+            $con_his = DB::table('configuration_history as ch')
+            ->select('ch.*')
+            ->orderBy('ch.created_at',$order)
+            ->get();
+        }
+
         $sectionId = session('partner_id');
+
         if($sectionId == null){
             return redirect()->route('index','login');
         }
+
         $metatag = DB::table('meta_tag_page as mtp')->where('id',21)->get();
+
         return  view('front-end.config-history')->with('metatag' ,$metatag)->with('con_his' ,$con_his);
     }
     public function successStories(){
