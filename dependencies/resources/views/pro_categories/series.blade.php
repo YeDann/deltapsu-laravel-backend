@@ -54,7 +54,7 @@
                     <tr>
                         <th class="text-center" style="width: 5%;">No.</th>
                         <th class="d-none d-sm-table-cell" style="width: 20%;">Name</th>
-                        <th class="d-none d-sm-table-cell" style="width: 20%;">Slug Name</th>
+                        <th class="d-none d-sm-table-cell" style="width: 10%;">Slug Name</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Show/hide</th>
                         <th style="width: 10%;" class="text-center">Manage</th>
                     </tr>
