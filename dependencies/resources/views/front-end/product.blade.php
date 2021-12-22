@@ -265,7 +265,7 @@
                             <h1 class="text-title-banner">{{$subCate->name}}</h1>
                             <div class="text-p-banner my-2">{!!$subCate->content!!}</div>
                                 @if(isset($subCate->file))
-                                <a class="text-color-delta text-bold" href="{{config('app.url')}}/medias/categories/{{$subCate->file}}" download="{{$subCate->name}}_selection_guide"><img
+                                <a class="text-color-delta text-bold" href="{{config('app.url')}}/medias/categories/{{$subCate->file}}" target="_blank"><img
                                     class="align-baseline mr-2"  src="{{asset('frontend-asset/image/icon/download-icon.svg')}}" alt="">
                                      {{$staticContent['Download_selection_guide']}}
                                 </a>
