@@ -54,6 +54,7 @@
                     <tr>
                         <th class="text-center" style="width: 5%;">No.</th>
                         <th class="d-none d-sm-table-cell" style="width: 20%;">Name</th>
+                        <th class="d-none d-sm-table-cell" style="width: 20%;">Slug Name</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">Show/hide</th>
                         <th style="width: 10%;" class="text-center">Manage</th>
                     </tr>
@@ -63,6 +64,7 @@
                     @foreach ($series as $item)
                     <td class="text-center">{{$loop->iteration}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->title}}</td>
+                    <td class="d-none d-sm-table-cell">{{$item->slug}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->status == 1?'Show':'Hide'}}</td>
                     <td class="text-center">
                         <div class="">

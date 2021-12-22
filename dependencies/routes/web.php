@@ -439,7 +439,7 @@ Route::post('importSubscriber','ImportController@importSubscriber')->name('impor
 //Route::get('getExportOldProduct','ImportController@getExportOldProduct')->name('getExportOldProduct');
  
 //Route::post('importSuccessStory','ImportController@importSuccessStory')->name('importSuccessStory');
-//Route::get('getOldDataSuccess','ImportController@getOldDataSuccess')->name('getOldDataSuccess');
+Route::get('getExportProductProperty','ImportController@getExportProductProperty')->name('getExportProductProperty');
 
 
 Route::get('subscribers/index','SubscribeController@index')->name('subscribers_index');

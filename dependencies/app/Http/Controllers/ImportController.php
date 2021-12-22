@@ -260,6 +260,76 @@ class ImportController extends Controller
       })->export('csv');
       }
     }
+    public function getExportProductProperty(){
+
+      $product_fields = DB::table('product_field as pf')
+      ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
+      ->join('section as st', 'pf.section_id', '=', 'st.id')
+      ->join('section_translation as stt', 'st.id', '=', 'stt.section_id')
+      ->where('pft.local', '=', 'en')
+      ->where('stt.local', '=', 'en')
+      ->select('pf.id as pd_field_id','pf.unit_name' ,'pf.type', 'pf.created_at', 'pft.field_name', 'pft.local as pft_local', 'st.id as section_id', 'stt.name as section_name')
+      ->orderBy('pf.id' ,'asc')
+      ->get();
+    
+      $products = DB::table('products as p')
+      ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+      ->where('pt.local' ,'en')
+      ->where('p.pro_id',670)
+      ->select('p.*', 'pt.*')
+      ->orderBy('pt.showstatus' ,'desc')
+      ->orderBy('p.created_at', 'desc')
+      ->get();
+    
+      $columArray = ["product_code"];
+      foreach ($product_fields as $pop) {
+      //  
+       $data = $pop->pd_field_id.",".$pop->field_name.",".$pop->type.",".$pop->unit_name;
+       array_push($columArray,$data);
+      }
+      // return dd($columArray);
+      if(isset($product_fields)){
+ 
+        Excel::create('product_fields', function ($excel) use ($products ,$product_fields ,$columArray)  {
+          $excel->sheet('product_fields', function ($sheet) use ($products ,$product_fields,$columArray) {
+            $arr1 = $columArray; 
+              $sheet->row(1,$arr1);
+              $i = 2;
+              foreach ($products as $pro) {
+              
+
+                 $arraysub = DB::table('product_has_property as ph')
+                ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
+                ->join('product_field as pf','pf.id' ,'=','ph.type_id')
+                ->join('product_field_translation as pft','ph.type_id' ,'=','pft.product_field_id')
+                ->where('ph.product_id',$pro->pro_id)
+                ->where('pht.local' ,'en')
+                ->where('pft.local' ,'en')
+                ->orderBy('pf.id' ,'asc')
+                ->select('pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
+                ->get();
+               
+                $arrcon2 = [];
+                foreach($arraysub as $sub){
+                  if($sub->type_value == 'number'){
+                    array_push($arrcon2,$sub->data_1.','.$sub->data_2.','.$sub->data_3.','.$sub->data_4.','.$sub->data_5);
+                  }else{
+                    array_push($arrcon2,$sub->value_text);
+                  }
+                }
+             
+                $arrcon1  =  [
+                  $pro->pro_code,
+                ];
+
+                $arrconmer = array_merge($arrcon1, $arrcon2);  
+                      $sheet->row($i,$arrconmer);
+                      $i++;
+              }
+          });
+      })->export('csv');
+      }
+    }
     // public function getExportOldProduct(){
 
     //   $products = DB::table('old_products as op')
