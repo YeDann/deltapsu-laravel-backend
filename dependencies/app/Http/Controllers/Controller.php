@@ -60,8 +60,16 @@ class Controller extends BaseController
           break;
          default:
           //$str = addslashes($str);
-          $str = htmlspecialchars($str, ENT_QUOTES);
-          return array(true, $str);
+         
+          //return dd($str ,isset($str));
+          if(isset($str) ){
+            $str = htmlspecialchars($str, ENT_QUOTES);
+            return array(true, $str);
+          }else{
+            return array(true, $str);
+          }
+        
+          
         }
        }
       
@@ -69,6 +77,7 @@ class Controller extends BaseController
         if (($v === "" || $v === NULL) && $default) $v = $default;
       
         $results = $this->filterInput($v, $type);
+        
         $result_txt = isset($results[1]) ? $results[1] : "";
         if (isset($results[0]) && $results[0] === true) {
          $check_text = str_replace('&lt;a&gt;','', $result_txt); 

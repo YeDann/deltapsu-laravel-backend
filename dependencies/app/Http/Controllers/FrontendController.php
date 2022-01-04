@@ -1157,7 +1157,13 @@ class FrontendController extends Controller
         $name = $this->validateInput($catename,'text',true);
         $slgSeries = null;
         if(isset($_GET['serie'])){
-            $slgSeries = $this->validateInput($_GET['serie'] ,'text',true);
+            if(is_array($_GET['serie'])){
+                $slgSeries = $this->validateInput($_GET['serie'][0] ,'text',true);
+            }else{
+                $slgSeries = $this->validateInput($_GET['serie'] ,'text',true);
+            }
+          
+           
          }
       
         $findoldCate = DB::table('sub_pro_categories as c')
