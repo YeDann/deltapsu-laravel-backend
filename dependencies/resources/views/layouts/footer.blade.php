@@ -6,33 +6,34 @@
                     <div class="col-md-12">
                         <div class="padding-new-sub text-center">
                             <h2 class="text-title-banner text-center"> 
-                                    {{$staticContent['Subscribe_to_our_newsletter']}}
+                                    {{isset($staticContent['Subscribe_to_our_newsletter'])? $staticContent['Subscribe_to_our_newsletter']:"Subscribe to our newsletter" }}
                             </h2>
                             <div class="text-be-first">
-                                    {{$staticContent['Be_the_first_to_hear']}}
+                                    {{isset($staticContent['Be_the_first_to_hear']) ? $staticContent['Be_the_first_to_hear']:"Be the first to hear about new events, news and products!"  }}
                             </div>
                             <div class="box-input-sub">
                                     <label for="inp" class="inp">
                                             <input type="text" id="inp3" placeholder="&nbsp;" data-toggle="modal" data-target="#subscribe-modal" >
                                             <span class="label">
-                                                {{$staticContent['Enter_email_address']}}
+                                                {{isset($staticContent['Enter_email_address'])?$staticContent['Enter_email_address'] :"Enter email address" }}
                                             </span>
                                             <span class="border"></span>
                                         </label>
-                                        <button class="btn btn-subscribe"  onclick="resetfield();" data-toggle="modal" data-target="#subscribe-modal" >{{$staticContent['Subscribe']}}</button>
+                                        <button class="btn btn-subscribe"  onclick="resetfield();" data-toggle="modal" data-target="#subscribe-modal" >{{isset($staticContent['Subscribe'])?$staticContent['Subscribe']:"Subscribe"}}</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
     </div> 
+
     <div class="bg-footer">
         <div class="container">
             <div class="padding-top-bottom">
                 <div class="row">
                     <div class="col-xl-2 col-lg-2">
                         <div class="text-footer-main ">
-                            <h6>{{$staticContent['Products']}}</h6>
+                            <h6>{{isset($staticContent['Products'])?$staticContent['Products']:"Products"}}</h6>
                         </div>
                         <div class=" ">
                            
@@ -45,7 +46,7 @@
                                 }
                             }
                           ?>
-                            <a href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $current1->name),$current1->sub_pro_id ,$current1->main_cateid ])}}" ><p class="text-pro-link">{{$staticContent['Industrial_Power']}}</p>
+                            <a href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $current1->name),$current1->sub_pro_id ,$current1->main_cateid ])}}" ><p class="text-pro-link">{{isset($staticContent['Industrial_Power'])?$staticContent['Industrial_Power']:"Industrial Power"}}</p>
                             </a>
                            
                         </div>
@@ -59,12 +60,12 @@
                                 }
                             }
                           ?>
-                            <a href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $current2->name),$current2->sub_pro_id ,$current2->main_cateid ])}}" ><p class="text-pro-link">{{$staticContent['Medical_Power']}}</p>
+                            <a href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $current2->name),$current2->sub_pro_id ,$current2->main_cateid ])}}" ><p class="text-pro-link">{{isset($staticContent['Medical_Power'])? $staticContent['Medical_Power']:"Medical Power"}}</p>
                             </a>
                         </div>
                         <div class=" ">
      
-                            <a href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC+Cv_Mode'),1 , 3])}}" ><p class="text-pro-link">{{$staticContent['LED_Power']}}</p>
+                            <a href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC+Cv_Mode'),1 , 3])}}" ><p class="text-pro-link">{{isset($staticContent['LED_Power'])?$staticContent['LED_Power']:"LED Power"}}</p>
                             </a>
                            
                         </div>
@@ -72,7 +73,7 @@
                     </div>{{-- product --}}
                     <div class="col-xl-2 col-lg-2">
                             <div class="text-footer-main ">
-                                <h6>{{$staticContent['Applications']}}</h6>
+                                <h6>{{isset($staticContent['Applications'])?$staticContent['Applications']:"Applications"}}</h6>
                             </div>
                             @foreach ($navapplication as $app)
                             <div class=" ">
@@ -84,52 +85,52 @@
                     </div>{{-- appli --}}
                     <div class="col-xl-2 col-lg-2">
                             <div class="text-footer-main">
-                                <h6>{{$staticContent['Tools']}}</h6>
+                                <h6>{{isset($staticContent['Tools'])?$staticContent['Tools']:"Tools"}}</h6>
                             </div>
                             <div class=" ">
                                 <a href="{{route('productFinder')}}">
-                                    <p class="text-pro-link">{{$staticContent['Product_Selector']}}</p>
+                                    <p class="text-pro-link">{{isset($staticContent['Product_Selector'])?$staticContent['Product_Selector']:"Product Selector"}}</p>
                                     
                                 </a>
                             </div>
                             <div class=" ">
                                 <a href="{{route('configurableproduct')}}" >
-                                    <p class="text-pro-link">{{$staticContent['configurable_power_selector']}}</p>
+                                    <p class="text-pro-link">{{isset($staticContent['configurable_power_selector']) ?$staticContent['configurable_power_selector']:"Configurable Power Selector" }}</p>
                                     
                                 </a>
                             </div>
                             <div class=" ">
                                 <a href="{{route('productCoparison')}}" >
-                                    <p class="text-pro-link">{{$staticContent['product_comparison']}}</p>
+                                    <p class="text-pro-link">{{isset($staticContent['product_comparison'])?  $staticContent['product_comparison']:"Product Comparison" }}</p>
                                 
                                 </a>
                             </div>
         
                             <br><br>
                             <div class="footer-one text-footer-main">
-                                <h6>{{$staticContent['Updates']}}</h6>
+                                <h6>{{isset($staticContent['Updates'])?$staticContent['Updates']:"Updates"}}</h6>
                             </div>
                             <div class=" ">
                                 <a href="{{route('index','news')}}" >
-                                    <p class="text-pro-link">{{$staticContent['Product_News']}}</p>
+                                    <p class="text-pro-link">{{isset($staticContent['Product_News'])? $staticContent['Product_News']:"Product News"}}</p>
                                     
                                 </a>
                             </div>
                             <div class=" ">
                                 <a href="{{route('index','events')}}" >
-                                    <p class="text-pro-link">{{$staticContent['Events']}}</p>
+                                    <p class="text-pro-link">{{isset($staticContent['Events'])?$staticContent['Events']:"Events" }}</p>
                                 </a>
                             </div>
                             {{-- <div class=" ">
                                 <a href="{{route('index','technical-articles')}}" >
-                                    <p class="text-pro-link">{{$staticContent['Technical_Articles']}}</p>
+                                    <p class="text-pro-link">{{isset($staticContent['Technical_Articles'])?$staticContent['Technical_Articles']:"Technical Articles"}}</p>
                                     
                                 </a>
                             </div> --}}
                     </div>{{-- TOOL&UPDATE --}}
                     <div class="col-xl-2 col-lg-2">
                         <div class="text-footer-main ">
-                            <h6>{{$staticContent['About']}}</h6>
+                            <h6>{{isset($staticContent['About'])?$staticContent['About']:"About"}}</h6>
                         </div>
                         @foreach ($navaboutus as $abt)
                         <div class=" ">
@@ -141,17 +142,17 @@
                          @endforeach
                         <br>
                         <div class="text-footer-main  footer-two">
-                            <h6>{{$staticContent['Downloads']}}</h6>
+                            <h6>{{isset($staticContent['Downloads'])?$staticContent['Downloads']:"Downloads"}}</h6>
                             </div>
                             <div class=" ">
                                 <a href="{{route('index','catalogs')}}">
-                                    <p class="text-pro-link">{{$staticContent['catalogs']}}</p>
+                                    <p class="text-pro-link">{{isset($staticContent['catalogs'])?$staticContent['catalogs']:"Catalogs"}}</p>
                                   
                                 </a>
                             </div>
                             <div class=" ">
                                 <a href="{{route('index','product-documents')}}">
-                                    <p class="text-pro-link">{{$staticContent['Product_Documents']}}</p>
+                                    <p class="text-pro-link">{{isset($staticContent['Product_Documents'])?:"Product Documents"}}</p>
                                     
                                 </a>
                             </div>
@@ -159,29 +160,29 @@
                     </div>{{-- about&RESOURCE --}}
                     <div class="col-xl-2 col-lg-2">
                         <div class="text-footer-main ">
-                            <h6>{{$staticContent['Supports']}}</h6>
+                            <h6>{{isset($staticContent['Supports'])?$staticContent['Supports']:"Supports"}}</h6>
                         </div>
                         <div class=" ">
                             <a href="{{route('contactSupport')}}">
-                                <p class="text-pro-link">{{$staticContent['contact_us']}}</p>
+                                <p class="text-pro-link">{{isset($staticContent['contact_us'])?$staticContent['contact_us']:"Contact Us"}}</p>
                                 
                             </a>
                         </div>
                         <div class=" ">
                             <a href="{{route('contactSalesOffices')}}">
-                                <p class="text-pro-link">{{$staticContent['sales_offices']}}</p>
+                                <p class="text-pro-link">{{isset($staticContent['sales_offices'])?$staticContent['sales_offices']:"Sales Offices"}}</p>
                                 
                             </a>
                         </div>
                         <div class=" ">
                             <a href="{{route('contactFindDistributor')}}">
-                                <p class="text-pro-link"> {{$staticContent['find_a_distributor']}}</p>
+                                <p class="text-pro-link"> {{isset($staticContent['find_a_distributor'])?$staticContent['find_a_distributor']:"find a distributor"}}</p>
                                
                             </a>
                         </div>
                         <div class=" ">
                             <a href="{{route('index','faqs')}}">
-                                <p class="text-pro-link">{{$staticContent['FAQs']}}</p>
+                                <p class="text-pro-link">{{isset($staticContent['FAQs'])?$staticContent['FAQs']:"FAQs"}}</p>
                                
                             </a>
                         </div>
@@ -190,17 +191,17 @@
                     </div>{{-- contact&PARTNER--}}
                     <div class="col-xl-2 col-lg-2">
                         <div class="text-footer-main ">
-                            <h6>{{$staticContent['Information']}}</h6>
+                            <h6>{{isset($staticContent['Information'])? $staticContent['Information']:Information}}</h6>
                         </div>
                         <div class=" ">
                         <a href="{{route('termsOfUse')}}">
-                                <p class="text-pro-link">{{$staticContent['Terms_of_Use']}}</p>
+                                <p class="text-pro-link">{{isset($staticContent['Terms_of_Use'])?$staticContent['Terms_of_Use']:"Terms of Use"}}</p>
                                 
                             </a>
                         </div>
                         <div class=" ">
                             <a href="{{route('privacyPolicy')}}">
-                                <p class="text-pro-link">{{$staticContent['Privacy_Policy']}}</p>
+                                <p class="text-pro-link">{{isset($staticContent['Privacy_Policy'])?$staticContent['Privacy_Policy']:"Privacy Policy" }}</p>
                                 
                             </a>
                         </div>
@@ -212,7 +213,7 @@
                         </div> --}}
                         <br><br><br>
                         <div class="text-footer-main footer-four">
-                            <h6>{{$staticContent['Follow_us_on_social']}}</h6>
+                            <h6>{{isset($staticContent['Follow_us_on_social'])?$staticContent['Follow_us_on_social']:"Follow us on social"}}</h6>
                             
                         </div>
 
@@ -387,7 +388,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header pl-4">
-          <h4 class="text-color-delta mb-0" id="subscribe-modal-title">{{$staticContent['Subscribe']}}</h4>
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title">{{isset($staticContent['Subscribe'])? $staticContent['Subscribe'] :"Subscribe"}}</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -396,28 +397,28 @@
         <form name="frmMr" id="subscribeform" action="{{route('subscribe')}}" onsubmit="return submitsubscribe()"  method="POST" >
                 {{csrf_field()}}
           <img class="brand-image my-3" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
-         <p class="text-one">{{$staticContent['alert_text_for_read_privacy']}}<a href="{{route('privacyPolicy')}}" class="text-underline text-bold"> {{$staticContent['Privacy_Policy']}}</a>.</p> 
+         <p class="text-one">{{isset($staticContent['alert_text_for_read_privacy'])?$staticContent['alert_text_for_read_privacy']:"Subscribe to DeltaPSU newsletter and be the first to know about our new product releases and industry knowledge. Read our"}}<a href="{{route('privacyPolicy')}}" class="text-underline text-bold"> {{isset($staticContent['Privacy_Policy'])?$staticContent['Privacy_Policy']:"Privacy Policy"}}</a>.</p> 
           <div class="select input-label w-100 my-4">
               <h6 class="mb-0" ><label class="text-dark">{{$staticContent['Country']}}<span class="red">*</span></label></h6>
               <select name="country" class="form-control" id="countryId" required>
-                <option value="">{{$staticContent['Select']}} {{$staticContent['Country']}}</option>
+                <option value="">{{isset($staticContent['Select'])? :"Select"}} {{isset($staticContent['Country'])?$staticContent['Country']:"Country"}}</option>
                 @foreach ($mail_chimp_country as $email)
                 <option value="{{$email->name}}">{{$email->name}}</option>
                 @endforeach
               </select>
           </div> 
           <div class="input-label w-100 my-4">
-              <h6 class="mb-0" ><label class="text-dark">{{$staticContent['Email_Address']}}<span class="red">*</span></label></h6>
+              <h6 class="mb-0" ><label class="text-dark">{{isset($staticContent['Email_Address'])?$staticContent['Email_Address']:"Email Address"}}<span class="red">*</span></label></h6>
               <input type="email" class="form-control" name="email" required="required" placeholder="Email Address">
               {{-- <label for="email">Email Address</label> --}}
           </div>
           <div class="input-label w-100 my-4">
-              <h6 class="mb-0" ><label class="text-dark">{{$staticContent['Name']}}<span class="red">*</span></label></h6>
+              <h6 class="mb-0" ><label class="text-dark">{{isset($staticContent['Name'])?$staticContent['Name']:"Name"}}<span class="red">*</span></label></h6>
               <input type="text" class="form-control" pattern="[A-Za-zก-๏\s]+" name="name" required="required" placeholder="Name" >
              {{--  <label for="email">Name</label> --}}
           </div>
-          <h6> {{$staticContent['Marketing_Permissions']}}<span class="red">*</span></h6>
-          <p class="text-one">{{$staticContent['DeltaPSU_will_use_the information_you']}}</p>
+          <h6> {{isset($staticContent['Marketing_Permissions'])?$staticContent['Marketing_Permissions']:"Marketing Permissions"}}<span class="red">*</span></h6>
+          <p class="text-one">{{isset($staticContent['DeltaPSU_will_use_the information_you'])?$staticContent['DeltaPSU_will_use_the information_you']:"DeltaPSU will use the information you provide on this form to be in touch with you."}}</p>
           <div class="box-input-checkbox my-3 p-3 bg-light-blue">
               <input name="accept" value="0"  class="inp-cbx" id="cxacceptPrivacy_data"  onclick="checkacceptPolicy();" type="checkbox" 
                   style="display: none;" />
@@ -427,10 +428,10 @@
                           <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
                       </svg>
                   </span>
-                  <span class="col-10 w-100">{{$staticContent['I_have_read_and_accept']}} </span></label>
+                  <span class="col-10 w-100">{{isset($staticContent['I_have_read_and_accept'])?$staticContent['I_have_read_and_accept']:"I have read and accept the Privacy Policy."}} </span></label>
           </div> 
-          <p class="text-one mb-4">{{$staticContent['To_unsubscribe']}}</p>
-        <button type="submit" class="btn btn-subscribe">{{$staticContent['Subscribe']}}</button>
+          <p class="text-one mb-4">{{isset($staticContent['To_unsubscribe'])?$staticContent['To_unsubscribe']:"To unsubscribe, click the link in our newsletter. We will treat your data with respect."}}</p>
+        <button type="submit" class="btn btn-subscribe">{{isset($staticContent['Subscribe'])?$staticContent['Subscribe']:"Subscribe"}}</button>
       </div>
     </form>
       
@@ -441,9 +442,9 @@
     <div class="container">
        <div class="row">
            <div class="col-lg-12 p-3 text-center">
-            {{$staticContent['We_use_cookies_to_provide']}}
-            <a href="{{route('privacyPolicy')}}" class="text-underline text-bold"> {{$staticContent['Privacy_Policy']}}</a>.</p>
-              <a class="btn btn-subscribe" onclick="setcokie();" href="#" >{{$staticContent['Accept']}}</a>
+            {{isset($staticContent['We_use_cookies_to_provide'])?$staticContent['We_use_cookies_to_provide']:" We use cookies to provide the best user experience for those who visit our website. By using this website you agree to the placement of cookies and our"}}
+            <a href="{{route('privacyPolicy')}}" class="text-underline text-bold"> {{isset($staticContent['Privacy_Policy'])?$staticContent['Privacy_Policy']:"Privacy Policy"}}</a>.</p>
+              <a class="btn btn-subscribe" onclick="setcokie();" href="#" >{{isset($staticContent['Accept'])?$staticContent['Accept']:"Accept"}}</a>
            </div>
        </div>
     </div>

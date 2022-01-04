@@ -111,6 +111,7 @@ class FrontendController extends Controller
      foreach($static_word as $word){
         $wordarry[$word->key_word] = $word->word;
      }
+     
      view()->share('staticContent', $wordarry);
     //  return dd($wordarry);
     session(['product_comp' => []]);
@@ -1817,6 +1818,7 @@ class FrontendController extends Controller
     public function updateNewsDetail($namePar){
      
         $lang = App::getLocale();
+      
         $name = $this->validateInput($namePar ,'text',true);
         $contents = DB::table('product_news_has_categories as pnc')
         ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
@@ -1830,7 +1832,7 @@ class FrontendController extends Controller
         ->select('c.*' ,'ct.*' ,'pnc.categories_id','ntt.title as cateName','nt.color_type')
         ->orderBy('c.created_at', 'desc')
         ->get();
-        // return dd($contents);
+       
         if(count($contents) == 0){
             abort(404);
         }
@@ -1862,6 +1864,7 @@ class FrontendController extends Controller
     }
     public function updateEventDetail($namePar){
         $lang = App::getLocale();
+        
         $name = $this->validateInput($namePar ,'text',true);
         $contents = DB::table('contents as c')
         ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
@@ -1872,6 +1875,11 @@ class FrontendController extends Controller
         ->select('c.*' ,'ct.*')
         ->orderBy('c.date_publish', 'desc')
         ->get();
+
+        if(count($contents) == 0){
+            abort(404);
+        }
+
         // return dd($contents);
         $otherNews = [];
         $otherNews = DB::table('contents as c')

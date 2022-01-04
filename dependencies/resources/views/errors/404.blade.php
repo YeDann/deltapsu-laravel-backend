@@ -1,4 +1,4 @@
-@extends('layouts.front-end')
+@extends('layouts.front-end404')
 @section('css')
 <style>
     .res-img{

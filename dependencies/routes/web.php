@@ -474,4 +474,5 @@ Route::post('uploadtoTexteditor','StaticContentController@uploadtoTexteditor')->
 
 Route::post('CheckApiMail','GetDataController@CheckApiMail')->name('CheckApiMail');
 
+
 });
