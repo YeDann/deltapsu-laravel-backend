@@ -2792,6 +2792,9 @@ class FrontendController extends Controller
        public function oldDoc($name){
         return redirect()->route('index','home');
        }
+       public function downloadGuide($doc){
+        return redirect()->route('index','home'); 
+       }
 
 
 
