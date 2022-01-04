@@ -2789,6 +2789,9 @@ class FrontendController extends Controller
            ->with('faqs',$faqs)
            ->with('keysearch',$keysearch);
        }
+       public function oldDoc($name){
+        return redirect()->route('index','home');
+       }
 
 
 
