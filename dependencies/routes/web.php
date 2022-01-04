@@ -33,6 +33,8 @@ Route::group([
 
 Route::get('/{page?}','FrontendController@index')->name('index');
 Route::get('/download/{doc?}','FrontendController@oldDoc')->name('downloadDocData');
+Route::get('/download/resources-leaflets/{doc?}','FrontendController@downloadoldLeaflets')->name('downloadoldLeaflets');
+
 Route::get('/main/download_guide/{doc?}','FrontendController@downloadGuide')->name('download_guide');
 Route::get('/tools/configurable-product-selection','FrontendController@configurableProduct')->name('configurableproduct');
 Route::get('/configurable-power/details','FrontendController@configurableProductDetail')->name('configurableProductDetail');
@@ -108,6 +110,7 @@ Route::get('/etc/imagelink/showimage/{name?}','FrontendController@imagelink')->n
 Route::post('tag_product','FrontendController@tag_product')->name('tag_product');
 Route::post('getProById','FrontendController@getProById')->name('getProById');
 Route::post('/loadparallercon','FrontendController@loadparallercon')->name('loadparallercon');
+Route::get('/upload/product_image/{doc?}','FrontendController@checkOldfileUrl')->name('checkOldfileUrl');
 });
 
 Route::prefix('/backend')->group(function () {

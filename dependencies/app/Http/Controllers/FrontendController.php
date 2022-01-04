@@ -2795,7 +2795,18 @@ class FrontendController extends Controller
        public function downloadGuide($doc){
         return redirect()->route('index','home'); 
        }
-
+       public function downloadoldLeaflets($doc){
+        return redirect()->route('index','home'); 
+       }
+       public function checkOldfileUrl($doc){
+        $path =  base_path('../upload/product_image/').$doc ; 
+        if (file_exists($path)) {
+            return response()->file($path);
+        } else {
+            return redirect()->route('index','home'); 
+        }
+       
+       }
 
 
        public function searchByTag($keysearchParm)
