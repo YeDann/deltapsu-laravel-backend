@@ -628,9 +628,10 @@ if (!Array.prototype.findIndex) {
         }
         function changeLangLocationmobile(){
           var link =  $('#select-mobile-lang').val();
-          var nameArr = link.split(',');
-          console.log(nameArr ,link );
-          setlocaltion(nameArr[1] , nameArr[0]);
+          // var nameArr = link.split(',');
+          window.location = link;
+          // console.log(nameArr ,link );
+          // setlocaltion(nameArr[1] , nameArr[0]);
         }
         function setlocaltion(lang ,link){
           // console.log(lang);

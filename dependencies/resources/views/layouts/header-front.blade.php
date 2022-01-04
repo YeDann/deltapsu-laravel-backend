@@ -553,7 +553,7 @@ top: -9px;
                         }
                         ?>
                       {{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}
-                      <option  value="{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }},{{$current}}" {{App::getLocale() == $current?'selected':'' }}>
+                      <option  value="{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}" {{App::getLocale() == $current?'selected':'' }}>
                         @if($current == 'cn')
                             简中
                         @elseif($current == 'tw')
