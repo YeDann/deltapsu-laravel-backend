@@ -581,6 +581,7 @@
     var series =  <?= json_encode($series);?>;
     var section =  <?= json_encode($section);?>;
     var unit_dimension =  <?= json_encode($subCategories[0]->unit_dimension);?>;
+    var unit_dimension_1 =  <?= json_encode($subCategories[0]->unit_dimension_1);?>;
     var documents_cate =  <?= json_encode($documents_cate);?>;
     var certi_products =  <?= json_encode($certi_products);?>;
     var defaultfilters =  <?= json_encode($defaultfilters);?>; 
@@ -1285,7 +1286,7 @@
         html += '</div>';
         html += '</div>';
         html += '<div class="dimension">';
-        html += '<h6 class="text-title-ft-sub text-one">{{$staticContent['Dimensions']}} (L x W x '+unit_dimension+') </h6>';
+        html += '<h6 class="text-title-ft-sub text-one">{{$staticContent['Dimensions']}} ('+unit_dimension_1+' x W x '+unit_dimension+') </h6>';
         if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 && ['dimensionW'] != '' && pro['dimensionD'] != ''){
         html += '<p class="text-ft-sub text-one">'+pro['dimensionL']+'x'+pro['dimensionW']+'x'+pro['dimensionD']+' mm</p>';
         html += '<p class="text-ft-sub text-one">'+mmtonich(pro['dimensionL'])+'”x'+mmtonich(pro['dimensionW'])+'”x'+mmtonich(pro['dimensionD'])+'”</p>';
@@ -1366,7 +1367,7 @@
         html += '</div>';
         html += '</div>';
         html += '<div class="dimension mt-2">';
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Dimensions']}} (L X W X '+unit_dimension+')</p>';
+        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Dimensions']}} ('+unit_dimension_1+' X W X '+unit_dimension+')</p>';
         if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 && pro['dimensionW'] != '' && pro['dimensionD'] != ''){
         html += '<p class="text-ft-sub text-two">'+pro['dimensionL']+'x'+pro['dimensionW']+'x'+pro['dimensionD']+' mm</p>';
         html += '<p class="text-ft-sub text-two">'+mmtonich(pro['dimensionL'])+'”x'+mmtonich(pro['dimensionW'])+'”x'+mmtonich(pro['dimensionD'])+'”</p>';
@@ -1415,7 +1416,7 @@
         html1 += '<th id="sortdata3" class="th-sm header-font-table w-tabfix" onclick="selectTable(3)">{{$staticContent['Output_Current']}}</th>';
         html1 += '<th id="sortdata4" class="th-sm header-font-table w-tabfix"onclick="selectTable(4)">{{$staticContent['Output_Power']}} </th>';
         html1 += '<th id="sortdata5" class="th-sm header-font-table w-tabfix" onclick="selectTable(5)">{{$staticContent['Input_Voltage']}}</th>';
-        html1 += '<th id="sortdata6" class="th-sm header-font-table w-tabfix"onclick="selectTable(6)" >{{$staticContent['Dimensions']}} (L x W x '+unit_dimension+')</th>';
+        html1 += '<th id="sortdata6" class="th-sm header-font-table w-tabfix"onclick="selectTable(6)" >{{$staticContent['Dimensions']}} ('+unit_dimension_1+' x W x '+unit_dimension+')</th>';
         html1 += '</tr>';
         html1 += '</thead>';
         html1 += '<tbody id="listcardList">';

@@ -398,7 +398,7 @@ font-size: 50px;
                             <p class="text-one">{!!$product[0]['content'][3]->value_text!!}</p>
                         </div>
                         <div class="col-sm-4 box-product-detail">
-                            <h5 class="text-color-delta mb-2"> {{$staticContent['Dimensions']}} (L x W x {{$product[0]['unit_dimension']}}) </h5>
+                            <h5 class="text-color-delta mb-2"> {{$staticContent['Dimensions']}} ({{$product[0]['unit_dimension_1']}} x W x {{$product[0]['unit_dimension']}}) </h5>
                           
                             @if(isset($product[0]['dimensionL']) && is_numeric($product[0]['dimensionL'])  && is_numeric($product[0]['dimensionD'])  && is_numeric($product[0]['dimensionW']) && isset($product[0]['dimensionW']) && isset($product[0]['dimensionD']))
                           <p class="text-one">{{$product[0]['dimensionL']}} x {{$product[0]['dimensionW']}} x
@@ -1190,7 +1190,7 @@ font-size: 50px;
                                                 </div>
                                             </div>
                                             <div class="dimension">
-                                                <h6 class="text-title-ft-sub"> {{$staticContent['Dimensions']}} (L x W x {{$pro['unit_dimension']}})</h6>
+                                                <h6 class="text-title-ft-sub"> {{$staticContent['Dimensions']}} ({{$product[0]['unit_dimension_1']}} x W x {{$pro['unit_dimension']}})</h6>
                                                 @if(isset($product[0]['dimensionL']) && is_numeric($pro['dimensionL'])  && isset($pro['dimensionW']) && isset($pro['dimensionD']))
                                                 <h6 class="text-ft-sub">{{$pro['dimensionL']}} x {{$pro['dimensionW']}} x
                                                     {{$pro['dimensionD']}} mm</h6>

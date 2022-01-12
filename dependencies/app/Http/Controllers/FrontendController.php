@@ -1217,7 +1217,7 @@ class FrontendController extends Controller
         ->where('pt.local' ,$prolang)
         ->where('st.local' ,$lang)
         ->where('p.pro_id',$check->pro_id)
-        ->select('p.*', 'pt.*' ,'st.title as serieName' ,'spt.name as catename','spt.sub_pro_id as pro_categories_id','sp.unit_dimension' )
+        ->select('p.*', 'pt.*' ,'st.title as serieName' ,'spt.name as catename','spt.sub_pro_id as pro_categories_id','sp.unit_dimension','sp.unit_dimension_1' )
         ->orderBy('p.created_at', 'desc')
         ->first();
 
@@ -1306,6 +1306,7 @@ class FrontendController extends Controller
                     "updated_at"=>$pro->updated_at,
                     "unit_weight"=>$pro->unit_weight,
                     "unit_dimension"=>$pro->unit_dimension,
+                    "unit_dimension_1"=>$pro->unit_dimension_1,
                     "content_1"=>$pro->content_1,
                     "content_2"=>$pro->content_2,
                     "serie_id"=>$pro->series_id,
@@ -1317,7 +1318,7 @@ class FrontendController extends Controller
                     "dimensionW"=>$pro->dimensionW,
                     "dimensionD"=>$pro->dimensionD,
                 ];
-                // return dd( $data);
+                //  return dd( $data);
           
                 $product_related = DB::table('product_related as pr')
                 ->join('products as p', 'p.pro_id', '=', 'pr.related_id')
@@ -2473,7 +2474,7 @@ class FrontendController extends Controller
         
 
 
-        //    $query->Orwhere('st.title', 'LIKE', '%'.$keypro.'%')
+          //$query->Orwhere('st.title', 'LIKE', '%'.$keypro.'%')
            $query->select('p.*','spt.name as catename' ,'sp.url_item' ,'phc.categories_id' ,'st.title as seName');
 
            $products = $query->get();
