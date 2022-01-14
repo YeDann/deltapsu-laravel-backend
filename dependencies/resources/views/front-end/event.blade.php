@@ -264,7 +264,7 @@
                         <div class="news-content">
                             <div class="post-meta">
                                 <span class="author text-uppercase">
-                                        <i class="zmdi zmdi-calendar-alt"></i> {{ $date['m'].' '.$date['d'].' - '.($date['m'] != $endDate['m'] ?$endDate['m']:"" ).(isset($endDate['d'])?''.$endDate['d']:'').' '.$date['y']}}
+                                        <i class="zmdi zmdi-calendar-alt"></i> {{ $date['m'].' '.$date['d'].' - '.($date['m'] != $endDate['m'] ?$endDate['m']:"" ).' '.(isset($endDate['d'])?''.$endDate['d']:'').' '.$date['y']}}
                                 </span>
                                 <span class="locations ">
                                     &nbsp; <i class="zmdi zmdi-pin"></i> {{$item->location}}
@@ -389,7 +389,7 @@
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
          ];
-        return monthNames[d.getMonth()]+ ' '+d.getDate()+' - '+checkShowMonth(monthNames[d.getMonth()],monthNames[de.getMonth()])+'' +de.getDate() + ', ' +d.getFullYear();
+        return monthNames[d.getMonth()]+ ' '+d.getDate()+' - '+checkShowMonth(monthNames[d.getMonth()],monthNames[de.getMonth()])+' ' +de.getDate() + ', ' +d.getFullYear();
       }
     function checkShowMonth(startM,endM){
        if(startM != endM){
