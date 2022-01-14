@@ -264,7 +264,7 @@
                         <div class="news-content">
                             <div class="post-meta">
                                 <span class="author text-uppercase">
-                                        <i class="zmdi zmdi-calendar-alt"></i> {{ $date['m'].' '.$date['d'] .''.(isset($endDate['d'])?' - '.$endDate['d']:'').' '.$date['y']}}
+                                        <i class="zmdi zmdi-calendar-alt"></i> {{ $date['m'].' '.$date['d'].' - '.($date['m'] != $endDate['m'] ?$endDate['m']:"" ).(isset($endDate['d'])?''.$endDate['d']:'').' '.$date['y']}}
                                 </span>
                                 <span class="locations ">
                                     &nbsp; <i class="zmdi zmdi-pin"></i> {{$item->location}}
@@ -389,8 +389,15 @@
         const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
          ];
-        return monthNames[d.getMonth()]+ ' '+d.getDate()+' - ' +de.getDate() + ', ' +d.getFullYear();
+        return monthNames[d.getMonth()]+ ' '+d.getDate()+' - '+checkShowMonth(monthNames[d.getMonth()],monthNames[de.getMonth()])+'' +de.getDate() + ', ' +d.getFullYear();
       }
+    function checkShowMonth(startM,endM){
+       if(startM != endM){
+           return endM
+       }else{
+          return "";
+       }
+    }
    
     function Years(num){
         var sum = years;
@@ -548,7 +555,7 @@
         var check   = new Date(date);
         var check = new Date(dateCheck);
           if(from.getFullYear() == check.getFullYear() && to.getFullYear() == check.getFullYear()  ){
-              if(from.getMonth() == check.getMonth() && to.getMonth() == check.getMonth()){
+              if(from.getMonth() == check.getMonth() || to.getMonth() == check.getMonth()){
                 return true;
               }
               return false;
@@ -565,8 +572,9 @@
         var to   = new Date(dateTo);
         var check   = new Date(date);
         var check = new Date(dateCheck);
-          if(from.getFullYear() == check.getFullYear() && to.getFullYear() == check.getFullYear()  ){
-              if(from.getMonth() == check.getMonth() || to.getMonth() >= check.getMonth()){
+        console.log(check.getMonth() , from.getMonth());
+          if(check.getFullYear() == from.getFullYear()  && check.getFullYear() == to.getFullYear() ){
+              if(check.getMonth() == from.getMonth() || check.getMonth() == to.getMonth() ){
           
                  if(check.getDate() >= from.getDate() &&  check.getDate() <= to.getDate()){
                     return true;
