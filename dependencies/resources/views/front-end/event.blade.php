@@ -576,7 +576,7 @@
           if(check.getFullYear() == from.getFullYear()  && check.getFullYear() == to.getFullYear() ){
               if(check.getMonth() == from.getMonth() || check.getMonth() == to.getMonth() ){
           
-                 if(check.getDate() >= from.getDate() &&  check.getDate() <= to.getDate()){
+                 if(from.getDate() >= check.getDate()  &&  check.getDate() <= to.getDate()){
                     return true;
                  }
                  return false;
