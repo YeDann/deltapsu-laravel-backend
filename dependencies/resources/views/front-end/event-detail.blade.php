@@ -138,7 +138,7 @@
                                        if($contents[0]->date_publish != null && $contents[0]->date_end != null ){
                                          $date = getDateformat($contents[0]->date_publish);
                                          $endDate = getDateformat($contents[0]->date_end);
-                                           echo $date['m'].' '.$date['d'].' - '.$date['m'] != $endDate['m']?$endDate['m']:"".''.(isset($endDate['d'])?''.$endDate['d']:'').' '.$date['y'];
+                                           echo $date['m'].' '.$date['d'].' - '.($date['m']!=$endDate['m']?$endDate['m']:"").''.(isset($endDate['d'])?''.$endDate['d']:'').' '.$date['y'];
                                        }else{
                                            echo '';
                                        }
@@ -189,7 +189,7 @@
                                     if($item->date_publish != null && $item->date_end != null ){
                                       $date1 = getDateformat($item->date_publish);
                                       $endDate2 = getDateformat($item->date_end);
-                                        echo $date1['m'].' '.$date1['d'].' - '.$date1['m'] != $endDate2['m']?$endDate2['m']:"" .''.(isset($endDate2['d'])?''.$endDate2['d']:'').' '.$date1['y'];
+                                        echo $date1['m'].' '.$date1['d'].' - '.($date1['m'] != $endDate2['m']?$endDate2['m']:"" ).''.(isset($endDate2['d'])?''.$endDate2['d']:'').' '.$date1['y'];
                                     }else{
                                         echo '';
                                     }
