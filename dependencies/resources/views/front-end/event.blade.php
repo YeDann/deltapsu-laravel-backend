@@ -572,12 +572,14 @@
         var to   = new Date(dateTo);
         var check   = new Date(date);
         var check = new Date(dateCheck);
-        //console.log(check.getMonth() , from.getMonth());
+   
           if(check.getFullYear() == from.getFullYear()  && check.getFullYear() == to.getFullYear() ){
               if(check.getMonth() == from.getMonth() || check.getMonth() == to.getMonth() ){
-          
-                 if(from.getDate() >= check.getDate()  &&  check.getDate() <= to.getDate()){
+                console.log((from.getDate() >= check.getDate()) , from.getDate() ,check.getDate());
+                 if( check.getDate() >= from.getDate() &&  check.getDate() <= to.getDate()){
+                   
                     return true;
+
                  }
                  return false;
               }
