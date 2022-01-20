@@ -11,7 +11,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('meta')
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" media="screen"/>
+   
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}"  media="screen"/>
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/header-front.css')}}" media="screen"/>
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/container.css')}}" media="screen"/>
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/home.css')}}" media="screen"/>
@@ -28,17 +29,13 @@
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen"/>
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/product.css')}}" media="screen"/>
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/font-awesome.css')}}" media="screen"/>
-    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" media="screen"/> --}}
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/datatables.css')}}" media="screen"/>
     
     <link rel="stylesheet" href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}">
-    {{-- <script src="https://kit.fontawesome.com/480db7c8b0.js" crossorigin="anonymous"></script> --}}
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" media="screen"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.3/nouislider.min.css" rel="stylesheet" media="screen"/>
     <link href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" rel="stylesheet" type="text/css" />
-    {{-- <link href="{{asset('/frontend-asset/css/dncalendar-skin.css')}}" rel="stylesheet" type="text/css" /> --}}
     <link href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" rel="stylesheet" type="text/css" />
-    {{-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> --}}
    
 
 
