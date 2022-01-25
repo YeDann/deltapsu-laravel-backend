@@ -3559,6 +3559,7 @@ class FrontendController extends Controller
        }
        public function downloadGui(Request $request){
         
+        return dd($request->procateGui);
         $name = $this->validateInput($request->name_gui,'text',true);
         $company = $this->validateInput($request->company_gui,'text',true);
         $checkname  =  preg_match('/\\s[^a-zA-Zก-ฮ]/', $name);
@@ -3587,6 +3588,8 @@ class FrontendController extends Controller
             $acept = $this->validateInput($ac_data,'number',true ,0);
             $filename = $this->validateInput($request->fileguidownload,'text',true);
             $country = $this->validateInput($request->country,'text',true);
+            $modelname = $this->validateInput($request->procodeGui,'text',true);
+            $typeName = $this->validateInput($request->procateGui,'text',true);
             
             $path =  base_path('../upload/product_files/').$filename; 
             $emailsend = [];
@@ -3600,6 +3603,8 @@ class FrontendController extends Controller
                     'company' =>$company,
                     'country' =>$country,
                     'filename' =>$filename,
+                    'model'=>$modelname,
+                    'type_name'=>$typeName,
                     'accept' =>$acept,
                     "created_at" => \Carbon\Carbon::now(),
                 ]

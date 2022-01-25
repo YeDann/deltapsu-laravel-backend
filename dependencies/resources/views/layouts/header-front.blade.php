@@ -803,6 +803,7 @@ top: -9px;
         </div>
         <input type="hidden" name="fileguidownload" id="fileguidownload">
         <input type="hidden" name="procodeGui"  id="procodeGui">
+        <input type="hidden" name="procateGui" id="procateGui" >
           <div class="input-label w-100 my-4">
             <h6 class="mb-0" ><label class="text-dark">{{$staticContent['Phone_Number']}}<span class="red">*</span></label></h6>
         

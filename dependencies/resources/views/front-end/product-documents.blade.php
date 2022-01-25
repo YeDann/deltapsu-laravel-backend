@@ -405,9 +405,11 @@
             }
             products.filter(function(data) {
                 if(data['pro_id'] == model_id){
-                    proImage = data['picture'];
-                    procode  = data['pro_code'];
-                    create_pro = data['created_at'];
+                    console.log(data);
+                   proImage = data['picture'];
+                   procode  = data['pro_code'];
+                   catename  = data['catename'];
+                   create_pro = data['created_at'];
                 }
             });
         
@@ -599,7 +601,7 @@
                 html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} '+setformatdate(doc['created_at']) +'</p>';
                 html2 += '</div>';
              
-                html2 += '<button class="btn-downlode" data-toggle="modal" data-target="#downloadgui-modal" onclick="downloadGUI('+"'"+ doc['file']+"'"+','+"'"+procode+"'"+')">{{$staticContent['Downloads']}}</button>';
+                html2 += '<button class="btn-downlode" data-toggle="modal" data-target="#downloadgui-modal" onclick="downloadGUI('+"'"+ doc['file']+"'"+','+"'"+procode+"'"+','+"'"+catename+"'"+')">{{$staticContent['Downloads']}}</button>';
                 html2 += ' </div>' ;
                  }
                 }

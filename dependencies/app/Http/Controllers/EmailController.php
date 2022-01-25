@@ -186,9 +186,15 @@ class EmailController extends Controller
               $excel->sheet('GUI Downloads', function ($sheet) use ($data) {
                   $sheet->row(1,[
                       'No',
+                      'Subject',
+                      'Name',
                       'Email',
                       'Country Name',
-                      'Name',
+                      'State',
+                      'Company',
+                      'Product Type',
+                      'Model',
+                      'Phone',
                       'Accept Privacy Policy',
                       'Created_at'
                   ]);
@@ -203,9 +209,15 @@ class EmailController extends Controller
                          }
                           $sheet->row($i, [
                               $j,
+                              "GUI Software Download",
+                              $sub->name,
                               $sub->email,
                               $sub->country,
-                              $sub->name,
+                              '',
+                              $sub->company,
+                              $sub->type_name,
+                              $sub->model,
+                              $sub->tel,
                               $accept,
                               $sub->created_at
                           ]);

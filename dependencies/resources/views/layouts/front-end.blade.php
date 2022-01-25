@@ -746,8 +746,9 @@ if (!Array.prototype.findIndex) {
      
       </script>
       <script>
-        function downloadGUI(file , procode){
+        function downloadGUI(file , procode ,proCate){
           $('#procodeGui').val(procode);
+          $('#procateGui').val(proCate);
           $('#fileguidownload').val(file);
         }
         function checkacceptPolicy(){
