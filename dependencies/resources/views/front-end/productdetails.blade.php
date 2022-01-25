@@ -876,7 +876,7 @@ font-size: 50px;
                         <p class="text-dark text-bold">{{$item->catename}}</p>
                             <p class="text-dark">{{$staticContent['Uploaded_on']}}  {{ $date2['d'] .'-'.$date2['m'].'-'.$date2['y']}}  </p>
                         </div>
-                        <a data-toggle="modal" data-target="#downloadgui-modal" onclick="downloadGUI('{{$item->file}}','{{setTextpro($product[0]['pro_code'])}}','{{$item->catename}}')" href="{{route('downloadFIle',[$item->slug,setTextpro($product[0]['pro_code'])])}}" target="_blank">
+                        <a data-toggle="modal" data-target="#downloadgui-modal" onclick="downloadGUI('{{$item->file}}','{{setTextpro($product[0]['pro_code'])}}','{{$product[0]['cate_name']}}')" href="{{route('downloadFIle',[$item->slug,setTextpro($product[0]['pro_code'])])}}" target="_blank">
                         <button class="btn-downlode">{{$staticContent['Downloads']}}</button>
                         </a>
                     </div>
