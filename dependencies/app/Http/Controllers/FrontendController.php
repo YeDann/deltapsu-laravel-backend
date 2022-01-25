@@ -3559,7 +3559,7 @@ class FrontendController extends Controller
        }
        public function downloadGui(Request $request){
         
-        return dd($request->procateGui);
+      
         $name = $this->validateInput($request->name_gui,'text',true);
         $company = $this->validateInput($request->company_gui,'text',true);
         $checkname  =  preg_match('/\\s[^a-zA-Zก-ฮ]/', $name);
