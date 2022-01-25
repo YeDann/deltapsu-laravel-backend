@@ -152,7 +152,7 @@
                             </div>
                             <div class=" ">
                                 <a href="{{route('index','product-documents')}}">
-                                    <p class="text-pro-link">{{isset($staticContent['Product_Documents'])?:"Product Documents"}}</p>
+                                    <p class="text-pro-link">{{isset($staticContent['Product_Documents'])?$staticContent['Product_Documents']:"Product Documents"}}</p>
                                     
                                 </a>
                             </div>
