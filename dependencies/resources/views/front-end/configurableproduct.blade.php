@@ -2071,7 +2071,7 @@ function selectCountry(){
 	 doc.open();
 	 doc.write(
             '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional //EN" "http://www.w3.org/TR/html4/loose.dtd">'+
-            '<html><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">'+
+            '<html><head><link rel="stylesheet" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}" >'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/font.css')}}">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/embepdf.css')}}">'+
 		    '<link rel="stylesheet" href="{{asset('/frontend-asset/css/header-front.css')}}">'+
