@@ -1235,7 +1235,7 @@ function selectCountry(){
 		var index = $('#model').children("option:selected").val();
 		$('.text-info').html(model_alldata[index]['description']);
 		
-		$('#mg-fistdata').html('<img class="img-model " src="{{config('app.url')}}/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
+		$('#img-fistdata').html('<img class="img-model " src="{{config('app.url')}}/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
 		$('#img-summary').html('<img class="img-fluid" src="{{config('app.url')}}/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
 	
 		$('#certificate').html('<img class="" src="{{config('app.url') }}/media/model/'+model_alldata[index]['certificate_img']+'" alt="">');
