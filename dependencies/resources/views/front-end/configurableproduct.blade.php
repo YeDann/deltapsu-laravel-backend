@@ -243,6 +243,10 @@
 	.d-p-cal {
 		display: table-cell !important;
 	}
+	.btn-enquiry:disabled{
+		color:#000;
+		background-color: #e7e9ed !important;
+	}
 	/* #PDFconfigurable{
 		display: none;
 	} */
@@ -303,7 +307,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-4 col-md-12" id="img">
+					<div class="col-lg-4 col-md-12" id="img-fistdata">
 					</div>
 					<div class="col-lg-4 col-md-12">
 						<div class="content">
@@ -843,7 +847,7 @@
 						{{-- </div> --}}
 					</div>
 				</div>
-				<button id="savedataauto" onclick="addToiframe(), convertToPDF();" class="d-none">Save to pdf</button>
+				<button id="savedataauto" onclick="addToiframe()" class="d-none">Save to pdf</button>
 
 
 			</section>
@@ -1146,7 +1150,7 @@ function selectCountry(){
 				$('a[href$="previous"]').addClass("btn-enquiry");
 				$('a[href$="previous"]').addClass("resetenqu");
 				$('a[href$="previous"]').attr('id','submitenquiry'); 
-				$('a[href$="previous"]').html('<button class="btn-enquiry" onclick="linktosupport();">{{$staticContent['Enquiry']}}</button>'); 
+				$('a[href$="previous"]').html('<button class="btn-enquiry" id="SbtRequest1" onclick="linktosupport();">{{$staticContent['Enquiry']}}</button>'); 
 				$('a[href$="previous"]').attr("href" ,'#');
 			
 		      
@@ -1173,6 +1177,7 @@ function selectCountry(){
 	
 	$('a[href$="finish"]').attr('data-toggle', 'modal');
 	$('a[href$="finish"]').attr('data-target', '#sentToPDF');
+	$('a[href$="finish"]').attr('id', 'sentToPDFMe');
 	$('a[href$="previous"]').attr('style', 'display:none');
 	$('a[href$="previous"]').addClass("btn-previous-border");
 	$('a[href$="next"]').addClass("arrow-next");
@@ -1229,9 +1234,10 @@ function selectCountry(){
 		$('#slot').empty();
 		var index = $('#model').children("option:selected").val();
 		$('.text-info').html(model_alldata[index]['description']);
-		$('#img').html('<img class="img-model " src="{{config('app.url') }}/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
-		$('#img-summary').html('<img class="img-fluid" src="{{config('app.url') }}/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
-		$('#img-summary-pdf').html('<img class="img-model" src="{{config('app.url') }}/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
+		
+		$('#mg-fistdata').html('<img class="img-model " src="{{config('app.url')}}/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
+		$('#img-summary').html('<img class="img-fluid" src="{{config('app.url')}}/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
+	
 		$('#certificate').html('<img class="" src="{{config('app.url') }}/media/model/'+model_alldata[index]['certificate_img']+'" alt="">');
 		var l = parseFloat(model_alldata[index]['dimensions']);
 		var w = parseFloat(model_alldata[index]['dimen_w']);
@@ -2087,7 +2093,9 @@ function selectCountry(){
         );
         doc.close();
         doc.body.innerHTML= data_pdf;
-
+		$('#sentToPDFMe').css("display",'none');
+		$("#SbtRequest1").prop('disabled', true);
+		convertToPDF();
 }
 
 	function convertToPDF(){
@@ -2111,6 +2119,7 @@ function selectCountry(){
 						 formData.append('modelcode', model);
 						 formData.append('factory', $('.factory').text());
 						 formData.append('customer',$('#customer').text());
+						
 						 savedatadataPdf(formData);
 
                   
@@ -2132,6 +2141,8 @@ function selectCountry(){
 					},
 					success: function(data){
 						$('#loaderSavefile').css("display",'none');
+						$('#sentToPDFMe').css("display",'block');
+						$("#SbtRequest1").prop('disabled', false);
 						$('#con_id').val(data.con_id);
 						checkValueConfigFile();
 					},
