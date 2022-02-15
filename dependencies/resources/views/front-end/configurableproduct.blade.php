@@ -627,7 +627,7 @@
 							<h3 class="customer text-normal"></h3>
 						</div>
 						<div class="summary-subbody d-flex flex-wrap justify-content-start">
-							<div class="col-lg-3 col-md-12" id="img-summary"></div>
+							<div class="col-lg-3 col-md-12 img-summary-add" ></div>
 							<div class="col-lg-9 col-md-12" id="text-summary">
 								<div class="col-lg-4 col-md-12">
 									<p class="mb-1"><b class="text-sixteen-delta">{{$staticContent['Highlights_Features']}}</b></p>
@@ -1234,11 +1234,11 @@ function selectCountry(){
 		$('#slot').empty();
 		var index = $('#model').children("option:selected").val();
 		$('.text-info').html(model_alldata[index]['description']);
-		
-		$('#img-fistdata').html('<img class="img-model " src="{{config('app.url')}}/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
-		$('#img-summary').html('<img class="img-fluid" src="{{config('app.url')}}/media/model/'+model_alldata[index]['thumb_img']+'" alt="">');
+		$('#img-fistdata').html('<img class="img-model " src="{{config('app.url')}}/media/model/'+model_alldata[index]['thumb_img']+'">');
+		$('.img-summary-add').html('<img class="img-fluid" src="{{config('app.url')}}/media/model/'+model_alldata[index]['thumb_img']+'" >');
 	
-		$('#certificate').html('<img class="" src="{{config('app.url') }}/media/model/'+model_alldata[index]['certificate_img']+'" alt="">');
+		
+		$('#certificate').html('<img class="" src="{{config('app.url') }}/media/model/'+model_alldata[index]['certificate_img']+'">');
 		var l = parseFloat(model_alldata[index]['dimensions']);
 		var w = parseFloat(model_alldata[index]['dimen_w']);
 		var d = parseFloat(model_alldata[index]['dimen_d']);
