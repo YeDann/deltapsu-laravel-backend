@@ -2103,6 +2103,7 @@ function selectCountry(){
 		var tar = $("#PDFconfigurable").contents().find("#savethis")[0];
 		html2canvas(tar,{
 			   letterRendering: 1, allowTaint : true,
+			   useCORS:true,
                 onrendered: function(canvas) {  
                 	 //Returns the image data URL, parameter: image format and clarity (0-1)
 		             	var pageData = canvas.toDataURL('image/png',1.0);
