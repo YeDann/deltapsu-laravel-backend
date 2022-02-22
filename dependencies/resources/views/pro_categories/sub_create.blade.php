@@ -180,6 +180,15 @@
                                     class="form-control "
                                     name="unit_dimension" value="D" maxlength="2" placeholder="Enter text...">
                             </div>
+                            <div class="form-group">
+                            <label for="example-select"> Warranty Policy<span class="req-fed">* Max File
+                                    Size 20 MB</span></label>
+                            <div class="custom-file " style="width:100%;">
+                                <input type="file" class="custom-file-input file_input"
+                                    name="warranty_file" data-toggle="custom-file-input">
+                                <label class="custom-file-label" for="warranty_file">Choose file</label>
+                            </div>
+                            </div>
                              
                     </div>
                     {{-- <div class="col-lg-8 pt-2">

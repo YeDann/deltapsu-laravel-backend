@@ -243,6 +243,7 @@ Route::get('editSubCategories/{id?}','ProductCategoriesController@editSubCategor
 Route::post('storeSubCategories','ProductCategoriesController@storeSubCategories')->name('storeSubCategories');
 Route::post('UpdateSubCategories','ProductCategoriesController@UpdateSubCategories')->name('UpdateSubCategories');
 Route::post('destroysubcategories','ProductCategoriesController@destroysubcategories')->name('destroysubcategories');
+Route::get('removefileDocWaranfile/{id?}','ProductCategoriesController@removefileDocWaranfile')->name('removefileDocWaranfile');
 
 Route::get('filter_setting/{id?}','ProductFilterController@filter_setting')->name('filter_setting');
 Route::post('storeFilter','ProductFilterController@storeFilter')->name('storeFilter');

@@ -11,7 +11,7 @@
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"> <a href="{{route('subCategories')}}">All Product Categories</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create</li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit</li>
                 </ol>
             </nav>
         </div>
@@ -297,6 +297,23 @@
                                 class="form-control "
                         name="unit_dimension" value="{{$subCategories[0]->unit_dimension}}" maxlength="2" placeholder="Enter text...">
                         </div>
+                        <div class="form-group">
+                                        <label for="example-select"> Old File Warranty</label>
+                                        <a href="{{config('app.url')}}/medias/categories/{{isset($subCategories[0]->warranty_file) ?$subCategories[0]->warranty_file:''}}">{{isset($subCategories[0]->warranty_file) ? $subCategories[0]->warranty_file :''}}</a>
+                                        @if(isset($subCategories[0]->warranty_file))
+                                        <a href="{{route('removefileDocWaranfile',$subCategories[0]->sub_pro_id)}}"  class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
+                                            @endif
+                                            <input type="hidden" name="oldfile_warranty_file" value="{{isset($subCategories[0]->warranty_file) ? $subCategories[0]->warranty_file :''}}">
+                                    </div>
+                        <div class="form-group">
+                            <label for="example-select"> Warranty Policy<span class="req-fed">* Max File
+                                    Size 20 MB</span></label>
+                            <div class="custom-file " style="width:100%;">
+                                <input type="file" class="custom-file-input file_input"
+                                    name="warranty_file" data-toggle="custom-file-input">
+                                <label class="custom-file-label" for="warranty_file">Choose file</label>
+                            </div>
+                            </div>
                     </div>
                     <div class="form-group">
                     @foreach ($orderCate as $cate)

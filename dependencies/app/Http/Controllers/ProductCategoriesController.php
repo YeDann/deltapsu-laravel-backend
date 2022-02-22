@@ -227,6 +227,12 @@ class ProductCategoriesController extends Controller
         $typeImage  = $request->typeImage;
         $arrayfileName = self::savearrayfile($thumbnailOpt ,$typeImage);
         // return dd($arrayfileName['type2']);
+        $warranty_file = "";
+        if($request->hasFile('warranty_file')){
+            $filewarr = $request->file('warranty_file');
+            $warranty_file = preg_replace('/\s+/', '', self::fileformat($filewarr));
+            $filewarr->move(base_path('/../medias/categories'),$warranty_file);
+        }
 
         $validate = Validator::make($request->all(), [
             'name' => 'required',
@@ -248,6 +254,7 @@ class ProductCategoriesController extends Controller
                         'image_type3' =>$arrayfileName['type3'],
                         'url_item' => strtolower($string),
                         "unit_dimension" => $request->unit_dimension,
+                        'warranty_file'=>$warranty_file,
                         "created_at" => \Carbon\Carbon::now(),
                         "updated_at" => \Carbon\Carbon::now(),
                     ]
@@ -260,6 +267,7 @@ class ProductCategoriesController extends Controller
                         "unit_dimension" => $request->unit_dimension,
                         "created_at" => \Carbon\Carbon::now(),
                         "updated_at" => \Carbon\Carbon::now(),
+                        'warranty_file'=>$warranty_file,
                     ]
                 );
               
@@ -413,6 +421,7 @@ class ProductCategoriesController extends Controller
         $contentAddType1 = $request->contentAddType1;
         $contentAddType2 = $request->contentAddType2;
         $contentAddType3 = $request->contentAddType3;
+        $oldfile_warranty_file  = $request->oldfile_warranty_file;
         // return dd($orderCate);
         $arrayfileName = self::UpdateOldfile($thumbnailOpt, $typeImage ,$oldfileytype);
         // return dd($arrayfileName);
@@ -420,6 +429,15 @@ class ProductCategoriesController extends Controller
             'name' => 'required',
         ]);
         // return dd($validate->fails());
+        $warranty_file = "";
+        if($request->hasFile('warranty_file')){
+            $filewarr = $request->file('warranty_file');
+            $warranty_file = preg_replace('/\s+/', '', self::fileformat($filewarr));
+            $filewarr->move(base_path('/../medias/categories'),$warranty_file);
+        }else{
+            $warranty_file = $oldfile_warranty_file;
+        }
+
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
         } else {
@@ -432,6 +450,7 @@ class ProductCategoriesController extends Controller
                         'image_type2' =>$arrayfileName['type2'],
                         'image_type3' =>$arrayfileName['type3'],
                         "unit_dimension" => $request->unit_dimension,
+                        'warranty_file'=>$warranty_file,
                         "updated_at" => \Carbon\Carbon::now(),
                     ]
                 );
@@ -442,6 +461,7 @@ class ProductCategoriesController extends Controller
                         'image_type2' =>$arrayfileName['type2'],
                         'image_type3' =>$arrayfileName['type3'],
                         "unit_dimension" => $request->unit_dimension,
+                        'warranty_file'=>$warranty_file,
                         "updated_at" => \Carbon\Carbon::now(),
                     ]
                 );
@@ -1069,6 +1089,20 @@ class ProductCategoriesController extends Controller
             [
 
                 "file" => null,
+            ]
+        );
+        return redirect()->route('editSubCategories',$id)->with('flash_message', 'Delete File successfully');
+        
+
+    }
+
+    public function removefileDocWaranfile($id,$filename){
+
+        DB::table('sub_pro_categories')
+        ->where('sub_pro_id' ,$id)->update(
+            [
+
+                "warranty_file" => null,
             ]
         );
         return redirect()->route('editSubCategories',$id)->with('flash_message', 'Delete File successfully');
