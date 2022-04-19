@@ -96,4 +96,9 @@ class Controller extends BaseController
         return preg_replace('/[^A-Za-z0-9ก-๙\-]/u', '',str_replace('&', '-and-', $string));
        }
 
+       protected function unique_code_bysetf($limit)
+        {
+          return (int) substr(random_int(100000000, 999999999), 0, $limit);
+        }
+
 }

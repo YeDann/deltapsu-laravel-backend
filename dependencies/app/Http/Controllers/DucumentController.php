@@ -578,7 +578,7 @@ class DucumentController extends Controller
                 if(!empty($products)){
                 $i = 0;
                 foreach($products as $product){
-                  $genId = (time()+$i);  
+                  $genId = $this->unique_code_bysetf(11);  
                   DB::table('product_has_documents')->insert(
                         [
                             "id" => $genId,
@@ -732,7 +732,7 @@ class DucumentController extends Controller
              DB::table('product_has_documents')->where('document_id',$id)->delete();
                 $i = 0;
                 foreach($products as $product){
-                $genId = (time()+$i);  
+                $genId = $this->unique_code_bysetf(11);  
                     DB::table('product_has_documents')->insert(
                         [
                             "id" => $genId,
@@ -825,7 +825,7 @@ class DucumentController extends Controller
     public function storeProDocuments(Request $request){
       $productid = $request->productId;
       $docId  =  $request->documents;
-      $genId = time();  
+      $genId = $this->unique_code_bysetf(11);  
         DB::table('product_has_documents')->insert(
                 [
                     "id" => $genId,
@@ -890,7 +890,7 @@ class DucumentController extends Controller
                     ]
                 );
             }
-            $genId = time();  
+            $genId = $this->unique_code_bysetf(11);  
             DB::table('product_has_documents')->insert(
                 [
                     "id" => $genId,

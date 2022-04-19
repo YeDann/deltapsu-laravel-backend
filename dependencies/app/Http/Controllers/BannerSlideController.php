@@ -20,7 +20,7 @@ class BannerSlideController extends Controller
     public function index()
     {
         $userdata = auth()->user();
-        // return dd($userdata);
+      
         if(isset($userdata) && $userdata->lang == 'All'){
             $banners = DB::table('banner_slide as bs')
             ->join('banner_slide_translations as bst','bs.id','=','bst.ban_id')
