@@ -553,6 +553,21 @@ class DucumentController extends Controller
         $validate = Validator::make($request->all(), [
             'name' => 'required',
         ]);
+        // return dd($products);
+        foreach($products as $product){
+        
+          $exitProInCate = DB::table('product_has_documents')
+            ->where('product_id' ,$product)
+            ->where('document_id',$doc_cate_id)
+             ->get();
+
+            //  return dd($exitProInCate);
+             if(count($exitProInCate)){
+                return redirect()->route('createDocMutidoc')->with('error_message', 'Already file type in this product');
+             }
+          
+          
+          }
     
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
@@ -684,8 +699,19 @@ class DucumentController extends Controller
     $fileGU = $request->file('fileGU');
     $oldfile = $request->oldfile;
     // return dd($langs);
-  
     $products = $request->product;
+    foreach($products as $product){
+        
+        $exitProInCate = DB::table('product_has_documents')
+          ->where('product_id' ,$product)
+          ->where('document_id',$doc_cate_id)
+           ->get();
+           if(count($exitProInCate)){
+              return redirect()->route('editDocMutidoc',$id)->with('error_message', 'Already file type in this product');
+           }
+        
+        
+        }
     $validate = Validator::make($request->all(), [
         'name' => 'required',
     ]);
