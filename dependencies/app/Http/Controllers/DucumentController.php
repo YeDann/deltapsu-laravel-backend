@@ -555,18 +555,17 @@ class DucumentController extends Controller
         ]);
         // return dd($products);
         foreach($products as $product){
-        
-          $exitProInCate = DB::table('product_has_documents')
-            ->where('product_id' ,$product)
-            ->where('document_id',$doc_cate_id)
+    
+             $exitProInCate  =  DB::table('product_has_documents as phd')
+             ->join('product_ducuments as pd','pd.doc_id','=','phd.document_id')
+             ->where('pd.cate_id',$doc_cate_id)
+             ->where('phd.product_id',$product)
              ->get();
 
             //  return dd($exitProInCate);
              if(count($exitProInCate)){
                 return redirect()->route('createDocMutidoc')->with('error_message', 'Already file type in this product');
              }
-          
-          
           }
     
         if ($validate->fails()) {
@@ -702,9 +701,10 @@ class DucumentController extends Controller
     $products = $request->product;
     foreach($products as $product){
         
-        $exitProInCate = DB::table('product_has_documents')
-          ->where('product_id' ,$product)
-          ->where('document_id',$doc_cate_id)
+           $exitProInCate  =  DB::table('product_has_documents as phd')
+           ->join('product_ducuments as pd','pd.doc_id','=','phd.document_id')
+           ->where('pd.cate_id',$doc_cate_id)
+           ->where('phd.product_id',$product)
            ->get();
            if(count($exitProInCate)){
               return redirect()->route('editDocMutidoc',$id)->with('error_message', 'Already file type in this product');
