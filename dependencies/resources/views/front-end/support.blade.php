@@ -172,7 +172,7 @@ textarea{
                 </div>
                 <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
                     <label class="text-title-detail-dark">{{$staticContent['Product_Type']}}<span class="red">*</span></label> 
-                        <select  id="type_id" name="type_id"  class="form-control" onchange="selectType();" >
+                        <select  id="type_id" name="type_id"  class="form-control" onchange="selectType();" required >
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Type']}}</option>
                             @foreach ($subCategories as $sub)
                             @if(in_array($sub->sub_pro_id, $arr_settype))
@@ -197,7 +197,7 @@ textarea{
                 </div> 
                 <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
                     <label class="text-title-detail-dark">{{$staticContent['Model']}}<span class="red">*</span></label>
-                        <select id="model_id"  name="model_name"  class="form-control"  disabled>
+                        <select id="model_id"  name="model_name"  class="form-control"  disabled required>
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Model']}}</option>
                         </select>
                 </div>
