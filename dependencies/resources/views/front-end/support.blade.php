@@ -172,7 +172,7 @@ textarea{
                 </div>
                 <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
                     <label class="text-title-detail-dark">{{$staticContent['Product_Type']}}<span class="red">*</span></label> 
-                        <select  id="type_id" name="type_id"  class="form-control" onchange="selectType();" required>
+                        <select  id="type_id" name="type_id"  class="form-control" onchange="selectType();" >
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Type']}}</option>
                             @foreach ($subCategories as $sub)
                             @if(in_array($sub->sub_pro_id, $arr_settype))
@@ -196,7 +196,7 @@ textarea{
                     </select>
                 </div> 
                 <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
-                    <label class="text-title-detail-dark">{{$staticContent['Model']}}</label>
+                    <label class="text-title-detail-dark">{{$staticContent['Model']}}<span class="red">*</span></label>
                         <select id="model_id"  name="model_name"  class="form-control"  disabled>
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Model']}}</option>
                         </select>
@@ -414,6 +414,12 @@ textarea{
         @if(Session::has('message_eror_notvertify'))
         $(document).ready(function() {
              $("#downloadgui-modal-vetify-robot").modal();
+          });
+        @endif
+
+        @if(Session::has('message_eror_notValid'))
+        $(document).ready(function() {
+             $("#Support_Frorm_required").modal();
           });
         @endif
 

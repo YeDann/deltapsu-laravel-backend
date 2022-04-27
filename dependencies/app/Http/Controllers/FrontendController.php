@@ -3346,6 +3346,21 @@ class FrontendController extends Controller
         );
     
         $body = json_decode((string)$response->getBody());
+
+        $validate = Validator::make($request->all(), [
+            'subject' => ['required'],
+            'type_id' => ['required'],
+            'model_name' => ['required'],
+            'type_name' => ['required'],
+            'name' => ['required'],
+            'email' => ['required'],
+            'company' => ['required'],
+            'country' => ['required']
+        ]);
+        if ($validate->fails()) {
+            // return redirect()->back()->withErrors($validate->errors());
+            return \Redirect::back()->with("message_eror_notValid","Can not send");
+        }
         // return dd($body->success);
         
         if($body->success){

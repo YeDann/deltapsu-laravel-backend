@@ -75,6 +75,7 @@
                         <th class="th-sm">Country</th>
                         <th class="th-sm">Type</th>
                         <th class="th-sm">Model</th>
+                        <th class="th-sm">Tel</th>
                         <th class="th-sm">Created_at</th>
                         <th class="th-sm">Config file</th>
                     </tr>
@@ -89,6 +90,7 @@
                     <td class="d-none d-sm-table-cell">{{$item->country}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->type_name}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->model_name}}</td>
+                    <td class="d-none d-sm-table-cell">{{$item->tel}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->created_at}}</td>
                     <td class="text-center">
                      @if(isset($item->file))
