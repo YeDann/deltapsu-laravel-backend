@@ -699,19 +699,7 @@ class DucumentController extends Controller
     $oldfile = $request->oldfile;
     // return dd($langs);
     $products = $request->product;
-    foreach($products as $product){
-        
-           $exitProInCate  =  DB::table('product_has_documents as phd')
-           ->join('product_ducuments as pd','pd.doc_id','=','phd.document_id')
-           ->where('pd.cate_id',$doc_cate_id)
-           ->where('phd.product_id',$product)
-           ->get();
-           if(count($exitProInCate)){
-              return redirect()->route('editDocMutidoc',$id)->with('error_message', 'Already file type in this product');
-           }
-        
-        
-        }
+  
     $validate = Validator::make($request->all(), [
         'name' => 'required',
     ]);
