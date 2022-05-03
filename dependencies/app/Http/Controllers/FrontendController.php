@@ -3354,14 +3354,14 @@ class FrontendController extends Controller
             'type_name' => ['required'],
             'name' => ['required'],
             'email' => ['required'],
-            'company' => ['required'],
+            // 'company' => ['required'],
             'country' => ['required']
         ]);
         if ($validate->fails()) {
             // return redirect()->back()->withErrors($validate->errors());
             return \Redirect::back()->with("message_eror_notValid","Can not send");
         }
-        // return dd($body->success);
+      
         
         if($body->success){
     

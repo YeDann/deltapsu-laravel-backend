@@ -874,6 +874,7 @@
 					<input type="hidden" name="enquireStatus" id="enquireStatus" value="3">
 					<input type="hidden" id="subject" name="subject" value="Configurable Power PDF Download">
 					<input type="hidden" name="type_name" id="type_name" value="Configurable Power">
+					<input type="hidden" name="type_id" id="type_id" value="7">
 					<input type="hidden" name="model_name" id="model_name">
 					<div class="form-group row">
 						<div class="col-lg-6 col-md-12 my-2">
@@ -1007,17 +1008,23 @@
 	  });
 	};
 	$("#submitSupport").submit(function( event ) {
-	  if($('#keyrecap').val() == ''){
-		 alert('Please Vertify I am not a robot?');
-	  }else{
-		$('#submitSupport').submit();
-	  }
+	//   if($('#keyrecap').val() == ''){
+	// 	 alert('Please Vertify I am not a robot?');
+	//   }else{
+	// 	$('#submitSupport').submit();
+	//   }
+	  $('#submitSupport').submit();
 	  event.preventDefault();
    });
 
        @if(Session::has('message_eror'))
         $(document).ready(function() {
              $("#downloadgui-modal-failures").modal();
+          });
+        @endif
+		@if(Session::has('message_eror_notValid'))
+        $(document).ready(function() {
+             $("#Support_Frorm_required").modal();
           });
         @endif
 
