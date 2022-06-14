@@ -2084,8 +2084,11 @@ function selectCountry(){
 	 doc.open();
 	 doc.write(
             '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional //EN" "http://www.w3.org/TR/html4/loose.dtd">'+
-            '<html><head><link rel="stylesheet" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}" >'+
+            '<html><head>'+
+			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}" >'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/font.css')}}">'+
+			'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC&display=swap">'+
+			'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/embepdf.css')}}">'+
 		    '<link rel="stylesheet" href="{{asset('/frontend-asset/css/header-front.css')}}">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/container.css')}}">'+
@@ -2093,9 +2096,6 @@ function selectCountry(){
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/product.css')}}">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/procompare.css')}}">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/bulltetpdf.css')}}">'+
-			'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC&display=swap">'+
-			'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap">'+
-			'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap">'+
             '<\/style><\/head><body><\/body><\/html>'
         );
         doc.close();
@@ -2109,7 +2109,6 @@ function selectCountry(){
 		const filename  = 'configurable-power-selector.pdf';
 		var tar = $("#PDFconfigurable").contents().find("#savethis")[0];
 		html2canvas(tar,{
-			   letterRendering: 1,
 			   useCORS:true,
                 onrendered: function(canvas) {  
                 	 //Returns the image data URL, parameter: image format and clarity (0-1)
