@@ -793,8 +793,8 @@
                                 <tr>
 
                             
-                                <td><a href="https://www.deltapsu.com/tools/product-selector" target="_blank"><img  height="150"  src="https://www.deltapsu.com/etc/imagelink/showimage/Product-selector_button.png" alt="img"></a></td>
-                                <td><a href="https://www.deltapsu.com/tools/configurable-product-selection" target="_blank"><img   height="150"  src="https://www.deltapsu.com/etc/imagelink/showimage/Configurableselector_button.png"></a></td>
+                                <td><a href="https://www.deltapsu.com/tools/product-selector" target="_blank"><img  height="150"  src="https://www.deltapsu.com/frontend-asset/image/Product-selector_button.png" alt="img"></a></td>
+                                <td><a href="https://www.deltapsu.com/tools/configurable-product-selection" target="_blank"><img   height="150"  src="https://www.deltapsu.com/frontend-asset/image/Configurableselector_button.png"></a></td>
                                 </tr>
                                 </tbody>
                             </table>
