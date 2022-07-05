@@ -77,10 +77,14 @@ tbody >tr > td:first-child{
 }
  </style>
    <style type="text/css">
-   
+    @font-face {
+        font-family: "DeltaSansSan";
+       src: url("../fonts/DeltaSans-Regular.woff") format('woff'),
+       url('../fonts/DeltaSans-Regular.woff2') format('woff2');
+    }
     
     * {
-        font-family: 'DeltaSans';
+      font-family:"DeltaSansSan";
     }
     </style>
 </head>
