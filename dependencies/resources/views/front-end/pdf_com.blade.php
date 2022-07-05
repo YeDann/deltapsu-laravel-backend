@@ -78,12 +78,12 @@ tbody >tr > td:first-child{
  </style>
    <style type="text/css">
     @font-face {
-       font-family:ArialUnicodeMSPDF;
+       font-family:ArialUnicodeMS;
        src: url('{{asset('/frontend-asset/fonts/ArialUnicodeMS.ttf')}}') format('truetype');
     }
     
     * {
-      font-family:ArialUnicodeMSPDF;
+      font-family:ArialUnicodeMS;
     }
     </style>
 </head>
