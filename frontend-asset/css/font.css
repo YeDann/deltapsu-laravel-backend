@@ -21,10 +21,31 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: "DeltaSans";
+    src: url("../fonts/DeltaSans-Regular.woff") format('woff'),
+    url('../fonts/DeltaSans-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: "DeltaSans";
+    src: url("../fonts/DeltaSans-Light.woff") format('woff'),
+    url('../fonts/DeltaSans-Light.woff') format('woff2');
+    font-weight:lighter;
+}
+
+@font-face {
+    font-family: "DeltaSans";
+    src: url("../fonts/DeltaSans-SemiBold.woff") format('woff'),
+    url('../fonts/DeltaSans-SemiBold.woff2') format('woff2');
+    font-weight: bold;
+}
+
 /* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1080">Text with this font applied</p> */
 .fontsforweb_fontid_1080 {
-	font-family: 'ArialUnicodeMS' !important;
+	font-family: 'DeltaSans' !important;
 }
+
 
 
 

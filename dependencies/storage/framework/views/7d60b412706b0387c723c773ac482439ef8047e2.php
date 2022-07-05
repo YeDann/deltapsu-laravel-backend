@@ -1,0 +1,624 @@
+<?php $__env->startSection('style'); ?>
+<style>
+    .card-header-collapes {
+        border: 1px solid gray;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    #accordion_input {
+        width: 100%;
+    }
+
+    .card-body {
+        padding: 10px;
+    }
+
+
+
+    .inline-box {
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+
+    .input-group-addon {
+        padding: 6px 12px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1;
+        color: #555;
+        text-align: center;
+        background-color: #eee;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .product-custom-field {
+        max-width: 150px;
+        display: inline-block;
+        margin-top: 5px;
+        margin-right: 5px;
+    }
+
+    .product-custom-field-min {
+        max-width: 150px;
+        display: inline-block;
+        margin-top: 5px;
+        margin-right: 5px;
+    }
+
+    .input-group-addon,
+    .input-group-btn {
+        width: 1%;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    .input-group {
+        position: relative;
+        display: table;
+        border-collapse: separate;
+    }
+
+    .input-group input {
+        width: 100% !important;
+    }
+
+    .input-group .form-control,
+    .input-group-addon,
+    .input-group-btn {
+        display: table-cell;
+    }
+
+    .btn-add-input {
+        display: inline-block;
+    }
+
+    .p-l {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    .p-r {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+
+</style>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+<!-- Nav -->
+<div class="bg-body-light">
+    <div class="content content-full">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Create Product</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"> <a href="<?php echo e(route('products.index')); ?>">Products</a> </li>
+                    <li class="breadcrumb-item active" aria-current="page">Create</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Content -->
+<div class="content">
+    <div class="block block-rounded block-bordered">
+        <div class="block-header block-header-default">
+            <h3 class="block-title">Product Information</h3>
+        </div>
+        <div class="block-content">
+            <form action="<?php echo e(route('storeProduct')); ?>" method="POST" enctype="multipart/form-data">
+                <?php echo e(csrf_field()); ?>
+
+                <!-- Basic Elements -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                           
+                            <label for="example-select">Product Code <span class="req-fed">*</span></label>
+                            <input type="text"
+                                class="form-control <?php echo e($errors->has('productCode') ? 'is-invalid' : ''); ?>"
+                                name="productCode" value="<?php echo e(old('productCode')); ?>" placeholder="Enter name..." required>
+                                <span class="req-fed">Remark* Don't use ( & ) in product code</span>
+                        </div>
+                        
+
+                        <div class="form-group">
+                            <label class="d-block">Select Product Category  <span class="req-fed">*</span></label>
+                            <?php $__currentLoopData = $subCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sub): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="checkbox" onclick="selectProductcategories(<?php echo e($sub->sub_pro_id); ?>)" class="custom-control-input" id="dataCate<?php echo e($sub->sub_pro_id); ?>" name="pro_categories[]"
+                                    value="<?php echo e($sub->sub_pro_id); ?>" >
+                                <label class="custom-control-label" for="dataCate<?php echo e($sub->sub_pro_id); ?>"><?php echo e($sub->name); ?></label>
+                            </div>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <input type="hidden" name="categorie" id="categories">
+                        </div>
+                        <div class="form-group">
+                            <label for="example-select">Select Series <span class="req-fed">*</span></label>
+                            <select class="js-select2 form-control" id="SeriesId" name="Series"
+                                data-placeholder="Choose one.." required>
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="d-block">Segment  <span class="req-fed">*</span></label>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="checkbox" class="custom-control-input" id="status_induc" name="status_certificate[]"
+                                    value="1" checked>
+                                <label class="custom-control-label" for="status_induc">Industrial</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="checkbox" class="custom-control-input" id="status_medical" name="status_certificate[]"
+                                    value="2">
+                                <label class="custom-control-label" for="status_medical">Medical</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="checkbox" class="custom-control-input" id="status_residen" name="status_certificate[]"
+                                    value="3">
+                                <label class="custom-control-label" for="status_residen">Lighting & Signage</label>
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <label>Dimension L</label>
+                            <label><span class="req-fed">Choice A: Use numeric value for simple display L x W x D.
+                                    Choice B: Use HTML to display any free text and ignore dimensionW and dimensionD
+                                </span></label>
+                            <input type="text" class="form-control" value="<?php echo e(old('dimensionL')); ?>" name="dimensionL"
+                                placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Dimension W</label>
+                            <input type="text" class="form-control" name="dimensionw" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Dimension D</label>
+                            <input type="text" class="form-control" name="dimensionD" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Unit Weight <span style="color:red;">(kg only)</span></label>
+                            <input type="text" class="form-control" name="unitWeight" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label class="d-block">Status <span class="req-fed">*</span></label>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status_none" name="status_pro"
+                                    value="1" checked>
+                                <label class="custom-control-label" for="status_none">None</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status_new" name="status_pro"
+                                    value="2">
+                                <label class="custom-control-label" for="status_new">NEW</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status_update" name="status_pro"
+                                    value="3">
+                                <label class="custom-control-label" for="status_update">UPDATED</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status_eol" name="status_pro"
+                                    value="4">
+                                <label class="custom-control-label" for="status_eol">EOL</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Tag</label>
+                          <select name="tag[]" class="form-control js-example-tags"  data-placeholder="Enter tag.." multiple="multiple">
+                            <option></option>
+                            <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <option value="<?php echo e($pro->pro_code); ?>"><?php echo e($pro->pro_code); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                          </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Related Products</label>
+                            <select  id="relatePro" class="js-select2 form-control" name="relatePro[]" data-placeholder="Choose many.."  multiple>
+                                <option></option>
+                                <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($pro->pro_id); ?>"><?php echo e($pro->pro_code); ?></option>
+                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                             </select>
+                        </div>
+
+
+
+
+                        <div class="block block-rounded block-bordered">
+                          
+                            <div class="block-content tab-content">
+                                <?php $__currentLoopData = $language; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <input type="hidden" name="lang_loop[]" value="<?php echo e($item->name); ?>">
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                <div class="form-group">
+                                        <label for="">Highlights & Features</label>
+                                        <textarea name="overview" class="jsnotenew"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Content</label>
+                                        <textarea name="content" class="jsnotenew"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="d-block">show/hide language</label>
+                                        <div
+                                            class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                            <input type="radio" class="custom-control-input"
+                                                id="status-1en" name="status" value="1"
+                                                checked>
+                                            <label class="custom-control-label"
+                                                for="status-1en">Show</label>
+                                        </div>
+                                        <div
+                                            class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                            <input type="radio" class="custom-control-input"
+                                                id="status-2en" name="status" value="0">
+                                            <label class="custom-control-label"
+                                                for="status-2en">Hide</label>
+                                        </div>
+
+                                    </div>
+                                 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-vcenter">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="width: 10px;">
+                                            File Type
+                                        </th>
+                                        <th style="width: 300px;">Preview</th>
+                                        <th>Upload File</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            Thumbnail
+                                        </td>
+                                        <td class="font-w600">
+                                            <img src="https://via.placeholder.com/200x200.png"
+                                                class="img-thumbnail imagePreview2" alt="">
+                                        </td>
+                                        <td class="">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input"
+                                                    data-toggle="custom-file-input" id="thumbnail" name="thumbnail"
+                                                    value="no image" accept="image/*">
+                                                <label id="label2" class="custom-file-label" for="thumbnail">Choose
+                                                    file</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="accordion_input">
+                            <?php $__currentLoopData = $section; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sect): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="card">
+                                <div class="card-header card-header-collapes" data-toggle="collapse"
+                                    href="#collapseheader<?php echo e($sect->sectid); ?>">
+                                    <a class="card-link">
+                                        <?php echo e($sect->name); ?>
+
+                                    </a>
+                                </div>
+                                <div id="collapseheader<?php echo e($sect->sectid); ?>"
+                                    class="collapse <?php echo e(($loop->iteration == 1 ) ? 'show' : ''); ?>"
+                                    data-parent="#accordion_input">
+                                    <div class="card-body">
+                                        <?php $__currentLoopData = $pd_fields; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $field): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if($sect->sectid == $field->section_id): ?>
+                                        <?php if($field->type == "text"): ?>
+                                        <input type="hidden" class="form-control"
+                                        name="productfieldText[]" value="<?php echo e($field->pd_field_id); ?>">
+                                        <div class="data-text">
+                                            <div class="form-group">
+                                                <label class="d-block"><?php echo e($field->field_name); ?></label>
+                                                <input type="text" class="form-control"
+                                                    name="inputText[<?php echo e($field->pd_field_id); ?>][en]">
+                                            </div>
+                                        </div>
+                                        <?php else: ?>
+                                        <div class="data-number">
+                                                <input type="hidden" class="form-control"
+                                                name="productfieldNumbers[]" value="<?php echo e($field->pd_field_id); ?>">
+                                            <div class="form-group">
+                                                <label class="d-block"><?php echo e($field->field_name); ?></label>
+                                                <div
+                                                    class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                                    <input type="radio" class="custom-control-input" onchange="selectinputtype(<?php echo e($field->pd_field_id); ?> ,1);"
+                                                        id="status_input_sig<?php echo e($field->pd_field_id); ?>" name="status_input[<?php echo e($field->pd_field_id); ?>]"
+                                                        value="1" checked>
+                                                    <label class="custom-control-label"
+                                                        for="status_input_sig<?php echo e($field->pd_field_id); ?>">Single</label>
+                                                </div>
+                                                <div
+                                                    class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                                    <input type="radio" class="custom-control-input"  onchange="selectinputtype(<?php echo e($field->pd_field_id); ?> ,2);"
+                                                        id="status_input_Mutl<?php echo e($field->pd_field_id); ?>" name="status_input[<?php echo e($field->pd_field_id); ?>]"
+                                                        value="2">
+                                                    <label class="custom-control-label"
+                                                        for="status_input_Mutl<?php echo e($field->pd_field_id); ?>">Multiple</label>
+                                                </div>
+                                                <div
+                                                    class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                                    <input type="radio" class="custom-control-input"  onchange="selectinputtype(<?php echo e($field->pd_field_id); ?> ,3);"
+                                                        id="status_input_Rang<?php echo e($field->pd_field_id); ?>" name="status_input[<?php echo e($field->pd_field_id); ?>]"
+                                                        value="3">
+                                                    <label class="custom-control-label"
+                                                        for="status_input_Rang<?php echo e($field->pd_field_id); ?>">Range</label>
+                                                </div>
+                                            </div>
+                                         
+                                            <div class="mulltiple-box<?php echo e($field->pd_field_id); ?> d-none">
+                                                <div class="product-custom-field addfield1">
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon p-l">1</span>
+                                                        <input name="inputNumber[<?php echo e($field->pd_field_id); ?>][m][1]" type="number"
+                                                             class="form-control">
+                                                        <span
+                                                            class="input-group-addon number_type_remove p-r" onclick="deletemutifield(<?php echo e($field->pd_field_id); ?> , 1);">-</span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-custom-field addfield2">
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon p-l">2</span>
+                                                        <input name="inputNumber[<?php echo e($field->pd_field_id); ?>][m][2]" type="number"
+                                                            step="any" class="form-control">
+                                                        <span
+                                                            class="input-group-addon number_type_remove p-r" onclick="deletemutifield(<?php echo e($field->pd_field_id); ?> , 2);">-</span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-custom-field addfield3">
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon p-l">3</span>
+                                                        <input name="inputNumber[<?php echo e($field->pd_field_id); ?>][m][3]" type="number"
+                                                             step="any" class="form-control">
+                                                        <span
+                                                            class="input-group-addon number_type_remove p-r" onclick="deletemutifield(<?php echo e($field->pd_field_id); ?> , 3);">-</span>
+                                                    </div>
+                                                </div>
+                                                <div class="btn-add-input">
+                                                    <div class="form-group input-group">
+                                                        <button type="button" class="btn"
+                                                            onclick="addMutlple(<?php echo e($field->pd_field_id); ?>);">
+                                                            Add
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                             
+                                            </div>
+                                            <div class="range-box<?php echo e($field->pd_field_id); ?> d-none">
+                                            <div class="product-custom-field-min">
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon p-l">Min</span>
+                                                    <input name="inputNumber[<?php echo e($field->pd_field_id); ?>][r][1]" type="number" step="any" 
+                                                        class="form-control">
+
+                                                </div>
+                                            </div>
+                                            <div class="product-custom-field-min">
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon p-l">Max</span>
+                                                    <input name="inputNumber[<?php echo e($field->pd_field_id); ?>][r][2]" type="number" step="any" 
+                                                        class="form-control">
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="single-box<?php echo e($field->pd_field_id); ?>">
+                                            <div class="product-custom-field-min">
+                                                <div class="form-group input-group ">
+                                                    <input name="inputNumber[<?php echo e($field->pd_field_id); ?>][s][1]" type="number" step="any" 
+                                                        class="form-control">
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <?php endif; ?>
+                                        <?php endif; ?>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="d-block">Enable/ Disable</label>
+                            <div
+                                class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input"
+                                    id="status-cl1en" name="enable_pro" value="1"
+                                    checked>
+                                <label class="custom-control-label"
+                                    for="status-cl1en">Enable</label>
+                            </div>
+                            <div
+                                class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input"
+                                    id="status-cl2en" name="enable_pro" value="0">
+                                <label class="custom-control-label"
+                                    for="status-cl2en">Disable</label>
+                            </div>
+                        </div>
+                        <div class="form-group mt-5">
+                            <label class="d-block">Is manaul page show?</label>
+                            <div
+                                class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input"
+                                    id="status-manaul" name="manaul_status" value="1"
+                                    checked>
+                                <label class="custom-control-label"
+                                    for="status-cl1en">Show</label>
+                            </div>
+                            <div
+                                class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input"
+                                    id="status-manaul2" name="manaul_status" value="0"  >
+                                <label class="custom-control-label"
+                                    for="status-manaul2">Hide</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center mt-5">
+                            <button class="btn btn-success" type="submit">Create
+                            </button>
+                            <a href="<?php echo e(route('products.index')); ?>" class="btn btn-secondary">
+                                Cancel
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('js'); ?>
+<script>
+    $('.jssummernote').summernote({
+        tabsize: 2,
+        height: 200
+    });
+    $('.jssummernote1').summernote({
+        tabsize: 2,
+        height: 300
+    });
+    $(".js-example-tags").select2({
+     tags: true
+});
+     function selectinputtype(id ,type){
+       
+             $('.single-box'+id+' input[type="number"]').val('');
+             $('.mulltiple-box'+id+' input[type="number"]').val('');
+             $('.range-box'+id+' input[type="number"]').val('');
+
+             $('.single-box'+id).removeClass('d-block');
+                $('.mulltiple-box'+id).removeClass('d-block');
+                $('.range-box'+id).removeClass('d-block');
+            if(type == 1){
+                $('.single-box'+id).addClass('d-block');
+                $('.mulltiple-box'+id).addClass('d-none');
+                $('.range-box'+id).addClass('d-none');
+            }else if(type == 2){
+                $('.single-box'+id).addClass('d-none');
+                $('.mulltiple-box'+id).addClass('d-block');
+                $('.range-box'+id).addClass('d-none');
+            }else if(type == 3){
+                $('.single-box'+id).addClass('d-none');
+                $('.mulltiple-box'+id).addClass('d-none');
+                $('.range-box'+id).addClass('d-block');
+
+              
+            }
+     
+     }
+     function addMutlple(id){
+        var numItems = $('.mulltiple-box'+id).find('.product-custom-field').length;
+        if(numItems < 12){
+            var html = '';
+            html += '<div class="product-custom-field addfield'+(numItems+1)+'">';
+            html += '<div class="form-group input-group">';
+            html += ' <span class="input-group-addon p-l">'+(numItems+1)+'</span>';
+            html += '<input name="inputNumber['+id+'][m]['+(numItems+1)+']" type="number"  step="any" class="form-control">';
+            html += '<span class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+id+','+(numItems+1)+');">-</span></div>';
+            html += '</div>';
+            $('.mulltiple-box'+id).append(html)
+            $('.mulltiple-box'+id +' .btn-add-input').insertAfter('.mulltiple-box'+id+' .product-custom-field:last-child')
+
+        }else{
+           alert('Max Multiple is 12');
+        }
+       
+     }
+     function deletemutifield(id,numItems){
+       $('.mulltiple-box'+id + ' .addfield'+numItems).remove();
+       $('.mulltiple-box'+id+ ' .product-custom-field').attr('class', 'product-custom-field');
+       $.each($('.mulltiple-box'+id+ ' .product-custom-field'),function(index,val){
+            $(val).addClass('addfield'+(index+1))
+           $(val).children('.input-group').children('.input-group-addon.p-l').text(index+1);
+           $(val).children('.input-group').children('input').attr('name','inputNumber['+id+'][m]['+(index+1)+']')
+           $(val).children('.input-group').children('.input-group-addon.number_type_remove.p-r').attr('onclick','deletemutifield('+id+','+(index+1)+');')
+       })
+     }
+</script>
+<script>
+    var previewImage = function (input, block) {
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
+        var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
+
+        if (isSuccess) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                block.attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+            return false;
+        } else {
+            alert('File is not expept!');
+            return true;
+        }
+
+    };
+
+
+    $(document).on('change', '#thumbnail', function () {
+        var FileSize = this.files[0].size / 1024 / 1024; // in MB
+        if (FileSize > 2) {
+            alert("File size exceeds 2 MB!");
+            this.value = "";
+            $('#label2').text('Choose file');
+        } else {
+            previewImage(this, $('.imagePreview2'));
+        }
+
+    });
+     var categorie = [];
+    function selectProductcategories(id) {
+        if(categorie.indexOf(id) == -1){
+            categorie.push(id);
+        }else{
+        var index = categorie.indexOf(id);
+            if (index > -1) {
+                categorie.splice(index, 1);
+            }
+        }
+        $.ajax({
+            url: "<?php echo e((route('searhSeries'))); ?>",
+            data: {
+            'data': categorie,
+           },
+           type: 'get',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                var options = '';
+
+                for (var i = 0; i < data.modalContent.length; i++) {
+                    options += '<option value="' + data.modalContent[i].se_id + '">' + data.modalContent[i]
+                        .title + '</option>';
+                }
+                $("select#SeriesId").html(options);
+            }
+
+        });
+
+    }
+
+</script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/Deltapsu_Production/dependencies/resources/views/product/create.blade.php ENDPATH**/ ?>

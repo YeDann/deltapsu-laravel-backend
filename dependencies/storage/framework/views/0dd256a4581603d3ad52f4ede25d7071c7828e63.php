@@ -7,9 +7,9 @@
     <link rel="shortcut icon" href="<?php echo e(asset('/frontend-asset/image/icon/delta_favicon.ico')); ?>" type="image/x-icon">
     <link rel="icon" href="<?php echo e(asset('/frontend-asset/image/icon/delta_favicon.ico')); ?>" type="image/x-icon">
     <!-- CSRF Token -->
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="noindex">
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
-    <?php echo $__env->yieldContent('meta'); ?>
+    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" media="screen"/>
     <link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/header-front.css')); ?>" media="screen"/>

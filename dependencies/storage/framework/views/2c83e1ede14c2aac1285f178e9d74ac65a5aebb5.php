@@ -150,7 +150,7 @@
                             </div>
                             <div class=" ">
                                 <a href="<?php echo e(route('index','product-documents')); ?>">
-                                    <p class="text-pro-link"><?php echo e(isset($staticContent['Product_Documents'])?:"Product Documents"); ?></p>
+                                    <p class="text-pro-link"><?php echo e(isset($staticContent['Product_Documents'])?$staticContent['Product_Documents']:"Product Documents"); ?></p>
                                     
                                 </a>
                             </div>
