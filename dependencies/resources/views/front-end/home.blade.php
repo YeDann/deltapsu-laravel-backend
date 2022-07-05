@@ -209,9 +209,9 @@
                 <div class="m-auto">
                     <a href="{{ route('producsList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])}}">
                      @if($sub->image != null)
-                    <img class="" src="{{config('app.url')}}/medias/categories/{{$sub->image}}" alt="">
+                    <img  data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy" class="lazyload"  alt="{{$sub->image}}">
                     @else
-                    <img class="" src="{{asset('frontend-asset/image/blank.png')}}" alt="">
+                    <img  data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy" class="lazyload"  alt="blank.png">
                     @endif
                     <div style="height: 50px; " class="d-flex">
                         <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$sub->name}}</h4>
@@ -234,11 +234,11 @@
                 <div class="border-2px d-flex h-100 p-1 align-items-center" style="    box-shadow: 0px 4px 5px 2px rgba(0, 0, 0, 0.09);">
                     <div class="m-auto">
                         <a href="{{ route('producsList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])}}">
-                        @if($sub->image != null)
-                        <img class="" src="{{config('app.url')}}/medias/categories/{{$sub->image}}" alt="">
-                        @else
-                        <img class="" src="{{asset('frontend-asset/image/blank.png')}}" alt="">
-                        @endif
+                          @if($sub->image != null)
+                            <img  data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy" class="lazyload"  alt="{{$sub->image}}">
+                            @else
+                            <img  data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy" class="lazyload"  alt="blank.png">
+                            @endif
                         <div style="height: 50px; " class="d-flex">
                             <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$sub->name}}</h4>
                         </div>
@@ -259,8 +259,8 @@
                 @foreach ($applications as $item)
                 <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->applica_id.'-'.$item->name)])}}" class="" style="">
                     <div class="grid-item ">
-                        <div class="grid-sub-pic"
-                            style="background: url('{{config('app.url')}}/medias/categories/{{$item->thumbnail}}');">
+                        <div loading="lazy"   data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" class="grid-sub-pic"
+                          >
                             {{--  <img src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" alt=""> --}}
                         </div>
                         <div class="grid-sub-text">

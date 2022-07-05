@@ -209,9 +209,9 @@
                 <div class="m-auto">
                     <a href="<?php echo e(route('producsList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])); ?>">
                      <?php if($sub->image != null): ?>
-                    <img class="" src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($sub->image); ?>" alt="">
+                    <img  data-src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($sub->image); ?>" loading="lazy" class="lazyload"  alt="<?php echo e($sub->image); ?>">
                     <?php else: ?>
-                    <img class="" src="<?php echo e(asset('frontend-asset/image/blank.png')); ?>" alt="">
+                    <img  data-src="<?php echo e(asset('frontend-asset/image/blank.png')); ?>" loading="lazy" class="lazyload"  alt="blank.png">
                     <?php endif; ?>
                     <div style="height: 50px; " class="d-flex">
                         <h4 class="text-title-dark mx-auto fix-text-width-product-selector"><?php echo e($sub->name); ?></h4>
@@ -234,11 +234,11 @@
                 <div class="border-2px d-flex h-100 p-1 align-items-center" style="    box-shadow: 0px 4px 5px 2px rgba(0, 0, 0, 0.09);">
                     <div class="m-auto">
                         <a href="<?php echo e(route('producsList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])); ?>">
-                        <?php if($sub->image != null): ?>
-                        <img class="" src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($sub->image); ?>" alt="">
-                        <?php else: ?>
-                        <img class="" src="<?php echo e(asset('frontend-asset/image/blank.png')); ?>" alt="">
-                        <?php endif; ?>
+                          <?php if($sub->image != null): ?>
+                            <img  data-src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($sub->image); ?>" loading="lazy" class="lazyload"  alt="<?php echo e($sub->image); ?>">
+                            <?php else: ?>
+                            <img  data-src="<?php echo e(asset('frontend-asset/image/blank.png')); ?>" loading="lazy" class="lazyload"  alt="blank.png">
+                            <?php endif; ?>
                         <div style="height: 50px; " class="d-flex">
                             <h4 class="text-title-dark mx-auto fix-text-width-product-selector"><?php echo e($sub->name); ?></h4>
                         </div>
@@ -259,8 +259,8 @@
                 <?php $__currentLoopData = $applications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <a href="<?php echo e(route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->applica_id.'-'.$item->name)])); ?>" class="" style="">
                     <div class="grid-item ">
-                        <div class="grid-sub-pic"
-                            style="background: url('<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($item->thumbnail); ?>');">
+                        <div loading="lazy"   data-src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($item->thumbnail); ?>" class="grid-sub-pic"
+                          >
                             
                         </div>
                         <div class="grid-sub-text">

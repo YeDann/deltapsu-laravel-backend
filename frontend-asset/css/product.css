@@ -146,7 +146,7 @@ a:hover{
     font-weight: bold;
 }
 .text-title {
-    font-family: 'ArialUnicodeMS';
+    font-family: 'DeltaSans';
     color: #0087DC;
     font-size: 32px;
     line-height: 47px;
@@ -327,7 +327,7 @@ a:hover{
 .link-see-product {
     font-size: 16px;
     line-height: 24px;
-    font-family: 'ArialUnicodeMS';
+    font-family: 'DeltaSans';
     cursor: pointer;
     font-weight: bold;
     color: #0087DC;
@@ -387,7 +387,7 @@ a:hover{
 .text-all-pro-type {
     font-size: 24px;
     line-height: 28px;
-    font-family: 'ArialUnicodeMS';
+    font-family: 'DeltaSans';
     padding: 47px 35px 8px 35px;
     text-align: center;
 }
@@ -395,7 +395,7 @@ a:hover{
 .text-all-pro-type-detail {
     font-size: 16px;
     line-height: 24px;
-    font-family: 'ArialUnicodeMS';
+    font-family: 'DeltaSans';
     text-align: center
 }
 
@@ -435,7 +435,7 @@ input:checked+label {
 .grid-icon {
     font-size: 16px;
     line-height: 24px;
-    font-family: 'ArialUnicodeMS';
+    font-family: 'DeltaSans';
     cursor: pointer;
     color: #ffffff;
     margin: 0px 5px;
@@ -581,7 +581,7 @@ input:checked+label {
 .text-over {
     font-size: 12px;
     line-height: 14px;
-    font-family: 'ArialUnicodeMS';
+    font-family: 'DeltaSans';
     display: block;
     background-color: #0087DC;
     color: #000;
@@ -595,7 +595,7 @@ input:checked+label {
 }
 
 .font-card {
-    font-family: 'ArialUnicodeMS';
+    font-family: 'DeltaSans';
     font-size: 18px;
     line-height: 24px;
 }
@@ -611,7 +611,7 @@ input:checked+label {
 .text-card-detial {
     font-size: 14px;
     line-height: 24px;
-    font-family: 'ArialUnicodeMS';
+    font-family: 'DeltaSans';
 }
 
 a.filter-mobile-link {
@@ -627,7 +627,7 @@ a.filter-mobile-link:hover {
 .view-pro-detial {
     font-size: 14px;
     line-height: 16px;
-    font-family: 'ArialUnicodeMS';
+    font-family: 'DeltaSans';
     font-weight: 600;
     color: #000;
     cursor: pointer;
@@ -650,7 +650,7 @@ a.filter-mobile-link:hover {
 .header-font-table {
     font-size: 12px !important;
     line-height: 24px !important;
-    font-family: 'ArialUnicodeMS';
+    font-family: 'DeltaSans';
     font-weight: bold;
     color: #ffffff;
 }
@@ -737,7 +737,7 @@ a.filter-mobile-link:hover {
 .count-products {
     font-size: 16px;
     line-height: 16px;
-    font-family: 'ArialUnicodeMS';
+    font-family: 'DeltaSans';
     padding: 26px 0 0 0;
     text-align: left;
 }
@@ -811,7 +811,7 @@ e.search-filter-action {
 .card-header-filter {
     font-size: 18px;
     line-height: 30px;
-    font-family: 'ArialUnicodeMS';
+    font-family: 'DeltaSans';
     font-weight: bolder;
     padding: .75rem 5px;
     margin-bottom: 0;
@@ -1298,7 +1298,7 @@ e.search-filter-action {
     }
 
     .faqs-list {
-        font-family: 'ArialUnicodeMS';
+        font-family: 'DeltaSans';
         font-weight: bolder;
         padding: 2rem 5px;
         margin-bottom: -2px;

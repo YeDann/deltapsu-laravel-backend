@@ -31,7 +31,7 @@
     .comparison-list {
         font-size: 20px;
         line-height: 30px;
-        font-family: 'ArialUnicodeMS';
+        font-family: 'DeltaSans';
         font-weight: bolder;
         padding: 1rem 5px;
         margin-bottom: -2px;

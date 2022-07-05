@@ -21,7 +21,7 @@
      }
      .f-btn{
         font-size: 12px;
-        font-family: 'ArialUnicodeMS';
+        font-family: 'DeltaSans';
      }
      .btn-certi:hover{
          border: 1px solid #0087DC;

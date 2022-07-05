@@ -1,6 +1,6 @@
 @extends('layouts.front-end')
 @section('css')
-<link rel="stylesheet" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}" >
+<!-- <link rel="stylesheet" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}" > -->
 <style>
     table {
         border-collapse: unset;

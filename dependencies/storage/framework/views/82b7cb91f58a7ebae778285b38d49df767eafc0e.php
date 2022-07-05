@@ -397,7 +397,7 @@ top: -9px;
                                     <?php endif; ?>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <div class="image-dropdown d-flex justify-content-center " style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('<?php echo e(asset('frontend-asset/image/Dropdown.jpg')); ?>')no-repeat;">
-                                        <img class="imageNav2 img-hove-on-dropdown" src="<?php echo e(asset('frontend-asset/image/Industrial_Power_Supplies.png')); ?>" alt="">
+                                        <img class="imageNav2 img-hove-on-dropdown lazyload" loading="lazy"   data-src="<?php echo e(asset('frontend-asset/image/Industrial_Power_Supplies.png')); ?>" alt="Industrial_Power_Supplies.png">
                                     </div>
                                 </ul>
                             </div>
@@ -422,7 +422,7 @@ top: -9px;
                                     <?php endif; ?>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <div class="image-dropdown d-flex justify-content-center " style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('<?php echo e(asset('frontend-asset/image/Dropdown.jpg')); ?>')no-repeat;">
-                                        <img class="imageNav1 img-hove-on-dropdown" src="<?php echo e(asset('frontend-asset/image/Medical-Power-Supplies.png')); ?>" alt="">
+                                        <img class="imageNav1 img-hove-on-dropdown lazyload"  data-src="<?php echo e(asset('frontend-asset/image/Medical-Power-Supplies.png')); ?>" loading="lazy" alt="Medical-Power-Supplies.png">
                                     </div>
                                 </ul>
                             </div>
@@ -439,7 +439,7 @@ top: -9px;
                                     <li><a tabindex="-1"  class="text-c"   href="<?php echo e(route('allproductsByType',[preg_replace('/\s+/', '_', 'CV_Mode'),3 ,3])); ?>"><?php echo e($staticContent['CV_Mode']); ?></a>
                                     </li>
                                       <div class="image-dropdown d-flex justify-content-center " style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('<?php echo e(asset('frontend-asset/image/Dropdown.jpg')); ?>') no-repeat;">
-                                        <img class="imageNav3 img-hove-on-dropdown" src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($navcategories3[0]->image); ?>" alt="">
+                                        <img class="imageNav3 img-hove-on-dropdown lazyload" data-src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($navcategories3[0]->image); ?>" loading="lazy" alt="<?php echo e($navcategories3[0]->image); ?>">
                                     </div>
                                 </ul>
                             </div>

@@ -1,25 +1,3 @@
-@font-face {
-	font-family: 'Arial';
-	src: url('../fonts/Arial.eot');
-	src: url('../fonts/Arial.woff') format('woff'),
-    url('../fonts/Arial.ttf') format('truetype');
-}
-
-@font-face {
-	font-family: 'ArialUnicodeMS';
-	src: url('../fonts/ArialUnicodeMS.woff') format('woff'),
-    url('../fonts/ArialUnicodeMS.ttf') format('truetype');
-}
-@font-face {
-    font-family: 'Tazugane Gothic StdN';
-    src: url('../fonts/TazuganeGothicStdN-Regular.eot');
-    src: url('../fonts/TazuganeGothicStdN-Regular.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/TazuganeGothicStdN-Regular.woff2') format('woff2'),
-        url('../fonts/TazuganeGothicStdN-Regular.woff') format('woff'),
-        url('../fonts/TazuganeGothicStdN-Regular.ttf') format('truetype'),
-        url('../fonts/TazuganeGothicStdN-Regular.svg#TazuganeGothicStdN-Regular') format('svg');
-    font-display: swap;
-}
 
 @font-face {
     font-family: "DeltaSans";
@@ -38,6 +16,67 @@
     font-family: "DeltaSans";
     src: url("../fonts/DeltaSans-SemiBold.woff") format('woff'),
     url('../fonts/DeltaSans-SemiBold.woff2') format('woff2');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "NotosansTw";
+    src: url("../fonts/notosanstc-regular-webfont.woff") format('woff'),
+    url('../fonts/notosanstc-regular-webfont.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: "NotosansTw";
+    src: url("../fonts/notosanstc-light-webfont.woff2") format('woff'),
+    url('../fonts/notosanstc-light-webfont.woff2') format('woff2');
+    font-weight:lighter;
+}
+
+@font-face {
+    font-family: "NotosansTw";
+    src: url("../fonts/notosanstc-bold-webfont.woff") format('woff'),
+    url('../fonts/notosanstc-bold-webfont.woff') format('woff2');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "NotosansCN";
+    src: url("../fonts/notosanssc-regular-webfont.woff") format('woff'),
+    url('../fonts/notosanssc-regular-webfont.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: "NotosansCN";
+    src: url("../fonts/notosanssc-light-webfont.woff") format('woff'),
+    url('../fonts/notosanssc-light-webfont.woff2') format('woff2');
+    font-weight:lighter;
+}
+
+@font-face {
+    font-family: "NotosansCN";
+    src: url("../fonts/notosanssc-bold-webfont.woff") format('woff'),
+    url('../fonts/notosanssc-bold-webfont.woff2') format('woff2');
+    font-weight: bold;
+}
+
+
+@font-face {
+    font-family: "NotosansJP";
+    src: url("../fonts/notosansjp-regular-webfont.woff") format('woff'),
+    url('../fonts/notosansjp-regular-webfont.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: "NotosansJP";
+    src: url("../fonts/notosansjp-light-webfont.woff") format('woff'),
+    url('../fonts/notosansjp-light-webfont.woff2') format('woff2');
+    font-weight:lighter;
+}
+
+@font-face {
+    font-family: "NotosansJP";
+    src: url("../fonts/notosansjp-bold-webfont.woff") format('woff'),
+    url('../fonts/notosansjp-bold-webfont.woff2') format('woff2');
     font-weight: bold;
 }
 

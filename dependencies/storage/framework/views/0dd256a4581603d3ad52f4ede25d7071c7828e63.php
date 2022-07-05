@@ -28,18 +28,11 @@
     <link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/owl.carousel.min.css')); ?>" media="screen"/>
     <link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/product.css')); ?>" media="screen"/>
     <link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/font-awesome.css')); ?>" media="screen"/>
-    
     <link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/datatables.css')); ?>" media="screen"/>
-    
     <link rel="stylesheet" href="<?php echo e(asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')); ?>">
-    
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" media="screen"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.3/nouislider.min.css" rel="stylesheet" media="screen"/>
     <link href="<?php echo e(asset('/frontend-asset/css/jquery.datepicker.css')); ?>" rel="stylesheet" type="text/css" />
-    
     <link href="<?php echo e(asset('/frontend-asset/css/zabuto_calendar.css')); ?>" rel="stylesheet" type="text/css" />
-    
-   
+  
 
 
     <?php echo $__env->yieldContent('css'); ?>
@@ -96,7 +89,7 @@
  
       
       body{
-          font-family: 'ArialUnicodeMS', Helvetica, sans-serif  !important;
+          font-family: 'DeltaSans' !important;
       }
       html[lang="cn"] body,
       html[lang="cn"] h1,
@@ -109,7 +102,7 @@
       html[lang="cn"] span,
       html[lang="cn"] .link-nav-first,
       html[lang="cn"] label{  
-        font-family:'ArialUnicodeMS',Helvetica, sans-serif  !important;
+        font-family:'NotosansCN','DeltaSans'  !important;
       }
 
   
@@ -126,7 +119,7 @@
       html[lang="tw"] span ,
       html[lang="tw"] .link-nav-first,
       html[lang="tw"] label {  
-        font-family:'ArialUnicodeMS', Helvetica, sans-serif !important ;
+        font-family:'NotosansTw','DeltaSans'!important ;
       }
 
       
@@ -142,7 +135,7 @@
       html[lang="jp"] span ,
       html[lang="jp"] .link-nav-first,
       html[lang="jp"] label {  
-        font-family:'Tazugane Gothic StdN','ArialUnicodeMS', Helvetica, sans-serif !important ;
+        font-family: 'NotosansJP','DeltaSans'!important ;
       }
       .color-yellow{
         background-color: #252A2C;

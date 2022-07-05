@@ -9,7 +9,7 @@
        margin-bottom: 50px;
     }
     .btn-page-eror {
-    font-family: 'ArialUnicodeMS';
+    font-family: 'DeltaSans';
     font-size: 14px;
     color: #ffffff !important;
     font-weight: bold;

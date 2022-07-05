@@ -277,7 +277,7 @@ a:hover {
 
 .text-sub-type {
   font-size: 14px;
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   padding: 10px 30px 10px 30px;
   text-align: center;
 }
@@ -305,7 +305,7 @@ a:hover {
 .slide-content {
   margin: 0;
   padding: 0;
-  font-family: 'ArialUnicodeMS', Helvetica, sans-serif;
+  font-family: 'DeltaSans', Helvetica, sans-serif;
   width: 100%;
   height: 480px;
   overflow-x: hidden;
@@ -588,7 +588,7 @@ a:hover {
 }
 
 .text-title-boxpp {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #0087DC;
   font-size: 32px;
   line-height: 47px;
@@ -622,7 +622,7 @@ a:hover {
   border: 2px solid #ffffff;
   border-radius: 4px;
   background-color: #76B900;
-  font-family: 'ArialUnicodeMS', Helvetica, sans-serif;
+  font-family: 'DeltaSans', Helvetica, sans-serif;
   font-size: 12px;
   font-weight: bold;
   color: #FFFFFF;
@@ -634,7 +634,7 @@ a:hover {
 }
 
 .btn-ft {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   font-size: 12px;
   color: #ffffff;
   font-weight: bold;
@@ -675,7 +675,7 @@ a:hover {
 .text-title-ft,
 .text-title-ft-sub,
 .text-ft-sub {
-  font-family: 'ArialUnicodeMS', Helvetica, sans-serif;
+  font-family: 'DeltaSans', Helvetica, sans-serif;
 }
 
 .text-title-ft-sub,
@@ -745,7 +745,7 @@ a:hover {
 
 .content-abt-home {
   font-size: 16px;
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   line-height: 24px;
   text-align: center;
   padding: 40px 40px 10px 40px;
@@ -754,7 +754,7 @@ a:hover {
 
 .link-no-more {
   color: #ffffff;
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   text-align: center;
   font-size: 14px;
   font-weight: 600;
@@ -774,7 +774,7 @@ a:hover {
 
 .text-sub-event {
   font-size: 16px;
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   margin-top: 20px;
   margin-bottom: 30px;
   color: #14A028;
@@ -870,7 +870,7 @@ a:hover {
 .text-new-pro {
   font-size: 12px;
   line-height: 13px;
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   font-weight: 600;
 }
 
@@ -927,7 +927,7 @@ a .title-new {
   font-size: 12px;
   line-height: 24px;
   font-weight: 500;
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #5F5F5F;
   margin: 20px 0px;
 }
@@ -936,7 +936,7 @@ a .title-new {
   font-size: 14px;
   line-height: 16px;
   font-weight: 600;
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #0087DC;
   padding-top: 10px;
 }
@@ -955,7 +955,7 @@ a .title-new {
 }
 
 .status-event {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #14A028;
   font-size: 12px;
   line-height: 13px;
@@ -963,7 +963,7 @@ a .title-new {
 }
 
 .status-event2 {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #14A028;
   font-size: 14px;
   line-height: 20px;
@@ -971,7 +971,7 @@ a .title-new {
 }
 
 .name-event {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #FFFFFF;
   font-size: 24px;
   line-height: 28px;
@@ -981,7 +981,7 @@ a .title-new {
 }
 
 .name-event2 {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #000;
   font-size: 20px;
   line-height: 24px;
@@ -990,14 +990,14 @@ a .title-new {
 }
 
 .location-event {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #FFFFFF;
   font-size: 16px;
   line-height: 18px;
 }
 
 .location-event2 {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #000;
   font-size: 16px;
   line-height: 18px;
@@ -1018,7 +1018,7 @@ a .title-new {
 }
 
 .text-event-date {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #14A028;
   font-size: 22px;
   line-height: 13px;
@@ -1026,7 +1026,7 @@ a .title-new {
 }
 
 .text-event-date2 {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #14A028;
   font-size: 16px;
   line-height: 13px;
@@ -1055,7 +1055,7 @@ a .title-new {
 }
 
 .text-be-first {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #444444;
   font-size: 16px;
   line-height: 20px;
@@ -1082,7 +1082,7 @@ a .title-new {
 
 .text-title-boxen {
   text-align: center;
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #0087DC;
   font-size: 32px;
   line-height: 47px;
@@ -1101,7 +1101,7 @@ a .title-new {
   border-radius: 4px;
   height: 40px;
   width: 160px;
-  font-family: 'ArialUnicodeMS', Helvetica, sans-serif;
+  font-family: 'DeltaSans', Helvetica, sans-serif;
   font-size: 12px;
   font-weight: bold;
   color: #444444;
@@ -1232,7 +1232,7 @@ a .title-new {
 }
 
 .btn-subscribe {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   font-size: 14px;
   color: #ffffff;
   font-weight: bold;
@@ -1246,7 +1246,7 @@ a .title-new {
 }
 
 .btn-border-delta {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   font-size: 12px;
   color: #0087DC;
   font-weight: bold;
@@ -1397,14 +1397,14 @@ a .title-new {
 }
 
 .text-pro-link {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #5F5F5F;
   font-size: 12px;
   line-height: 16px;
 }
 
 .text-pro-link-main {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #FFFFFF;
   font-size: 14px;
   line-height: 16px;
@@ -1434,7 +1434,7 @@ a .title-new {
 }
 
 .text-copy-right {
-  font-family: 'ArialUnicodeMS';
+  font-family: 'DeltaSans';
   color: #B4B4B4;
   font-size: 14px;
   line-height: 24px;

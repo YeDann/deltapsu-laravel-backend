@@ -1,5 +1,5 @@
 body{
-    font-family: 'ArialUnicodeMS', Helvetica, sans-serif  !important;
+    font-family: 'DeltaSans', Helvetica, sans-serif  !important;
 }
 
 html[lang="cn"] body,
@@ -13,7 +13,7 @@ html[lang="cn"] button,
 html[lang="cn"] span,
 html[lang="cn"] .link-nav-first,
 html[lang="cn"] label{  
-  font-family:'ArialUnicodeMS',Helvetica, sans-serif  !important;
+  font-family:'DeltaSans',Helvetica, sans-serif  !important;
 }
 
 
@@ -30,6 +30,6 @@ html[lang="tw"] div,
 html[lang="tw"] span ,
 html[lang="tw"] .link-nav-first,
 html[lang="tw"] label {  
-  font-family:'ArialUnicodeMS', Helvetica, sans-serif !important ;
+  font-family:'DeltaSans', Helvetica, sans-serif !important ;
 }
 

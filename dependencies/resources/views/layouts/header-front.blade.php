@@ -392,7 +392,7 @@ top: -9px;
                                     @endif
                                     @endforeach
                                     <div class="image-dropdown d-flex justify-content-center " style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('{{asset('frontend-asset/image/Dropdown.jpg')}}')no-repeat;">
-                                        <img class="imageNav2 img-hove-on-dropdown" src="{{asset('frontend-asset/image/Industrial_Power_Supplies.png')}}" alt="">
+                                        <img class="imageNav2 img-hove-on-dropdown lazyload" loading="lazy"   data-src="{{asset('frontend-asset/image/Industrial_Power_Supplies.png')}}" alt="Industrial_Power_Supplies.png">
                                     </div>
                                 </ul>
                             </div>
@@ -417,7 +417,7 @@ top: -9px;
                                     @endif
                                     @endforeach
                                     <div class="image-dropdown d-flex justify-content-center " style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('{{asset('frontend-asset/image/Dropdown.jpg')}}')no-repeat;">
-                                        <img class="imageNav1 img-hove-on-dropdown" src="{{asset('frontend-asset/image/Medical-Power-Supplies.png')}}" alt="">
+                                        <img class="imageNav1 img-hove-on-dropdown lazyload"  data-src="{{asset('frontend-asset/image/Medical-Power-Supplies.png')}}" loading="lazy" alt="Medical-Power-Supplies.png">
                                     </div>
                                 </ul>
                             </div>
@@ -439,7 +439,7 @@ top: -9px;
                                     <li><a tabindex="-1"  class="text-c"   href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CV_Mode'),3 ,3])}}">{{$staticContent['CV_Mode']}}</a>
                                     </li>
                                       <div class="image-dropdown d-flex justify-content-center " style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('{{asset('frontend-asset/image/Dropdown.jpg')}}') no-repeat;">
-                                        <img class="imageNav3 img-hove-on-dropdown" src="{{config('app.url')}}/medias/categories/{{$navcategories3[0]->image}}" alt="">
+                                        <img class="imageNav3 img-hove-on-dropdown lazyload" data-src="{{config('app.url')}}/medias/categories/{{$navcategories3[0]->image}}" loading="lazy" alt="{{$navcategories3[0]->image}}">
                                     </div>
                                 </ul>
                             </div>

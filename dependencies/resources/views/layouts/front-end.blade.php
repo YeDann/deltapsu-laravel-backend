@@ -92,7 +92,7 @@
  
       
       body{
-          font-family: 'ArialUnicodeMS', Helvetica, sans-serif  !important;
+          font-family:'DeltaSans' !important;
       }
       html[lang="cn"] body,
       html[lang="cn"] h1,
@@ -105,7 +105,7 @@
       html[lang="cn"] span,
       html[lang="cn"] .link-nav-first,
       html[lang="cn"] label{  
-        font-family:'ArialUnicodeMS',Helvetica, sans-serif  !important;
+        font-family:'NotosansCN','DeltaSans'  !important;
       }
 
   
@@ -122,7 +122,7 @@
       html[lang="tw"] span ,
       html[lang="tw"] .link-nav-first,
       html[lang="tw"] label {  
-        font-family:'ArialUnicodeMS', Helvetica, sans-serif !important ;
+        font-family:'NotosansTw','DeltaSans'!important ;
       }
 
       
@@ -138,7 +138,7 @@
       html[lang="jp"] span ,
       html[lang="jp"] .link-nav-first,
       html[lang="jp"] label {  
-        font-family:'Tazugane Gothic StdN','ArialUnicodeMS', Helvetica, sans-serif !important ;
+        font-family: 'NotosansJP','DeltaSans'!important ;
       }
       .color-yellow{
         background-color: #252A2C;
@@ -202,6 +202,30 @@
 <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
 <script type="text/javascript" src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en"
 async defer>
+</script>
+<script>
+  if ('loading' in HTMLImageElement.prototype) {
+    const images = document.querySelectorAll('img[loading="lazy"]');
+    images.forEach(img => {
+      img.src = img.dataset.src;
+    });
+    const imageDiv = document.querySelectorAll('div[loading="lazy"]');
+     
+
+     imageDiv.forEach(imgD => {
+      console.log(imgD.dataset.src ,"imageDiv")
+       imgD.style.backgroundImage = "url('"+imgD.dataset.src+"')" ;
+
+   
+    });
+
+  } else {
+    // Dynamically import the LazySizes library
+    const script = document.createElement('script');
+    script.src =
+      'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js';
+    document.body.appendChild(script);
+  }
 </script>
 <script type="text/javascript">
   var verifyCallback = function(response) {

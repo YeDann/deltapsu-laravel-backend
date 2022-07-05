@@ -77,7 +77,11 @@ tbody >tr > td:first-child{
 }
  </style>
    <style type="text/css">
-
+    @font-face {
+       font-family:ArialUnicodeMS;
+       src: url('{{asset('/frontend-asset/fonts/ArialUnicodeMS.ttf')}}') format('truetype');
+    }
+    
     * {
       font-family:ArialUnicodeMS;
     }
