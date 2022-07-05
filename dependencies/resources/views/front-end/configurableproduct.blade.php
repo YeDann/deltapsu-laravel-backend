@@ -993,7 +993,38 @@
 @endsection
 
 @section('js')
+<script type="text/javascript" src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>
+<script>
+       $(document).ready(function() {
+        msieversion();
+       });
+      function msieversion() 
+            {
+                var ua = window.navigator.userAgent;
+                var msie = ua.indexOf("MSIE");
 
+                if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) // If Internet Explorer, return version number
+                {
+                  var script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.src = '{{asset('/frontend-asset/js/html2canvasie.js')}}';    
+
+                    document.getElementsByTagName('head')[0].appendChild(script);
+              
+                }
+                else  // If another browser, return 0
+                {
+                  var script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.src = '{{asset('/frontend-asset/js/html2canvas.js')}}';    
+
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                  
+                }
+
+                return false;
+            }
+      </script>
 <script type="text/javascript">
 	var verifyCallback = function(response) {
 	  // alert(response);

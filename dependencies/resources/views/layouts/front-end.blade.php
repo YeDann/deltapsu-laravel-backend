@@ -196,7 +196,7 @@
 <script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>
+
 <script type="text/javascript" src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
 <script type="text/javascript" src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en"
@@ -258,37 +258,7 @@ async defer>
   <!-- End Google Tag Manager (noscript) -->
   
     @yield('js')
-    <script>
-       $(document).ready(function() {
-        msieversion();
-       });
-      function msieversion() 
-            {
-                var ua = window.navigator.userAgent;
-                var msie = ua.indexOf("MSIE");
-
-                if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) // If Internet Explorer, return version number
-                {
-                  var script = document.createElement('script');
-                    script.type = 'text/javascript';
-                    script.src = '{{asset('/frontend-asset/js/html2canvasie.js')}}';    
-
-                    document.getElementsByTagName('head')[0].appendChild(script);
-              
-                }
-                else  // If another browser, return 0
-                {
-                  var script = document.createElement('script');
-                    script.type = 'text/javascript';
-                    script.src = '{{asset('/frontend-asset/js/html2canvas.js')}}';    
-
-                    document.getElementsByTagName('head')[0].appendChild(script);
-                  
-                }
-
-                return false;
-            }
-      </script>
+   
     <script>
       // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
