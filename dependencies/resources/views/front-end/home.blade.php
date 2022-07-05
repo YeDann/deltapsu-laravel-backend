@@ -819,7 +819,7 @@ function retextdata($arr ,$unit){
                 </a>
             </div>
 
-            <img class="image-doc" src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}"
+            <img loading="lazy" data-src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}" class="image-doc lazyload"
                 alt="">
         </div>
     </div>
@@ -827,7 +827,7 @@ function retextdata($arr ,$unit){
 <div class="visible-nav-minimize">
     <div class="box-product-document-mobile"
         style=" background: url('{{asset('frontend-asset/image/Docdownload-BG.jpg')}}');">
-        <img class="image-doc" src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}"
+        <img class="image-doc lazyload" loading="lazy" data-src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}"
             alt="">
         <div class="container">
             <div class="box-product-document-all">
