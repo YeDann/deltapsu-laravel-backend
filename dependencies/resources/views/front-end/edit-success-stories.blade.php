@@ -1,6 +1,6 @@
 @extends('layouts.front-end')
 @section('css')
-
+<link rel="stylesheet" href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}">
 <style>
     table {
         border-collapse: unset;
@@ -362,6 +362,7 @@
 
 
 @section('js')
+<script type="text/javascript" src="{{asset('/frontend-asset/js/dropzone.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {

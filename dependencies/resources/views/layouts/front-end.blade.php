@@ -194,7 +194,6 @@
 <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
 <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('/frontend-asset/js/dropzone.js')}}"></script>
 <script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>

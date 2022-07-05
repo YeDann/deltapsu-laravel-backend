@@ -124,8 +124,7 @@
             <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="item banner-item">
                 <a href="<?php echo e($banner->btn_link); ?>">
-                <div class="slide"
-                    style="background: url('<?php echo e(config('app.url')); ?>/medias/banners/<?php echo e($banner->image_destop); ?>');">
+                <div loading="lazy"  data-src="<?php echo e(config('app.url')); ?>/medias/banners/<?php echo e($banner->image_destop); ?>" class="slide">
                     <div class="slide-content">
                         <?php if($banner->title2 != null ||  $banner->content != null): ?>
                         <div class="container">
@@ -168,7 +167,7 @@
             <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="item banner-item ">
                 <a href="<?php echo e($banner->btn_link); ?>">
-                <div class="slide" style="background:url('<?php echo e(config('app.url')); ?>/medias/banners/<?php echo e($banner->image); ?>');">
+                <div loading="lazy"  data-src="<?php echo e(config('app.url')); ?>/medias/banners/<?php echo e($banner->image_destop); ?>" class="slide" >
                     <div class="slide-content">
                         <?php if($banner->title2 != null): ?>
                         <div class="container ">
@@ -234,7 +233,7 @@
                 <div class="border-2px d-flex h-100 p-1 align-items-center" style="    box-shadow: 0px 4px 5px 2px rgba(0, 0, 0, 0.09);">
                     <div class="m-auto">
                         <a href="<?php echo e(route('producsList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])); ?>">
-                          <?php if($sub->image != null): ?>
+                        <?php if($sub->image != null): ?>
                             <img  data-src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($sub->image); ?>" loading="lazy" class="lazyload"  alt="<?php echo e($sub->image); ?>">
                             <?php else: ?>
                             <img  data-src="<?php echo e(asset('frontend-asset/image/blank.png')); ?>" loading="lazy" class="lazyload"  alt="blank.png">
@@ -259,9 +258,8 @@
                 <?php $__currentLoopData = $applications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <a href="<?php echo e(route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->applica_id.'-'.$item->name)])); ?>" class="" style="">
                     <div class="grid-item ">
-                        <div loading="lazy"   data-src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($item->thumbnail); ?>" class="grid-sub-pic"
-                          >
-                            
+                        <div  data-src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($item->thumbnail); ?>" loading="lazy" class="grid-sub-pic">
+                          
                         </div>
                         <div class="grid-sub-text">
                             <img src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($item->color_icon); ?>" alt="">
@@ -302,12 +300,10 @@
                 <?php $__currentLoopData = $applications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <a href="<?php echo e(route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->applica_id.'-'.$item->name)])); ?>" class="blogBox-mb moreBox-mb" style="display: none;">
                     <div class="grid-item ">
-                        <div class="grid-sub-pic"
-                            style="background: url('<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($item->thumbnail); ?>');">
-                            
+                        <div  data-src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($item->thumbnail); ?>" loading="lazy"  class="grid-sub-pic">
                         </div>
                         <div class="grid-sub-text">
-                            <img src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($item->color_icon); ?>" alt="">
+                            <img  class="lazyload" data-src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($item->color_icon); ?>" loading="lazy"   alt="">
                             <p class=""><?php echo e($item->name); ?></p>
                             <ul class="app-detail-bullet">
 
@@ -368,10 +364,10 @@ function retextdata($arr ,$unit){
                                 <a style="color:inherit;" class="" href="<?php echo e(route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])); ?>">
                                 <?php endif; ?>
                                     <?php if(isset($serie->image)): ?>
-                                    <img class="img-fluid m-auto"
-                                        src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($serie->image); ?>" alt="">
+                                    <img data-src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($serie->image); ?>" loading="lazy" class="img-fluid m-auto lazyload"
+                                        src="" alt="">
                                     <?php else: ?>
-                                    <img class="img-fluid m-auto" src="<?php echo e(asset('frontend-asset/image/blank.png')); ?>" alt="">
+                                    <img data-src="<?php echo e(asset('frontend-asset/image/blank.png')); ?>" loading="lazy" class="img-fluid m-auto lazyload"  alt="">
                                     <?php endif; ?>
                                 </a>
                             </div>
@@ -438,11 +434,11 @@ function retextdata($arr ,$unit){
                                 <?php else: ?>
                                 <a style="color:inherit;" class="" href="<?php echo e(route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])); ?>">
                                 <?php endif; ?>
-                                    <?php if(isset($serie->image)): ?>
-                                    <img class="img-fluid m-auto"
-                                        src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($serie->image); ?>" alt="">
+                                   <?php if(isset($serie->image)): ?>
+                                    <img data-src="<?php echo e(config('app.url')); ?>/medias/categories/<?php echo e($serie->image); ?>" loading="lazy" class="img-fluid m-auto lazyload"
+                                        src="" alt="">
                                     <?php else: ?>
-                                    <img class="img-fluid m-auto" src="<?php echo e(asset('frontend-asset/image/blank.png')); ?>" alt="">
+                                    <img data-src="<?php echo e(asset('frontend-asset/image/blank.png')); ?>" loading="lazy" class="img-fluid m-auto lazyload"  alt="">
                                     <?php endif; ?>
                                 </a>
                             </div>
@@ -504,8 +500,8 @@ function retextdata($arr ,$unit){
                     <div class="card">
                         <a href="<?php echo e(route('updateEventDetail',$events[0]['slug'])); ?>">
                         <div class="post-image">
-                            <img src="<?php echo e(config('app.url')); ?>/uploads_delta/<?php echo e($events[0]['thumb']); ?>" alt=""
-                                class="img-responsive">
+                            <img data-src="<?php echo e(config('app.url')); ?>/uploads_delta/<?php echo e($events[0]['thumb']); ?>" loading="lazy" alt=""
+                                class="img-responsive lazyload">
                         </div>
                         </a>
                         <div class="news-content w-100">
@@ -546,8 +542,8 @@ function retextdata($arr ,$unit){
                     <div class="card">
                         <a href="<?php echo e(route('updateNewsDetail',$news[0]['slug'])); ?>">
                         <div class="post-image">
-                            <img src="<?php echo e(config('app.url')); ?>/uploads_delta/<?php echo e($news[0]['thumb']); ?>" alt=""
-                                class="img-responsive">
+                            <img data-src="<?php echo e(config('app.url')); ?>/uploads_delta/<?php echo e($news[0]['thumb']); ?>" loading="lazy" alt=""
+                                class="img-responsive lazyload">
                         </div>
                         </a>
                         <div class="news-content w-100">
@@ -592,13 +588,13 @@ function retextdata($arr ,$unit){
                 </div>
                 <div class="col-lg-4">
                     <h2 class="text-title-delta-home"><?php echo e($staticContent['FAQs']); ?></h2>
-                    
+                 
                     <div class="card">
                     <a href="<?php echo e(route('index','faqs')); ?>" >
                         <div class="post-image w-100" >
                        
-                        <img src="<?php echo e(config('app.url')); ?>/medias/static_content/<?php echo e($faqbanner->destop_image); ?>" alt=""
-                             class="img-responsive">
+                        <img data-src="<?php echo e(config('app.url')); ?>/medias/static_content/<?php echo e($faqbanner->destop_image); ?>" loading="lazy" alt=""
+                             class="img-responsive lazyload">
                         </div>
                         </a>
                         <div class="news-content w-100">
@@ -685,11 +681,11 @@ function retextdata($arr ,$unit){
                         <a href="<?php echo e(route('updateNewsDetail',$news[0]['slug'])); ?>">
                         <div class="post-image">
                             <?php if(isset($news[0]['thumb'])): ?>
-                            <img src="<?php echo e(config('app.url')); ?>/uploads_delta/<?php echo e($news[0]['thumb']); ?>" alt=""
-                                class="img-responsive">
+                            <img data-src="<?php echo e(config('app.url')); ?>/uploads_delta/<?php echo e($news[0]['thumb']); ?>" loading="lazy" alt=""
+                                class="img-responsive lazyload">
                             <?php else: ?> 
-                            <img src="<?php echo e(config('app.url')); ?>/frontend-asset/image/upcoming-img.png" alt=""
-                            class="img-responsive">
+                            <img data-src="<?php echo e(config('app.url')); ?>/frontend-asset/image/upcoming-img.png" loading="lazy" alt=""
+                            class="img-responsive lazyload">
                             <?php endif; ?>
                         </div>
                         </a>
@@ -785,7 +781,7 @@ function retextdata($arr ,$unit){
                 </a>
             </div>
 
-            <img class="image-doc" src="<?php echo e(config('app.url')); ?>/medias/static_content/<?php echo e($static_content->destop_image); ?>"
+            <img loading="lazy" data-src="<?php echo e(config('app.url')); ?>/medias/static_content/<?php echo e($static_content->destop_image); ?>" class="image-doc lazyload"
                 alt="">
         </div>
     </div>
@@ -793,7 +789,7 @@ function retextdata($arr ,$unit){
 <div class="visible-nav-minimize">
     <div class="box-product-document-mobile"
         style=" background: url('<?php echo e(asset('frontend-asset/image/Docdownload-BG.jpg')); ?>');">
-        <img class="image-doc" src="<?php echo e(config('app.url')); ?>/medias/static_content/<?php echo e($static_content->destop_image); ?>"
+        <img class="image-doc lazyload" loading="lazy" data-src="<?php echo e(config('app.url')); ?>/medias/static_content/<?php echo e($static_content->destop_image); ?>"
             alt="">
         <div class="container">
             <div class="box-product-document-all">

@@ -29,7 +29,6 @@
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/product.css')}}" media="screen"/>
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/font-awesome.css')}}" media="screen"/>
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/datatables.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}">
     <link href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" rel="stylesheet" type="text/css" />
   
