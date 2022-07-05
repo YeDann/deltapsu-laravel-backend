@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}" media="screen"/>
     <link href="{{asset('/frontend-asset/css/fontello.css')}}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" media="screen"/>
-    <link rel="stylesheet" href="{{asset('/frontend-asset/css/font.css')}}" media="screen"/>
+    <link rel="stylesheet" href="{{asset('/frontend-asset/css/fontNew.css')}}" media="screen"/>
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/owl.theme.default.css')}}" media="screen"/>
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen"/>
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/product.css')}}" media="screen"/>
