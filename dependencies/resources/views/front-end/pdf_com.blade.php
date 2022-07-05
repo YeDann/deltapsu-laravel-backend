@@ -80,7 +80,7 @@ tbody >tr > td:first-child{
    
     
     * {
-      font-family:DeltaSans;
+        font-family: 'DeltaSans';
     }
     </style>
 </head>
