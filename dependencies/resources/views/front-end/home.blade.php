@@ -125,7 +125,8 @@
             @foreach ($banners as $banner)
             <div class="item banner-item">
                 <a href="{{$banner->btn_link}}">
-                <div  loading="lazy"   data-src="{{config('app.url')}}/medias/banners/{{$banner->image_destop}}" class="slide">
+                <div class="slide"
+                    style="background: url('{{config('app.url')}}/medias/banners/{{$banner->image_destop}}');">
                     <div class="slide-content">
                         @if($banner->title2 != null ||  $banner->content != null)
                         <div class="container">
@@ -167,7 +168,7 @@
             @foreach ($banners as $banner)
             <div class="item banner-item ">
                 <a href="{{$banner->btn_link}}">
-                <div class="slide" loading="lazy" data-src="{{config('app.url')}}/medias/banners/{{$banner->image}}" >
+                <div class="slide" style="background:url('{{config('app.url')}}/medias/banners/{{$banner->image}}');">
                     <div class="slide-content">
                         @if($banner->title2 != null)
                         <div class="container ">
@@ -233,7 +234,7 @@
                 <div class="border-2px d-flex h-100 p-1 align-items-center" style="    box-shadow: 0px 4px 5px 2px rgba(0, 0, 0, 0.09);">
                     <div class="m-auto">
                         <a href="{{ route('producsList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])}}">
-                          @if($sub->image != null)
+                        @if($sub->image != null)
                             <img  data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy" class="lazyload"  alt="{{$sub->image}}">
                             @else
                             <img  data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy" class="lazyload"  alt="blank.png">
@@ -258,8 +259,9 @@
                 @foreach ($applications as $item)
                 <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->applica_id.'-'.$item->name)])}}" class="" style="">
                     <div class="grid-item ">
-                        <div loading="lazy"   data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" class="grid-sub-pic" >
-                          
+                        <div class="grid-sub-pic"
+                            style="background: url('{{config('app.url')}}/medias/categories/{{$item->thumbnail}}');">
+                            {{--  <img src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" alt=""> --}}
                         </div>
                         <div class="grid-sub-text">
                             <img src="{{config('app.url')}}/medias/categories/{{$item->color_icon}}" alt="">
@@ -302,8 +304,10 @@
                 @foreach ($applications as $item)
                 <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->applica_id.'-'.$item->name)])}}" class="blogBox-mb moreBox-mb" style="display: none;">
                     <div class="grid-item ">
-                     
-                        <div loading="lazy"   data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" class="grid-sub-pic" >
+                        <div class="grid-sub-pic"
+                            style="background: url('{{config('app.url')}}/medias/categories/{{$item->thumbnail}}');">
+                            {{--  <img src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" alt=""> --}}
+                        </div>
                         <div class="grid-sub-text">
                             <img src="{{config('app.url')}}/medias/categories/{{$item->color_icon}}" alt="">
                             <p class="">{{$item->name}}</p>
@@ -366,10 +370,10 @@ function retextdata($arr ,$unit){
                                 <a style="color:inherit;" class="" href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                 @endif
                                     @if(isset($serie->image))
-                                    <img  data-src="{{config('app.url')}}/medias/categories/{{$serie->image}}" loading="lazy" class="img-fluid m-auto lazyload"
-                                       alt="{{$serie->image}}">
+                                    <img class="img-fluid m-auto"
+                                        src="{{config('app.url')}}/medias/categories/{{$serie->image}}" alt="">
                                     @else
-                                    <img class="img-fluid m-auto lazyload"  data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy"  alt="blank.png">
+                                    <img class="img-fluid m-auto" src="{{asset('frontend-asset/image/blank.png')}}" alt="">
                                     @endif
                                 </a>
                             </div>
@@ -435,12 +439,11 @@ function retextdata($arr ,$unit){
                                 @else
                                 <a style="color:inherit;" class="" href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                 @endif
-                                 
                                     @if(isset($serie->image))
-                                    <img  data-src="{{config('app.url')}}/medias/categories/{{$serie->image}}" loading="lazy" class="img-fluid m-auto lazyload"
-                                       alt="{{$serie->image}}">
+                                    <img class="img-fluid m-auto"
+                                        src="{{config('app.url')}}/medias/categories/{{$serie->image}}" alt="">
                                     @else
-                                    <img class="img-fluid m-auto lazyload"  data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy"  alt="blank.png">
+                                    <img class="img-fluid m-auto" src="{{asset('frontend-asset/image/blank.png')}}" alt="">
                                     @endif
                                 </a>
                             </div>
@@ -501,8 +504,8 @@ function retextdata($arr ,$unit){
                     <div class="card">
                         <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
                         <div class="post-image">
-                            <img data-src="{{config('app.url')}}/uploads_delta/{{$events[0]['thumb']}}" loading="lazy"   alt=""
-                                class="img-responsive lazyload">
+                            <img src="{{config('app.url')}}/uploads_delta/{{$events[0]['thumb']}}" alt=""
+                                class="img-responsive">
                         </div>
                         </a>
                         <div class="news-content w-100">
@@ -541,8 +544,8 @@ function retextdata($arr ,$unit){
                     <div class="card">
                         <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
                         <div class="post-image">
-                            <img data-src="{{config('app.url')}}/uploads_delta/{{$news[0]['thumb']}}" loading="lazy"  alt=""
-                                class="img-responsive lazyload">
+                            <img src="{{config('app.url')}}/uploads_delta/{{$news[0]['thumb']}}" alt=""
+                                class="img-responsive">
                         </div>
                         </a>
                         <div class="news-content w-100">
@@ -584,13 +587,52 @@ function retextdata($arr ,$unit){
                 </div>
                 <div class="col-lg-4">
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
-                   
+                    {{-- @if(isset($teachni[0]))
+                    <div class="card">
+                        <a href="{{route('updateTechnicalDetail',$teachni[0]->slug)}}" >
+                        <div class="post-image">
+                            @if(isset($teachni[0]->thumb))
+                            <img src="{{config('app.url')}}/uploads_delta/{{$teachni[0]->thumb}}" alt=""
+                                class="img-responsive">
+                             @else 
+                             <img src="{{config('app.url')}}/frontend-asset/image/upcoming-img.png" alt=""
+                             class="img-responsive">
+                             @endif
+                        </div>
+                        </a>
+                        <div class="news-content w-100">
+                            <div class="post-meta">
+                                @if(isset($teachni[0]->date_info))
+                              
+                                <span class="author text-uppercase">
+                                        <i class="zmdi zmdi-calendar-alt"></i>
+                                        {{$teachnidate['m'].' '.$teachnidate['d'].' '.$teachnidate['y']}}
+                                </span>
+                                @endif
+                                @if(isset($teachni[0]->location))
+                                <span class="locations">
+                                        <i class="zmdi zmdi-pin"></i>{{$teachni[0]->location}}
+                                </span>
+                                @endif
+                            </div>
+                            <h4 class="post-header title-new">
+                                <a href="{{route('updateTechnicalDetail',$teachni[0]->slug)}}" >
+                                {{$teachni[0]->title}}
+                                </a>
+                            </h4>
+                            <p> {!! iconv_substr(strip_tags($teachni[0]->content),0,90,'UTF-8') !!} ...
+                            </p>
+
+                        </div>
+                        <a href="{{route('updateTechnicalDetail',$teachni[0]->slug)}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                    </div>
+                    @endif --}}
                     <div class="card">
                     <a href="{{route('index','faqs')}}" >
                         <div class="post-image w-100" >
                        
-                        <img data-src="{{config('app.url')}}/medias/static_content/{{$faqbanner->destop_image}}" loading="lazy"  alt=""
-                             class="img-responsive lazyload">
+                        <img src="{{config('app.url')}}/medias/static_content/{{$faqbanner->destop_image}}" alt=""
+                             class="img-responsive">
                         </div>
                         </a>
                         <div class="news-content w-100">
@@ -628,17 +670,24 @@ function retextdata($arr ,$unit){
                         <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
                         <div class="post-image">
                             @if(isset($events[0]['thumb']))
-                            <img data-src="{{config('app.url')}}/uploads_delta/{{$events[0]['thumb']}}" loading="lazy"  alt=""
-                                class="img-responsive lazyload">
+                            <img src="{{config('app.url')}}/uploads_delta/{{$events[0]['thumb']}}" alt=""
+                                class="img-responsive">
                              @else 
-                             <img  data-src="{{config('app.url')}}/frontend-asset/image/upcoming-img.png" loading="lazy" alt=""
-                             class="img-responsive lazyload">
+                             <img src="{{config('app.url')}}/frontend-asset/image/upcoming-img.png" alt=""
+                             class="img-responsive">
                             @endif
                         </div>
                         </a>
                         <div class="news-content w-100">
-                            <div class="post-meta">
+                            <?php
+                            // $date = getDateformat(isset($events[0]->date_publish)? $events[0]->date_publish:'00:00:00');
+                            //  $endDate = getDateformat(isset($events[0]->date_end)? $events[0]->date_end:'00:00:00');
+                             ?> 
                           
+                            <div class="post-meta">
+                                <span class="author text-uppercase">
+                                        {{-- <i class="zmdi zmdi-calendar-alt"></i>    {{ $date['m'].' '.$date['d'] .''.(isset($endDate['d'])?' - '.$endDate['d']:'').' '.$date['y']}} --}}
+                                </span>
                            
                                 @if(isset($events[0]['location']))
                                 <span class="locations">
@@ -651,7 +700,8 @@ function retextdata($arr ,$unit){
                                 {{$events[0]['title']}}
                                 </a>
                             </h4>
-                            
+                            {{-- <p> {!! iconv_substr(strip_tags($events[0]->content),0,90,'UTF-8') !!} ...
+                            </p> --}}
 
                         </div>
                         <a href="{{route('updateEventDetail',$events[0]['slug'])}}" class="read-more">{{$staticContent['Read_More']}}</a>
@@ -668,11 +718,11 @@ function retextdata($arr ,$unit){
                         <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
                         <div class="post-image">
                             @if(isset($news[0]['thumb']))
-                            <img  data-src="{{config('app.url')}}/uploads_delta/{{$news[0]['thumb']}}" loading="lazy"  alt=""
-                                class="img-responsive lazyload">
+                            <img src="{{config('app.url')}}/uploads_delta/{{$news[0]['thumb']}}" alt=""
+                                class="img-responsive">
                             @else 
-                            <img data-src="{{config('app.url')}}/frontend-asset/image/upcoming-img.png" loading="lazy"  alt=""
-                            class="img-responsive lazyload">
+                            <img src="{{config('app.url')}}/frontend-asset/image/upcoming-img.png" alt=""
+                            class="img-responsive">
                             @endif
                         </div>
                         </a>
@@ -716,9 +766,10 @@ function retextdata($arr ,$unit){
                     <div class="card">
                         <a href="{{route('index','faqs')}}" >
                             <div class="post-image w-100" >
-                                <img  data-src="{{config('app.url')}}/medias/static_content/{{$faqbanner->destop_image}}" loading="lazy" alt=""
-                                class="img-responsive lazyload">
-                             
+                                <img src="{{config('app.url')}}/medias/static_content/{{$faqbanner->destop_image}}" alt=""
+                                class="img-responsive">
+                                 {{-- <img src="{{config('app.url')}}/frontend-asset/image/faqs.jpg" alt=""
+                                 class="img-responsive"> --}}
                             </div>
                             </a>
                             <div class="news-content w-100">
@@ -743,7 +794,55 @@ function retextdata($arr ,$unit){
                     </div>
                    
             </div>
-           
+            {{-- <h2 class="text-title-delta-home">{{$staticContent['Latest_Article']}}</h2>
+            <div class="row">
+                @foreach ($teachni as $tech)
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <a href="{{route('updateTechnicalDetail',$tech->slug)}}">
+                        <div class="post-image">
+                                @if(isset($tech->thumb))
+                                <img src="{{config('app.url')}}/uploads_delta/{{$tech->thumb}}" alt=""
+                                    class="img-responsive">
+                                 @else 
+                                 <img src="{{config('app.url')}}/frontend-asset/image/upcoming-img.png" alt=""
+                                 class="img-responsive">
+                                 @endif
+                        </div>
+                        </a>
+                        <div class="news-content w-100">
+                            <div class="post-meta">
+                                @if(isset($tech->date_info))
+                              
+                                <span class="author text-uppercase">
+                                        <i class="zmdi zmdi-calendar-alt"></i>
+                                        {{$teachdate['m'].' '.$teachdate['d'].' '.$teachdate['y']}}
+                                </span>
+                                @endif
+                                @if(isset($tech->location))
+                                <span class="locations">
+                                        <i class="zmdi zmdi-pin"></i>{{$tech->location}}
+                                </span>
+                                @endif
+                            </div>
+                            <h4 class="post-header title-new">
+                                <a href="{{route('updateTechnicalDetail',$tech->slug)}}">
+                                {{$tech->title}}
+                                </a>
+                            </h4>
+                            <p> {!! iconv_substr(strip_tags($tech->content),0,90,'UTF-8') !!} ...
+                            </p>
+
+                        </div>
+                        <a href="{{route('updateTechnicalDetail',$tech->slug)}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                    </div>
+                </div>
+                @endforeach
+               
+            </div>
+            <div class="box-btn-boxen text-center">
+                <a class="btn btn-boxen" href="{{route('index','technical-articles')}}">{{$staticContent['See_All']}}</a>
+            </div> --}}
         </div>
 
     </div>
@@ -763,14 +862,15 @@ function retextdata($arr ,$unit){
                 </a>
             </div>
 
-            <img data-src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}" loading="lazy" class="image-doc lazyload"
+            <img class="image-doc" src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}"
                 alt="">
         </div>
     </div>
 </div>
 <div class="visible-nav-minimize">
-    <div loading="lazy"  data-src="{{asset('frontend-asset/image/Docdownload-BG.jpg')}}" class="box-product-document-mobile">
-        <img  data-src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}" loading="lazy" class="image-doc lazyload" 
+    <div class="box-product-document-mobile"
+        style=" background: url('{{asset('frontend-asset/image/Docdownload-BG.jpg')}}');">
+        <img class="image-doc" src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}"
             alt="">
         <div class="container">
             <div class="box-product-document-all">
