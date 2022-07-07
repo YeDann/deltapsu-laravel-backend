@@ -7,13 +7,6 @@
 
 @font-face {
     font-family: "DeltaSans";
-    src: url("../fonts/DeltaSans-Light.woff") format('woff'),
-    url('../fonts/DeltaSans-Light.woff') format('woff2');
-    font-weight:lighter;
-}
-
-@font-face {
-    font-family: "DeltaSans";
     src: url("../fonts/DeltaSans-SemiBold.woff") format('woff'),
     url('../fonts/DeltaSans-SemiBold.woff2') format('woff2');
     font-weight: bold;
