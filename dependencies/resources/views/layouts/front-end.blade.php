@@ -209,7 +209,7 @@ async defer>
       img.src = img.dataset.src;
     });
     const imageDiv = document.querySelectorAll('div[loading="lazy"]');
-     
+     console.log(imageDiv ,"imageDivSafari")
 
      imageDiv.forEach(imgD => {
       console.log(imgD.dataset.src ,"imageDiv")
