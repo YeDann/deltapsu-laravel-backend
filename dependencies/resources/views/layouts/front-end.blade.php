@@ -209,7 +209,10 @@ async defer>
       img.src = img.dataset.src;
     });
   
-
+    const imageDiv = document.querySelectorAll('div[loading="lazy"]');
+     imageDiv.forEach(imgD => {
+       imgD.style.backgroundImage = "url('"+imgD.dataset.src+"')";
+    });
   } else {
     const imageDiv = document.querySelectorAll('div[loading="lazy"]');
      imageDiv.forEach(imgD => {
