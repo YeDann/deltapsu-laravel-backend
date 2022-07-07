@@ -208,17 +208,13 @@ async defer>
     images.forEach(img => {
       img.src = img.dataset.src;
     });
-    const imageDiv = document.querySelectorAll('div[loading="lazy"]');
-     console.log(imageDiv ,"imageDivSafari")
-
-     imageDiv.forEach(imgD => {
-      console.log(imgD.dataset.src ,"imageDiv")
-       imgD.style.backgroundImage = "url('"+imgD.dataset.src+"')" ;
-
-   
-    });
+  
 
   } else {
+    const imageDiv = document.querySelectorAll('div[loading="lazy"]');
+     imageDiv.forEach(imgD => {
+       imgD.style.backgroundImage = "url('"+imgD.dataset.src+"')";
+    });
     // Dynamically import the LazySizes library
     const script = document.createElement('script');
     script.src =
