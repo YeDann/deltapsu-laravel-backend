@@ -2117,9 +2117,7 @@ function selectCountry(){
             '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional //EN" "http://www.w3.org/TR/html4/loose.dtd">'+
             '<html><head>'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}" >'+
-			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/font.css')}}">'+
-			'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC&display=swap">'+
-			'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap">'+
+			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/fontNews.css')}}">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/embepdf.css')}}">'+
 		    '<link rel="stylesheet" href="{{asset('/frontend-asset/css/header-front.css')}}">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/container.css')}}">'+
