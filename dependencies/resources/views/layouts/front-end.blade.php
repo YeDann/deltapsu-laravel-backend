@@ -24,7 +24,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fonts.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontns.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.theme.default.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product.css')}}" media="screen"/>
@@ -143,6 +143,23 @@
       html[lang="jp"] label {  
         font-family: 'NotosansJP','DeltaSans' ,sans-serif !important ;
       }
+
+      html[lang="ru"] body,
+      html[lang="ru"] h1,
+      html[lang="ru"] h2,
+      html[lang="ru"] h3,
+      html[lang="ru"] h4,
+      html[lang="ru"] h5,
+      html[lang="ru"] a,
+      html[lang="ru"] button,
+      html[lang="ru"] div,
+      html[lang="ru"] span ,
+      html[lang="ru"] p ,
+      html[lang="ru"] .link-nav-first,
+      html[lang="ru"] label {  
+        font-family: 'Inter','DeltaSans' ,sans-serif !important ;
+      }
+      
       .color-yellow{
         background-color: #252A2C;
         color: #fff;

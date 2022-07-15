@@ -1,0 +1,91 @@
+
+@font-face {
+    font-family: "DeltaSans";
+    src: url("../fontNews/DeltaSans-Regular.woff") format('woff'),
+    url('../fontNews/DeltaSans-Regular.woff2') format('woff2');
+}
+
+
+@font-face {
+    font-family: "DeltaSans";
+    src: url("../fontNews/DeltaSans-SemiBold.woff") format('woff'),
+    url('../fontNews/DeltaSans-SemiBold.woff2') format('woff2');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'NotoSansTC';
+    src: url('../fontNews/NotoSansTC-Regular-Alphabetic.eot');
+    src: url('../fontNews/NotoSansTC-Regular-Alphabetic.eot?#iefix') format('embedded-opentype'),
+        url('../fontNews/NotoSansTC-Regular-Alphabetic.woff2') format('woff2'),
+        url('../fontNews/NotoSansTC-Regular-Alphabetic.woff') format('woff'),
+        url('../fontNews/NotoSansTC-Regular-Alphabetic.ttf') format('truetype'),
+        url('../fontNews/NotoSansTC-Regular-Alphabetic.svg#NotoSansTC-Regular-Alphabetic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NotoSansTC';
+    src: url('../fontNews/NotoSansTC-Bold-Alphabetic.eot');
+    src: url('../fontNews/NotoSansTC-Bold-Alphabetic.eot?#iefix') format('embedded-opentype'),
+        url('../fontNews/NotoSansTC-Bold-Alphabetic.woff2') format('woff2'),
+        url('../fontNews/NotoSansTC-Bold-Alphabetic.woff') format('woff'),
+        url('../fontNews/NotoSansTC-Bold-Alphabetic.ttf') format('truetype'),
+        url('../fontNews/NotoSansTC-Bold-Alphabetic.svg#NotoSansTC-Bold-Alphabetic') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../fontNews/Inter-Regular.woff2') format('woff2'),
+        url('../fontNews/Inter-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../fontNews/Inter-Bold.woff2') format('woff2'),
+        url('../fontNews/Inter-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+@font-face {
+    font-family: "NotosansCN";
+    src: url("../fontNews/notosanssc-regular-webfont.woff") format('woff'),
+    url('../fontNews/notosanssc-regular-webfont.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: "NotosansCN";
+    src: url("../fontNews/notosanssc-light-webfont.woff") format('woff'),
+    url('../fontNews/notosanssc-light-webfont.woff2') format('woff2');
+    font-weight:lighter;
+}
+
+@font-face {
+    font-family: "NotosansCN";
+    src: url("../fontNews/notosanssc-bold-webfont.woff") format('woff'),
+    url('../fontNews/notosanssc-bold-webfont.woff2') format('woff2');
+    font-weight: bold;
+}
+
+
+/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1080">Text with this font applied</p> */
+.fontsforweb_fontid_1080 {
+	font-family: 'DeltaSans' !important;
+}
+
+
+
+
+
+/* Font downloaded from FontsForWeb.com */
