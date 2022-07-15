@@ -106,7 +106,7 @@
       html[lang="cn"] p,
       html[lang="cn"] .link-nav-first,
       html[lang="cn"] label{  
-        font-family:'NotosansCN','DeltaSans',sans-serif !important;
+        font-family:'Noto San CN','DeltaSans',sans-serif !important;
       }
 
   

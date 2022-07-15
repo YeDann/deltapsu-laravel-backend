@@ -64,7 +64,7 @@
 
 
 @font-face {
-    font-family: "NotosansCN";
+    font-family: "Noto San CN";
     src: url("../fonts/notosanssc-regular-webfont.woff") format('woff'),
     url('../fonts/notosanssc-regular-webfont.woff2') format('woff2');
     font-weight: normal;
@@ -75,7 +75,7 @@
 
 
 @font-face {
-    font-family: "NotosansCN";
+    font-family: "Noto San CN";
     src: url("../fonts/notosanssc-bold-webfont.woff") format('woff'),
     url('../fonts/notosanssc-bold-webfont.woff2') format('woff2');
     font-weight: bold;
