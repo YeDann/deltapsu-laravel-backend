@@ -13,20 +13,14 @@
 }
 
 @font-face {
-    font-family: "NotosansTw";
+    font-family: "NotosansTC";
     src: url("../fonts/notosanstc-regular-webfont.woff") format('woff'),
     url('../fonts/notosanstc-regular-webfont.woff2') format('woff2');
 }
 
-@font-face {
-    font-family: "NotosansTw";
-    src: url("../fonts/notosanstc-light-webfont.woff2") format('woff'),
-    url('../fonts/notosanstc-light-webfont.woff2') format('woff2');
-    font-weight:lighter;
-}
 
 @font-face {
-    font-family: "NotosansTw";
+    font-family: "NotosansTC";
     src: url("../fonts/notosanstc-bold-webfont.woff") format('woff'),
     url('../fonts/notosanstc-bold-webfont.woff') format('woff2');
     font-weight: bold;

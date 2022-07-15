@@ -103,9 +103,10 @@
       html[lang="cn"] a,
       html[lang="cn"] button,
       html[lang="cn"] span,
+      html[lang="cn"] p,
       html[lang="cn"] .link-nav-first,
       html[lang="cn"] label{  
-        font-family:'NotosansCN','DeltaSans'  !important;
+        font-family:'NotosansCN','DeltaSans',sans-serif !important;
       }
 
   
@@ -120,9 +121,10 @@
       html[lang="tw"] button,
       html[lang="tw"] div,
       html[lang="tw"] span ,
+      html[lang="tw"] p,
       html[lang="tw"] .link-nav-first,
       html[lang="tw"] label {  
-        font-family:'NotosansTw','DeltaSans'!important ;
+        font-family:'NotosansTC','DeltaSans',sans-serif !important ;
       }
 
       
@@ -136,9 +138,10 @@
       html[lang="jp"] button,
       html[lang="jp"] div,
       html[lang="jp"] span ,
+      html[lang="jp"] p ,
       html[lang="jp"] .link-nav-first,
       html[lang="jp"] label {  
-        font-family: 'NotosansJP','DeltaSans'!important ;
+        font-family: 'NotosansJP','DeltaSans' ,sans-serif !important ;
       }
       .color-yellow{
         background-color: #252A2C;
