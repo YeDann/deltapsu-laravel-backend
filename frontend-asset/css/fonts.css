@@ -1,0 +1,73 @@
+
+@font-face {
+    font-family: "DeltaSans";
+    src: url("../fonts/DeltaSans-Regular.woff") format('woff'),
+    url('../fonts/DeltaSans-Regular.woff2') format('woff2');
+}
+
+
+@font-face {
+    font-family: "DeltaSans";
+    src: url("../fonts/DeltaSans-SemiBold.woff") format('woff'),
+    url('../fonts/DeltaSans-SemiBold.woff2') format('woff2');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'NotoSansTC';
+    src: url('../fonts/NotoSansTC-Regular-Alphabetic.eot');
+    src: url('../fonts/NotoSansTC-Regular-Alphabetic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/NotoSansTC-Regular-Alphabetic.woff2') format('woff2'),
+        url('../fonts/NotoSansTC-Regular-Alphabetic.woff') format('woff'),
+        url('../fonts/NotoSansTC-Regular-Alphabetic.ttf') format('truetype'),
+        url('../fonts/NotoSansTC-Regular-Alphabetic.svg#NotoSansTC-Regular-Alphabetic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NotoSansTC';
+    src: url('../fonts/NotoSansTC-Bold-Alphabetic.eot');
+    src: url('../fonts/NotoSansTC-Bold-Alphabetic.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/NotoSansTC-Bold-Alphabetic.woff2') format('woff2'),
+        url('../fonts/NotoSansTC-Bold-Alphabetic.woff') format('woff'),
+        url('../fonts/NotoSansTC-Bold-Alphabetic.ttf') format('truetype'),
+        url('../fonts/NotoSansTC-Bold-Alphabetic.svg#NotoSansTC-Bold-Alphabetic') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+@font-face {
+    font-family: "NotosansCN";
+    src: url("../fonts/notosanssc-regular-webfont.woff") format('woff'),
+    url('../fonts/notosanssc-regular-webfont.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: "NotosansCN";
+    src: url("../fonts/notosanssc-light-webfont.woff") format('woff'),
+    url('../fonts/notosanssc-light-webfont.woff2') format('woff2');
+    font-weight:lighter;
+}
+
+@font-face {
+    font-family: "NotosansCN";
+    src: url("../fonts/notosanssc-bold-webfont.woff") format('woff'),
+    url('../fonts/notosanssc-bold-webfont.woff2') format('woff2');
+    font-weight: bold;
+}
+
+
+/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1080">Text with this font applied</p> */
+.fontsforweb_fontid_1080 {
+	font-family: 'DeltaSans' !important;
+}
+
+
+
+
+
+/* Font downloaded from FontsForWeb.com */
