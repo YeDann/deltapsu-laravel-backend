@@ -24,7 +24,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontNew.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fonts.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.theme.default.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product.css')}}" media="screen"/>
@@ -124,7 +124,7 @@
       html[lang="tw"] p,
       html[lang="tw"] .link-nav-first,
       html[lang="tw"] label {  
-        font-family:'NotosansTC','DeltaSans',sans-serif !important ;
+        font-family:'NotoSansTC','DeltaSans',sans-serif !important ;
       }
 
       
