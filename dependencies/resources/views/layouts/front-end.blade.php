@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}"  media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontsn.css')}}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/font.css')}}" media="screen"/>
 
 
     @yield('css')
