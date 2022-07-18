@@ -1,22 +1,5 @@
 
-@font-face {
-    font-family: "DeltaSans";
-    src: url("../fonts/DeltaSans-Regular.woff") format('woff'),
-    url('../fonts/DeltaSans-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
 
-
-@font-face {
-    font-family: "DeltaSans";
-    src: url("../fonts/DeltaSans-SemiBold.woff") format('woff'),
-    url('../fonts/DeltaSans-SemiBold.woff2') format('woff2');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-}
 
 @font-face {
     font-family: 'Noto Sans TC';
@@ -82,6 +65,29 @@
     font-style: normal;
     font-display: swap;
 }
+
+
+
+@font-face {
+    font-family: "DeltaSans";
+    src: url("../fonts/DeltaSans-Regular.woff") format('woff'),
+    url('../fonts/DeltaSans-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+@font-face {
+    font-family: "DeltaSans";
+    src: url("../fonts/DeltaSans-SemiBold.woff") format('woff'),
+    url('../fonts/DeltaSans-SemiBold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+
 
 
 /* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1080">Text with this font applied</p> */
