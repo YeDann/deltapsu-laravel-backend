@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('meta')
     <!-- Bootstrap CSS -->
-   
+     
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}"  media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/header-front.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/container.css')}}" media="screen"/>
@@ -24,7 +24,6 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontnews.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.theme.default.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product.css')}}" media="screen"/>
@@ -35,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}"  media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" media="screen" />
-   
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontnews.css')}}" media="screen"/>
 
 
     @yield('css')
@@ -90,75 +89,6 @@
       box-shadow: none;
       }
  
-      
-      body{
-          font-family:'DeltaSans' !important;
-      }
-      html[lang="cn"] body,
-      html[lang="cn"] h1,
-      html[lang="cn"] h2,
-      html[lang="cn"] h3,
-      html[lang="cn"] h4,
-      html[lang="cn"] h5,
-      html[lang="cn"] a,
-      html[lang="cn"] button,
-      html[lang="cn"] span,
-      html[lang="cn"] p,
-      html[lang="cn"] .link-nav-first,
-      html[lang="cn"] label{  
-        font-family:'Noto Sans SC','DeltaSans',sans-serif !important;
-      }
-
-  
-
-      html[lang="tw"] body,
-      html[lang="tw"] h1,
-      html[lang="tw"] h2,
-      html[lang="tw"] h3,
-      html[lang="tw"] h4,
-      html[lang="tw"] h5,
-      html[lang="tw"] a,
-      html[lang="tw"] button,
-      html[lang="tw"] div,
-      html[lang="tw"] span ,
-      html[lang="tw"] p,
-      html[lang="tw"] .link-nav-first,
-      html[lang="tw"] label {  
-        font-family:'Noto Sans TC','DeltaSans',sans-serif !important ;
-      }
-
-      
-      html[lang="jp"] body,
-      html[lang="jp"] h1,
-      html[lang="jp"] h2,
-      html[lang="jp"] h3,
-      html[lang="jp"] h4,
-      html[lang="jp"] h5,
-      html[lang="jp"] a,
-      html[lang="jp"] button,
-      html[lang="jp"] div,
-      html[lang="jp"] span ,
-      html[lang="jp"] p ,
-      html[lang="jp"] .link-nav-first,
-      html[lang="jp"] label {  
-        font-family: 'NotosansJP','DeltaSans' ,sans-serif !important ;
-      }
-
-      html[lang="ru"] body,
-      html[lang="ru"] h1,
-      html[lang="ru"] h2,
-      html[lang="ru"] h3,
-      html[lang="ru"] h4,
-      html[lang="ru"] h5,
-      html[lang="ru"] a,
-      html[lang="ru"] button,
-      html[lang="ru"] div,
-      html[lang="ru"] span ,
-      html[lang="ru"] p ,
-      html[lang="ru"] .link-nav-first,
-      html[lang="ru"] label {  
-        font-family: 'Inter','DeltaSans' ,sans-serif !important ;
-      }
       
       .color-yellow{
         background-color: #252A2C;
