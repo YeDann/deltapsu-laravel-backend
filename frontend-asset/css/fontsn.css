@@ -160,7 +160,24 @@
          url('../fonts/noto-sans-jp-v42-japanese-700.ttf') format('truetype'), /* Safari, Android, iOS */
          url('../fonts/noto-sans-jp-v42-japanese-700.svg#NotoSansJP') format('svg'); /* Legacy iOS */
   }
+@font-face {
+    font-family: 'Microsoft Yahei';
+    src: url('../fonts/MicrosoftYaHei-01.woff') format('woff2'),
+        url('../fonts/MicrosoftYaHei-01.woff2') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 
+@font-face {
+  font-family: 'Microsoft Yahei';
+  src: url('../fonts/MicrosoftYaHeiUI-Bold-02.woff') format('woff2'),
+      url('../fonts/MicrosoftYaHeiUI-Bold-02.woff2') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+  
 
 /* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1080">Text with this font applied</p> */
 .fontsforweb_fontid_1080 {
@@ -183,7 +200,7 @@ html[lang="cn"] span,
 html[lang="cn"] p,
 html[lang="cn"] .link-nav-first,
 html[lang="cn"] label{  
-  font-family:'Noto Sans SC','DeltaSans',sans-serif !important;
+  font-family:'Microsoft Yahei','DeltaSans',sans-serif !important;
 }
 
 
@@ -236,7 +253,6 @@ html[lang="ru"] .link-nav-first,
 html[lang="ru"] label {  
   font-family: 'Inter','DeltaSans' ,sans-serif !important ;
 }
-
 
 
 
