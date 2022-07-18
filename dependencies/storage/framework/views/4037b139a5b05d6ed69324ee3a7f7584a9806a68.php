@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <?php echo $__env->yieldContent('meta'); ?>
     <!-- Bootstrap CSS -->
-   
+     
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/bootstrap.min.css')); ?>"  media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/header-front.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/container.css')); ?>" media="screen"/>
@@ -24,7 +24,6 @@
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/vanilla-calendar-min.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/fontello.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')); ?>" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/fontNew.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/owl.theme.default.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/owl.carousel.min.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/product.css')); ?>" media="screen"/>
@@ -35,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/nouislider.min.css')); ?>"  media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/jquery.datepicker.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/zabuto_calendar.css')); ?>" media="screen" />
-   
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/fontnews.css')); ?>" media="screen"/>
 
 
     <?php echo $__env->yieldContent('css'); ?>
@@ -91,55 +90,6 @@
       }
  
       
-      body{
-          font-family:'DeltaSans' !important;
-      }
-      html[lang="cn"] body,
-      html[lang="cn"] h1,
-      html[lang="cn"] h2,
-      html[lang="cn"] h3,
-      html[lang="cn"] h4,
-      html[lang="cn"] h5,
-      html[lang="cn"] a,
-      html[lang="cn"] button,
-      html[lang="cn"] span,
-      html[lang="cn"] .link-nav-first,
-      html[lang="cn"] label{  
-        font-family:'NotosansCN','DeltaSans'  !important;
-      }
-
-  
-
-      html[lang="tw"] body,
-      html[lang="tw"] h1,
-      html[lang="tw"] h2,
-      html[lang="tw"] h3,
-      html[lang="tw"] h4,
-      html[lang="tw"] h5,
-      html[lang="tw"] a,
-      html[lang="tw"] button,
-      html[lang="tw"] div,
-      html[lang="tw"] span ,
-      html[lang="tw"] .link-nav-first,
-      html[lang="tw"] label {  
-        font-family:'NotosansTw','DeltaSans'!important ;
-      }
-
-      
-      html[lang="jp"] body,
-      html[lang="jp"] h1,
-      html[lang="jp"] h2,
-      html[lang="jp"] h3,
-      html[lang="jp"] h4,
-      html[lang="jp"] h5,
-      html[lang="jp"] a,
-      html[lang="jp"] button,
-      html[lang="jp"] div,
-      html[lang="jp"] span ,
-      html[lang="jp"] .link-nav-first,
-      html[lang="jp"] label {  
-        font-family: 'NotosansJP','DeltaSans'!important ;
-      }
       .color-yellow{
         background-color: #252A2C;
         color: #fff;
@@ -194,10 +144,9 @@
 <script type="text/javascript" src="<?php echo e(asset('/frontend-asset/js/owl.carousel.js')); ?>"></script>
 <script type="text/javascript" src="<?php echo e(asset('/frontend-asset/js/owl.carousel.min.js')); ?>"></script>
 <script type="text/javascript" src="<?php echo e(asset('/frontend-asset/js/datatables.min.js')); ?>"></script>
-<script type="text/javascript" src="<?php echo e(asset('/frontend-asset/js/dropzone.js')); ?>"></script>
 <script type="text/javascript" src="<?php echo e(asset('/frontend-asset/js/slick.min.js')); ?>"></script>
 <script type="text/javascript" src="<?php echo e(asset('/frontend-asset/js/nouislider.min.js')); ?>"></script>
-<script type="text/javascript" src="<?php echo e(asset('/frontend-asset/js/jspdf.debug.js')); ?>"></script>
+
 <script type="text/javascript" src="<?php echo e(asset('/frontend-asset/js/zabuto_calendar.min.js')); ?>"></script>
 <script type="text/javascript" src="<?php echo e(asset('/frontend-asset/js/mb5.js')); ?>"></script>
 <script type="text/javascript" src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en"
@@ -209,17 +158,16 @@ async defer>
     images.forEach(img => {
       img.src = img.dataset.src;
     });
+  
     const imageDiv = document.querySelectorAll('div[loading="lazy"]');
-     
-
      imageDiv.forEach(imgD => {
-      console.log(imgD.dataset.src ,"imageDiv")
-       imgD.style.backgroundImage = "url('"+imgD.dataset.src+"')" ;
-
-   
+       imgD.style.backgroundImage = "url('"+imgD.dataset.src+"')";
     });
-
   } else {
+    const imageDiv = document.querySelectorAll('div[loading="lazy"]');
+     imageDiv.forEach(imgD => {
+       imgD.style.backgroundImage = "url('"+imgD.dataset.src+"')";
+    });
     // Dynamically import the LazySizes library
     const script = document.createElement('script');
     script.src =
@@ -259,37 +207,7 @@ async defer>
   <!-- End Google Tag Manager (noscript) -->
   
     <?php echo $__env->yieldContent('js'); ?>
-    <script>
-       $(document).ready(function() {
-        msieversion();
-       });
-      function msieversion() 
-            {
-                var ua = window.navigator.userAgent;
-                var msie = ua.indexOf("MSIE");
-
-                if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) // If Internet Explorer, return version number
-                {
-                  var script = document.createElement('script');
-                    script.type = 'text/javascript';
-                    script.src = '<?php echo e(asset('/frontend-asset/js/html2canvasie.js')); ?>';    
-
-                    document.getElementsByTagName('head')[0].appendChild(script);
-              
-                }
-                else  // If another browser, return 0
-                {
-                  var script = document.createElement('script');
-                    script.type = 'text/javascript';
-                    script.src = '<?php echo e(asset('/frontend-asset/js/html2canvas.js')); ?>';    
-
-                    document.getElementsByTagName('head')[0].appendChild(script);
-                  
-                }
-
-                return false;
-            }
-      </script>
+   
     <script>
       // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {

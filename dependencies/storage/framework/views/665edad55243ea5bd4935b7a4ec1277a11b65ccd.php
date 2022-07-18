@@ -1,5 +1,5 @@
 <?php $__env->startSection('css'); ?>
-
+<link rel="stylesheet" href="<?php echo e(asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')); ?>">
 <style>
     table {
         border-collapse: unset;
@@ -363,6 +363,7 @@
 
 
 <?php $__env->startSection('js'); ?>
+<script type="text/javascript" src="<?php echo e(asset('/frontend-asset/js/dropzone.js')); ?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {

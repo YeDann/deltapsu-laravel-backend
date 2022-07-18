@@ -708,7 +708,38 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('js'); ?>
+<script type="text/javascript" src="<?php echo e(asset('/frontend-asset/js/jspdf.debug.js')); ?>"></script>
+<script>
+       $(document).ready(function() {
+        msieversion();
+       });
+      function msieversion() 
+            {
+                var ua = window.navigator.userAgent;
+                var msie = ua.indexOf("MSIE");
 
+                if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) // If Internet Explorer, return version number
+                {
+                  var script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.src = '<?php echo e(asset('/frontend-asset/js/html2canvasie.js')); ?>';    
+
+                    document.getElementsByTagName('head')[0].appendChild(script);
+              
+                }
+                else  // If another browser, return 0
+                {
+                  var script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.src = '<?php echo e(asset('/frontend-asset/js/html2canvas.js')); ?>';    
+
+                    document.getElementsByTagName('head')[0].appendChild(script);
+                  
+                }
+
+                return false;
+            }
+      </script>
 <script type="text/javascript">
 	var verifyCallback = function(response) {
 	  // alert(response);
@@ -1801,9 +1832,7 @@ function selectCountry(){
             '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional //EN" "http://www.w3.org/TR/html4/loose.dtd">'+
             '<html><head>'+
 			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/bootstrap.min.css')); ?>" >'+
-			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/font.css')); ?>">'+
-			'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC&display=swap">'+
-			'<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap">'+
+			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/fontNews.css')); ?>">'+
 			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/embepdf.css')); ?>">'+
 		    '<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/header-front.css')); ?>">'+
 			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/container.css')); ?>">'+
