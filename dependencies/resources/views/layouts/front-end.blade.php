@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('meta')
     <!-- Bootstrap CSS -->
-     
+    <link rel="stylesheet"  rel="preload" type="text/css" href="{{asset('/frontend-asset/css/font.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}"  media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/header-front.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/container.css')}}" media="screen"/>
@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}"  media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/font.css')}}" media="screen"/>
+  
 
 
     @yield('css')
