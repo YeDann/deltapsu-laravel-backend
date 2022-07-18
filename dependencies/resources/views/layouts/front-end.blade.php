@@ -106,7 +106,7 @@
       html[lang="cn"] p,
       html[lang="cn"] .link-nav-first,
       html[lang="cn"] label{  
-        font-family:'Noto San CN','DeltaSans',sans-serif !important;
+        font-family:'Noto Sans SC','DeltaSans',sans-serif !important;
       }
 
   
@@ -124,7 +124,7 @@
       html[lang="tw"] p,
       html[lang="tw"] .link-nav-first,
       html[lang="tw"] label {  
-        font-family:'NotoSansTC','DeltaSans',sans-serif !important ;
+        font-family:'Noto Sans TC','DeltaSans',sans-serif !important ;
       }
 
       

@@ -19,7 +19,7 @@
 }
 
 @font-face {
-    font-family: 'NotoSansTC';
+    font-family: 'Noto Sans TC';
     src: url('../fonts/NotoSansTC-Regular-Alphabetic.eot');
     src: url('../fonts/NotoSansTC-Regular-Alphabetic.eot?#iefix') format('embedded-opentype'),
         url('../fonts/NotoSansTC-Regular-Alphabetic.woff2') format('woff2'),
@@ -32,7 +32,7 @@
 }
 
 @font-face {
-    font-family: 'NotoSansTC';
+    font-family: 'Noto Sans TC';
     src: url('../fonts/NotoSansTC-Bold-Alphabetic.eot');
     src: url('../fonts/NotoSansTC-Bold-Alphabetic.eot?#iefix') format('embedded-opentype'),
         url('../fonts/NotoSansTC-Bold-Alphabetic.woff2') format('woff2'),
@@ -64,7 +64,7 @@
 
 
 @font-face {
-    font-family: "Noto San CN";
+    font-family: "Noto Sans SC";
     src: url("../fonts/notosanssc-regular-webfont.woff") format('woff'),
     url('../fonts/notosanssc-regular-webfont.woff2') format('woff2');
     font-weight: normal;
@@ -75,7 +75,7 @@
 
 
 @font-face {
-    font-family: "Noto San CN";
+    font-family: "Noto Sans SC";
     src: url("../fonts/notosanssc-bold-webfont.woff") format('woff'),
     url('../fonts/notosanssc-bold-webfont.woff2') format('woff2');
     font-weight: bold;
