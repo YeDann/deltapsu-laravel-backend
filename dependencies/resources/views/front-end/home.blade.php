@@ -167,7 +167,7 @@
             @foreach ($banners as $banner)
             <div class="item banner-item ">
                 <a href="{{$banner->btn_link}}">
-                <div loading="lazy"  data-src="{{config('app.url')}}/medias/banners/{{$banner->image_destop}}" class="slide" >
+                <div loading="lazy"  data-src="{{config('app.url')}}/medias/banners/{{$banner->image}}" class="slide" >
                     <div class="slide-content">
                         @if($banner->title2 != null)
                         <div class="container ">
