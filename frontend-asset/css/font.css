@@ -171,8 +171,8 @@
 
 @font-face {
   font-family: 'Microsoft Yahei';
-  src: url('../fonts/MicrosoftYaHeiUI-Bold-02.woff') format('woff2'),
-      url('../fonts/MicrosoftYaHeiUI-Bold-02.woff2') format('woff');
+  src: url('../fonts/MicrosoftYaHei-Bold-01.woff') format('woff2'),
+      url('../fonts/MicrosoftYaHei-Bold-01.woff2') format('woff');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
