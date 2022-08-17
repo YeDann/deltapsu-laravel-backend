@@ -78,6 +78,22 @@
     .datasheet-select{
         padding: 24px 12px;
     }
+    .content_tags_pro{
+        display: flex;
+        width: 200%;
+        flex-wrap: wrap;
+    }
+    .box-list-tag{
+        padding: 4px;
+        border: 1px solid #E3EFF8;
+        margin-bottom: 26px;
+        border-radius: 4px;
+        display: block;
+        margin-right: 9px;
+        white-space: nowrap;
+    }
+    
+  
   
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
@@ -104,14 +120,16 @@
        display: none;
    }
    .text-tag-link span{
-       color:#0087DC;
-       font-size: 14px;
-       cursor: pointer;
-       padding-right: 3px;
+    color: #0087DC;
+    font-size: 14px;
+    cursor: pointer;
    }
    .text-tag-link span:hover{
        color: #444444;
       text-decoration: underline;
+   }
+   .product-document-type{
+      background-color: #fff;
    }
 </style>
 <?php $__env->stopSection(); ?>
@@ -159,12 +177,12 @@
                                 <img src="<?php echo e(asset('frontend-asset/image/search-filters-icon.svg')); ?>" alt="">
                             </div>
                             <label for="key_mobile" class="searchinput-filters-input">
-                                
+                              
                                 <select id="key_model_input" class="js-example-basic-single form-control" >
                                     <option></option>
-                                    <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <!-- <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($pro->pro_code); ?>" ><?php echo e($pro->pro_code); ?></option> 
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> -->
                                 </select>
                                 <input type="hidden" id="model_id_key" >
                             </label>
@@ -208,8 +226,10 @@
                     <div class="image-datasheet mb-2" id="content_pro">
                     </div>
                     <div>
-                        
-                        
+                        <h6 class="text-title-ft-sub mt-2">Tags</h6> 
+                        <div class="content_tags_pro" id="content_tags_pro">
+
+                       </div> 
                     
                     </div>
             </div>
@@ -245,13 +265,37 @@
         var products =  <?= json_encode($products);?>;
         var documents_cate =  <?= json_encode($documents_cate);?>;
         var documents =  <?= json_encode($documents);?>;
+        var tags_data =  <?= json_encode($Protags);?>;
         var proImage = '' ;
         var create_pro = '00/00/0000';
         var domainUrl = '<?php echo e(config('app.url')); ?>';
+        var data_product = [];
         $(document).ready(function () {
             selectType();
+            data_product = mergeDataPro();
           
         });
+        function mergeDataPro(){
+            var newproduct = [];
+            var html = '';
+            $.each(products, function(index,pro){
+                newproduct.push(pro['pro_code'])
+            });
+
+            $.each(tags_data, function(idx,tag){
+                 if(!newproduct.includes(tag['tag'])){
+                    newproduct.push(tag['tag'])
+                 }               
+              
+            });
+            html += '<option></option>';
+            $.each(newproduct, function(index,item){
+                    html += '<option value="'+item +'">'+item+'</option>';
+                
+            });
+            $('#key_model_input').html(html);
+            return newproduct;
+        }
         function selectType(){
             var id = $('#type_id').val();
             var html = '';
@@ -272,13 +316,34 @@
         // console.log(key);
         //var term = key; // search term (regex pattern)
         //var search = new RegExp(term , 'i'); // prepare a regex object     
-          products.filter(function(data){
-            if(key == data.pro_code){
-                $('#model_id_key').val(data.product_id); 
-            }
-           });
-           loadContent(2);
+        // var proId = products.filter(function(data){
+        //     if(key == data.pro_code){
+        //         console.log( data.product_id ,' data.product_id')
+        //        return data.product_id;
+        //     }
+        //    });
+          var findPro =  products.filter(function(e) { return e.pro_code === key});
+          var findByTag =  tags_data.filter(function(x) { return  x.tag === key});
+          if(findPro.length > 0){
+            $('#model_id_key').val(findPro[0]["product_id"]); 
+            loadContent(2);
+          }else if(findByTag.length > 0 && findByTag.length == 1){
+           
+            $('#model_id_key').val(findByTag[0]["pro_id"]); 
+            loadContent(2);
+          }else{
+            // console.log(findByTag.length ,'findByTag.length');
+            $("#notfound_product").modal();
+          }
 
+        //    if(proId){
+        //     loadContent(2);
+        //     $('#model_id_key').val(1); 
+        //    }else{
+        //      alert('data not found')
+        //    }
+       
+    
         }   
 
         function onSelectSeries(){
@@ -309,7 +374,7 @@
          model_id = $('#model_id_key').val()
           getContentByModel(2);
         }
-        // gettags(model_id);
+          gettags(model_id);
             var html = '';
             products.filter(function(data) {
                 if(data['pro_id'] == model_id){
@@ -350,7 +415,7 @@
               //console.log(res['data']);
               var html = '';
               $.each(res['data'], function(index,tag){
-              html += '<a class="text-tag-link"><span  onclick="viewKey('+"'"+tag['tag']+"'"+');">'+tag['tag']+ '</span></a>';
+              html += '<div class="box-list-tag"><a class="text-tag-link"><span  onclick="viewKey('+"'"+tag['tag']+"'"+');">'+tag['tag']+ '</span></a></div>';
               });
               $('#content_tags_pro').html(html);
            }
@@ -379,7 +444,7 @@
             }
             products.filter(function(data) {
                 if(data['pro_id'] == model_id){
-                    console.log(data);
+                    
                    proImage = data['picture'];
                    procode  = data['pro_code'];
                    catename  = data['catename'];
@@ -638,6 +703,7 @@
              $('#linkdownloadsuc').html(html);
              $("#downloadgui-modal-success").modal();
              
+            
           });
         <?php endif; ?>
 

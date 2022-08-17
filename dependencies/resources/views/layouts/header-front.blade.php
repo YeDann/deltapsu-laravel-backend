@@ -363,7 +363,7 @@ top: -9px;
 
                 </span>
             </button>
-            <div class="collapse navbar-collapse" id="navbar">
+            <div class="collapse navbar-collapse header-bar-line" id="navbar">
                 <ul id="nav-all" class="navbar-nav mr-center-nav">
 
                     <li class="nav-item dropdown">
@@ -922,6 +922,24 @@ top: -9px;
     </div>
   </div>
 
+  <div class="modal fade p-1" id="Support_policy_required" tabindex="-1" role="dialog" aria-labelledby="subscribe-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content ">
+        <div class="modal-header pl-4">
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body px-4 mb-4">
+            <div class="text-center">
+                <h4 class="text-color-delta">Sorry, Please fill agree to our privacy policy</h4>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 
   <div class="modal fade p-1" id="downloadgui-modal-failures-Api" tabindex="-1" role="dialog" aria-labelledby="subscribe-modal-title" aria-hidden="true">
@@ -1060,6 +1078,24 @@ top: -9px;
         <div class="modal-body px-4 mb-4">
             <div class="text-center">
                 <h4 class="text-color-delta">Sorry, Please verify i'm not robot </h4>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade p-1" id="notfound_product" tabindex="-1" role="dialog" aria-labelledby="subscribe-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content ">
+        <div class="modal-header pl-4">
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Message</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body px-4 mb-4">
+            <div class="text-center">
+                <h4 class="text-color-delta">Data not found.</h4>
             </div>
         </div>
       </div>

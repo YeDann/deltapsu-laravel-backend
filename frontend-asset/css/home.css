@@ -10,6 +10,7 @@
   visibility: hidden;
 }
 
+
 .accept-checkCookie.active {
   display: block;
   visibility: visible;

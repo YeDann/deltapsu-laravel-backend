@@ -167,7 +167,7 @@
             <?php $__currentLoopData = $banners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $banner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="item banner-item ">
                 <a href="<?php echo e($banner->btn_link); ?>">
-                <div loading="lazy"  data-src="<?php echo e(config('app.url')); ?>/medias/banners/<?php echo e($banner->image_destop); ?>" class="slide" >
+                <div loading="lazy"  data-src="<?php echo e(config('app.url')); ?>/medias/banners/<?php echo e($banner->image); ?>" class="slide" >
                     <div class="slide-content">
                         <?php if($banner->title2 != null): ?>
                         <div class="container ">

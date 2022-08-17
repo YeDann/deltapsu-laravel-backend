@@ -258,6 +258,7 @@
 
 .image-datasheet {
     border: 2px solid #E3EFF8;
+    min-height: 388px;
 }
 
 .pad-right {

@@ -135,7 +135,7 @@ textarea{
     <div class="container">
         <h2 class="text-title-delta visible-tablets-up"><?php echo e($staticContent['what_type_of_support']); ?></h2>
         <h3 class="text-title-delta visible-mobile"><?php echo e($staticContent['what_type_of_support']); ?></h3>
-    <form id="submitSupport"   action="<?php echo e(route('SubmitContact')); ?>" method="POST">
+    <form id="submitSupport"  onsubmit="return validateForm(this)"  action="<?php echo e(route('SubmitContact')); ?>" method="POST">
         <?php echo e(csrf_field()); ?>
 
         <p><?php echo e($staticContent['support_from_up_text']); ?></p>
@@ -222,7 +222,16 @@ textarea{
                         <textarea name="message" id="message" class="w-100" required="required" rows="10"></textarea>
                         <label for="message"><?php echo e($staticContent['Message']); ?></label>
                     </div>
-                    <p class="mr-24px"> <?php echo e($staticContent['By_submitting_this_form']); ?> <a href="<?php echo e(route('privacyPolicy')); ?>" class="font-size-tab text-underline text-bold"><?php echo e($staticContent['Privacy_Policy']); ?></a></p>
+                   
+                    <div class="box-input-checkbox">
+                        <input class="inp-cbx" name="prichk" id="privacycheck" value="1"  type="checkbox"
+                            style="display: none;" />
+                        <label class="cbx" for="privacycheck"><span>
+                                <svg width="12px" height="10px" viewbox="0 0 12 10">
+                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                </svg></span><span> <?php echo e($staticContent['By_submitting_this_form']); ?> <text class="red">*</text> <a target="_blank" href="<?php echo e(route('privacyPolicy')); ?>" class="font-size-tab text-underline text-bold"><?php echo e($staticContent['Privacy_Policy']); ?></a></span></label>
+                    </div>
+ 
                     <div class="box-input-checkbox">
                         <input class="inp-cbx" name="checkData" id="cx-sign-up" value="1" type="checkbox"
                             style="display: none;" />
@@ -265,17 +274,19 @@ textarea{
           'theme' : 'light'
         });
       };
-      $("#submitSupport").submit(function( event ) {
-        // if($('#keyrecap').val() == ''){
-        //    alert('Please Vertify I am not a robot?');
-        // }else{
-        //   $('#submitSupport').submit();
-        // }
-        // event.preventDefault();
 
-        $('#submitSupport').submit();
-     });
-
+    
+  
+      function validateForm(form){
+               if(!form.prichk.checked)
+               console.log(form.prichk.checked);
+                {
+                    $("#Support_policy_required").modal();
+                    return false;
+                }else{
+                    return true;
+                }
+      }
   </script>
 
 <script>

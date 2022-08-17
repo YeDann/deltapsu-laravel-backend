@@ -818,12 +818,19 @@
                                             <p style="Margin-top: 0;Margin-bottom: 20px;">
                                                 <table>
                                                     <tbody>
+                                                      <?php if(isset($ticket_id)): ?>
+                                                        <tr>
+                                                            <td style="width: 100px;">Ticket No: </td>
+                                                            <td><?php echo e($ticket_id); ?></td>
+                                                        </tr>
+                                                        <?php endif; ?>
                                                         <?php if(isset($contactForm['name'])): ?>
                                                         <tr>
                                                             <td style="width: 100px;">Name : </td>
                                                             <td><?php echo e($contactForm['name']); ?></td>
                                                         </tr>
                                                         <?php endif; ?>
+
                                                         <?php if(isset($contactForm['tel'])): ?>
                                                         <tr>
                                                             <td style="width: 100px;">Phone : </td>

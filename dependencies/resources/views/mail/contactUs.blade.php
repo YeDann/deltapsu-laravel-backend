@@ -823,12 +823,19 @@
                                             <p style="Margin-top: 0;Margin-bottom: 20px;">
                                                 <table>
                                                     <tbody>
+                                                      @if(isset($ticket_id))
+                                                        <tr>
+                                                            <td style="width: 100px;">Ticket No: </td>
+                                                            <td>{{$ticket_id}}</td>
+                                                        </tr>
+                                                        @endif
                                                         @if(isset($contactForm['name']))
                                                         <tr>
                                                             <td style="width: 100px;">Name : </td>
                                                             <td>{{$contactForm['name']}}</td>
                                                         </tr>
                                                         @endif
+
                                                         @if(isset($contactForm['tel']))
                                                         <tr>
                                                             <td style="width: 100px;">Phone : </td>

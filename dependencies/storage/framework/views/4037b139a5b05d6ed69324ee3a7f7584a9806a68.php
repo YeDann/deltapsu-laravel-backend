@@ -11,7 +11,7 @@
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
     <?php echo $__env->yieldContent('meta'); ?>
     <!-- Bootstrap CSS -->
-     
+    <link rel="stylesheet"  rel="preload" type="text/css" href="<?php echo e(asset('/frontend-asset/css/font.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/bootstrap.min.css')); ?>"  media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/header-front.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/container.css')); ?>" media="screen"/>
@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/nouislider.min.css')); ?>"  media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/jquery.datepicker.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/zabuto_calendar.css')); ?>" media="screen" />
-    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/font.css')); ?>" media="screen"/>
+  
 
 
     <?php echo $__env->yieldContent('css'); ?>
@@ -152,6 +152,7 @@
 <script type="text/javascript" src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en"
 async defer>
 </script>
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-blockingmode="auto" type="text/javascript"></script>
 <script>
   if ('loading' in HTMLImageElement.prototype) {
     const images = document.querySelectorAll('img[loading="lazy"]');
@@ -198,6 +199,7 @@ async defer>
  });
 
 </script>
+<script id="CookieDeclaration" src="https://consent.cookiebot.com/0b87f4dd-13cf-473e-b5c7-019f4154d02a/cd.js" type="text/javascript" async></script>
 
  <!-- Google Tag Manager (noscript) -->
  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBXMMSN"
@@ -612,7 +614,7 @@ if (!Array.prototype.findIndex) {
         </script>
         <script>
           $(document).ready(function() {
-             checkCookie();
+            //  checkCookie();
           });
           function resetTime(){
              var hours = 24; // Reset when storage is more than 24hours

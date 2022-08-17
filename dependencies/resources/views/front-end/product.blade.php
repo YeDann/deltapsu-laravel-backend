@@ -86,6 +86,7 @@
     }
     .table thead th{
         vertical-align: middle !important;
+        text-align: center;
     }
     .table td {
         /* border-top: unset; */
@@ -137,9 +138,7 @@
     a{
         color: #0087DC;
     }
-   .w-tabfix{
-       /* width: 100px !important; */
-    }
+
     .in-volt{
         height: 50px;
     }
@@ -158,8 +157,10 @@
    display: block;
   visibility: visible;
   position: absolute;
-  margin-top: -6px;
   color: #fff;
+  top: 50%;
+  right: 0.25rem;
+  transform: translateY(calc(50% - 2rem));
 }
 
 .w-tabfix:after {
@@ -172,8 +173,10 @@
   display:block;
   visibility: visible;
   position: absolute;
-  margin-top: -8px;
   color: #fff;
+  top: 50%;
+  right: 0.25rem;
+  transform: translateY(calc(50% - 0rem));
 }
 .w-tabfix.active{
     color: #0087DC;
@@ -186,7 +189,7 @@
   opacity: 1;
   }
   .w-td-con{
-      width: 122px;
+      width: 83px;
       word-break: break-all;
   }
   
@@ -225,6 +228,10 @@
         -webkit-transform: scale(1.12);
         transform: scale(1.12);
     }
+    .w-number{
+        width: 20px !important;
+    }
+    
 </style>
 @endsection
 @section('meta')
@@ -585,6 +592,8 @@
     var documents_cate =  <?= json_encode($documents_cate);?>;
     var certi_products =  <?= json_encode($certi_products);?>;
     var defaultfilters =  <?= json_encode($defaultfilters);?>; 
+    var catename = <?= json_encode($catename);?>;
+    var cateid = <?= json_encode($cateid);?>;
     var pro_perti = [];
     var ser_arr = [];
     var productFilter = [];
@@ -601,7 +610,8 @@
         filtercontentMobile();
         filtercontent();
         loadPopUpfilter();
-     
+        console.log(catename ,'catedata');
+        console.log(cateid ,'cateid');
 
         var size  = $(window).width();
         if(size <= 768){
@@ -1220,6 +1230,7 @@
            return newkey;
     }
     function onclickGridView(productarray) {
+        
         $('#current_list_item').val(1);
         var html = '';
         html += '<div class="GridView visible-upper-mobile" id="GridView">';
@@ -1296,7 +1307,9 @@
         html += '<p class="text-ft-sub text-one">-</p>';
         }
         html += '</div>';
+        html += '<div><a class="btn btn-datasheet w-50 mr-2 mt-2" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><i class="fa fa-arrow-circle-down" aria-hidden="true"></i> {{$staticContent['data_sheet']}}</a></div>';
         html += '<div href="#" class="btn btn-ft mt-2" onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" >+{{$staticContent['Add_to_Compare']}}</div>';
+        html += '<div class="btn-enq-d mt-2"><a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'">{{$staticContent['Enquiry']}}</a></div>';
         html += '</div>';
         html += '</div>';
         html += '</div>';
@@ -1408,15 +1421,15 @@
         html1 += '<div class="count-products">';
         html1 += '<span class="countproduct"></span> {{$staticContent['Product(s)']}}';
         html1 += '</div>';
-        html1 += '<table id="dtBasicExample" class="table" cellspacing="5em" width="100%">';
+        html1 += '<table id="dtBasicExample" class="table" cellspacing="1em" width="100%">';
         html1 += '<thead>';
         html1 += '<tr class="headder-bg-table">';
-        html1 += '<th id="sortdata1" class="th-sm header-font-table w-tabfix" onclick="selectTable(1)">{{$staticContent['Model_Name']}}</th>';
-        html1 += '<th id="sortdata2" class="th-sm header-font-table w-tabfix" onclick="selectTable(2)"><span>{{$staticContent['Output_Voltage']}} </span></th>';
-        html1 += '<th id="sortdata3" class="th-sm header-font-table w-tabfix" onclick="selectTable(3)">{{$staticContent['Output_Current']}}</th>';
-        html1 += '<th id="sortdata4" class="th-sm header-font-table w-tabfix"onclick="selectTable(4)">{{$staticContent['Output_Power']}} </th>';
-        html1 += '<th id="sortdata5" class="th-sm header-font-table w-tabfix" onclick="selectTable(5)">{{$staticContent['Input_Voltage']}}</th>';
-        html1 += '<th id="sortdata6" class="th-sm header-font-table w-tabfix"onclick="selectTable(6)" >{{$staticContent['Dimensions']}} ('+unit_dimension_1+' x W x '+unit_dimension+')</th>';
+        html1 += '<th colspan="2" id="sortdata1" class=" header-font-table w-tabfix"  onclick="selectTable(1)">{{$staticContent['Model_Name']}}</th>';
+        html1 += '<th id="sortdata2" class=" header-font-table w-tabfix"  onclick="selectTable(2)">{{$staticContent['Output_Voltage']}}</th>';
+        html1 += '<th id="sortdata3" class=" header-font-table w-tabfix"  onclick="selectTable(3)">{{$staticContent['Output_Current']}}</th>';
+        html1 += '<th id="sortdata4" class=" header-font-table w-tabfix"  onclick="selectTable(4)">{{$staticContent['Output_Power']}} </th>';
+        html1 += '<th id="sortdata5" class=" header-font-table w-tabfix"  onclick="selectTable(5)">{{$staticContent['Input_Voltage']}}</th>';
+        html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['Dimensions']}} <br>('+unit_dimension_1+' x W x '+unit_dimension+')</th>';
         html1 += '</tr>';
         html1 += '</thead>';
         html1 += '<tbody id="listcardList">';
@@ -1454,6 +1467,7 @@
     function listviewCard(productarray) {
        
         var html1 = '';
+        console.log(productarray ,"productarray")
     
         $.each(productarray, function(index_pro,pro){
         html1 += '<tr class="box-cardlist row_table" style="display: none;">';
@@ -1489,7 +1503,19 @@
             content[2]['data_6'],content[2]['data_7'],content[2]['data_8'],content[2]['data_9'],content[2]['data_10'],content[2]['data_11'],
             content[2]['data_12']
             ]
-       
+        html1 += '<td>';
+        html1 += '<div class="card-btn-a">';
+    
+        html1 += '<div class="card-btn-a-detail">';
+        html1 += '<a class="link-d-sheet" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank">';
+        html1 += '<div class="text-name-data">Datasheet</div>';
+        html1 += '<div class="icon-datasheet">';
+        html1 += '<i class="fa fa-arrow-circle-down" aria-hidden="true"></i>';
+        html1 += '</div>' ;
+        html1 += '</a>';
+        html1 += '<div class="btn-enq-d"><a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'">{{$staticContent['Enquiry']}}</a></div>';
+        html1 += '</div></div>';
+        html1 += '</td>';
         html1 += ' <td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon1,content[1]['unit_name'] ,content[1]['status_input'])+'</div></td>';
         html1 += '<td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon2,content[0]['unit_name'] ,content[0]['status_input'])+'</div></td>';
         html1 += ' <td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon3,content[2]['unit_name'] ,content[2]['status_input'])+'</div></td>';
@@ -1514,6 +1540,10 @@
 
         $('#listcardList').html(html1);
 
+    }
+    function productKey(key){
+            var newkey = key.replace(/[/]/g,'@');
+            return newkey;
     }
     function checkNullShow(dataarr,unit,status){
      
@@ -1549,6 +1579,17 @@
                 strfor += '<br>';
              }
             }
+            });
+            return strfor;
+    }
+    function stringSpacefor(str){
+        var arrStr = str.split(' ');
+        var strfor = '';
+        $.each(arrStr, function(index,data){
+              strfor += data;
+              strfor += '<br>';
+             
+            
             });
             return strfor;
     }

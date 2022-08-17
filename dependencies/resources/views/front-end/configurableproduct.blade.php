@@ -620,8 +620,8 @@
 					<div class="d-flex flex-wrap border-2px-unmobile" id="savethis">
 						{{-- <div class="col-12"> --}}
 						<div class="summary-subbody">
-							<h5 class="text-color-delta">{{$staticContent['Factory_Model_Name']}} :</h5>
-							<h3 class="factory text-normal"></h3>
+							<!-- <h5 class="text-color-delta">{{$staticContent['Factory_Model_Name']}} :</h5>
+							<h3 class="factory text-normal"></h3> -->
 
 							<h5 class="text-color-delta">{{$staticContent['Customer_Model_Name']}} :</h5>
 							<h3 class="customer text-normal"></h3>

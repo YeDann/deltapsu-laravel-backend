@@ -17,12 +17,13 @@ class Contact extends Mailable
      * @return void
      */
     protected $request;
+    protected $ticket_id;
+    
 
-    public function __construct($request)
+    public function __construct($request ,$ticket_id)
     {
         $this->request = $request;
-
-
+        $this->ticket_id = $ticket_id;
     }
 
     /**
@@ -46,6 +47,7 @@ class Contact extends Mailable
         ];
        
         return $this->view('mail.contactUs', $data)
+        ->with('ticket_id', $this->ticket_id)
         ->subject($subject);
 
       

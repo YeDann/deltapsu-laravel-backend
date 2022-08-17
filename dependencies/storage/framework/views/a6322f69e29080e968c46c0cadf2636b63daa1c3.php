@@ -272,6 +272,9 @@ font-size: 50px;
                         <button class="btn btn-enquiry"><?php echo e($staticContent['Enquiry']); ?></button>
                         </a>
                         <button class="btn btn-addcompare" onclick="showNavCoparison(<?php echo e($product[0]['pro_id']); ?>, <?php echo e($product[0]['cate_id']); ?>)">+ <?php echo e($staticContent['Add_to_Compare']); ?></button>
+                        <a href="<?php echo e(route('downloadFIle')); ?>/Datasheet/<?php echo e($product[0]['pro_code']); ?>" target="_blank">
+                        <button class="btn btn-datasheet mr-2"  ><i class="fa fa-arrow-circle-down" aria-hidden="true"></i> <?php echo e($staticContent['data_sheet']); ?></button>
+                        </a>
                     </div>
                     <div class="row">
                         <div class="col-sm-4 box-product-detail">

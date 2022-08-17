@@ -273,6 +273,9 @@ font-size: 50px;
                         <button class="btn btn-enquiry">{{$staticContent['Enquiry']}}</button>
                         </a>
                         <button class="btn btn-addcompare" onclick="showNavCoparison({{$product[0]['pro_id']}}, {{$product[0]['cate_id']}})">+ {{$staticContent['Add_to_Compare']}}</button>
+                        <a href="{{route('downloadFIle')}}/Datasheet/{{$product[0]['pro_code']}}" target="_blank">
+                        <button class="btn btn-datasheet mr-2"  ><i class="fa fa-arrow-circle-down" aria-hidden="true"></i> {{$staticContent['data_sheet']}}</button>
+                        </a>
                     </div>
                     <div class="row">
                         <div class="col-sm-4 box-product-detail">

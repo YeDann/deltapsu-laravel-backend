@@ -523,7 +523,18 @@ class FrontendController extends Controller
             ->orderBy('p.pro_code', 'asc')
             ->get();
 
-         
+
+            $Protags  = DB::table('product_tags as ptag')
+           ->join('products as p', 'p.pro_id', '=', 'ptag.product_id')
+           ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+           ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+           ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+           ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+           ->where('spt.local' ,$lang)
+           ->where('st.local' ,$lang)
+           ->where('p.enable_pro' ,1)
+           ->select('p.*','spt.name as catename','phc.categories_id','sp.url_item' ,'st.title as seName','ptag.*')
+           ->get();
 
             $series =  DB::table('series_has_pro_categories as sc')
                 ->join('series as s' ,'sc.se_id' ,'=' ,'s.se_id')
@@ -558,6 +569,7 @@ class FrontendController extends Controller
                 ->get();
                 $metatag = DB::table('meta_tag_page as mtp')->where('id',9)->get();
             return  view('front-end.product-documents')
+            ->with('Protags' ,$Protags)
             ->with('metatag' ,$metatag)
             ->with('subCategories' ,$subCategories)
             ->with('series' ,$series)
@@ -730,20 +742,7 @@ class FrontendController extends Controller
             }
             return redirect()->route('contactSupport'); 
         } 
-        if($page == 'testFunction3'){
-            $events = DB::table('contents as c')
-            ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
-            ->where('ct.local', $lang)
-            ->where('c.content_type', '=', 'event')
-            ->where('c.status',  1)
-            ->select('c.*' ,'ct.*')
-            ->orderBy('c.date_publish', 'desc')
-            ->limit(2)
-            ->get();
-            return view('front-end.test')->with('events',$events); 
-
-
-        }
+     
         if($page == "checkPro3"){
             $arrcheck = [];
             $products = DB::table('products as p')
@@ -3361,9 +3360,8 @@ class FrontendController extends Controller
             // return redirect()->back()->withErrors($validate->errors());
             return \Redirect::back()->with("message_eror_notValid","Can not send");
         }
-      
-        
-        if($body->success){
+        $ticket_id = null;
+        if(true){
     
            $subject = $this->validateInput($request->subject,'text',true);
            $name = $this->validateInput($request->name,'text',true);
@@ -3377,18 +3375,20 @@ class FrontendController extends Controller
            $model_name = $this->validateInput($request->model_name,'text',true);
            $message = $this->validateInput($request->message,'text',true);
            $checkData = $this->validateInput($request->checkData,'number',true);
-
+           $agree_policy = $this->validateInput($request->prichk,'text',true);
+        
            
            $accept_sigh = 0;
            if($checkData == 1){
             $accept_sigh = 1;
             self::subCheckBox($request);
            }
-           if($subject == 0){
+  
+           if($subject == "0"){
             $subject = 'Sale Enquiries';
            }
         //    return dd($request->config_id, $request->enquireStatus);
-        //   return dd($request->config_id);
+      
           $path = null;
           $filepdf = null;
 
@@ -3443,6 +3443,26 @@ class FrontendController extends Controller
           }
 
           if($request->enquireStatus != 3){
+          
+         
+            $lastdata = DB::table('contacts')->where('subject','Sale Enquiries')->latest('id')->first();
+            $run_num  = 1;
+            if($lastdata->run_num){
+              $run_num = $lastdata->run_num + 1;
+            }
+            $d = date('d');
+            $yy = date('Y');
+            $m = date('m');
+            $numdate = $yy.$m.$d;
+          
+            if($subject == "Sale Enquiries"){
+                $ticket_id = $numdate.sprintf("%04d", $run_num);
+            }else{
+                $ticket_id = null;
+            }
+           
+
+
             DB::table('contacts')->insert(
                 [
                     'name' => $name,
@@ -3454,7 +3474,10 @@ class FrontendController extends Controller
                     'state' =>$state,
                     'type_name' =>$type_name,
                     'model_name' =>$model_name,
+                    'ticket_id' =>$ticket_id,
+                    'run_num' =>$run_num,
                     'message' =>$message,
+                    'agree_policy'=>$agree_policy,
                     'file' =>isset($filepdf)?$filepdf:null,
                     'accept_signup_news' =>$accept_sigh,
                     "created_at" => \Carbon\Carbon::now(),
@@ -3522,7 +3545,8 @@ class FrontendController extends Controller
           }
          
            try {
-            $emaillog = Mail::to($emailsend)->send(new Contact($request->except('_token')));
+            $emailTest = 'chai@degitobangkok.com';
+            $emaillog = Mail::to($emailTest)->send(new Contact($request->except('_token'),$ticket_id));
             Log::channel('mail_log')->info('[Success] message : Send Mail to '.implode(",",$emailsend));
             return \Redirect::back()->with("message","Send Email Successfully");
            } catch (\Swift_RfcComplianceException  $ex) {

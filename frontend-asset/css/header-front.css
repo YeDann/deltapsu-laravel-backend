@@ -6,7 +6,28 @@
     color:#0087DC;
 }
 
-
+.header-bar-line {
+    border-bottom: 7px solid #64d7d7;
+}
+.header-bar-line::after, .header-bar-line::before {
+    bottom: 0px;
+}
+.header-bar-line::after, .header-bar-line::before {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 7px;
+}
+.header-bar-line::before {
+    width: 60%;
+    left: 0;
+    background-color: #0087dc;
+}
+.header-bar-line::after {
+    right: 0;
+    width: 20%;
+    background-color: #b9eb5f;
+}
 .megamenu-li {
     position: static;
 }
