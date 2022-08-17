@@ -3361,7 +3361,7 @@ class FrontendController extends Controller
             return \Redirect::back()->with("message_eror_notValid","Can not send");
         }
         $ticket_id = null;
-        if(true){
+        if($body->succes){
     
            $subject = $this->validateInput($request->subject,'text',true);
            $name = $this->validateInput($request->name,'text',true);
@@ -3545,7 +3545,7 @@ class FrontendController extends Controller
           }
          
            try {
-            $emailTest = 'chai@degitobangkok.com';
+        
             $emaillog = Mail::to($emailTest)->send(new Contact($request->except('_token'),$ticket_id));
             Log::channel('mail_log')->info('[Success] message : Send Mail to '.implode(",",$emailsend));
             return \Redirect::back()->with("message","Send Email Successfully");
