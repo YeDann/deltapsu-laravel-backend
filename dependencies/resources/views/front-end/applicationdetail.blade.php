@@ -71,7 +71,7 @@
         flex-wrap: wrap;
     }
     .other-applications-list{
-        height: 100px;
+        height: auto;
         padding: 24px;
         border: 2px solid #E3EFF8;
         margin-bottom: 20px;
@@ -139,12 +139,22 @@
         line-height: 1;
     }
     .h-text-app{
-        height: 50px;
-       margin-top: 33px;
+      /* height: 50px; */
+    width: 163px;
+    top: 50%;
+    left: 30%;
+    -webkit-transform: translate(30%, -50%);
+    -ms-transform: translate(30%, -50%);
+    transform: translate(30%, -50%);
+    text-align: left;
+    vertical-align: middle;
+    position: absolute;
+    word-break: break-all;
     }
     .app-middle-box{
- 
         display: flex;
+        height: 90px;
+        position: relative;
     }
     .other-applications-grid-mobile-list img{
         height: 70px;
