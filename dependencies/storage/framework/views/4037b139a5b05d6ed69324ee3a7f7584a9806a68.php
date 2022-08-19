@@ -100,7 +100,14 @@
         right: 0;
         z-index: 99;
       }
-      
+   
+      html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
+        padding: 21px 9px;
+      }
+      html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
+        padding: 21px 9px;
+      }
+       
       
   </style>
     <!-- Fonts -->

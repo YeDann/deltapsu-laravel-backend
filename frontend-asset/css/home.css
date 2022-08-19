@@ -462,10 +462,10 @@ a:hover {
 
 .grid-container>a {
   -webkit-box-flex: 0;
-  -ms-flex: 0 0 30.9%;
-  flex: 0 0 30.9%;
-  min-width: 30.9%;
-  max-width: 30.9%;
+  -ms-flex: 0 0 47%;
+  flex: 0 0 47%;
+  min-width: 47%;
+  max-width: 47%;
   margin: 24px 0 0 24px;
 }
 
@@ -474,14 +474,22 @@ a:hover {
   flex-wrap: wrap;
 }
 
-.grid-sub-pic,
+.grid-sub-pic{
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 30%;
+  flex: 0 0 30%;
+  max-width: 30%;
+  min-width: 30%;
+}
+
 .grid-sub-text {
   -webkit-box-flex: 0;
-  -ms-flex: 0 0 50%;
-  flex: 0 0 50%;
-  max-width: 50%;
-  min-width: 50%;
+  -ms-flex: 0 0 60%;
+  flex: 0 0 60%;
+  max-width: 60%;
+  min-width: 60%;
 }
+
 
 .grid-sub-text {
   text-align: left;
