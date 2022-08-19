@@ -245,7 +245,7 @@ textarea{
                             <div class="mt-4" id="recap_vertify"></div>
                             <br>
                           </form>
-                      <input type="hidden" id="keyrecap" name="keyrecap" value="">
+              <input type="hidden" id="keyrecap" name="keyrecap" value="">
                       
                     <button class="btn-subscribe" type="submit"><?php echo e($staticContent['Send']); ?></button>
                 </div>
@@ -268,19 +268,26 @@ textarea{
       };
       var onloadCallback = function() {
         grecaptcha.render('recap_vertify', {
-        //'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-         'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
+        'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
+         //'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
           'callback' : verifyCallback,
           'theme' : 'light'
         });
       };
 
-    
+      $("#submitSupport").submit(function( event ) {
+        if($('#keyrecap').val() == ''){
+           alert('Please Vertify I am not a robot?');
+        }else{
+          $('#submitSupport').submit();
+        }
+        event.preventDefault();
+
+        $('#submitSupport').submit();
+     });
   
       function validateForm(form){
-               if(!form.prichk.checked)
-               console.log(form.prichk.checked);
-                {
+               if(!form.prichk.checked) {
                     $("#Support_policy_required").modal();
                     return false;
                 }else{
