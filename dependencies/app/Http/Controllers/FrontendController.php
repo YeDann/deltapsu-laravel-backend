@@ -3362,7 +3362,8 @@ class FrontendController extends Controller
             return \Redirect::back()->with("message_eror_notValid","Can not send");
         }
         $ticket_id = null;
-        if($body->succes){
+        
+        if($body->success){
     
            $subject = $this->validateInput($request->subject,'text',true);
            $name = $this->validateInput($request->name,'text',true);
