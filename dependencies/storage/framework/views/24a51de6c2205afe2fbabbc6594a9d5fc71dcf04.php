@@ -275,16 +275,7 @@ textarea{
         });
       };
 
-      $("#submitSupport").submit(function( event ) {
-        if($('#keyrecap').val() == ''){
-           alert('Please Vertify I am not a robot?');
-        }else{
-          $('#submitSupport').submit();
-        }
-        event.preventDefault();
-
-        $('#submitSupport').submit();
-     });
+    
   
       function validateForm(form){
                if(!form.prichk.checked) {

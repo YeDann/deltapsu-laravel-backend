@@ -462,10 +462,10 @@ a:hover {
 
 .grid-container>a {
   -webkit-box-flex: 0;
-  -ms-flex: 0 0 47%;
-  flex: 0 0 47%;
-  min-width: 47%;
-  max-width: 47%;
+  -ms-flex: 0 0 30.9%;
+  flex: 0 0 30.9%;
+  min-width: 30.9%;
+  max-width: 30.9%;
   margin: 24px 0 0 24px;
 }
 
@@ -476,18 +476,18 @@ a:hover {
 
 .grid-sub-pic{
   -webkit-box-flex: 0;
-  -ms-flex: 0 0 30%;
-  flex: 0 0 30%;
-  max-width: 30%;
-  min-width: 30%;
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  max-width: 50%;
+  min-width: 50%;
 }
 
 .grid-sub-text {
   -webkit-box-flex: 0;
-  -ms-flex: 0 0 70%;
-  flex: 0 0 70%;
-  max-width: 70%;
-  min-width: 70%;
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  max-width: 50%;
+  min-width: 50%;
 }
 
 
@@ -509,6 +509,7 @@ a:hover {
 .grid-sub-text p {
   font-weight: bold;
   margin-bottom: 0.2em;
+  font-size: 0.75em;
 }
 
 .grid-sub-pic {
@@ -565,7 +566,7 @@ a:hover {
 }
 
 .grid-sub-text li {
-  font-size: 0.875em;
+  font-size:0.75em;
   line-height: 1.6em;
   font-weight: 300;
   color: #5f5f5f;
@@ -646,7 +647,7 @@ a:hover {
   font-size: 12px;
   color: #ffffff;
   font-weight: bold;
-  background-color: #0087DC;
+  background-color: rgb(30,80, 200);
   padding: 9px 20px;
   /* padding: 10px 15px; */
   border: 2px solid transparent;

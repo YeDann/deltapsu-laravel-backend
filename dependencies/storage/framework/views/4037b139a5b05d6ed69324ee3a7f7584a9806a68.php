@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/product-comparison.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/vanilla-calendar-min.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/fontello.css')); ?>" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/fontello2.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/owl.theme.default.css')); ?>" media="screen"/>
     <link rel="stylesheet" type="text/css" href="<?php echo e(asset('/frontend-asset/css/owl.carousel.min.css')); ?>" media="screen"/>
@@ -102,10 +103,10 @@
       }
    
       html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
-        padding: 21px 9px;
+        padding: 17px 9px;
       }
       html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
-        padding: 21px 9px;
+        padding: 17px 9px;
       }
        
       
@@ -159,8 +160,8 @@
 <script type="text/javascript" src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en"
 async defer>
 </script>
-<!-- <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-blockingmode="auto" type="text/javascript"></script> -->
-<!-- <script id="CookieDeclaration" src="https://consent.cookiebot.com/0b87f4dd-13cf-473e-b5c7-019f4154d02a/cd.js" type="text/javascript" async></script> -->
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-blockingmode="auto" type="text/javascript"></script> 
+<script id="CookieDeclaration" src="https://consent.cookiebot.com/0b87f4dd-13cf-473e-b5c7-019f4154d02a/cd.js" type="text/javascript" async></script> 
 
 <script>
   if ('loading' in HTMLImageElement.prototype) {

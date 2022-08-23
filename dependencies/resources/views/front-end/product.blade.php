@@ -530,7 +530,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 <script>
     $('.js-example-basic-single').select2({
-        placeholder: '{{$staticContent['Search_By_Model_Name']}}'
+        placeholder: 'Model Name'
 });
 </script>
 <script type="text/javascript">
@@ -1307,7 +1307,7 @@
         html += '<p class="text-ft-sub text-one">-</p>';
         }
         html += '</div>';
-        html += '<div><a class="btn btn-datasheet w-50 mr-2 mt-2" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><i class="fa fa-arrow-circle-down" aria-hidden="true"></i> {{$staticContent['data_sheet']}}</a></div>';
+        html += '<div><a class="btn btn-datasheet w-50 mr-2 mt-2" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" > {{$staticContent['data_sheet']}}</a></div>';
         html += '<div href="#" class="btn btn-ft mt-2" onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" >+{{$staticContent['Add_to_Compare']}}</div>';
         html += '<div class="btn-enq-d mt-2"><a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'">{{$staticContent['Enquiry']}}</a></div>';
         html += '</div>';
@@ -1510,7 +1510,7 @@
         html1 += '<a class="link-d-sheet" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank">';
         html1 += '<div class="text-name-data">Datasheet</div>';
         html1 += '<div class="icon-datasheet">';
-        html1 += '<i class="fa fa-arrow-circle-down" aria-hidden="true"></i>';
+        html1 += '<i class="icon-facon icon-download"></i>';
         html1 += '</div>' ;
         html1 += '</a>';
         html1 += '<div class="btn-enq-d"><a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'">{{$staticContent['Enquiry']}}</a></div>';

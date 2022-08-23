@@ -3456,12 +3456,8 @@ class FrontendController extends Controller
             $yy = date('Y');
             $m = date('m');
             $numdate = $yy.$m.$d;
-          
-            if($subject == "Sale Enquiries"){
-                $ticket_id = $numdate.sprintf("%04d", $run_num);
-            }else{
-                $ticket_id = null;
-            }
+            $ticket_id = $numdate.sprintf("%04d", $run_num);
+         
            
 
 
@@ -3547,8 +3543,8 @@ class FrontendController extends Controller
           }
          
            try {
-        
-            $emaillog = Mail::to($emailsend)->send(new Contact($request->except('_token'),$ticket_id));
+           $testemail = 'chai@degitobangkok.com';
+            $emaillog = Mail::to($testemail)->send(new Contact($request->except('_token'),$ticket_id));
             Log::channel('mail_log')->info('[Success] message : Send Mail to '.implode(",",$emailsend));
             return \Redirect::back()->with("message","Send Email Successfully");
            } catch (\Swift_RfcComplianceException  $ex) {

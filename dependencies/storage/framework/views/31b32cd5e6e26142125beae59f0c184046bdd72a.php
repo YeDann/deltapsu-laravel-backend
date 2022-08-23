@@ -92,6 +92,11 @@
         margin-right: 9px;
         white-space: nowrap;
     }
+
+
+    .hightlight {
+    background: #ff0;
+    }
     
   
   
@@ -254,7 +259,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 <script>
     $('.js-example-basic-single').select2({
-        placeholder: '<?php echo e($staticContent['Search_By_Model_Name']); ?>'
+        placeholder: 'Model Name'
     });
     $('#key_tag_input').select2({
         placeholder: 'Search By Tag'
@@ -413,9 +418,16 @@
            },
            success: function (res) {
               //console.log(res['data']);
+              var key = $('#key_model_input').val();
+         
               var html = '';
               $.each(res['data'], function(index,tag){
-              html += '<div class="box-list-tag"><a class="text-tag-link"><span  onclick="viewKey('+"'"+tag['tag']+"'"+');">'+tag['tag']+ '</span></a></div>';
+              if(key == tag['tag']){
+                html += '<div class="box-list-tag"><a class="text-tag-link hightlight"><span  onclick="viewKey('+"'"+tag['tag']+"'"+');">'+tag['tag']+ '</span></a></div>';
+              }else{
+                html += '<div class="box-list-tag"><a class="text-tag-link"><span  onclick="viewKey('+"'"+tag['tag']+"'"+');">'+tag['tag']+ '</span></a></div>';
+              }
+            
               });
               $('#content_tags_pro').html(html);
            }

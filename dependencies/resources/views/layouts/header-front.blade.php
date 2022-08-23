@@ -364,11 +364,12 @@ top: -9px;
                 </span>
             </button>
             <div class="collapse navbar-collapse header-bar-line" id="navbar">
-                <ul id="nav-all" class="navbar-nav mr-center-nav">
+                <ul id="nav-all" class="navbar-nav mr-center-nav ul-nav-inner">
 
                     <li class="nav-item dropdown">
-                        <a id="nav-uderline" class="nav-link dropdown-toggle"  id="dropdown01"
+                        <a id="nav-uderline" class="nav-link"  id="dropdown01"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$staticContent['Products']}}
+                         
                             <i class="zmdi zmdi-chevron-down"></i>
                         </a>
                         <div class="dropdown-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
@@ -447,7 +448,7 @@ top: -9px;
                     </li>
                     
                     <li class="nav-item dropdown ">
-                        <a id="nav-uderline" class="nav-link dropdown-toggle" href="" id="dropdown02"
+                        <a id="nav-uderline" class="nav-link " href="" id="dropdown02"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$staticContent['Tools']}} <i  class="zmdi zmdi-chevron-down"></i></a>
                         <div class="dropdown-menu" role="menu" aria-labelledby="dropdown02">
                            {{--  <li class="dropdown-item"> --}}<a class="dropdown-item" href="{{route('productFinder')}}">{{$staticContent['Product_Selector']}}</a>{{-- </li> --}}
@@ -458,7 +459,7 @@ top: -9px;
                    
 
                     <li class="nav-item dropdown ">
-                        <a id="nav-uderline" class="nav-link dropdown-toggle" href="" id="dropdown03"
+                        <a id="nav-uderline" class="nav-link " href="" id="dropdown03"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$staticContent['Applications']}} <i
                                 class="zmdi zmdi-chevron-down"></i></a>
                         <div class="dropdown-menu" role="menu" aria-labelledby="dropdown03">
@@ -468,7 +469,7 @@ top: -9px;
                         </div>
                     </li>
                     <li class="nav-item dropdown ">
-                        <a id="nav-uderline" class="nav-link dropdown-toggle" href="" id="dropdown04"
+                        <a id="nav-uderline" class="nav-link " href="" id="dropdown04"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$staticContent['About']}} <i
                                 class="zmdi zmdi-chevron-down"></i></a>
                         <div class="dropdown-menu megamenu" aria-labelledby="dropdown04">
@@ -480,7 +481,7 @@ top: -9px;
                     </li>
                
                     <li class="nav-item dropdown ">
-                        <a id="nav-uderline" class="nav-link dropdown-toggle" href="" id="dropdown05" data-toggle="dropdown"
+                        <a id="nav-uderline" class="nav-link" href="" id="dropdown05" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">{{$staticContent['Updates']}} <i class="zmdi zmdi-chevron-down"></i></a>
                         <div class="dropdown-menu megamenu" aria-labelledby="dropdown05">
                            <a class="dropdown-item" href="{{route('index','news')}}"> {{$staticContent['Product_News']}} </a>
@@ -490,7 +491,7 @@ top: -9px;
                         </div>
                     </li>
                     <li class="nav-item dropdown  ">
-                        <a id="nav-uderline" class="nav-link dropdown-toggle" href="" id="dropdown06" data-toggle="dropdown"
+                        <a id="nav-uderline" class="nav-link " href="" id="dropdown06" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">{{$staticContent['nav_dowloads']}}
                             <i class="zmdi zmdi-chevron-down"></i></a>
                         <div class="dropdown-menu megamenu sp-dropdown02" aria-labelledby="dropdown06">
@@ -500,7 +501,7 @@ top: -9px;
                         </div>
                     </li>
                     <li class="nav-item dropdown ">
-                        <a id="nav-uderline" class="nav-link dropdown-toggle" href="" id="dropdown07" data-toggle="dropdown"
+                        <a id="nav-uderline" class="nav-link" href="" id="dropdown07" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">{{$staticContent['Supports']}}
                             <i class="zmdi zmdi-chevron-down"></i></a>
                         <div class="dropdown-menu megamenu" aria-labelledby="dropdown07">
@@ -953,7 +954,7 @@ top: -9px;
         </div>
         <div class="modal-body px-4 mb-4">
             <div class="text-center">
-                <h4 class="text-color-delta">Sorry, Can't send email,There are something error on data</h4>
+                <h5 class="text-color-delta">Sorry, Can't send email,There are something error on data</h5>
             </div>
         </div>
       </div>
@@ -972,7 +973,7 @@ top: -9px;
         </div>
         <div class="modal-body px-4 mb-4">
             <div class="text-center">
-                <h4 class="text-color-delta">{{isset($staticContent['support_form_text'])? $staticContent['support_form_text']:''}}</h4>
+                <h5 class="text-color-delta">{{isset($staticContent['support_form_text'])? $staticContent['support_form_text']:''}}</h5>
             </div>
         </div>
       </div>
