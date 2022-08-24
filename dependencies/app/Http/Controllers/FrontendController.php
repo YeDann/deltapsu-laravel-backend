@@ -3542,8 +3542,8 @@ class FrontendController extends Controller
           }
          
            try {
-            $testemail = "chai@degitobangkok.com";
-            $emaillog = Mail::to($testemail)->send(new Contact($request->except('_token'),$ticket_id));
+           
+            $emaillog = Mail::to($emailsend)->send(new Contact($request->except('_token'),$ticket_id));
             Log::channel('mail_log')->info('[Success] message : Send Mail to '.implode(",",$emailsend));
             return \Redirect::back()->with("message","Send Email Successfully");
            } catch (\Swift_RfcComplianceException  $ex) {
