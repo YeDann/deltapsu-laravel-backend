@@ -105,7 +105,13 @@
       html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
         padding: 17px 9px;
       }
-       
+      a#CybotCookiebotDialogPoweredbyCybot,
+      div#CybotCookiebotDialogPoweredByText {
+        display: none;
+      }
+      #CookiebotWidget .CookiebotWidget-body .CookiebotWidget-main-logo {
+         display: none !important;
+      }
       
   </style>
     <!-- Fonts -->
