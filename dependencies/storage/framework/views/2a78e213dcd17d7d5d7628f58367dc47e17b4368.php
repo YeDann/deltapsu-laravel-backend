@@ -1500,7 +1500,7 @@
         html1 += '<a class="link-d-sheet" href="<?php echo e(route('downloadFIle')); ?>/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank">';
         html1 += '<div class="text-name-data">Datasheet</div>';
         html1 += '<div class="icon-datasheet">';
-        html1 += '<i class="icon-facon icon-download"></i>';
+        html1 += '<i class="icon-facon2 icon-download"></i>';
         html1 += '</div>' ;
         html1 += '</a>';
         html1 += '<div class="btn-enq-d"><a class="btn btn-enquiry w-50 mr-2" href="<?php echo e(route('LinktoEnquiry')); ?>/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'"><?php echo e($staticContent['Enquiry']); ?></a></div>';

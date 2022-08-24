@@ -43,7 +43,7 @@ class Contact extends Mailable
       
         $data = [
             'contactForm' => $this->request,
-            'header' => $subject,
+            'header' => $subject.'_'.$this->ticket_id,
         ];
        
         return $this->view('mail.contactUs', $data)
