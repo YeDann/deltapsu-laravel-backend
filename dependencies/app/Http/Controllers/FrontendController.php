@@ -3445,7 +3445,6 @@ class FrontendController extends Controller
           }
 
           if($request->enquireStatus != 3){
-          
          
             $lastdata = DB::table('contacts')->where('subject',$subject)->latest('id')->first();
             $run_num  = 1;
