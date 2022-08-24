@@ -40,15 +40,15 @@ class Contact extends Mailable
         }else{
             $subject = $this->request['subject'];
         }
-      
+         $subjectName =  $subject.'_'.$this->ticket_id;
         $data = [
             'contactForm' => $this->request,
-            'header' => $subject.'_'.$this->ticket_id,
+            'header' => $subject,
         ];
        
         return $this->view('mail.contactUs', $data)
         ->with('ticket_id', $this->ticket_id)
-        ->subject($subject);
+        ->subject($subjectName);
 
       
     }
