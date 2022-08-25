@@ -775,7 +775,7 @@ top: -9px;
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="submitGuiDownload" action="<?php echo e(route('downloadGui')); ?>" method="POST" >
+        <form id="submitGuiDownload" onsubmit="return validateFormGUI(this)" action="<?php echo e(route('downloadGui')); ?>" method="POST" >
         <div class="modal-body px-4 mb-4">
     
                 <?php echo e(csrf_field()); ?>
@@ -824,7 +824,7 @@ top: -9px;
             <div class="mt-4" id="recap_vertifygetGui"></div>
             <br>
           </form>
-          
+          <input type="hidden" id="acceptCookie_dd" name="acceptCookie" value="">
     
        
         <button type="submit" class="btn btn-subscribe">Download</button>
@@ -1094,7 +1094,24 @@ top: -9px;
       </div>
     </div>
   </div>
- 
+
+  <div class="modal fade p-1" id="acceptCookieContent" tabindex="-1" role="dialog" aria-labelledby="subscribe-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content ">
+        <div class="modal-header pl-4">
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Message</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body px-4 mb-4">
+            <div class="text-center">
+                <h4 class="text-color-delta">Please acccept Cookie Consent Policy on this website</h4>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
  
   
 
