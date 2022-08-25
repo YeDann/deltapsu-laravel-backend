@@ -107,12 +107,14 @@
       }
       a#CybotCookiebotDialogPoweredbyCybot,
       div#CybotCookiebotDialogPoweredByText {
-        display: none;
+        display: none !important;
       }
       #CookiebotWidget .CookiebotWidget-body .CookiebotWidget-main-logo {
          display: none !important;
       }
-      
+      .CookieDeclaration{
+        display: none !important;
+      }
   </style>
     <!-- Fonts -->
     <!-- Styles -->
@@ -202,15 +204,22 @@ async defer>
       'theme' : 'light'
     });
   };
-  $("#submitGuiDownload").submit(function( event ) {
-    if($('#keyrecapGui').val() == ''){
-       alert('Please Vertify I am not a robot?');
-    }else{
-      $('#submitGuiDownload').submit();
-    }
-    event.preventDefault();
- });
+  
 
+  function onacceptcookie(){
+    onloadCallback();
+    $('#acceptCookie_dd').val(1);
+    $('#acceptCookie_sup').val(1);
+  }
+
+  function validateFormGUI(form){
+               if(form.acceptCookie.value == '' && form.keyresponseCap.value == '') {
+                    $("#acceptCookieContent").modal();
+                    return false;
+                }else{
+                    return true;
+                }
+      }
 </script>
 
  <!-- Google Tag Manager (noscript) -->

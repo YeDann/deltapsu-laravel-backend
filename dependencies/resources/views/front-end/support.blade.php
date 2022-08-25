@@ -248,8 +248,8 @@ textarea{
                             <div class="mt-4" id="recap_vertify"></div>
                             <br>
                           </form>
-              <input type="hidden" id="keyrecap" name="keyrecap" value="">
-                      
+              <input type="hidden" id="keyrecap" name="keyrecap" >
+              <input type="hidden" id="acceptCookie_sup" name="acceptCookie_sup" >
                     <button class="btn-subscribe" type="submit">{{$staticContent['Send']}}</button>
                 </div>
                 
@@ -281,7 +281,11 @@ textarea{
     
   
       function validateForm(form){
-               if(!form.prichk.checked) {
+        
+               if(form.acceptCookie_sup.value ==''&& form.keyrecap.value == '') {
+                    $("#acceptCookieContent").modal();
+                    return false;
+                }else if(!form.prichk.checked){
                     $("#Support_policy_required").modal();
                     return false;
                 }else{
