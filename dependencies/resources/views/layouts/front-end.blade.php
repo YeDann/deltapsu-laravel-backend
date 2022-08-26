@@ -121,6 +121,11 @@
      #CybotCookiebotDialog.CybotEdge {
       padding:12px !important;
      }
+     
+     #CybotCookiebotDialog.CybotEdge .CybotCookiebotDialogBodyBottomWrapper {
+       margin-top: 0 !important;
+    }
+  
   </style>
     <!-- Fonts -->
     <!-- Styles -->
