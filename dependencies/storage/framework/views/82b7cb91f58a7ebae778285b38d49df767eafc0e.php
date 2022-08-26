@@ -824,7 +824,7 @@ top: -9px;
             <div class="mt-4" id="recap_vertifygetGui"></div>
             <br>
           </form>
-          <input type="hidden" id="acceptCookie_dd" name="acceptCookie" value="">
+    
     
        
         <button type="submit" class="btn btn-subscribe">Download</button>
@@ -1106,7 +1106,7 @@ top: -9px;
         </div>
         <div class="modal-body px-4 mb-4">
             <div class="text-center">
-                <h4 class="text-color-delta">Please acccept Cookie Consent Policy on this website</h4>
+                <h4 class="text-color-delta">Please acccept Cookie Consent Policy on This website</h4>
             </div>
         </div>
       </div>

@@ -224,7 +224,7 @@ textarea{
                     </div>
                    
                     <div class="box-input-checkbox">
-                        <input class="inp-cbx" name="prichk" id="privacycheck" value="1"  type="checkbox"
+                        <input class="inp-cbx" name="prichk" id="privacycheck" value="1" onclick="onacceptionPolicy()"  type="checkbox"
                             style="display: none;" />
                         <label class="cbx" for="privacycheck"><span>
                                 <svg width="12px" height="10px" viewbox="0 0 12 10">
@@ -233,23 +233,19 @@ textarea{
                     </div>
  
                     <div class="box-input-checkbox">
-                        <input class="inp-cbx" name="checkData" id="cx-sign-up" value="1" type="checkbox"
+                        <input class="inp-cbx" name="checkData" id="cx-sign-up"  value="1" type="checkbox"
                             style="display: none;" />
                         <label class="cbx" for="cx-sign-up"><span>
                                 <svg width="12px" height="10px" viewbox="0 0 12 10">
                                     <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
                                 </svg></span><span>{{$staticContent['Sign_up_for_newsletter']}}</span></label>
                     </div>
-                        {{-- <div  class="mt-4">
-                            <div  class="g-recaptcha" data-sitekey="6LdUH88UAAAAAEFgIaCALBkK44pRjqPfGYB0EYMS"></div>
-                            <br/>
-                        </div> --}}
+                       
                         <form action="?" method="POST" >
                             <div class="mt-4" id="recap_vertify"></div>
                             <br>
                           </form>
               <input type="hidden" id="keyrecap" name="keyrecap" >
-              <input type="hidden" id="acceptCookie_sup" name="acceptCookie_sup" >
                     <button class="btn-subscribe" type="submit">{{$staticContent['Send']}}</button>
                 </div>
                 
@@ -266,26 +262,30 @@ textarea{
 
 
 <script type="text/javascript">
-      var verifyCallback = function(response) {
-        $('#keyrecap').val(response);
-      };
-      var onloadCallback = function() {
-        grecaptcha.render('recap_vertify', {
-        'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-         //'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
-          'callback' : verifyCallback,
-          'theme' : 'light'
-        });
-      };
 
-    
+        var verifyCallbackSuport = function(response) {
+                $('#keyrecap').val(response);
+            };
+            var onloadCallbackSuport = function() {
+                grecaptcha.render('recap_vertify', {
+                'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
+                //'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
+                'callback' : verifyCallbackSuport,
+                'theme' : 'light'
+                });
+        };
+
+        $( document ).ready(function() {
+            onloadCallbackSuport();
+       });
+     
+      function onacceptionPolicy(){
+        $('#acceptcookiebot').click();
+      }
   
       function validateForm(form){
         
-               if(form.acceptCookie_sup.value ==''&& form.keyrecap.value == '') {
-                    $("#acceptCookieContent").modal();
-                    return false;
-                }else if(!form.prichk.checked){
+                if(!form.prichk.checked){
                     $("#Support_policy_required").modal();
                     return false;
                 }else{
