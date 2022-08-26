@@ -3449,7 +3449,7 @@ class FrontendController extends Controller
              $lastdata = DB::table('contacts')->where('subject',$subject)->latest('id')->first();
             $last = DB::table('contacts')->latest('id')->first();
             $run_num  = 1;
-             return dd($lastdata ,$last ,$subject);
+            //  return dd($lastdata ,$last ,$subject);
             if($lastdata && $lastdata->run_num){
               $run_num = $lastdata->run_num + 1;
             }
