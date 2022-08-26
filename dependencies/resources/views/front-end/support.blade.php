@@ -263,20 +263,20 @@ textarea{
 
 <script type="text/javascript">
 
-        var verifyCallbackSuport = function(response) {
+        var verifyCallback = function(response) {
                 $('#keyrecap').val(response);
             };
-            var onloadCallbackSuport = function() {
+            var onloadCallback = function() {
                 grecaptcha.render('recap_vertify', {
                 'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
                 //'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
-                'callback' : verifyCallbackSuport,
+                'callback' : verifyCallback,
                 'theme' : 'light'
                 });
         };
 
         $( document ).ready(function() {
-            onloadCallbackSuport();
+            onloadCallback();
        });
      
       function onacceptionPolicy(){

@@ -162,7 +162,7 @@
 
 <script type="text/javascript" src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
-<script type="text/javascript" src="https://www.recaptcha.net/recaptcha/api.js?render=explicit&hl=en"
+<script type="text/javascript" src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en"
 async defer>
 </script>
 <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-blockingmode="auto" type="text/javascript"></script> 
