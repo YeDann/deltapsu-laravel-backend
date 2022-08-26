@@ -115,6 +115,12 @@
       .CookieDeclaration{
         display: none !important;
       }
+      #CybotCookiebotDialogHeader {
+         width: 0px !important;
+     }
+     #CybotCookiebotDialog.CybotEdge {
+      padding:12px !important;
+     }
   </style>
     <!-- Fonts -->
     <!-- Styles -->
