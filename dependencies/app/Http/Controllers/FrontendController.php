@@ -3446,10 +3446,11 @@ class FrontendController extends Controller
 
           if($request->enquireStatus != 3){
          
-            $lastdata = DB::table('contacts')->where('subject',$subject)->latest('id')->first();
+             $lastdata = DB::table('contacts')->where('subject',$subject)->latest('id')->first();
+            $last = DB::table('contacts')->latest('id')->first();
             $run_num  = 1;
-            return dd($lastdata);
-            if($lastdata->run_num){
+             return dd($lastdata ,$last ,$subject);
+            if($lastdata && $lastdata->run_num){
               $run_num = $lastdata->run_num + 1;
             }
             $d = date('d');
