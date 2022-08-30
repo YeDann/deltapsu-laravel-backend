@@ -322,7 +322,7 @@ top: -9px;
         </div>
 
     </div>
-    <div class="nav-position scrolled">
+    <div class="nav-position des-scrolled">
         <div class="container nav-here">
 
             <a class="navbar-brand" href="<?php echo e(route('index','home')); ?>">
@@ -377,7 +377,7 @@ top: -9px;
                          
                             <i class="zmdi zmdi-chevron-down"></i>
                         </a>
-                        <div class="dropdown-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
+                        <div class="dropdown-menu s-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
                             <div class="dropdown-submenu">
                                 <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1" href="#"><?php echo e($staticContent['Industrial_Power']); ?> <i
                                         class="zmdi zmdi-chevron-right"></i></a>
@@ -450,7 +450,7 @@ top: -9px;
                     <li class="nav-item dropdown ">
                         <a id="nav-uderline" class="nav-link " href="" id="dropdown02"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo e($staticContent['Tools']); ?> <i  class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="dropdown-menu" role="menu" aria-labelledby="dropdown02">
+                        <div class="dropdown-menu s-menu" role="menu" aria-labelledby="dropdown02">
                            <a class="dropdown-item" href="<?php echo e(route('productFinder')); ?>"><?php echo e($staticContent['Product_Selector']); ?></a>
                            <a class="dropdown-item" href="<?php echo e(route('configurableproduct')); ?>"><?php echo e($staticContent['configurable_power_selector']); ?></a>
                            <a class="dropdown-item" href="<?php echo e(route('productCoparison')); ?>"><?php echo e($staticContent['product_comparison']); ?></a>
@@ -462,7 +462,7 @@ top: -9px;
                         <a id="nav-uderline" class="nav-link " href="" id="dropdown03"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo e($staticContent['Applications']); ?> <i
                                 class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="dropdown-menu" role="menu" aria-labelledby="dropdown03">
+                        <div class="dropdown-menu s-menu" role="menu" aria-labelledby="dropdown03">
                             <?php $__currentLoopData = $navapplication; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $app): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <a class="dropdown-item " href="<?php echo e(route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])); ?>"><?php echo e($app->name); ?></a> 
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -472,7 +472,7 @@ top: -9px;
                         <a id="nav-uderline" class="nav-link " href="" id="dropdown04"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo e($staticContent['About']); ?> <i
                                 class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="dropdown-menu megamenu" aria-labelledby="dropdown04">
+                        <div class="dropdown-menu megamenu s-menu" aria-labelledby="dropdown04">
                             <?php $__currentLoopData = $navaboutus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $abt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <a class="dropdown-item" href="<?php echo e(route('aboutUs',$abt->stug)); ?>"><?php echo e($abt->title); ?></a>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -483,7 +483,7 @@ top: -9px;
                     <li class="nav-item dropdown ">
                         <a id="nav-uderline" class="nav-link" href="" id="dropdown05" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false"><?php echo e($staticContent['Updates']); ?> <i class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="dropdown-menu megamenu" aria-labelledby="dropdown05">
+                        <div class="dropdown-menu megamenu s-menu" aria-labelledby="dropdown05">
                            <a class="dropdown-item" href="<?php echo e(route('index','news')); ?>"> <?php echo e($staticContent['Product_News']); ?> </a>
                            <a class="dropdown-item" href="<?php echo e(route('index','events')); ?>"><?php echo e($staticContent['Events']); ?></a>
                             
@@ -494,7 +494,7 @@ top: -9px;
                             aria-haspopup="true" aria-expanded="false"><?php echo e($staticContent['nav_dowloads']); ?>
 
                             <i class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="dropdown-menu megamenu sp-dropdown02" aria-labelledby="dropdown06">
+                        <div class="dropdown-menu megamenu sp-dropdown02 s-menu" aria-labelledby="dropdown06">
                             <a class="dropdown-item" href="<?php echo e(route('index','catalogs')); ?>"><?php echo e($staticContent['catalogs']); ?></a>
                             <a class="dropdown-item" href="<?php echo e(route('index','product-documents')); ?>"><?php echo e($staticContent['Product_Documents']); ?></a>
                             
@@ -505,7 +505,7 @@ top: -9px;
                             aria-haspopup="true" aria-expanded="false"><?php echo e($staticContent['Supports']); ?>
 
                             <i class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="dropdown-menu megamenu" aria-labelledby="dropdown07">
+                        <div class="dropdown-menu megamenu s-menu" aria-labelledby="dropdown07">
                             <a class="dropdown-item" href="<?php echo e(route('contactSupport')); ?>"><?php echo e($staticContent['contact_us']); ?></a>
                             <a class="dropdown-item" href="<?php echo e(route('contactSalesOffices')); ?>"><?php echo e($staticContent['sales_offices']); ?></a>
                             <a class="dropdown-item" href="<?php echo e(route('contactFindDistributor')); ?>"><?php echo e($staticContent['find_a_distributor']); ?></a>
@@ -865,7 +865,7 @@ top: -9px;
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header pl-4">
-          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Error Message</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -883,7 +883,7 @@ top: -9px;
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header pl-4">
-          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Error Message</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -901,7 +901,7 @@ top: -9px;
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header pl-4">
-          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Error Message</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -919,14 +919,14 @@ top: -9px;
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header pl-4">
-          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Error Message</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body px-4 mb-4">
             <div class="text-center">
-                <h4 class="text-color-delta">Sorry, Please fill agree to our privacy policy</h4>
+                <h4 class="text-color-delta">Please accept Privacy Policy checkbox to continue</h4>
             </div>
         </div>
       </div>
@@ -939,7 +939,7 @@ top: -9px;
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header pl-4">
-          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Error Message</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -1063,7 +1063,7 @@ top: -9px;
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header pl-4">
-          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Error Message</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

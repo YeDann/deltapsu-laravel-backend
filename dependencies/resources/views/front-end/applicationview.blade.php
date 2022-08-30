@@ -172,7 +172,6 @@
     });
     $(window).resize(function () {
         var w = $(window).width(); // New width
-        console.log(w)
         showBtnSeeMore(w);
 
     });

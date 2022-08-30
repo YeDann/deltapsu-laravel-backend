@@ -318,7 +318,7 @@ top: -9px;
         </div>
 
     </div>
-    <div class="nav-position scrolled">
+    <div class="nav-position des-scrolled">
         <div class="container nav-here">
 
             <a class="navbar-brand" href="{{route('index','home')}}">
@@ -372,7 +372,7 @@ top: -9px;
                          
                             <i class="zmdi zmdi-chevron-down"></i>
                         </a>
-                        <div class="dropdown-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
+                        <div class="dropdown-menu s-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
                             <div class="dropdown-submenu">
                                 <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1" href="#">{{$staticContent['Industrial_Power']}} <i
                                         class="zmdi zmdi-chevron-right"></i></a>
@@ -450,7 +450,7 @@ top: -9px;
                     <li class="nav-item dropdown ">
                         <a id="nav-uderline" class="nav-link " href="" id="dropdown02"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$staticContent['Tools']}} <i  class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="dropdown-menu" role="menu" aria-labelledby="dropdown02">
+                        <div class="dropdown-menu s-menu" role="menu" aria-labelledby="dropdown02">
                            {{--  <li class="dropdown-item"> --}}<a class="dropdown-item" href="{{route('productFinder')}}">{{$staticContent['Product_Selector']}}</a>{{-- </li> --}}
                            {{--  <li class="dropdown-item"> --}}<a class="dropdown-item" href="{{route('configurableproduct')}}">{{$staticContent['configurable_power_selector']}}</a>{{-- </li> --}}
                            {{--  <li class="dropdown-item"> --}}<a class="dropdown-item" href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a>{{-- </li> --}}
@@ -462,7 +462,7 @@ top: -9px;
                         <a id="nav-uderline" class="nav-link " href="" id="dropdown03"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$staticContent['Applications']}} <i
                                 class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="dropdown-menu" role="menu" aria-labelledby="dropdown03">
+                        <div class="dropdown-menu s-menu" role="menu" aria-labelledby="dropdown03">
                             @foreach ($navapplication as $app)
                         <a class="dropdown-item " href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}">{{$app->name}}</a> 
                             @endforeach
@@ -472,7 +472,7 @@ top: -9px;
                         <a id="nav-uderline" class="nav-link " href="" id="dropdown04"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$staticContent['About']}} <i
                                 class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="dropdown-menu megamenu" aria-labelledby="dropdown04">
+                        <div class="dropdown-menu megamenu s-menu" aria-labelledby="dropdown04">
                             @foreach ($navaboutus as $abt)
                             <a class="dropdown-item" href="{{route('aboutUs',$abt->stug)}}">{{$abt->title}}</a>
                             @endforeach
@@ -483,7 +483,7 @@ top: -9px;
                     <li class="nav-item dropdown ">
                         <a id="nav-uderline" class="nav-link" href="" id="dropdown05" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">{{$staticContent['Updates']}} <i class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="dropdown-menu megamenu" aria-labelledby="dropdown05">
+                        <div class="dropdown-menu megamenu s-menu" aria-labelledby="dropdown05">
                            <a class="dropdown-item" href="{{route('index','news')}}"> {{$staticContent['Product_News']}} </a>
                            <a class="dropdown-item" href="{{route('index','events')}}">{{$staticContent['Events']}}</a>
                             {{-- <li><a href="{{route('index','technical-articles')}}">TECHNICAL ARTICLE</a></li>
@@ -494,7 +494,7 @@ top: -9px;
                         <a id="nav-uderline" class="nav-link " href="" id="dropdown06" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">{{$staticContent['nav_dowloads']}}
                             <i class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="dropdown-menu megamenu sp-dropdown02" aria-labelledby="dropdown06">
+                        <div class="dropdown-menu megamenu sp-dropdown02 s-menu" aria-labelledby="dropdown06">
                             <a class="dropdown-item" href="{{route('index','catalogs')}}">{{$staticContent['catalogs']}}</a>
                             <a class="dropdown-item" href="{{route('index','product-documents')}}">{{$staticContent['Product_Documents']}}</a>
                             {{-- <a class="dropdown-item" href="{{route('index','login')}}">PARTNERS</a> --}}
@@ -504,7 +504,7 @@ top: -9px;
                         <a id="nav-uderline" class="nav-link" href="" id="dropdown07" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">{{$staticContent['Supports']}}
                             <i class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="dropdown-menu megamenu" aria-labelledby="dropdown07">
+                        <div class="dropdown-menu megamenu s-menu" aria-labelledby="dropdown07">
                             <a class="dropdown-item" href="{{route('contactSupport')}}">{{$staticContent['contact_us']}}</a>
                             <a class="dropdown-item" href="{{route('contactSalesOffices')}}">{{$staticContent['sales_offices']}}</a>
                             <a class="dropdown-item" href="{{route('contactFindDistributor')}}">{{$staticContent['find_a_distributor']}}</a>
@@ -873,7 +873,7 @@ top: -9px;
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header pl-4">
-          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Error Message</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -891,7 +891,7 @@ top: -9px;
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header pl-4">
-          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Error Message</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -909,7 +909,7 @@ top: -9px;
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header pl-4">
-          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Error Message</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -927,14 +927,14 @@ top: -9px;
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header pl-4">
-          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Error Message</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body px-4 mb-4">
             <div class="text-center">
-                <h4 class="text-color-delta">Sorry, Please fill agree to our privacy policy</h4>
+                <h4 class="text-color-delta">Please accept Privacy Policy checkbox to continue</h4>
             </div>
         </div>
       </div>
@@ -947,7 +947,7 @@ top: -9px;
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header pl-4">
-          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Error Message</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -1071,7 +1071,7 @@ top: -9px;
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content ">
         <div class="modal-header pl-4">
-          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Eror Message</h4>
+          <h4 class="text-color-delta mb-0" id="subscribe-modal-title2">Error Message</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

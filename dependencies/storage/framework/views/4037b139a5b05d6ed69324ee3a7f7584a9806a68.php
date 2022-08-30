@@ -121,13 +121,7 @@
      #CybotCookiebotDialog.CybotEdge {
       padding:12px !important;
      }
-     #CybotCookiebotDialogBodyLevelButtonAccept{
-      background-color: #0087DC !important;
-      width: 160px !important;
-      border: 2px solid transparent;
-      border-radius: 5px !important;
-      padding:9px !important;
-     }
+     
      #CybotCookiebotDialog.CybotEdge .CybotCookiebotDialogBodyBottomWrapper {
        margin-top: 0 !important;
     }
