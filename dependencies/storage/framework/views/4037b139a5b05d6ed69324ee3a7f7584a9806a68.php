@@ -100,10 +100,10 @@
       }
    
       html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
-        padding: 17px 9px;
+        padding: 20px 9px;
       }
       html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
-        padding: 17px 9px;
+        padding: 20px 9px;
       }
       a#CybotCookiebotDialogPoweredbyCybot,
       div#CybotCookiebotDialogPoweredByText {
