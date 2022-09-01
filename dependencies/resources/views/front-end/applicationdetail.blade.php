@@ -308,7 +308,7 @@
                         <div class="app-middle-box align-self-center">
                         <img class="mr-3" src="{{config('app.url')}}/medias/categories/{{$app->color_icon}}" >
                         <div class="h-text-app">
-                            <h5 class="text-title-dark">{{$app->name}} </h5>
+                            <h6 class="text-title-dark">{{$app->name}} </h6>
                         </div>
                         </div>
                      
@@ -416,7 +416,7 @@
                 <div class="col-md-6">
                     <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}" class="other-applications-grid-mobile-list">
                         <img class="center my-2" src="{{config('app.url')}}/medias/categories/{{$app->color_icon}}" >
-                        <h5 class="text-title-dark text-center">{{$app->name}}</h5>
+                        <h6 class="text-title-dark text-center">{{$app->name}}</h6>
                     </a>
                 </div>
         
