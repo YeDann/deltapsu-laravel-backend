@@ -142,7 +142,11 @@ margin-bottom: 0em;
     /* font-size: 24px; */
     color: #444444;
 }
-
+.btn-enquiry{
+    background-color: rgb(120,120,120);
+    color: #fff;
+    border-color: transparent;
+}
 .arrow-next::before{
     font-family: FontAwesome;
     content: "\f105";
