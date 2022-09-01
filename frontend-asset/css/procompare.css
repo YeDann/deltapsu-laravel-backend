@@ -95,12 +95,14 @@ ul > li{
     border-bottom: #E3EFF8 solid 2px;
     /* margin-bottom:1em; */
 }
+.enquiry-bg{
+  background-color: rgb(120,120,120) !important;
+}
 .wizard > .actions a, .wizard > .actions a:hover, .wizard > .actions a:active{
-    background: #0087DC;
     color: #fff;
     border-radius: 5px;
     border: 2px solid transparent;
-    width: 160px;
+    min-width: 160px;
     height: 40px;
     font-size: 12px;
     font-weight: bold;

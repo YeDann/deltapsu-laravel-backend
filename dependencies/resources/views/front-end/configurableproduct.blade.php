@@ -1185,7 +1185,7 @@ function selectCountry(){
 				$('a[href$="previous"]').attr('style', 'display:block');
 				$('a[href$="previous"]').text('{{$staticContent['Enquiry']}}');
 				$('a[href$="previous"]').removeClass("btn-previous-border");
-				$('a[href$="previous"]').addClass("btn-enquiry");
+				$('a[href$="previous"]').addClass("enquiry-bg");
 				$('a[href$="previous"]').addClass("resetenqu");
 				$('a[href$="previous"]').attr('id','submitenquiry'); 
 				$('a[href$="previous"]').html('<button class="btn-enquiry" id="SbtRequest1" onclick="linktosupport();">{{$staticContent['Enquiry']}}</button>'); 
@@ -1214,6 +1214,7 @@ function selectCountry(){
 	});
 	
 	$('a[href$="finish"]').attr('data-toggle', 'modal');
+	$('a[href$="finish"]').addClass("enquiry-bg");
 	$('a[href$="finish"]').attr('data-target', '#sentToPDF');
 	$('a[href$="finish"]').attr('id', 'sentToPDFMe');
 	$('a[href$="previous"]').attr('style', 'display:none');
