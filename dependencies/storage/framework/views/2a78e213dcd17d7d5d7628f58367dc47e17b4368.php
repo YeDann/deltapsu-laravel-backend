@@ -1304,7 +1304,7 @@
         html += '<div class="w-100">';
         html += '<div class="boxlist-icon-img">';
         html += '<a href="<?php echo e(route('LinktoEnquiry')); ?>/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span><?php echo e($staticContent['Enquiry']); ?></span><img src="<?php echo e(asset('/frontend-asset/image/Enquiry.svg')); ?>"></button></a>';
-        html += '<button onclick="showNavCoparison('+pro['pro_id']+' ,<?php echo e($cateid); ?>)" class="btn img-btn-icon-pro tooltip2" title="<?php echo e($staticContent['Add_to_Compare']); ?>"><span><?php echo e($staticContent['Add_to_Compare']); ?></span><img src="<?php echo e(asset('/frontend-asset/image/Compare.svg')); ?>"></button>';
+        html += '<button onclick="showNavCoparison('+pro['pro_id']+' ,<?php echo e($cateid); ?>)" class="btn img-btn-icon-pro tooltip2"><span><?php echo e($staticContent['Add_to_Compare']); ?></span><img src="<?php echo e(asset('/frontend-asset/image/Compare.svg')); ?>"></button>';
         html += '<a href="<?php echo e(route('downloadFIle')); ?>/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span><?php echo e($staticContent['data_sheet']); ?></span><img src="<?php echo e(asset('/frontend-asset/image/Datasheet.svg')); ?>"></button></a>';
         html += '</div>';
         html += '</div>';
@@ -1487,7 +1487,7 @@
         html1 += '<div class="w-100">';
         html1 += '<div class="boxlist-icon-img">';
         html1 += '<a href="<?php echo e(route('LinktoEnquiry')); ?>/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span><?php echo e($staticContent['Enquiry']); ?></span><img src="<?php echo e(asset('/frontend-asset/image/Enquiry.svg')); ?>"></button></a>';
-        html1 += '<button onclick="showNavCoparison('+pro['pro_id']+' ,<?php echo e($cateid); ?>)" class="btn img-btn-icon-pro tooltip2" title="<?php echo e($staticContent['Add_to_Compare']); ?>"><span><?php echo e($staticContent['Add_to_Compare']); ?></span><img src="<?php echo e(asset('/frontend-asset/image/Compare.svg')); ?>"></button>';
+        html1 += '<button onclick="showNavCoparison('+pro['pro_id']+' ,<?php echo e($cateid); ?>)" class="btn img-btn-icon-pro tooltip2"><span><?php echo e($staticContent['Add_to_Compare']); ?></span><img src="<?php echo e(asset('/frontend-asset/image/Compare.svg')); ?>"></button>';
         html1 += '<a href="<?php echo e(route('downloadFIle')); ?>/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span><?php echo e($staticContent['data_sheet']); ?></span><img src="<?php echo e(asset('/frontend-asset/image/Datasheet.svg')); ?>"></button></a>';
         html1 += '</div>';
         html1 += '</div>';
