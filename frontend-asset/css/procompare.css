@@ -101,6 +101,7 @@ ul > li{
 .wizard > .actions a, .wizard > .actions a:hover, .wizard > .actions a:active{
     color: #fff;
     border-radius: 5px;
+    background-color:#0087DC ;
     border: 2px solid transparent;
     min-width: 160px;
     height: 40px;
