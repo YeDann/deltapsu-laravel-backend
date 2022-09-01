@@ -125,6 +125,17 @@
      #CybotCookiebotDialog.CybotEdge .CybotCookiebotDialogBodyBottomWrapper {
        margin-top: 0 !important;
     }
+    /* #CybotCookiebotDialog.CybotEdge.CybotMultilevel .CybotCookiebotDialogBodyBottomWrapper {
+    border-top: none !important;
+    } */
+
+    @media  screen and (min-width: 1280px){
+      #CybotCookiebotDialog.CybotEdge.CybotMultilevel .CybotCookiebotDialogBodyBottomWrapper {
+    border-top: 1px solid #fff !important;
+
+      }
+    }
+
   
   </style>
     <!-- Fonts -->
