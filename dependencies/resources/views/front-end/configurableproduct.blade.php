@@ -1185,7 +1185,6 @@ function selectCountry(){
 				$('a[href$="previous"]').attr('style', 'display:block');
 				$('a[href$="previous"]').text('{{$staticContent['Enquiry']}}');
 				$('a[href$="previous"]').removeClass("btn-previous-border");
-				$('a[href$="previous"]').addClass("enquiry-bg");
 				$('a[href$="previous"]').addClass("resetenqu");
 				$('a[href$="previous"]').attr('id','submitenquiry'); 
 				$('a[href$="previous"]').html('<button class="btn-enquiry" id="SbtRequest1" onclick="linktosupport();">{{$staticContent['Enquiry']}}</button>'); 

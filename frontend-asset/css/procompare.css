@@ -147,6 +147,7 @@ margin-bottom: 0em;
     background-color: rgb(120,120,120);
     color: #fff;
     border-color: transparent;
+    width: 100%;
 }
 .arrow-next::before{
     font-family: FontAwesome;
