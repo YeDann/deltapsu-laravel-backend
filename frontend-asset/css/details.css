@@ -94,7 +94,7 @@
 
 .btn-enquiry,
 .btn-addcompare {
-    min-width: 160px;
+    min-width: 120px;
     height: 40px;
     border-radius: 4px;
     border: 2px solid transparent;
@@ -105,11 +105,11 @@
 }
 
 .btn-enquiry {
-    background-color: rgb(0,40,140);
+    background-color: rgb(120,120,120);
 }
 
 .btn-addcompare {
-    background-color: #0087DC;
+    background-color: rgb(120,120,120);
 }
 
 .text-fourteen-gray {

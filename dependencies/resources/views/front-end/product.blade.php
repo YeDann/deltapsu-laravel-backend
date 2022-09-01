@@ -1307,9 +1307,18 @@
         html += '<p class="text-ft-sub text-one">-</p>';
         }
         html += '</div>';
-        html += '<div><a class="btn btn-datasheet w-50 mr-2 mt-2" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" > {{$staticContent['data_sheet']}}</a></div>';
-        html += '<div href="#" class="btn btn-ft mt-2" onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" >+{{$staticContent['Add_to_Compare']}}</div>';
-        html += '<div class="btn-enq-d mt-2"><a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'">{{$staticContent['Enquiry']}}</a></div>';
+        // html += '<div><a class="btn btn-datasheet w-50 mr-2 mt-2" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" > {{$staticContent['data_sheet']}}</a></div>';
+        // html += '<div href="#" class="btn btn-ft mt-2" onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" >+{{$staticContent['Add_to_Compare']}}</div>';
+        // html += '<div class="btn-enq-d mt-2"><a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'">{{$staticContent['Enquiry']}}</a></div>';
+
+        html += '<div class="w-100">';
+        html += '<div class="boxlist-icon-img">';
+        html += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button></a>';
+        html += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2" title="{{$staticContent['Add_to_Compare']}}"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
+        html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
+        html += '</div>';
+        html += '</div>';
+
         html += '</div>';
         html += '</div>';
         html += '</div>';
@@ -1424,7 +1433,7 @@
         html1 += '<table id="dtBasicExample" class="table" cellspacing="1em" width="100%">';
         html1 += '<thead>';
         html1 += '<tr class="headder-bg-table">';
-        html1 += '<th colspan="2" id="sortdata1" class=" header-font-table w-tabfix"  onclick="selectTable(1)">{{$staticContent['Model_Name']}}</th>';
+        html1 += '<th  id="sortdata1" class=" header-font-table w-tabfix"  onclick="selectTable(1)">{{$staticContent['Model_Name']}}</th>';
         html1 += '<th id="sortdata2" class=" header-font-table w-tabfix"  onclick="selectTable(2)">{{$staticContent['Output_Voltage']}}</th>';
         html1 += '<th id="sortdata3" class=" header-font-table w-tabfix"  onclick="selectTable(3)">{{$staticContent['Output_Current']}}</th>';
         html1 += '<th id="sortdata4" class=" header-font-table w-tabfix"  onclick="selectTable(4)">{{$staticContent['Output_Power']}} </th>';
@@ -1486,8 +1495,14 @@
         html1 += '</div>';
         html1 += '</a>';
         html1 += '<div class="w-100">';
-        html1 += '<div class="btn btn-ft" onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})"> + {{$staticContent['Add_to_Compare']}}</div>';
+        html1 += '<div class="boxlist-icon-img">';
+        html1 += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button></a>';
+        html1 += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2" title="{{$staticContent['Add_to_Compare']}}"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
+        html1 += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
         html1 += '</div>';
+        html1 += '</div>';
+        // html1 += '<div class="w-100">';
+        // html1 += '<div class="btn btn-ft" onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})"> + {{$staticContent['Add_to_Compare']}}</div>';
         html1 += '</div>';
         html1 += '</td>';
         var content =  onlycontent(pro['content']);
@@ -1503,19 +1518,19 @@
             content[2]['data_6'],content[2]['data_7'],content[2]['data_8'],content[2]['data_9'],content[2]['data_10'],content[2]['data_11'],
             content[2]['data_12']
             ]
-        html1 += '<td>';
-        html1 += '<div class="card-btn-a">';
+        // html1 += '<td>';
+        // html1 += '<div class="card-btn-a">';
     
-        html1 += '<div class="card-btn-a-detail">';
-        html1 += '<a class="link-d-sheet" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank">';
-        html1 += '<div class="text-name-data">Datasheet</div>';
-        html1 += '<div class="icon-datasheet">';
-        html1 += '<i class="icon-facon2 icon-download"></i>';
-        html1 += '</div>' ;
-        html1 += '</a>';
-        html1 += '<div class="btn-enq-d"><a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'">{{$staticContent['Enquiry']}}</a></div>';
-        html1 += '</div></div>';
-        html1 += '</td>';
+        // html1 += '<div class="card-btn-a-detail">';
+        // html1 += '<a class="link-d-sheet" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank">';
+        // html1 += '<div class="text-name-data">Datasheet</div>';
+        // html1 += '<div class="icon-datasheet">';
+        // html1 += '<i class="icon-facon2 icon-download"></i>';
+        // html1 += '</div>' ;
+        // html1 += '</a>';
+        // html1 += '<div class="btn-enq-d"><a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'">{{$staticContent['Enquiry']}}</a></div>';
+        // html1 += '</div></div>';
+        // html1 += '</td>';
         html1 += ' <td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon1,content[1]['unit_name'] ,content[1]['status_input'])+'</div></td>';
         html1 += '<td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon2,content[0]['unit_name'] ,content[0]['status_input'])+'</div></td>';
         html1 += ' <td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon3,content[2]['unit_name'] ,content[2]['status_input'])+'</div></td>';

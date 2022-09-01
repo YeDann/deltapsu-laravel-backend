@@ -201,7 +201,7 @@ font-size: 50px;
                   <a href="<?php echo e(route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])); ?>">
                     <button class="btn-enquiry"><?php echo e($staticContent['Enquiry']); ?></button>
                    </a>  
-                    <button class="btn-addcompare" onclick="showNavCoparison(<?php echo e($product[0]['pro_id']); ?> ,<?php echo e($product[0]['cate_id']); ?>)">+ <?php echo e($staticContent['Add_to_Compare']); ?></button>
+                    <button class="btn-addcompare" onclick="showNavCoparison(<?php echo e($product[0]['pro_id']); ?> ,<?php echo e($product[0]['cate_id']); ?>)"><?php echo e($staticContent['Add_to_Compare']); ?></button>
                 </div>
             </div>
         </div>
@@ -271,9 +271,9 @@ font-size: 50px;
                         <a href="<?php echo e(route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])); ?>">
                         <button class="btn btn-enquiry"><?php echo e($staticContent['Enquiry']); ?></button>
                         </a>
-                        <button class="btn btn-addcompare" onclick="showNavCoparison(<?php echo e($product[0]['pro_id']); ?>, <?php echo e($product[0]['cate_id']); ?>)">+ <?php echo e($staticContent['Add_to_Compare']); ?></button>
+                        <button class="btn btn-addcompare" onclick="showNavCoparison(<?php echo e($product[0]['pro_id']); ?>, <?php echo e($product[0]['cate_id']); ?>)"><?php echo e($staticContent['Add_to_Compare']); ?></button>
                         <a href="<?php echo e(route('downloadFIle')); ?>/Datasheet/<?php echo e($product[0]['pro_code']); ?>" target="_blank">
-                        <button class="btn btn-datasheet mr-2"  ><i class="icon-facon2 icon-download" aria-hidden="true"></i> <?php echo e($staticContent['data_sheet']); ?></button>
+                        <button class="btn btn-datasheet mr-2"  ><?php echo e($staticContent['data_sheet']); ?></button>
                         </a>
                     </div>
                     <div class="row">
@@ -547,7 +547,7 @@ font-size: 50px;
             </div>
             <div class="my-4">
                 <button class="btn btn-enquiry w-100 my-2"><?php echo e($staticContent['Enquiry']); ?></button>
-                <button class="btn btn-addcompare w-100 my-2" onclick="showNavCoparison(<?php echo e($product[0]['pro_id']); ?> ,<?php echo e($product[0]['cate_id']); ?>)">+ <?php echo e($staticContent['Add_to_Compare']); ?></button>
+                <button class="btn btn-addcompare w-100 my-2" onclick="showNavCoparison(<?php echo e($product[0]['pro_id']); ?> ,<?php echo e($product[0]['cate_id']); ?>)"><?php echo e($staticContent['Add_to_Compare']); ?></button>
             </div>
             
             <div class="box-detail">
@@ -1163,7 +1163,7 @@ font-size: 50px;
                                                 <?php else: ?>
                                                 <h6 class="text-ft-sub"><?php echo iconv_substr(strip_tags($pro['dimensionL']),0,20,'UTF-8'); ?></h6>
                                                 <?php endif; ?>
-                                                <div class="btn btn-ft mt-2" onclick="showNavCoparison(<?php echo e($pro['pro_id']); ?> ,<?php echo e($pro['cate_id']); ?>)">+ <?php echo e($staticContent['Add_to_Compare']); ?></div>
+                                                <div class="btn btn-ft mt-2" onclick="showNavCoparison(<?php echo e($pro['pro_id']); ?> ,<?php echo e($pro['cate_id']); ?>)"><?php echo e($staticContent['Add_to_Compare']); ?></div>
                                             </div>
                                     </div>
                             </div>
