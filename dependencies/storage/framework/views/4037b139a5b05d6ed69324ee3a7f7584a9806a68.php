@@ -206,7 +206,7 @@ $langch = str_replace('_', '-', app()->getLocale());
 ?>
 
 
-<script id="Cookiebot"  data-culture="<?php echo e(lanngCookie); ?>" src="https://consent.cookiebot.com/uc.js" data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-blockingmode="auto" type="text/javascript"></script> 
+<script id="Cookiebot"  data-culture="<?php echo e($lanngCookie); ?>" src="https://consent.cookiebot.com/uc.js" data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-blockingmode="auto" type="text/javascript"></script> 
 
 
 <script id="CookieDeclaration" src="https://consent.cookiebot.com/0b87f4dd-13cf-473e-b5c7-019f4154d02a/cd.js" type="text/javascript" async></script> 
