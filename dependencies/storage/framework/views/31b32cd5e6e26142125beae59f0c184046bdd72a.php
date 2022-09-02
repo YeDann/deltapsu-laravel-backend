@@ -337,11 +337,11 @@
             $('#model_id_key').val(findPro[0]["product_id"]); 
             loadContent(2);
           }else if(findByTag.length > 0 && findByTag.length == 1){
-           
+            
             $('#model_id_key').val(findByTag[0]["pro_id"]); 
             loadContent(2);
           }else{
-            // console.log(findByTag.length ,'findByTag.length');
+            console.log(findByTag.length ,'findByTag.length');
             $("#notfound_product").modal();
           }
 
