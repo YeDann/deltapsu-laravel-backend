@@ -82,6 +82,30 @@
     width: 20%;
     background-color: #b9eb5f;
 }
+
+.nav-mobile::after, .nav-mobile::before {
+    bottom: -7px;
+}
+.nav-mobile::after, .nav-mobile::before {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 7px;
+}
+
+.nav-mobile::before {
+    width: 60%;
+    left: 0;
+    background-color: #0087dc;
+}
+.nav-mobile::after {
+    right: 0;
+    width: 20%;
+    background-color: #b9eb5f;
+}
+.nav-mobile {
+    border-bottom: 7px solid #64d7d7;
+}
 @keyframes ani-blue{
     0%{
         width:25%;
@@ -304,9 +328,6 @@ body {
 
 .scrolled {
     background-color: #FFFFFF !important;
-    -webkit-box-shadow: 0px 3px 22px -16px rgba(68, 68, 68, 0.94);
-    -moz-box-shadow: 0px 3px 22px -16px rgba(68, 68, 68, 0.94);
-    box-shadow: 0px 3px 22px -16px rgba(68, 68, 68, 0.94);
 }
 .des-scrolled {
     background-color: #FFFFFF !important;
