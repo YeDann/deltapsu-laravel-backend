@@ -356,8 +356,8 @@
         //     }
         //    });
           var findPro =  products.filter(function(e) { return e.pro_code === key});
-          var findByTag =  tags_data.filter(function(x) { return  x.tag === "Low Profile"});
-          console.log(findByTag.length ,'findByTag.length' ,findByTag);
+          var findByTag =  tags_data.filter(function(x) { return  x.tag.toLowerCase().replace(/\s/g, '') === key.toLowerCase().replace(/\s/g, '') });
+          console.log(findByTag.length ,'findByTag.length',tags_data ,findByTag);
           if(findPro.length > 0){
             $('#model_id_key').val(findPro[0]["product_id"]); 
             loadContent(2);
