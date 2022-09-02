@@ -365,7 +365,10 @@
             
             $('#model_id_key').val(findByTag[0]["pro_id"]); 
             loadContent(2);
-          }else{
+          }else if(findByTag.length == 2 && findByTag[0]["catename"] == "Enclosed" && findByTag[1]["catename"] == "Panel Mount" ){
+            $('#model_id_key').val(findByTag[0]["pro_id"]); 
+            loadContent(2);
+          } else{
            
             $("#notfound_product").modal();
           }
