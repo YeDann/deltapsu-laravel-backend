@@ -282,17 +282,21 @@
         });
         function mergeDataPro(){
             var newproduct = [];
+            var chproduct = [];
             var html = '';
             $.each(products, function(index,pro){
                 newproduct.push(pro['pro_code'])
             });
 
             $.each(tags_data, function(idx,tag){
-                 if(!newproduct.includes(tag['tag'])){
+                 if(!chproduct.includes(tag['tag'].toLowerCase().replace(/\s/g, ''))){
+                  
                     newproduct.push(tag['tag'])
+                    chproduct.push(tag['tag'].toLowerCase().replace(/\s/g, ''))
                  }               
               
             });
+            
             html += '<option></option>';
             $.each(newproduct, function(index,item){
                     html += '<option value="'+item +'">'+item+'</option>';
