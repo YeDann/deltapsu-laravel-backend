@@ -309,7 +309,10 @@
             var chproduct = [];
             var html = '';
             $.each(products, function(index,pro){
-                newproduct.push(pro['pro_code'])
+                if(!chproduct.includes(pro['pro_code'].toLowerCase().replace(/\s/g, ''))){
+                    newproduct.push(pro['pro_code'])
+                    chproduct.push(pro['pro_code'].toLowerCase().replace(/\s/g, ''))
+               }   
             });
 
             $.each(tags_data, function(idx,tag){
