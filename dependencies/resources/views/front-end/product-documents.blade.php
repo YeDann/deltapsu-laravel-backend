@@ -458,9 +458,9 @@
               var html = '';
               $.each(res['data'], function(index,tag){
               if(key == tag['tag']){
-                html += '<div class="box-list-tag"><a class="text-tag-link hightlight"><span  onclick="viewKey('+"'"+tag['tag']+"'"+');">'+tag['tag']+ '</span></a></div>';
+                html += '<div class="box-list-tag"><a href="{{route('searchByTag')}}/'+checkProKey(tag['tag']) +'" class="text-tag-link hightlight"><span >'+tag['tag']+ '</span></a></div>';
               }else{
-                html += '<div class="box-list-tag"><a class="text-tag-link"><span  onclick="viewKey('+"'"+tag['tag']+"'"+');">'+tag['tag']+ '</span></a></div>';
+                html += '<div class="box-list-tag"><a href="{{route('searchByTag')}}/'+checkProKey(tag['tag']) +'" class="text-tag-link"><span >'+tag['tag']+ '</span></a></div>';
               }
             
               });
@@ -469,8 +469,14 @@
            });
 
         }
+        function checkProKey(key){
+            var newkey = key.replace(/[/]/g,'@');
+              return key;
+         
+         }
         function viewKey(key){
             var newkey = key.replace(/[/]/g,'@');
+              return key;
               event.preventDefault();
               window.location = '{{route('searchByTag')}}/'+newkey;
          }
