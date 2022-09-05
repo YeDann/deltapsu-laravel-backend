@@ -229,7 +229,7 @@ textarea{
                         <label class="cbx" for="privacycheck"><span>
                                 <svg width="12px" height="10px" viewbox="0 0 12 10">
                                     <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                                </svg></span><span style="padding-left:9px;">  {{$staticContent['By_submitting_this_form']}} <a target="_blank" href="{{route('privacyPolicy')}}" class="font-size-tab text-underline">{{$staticContent['Privacy_Policy']}}</a></span> <text class="red">*</text></label>
+                                </svg></span><span style="padding-left:9px;">  {{$staticContent['By_submitting_this_form']}} <a target="_blank" href="{{route('privacyPolicy')}}" class=" text-underline">{{$staticContent['Privacy_Policy']}}</a><text class="red">*</text></span> </label>
                     </div>
  
                     <div class="box-input-checkbox">
