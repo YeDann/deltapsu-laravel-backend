@@ -92,6 +92,7 @@
         display: block;
         margin-right: 9px;
         white-space: nowrap;
+        z-index: 999;
     }
 
 
