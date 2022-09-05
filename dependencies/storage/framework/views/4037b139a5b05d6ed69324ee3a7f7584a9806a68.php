@@ -135,6 +135,19 @@
 
       }
     }
+    #CookiebotWidget .CookiebotWidget-body .CookiebotWidget-consents-list li.CookiebotWidget-approved svg {
+    fill: #0087DC !important;
+    }
+    #CookiebotWidget .CookiebotWidget-consent-details button {
+    color: #0087DC !important;
+   }
+    #CookiebotWidget #CookiebotWidget-buttons #CookiebotWidget-btn-change{
+      background-color: #0087DC !important;
+       border-color:#0087DC !important;
+    }
+    #CookiebotWidget #CookiebotWidget-buttons #CookiebotWidget-btn-withdraw{
+      border-color:#0087DC !important;
+    }
 
   
   </style>
