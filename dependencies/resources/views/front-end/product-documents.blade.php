@@ -95,7 +95,9 @@
         z-index: 999;
     }
 
-
+    .collapse.show {
+        z-index: 99999;
+    }
     .hightlight {
     background: #ff0;
     }

@@ -1078,7 +1078,7 @@ top: -9px;
         </div>
         <div class="modal-body px-4 mb-4">
             <div class="text-center">
-                <h4 class="text-color-delta">Sorry, Please verify i'm not robot </h4>
+                <h4 class="text-color-delta">Please verify you are not a robot </h4>
             </div>
         </div>
       </div>
