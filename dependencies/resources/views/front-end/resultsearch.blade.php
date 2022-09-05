@@ -285,7 +285,7 @@
                                                 <a class="text-tag {{$pro['tag_m'] == $tag->tag ?'hightlight':'' }}"><span  onclick="viewKey('{{$tag->tag}}')">{{$tag->tag}}{{$loop->iteration != $loop->count?',':'' }} </span></a>
                                                @endforeach
                                             </div>
-                                            <div  class="btn btn-ft mt-2" onclick="showNavCoparison({{$pro['pro_id']}} ,{{$pro['cateid']}})">+ {{$staticContent['Add_to_Compare']}} </div>
+                                            <div  class="btn btn-ft mt-2" onclick="showNavCoparison({{$pro['pro_id']}} ,{{$pro['cateid']}})">{{$staticContent['Add_to_Compare']}} </div>
                                         </div>
                                     
                                         
@@ -462,7 +462,7 @@
                                                @endforeach
                                             </div>
                                         </div>
-                                        <div class="btn btn-ft" onclick="showNavCoparison({{$pro['pro_id']}},{{$pro['cateid']}})">+{{$staticContent['Add_to_Compare']}}</div>
+                                        <div class="btn btn-ft" onclick="showNavCoparison({{$pro['pro_id']}},{{$pro['cateid']}})">{{$staticContent['Add_to_Compare']}}</div>
                                       
                                     </div>
                                 </div>
