@@ -9,6 +9,9 @@
   position: relative;
 }
 
+.pd-mobile{
+    padding: 10px 13px;
+}
 
 .img-btn-icon-pro img{
     width: 34px;

@@ -285,7 +285,10 @@
             var chproduct = [];
             var html = '';
             $.each(products, function(index,pro){
-                newproduct.push(pro['pro_code'])
+                if(!chproduct.includes(pro['pro_code'].toLowerCase().replace(/\s/g, ''))){
+                    newproduct.push(pro['pro_code'])
+                    chproduct.push(pro['pro_code'].toLowerCase().replace(/\s/g, ''))
+               }   
             });
 
             $.each(tags_data, function(idx,tag){
@@ -332,8 +335,8 @@
         //     }
         //    });
           var findPro =  products.filter(function(e) { return e.pro_code === key});
-          var findByTag =  tags_data.filter(function(x) { return  x.tag === "Low Profile"});
-          console.log(findByTag.length ,'findByTag.length' ,findByTag);
+          var findByTag =  tags_data.filter(function(x) { return  x.tag.toLowerCase().replace(/\s/g, '') === key.toLowerCase().replace(/\s/g, '') });
+   
           if(findPro.length > 0){
             $('#model_id_key').val(findPro[0]["product_id"]); 
             loadContent(2);
@@ -341,7 +344,10 @@
             
             $('#model_id_key').val(findByTag[0]["pro_id"]); 
             loadContent(2);
-          }else{
+          }else if(findByTag.length == 2 && findByTag[0]["catename"] == "Enclosed" && findByTag[1]["catename"] == "Panel Mount" ){
+            $('#model_id_key').val(findByTag[0]["pro_id"]); 
+            loadContent(2);
+          } else{
            
             $("#notfound_product").modal();
           }
