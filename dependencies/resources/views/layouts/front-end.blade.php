@@ -253,8 +253,8 @@ $langch = str_replace('_', '-', app()->getLocale());
   };
   var onloadCallback = function() {
     grecaptcha.render('recap_vertifygetGui', {
-     'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-      //  'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
+    //  'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
+       'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
       'callback' : verifyCallbackData,
       'theme' : 'light'
     });
