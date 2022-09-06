@@ -248,14 +248,14 @@ $langch = str_replace('_', '-', app()->getLocale());
   }
 </script>
 <script type="text/javascript">
-  var verifyCallback = function(response) {
-    $('#submitGuiDownload').prepend('<input type="hidden" name="keyresponseCap" value="' + response + '">');
+  var verifyCallbackData = function(response) {
+    $('#keyrecapgui').val(response);
   };
   var onloadCallback = function() {
     grecaptcha.render('recap_vertifygetGui', {
      'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
       //  'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
-      'callback' : verifyCallback,
+      'callback' : verifyCallbackData,
       'theme' : 'light'
     });
   };
@@ -274,10 +274,14 @@ $langch = str_replace('_', '-', app()->getLocale());
   }
 
   function validateFormGUI(form){
-               if(form.acceptCookie.value == '' && form.keyresponseCap.value == '') {
-                    $("#acceptCookieContent").modal();
+               
+                if(!form.acceptPolicyGui.checked){
+                    $("#Support_policy_required").modal();
                     return false;
-                }else{
+                }else if(form.keyresponseCap.value == ''){
+                    $("#downloadgui-modal-vetify-robot").modal();
+                    return false;
+                } else{
                     return true;
                 }
       }

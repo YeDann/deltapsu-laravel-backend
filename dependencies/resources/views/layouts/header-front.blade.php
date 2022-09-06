@@ -819,7 +819,14 @@ top: -9px;
                 @endforeach
               </select>
           </div> 
-          <p class="mr-24px"> {{$staticContent['By_submitting_this_form']}} <a href="{{route('privacyPolicy')}}" class="font-size-tab text-underline text-bold">{{$staticContent['Privacy_Policy']}}</a></p>
+          <div class="box-input-checkbox">
+                        <input class="inp-cbx" name="acceptPolicyGui" id="acceptPolicyGui" value="1"   type="checkbox"
+                            style="display: none;" />
+                        <label class="cbx" for="acceptPolicyGui"><span>
+                                <svg width="12px" height="10px" viewbox="0 0 12 10">
+                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                </svg></span><span style="padding-left:9px;">  {{$staticContent['By_submitting_this_form']}} <a target="_blank" href="{{route('privacyPolicy')}}" class=" text-underline">{{$staticContent['Privacy_Policy']}}</a><text class="red">*</text></span> </label>
+                    </div>
           <div class="box-input-checkbox">
               <input class="inp-cbx" name="data_conf"  id="cxguiup" value="1" type="checkbox"
                   style="display: none;" />
@@ -832,7 +839,7 @@ top: -9px;
             <div class="mt-4" id="recap_vertifygetGui"></div>
             <br>
           </form>
-    
+          <input type="hidden" id="keyrecapgui" name="keyresponseCap" >
     
        
         <button type="submit" class="btn btn-subscribe">Download</button>

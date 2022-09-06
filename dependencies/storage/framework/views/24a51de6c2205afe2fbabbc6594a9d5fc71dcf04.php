@@ -245,7 +245,7 @@ textarea{
                             <div class="mt-4" id="recap_vertify"></div>
                             <br>
                           </form>
-              <input type="hidden" id="keyrecap" name="keyrecap" >
+                      <input type="hidden" id="keyrecap" name="keyrecap" >
                     <button class="btn-subscribe" type="submit"><?php echo e($staticContent['Send']); ?></button>
                 </div>
                 
@@ -288,7 +288,10 @@ textarea{
                 if(!form.prichk.checked){
                     $("#Support_policy_required").modal();
                     return false;
-                }else{
+                }else if(form.keyrecap.value == ''){
+                    $("#downloadgui-modal-vetify-robot").modal();
+                    return false;
+                } else{
                     return true;
                 }
       }

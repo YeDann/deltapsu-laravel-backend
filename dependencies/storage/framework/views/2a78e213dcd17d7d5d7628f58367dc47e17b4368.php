@@ -1298,7 +1298,7 @@
         }
         html += '</div>';
         // html += '<div><a class="btn btn-datasheet w-50 mr-2 mt-2" href="<?php echo e(route('downloadFIle')); ?>/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" > <?php echo e($staticContent['data_sheet']); ?></a></div>';
-        // html += '<div href="#" class="btn btn-ft mt-2" onclick="showNavCoparison('+pro['pro_id']+' ,<?php echo e($cateid); ?>)" >+<?php echo e($staticContent['Add_to_Compare']); ?></div>';
+        // html += '<div href="#" class="btn btn-ft mt-2" onclick="showNavCoparison('+pro['pro_id']+' ,<?php echo e($cateid); ?>)" ><?php echo e($staticContent['Add_to_Compare']); ?></div>';
         // html += '<div class="btn-enq-d mt-2"><a class="btn btn-enquiry w-50 mr-2" href="<?php echo e(route('LinktoEnquiry')); ?>/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'"><?php echo e($staticContent['Enquiry']); ?></a></div>';
 
         html += '<div class="w-100">';

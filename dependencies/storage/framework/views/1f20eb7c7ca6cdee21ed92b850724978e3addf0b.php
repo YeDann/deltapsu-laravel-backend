@@ -272,7 +272,7 @@
                                                 <a class="text-tag <?php echo e($pro['tag_m'] == $tag->tag ?'hightlight':''); ?>"><span  onclick="viewKey('<?php echo e($tag->tag); ?>')"><?php echo e($tag->tag); ?><?php echo e($loop->iteration != $loop->count?',':''); ?> </span></a>
                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </div>
-                                            <div  class="btn btn-ft mt-2" onclick="showNavCoparison(<?php echo e($pro['pro_id']); ?> ,<?php echo e($pro['cateid']); ?>)">+ <?php echo e($staticContent['Add_to_Compare']); ?> </div>
+                                            <div  class="btn btn-ft mt-2" onclick="showNavCoparison(<?php echo e($pro['pro_id']); ?> ,<?php echo e($pro['cateid']); ?>)"><?php echo e($staticContent['Add_to_Compare']); ?> </div>
                                         </div>
                                     
                                         
@@ -434,7 +434,7 @@
                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </div>
                                         </div>
-                                        <div class="btn btn-ft" onclick="showNavCoparison(<?php echo e($pro['pro_id']); ?>,<?php echo e($pro['cateid']); ?>)">+<?php echo e($staticContent['Add_to_Compare']); ?></div>
+                                        <div class="btn btn-ft" onclick="showNavCoparison(<?php echo e($pro['pro_id']); ?>,<?php echo e($pro['cateid']); ?>)"><?php echo e($staticContent['Add_to_Compare']); ?></div>
                                       
                                     </div>
                                 </div>

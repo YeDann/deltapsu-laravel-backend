@@ -329,12 +329,16 @@ tbody tr{
     /* padding: 24px !important; */
     top: 24px;
 }
+.text-info  ul {
+    padding: 0;
+    margin: 0;
+}
 .text-info{
     color: #5F5F5F !important;
     font-size: 14px;
     line-height: 1;
     margin-bottom: 24px;
-    padding-left: 13px;
+    padding-left: 17px;
 }
 .summary-subbody,.summary-subbody-last{
     

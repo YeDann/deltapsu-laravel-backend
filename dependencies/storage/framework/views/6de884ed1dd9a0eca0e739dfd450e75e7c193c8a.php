@@ -681,6 +681,17 @@
 								<svg width="12px" height="10px" viewbox="0 0 12 10">
 									<polyline points="1.5 6 4.5 9 10.5 1"></polyline>
 								</svg></span><span>Sign up for newsletter</span></label>
+
+								<div class="box-input-checkbox">
+                        <input class="inp-cbx" name="prichk" id="privacycheck" value="1" onclick="onacceptionPolicy()"  type="checkbox"
+                            style="display: none;" />
+                        <label class="cbx" for="privacycheck"><span>
+                                <svg width="12px" height="10px" viewbox="0 0 12 10">
+                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                </svg></span><span style="padding-left:9px;">  <?php echo e($staticContent['By_submitting_this_form']); ?> <a target="_blank" href="<?php echo e(route('privacyPolicy')); ?>" class=" text-underline"><?php echo e($staticContent['Privacy_Policy']); ?></a><text class="red">*</text></span> </label>
+                          </div>
+					</div>
+					<div  class="red" id="error-massage">
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-subscribe">Send</button>
@@ -747,8 +758,8 @@
 	};
 	var onloadCallback = function() {
 	  grecaptcha.render('recap_vertify', {
-	   //'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-         'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
+	   'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
+        //  'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
 		'callback' : verifyCallback,
 		'theme' : 'light'
 	  });
@@ -966,12 +977,17 @@ function selectCountry(){
 			$('#loaderSavefile').css("display",'block');
 			// alert('testconf');
 			return false;
-          } else {
+		   }else if(document.configform.keyrecap.value == '' || document.configform.keyrecap.value == null ){
+		    alert('Please verify you are not a robot')
+			return false;
+		   }else if(!document.configform.prichk.checked){
+			alert('Please accept Privacy Policy checkbox to continue')
+			return false;
+		   }else {
 			  if($('#keyrecap').val() != '' && $('#keyrecap').val() != null){
 				document.configform.submit();
-			  }
-             
-          }
+			  }    
+            }
 	}
 
 	function selectionGenerate(){
@@ -1895,7 +1911,7 @@ function selectCountry(){
 						$('#sentToPDFMe').css("display",'block');
 						$("#SbtRequest1").prop('disabled', false);
 						$('#con_id').val(data.con_id);
-						checkValueConfigFile();
+						// checkValueConfigFile();
 					},
 					error: function(data){
 						console.log(data)

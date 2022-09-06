@@ -811,7 +811,14 @@ top: -9px;
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
               </select>
           </div> 
-          <p class="mr-24px"> <?php echo e($staticContent['By_submitting_this_form']); ?> <a href="<?php echo e(route('privacyPolicy')); ?>" class="font-size-tab text-underline text-bold"><?php echo e($staticContent['Privacy_Policy']); ?></a></p>
+          <div class="box-input-checkbox">
+                        <input class="inp-cbx" name="acceptPolicyGui" id="acceptPolicyGui" value="1"   type="checkbox"
+                            style="display: none;" />
+                        <label class="cbx" for="acceptPolicyGui"><span>
+                                <svg width="12px" height="10px" viewbox="0 0 12 10">
+                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                </svg></span><span style="padding-left:9px;">  <?php echo e($staticContent['By_submitting_this_form']); ?> <a target="_blank" href="<?php echo e(route('privacyPolicy')); ?>" class=" text-underline"><?php echo e($staticContent['Privacy_Policy']); ?></a><text class="red">*</text></span> </label>
+                    </div>
           <div class="box-input-checkbox">
               <input class="inp-cbx" name="data_conf"  id="cxguiup" value="1" type="checkbox"
                   style="display: none;" />
@@ -824,7 +831,7 @@ top: -9px;
             <div class="mt-4" id="recap_vertifygetGui"></div>
             <br>
           </form>
-    
+          <input type="hidden" id="keyrecapgui" name="keyresponseCap" >
     
        
         <button type="submit" class="btn btn-subscribe">Download</button>
@@ -890,7 +897,7 @@ top: -9px;
         </div>
         <div class="modal-body px-4 mb-4">
             <div class="text-center">
-                <h4 class="text-color-delta">Sorry, Please verify im'not robot</h4>
+                <h4 class="text-color-delta">Please verify you are not a robot</h4>
             </div>
         </div>
       </div>
