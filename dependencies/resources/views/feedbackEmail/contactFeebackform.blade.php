@@ -70,6 +70,7 @@
                     <tr>
                         <th class="th-sm">No.</th>
                         <th class="th-sm">Subject</th>
+                        <th class="th-sm">Ticket No</th>
                         <th class="th-sm">Email</th>
                         <th class="th-sm">Name</th>
                         <th class="th-sm">Country</th>
@@ -85,6 +86,7 @@
                     @foreach ($contactemail as $item)
                     <td class="text-center">{{$loop->iteration}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->subject}}</td>
+                    <td class="d-none d-sm-table-cell">{{$item->ticket_id}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->email}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->name}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->country}}</td>
