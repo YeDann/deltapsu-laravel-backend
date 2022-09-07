@@ -292,6 +292,7 @@ class EmailController extends Controller
                   $sheet->row(1,[
                         'No',
                         'Subject',
+                        'Ticket No',
                         'Name',
                         'Email',
                         'Country',
@@ -317,6 +318,7 @@ class EmailController extends Controller
                           $sheet->row($i, [
                               $j,
                               $sub->subject,
+                              $sub->ticket_id,
                               $sub->name,
                               $sub->email,
                               $sub->country,
