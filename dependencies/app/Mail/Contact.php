@@ -37,10 +37,16 @@ class Contact extends Mailable
  
         if($this->request['subject'] == "0"){
             $subject = 'Sale Enquiries';
+            $subjectName =  $subject.'_'.$this->ticket_id;
+        }else if($this->request['enquireStatus'] == 3){
+            $subject = 'Configurable Power PDF Download';
+            $subjectName =  $subject;
         }else{
             $subject = $this->request['subject'];
+            $subjectName =  $subject.'_'.$this->ticket_id;
         }
-         $subjectName =  $subject.'_'.$this->ticket_id;
+       
+        
         $data = [
             'contactForm' => $this->request,
             'header' => $subject,
