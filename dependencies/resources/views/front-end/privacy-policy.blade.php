@@ -17,7 +17,7 @@
     <h3 class="text-title-delta visible-mobile"> {!!$static_content->title !!}</h3>
     <div class="container">
         {!!$static_content->content !!} 
-        <h4>Cookies</h4>
+        <h4 class="mt-5">Cookies</h4>
         <script id="CookieDeclaration" src="https://consent.cookiebot.com/0b87f4dd-13cf-473e-b5c7-019f4154d02a/cd.js" type="text/javascript" async></script>
        {{-- <p class="text-title-detail mr-b-1">Policy Overview</p>
         Personal information is information that can be used to uniquely identify or contact a single person. DeltaPSU may obtain personal information about individuals when such individuals specifically provide such information to DeltaPSU.com, such as by registering Delta Power Supply products, purchasing a Delta power Supply product, contacting sales, creating a web account, requesting support, participating in a marketing/sales promotion or online survey, requesting marketing materials, and through other means.
