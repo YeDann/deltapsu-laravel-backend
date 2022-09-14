@@ -230,7 +230,9 @@
     .w-number{
         width: 20px !important;
     }
-    
+    .w-120{
+        width: 130px;
+    }
 </style>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('meta'); ?>
@@ -1430,9 +1432,9 @@
         html1 += '<thead>';
         html1 += '<tr class="headder-bg-table">';
         html1 += '<th  id="sortdata1" class=" header-font-table w-tabfix"  onclick="selectTable(1)"><?php echo e($staticContent['Model_Name']); ?></th>';
-        html1 += '<th id="sortdata2" class=" header-font-table w-tabfix"  onclick="selectTable(2)"><?php echo e($staticContent['Output_Voltage']); ?></th>';
-        html1 += '<th id="sortdata3" class=" header-font-table w-tabfix"  onclick="selectTable(3)"><?php echo e($staticContent['Output_Current']); ?></th>';
-        html1 += '<th id="sortdata4" class=" header-font-table w-tabfix"  onclick="selectTable(4)"><?php echo e($staticContent['Output_Power']); ?> </th>';
+        html1 += '<th id="sortdata2" class=" header-font-table w-tabfix w-120"  onclick="selectTable(2)"><?php echo e($staticContent['Output_Voltage']); ?></th>';
+        html1 += '<th id="sortdata3" class=" header-font-table w-tabfix w-120"  onclick="selectTable(3)"><?php echo e($staticContent['Output_Current']); ?></th>';
+        html1 += '<th id="sortdata4" class=" header-font-table w-tabfix w-120"  onclick="selectTable(4)"><?php echo e($staticContent['Output_Power']); ?> </th>';
         html1 += '<th id="sortdata5" class=" header-font-table w-tabfix"  onclick="selectTable(5)"><?php echo e($staticContent['Input_Voltage']); ?></th>';
         html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" ><?php echo e($staticContent['Dimensions']); ?> <br>('+unit_dimension_1+' x W x '+unit_dimension+')</th>';
         html1 += '</tr>';

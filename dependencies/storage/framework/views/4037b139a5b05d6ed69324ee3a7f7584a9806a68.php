@@ -112,9 +112,7 @@
       #CookiebotWidget .CookiebotWidget-body .CookiebotWidget-main-logo {
          display: none !important;
       }
-      .CookieDeclaration{
-        display: none !important;
-      }
+   
       #CybotCookiebotDialogHeader {
          width: 0px !important;
      }
@@ -222,8 +220,6 @@ $langch = str_replace('_', '-', app()->getLocale());
 <script id="Cookiebot"  data-culture="<?php echo e($lanngCookie); ?>" src="https://consent.cookiebot.com/uc.js" data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-blockingmode="auto" type="text/javascript"></script> 
 
 
-<script id="CookieDeclaration" src="https://consent.cookiebot.com/0b87f4dd-13cf-473e-b5c7-019f4154d02a/cd.js" type="text/javascript" async></script> 
-
 <script>
   if ('loading' in HTMLImageElement.prototype) {
     const images = document.querySelectorAll('img[loading="lazy"]');
@@ -253,8 +249,8 @@ $langch = str_replace('_', '-', app()->getLocale());
   };
   var onloadCallback = function() {
     grecaptcha.render('recap_vertifygetGui', {
-     'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-      //  'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
+    //  'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
+       'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
       'callback' : verifyCallbackData,
       'theme' : 'light'
     });

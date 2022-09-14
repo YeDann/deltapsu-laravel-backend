@@ -71,6 +71,7 @@
                     <tr>
                         <th class="th-sm">No.</th>
                         <th class="th-sm">Subject</th>
+                        <th class="th-sm">Ticket No</th>
                         <th class="th-sm">Email</th>
                         <th class="th-sm">Name</th>
                         <th class="th-sm">Country</th>
@@ -86,6 +87,7 @@
                     <?php $__currentLoopData = $contactemail; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <td class="text-center"><?php echo e($loop->iteration); ?></td>
                     <td class="d-none d-sm-table-cell"><?php echo e($item->subject); ?></td>
+                    <td class="d-none d-sm-table-cell"><?php echo e($item->ticket_id); ?></td>
                     <td class="d-none d-sm-table-cell"><?php echo e($item->email); ?></td>
                     <td class="d-none d-sm-table-cell"><?php echo e($item->name); ?></td>
                     <td class="d-none d-sm-table-cell"><?php echo e($item->country); ?></td>
