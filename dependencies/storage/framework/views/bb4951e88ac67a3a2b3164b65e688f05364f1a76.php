@@ -16,8 +16,10 @@
     <h3 class="text-title-delta visible-mobile"> <?php echo $static_content->title; ?></h3>
     <div class="container">
         <?php echo $static_content->content; ?> 
+        <h4 class="mt-5">Cookies</h4>
+        <script id="CookieDeclaration" src="https://consent.cookiebot.com/0b87f4dd-13cf-473e-b5c7-019f4154d02a/cd.js" type="text/javascript" async></script>
        
-   
+      
    </div> 
 </div>
 <?php $__env->stopSection(); ?>

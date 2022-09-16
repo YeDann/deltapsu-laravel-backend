@@ -146,7 +146,12 @@
     #CookiebotWidget #CookiebotWidget-buttons #CookiebotWidget-btn-withdraw{
       border-color:#0087DC !important;
     }
-
+      
+    @media only screen and (max-width: 1366px) {
+          html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
+        padding: 20px 4px !important;
+      }
+    }
   
   </style>
     <!-- Fonts -->
