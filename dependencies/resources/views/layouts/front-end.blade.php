@@ -149,7 +149,11 @@
       
     @media only screen and (max-width: 1366px) {
           html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
+          padding: 20px 4px !important;
+      }
+      html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
         padding: 20px 4px !important;
+        font-size: 14px !important;
       }
     }
   
