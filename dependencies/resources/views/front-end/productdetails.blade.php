@@ -273,7 +273,7 @@ font-size: 50px;
                         <button class="btn btn-enquiry">{{$staticContent['Enquiry']}}</button>
                         </a>
                         <button class="btn btn-addcompare" onclick="showNavCoparison({{$product[0]['pro_id']}}, {{$product[0]['cate_id']}})">{{$staticContent['Add_to_Compare']}}</button>
-                        <a href="{{route('downloadFIle')}}/Datasheet/{{$product[0]['pro_code']}}" target="_blank">
+                        <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}" target="_blank">
                         <button class="btn btn-datasheet mr-2"  >{{$staticContent['data_sheet']}}</button>
                         </a>
                     </div>
@@ -438,7 +438,7 @@ font-size: 50px;
                              {!! str_replace("/uploads_delta",config('app.url')."/uploads_delta",$product[0]['content_1']) !!}
                             </div>
 
-                            <h5 class="text-color-delta mt-2">Tags </h5>
+                            <h5 class="text-color-delta mt-2">{{$staticContent['Tags']}} </h5>
                          
                             @foreach ($tags_pro as $tag)
                         <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}}{{$loop->iteration != $loop->count?',':'' }}</span>
