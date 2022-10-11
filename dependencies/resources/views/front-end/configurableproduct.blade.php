@@ -637,7 +637,7 @@
 									<p class="c_delta_weight text-detail-describe m-0"></p>
 									<br>
 									<p class="m-0"><span class="text-sixteen-delta c_delta"><b>{{$staticContent['Dimensions']}} (L x W x
-												D)</b></span></p>
+												H)</b></span></p>
 									<p class="c_delta_mm text-detail-describe m-0"></p>
 									<p class="c_delta_inc text-detail-describe m-0"></p>
 								</div>
