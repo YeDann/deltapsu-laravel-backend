@@ -204,9 +204,13 @@
 
 <script type="text/javascript" src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
-<script type="text/javascript" src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en"
+{{-- <script type="text/javascript" src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en"
 async defer>
+</script> --}}
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+    async defer>
 </script>
+
 <?php
 $lanngCookie = "EN";
 $langch = str_replace('_', '-', app()->getLocale());
