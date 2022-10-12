@@ -270,18 +270,6 @@ $langch = str_replace('_', '-', app()->getLocale());
   };
   
 
-   $( document ).ready(function() {
-    onloadCallback();
-   });
-
- 
-
-  function onacceptcookie(){
-    onloadCallback();
-    $('#acceptCookie_dd').val(1);
-    $('#acceptCookie_sup').val(1);
-  }
-
   function validateFormGUI(form){
                
                 if(!form.acceptPolicyGui.checked){
