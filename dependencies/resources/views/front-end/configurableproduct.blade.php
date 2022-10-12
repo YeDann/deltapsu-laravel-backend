@@ -2122,12 +2122,8 @@ function selectCountry(){
 	function addToiframe(){
 
 	// var headdd = document.body.innerHTML;
-
-
-
 	 var data_pdf = $('#configurable-summary').html();
 	 var doc = document.getElementById('PDFconfigurable').contentWindow.document;
-
 	 doc.open();
 	 doc.write(
             '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional //EN" "http://www.w3.org/TR/html4/loose.dtd">'+
@@ -2154,6 +2150,8 @@ function selectCountry(){
 		const filename  = 'configurable-power-selector.pdf';
 		var tar = $("#PDFconfigurable").contents().find("#savethis")[0];
 		html2canvas(tar,{
+															// allowTaint: false,
+											    	useCORS: true,
                 onrendered: function(canvas) {  
                 	 //Returns the image data URL, parameter: image format and clarity (0-1)
 		             	var pageData = canvas.toDataURL('image/png',1.0);
