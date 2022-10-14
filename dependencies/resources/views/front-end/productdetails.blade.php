@@ -199,10 +199,18 @@ font-size: 50px;
                     <h3>{{$product[0]['pro_code']}}</h3>
                 </div>
                 <div class="btn-add-compare-nav">
-                  <a href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}">
+                  {{-- <a href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}">
                     <button class="btn-enquiry">{{$staticContent['Enquiry']}}</button>
                    </a>  
-                    <button class="btn-addcompare" onclick="showNavCoparison({{$product[0]['pro_id']}} ,{{$product[0]['cate_id']}})">{{$staticContent['Add_to_Compare']}}</button>
+                    <button class="btn-addcompare" onclick="showNavCoparison({{$product[0]['pro_id']}} ,{{$product[0]['cate_id']}})">{{$staticContent['Add_to_Compare']}}</button> --}}
+
+                    <div class="w-100">
+                        <div class="boxlist-icon-img pd-mobile">
+                          <a href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button></a>
+                           <button onclick="showNavCoparison({{$product[0]['pro_id']}} ,{{$product[0]['cate_id']}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>
+                            <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>
+                        </div>
+                       </div>
                 </div>
             </div>
         </div>
@@ -514,10 +522,18 @@ font-size: 50px;
                 <h6 class="text-color-delta m-0 invisible-up-320"> {{$product[0]['pro_code']}}</h6>
             </div>
             <div class="my-auto w-100 d-flex justify-content-end">
-                <a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}">
+                {{-- <a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}">
                     {{$staticContent['Enquiry']}}
                 </a>
-                <button class="btn btn-addcompare w-50 " onclick="showNavCoparison({{$product[0]['pro_id']}},{{$product[0]['cate_id']}})">{{$staticContent['compare']}}</button>
+                <button class="btn btn-addcompare w-50 " onclick="showNavCoparison({{$product[0]['pro_id']}},{{$product[0]['cate_id']}})">{{$staticContent['compare']}}</button> --}}
+
+                <div class="w-100">
+                    <div class="boxlist-icon-img pd-mobile">
+                      <a href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button></a>
+                       <button onclick="showNavCoparison({{$product[0]['pro_id']}} ,{{$product[0]['cate_id']}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>
+                        <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>
+                    </div>
+                   </div>
             </div>
         </div>
            
@@ -571,8 +587,15 @@ font-size: 50px;
                {{$product[0]['pro_code']}}</h3>
             </div>
             <div class="my-4">
-                <button class="btn btn-enquiry w-100 my-2">{{$staticContent['Enquiry']}}</button>
+                <a href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}">
+                    <button class="btn btn-enquiry w-100 my-2">{{$staticContent['Enquiry']}}</button>
+                </a>
+             
                 <button class="btn btn-addcompare w-100 my-2" onclick="showNavCoparison({{$product[0]['pro_id']}} ,{{$product[0]['cate_id']}})">{{$staticContent['Add_to_Compare']}}</button>
+                <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}" target="_blank">
+                    <button class="btn btn-datasheet w-100 mr-2"  >{{$staticContent['data_sheet']}}</button>
+                    </a>
+                
             </div>
             
             <div class="box-detail">
