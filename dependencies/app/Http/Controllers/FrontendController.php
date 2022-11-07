@@ -1231,6 +1231,11 @@ class FrontendController extends Controller
             abort(404); 
         }
 
+        $external_link = DB::table('external_link as e')
+         ->select('e.*')
+         ->where('e.products','LIKE','%'.$pro->pro_id.'%')
+         ->get();  
+
         //   return dd($pro);
 
         $vieo_img = DB::table('product_image as pm')
@@ -1397,10 +1402,7 @@ class FrontendController extends Controller
                 ->select('st.id', 'stt.sortname','stt.name')
                 ->get(); 
 
-         $external_link = DB::table('external_link as e')
-         ->select('e.*')
-         ->where('e.products','LIKE','%'.$pro->pro_id.'%')
-         ->get();  
+         
          
         //  return dd($external_link ,'external_link');
               
