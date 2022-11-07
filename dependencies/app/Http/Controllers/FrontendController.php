@@ -1397,7 +1397,12 @@ class FrontendController extends Controller
                 ->select('st.id', 'stt.sortname','stt.name')
                 ->get(); 
 
-            
+         $external_link = DB::table('external_link as e')
+         ->select('e.*')
+         ->where('e.products','LIKE','%'.$pro->pro_id.'%')
+         ->get();  
+         
+        //  return dd($external_link ,'external_link');
               
         
         return  view('front-end.productdetails')
@@ -1408,6 +1413,7 @@ class FrontendController extends Controller
         ->with('Otherpros' , $data_other)
         ->with('section' , $section)
         ->with('product_has_property' , $product_has_property)
+        ->with('external_link' , $external_link)
         ->with('product' , $data);
     }
     public function resultSearch(){

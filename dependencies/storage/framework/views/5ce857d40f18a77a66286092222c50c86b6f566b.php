@@ -132,7 +132,7 @@
             </li>
             <li class="nav-main-item">
             <?php if($menu == "section"): ?>
-          <a class="nav-main-link active" href="<?php echo e(route('section.index')); ?>">
+             <a class="nav-main-link active" href="<?php echo e(route('section.index')); ?>">
             <span class="nav-main-link-name">Section</span>
             </a>
             <?php else: ?>
@@ -141,6 +141,19 @@
             </a>
             <?php endif; ?>
             </li>
+
+            <?php if($menu == "external_link"): ?>
+            <a class="nav-main-link active" href="<?php echo e(route('externallist')); ?>">
+           <span class="nav-main-link-name">External Link </span>
+           </a>
+           <?php else: ?>
+           <a class="nav-main-link" href="<?php echo e(route('externallist')); ?>">
+               <span class="nav-main-link-name">External Link</span>
+           </a>
+           <?php endif; ?>
+           </li>
+
+       
 
         </ul>
         </li>
@@ -186,6 +199,11 @@
         <span class="nav-main-link-name">Section</span>
         </a>
         </li>
+        <li class="nav-main-item">
+            <a class="nav-main-link" href="<?php echo e(route('externallist')); ?>">
+            <span class="nav-main-link-name">External Link</span>
+            </a>
+            </li>
 
         </ul>
         </li>

@@ -149,7 +149,11 @@
       
     @media  only screen and (max-width: 1366px) {
           html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
+          padding: 20px 4px !important;
+      }
+      html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
         padding: 20px 4px !important;
+        font-size: 14px !important;
       }
     }
   
@@ -200,9 +204,9 @@
 
 <script type="text/javascript" src="<?php echo e(asset('/frontend-asset/js/zabuto_calendar.min.js')); ?>"></script>
 <script type="text/javascript" src="<?php echo e(asset('/frontend-asset/js/mb5.js')); ?>"></script>
-<script type="text/javascript" src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en"
-async defer>
-</script>
+
+
+
 <?php
 $lanngCookie = "EN";
 $langch = str_replace('_', '-', app()->getLocale());
@@ -224,7 +228,9 @@ $langch = str_replace('_', '-', app()->getLocale());
 
 <script id="Cookiebot"  data-culture="<?php echo e($lanngCookie); ?>" src="https://consent.cookiebot.com/uc.js" data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-blockingmode="auto" type="text/javascript"></script> 
 
-
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+    async defer>
+</script>
 <script>
   if ('loading' in HTMLImageElement.prototype) {
     const images = document.querySelectorAll('img[loading="lazy"]');
@@ -261,18 +267,6 @@ $langch = str_replace('_', '-', app()->getLocale());
     });
   };
   
-
-   $( document ).ready(function() {
-    onloadCallback();
-   });
-
- 
-
-  function onacceptcookie(){
-    onloadCallback();
-    $('#acceptCookie_dd').val(1);
-    $('#acceptCookie_sup').val(1);
-  }
 
   function validateFormGUI(form){
                

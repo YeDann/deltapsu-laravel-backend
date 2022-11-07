@@ -495,7 +495,7 @@
 									<p class="c_delta_weight text-detail-describe m-0"></p>
 									<br>
 									<p class="m-0"><span class="text-sixteen-delta c_delta"><b><?php echo e($staticContent['Dimensions']); ?> (L x W x
-												D)</b></span></p>
+												H)</b></span></p>
 									<p class="c_delta_mm text-detail-describe m-0"></p>
 									<p class="c_delta_inc text-detail-describe m-0"></p>
 								</div>
@@ -1837,20 +1837,16 @@ function selectCountry(){
 	function addToiframe(){
 
 	// var headdd = document.body.innerHTML;
-
-
-
 	 var data_pdf = $('#configurable-summary').html();
 	 var doc = document.getElementById('PDFconfigurable').contentWindow.document;
-
 	 doc.open();
 	 doc.write(
             '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional //EN" "http://www.w3.org/TR/html4/loose.dtd">'+
             '<html><head>'+
 			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/bootstrap.min.css')); ?>" >'+
 			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/font.css')); ?>">'+
-			// '<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/embepdf.css')); ?>">'+
-		    '<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/header-front.css')); ?>">'+
+			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/embepdf.css')); ?>">'+
+		 '<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/header-front.css')); ?>">'+
 			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/container.css')); ?>">'+
 			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/home.css')); ?>">'+
 			'<link rel="stylesheet" href="<?php echo e(asset('/frontend-asset/css/product.css')); ?>">'+
@@ -1869,6 +1865,8 @@ function selectCountry(){
 		const filename  = 'configurable-power-selector.pdf';
 		var tar = $("#PDFconfigurable").contents().find("#savethis")[0];
 		html2canvas(tar,{
+															// allowTaint: false,
+											    	useCORS: true,
                 onrendered: function(canvas) {  
                 	 //Returns the image data URL, parameter: image format and clarity (0-1)
 		             	var pageData = canvas.toDataURL('image/png',1.0);

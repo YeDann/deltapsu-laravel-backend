@@ -145,6 +145,18 @@ font-size: 50px;
 .box-doc-list{
     cursor: pointer;
 }
+.box-imgexternal img{
+   width: 100px;
+}
+.btn-middle{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    vertical-align: middle;
+}
 </style>
 @endsection
 @section('meta')
@@ -846,6 +858,21 @@ font-size: 50px;
                         </div>
                         @endif
                         @endif
+                        @endforeach
+
+                        @foreach ($external_link as $item)
+                        <div class="data-sheet-downloade d-flex justify-content-between ">
+                            <div class="detail-downlode ">
+                                <a href="{{$item->link}}" target="_blank">
+                              <div class="box-imgexternal">
+                                <img src="{{config('app.url')}}/upload/thumbs/{{$item->logo}}">
+                              </div>
+                                </a>
+                            </div>
+                            <a href="{{$item->link}}" target="_blank">
+                            <button class="btn-downlode btn-middle">{{$staticContent['Downloads']}}</button>
+                            </a>
+                        </div>
                         @endforeach
                     </div>
                 </div>

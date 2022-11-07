@@ -1132,6 +1132,98 @@ public function featureProduct(){
             'data' =>  $status,
                 ], 200);
     }
+
+     public function listexternal_link(){
+         
+         $list = DB::table('external_link as e')
+         ->orderBy('e.created_at', 'desc')
+         ->get();
+ 
+         return view('product.external_link')
+         ->with('menu', "external_link")
+         ->with('list', $list)
+         ->with('name', "product");
+     }
+     
+     public function storeExternallink(Request $request){
+
+        $product = $request->relatePro;
+        $striPro = implode(",",$product);
+        $logoname = '';
+        if ($request->hasFile('thumbnail')) {
+            $thumbnailImage = $request->file('thumbnail');
+            $thumbnailName = uniqid() . "." . $thumbnailImage->getClientOriginalExtension();
+            $thumbnailImage->move(base_path('/../upload/thumbs/'), preg_replace('/\s+/', '', $thumbnailName));
+            $logoname = $thumbnailName;
+        }
+  
+        DB::table('external_link')->insert(
+            [
+                "name" => $request->name,
+                "link" =>$request->link,
+                "logo" =>$logoname,
+                "products"=>$striPro,
+                "created_at" => \Carbon\Carbon::now(),
+            ]
+        );
+        return redirect()->route('externallist')->with('flash_message', 'Save Data successfully');
+    }
+    public function updateExternalLink(Request $request){
+
+        $product = $request->relatePro;
+        $striPro = implode(",",$product);
+        $logoname = $request->oldfile;
+        $id = $request->old_id;
+        if ($request->hasFile('thumbnail')) {
+            $thumbnailImage = $request->file('thumbnail');
+            $thumbnailName = uniqid() . "." . $thumbnailImage->getClientOriginalExtension();
+            $thumbnailImage->move(base_path('/../upload/thumbs/'), preg_replace('/\s+/', '', $thumbnailName));
+            $logoname = $thumbnailName;
+        }
+
+        DB::table('external_link')->where('id',$id)->update(
+            [
+                "name" => $request->name,
+                "link" =>$request->link,
+                "logo" =>$logoname,
+                "products"=>$striPro,
+            ]
+        );
+        return redirect()->route('externallist')->with('flash_message', 'Update Data successfully');
+    }
+    public function editExternallink($id){
+        $item = DB::table('external_link as e')
+         ->select('e.*')
+         ->where('e.id',$id)
+         ->first();
+        $arrProduct = explode(",",$item->products);
+        $products  = DB::table('products as p')
+        ->join('products_translation as pt', 'pt.product_id', '=', 'p.pro_id')
+        ->where('pt.local','en')
+        ->orderBy('p.created_at','desc')
+        ->select('p.*')
+        ->get();
+        return view('product.edit_external')
+         ->with('item',$item)
+         ->with('arrProduct',$arrProduct)
+         ->with('products',$products)
+         ->with('menu', "external_link")
+         ->with('name', "product");
+    }
+
+     public function createExternallist(){
+        $products  = DB::table('products as p')
+        ->join('products_translation as pt', 'pt.product_id', '=', 'p.pro_id')
+        ->where('pt.local','en')
+        ->orderBy('p.created_at','desc')
+        ->select('p.*')
+        ->get();
+         return view('product.create_external')
+         ->with('products',$products)
+         ->with('menu', "external_link")
+         ->with('name', "product");
+     }
+
 }
 
 

@@ -149,7 +149,12 @@ Route::get('unSetting/{id?}','ProductsController@unSetting')->name('unSetting');
 Route::get('updateProSection/{id?}','ProductsController@updateProSection')->name('updateProSection');
 Route::post('update_order_productselect','ProductsController@update_order_productselect')->name('update_order_productselect');
 Route::post('update_order_seriesLeast','ProductsController@update_order_seriesLeast')->name('update_order_seriesLeast');
+Route::get('externallist','ProductsController@listexternal_link')->name('externallist');
+Route::get('createExternallist','ProductsController@createExternallist')->name('createExternallist');
+Route::get('editExternallink/{id?}','ProductsController@editExternallink')->name('editExternallink');
 
+Route::post('storeExternallink','ProductsController@storeExternallink')->name('storeExternallink');
+Route::post('updateExternalLink','ProductsController@updateExternalLink')->name('updateExternalLink');
 //video products
 Route::get('videos_images/{id?}','ProductVideoImageController@index')->name('videos_images');
 Route::post('SaveVideoPro','ProductVideoImageController@SaveVideoPro')->name('SaveVideoPro');

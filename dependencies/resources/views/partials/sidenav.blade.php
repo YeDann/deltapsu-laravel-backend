@@ -136,7 +136,7 @@
             </li>
             <li class="nav-main-item">
             @if($menu == "section")
-          <a class="nav-main-link active" href="{{route('section.index')}}">
+             <a class="nav-main-link active" href="{{route('section.index')}}">
             <span class="nav-main-link-name">Section</span>
             </a>
             @else
@@ -145,6 +145,19 @@
             </a>
             @endif
             </li>
+
+            @if($menu == "external_link")
+            <a class="nav-main-link active" href="{{route('externallist')}}">
+           <span class="nav-main-link-name">External Link </span>
+           </a>
+           @else
+           <a class="nav-main-link" href="{{route('externallist')}}">
+               <span class="nav-main-link-name">External Link</span>
+           </a>
+           @endif
+           </li>
+
+       
 
         </ul>
         </li>
@@ -190,6 +203,11 @@
         <span class="nav-main-link-name">Section</span>
         </a>
         </li>
+        <li class="nav-main-item">
+            <a class="nav-main-link" href="{{route('externallist')}}">
+            <span class="nav-main-link-name">External Link</span>
+            </a>
+            </li>
 
         </ul>
         </li>

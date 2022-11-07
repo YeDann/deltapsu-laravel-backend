@@ -144,6 +144,18 @@ font-size: 50px;
 .box-doc-list{
     cursor: pointer;
 }
+.box-imgexternal img{
+   width: 100px;
+}
+.btn-middle{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    vertical-align: middle;
+}
 </style>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('meta'); ?>
@@ -198,10 +210,15 @@ font-size: 50px;
                     <h3><?php echo e($product[0]['pro_code']); ?></h3>
                 </div>
                 <div class="btn-add-compare-nav">
-                  <a href="<?php echo e(route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])); ?>">
-                    <button class="btn-enquiry"><?php echo e($staticContent['Enquiry']); ?></button>
-                   </a>  
-                    <button class="btn-addcompare" onclick="showNavCoparison(<?php echo e($product[0]['pro_id']); ?> ,<?php echo e($product[0]['cate_id']); ?>)"><?php echo e($staticContent['Add_to_Compare']); ?></button>
+                  
+
+                    <div class="w-100">
+                        <div class="boxlist-icon-img pd-mobile">
+                          <a href="<?php echo e(route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])); ?>" ><button class="btn img-btn-icon-pro tooltip2"><span><?php echo e($staticContent['Enquiry']); ?></span><img src="<?php echo e(asset('/frontend-asset/image/Enquiry.svg')); ?>"></button></a>
+                           <button onclick="showNavCoparison(<?php echo e($product[0]['pro_id']); ?> ,<?php echo e($product[0]['cate_id']); ?>)" class="btn img-btn-icon-pro tooltip2"><span><?php echo e($staticContent['Add_to_Compare']); ?></span><img src="<?php echo e(asset('/frontend-asset/image/Compare.svg')); ?>"></button>
+                            <a href="<?php echo e(route('downloadFIle')); ?>/Datasheet/<?php echo e(setTextpro($product[0]['pro_code'])); ?>" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span><?php echo e($staticContent['data_sheet']); ?></span><img src="<?php echo e(asset('/frontend-asset/image/Datasheet.svg')); ?>"></button></a>
+                        </div>
+                       </div>
                 </div>
             </div>
         </div>
@@ -272,7 +289,7 @@ font-size: 50px;
                         <button class="btn btn-enquiry"><?php echo e($staticContent['Enquiry']); ?></button>
                         </a>
                         <button class="btn btn-addcompare" onclick="showNavCoparison(<?php echo e($product[0]['pro_id']); ?>, <?php echo e($product[0]['cate_id']); ?>)"><?php echo e($staticContent['Add_to_Compare']); ?></button>
-                        <a href="<?php echo e(route('downloadFIle')); ?>/Datasheet/<?php echo e($product[0]['pro_code']); ?>" target="_blank">
+                        <a href="<?php echo e(route('downloadFIle')); ?>/Datasheet/<?php echo e(setTextpro($product[0]['pro_code'])); ?>" target="_blank">
                         <button class="btn btn-datasheet mr-2"  ><?php echo e($staticContent['data_sheet']); ?></button>
                         </a>
                     </div>
@@ -434,7 +451,7 @@ font-size: 50px;
 
                             </div>
 
-                            <h5 class="text-color-delta mt-2">Tags </h5>
+                            <h5 class="text-color-delta mt-2"><?php echo e($staticContent['Tags']); ?> </h5>
                          
                             <?php $__currentLoopData = $tags_pro; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tag): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <span onclick="viewKey('<?php echo e($tag->tag); ?>')" class="text-tag"><?php echo e($tag->tag); ?><?php echo e($loop->iteration != $loop->count?',':''); ?></span>
@@ -488,11 +505,15 @@ font-size: 50px;
                 <h6 class="text-color-delta m-0 invisible-up-320"> <?php echo e($product[0]['pro_code']); ?></h6>
             </div>
             <div class="my-auto w-100 d-flex justify-content-end">
-                <a class="btn btn-enquiry w-50 mr-2" href="<?php echo e(route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])); ?>">
-                    <?php echo e($staticContent['Enquiry']); ?>
+                
 
-                </a>
-                <button class="btn btn-addcompare w-50 " onclick="showNavCoparison(<?php echo e($product[0]['pro_id']); ?>,<?php echo e($product[0]['cate_id']); ?>)"><?php echo e($staticContent['compare']); ?></button>
+                <div class="w-100">
+                    <div class="boxlist-icon-img pd-mobile">
+                      <a href="<?php echo e(route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])); ?>" ><button class="btn img-btn-icon-pro tooltip2"><span><?php echo e($staticContent['Enquiry']); ?></span><img src="<?php echo e(asset('/frontend-asset/image/Enquiry.svg')); ?>"></button></a>
+                       <button onclick="showNavCoparison(<?php echo e($product[0]['pro_id']); ?> ,<?php echo e($product[0]['cate_id']); ?>)" class="btn img-btn-icon-pro tooltip2"><span><?php echo e($staticContent['Add_to_Compare']); ?></span><img src="<?php echo e(asset('/frontend-asset/image/Compare.svg')); ?>"></button>
+                        <a href="<?php echo e(route('downloadFIle')); ?>/Datasheet/<?php echo e(setTextpro($product[0]['pro_code'])); ?>" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span><?php echo e($staticContent['data_sheet']); ?></span><img src="<?php echo e(asset('/frontend-asset/image/Datasheet.svg')); ?>"></button></a>
+                    </div>
+                   </div>
             </div>
         </div>
            
@@ -546,8 +567,15 @@ font-size: 50px;
                <?php echo e($product[0]['pro_code']); ?></h3>
             </div>
             <div class="my-4">
-                <button class="btn btn-enquiry w-100 my-2"><?php echo e($staticContent['Enquiry']); ?></button>
+                <a href="<?php echo e(route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])); ?>">
+                    <button class="btn btn-enquiry w-100 my-2"><?php echo e($staticContent['Enquiry']); ?></button>
+                </a>
+             
                 <button class="btn btn-addcompare w-100 my-2" onclick="showNavCoparison(<?php echo e($product[0]['pro_id']); ?> ,<?php echo e($product[0]['cate_id']); ?>)"><?php echo e($staticContent['Add_to_Compare']); ?></button>
+                <a href="<?php echo e(route('downloadFIle')); ?>/Datasheet/<?php echo e(setTextpro($product[0]['pro_code'])); ?>" target="_blank">
+                    <button class="btn btn-datasheet w-100 mr-2"  ><?php echo e($staticContent['data_sheet']); ?></button>
+                    </a>
+                
             </div>
             
             <div class="box-detail">
@@ -778,6 +806,21 @@ font-size: 50px;
                         </div>
                         <?php endif; ?>
                         <?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                        <?php $__currentLoopData = $external_link; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="data-sheet-downloade d-flex justify-content-between ">
+                            <div class="detail-downlode ">
+                                <a href="<?php echo e($item->link); ?>" target="_blank">
+                              <div class="box-imgexternal">
+                                <img src="<?php echo e(config('app.url')); ?>/upload/thumbs/<?php echo e($item->logo); ?>">
+                              </div>
+                                </a>
+                            </div>
+                            <a href="<?php echo e($item->link); ?>" target="_blank">
+                            <button class="btn-downlode btn-middle"><?php echo e($staticContent['Downloads']); ?></button>
+                            </a>
+                        </div>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 </div>
