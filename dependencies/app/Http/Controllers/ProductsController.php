@@ -1223,6 +1223,20 @@ public function featureProduct(){
          ->with('menu', "external_link")
          ->with('name', "product");
      }
+     public function deleteExternallink(Request $request){
+        $itemId = $request->itemId;
+        $links = DB::table('external_link as e')
+       ->select('e.*')
+       ->where('e.id' ,$itemId)
+       ->first();
+       $image  =  $links->logo;
+       $file_pointer = base_path('/../upload/thumbs/').$image;
+       if (file_exists($file_pointer) && $image != null ) {
+        unlink($file_pointer);
+       }
+        DB::table('external_link')->where('id' ,$itemId)->delete();
+        return redirect()->route('externallist')->with('flash_message', 'Delete Data successfully');
+     }
 
 }
 

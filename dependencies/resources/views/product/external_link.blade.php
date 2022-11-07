@@ -95,7 +95,7 @@
                             </button>
                         </div>
                     </div>
-                    <form action="{{route('deleteproDoc')}}" method="POST" >
+                    <form action="{{route('deleteExternallink')}}" method="POST" >
                         {{csrf_field()}}
                       
                     <div class="block-content">

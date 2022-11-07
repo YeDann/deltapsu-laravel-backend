@@ -152,6 +152,7 @@ Route::post('update_order_seriesLeast','ProductsController@update_order_seriesLe
 Route::get('externallist','ProductsController@listexternal_link')->name('externallist');
 Route::get('createExternallist','ProductsController@createExternallist')->name('createExternallist');
 Route::get('editExternallink/{id?}','ProductsController@editExternallink')->name('editExternallink');
+Route::post('deleteExternallink','ProductsController@deleteExternallink')->name('deleteExternallink');
 
 Route::post('storeExternallink','ProductsController@storeExternallink')->name('storeExternallink');
 Route::post('updateExternalLink','ProductsController@updateExternalLink')->name('updateExternalLink');
