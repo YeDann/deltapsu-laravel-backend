@@ -1402,7 +1402,7 @@ class FrontendController extends Controller
          ->where('e.products','LIKE','%'.$pro->pro_id.'%')
          ->get();  
          
-        //  return dd($external_link ,'external_link');
+         return dd($external_link ,'external_link');
               
         
         return  view('front-end.productdetails')
