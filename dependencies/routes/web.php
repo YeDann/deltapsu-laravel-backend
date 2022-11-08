@@ -222,6 +222,8 @@ Route::get('ParallelConnection/{id?}','ConfigurableProduct@ParallelCon')->name('
 Route::post('storeParallel','ConfigurableProduct@storeParallel')->name('storeParallel');
 Route::post('deleteParalle','ConfigurableProduct@deleteParalle')->name('deleteParalle');
 Route::post('editParallel','ConfigurableProduct@editParallel')->name('editParallel');
+Route::get('connector_image','ConfigurableProduct@connectorImage')->name('connector_image');
+
 //Section
 Route::resource('section', 'SectionController');
 Route::post('sectionUpdate','SectionController@update')->name('sectionUpdate');

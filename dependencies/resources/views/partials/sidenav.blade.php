@@ -309,6 +309,11 @@
                         <span class="nav-main-link-name ">Enquiry Contact</span>
                     </a>
                 </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link {{($menu == 'connector_image') ? 'active':''}}" href="{{route('connector_image')}}">
+                        <span class="nav-main-link-name ">Connector Image(s)</span>
+                    </a>
+                </li>
             </ul>
         </li>
         @else
@@ -333,6 +338,11 @@
                 <li class="nav-main-item">
                     <a class="nav-main-link" href="{{route('getEnquiryContact')}}">
                         <span class="nav-main-link-name ">Enquiry Contact</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('connector_image')}}">
+                        <span class="nav-main-link-name ">Connector Image(s)</span>
                     </a>
                 </li>
             </ul>

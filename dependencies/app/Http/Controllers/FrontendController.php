@@ -1233,7 +1233,7 @@ class FrontendController extends Controller
 
         $external_link = DB::table('external_link as e')
          ->select('e.*')
-         ->where('e.products','LIKE','%'.$pro->pro_id.'%')
+         ->where('e.products',$pro->pro_id)
          ->get();  
 
         //   return dd($pro);

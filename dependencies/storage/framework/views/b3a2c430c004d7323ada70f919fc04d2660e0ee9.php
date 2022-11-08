@@ -52,10 +52,10 @@
                 <thead>
                     <tr>
                         <th class="text-center" style="width: 5%;">No.</th>
-                        <th class="d-none d-sm-table-cell" style="width: 20%;">Product Code</th>
+                        <th class="d-none d-sm-table-cell" style="width: 10%;">Product Code</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">status</th>
                         <th class="d-none d-sm-table-cell" style="width: 10%;">create</th>
-                        <th style="width: 20%;" class="text-center">Manage</th>
+                        <th style="width: 30%;" class="text-center">Manage</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,6 +67,7 @@
                     <td class="d-none d-sm-table-cell"><?php echo e($item->time_create); ?></td>
                     <td class="text-center">
                         <a href="<?php echo e(route('ParallelConnection' ,$item->translate_id)); ?>" class="btn btn-primary">Parallel Connection(s)</a>
+                        
                             <a href="<?php echo e(route('editConfigProduct' ,$item->translate_id)); ?>" class="btn btn-primary">Edit</a>
                             <button type="button" class="btn btn-danger" onclick="ondelelete(<?php echo e($item->translate_id); ?>);" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
                        

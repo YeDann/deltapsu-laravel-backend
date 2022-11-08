@@ -435,6 +435,15 @@ public function exportConfigable(){
         'data' =>$Parallels
             ], 200);
  }
+ public function connectorImage(){
+    // return dd($id);
+    $connectors = [];
+    
+    return view('configurableProduct.connector_image')
+        ->with('name','config_products')
+        ->with('menu','connector_image')
+        ->with('connectors',$connectors);
+ }
 
 
 }
