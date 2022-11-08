@@ -145,7 +145,7 @@ font-size: 50px;
     cursor: pointer;
 }
 .box-imgexternal img{
-   width: 100px;
+   width: 80px;
 }
 .btn-middle{
     position: relative;
@@ -155,6 +155,14 @@ font-size: 50px;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     vertical-align: middle;
+}
+@media (max-width:720px){
+    .box-imgexternal img {
+        width: 80px;
+        margin-right: 90px;
+        margin-bottom: 10px;
+    }
+
 }
 </style>
 <?php $__env->stopSection(); ?>

@@ -148,17 +148,22 @@ font-size: 50px;
 .box-imgexternal img{
    width: 80px;
 }
-
-@media (min-width:720px){
-    .btn-middle{
-        position: relative;
-        top: 50%;
-        left: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        vertical-align: middle;
+.btn-middle{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    vertical-align: middle;
+}
+@media (max-width:720px){
+    .box-imgexternal img {
+        width: 80px;
+        margin-right: 90px;
+        margin-bottom: 10px;
     }
+
 }
 </style>
 @endsection
