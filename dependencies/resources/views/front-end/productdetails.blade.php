@@ -146,7 +146,7 @@ font-size: 50px;
     cursor: pointer;
 }
 .box-imgexternal img{
-   width: 100px;
+   width: 80px;
 }
 .btn-middle{
     position: relative;
