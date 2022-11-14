@@ -43,6 +43,7 @@
                           <input type="hidden" name="old_id" value="{{$item->id}}" >
                           <div class="form-group">
                             <label for="example-select"><span class="req-fed">*</span>Value</label>
+                            <label for="example-select">Ex. T = 1 ,B = 2 , C = 3 </label>
                             <input type="text"
                                 class="form-control {{ $errors->has('value') ? 'is-invalid' : '' }}"
                                 name="value" value="{{$item->value}}" placeholder="Enter Value..." required >
