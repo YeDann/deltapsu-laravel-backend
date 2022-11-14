@@ -435,15 +435,92 @@ public function exportConfigable(){
         'data' =>$Parallels
             ], 200);
  }
- public function connectorImage(){
-    // return dd($id);
-    $connectors = [];
+ public function connectorImage($id){
+    $connectors = DB::table('connector_image as cm')
+    ->select('cm.*')
+    ->where('cm.product_id',$id)
+    ->get();
     
     return view('configurableProduct.connector_image')
         ->with('name','config_products')
         ->with('menu','connector_image')
+        ->with('productId',$id)
         ->with('connectors',$connectors);
  }
+ public function create_connectorimage($id){
+
+    return view('configurableProduct.create_connector')
+        ->with('name','config_products')
+        ->with('productId',$id)
+        ->with('menu','connector_image');
+ }
+ public function edit_connectorimage($pro_id,$id){
+
+        $item = DB::table('connector_image as cm')
+        ->select('cm.*')
+        ->where('cm.id',$id)
+        ->first();
+
+
+        return view('configurableProduct.edit_connector')
+        ->with('name','config_products')
+        ->with('item',$item)
+        ->with('productId',$pro_id)
+        ->with('menu','connector_image');
+        }
+ public function storeConnectorImage(Request $request){
+
+        $product_id = $request->product_id;
+  
+        $logoname = '';
+        if ($request->hasFile('thumbnail')) {
+            $thumbnailImage = $request->file('thumbnail');
+            $thumbnailName = uniqid() . "." . $thumbnailImage->getClientOriginalExtension();
+            $thumbnailImage->move(base_path('/../upload/thumbs/'), preg_replace('/\s+/', '', $thumbnailName));
+            $logoname = $thumbnailName;
+        }
+       DB::table('connector_image')->insert(
+            [
+                'code'=>$request->connect_code,
+                'image'=>$logoname,
+                'value'=>$request->value,
+                'product_id'=>$product_id,
+            ]
+        );
+
+        return redirect()->route('connector_image',$product_id)->with('flash_message', 'Insert Data Success');
+ }
+
+ public function updateConnectorImage(Request $request){
+
+                $product_id = $request->product_id;
+                $id = $request->old_id;
+                $logoname = $request->oldfile;
+                if ($request->hasFile('thumbnail')) {
+                    $thumbnailImage = $request->file('thumbnail');
+                    $thumbnailName = uniqid() . "." . $thumbnailImage->getClientOriginalExtension();
+                    $thumbnailImage->move(base_path('/../upload/thumbs/'), preg_replace('/\s+/', '', $thumbnailName));
+                    $logoname = $thumbnailName;
+                }
+            
+                DB::table('connector_image')->where('id',$id)->update(
+                    [
+                        'code'=>$request->connect_code,
+                        'image'=>$logoname,
+                        'value'=>$request->value,
+                        'product_id'=>$product_id,
+                     ]
+               );
+
+                return redirect()->route('connector_image',$product_id)->with('flash_message', 'Update Data Success');
+}
+
+public function deleteConnectorImage(Request $request){
+    $id = $request->itemId;
+    $product_id = $request->product_id;
+    DB::table('connector_image')->where('id',$id)->delete();
+    return redirect()->route('connector_image',$product_id)->with('flash_message', 'Delete Data Success');
+}
 
 
 }

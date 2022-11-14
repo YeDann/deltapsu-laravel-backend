@@ -845,10 +845,15 @@ class FrontendController extends Controller
     	$model = DB::table('cproducts')->select('product_code')->where('language',$lang)->where('status','1')->get();
         $model_alldata = DB::table('cproducts')->where('language',$lang)->where('status','1')->get();
         // return dd($model_alldata);
+        $connectors_images = DB::table('connector_image as cm')
+        ->select('cm.*')
+        ->get();
+    
         $metatag = DB::table('meta_tag_page as mtp')->where('id',5)->get();
         return  view('front-end.configurableproduct')
         ->with('metatag',$metatag)
         ->with('model',$model)
+        ->with('connectors_images',$connectors_images)
         ->with('model_alldata',$model_alldata);
         
     }

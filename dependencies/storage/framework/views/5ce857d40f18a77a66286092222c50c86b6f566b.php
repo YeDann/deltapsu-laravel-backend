@@ -305,11 +305,7 @@
                         <span class="nav-main-link-name ">Enquiry Contact</span>
                     </a>
                 </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link <?php echo e(($menu == 'connector_image') ? 'active':''); ?>" href="<?php echo e(route('connector_image')); ?>">
-                        <span class="nav-main-link-name ">Connector Image(s)</span>
-                    </a>
-                </li>
+               
             </ul>
         </li>
         <?php else: ?>
@@ -336,11 +332,7 @@
                         <span class="nav-main-link-name ">Enquiry Contact</span>
                     </a>
                 </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link" href="<?php echo e(route('connector_image')); ?>">
-                        <span class="nav-main-link-name ">Connector Image(s)</span>
-                    </a>
-                </li>
+               
             </ul>
         </li>
         <?php endif; ?>

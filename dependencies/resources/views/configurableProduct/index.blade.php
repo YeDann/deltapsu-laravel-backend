@@ -65,10 +65,11 @@
                     <td class="d-none d-sm-table-cell">{{($item->status == 1) ? 'show':'hide'}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->time_create}}</td>
                     <td class="text-center">
-                        <a href="{{route('ParallelConnection' ,$item->translate_id)}}" class="btn btn-primary">Parallel Connection(s)</a>
-                        {{-- <a href="{{route('connector_image' ,$item->translate_id)}}" class="btn btn-primary">Connector Image(s)</a> --}}
-                            <a href="{{route('editConfigProduct' ,$item->translate_id)}}" class="btn btn-primary">Edit</a>
-                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->translate_id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                        <a href="{{route('connector_image')}}/{{$item->translate_id}}" class="btn btn-primary mb-2">Connector Image(s)</a>
+                        <a href="{{route('ParallelConnection' ,$item->translate_id)}}" class="btn btn-primary mb-2">Parallel Connection(s)</a>
+                       
+                            <a href="{{route('editConfigProduct' ,$item->translate_id)}}" class="btn btn-primary mb-2">Edit</a>
+                            <button type="button" class="btn btn-danger mb-2" onclick="ondelelete({{$item->translate_id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
                        
                     </td>
                     </tr>

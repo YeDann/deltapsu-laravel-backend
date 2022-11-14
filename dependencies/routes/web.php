@@ -222,8 +222,12 @@ Route::get('ParallelConnection/{id?}','ConfigurableProduct@ParallelCon')->name('
 Route::post('storeParallel','ConfigurableProduct@storeParallel')->name('storeParallel');
 Route::post('deleteParalle','ConfigurableProduct@deleteParalle')->name('deleteParalle');
 Route::post('editParallel','ConfigurableProduct@editParallel')->name('editParallel');
-Route::get('connector_image','ConfigurableProduct@connectorImage')->name('connector_image');
-
+Route::get('connector_image/{id?}','ConfigurableProduct@connectorImage')->name('connector_image');
+Route::get('create_connectorimage/{id?}','ConfigurableProduct@create_connectorimage')->name('create_connectorimage');
+Route::get('edit_connectorimage/{pro_id?}/{id?}','ConfigurableProduct@edit_connectorimage')->name('edit_connectorimage');
+Route::post('updateConnectorImage','ConfigurableProduct@updateConnectorImage')->name('updateConnectorImage');
+Route::post('storeConnectorImage','ConfigurableProduct@storeConnectorImage')->name('storeConnectorImage');
+Route::post('deleteConnectorImage','ConfigurableProduct@deleteConnectorImage')->name('deleteConnectorImage');
 //Section
 Route::resource('section', 'SectionController');
 Route::post('sectionUpdate','SectionController@update')->name('sectionUpdate');

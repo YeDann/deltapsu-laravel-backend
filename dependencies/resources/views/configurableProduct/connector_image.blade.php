@@ -43,7 +43,8 @@
                 
                 </div>
                 <div class="block-options-item">
-                    <button type="button" class="btn btn-success"  onclick="createData();" data-toggle="modal" data-target="#modal-block-create_code">Create</button>
+                   
+                    <a href="{{route('create_connectorimage',$productId)}}" class="btn btn-success"><i class="fa fa-plus"></i> Create </a>
                 </div>
             </div>
         </div>
@@ -61,7 +62,7 @@
                        <td class="text-center">{{$item->code}}</td>
                         <td class="text-center">
                             <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
-                            <button type="button" class="btn btn-primary" onclick="edit({{$item->id}});" data-toggle="modal" data-target="#modal-block-create_code">Edit</button>
+                            <a href="{{route('edit_connectorimage' ,[$productId ,$item->id])}}" class="btn btn-primary">Edit</a>
                         </td>
                     </tr>
                     @endforeach
@@ -72,9 +73,44 @@
     </div>
 </div>
 
-   
+<div class="modal" id="modal-block-vcenter" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-danger">
+                    <h3 class="block-title">!! Warning </h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <form action="{{route('deleteConnectorImage')}}" method="POST" >
+                    {{csrf_field()}}
+                  
+                <div class="block-content">
+                    <input type="hidden" name="itemId" id="itemId">
+                    <input type="hidden" name="product_id" value="{{$productId}}">
+                    <p>Data will be lost?</p>
+                </div>
+                <div class="block-content block-content-full text-right bg-light">
+                    <button type="button" class="btn  btn-light" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">OK</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Vertically Centered Block Modal -->
 
 @endsection
 @section('js')
+<script>
+    function ondelelete(id){
+         $('#itemId').val(id);
 
+    }
+
+</script>
 @endsection

@@ -381,7 +381,7 @@
 														title="{{$staticContent['Inlet_Type_description']}}">
 												</span></h5>
 										</label>
-										<select class="form-control" id="terminal" onchange="getToSummary()">
+										<select class="form-control" id="terminal" onchange="getToSummary();getToTerimal();">
 											<option value="1">T for American terminal</option>
 											<option value="2">E for European terminal</option>
 											<option value="3">C for C14</option>
@@ -1137,6 +1137,7 @@ function selectCountry(){
 	});
 	var model_name = <?=$model?>;
 	var model_alldata = <?=$model_alldata?>;
+	var connectors_images = <?=$connectors_images?>;
 	var paralls_cons = [];
 	var ss_v = [2,2.4,3,3.3,5,5.5,6,8,10,12,14,15,18,20,24,28,30,32,36,42,48,54,60];
 	var do_v = [3.3,5,5.5,6,8,10,12,14,15,18,20,24,28,30];
@@ -1375,10 +1376,29 @@ function selectCountry(){
 			}
 
 		 loadparallel(model_alldata[index]['translate_id'] ,model_alldata[index]['max_slot']);
-	
+			getSelectConnector(model_alldata[index]['translate_id'],model_alldata[index]);
 		//addMoreOutput();
 		$('.slot').empty();
 		addSlotOutput();
+	
+	}
+
+	function getSelectConnector(proId ,model){
+	if(connectors_images.length > 0){
+		$('#terminal').empty();
+		$.each(connectors_images,function(index,value){
+	   		if(index == 0){
+							 if(value.image){
+									$('.img-summary-add').html('<img class="img-fluid" src="{{config('app.url')}}/upload/thumbs/'+value.image+'" >');
+								}else{
+									$('.img-summary-add').html('<img class="img-fluid" src="{{config('app.url')}}/media/model/'+model['thumb_img']+'" >');
+								}
+						}
+	     if(value.product_id == proId ){
+								$("#terminal").append(new Option(value.code, value.value));
+						}
+		});
+	}
 	
 	}
 	function loadparallel(id, max_slot){
@@ -2102,6 +2122,22 @@ function selectCountry(){
 		$('#inlet').text($("#terminal option:selected").text());
 		$('#commu').text($("#bus option:selected").text());
 		$('#control-code').text($("#logic option:selected").text());
+	}
+	function getToTerimal(){
+		var terminal = $('#terminal').children('option:selected').val();
+		var index = $('#model').children("option:selected").val();
+		var model = model_alldata[index];
+   console.log('model',model['id']);
+		$.each(connectors_images,function(index,value){
+	   		if(value.product_id == model['id'] &&  terminal == value.value){
+							 if(value.image){
+									$('.img-summary-add').html('<img class="img-fluid" src="{{config('app.url')}}/upload/thumbs/'+value.image+'" >');
+								}else{
+									$('.img-summary-add').html('<img class="img-fluid" src="{{config('app.url')}}/media/model/'+model['thumb_img']+'" >');
+								}
+						}
+	    
+		});
 	}
 	function getToSum(i){
 		/* $('#list-slot').text($("#volt"+i+" option:selected").text()); */

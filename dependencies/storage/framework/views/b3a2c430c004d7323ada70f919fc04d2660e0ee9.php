@@ -66,10 +66,11 @@
                     <td class="d-none d-sm-table-cell"><?php echo e(($item->status == 1) ? 'show':'hide'); ?></td>
                     <td class="d-none d-sm-table-cell"><?php echo e($item->time_create); ?></td>
                     <td class="text-center">
-                        <a href="<?php echo e(route('ParallelConnection' ,$item->translate_id)); ?>" class="btn btn-primary">Parallel Connection(s)</a>
-                        
-                            <a href="<?php echo e(route('editConfigProduct' ,$item->translate_id)); ?>" class="btn btn-primary">Edit</a>
-                            <button type="button" class="btn btn-danger" onclick="ondelelete(<?php echo e($item->translate_id); ?>);" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                        <a href="<?php echo e(route('connector_image')); ?>/<?php echo e($item->translate_id); ?>" class="btn btn-primary mb-2">Connector Image(s)</a>
+                        <a href="<?php echo e(route('ParallelConnection' ,$item->translate_id)); ?>" class="btn btn-primary mb-2">Parallel Connection(s)</a>
+                       
+                            <a href="<?php echo e(route('editConfigProduct' ,$item->translate_id)); ?>" class="btn btn-primary mb-2">Edit</a>
+                            <button type="button" class="btn btn-danger mb-2" onclick="ondelelete(<?php echo e($item->translate_id); ?>);" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
                        
                     </td>
                     </tr>
