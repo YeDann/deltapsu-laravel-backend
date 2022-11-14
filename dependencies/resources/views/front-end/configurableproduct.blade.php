@@ -1387,14 +1387,16 @@ function selectCountry(){
 	if(connectors_images.length > 0){
 		$('#terminal').empty();
 		$.each(connectors_images,function(index,value){
-	   		if(index == 0){
+	  
+	     if(value.product_id == proId){
+							console.log(value.product_id ,'value.product_id')
+							if(index == 0){
 							 if(value.image){
 									$('.img-summary-add').html('<img class="img-fluid" src="{{config('app.url')}}/upload/thumbs/'+value.image+'" >');
 								}else{
 									$('.img-summary-add').html('<img class="img-fluid" src="{{config('app.url')}}/media/model/'+model['thumb_img']+'" >');
 								}
-						}
-	     if(value.product_id == proId ){
+					 	}
 								$("#terminal").append(new Option(value.code, value.value));
 						}
 		});
