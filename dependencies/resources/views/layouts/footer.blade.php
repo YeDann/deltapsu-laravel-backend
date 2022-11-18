@@ -401,7 +401,7 @@
           <div class="select input-label w-100 my-4">
               <h6 class="mb-0" ><label class="text-dark">{{$staticContent['Country']}}<span class="red">*</span></label></h6>
               <select name="country" class="form-control" id="countryId" required>
-                <option value="">{{isset($staticContent['Select'])? :"Select"}} {{isset($staticContent['Country'])?$staticContent['Country']:"Country"}}</option>
+                <option value="">{{isset($staticContent['Select'])? $staticContent['Select'] :"Select"}} {{isset($staticContent['Country'])?$staticContent['Country']:"Country"}}</option>
                 @foreach ($mail_chimp_country as $email)
                 <option value="{{$email->name}}">{{$email->name}}</option>
                 @endforeach
