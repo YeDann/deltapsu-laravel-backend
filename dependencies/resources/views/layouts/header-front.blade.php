@@ -12,7 +12,6 @@
     background-image: url('{{asset('frontend-asset/image/arrow.svg')}}');
     width: 50px;
     background-color:#fff;
-    margin-top:13px;
 
 }
 .select-language:disabled, .select-language[readonly] {
@@ -177,7 +176,7 @@ top: -9px;
 
 }
 .icon-serch{
-    margin-top: 18px;
+    margin-top: 10px;
     margin-right: 10px;
     color: #444444;
 }
@@ -194,7 +193,6 @@ top: -9px;
   -webkit-transition: 0.3s;
   transition: 0.3s;
   cursor: pointer;
-  margin-top: 6px;
 }
 
 .bar {
