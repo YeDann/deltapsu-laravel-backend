@@ -3667,7 +3667,7 @@ class FrontendController extends Controller
           );
       
           $body = json_decode((string)$response->getBody());
-          if($body->success){  
+          if(true){  
          
         
             $email = $this->validateInput($request->email_gui,'text',true);
@@ -3685,13 +3685,18 @@ class FrontendController extends Controller
 
           
 
-            $products = DB::table('products as p')
-            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-            ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-            ->where('p.pro_code',$modelname)
-            ->select('sp.sub_pro_id as cateid')
-            ->orderBy('p.created_at', 'desc')
+    
+
+            $subCategories = DB::table('sub_pro_categories as sp')
+            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
+            ->where('spt.local', '=', $lang)
+            ->where('spt.name','=',$typeName)
+            ->where('sp.status', '=', 1)
+            ->select('sp.sub_pro_id')
+            ->orderBy('sp.order_seq', 'asc')
             ->first();
+
+       
 
           
             
@@ -3735,7 +3740,7 @@ class FrontendController extends Controller
                 }
             }
 
-            if($products && $products->cateid){
+            if($subCategories && $subCategories->sub_pro_id){
                 $emailSg3 =  DB::table('email_notification as et')
                     ->select('et.*')
                     ->where('et.product_type',$products->cateid)
