@@ -3688,11 +3688,12 @@ class FrontendController extends Controller
             $products = DB::table('products as p')
             ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
             ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-            ->where('p.pro_code' ,$modelname)
-            ->where('p.feature_product' ,1)
+            ->where('p.pro_code',$modelname)
             ->select('sp.sub_pro_id as cateid')
             ->orderBy('p.created_at', 'desc')
             ->first();
+
+          
             
             $path =  base_path('../upload/product_files/').$filename; 
             $emailsend = [];
@@ -3734,7 +3735,7 @@ class FrontendController extends Controller
                 }
             }
 
-            if($products->cateid){
+            if($products && $products->cateid){
                 $emailSg3 =  DB::table('email_notification as et')
                     ->select('et.*')
                     ->where('et.product_type',$products->cateid)
