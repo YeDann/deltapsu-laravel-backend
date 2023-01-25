@@ -3743,7 +3743,7 @@ class FrontendController extends Controller
             if($subCategories && $subCategories->sub_pro_id){
                 $emailSg3 =  DB::table('email_notification as et')
                     ->select('et.*')
-                    ->where('et.product_type',$products->cateid)
+                    ->where('et.product_type',$subCategories->sub_pro_id)
                     ->where('et.type', 3)
                     ->orderBy('et.country', 'asc')
                     ->first();
