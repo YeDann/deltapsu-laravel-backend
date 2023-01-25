@@ -3648,7 +3648,7 @@ class FrontendController extends Controller
          ], 200);
        }
        public function downloadGui(Request $request){
-        
+        $lang = App::getLocale();
       
         $name = $this->validateInput($request->name_gui,'text',true);
         $company = $this->validateInput($request->company_gui,'text',true);
