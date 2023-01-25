@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use PDF;
+use Excel;
 use Mailchimp;
 use LaravelLocalization;
 use Symfony\Component\Debug\Exception\FlattenException;
@@ -2369,15 +2370,52 @@ class FrontendController extends Controller
         ->with('products' ,$products);
     }
     
-       public function loadPdffile(Request $request)
+       public function loadPdffileCSV(Request $request)
        {  
+   
        $contentCompare = $request->datacon;
        $string = $this->validateInput($request->arr_con ,'text',true);
        $type_name = $this->validateInput($request->type_name ,'text',true);
-    // return dd( $contentCompare);
         $myArray = explode(',', $string);
+        $rsp =  self::GetCoparisonHeader($myArray ,$type_name);
+             $RawData =  [
+                "No",
+                "Type Name",
+                "Model Name",
+                "Dimensions",
+                "Unit Weight"
+            ];
+ 
+            $FirstRow = array_merge($RawData, $rsp['header']);
+            $rowall = $rsp['rows'];
 
-        // return dd($myArray);
+            Excel::create('comparison_product', function ($excel) use ($FirstRow ,$rowall) {
+              $excel->sheet('comparison_product', function ($sheet) use ($FirstRow ,$rowall) {
+                  $sheet->row(1,$FirstRow);
+                  $i = 2;
+                  $j = 1;
+                  if($rowall[0]){
+                    $sheet->row(2,$rowall[0]);
+                  }
+                  if($rowall[1]){
+                    $sheet->row(3,$rowall[1]);
+                  }
+                  if($rowall[2]){
+                    $sheet->row(4,$rowall[2]);
+                  }
+            
+              });
+          })->export('csv');
+             
+       }
+
+       public function loadPdffile(Request $request)
+       {  
+       
+       $contentCompare = $request->datacon;
+       $string = $this->validateInput($request->arr_con ,'text',true);
+       $type_name = $this->validateInput($request->type_name ,'text',true);
+        $myArray = explode(',', $string);
         $lang = App::getLocale();
         $langpro1 =  self::checkLang($lang ,$myArray[0]);
         $pro1  = DB::table('products as p')
@@ -2418,13 +2456,14 @@ class FrontendController extends Controller
         ->where('p.pro_id' ,$myArray[2])
         ->select('p.*', 'pt.*','spt.name as catename','st.title as seName')
         ->get();
-        //  return dd($pro2);
+       
 
             $data['tyepname']  = $type_name;
             $data['product1']  = $pro1;
             $data['product2']  = $pro2;
             $data['product3']  = $pro3;
             $data['contentCompare']  = $contentCompare;
+
             $pdf = PDF::loadView('front-end.pdf_com', $data);
           return $pdf->download('compareProduct.pdf');         
        }
@@ -3642,6 +3681,18 @@ class FrontendController extends Controller
             $country = $this->validateInput($request->country,'text',true);
             $modelname = $this->validateInput($request->procodeGui,'text',true);
             $typeName = $this->validateInput($request->procateGui,'text',true);
+
+
+          
+
+            $products = DB::table('products as p')
+            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+            ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+            ->where('p.pro_code' ,$modelname)
+            ->where('p.feature_product' ,1)
+            ->select('sp.sub_pro_id as cateid')
+            ->orderBy('p.created_at', 'desc')
+            ->first();
             
             $path =  base_path('../upload/product_files/').$filename; 
             $emailsend = [];
@@ -3682,6 +3733,26 @@ class FrontendController extends Controller
                     }
                 }
             }
+
+            if($products->cateid){
+                $emailSg3 =  DB::table('email_notification as et')
+                    ->select('et.*')
+                    ->where('et.product_type',$products->cateid)
+                    ->where('et.type', 3)
+                    ->orderBy('et.country', 'asc')
+                    ->first();
+                    if(isset($emailSg3)){
+                        $emailg3 = explode(",", $emailSg3->email);
+                        if(count($emailg3) > 0){
+                            foreach($emailg3 as $em3){
+                                if (!in_array(trim($em3), $emailsend)) {
+                                array_push($emailsend ,trim($em3));
+                                }
+                            }
+                        }
+                    }
+            }
+      
 
              $email = Mail::to($emailsend)->send(new DowloadGui($request->except('_token')));
             if (Mail::failures()) {
@@ -4078,6 +4149,204 @@ class FrontendController extends Controller
             'data' =>$Parallels 
                 ], 200);
     }
+
+    function GetCoparisonHeader($arrInpro ,$type_name){
+        $header = [];
+        $rowsall = [];
+        $lang = App::getLocale();
+        $rows1 = [];
+        $rows2 = [];
+        $rows3 = [];
+        if($arrInpro[0] &&  $arrInpro[0] != 0){
+        $langpro1 =  self::checkLang($lang ,$arrInpro[0]);
+        $pro1  = DB::table('products as p')
+        ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+        ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+        ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+        ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+        ->where('pt.local' ,$langpro1)
+        ->where('spt.local' ,$lang)
+        ->where('st.local' ,$lang)
+        ->where('pt.showstatus' ,1)
+        ->where('p.pro_id' ,$arrInpro[0])
+        ->select('p.*', 'pt.*','spt.name as catename','st.title as seName')
+        ->first();
+            if($pro1 && $pro1->pro_code){
+                $rows1 = [1,$type_name ,$pro1->pro_code, self::getDimansion($pro1) , self::getUnitWeight($pro1)];
+            }
+        }
+        if($arrInpro[1] &&  $arrInpro[1] != 0){
+            $langpro2 =  self::checkLang($lang ,$arrInpro[1]);
+            $pro2  = DB::table('products as p')
+            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+            ->where('pt.local' ,$langpro2)
+            ->where('spt.local' ,$lang)
+            ->where('st.local' ,$lang)
+            ->where('pt.showstatus' ,1)
+            ->where('p.pro_id' ,$arrInpro[1])
+            ->select('p.*', 'pt.*','spt.name as catename','st.title as seName')
+            ->first();
+           if($pro2 && $pro2->pro_code){
+                 $rows2 = [2,$type_name ,$pro2->pro_code ,self::getDimansion($pro2) , self::getUnitWeight($pro2)];
+            }
+        }
+        if($arrInpro[2] &&  $arrInpro[2] != 0){
+            $langpro3 =  self::checkLang($lang ,$arrInpro[2]);
+            $pro3  = DB::table('products as p')
+            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+            ->where('pt.local' ,$langpro3)
+            ->where('spt.local' ,$lang)
+            ->where('st.local' ,$lang)
+            ->where('pt.showstatus' ,1)
+            ->where('p.pro_id' ,$arrInpro[2])
+            ->select('p.*', 'pt.*','spt.name as catename','st.title as seName')
+            ->first();
+            if($pro3 && $pro3->pro_code){
+                    $rows3 = [2,$type_name ,$pro3->pro_code ,self::getDimansion($pro3) , self::getUnitWeight($pro3)];
+            }
+        } 
+        $pd_field = DB::table('product_field as pf')
+        ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
+        ->where('pft.local', '=', $lang)
+        ->where('pf.id', '!=', 115)
+        ->select('pf.*','pft.field_name')
+        ->orderBy('pf.id', 'asc')
+        ->get();
+        // return dd($pd_field);
+             $propertys = DB::table('product_has_property as ph')
+              ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
+              ->join('product_field as pf','pf.id' ,'=','ph.type_id')
+              ->join('product_field_translation as pft','ph.type_id' ,'=','pft.product_field_id')
+              ->join('products as p', 'p.pro_id', '=', 'ph.product_id')
+              ->where('pht.local' ,'en')
+              ->where('pft.local' ,$lang)
+              ->whereIn('ph.product_id',$arrInpro)
+              ->orderBy('ph.type_id' ,'asc')
+              ->select('p.*' ,'pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
+              ->get();
+          
+         
+            foreach ($pd_field as $item) {
+            if(
+                self::searchValue($item->id,$arrInpro[0],$item->type,$item->unit_name,$propertys) != '' ||
+                self::searchValue($item->id,$arrInpro[1],$item->type,$item->unit_name,$propertys) != '' ||
+                self::searchValue($item->id,$arrInpro[2],$item->type,$item->unit_name,$propertys) != '' 
+              ){
+                array_push($header, $item->field_name);
+                if($arrInpro[0] &&  $arrInpro[0] != 0){
+                    $text1 =  self::searchValue($item->id,$arrInpro[0],$item->type,$item->unit_name,$propertys);
+                    array_push($rows1, $text1);
+                }
+                if($arrInpro[1] &&  $arrInpro[1] != 0){
+                    $text2 =  self::searchValue($item->id,$arrInpro[1],$item->type,$item->unit_name,$propertys);
+                    array_push($rows2, $text2);
+                }
+                if($arrInpro[2] &&  $arrInpro[2] != 0){
+                    $text3 =  self::searchValue($item->id,$arrInpro[2],$item->type,$item->unit_name,$propertys);
+                    array_push($rows3, $text3);
+                }
+               }
+            }
+            array_push($rowsall, $rows1);
+            array_push($rowsall, $rows2);
+            array_push($rowsall, $rows3);
+            $data = [
+                'header' => $header,
+                'rows' => $rowsall,
+            ];  
+        return $data;
+    }
+
+    function searchValue($fil_id ,$proid ,$type ,$unit, $propertys){
+        $data_result = '';
+        // return dd($propertys);
+        if($type == 'number'){
+           foreach($propertys as $item){
+               if($item->type_id == $fil_id && $item->product_id == $proid){
+                $datarr = [
+                    $item->data_1,
+                    $item->data_2,
+                    $item->data_3,
+                    $item->data_4,
+                    $item->data_5,
+                    $item->data_6,
+                    $item->data_7,
+                    $item->data_8,
+                    $item->data_9,
+                    $item->data_10,
+                    $item->data_11,
+                    $item->data_12
+                ];
+                $data_result = self::checkNullData($datarr,$unit,$item->status_input);
+              }
+            }
+         
+        }else if($type == 'text') {
+            foreach($propertys as $item){
+             if($item->type_id == $fil_id && $item->product_id == $proid){
+                if($item->value_text != null && $item->value_text  != 'null'  ){
+                    $data_result = $item->value_text;
+                }
+              }
+            }
+        }
+       
+        return $data_result;
+       
+    }
+
+    function checkNullData($dataarr,$unit,$status){
+        $stringText = '-';
+        $arrstri = [];
+       if($status == 1 || $status == 2){
+        foreach($dataarr as $item){
+          if($item){
+            array_push($arrstri, $item.$unit);
+          }
+   
+        }
+        $stringText = join(",",$arrstri);
+       }else if($status == 3){
+        $stringText = $dataarr[0].$dataarr[1].$unit;
+       }
+         return  $stringText;
+    }
+
+    function getDimansion($product){
+        // return dd($product);
+          $str = '';
+        if(isset($product->dimensionL) 
+         && is_numeric($product->dimensionL) 
+         && is_numeric($product->dimensionD)  
+         && is_numeric($product->dimensionW) 
+         && isset($product->dimensionW) 
+         && isset($product->dimensionD)
+         ){
+          $str =  $product->dimensionL.' X '.$product->dimensionW.' X '. $product->dimensionD.' mm'.' '.number_format($product->dimensionL* 0.0393701 ,2).' X '.number_format($product->dimensionW* 0.0393701 ,2).' X '.number_format($product->dimensionD* 0.0393701 ,2);
+         }else{
+          $str = $product->dimensionL;
+         }
+         return $str;
+                            
+    }
+    function getUnitWeight($product){
+               $sum  = 0;
+        if(isset($product->unit_weight)){
+                $number = substr($product->unit_weight , 0, -2);
+                $float = (float)$number;
+                $sum = ($float*2.2046244202);                  
+        }
+         $String =  $product->unit_weight.'('.number_format($sum,2).' lb)';
+         return $String;
+    }
+ 
+
 
        
        
