@@ -3667,7 +3667,7 @@ class FrontendController extends Controller
           );
       
           $body = json_decode((string)$response->getBody());
-          if(true){  
+          if($body->success){  
          
         
             $email = $this->validateInput($request->email_gui,'text',true);
