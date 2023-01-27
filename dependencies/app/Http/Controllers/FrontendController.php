@@ -2370,7 +2370,7 @@ class FrontendController extends Controller
         ->with('products' ,$products);
     }
     
-       public function loadPdffileCSV(Request $request)
+       public function loadPdffile(Request $request)
        {  
    
        $contentCompare = $request->datacon;
@@ -2409,7 +2409,7 @@ class FrontendController extends Controller
              
        }
 
-       public function loadPdffile(Request $request)
+       public function loadPdffileCSV(Request $request)
        {  
        
        $contentCompare = $request->datacon;
