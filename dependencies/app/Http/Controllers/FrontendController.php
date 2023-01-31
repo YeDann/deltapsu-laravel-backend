@@ -4138,12 +4138,10 @@ class FrontendController extends Controller
     }
 
     function GetCoparisonHeader($arrInpro ,$type_name){
-        $header = [];
-        $rowsall = [];
         $lang = App::getLocale();
-        $rows1 = [];
-        $rows2 = [];
-        $rows3 = [];
+        $pro1 = null;
+        $pro2 = null;
+        $pro3 = null;
         if($arrInpro[0] &&  $arrInpro[0] != 0){
         $langpro1 =  self::checkLang($lang ,$arrInpro[0]);
         $pro1  = DB::table('products as p')
