@@ -4350,6 +4350,7 @@ class FrontendController extends Controller
     }
     function getUnitWeight($product){
                $sum  = 0;
+               $String = '';
         if($product){
           if(isset($product->unit_weight)){
                 $number = substr($product->unit_weight , 0, -2);
