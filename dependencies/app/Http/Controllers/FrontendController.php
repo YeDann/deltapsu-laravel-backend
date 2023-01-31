@@ -2378,31 +2378,12 @@ class FrontendController extends Controller
        $type_name = $this->validateInput($request->type_name ,'text',true);
         $myArray = explode(',', $string);
         $rsp =  self::GetCoparisonHeader($myArray ,$type_name);
-             $RawData =  [
-                "No",
-                "Type Name",
-                "Model Name",
-                "Dimensions",
-                "Unit Weight"
-            ];
- 
-            $FirstRow = array_merge($RawData, $rsp['header']);
-            $rowall = $rsp['rows'];
+     
+            $rowall = $rsp['CSV'];
 
-            Excel::create('comparison_product', function ($excel) use ($FirstRow ,$rowall) {
-              $excel->sheet('comparison_product', function ($sheet) use ($FirstRow ,$rowall) {
-                  $sheet->row(1,$FirstRow);
-                  $i = 2;
-                  $j = 1;
-                  if($rowall[0]){
-                    $sheet->row(2,$rowall[0]);
-                  }
-                  if($rowall[1]){
-                    $sheet->row(3,$rowall[1]);
-                  }
-                  if($rowall[2]){
-                    $sheet->row(4,$rowall[2]);
-                  }
+            Excel::create('comparison_product', function ($excel) use ($rowall) {
+              $excel->sheet('comparison_product', function ($sheet) use ($rowall) {
+                $sheet->fromArray($rowall, null, 'A1', false, false);
             
               });
           })->export('csv');
@@ -4177,9 +4158,8 @@ class FrontendController extends Controller
         ->where('p.pro_id' ,$arrInpro[0])
         ->select('p.*', 'pt.*','spt.name as catename','st.title as seName')
         ->first();
-            if($pro1 && $pro1->pro_code){
-                $rows1 = [1,$type_name ,$pro1->pro_code, self::getDimansion($pro1) , self::getUnitWeight($pro1)];
-            }
+          
+
         }
         if($arrInpro[1] &&  $arrInpro[1] != 0){
             $langpro2 =  self::checkLang($lang ,$arrInpro[1]);
@@ -4195,9 +4175,7 @@ class FrontendController extends Controller
             ->where('p.pro_id' ,$arrInpro[1])
             ->select('p.*', 'pt.*','spt.name as catename','st.title as seName')
             ->first();
-           if($pro2 && $pro2->pro_code){
-                 $rows2 = [2,$type_name ,$pro2->pro_code ,self::getDimansion($pro2) , self::getUnitWeight($pro2)];
-            }
+         
         }
         if($arrInpro[2] &&  $arrInpro[2] != 0){
             $langpro3 =  self::checkLang($lang ,$arrInpro[2]);
@@ -4213,10 +4191,19 @@ class FrontendController extends Controller
             ->where('p.pro_id' ,$arrInpro[2])
             ->select('p.*', 'pt.*','spt.name as catename','st.title as seName')
             ->first();
-            if($pro3 && $pro3->pro_code){
-                    $rows3 = [2,$type_name ,$pro3->pro_code ,self::getDimansion($pro3) , self::getUnitWeight($pro3)];
-            }
+          
         } 
+
+        
+            $typearr = ['Type Name',self::Checkdata($type_name)];
+            $ModelName = ['Model Name',self::Checkdata($pro1->pro_code) ,self::Checkdata($pro2->pro_code),self::Checkdata($pro3->pro_code) ];
+         
+            $Collect1 = array(
+                $typearr,
+                $ModelName,
+            );
+
+
         $pd_field = DB::table('product_field as pf')
         ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
         ->where('pft.local', '=', $lang)
@@ -4236,43 +4223,52 @@ class FrontendController extends Controller
               ->orderBy('ph.type_id' ,'asc')
               ->select('p.*' ,'pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
               ->get();
+              $section = DB::table('section as st')
+                ->join('section_translation as stt','st.id','=','stt.section_id')
+                ->where('stt.local','=', $lang)
+                ->select('st.id','stt.name')
+                ->get();
           
-         
-            foreach ($pd_field as $item) {
-            if(
-                self::searchValue($item->id,$arrInpro[0],$item->type,$item->unit_name,$propertys) != '' ||
-                self::searchValue($item->id,$arrInpro[1],$item->type,$item->unit_name,$propertys) != '' ||
-                self::searchValue($item->id,$arrInpro[2],$item->type,$item->unit_name,$propertys) != '' 
-              ){
-                array_push($header, $item->field_name);
-                if($arrInpro[0] &&  $arrInpro[0] != 0){
+           foreach($section as $sec){
+              $arrsec = [$sec->name];
+              array_push($Collect1, $arrsec);
+                 foreach ($pd_field as $item){
+                if($sec->id == $item->section_id ){
+                    if(
+                    self::searchValue($item->id,$arrInpro[0],$item->type,$item->unit_name,$propertys) != '' ||
+                    self::searchValue($item->id,$arrInpro[1],$item->type,$item->unit_name,$propertys) != '' ||
+                    self::searchValue($item->id,$arrInpro[2],$item->type,$item->unit_name,$propertys) != '' 
+                    ){
                     $text1 =  self::searchValue($item->id,$arrInpro[0],$item->type,$item->unit_name,$propertys);
-                    array_push($rows1, $text1);
-                }
-                if($arrInpro[1] &&  $arrInpro[1] != 0){
                     $text2 =  self::searchValue($item->id,$arrInpro[1],$item->type,$item->unit_name,$propertys);
-                    array_push($rows2, $text2);
-                }
-                if($arrInpro[2] &&  $arrInpro[2] != 0){
                     $text3 =  self::searchValue($item->id,$arrInpro[2],$item->type,$item->unit_name,$propertys);
-                    array_push($rows3, $text3);
+                    $popertity = [$item->field_name ,$text1 ,$text2 ,$text3];
+                    array_push($Collect1, $popertity);
+                   }
                 }
                }
-            }
-            array_push($rowsall, $rows1);
-            array_push($rowsall, $rows2);
-            array_push($rowsall, $rows3);
+
+                if($sec->id == 3){
+                      $getDimansion = ['Dimansion',self::getDimansion($pro1) ,self::getDimansion($pro2),self::getDimansion($pro3) ];
+                      $getUnitWeight = ['Unit Weight',self::getUnitWeight($pro1) ,self::getUnitWeight($pro2),self::getUnitWeight($pro3) ];
+                      array_push($Collect1, $getDimansion);
+                      array_push($Collect1, $getUnitWeight);
+                }
+        }
+      
+
             $data = [
-                'header' => $header,
-                'rows' => $rowsall,
+                'CSV' => $Collect1,
             ];  
+            // return dd($data);
         return $data;
     }
 
     function searchValue($fil_id ,$proid ,$type ,$unit, $propertys){
         $data_result = '';
         // return dd($propertys);
-        if($type == 'number'){
+        if($proid){
+            if($type == 'number'){
            foreach($propertys as $item){
                if($item->type_id == $fil_id && $item->product_id == $proid){
                 $datarr = [
@@ -4302,7 +4298,8 @@ class FrontendController extends Controller
               }
             }
         }
-       
+        }
+        
         return $data_result;
        
     }
@@ -4322,6 +4319,16 @@ class FrontendController extends Controller
         $stringText = $dataarr[0].$dataarr[1].$unit;
        }
          return  $stringText;
+    }
+
+    function Checkdata($data){
+        // return dd($product);
+          $str = '';
+        if(isset($data)&& $data){
+          $str = $data;
+        }
+         return $str;
+                            
     }
 
     function getDimansion($product){
