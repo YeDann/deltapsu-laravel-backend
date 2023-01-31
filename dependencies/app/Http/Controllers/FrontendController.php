@@ -4194,7 +4194,7 @@ class FrontendController extends Controller
 
         
             $typearr = ['Type Name',self::Checkdata($type_name)];
-            $ModelName = ['Model Name',self::Checkdata($pro1->pro_code) ,self::Checkdata($pro2->pro_code),self::Checkdata($pro3->pro_code) ];
+            $ModelName = ['Model Name',$pro1? self::Checkdata($pro1->pro_code):'' ,$pro2?self::Checkdata($pro2->pro_code):'',$pro3?self::Checkdata($pro3->pro_code):'' ];
          
             $Collect1 = array(
                 $typearr,
