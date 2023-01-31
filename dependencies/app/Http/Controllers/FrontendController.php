@@ -4313,7 +4313,10 @@ class FrontendController extends Controller
         }
         $stringText = join(",",$arrstri);
        }else if($status == 3){
-        $stringText = $dataarr[0].$dataarr[1].$unit;
+        if($dataarr[0] || $dataarr[1]){
+            $stringText = $dataarr[0].$dataarr[1].$unit;
+        }
+       
        }
          return  $stringText;
     }
