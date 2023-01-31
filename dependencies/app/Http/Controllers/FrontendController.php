@@ -4260,7 +4260,6 @@ class FrontendController extends Controller
             $data = [
                 'CSV' => $Collect1,
             ];  
-            // return dd($data);
         return $data;
     }
 
