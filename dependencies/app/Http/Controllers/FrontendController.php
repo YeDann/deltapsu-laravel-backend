@@ -4331,6 +4331,8 @@ class FrontendController extends Controller
     function getDimansion($product){
         // return dd($product);
           $str = '';
+
+        if($product){
         if(isset($product->dimensionL) 
          && is_numeric($product->dimensionL) 
          && is_numeric($product->dimensionD)  
@@ -4342,17 +4344,20 @@ class FrontendController extends Controller
          }else{
           $str = $product->dimensionL;
          }
+        }
          return $str;
                             
     }
     function getUnitWeight($product){
                $sum  = 0;
-        if(isset($product->unit_weight)){
+        if($product){
+          if(isset($product->unit_weight)){
                 $number = substr($product->unit_weight , 0, -2);
                 $float = (float)$number;
                 $sum = ($float*2.2046244202);                  
+          }
+          $String =  $product->unit_weight.'('.number_format($sum,2).' lb)';
         }
-         $String =  $product->unit_weight.'('.number_format($sum,2).' lb)';
          return $String;
     }
  
