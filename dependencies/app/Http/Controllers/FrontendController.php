@@ -4291,7 +4291,7 @@ class FrontendController extends Controller
             foreach($propertys as $item){
              if($item->type_id == $fil_id && $item->product_id == $proid){
                 if($item->value_text != null && $item->value_text  != 'null'  ){
-                    $data_result = str_replace('<br>', ' ', $item->value_text);
+                    $data_result = str_replace('<br>', "\n", $item->value_text);
                 }
               }
             }
@@ -4344,7 +4344,7 @@ class FrontendController extends Controller
          && isset($product->dimensionW) 
          && isset($product->dimensionD)
          ){
-          $str =  $product->dimensionL.' X '.$product->dimensionW.' X '. $product->dimensionD.' mm'.' '.number_format($product->dimensionL* 0.0393701 ,2).' X '.number_format($product->dimensionW* 0.0393701 ,2).' X '.number_format($product->dimensionD* 0.0393701 ,2);
+          $str =  $product->dimensionL.' X '.$product->dimensionW.' X '. $product->dimensionD.' mm'. "\n".' '.number_format($product->dimensionL* 0.0393701 ,2).'" X '.number_format($product->dimensionW* 0.0393701 ,2).'" X '.number_format($product->dimensionD* 0.0393701 ,2).'"';
          }else{
           $str = $product->dimensionL;
          }
@@ -4361,7 +4361,7 @@ class FrontendController extends Controller
                 $float = (float)$number;
                 $sum = ($float*2.2046244202);                  
           }
-          $String =  $product->unit_weight.'('.number_format($sum,2).' lb)';
+          $String =  $product->unit_weight.' ('.number_format($sum,2).' lb)';
         }
          return $String;
     }
