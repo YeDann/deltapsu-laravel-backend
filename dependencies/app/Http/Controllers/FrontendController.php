@@ -4247,7 +4247,7 @@ class FrontendController extends Controller
                }
 
                 if($sec->id == 3){
-                      $getDimansion = ['Dimansion',self::getDimansion($pro1) ,self::getDimansion($pro2),self::getDimansion($pro3) ];
+                      $getDimansion = ['Dimension',self::getDimansion($pro1) ,self::getDimansion($pro2),self::getDimansion($pro3) ];
                       $getUnitWeight = ['Unit Weight',self::getUnitWeight($pro1) ,self::getUnitWeight($pro2),self::getUnitWeight($pro3) ];
                       array_push($Collect1, $getDimansion);
                       array_push($Collect1, $getUnitWeight);
@@ -4258,6 +4258,7 @@ class FrontendController extends Controller
             $data = [
                 'CSV' => $Collect1,
             ];  
+            // return dd($data);
         return $data;
     }
 
@@ -4290,7 +4291,7 @@ class FrontendController extends Controller
             foreach($propertys as $item){
              if($item->type_id == $fil_id && $item->product_id == $proid){
                 if($item->value_text != null && $item->value_text  != 'null'  ){
-                    $data_result = $item->value_text;
+                    $data_result = str_replace('<br>', ' ', $item->value_text);
                 }
               }
             }
