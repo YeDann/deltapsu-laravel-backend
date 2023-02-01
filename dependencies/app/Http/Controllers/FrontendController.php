@@ -4291,7 +4291,8 @@ class FrontendController extends Controller
             foreach($propertys as $item){
              if($item->type_id == $fil_id && $item->product_id == $proid){
                 if($item->value_text != null && $item->value_text  != 'null'  ){
-                    $data_result = str_replace('<br>', "\n", $item->value_text);
+                    $raw2 = str_replace('<br>',"\n", $item->value_text);
+                    $data_result = str_replace('<br/>',"\n", $raw);
                 }
               }
             }
@@ -4314,8 +4315,8 @@ class FrontendController extends Controller
         }
         $stringText = join(",",$arrstri);
        }else if($status == 3){
-        if($dataarr[0] || $dataarr[1]){
-            $stringText = $dataarr[0].$dataarr[1].$unit;
+        if($dataarr[0] && $dataarr[1]){
+            $stringText = $dataarr[0].'-'.$dataarr[1].$unit;
         }
        
        }
