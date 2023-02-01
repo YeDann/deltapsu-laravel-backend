@@ -172,7 +172,7 @@
                     </select>
                 </div>
              
-            <button onclick="loadhtml();"  class="downloade-pdf btn btn-subscribe"><?php echo e($staticContent['Download_AS_PDF']); ?></button>
+            <button onclick="loadhtml();"  class="downloade-pdf btn btn-subscribe"><?php echo e($staticContent['Download_as_CSV']); ?></button>
             <form id="ContentCompare" action="<?php echo e(route('loadPdffile')); ?>" method="POST">
                 <?php echo e(csrf_field()); ?>
 
@@ -309,7 +309,7 @@
     </div>
     <div class="download-pdf-mobile py-3">
         <div class="container">
-            <div href="" class="btn btn-subscribe w-100 text-upercase" onclick="loadhtml();" ><?php echo e($staticContent['Download_AS_PDF']); ?></div>
+            <div href="" class="btn btn-subscribe w-100 text-upercase" onclick="loadhtml();" ><?php echo e($staticContent['Download_as_CSV']); ?></div>
         </div>
     </div>
     <div id="comparison_mobile" class="comparison-collapse">

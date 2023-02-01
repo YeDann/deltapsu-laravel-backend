@@ -158,6 +158,28 @@
     }
   
   </style>
+
+<?php
+$lanngCookie = "EN";
+$langch = str_replace('_', '-', app()->getLocale());
+
+ if($langch == 'cn'){
+  $lanngCookie = "ZH";
+ }else if($langch == 'tw'){
+  $lanngCookie = "ZH-HANT";
+ }else if($langch == 'de'){
+  $lanngCookie = "DE";
+ }else if($langch == 'ru'){
+  $lanngCookie = "RU";
+ }else if($langch == 'jp'){
+  $lanngCookie = "JA";
+ }
+
+?>
+
+
+<script id="Cookiebot"  data-culture="<?php echo e($lanngCookie); ?>" src="https://consent.cookiebot.com/uc.js" data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a"  type="text/javascript"></script> 
+
     <!-- Fonts -->
     <!-- Styles -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -207,26 +229,6 @@
 
 
 
-<?php
-$lanngCookie = "EN";
-$langch = str_replace('_', '-', app()->getLocale());
-
- if($langch == 'cn'){
-  $lanngCookie = "ZH";
- }else if($langch == 'tw'){
-  $lanngCookie = "ZH-HANT";
- }else if($langch == 'de'){
-  $lanngCookie = "DE";
- }else if($langch == 'ru'){
-  $lanngCookie = "RU";
- }else if($langch == 'jp'){
-  $lanngCookie = "JA";
- }
-
-?>
-
-
-<script id="Cookiebot"  data-culture="<?php echo e($lanngCookie); ?>" src="https://consent.cookiebot.com/uc.js" data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-blockingmode="auto" type="text/javascript"></script> 
 
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
     async defer>

@@ -396,7 +396,7 @@
           <div class="select input-label w-100 my-4">
               <h6 class="mb-0" ><label class="text-dark"><?php echo e($staticContent['Country']); ?><span class="red">*</span></label></h6>
               <select name="country" class="form-control" id="countryId" required>
-                <option value=""><?php echo e(isset($staticContent['Select'])? :"Select"); ?> <?php echo e(isset($staticContent['Country'])?$staticContent['Country']:"Country"); ?></option>
+                <option value=""><?php echo e(isset($staticContent['Select'])? $staticContent['Select'] :"Select"); ?> <?php echo e(isset($staticContent['Country'])?$staticContent['Country']:"Country"); ?></option>
                 <?php $__currentLoopData = $mail_chimp_country; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $email): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <option value="<?php echo e($email->name); ?>"><?php echo e($email->name); ?></option>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

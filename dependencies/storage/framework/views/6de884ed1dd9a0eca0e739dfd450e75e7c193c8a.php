@@ -1102,14 +1102,14 @@ function selectCountry(){
 	if(connectors_images.length > 0){
 		$('#terminal').empty();
 		$.each(connectors_images,function(index,value){
-	   		if(index == 0){
-							 if(value.image){
-									$('.img-summary-add').html('<img class="img-fluid" src="<?php echo e(config('app.url')); ?>/upload/thumbs/'+value.image+'" >');
-								}else{
-									$('.img-summary-add').html('<img class="img-fluid" src="<?php echo e(config('app.url')); ?>/media/model/'+model['thumb_img']+'" >');
-								}
-						}
-	     if(value.product_id == proId ){
+	     if(value.product_id == proId){
+							if(value.value == 1){
+									if(value.image){
+										$('.img-summary-add').html('<img class="img-fluid" src="<?php echo e(config('app.url')); ?>/upload/thumbs/'+value.image+'" >');
+									}else{
+										$('.img-summary-add').html('<img class="img-fluid" src="<?php echo e(config('app.url')); ?>/media/model/'+model['thumb_img']+'" >');
+									}
+					  	}
 								$("#terminal").append(new Option(value.code, value.value));
 						}
 		});
