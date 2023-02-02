@@ -4292,7 +4292,7 @@ class FrontendController extends Controller
              if($item->type_id == $fil_id && $item->product_id == $proid){
                 if($item->value_text != null && $item->value_text  != 'null'  ){
                     $raw2 = str_replace('<br>',"\n", $item->value_text);
-                    $data_result = str_replace('<br/>',"\n", $raw);
+                    $data_result = str_replace('<br/>',"\n", $raw2);
                 }
               }
             }
