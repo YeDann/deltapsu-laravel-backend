@@ -173,12 +173,28 @@
                     </select>
                 </div>
              
-            <button onclick="loadhtml();"  class="downloade-pdf btn btn-subscribe">{{$staticContent['Download_as_CSV']}}</button>
+            {{-- <button onclick="loadhtml();"  class="downloade-pdf btn btn-subscribe">{{$staticContent['Download_as_CSV']}}</button> --}}
+            <div class="dropdown">
+                <button class="btn btn-subscribe dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{$staticContent['Downloads']}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#" onclick="loadhtml();"  >{{$staticContent['Download_as_CSV']}}</a>
+                  <a class="dropdown-item" href="#" onclick="loadhtmlPDF();" >{{$staticContent['Download_AS_PDF']}}</a>
+                </div>
+              </div>
             <form id="ContentCompare" action="{{route('loadPdffile')}}" method="POST">
                 {{csrf_field()}}
                 <input type="hidden" name="datacon" id="comtentcompare" >
                 <input  type="hidden" name="arr_con" id="arr_con" >
                 <input  type="hidden" name="type_name" id="typename" >
+            </form>
+
+            <form id="ContentComparePDF" action="{{route('loadPdffilePDF')}}" method="POST">
+                {{csrf_field()}}
+                <input type="hidden" name="datacon" id="comtentcompare2" >
+                <input  type="hidden" name="arr_con" id="arr_con2" >
+                <input  type="hidden" name="type_name" id="typename2" >
             </form>
             </div>
             
@@ -334,7 +350,16 @@
     </div>
     <div class="download-pdf-mobile py-3">
         <div class="container">
-            <div href="" class="btn btn-subscribe w-100 text-upercase" onclick="loadhtml();" >{{$staticContent['Download_as_CSV']}}</div>
+            {{-- <div href="" class="btn btn-subscribe w-100 text-upercase" onclick="loadhtml();" >{{$staticContent['Download_as_CSV']}}</div> --}}
+            <div class="dropdown">
+                <button class="btn btn-subscribe w-100 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{$staticContent['Downloads']}}
+                </button>
+                <div class="dropdown-menu  w-100" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#" onclick="loadhtml();"  >{{$staticContent['Download_as_CSV']}}</a>
+                  <a class="dropdown-item" href="#" onclick="loadhtmlPDF();" >{{$staticContent['Download_AS_PDF']}}</a>
+                </div>
+              </div>
         </div>
     </div>
     <div id="comparison_mobile" class="comparison-collapse">
@@ -457,6 +482,21 @@
             $('#typename').val(typename);
             $('#comtentcompare').val($('#comparison').html());
             document.getElementById("ContentCompare").submit();
+         }
+     }
+     function loadhtmlPDF(){
+         var arrcon = [];
+         arrcon.push(pro1);
+         arrcon.push(pro2);
+         arrcon.push(pro3);
+         if(arrcon[0] == 0){
+            alert('Please Select Model.');
+         }else{
+            $('#arr_con2').val(arrcon);
+            var typename = $( "#proType option:selected" ).text();
+            $('#typename2').val(typename);
+            $('#comtentcompare2').val($('#comparison').html());
+            document.getElementById("ContentComparePDF").submit();
          }
      }
      function selectNewProductByType(){

@@ -2390,13 +2390,14 @@ class FrontendController extends Controller
              
        }
 
-       public function loadPdffileCSV(Request $request)
+       public function loadPdffilePDF(Request $request)
        {  
        
        $contentCompare = $request->datacon;
        $string = $this->validateInput($request->arr_con ,'text',true);
        $type_name = $this->validateInput($request->type_name ,'text',true);
         $myArray = explode(',', $string);
+        // return dd($myArray);
         $lang = App::getLocale();
         $langpro1 =  self::checkLang($lang ,$myArray[0]);
         $pro1  = DB::table('products as p')

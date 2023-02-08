@@ -54,7 +54,8 @@ Route::post('/getProductByType','FrontendController@getProductByType')->name('ge
 Route::post('/loadImageProByArr','FrontendController@loadImageProByArr')->name('loadImageProByArr');
 Route::get('/searchAll/{key?}','FrontendController@searchAll')->name('searchAll');
 Route::get('/searchByTag/{key?}','FrontendController@searchByTag')->name('searchByTag');
-Route::post('/loadpdf','FrontendController@loadPdffile')->name('loadPdffile');
+Route::post('/loadpdf','FrontendController@loadPdffilePDF')->name('loadPdffilePDF');
+Route::post('/loadcsv','FrontendController@loadPdffile')->name('loadPdffile');
 Route::post('savepdfConfig','FrontendController@savepdfConfig')->name('savepdfConfig');
 Route::get('/user/login','FrontendController@loginpartner')->name('loginpartner');
 Route::get('/faq/detail/{name?}','FrontendController@faq_detail')->name('faq_detail');
