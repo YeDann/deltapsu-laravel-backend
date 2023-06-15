@@ -863,9 +863,7 @@ top: -9px;
             <input type="hidden" name="fileguidownload" id="fileguidownload">
             <div class="text-center">
                 <h4 class="text-color-delta">Thank You</h4>
-                <p>Get your files as below link </p>
-                <p>Dowload link</p>
-             
+                <p>Click the link below to download the file.</p>
             </div>
             <div class="text-center" style="word-break: break-all;" id='linkdownloadsuc'></div>
         </div>
