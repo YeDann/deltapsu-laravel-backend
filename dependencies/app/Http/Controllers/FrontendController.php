@@ -3140,10 +3140,12 @@ class FrontendController extends Controller
        private  function subCheckBox($request){
         $email = $request->email;
          //GUI download
+ 
         if($email == '' ||  $email == null ){
             $email = $request->email_gui;
         }
-        if($email != null){
+        try{
+            if($email != null){
             $mailch = $this->validateInput($email,'text',true);
             $strmlo = strtolower($mailch);
             $mailchimdata =  Mailchimp::getLists();
@@ -3152,9 +3154,8 @@ class FrontendController extends Controller
             $checkmailsta  =  Mailchimp::status($mailchimdata[0]['id'],trim($strmlo));
             $alreadysub =  DB::table('subscribes')->where('email',trim($strmlo))->get();
     
-            if($checkmailC){
-            }else{
-                 if(count($alreadysub) == 0){
+            if(!$checkmailC){
+                if(count($alreadysub) == 0){
                     DB::table('subscribes')->insert(
                        [
                            "country_name" => $request->country,
@@ -3168,6 +3169,12 @@ class FrontendController extends Controller
                 Mailchimp::subscribe($mailchimdata[0]['id'], trim($strmlo),['NAME' => $request->name, 'COUNTRY' => $request->country] ,true);
             }
         }
+        }catch (\Exception $e){
+            Log::channel('mail_log')->info('[EROR] message :Mailchimp::subscribe '.$e);
+        }
+        
+
+
 
        }
 

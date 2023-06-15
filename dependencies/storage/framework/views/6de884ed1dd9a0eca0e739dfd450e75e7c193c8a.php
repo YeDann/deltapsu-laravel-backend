@@ -1779,7 +1779,7 @@ function selectCountry(){
 			if($('#child-'+i+' input[name=slot-type-'+i+']:checked').val() == 1){
 				voltage_index = parseInt($('#child-'+i+' .select-box .voltage select').val())+1;
 				slot_index = $('#child-'+i+' input[name=slot]').val();
-
+   console.log(voltage_index,'voltage_index')
 				if(voltage_index > 0){
 					code += String.fromCharCode(64+voltage_index)+''+ (slot_index == 1 ? 1 : 2);
 					amp_index = parseFloat($('#child-'+i+' .select-box .current select').prop('selectedIndex'));
