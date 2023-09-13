@@ -166,14 +166,18 @@
                 line-height: 63px !important
             }
         }
-
     </style>
     <style type="text/css">
         body {
             margin: 0;
             padding: 0;
         }
-        body, table, td {font-family: Arial, Helvetica, sans-serif !important;}
+
+        body,
+        table,
+        td {
+            font-family: Arial, Helvetica, sans-serif !important;
+        }
 
         table {
             border-collapse: collapse;
@@ -696,13 +700,11 @@
             font-size: 64px !important;
             line-height: 63px !important;
         }
-
     </style>
 
     <!--[if !mso]><!-->
     {{-- <style type="text/css">
         @import url(https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic);
-
     </style>
     <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic" rel="stylesheet"
         type="text/css" /> --}}
@@ -766,7 +768,6 @@
         .mso .footer__share-button p {
             font-family: Arial, Helvetica, sans-serif;
         }
-
     </style>
     <meta name="robots" content="noindex,nofollow" />
     <meta property="og:title" content="My First Campaign" />
@@ -778,36 +779,48 @@
 
 <body class="full-padding" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;">
     <!--<![endif]-->
-             <table>
-                <tbody>
-                    <tr>
-                        <td style="padding-left: 12px;">
-                            Thank you for your interest in our range of configurable power supplies. Attached PDF file is the configuration summary.<br>
-                            You can access other product resources via the links below. If you have any questions, feel free to contact us at info@DeltaPSU.com.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table>
-                                <tbody>
-                                <tr>
+    <table>
+        <tbody>
+            <tr>
+                <td style="padding-left: 12px;">
+                    Thank you for your interest in our range of configurable power supplies. Attached PDF file is the
+                    configuration summary.<br>
+                    You can access other product resources via the links below. If you have any questions,
+                    please don’t hesitate to reach out to our <a
+                        href="https://www.deltapsu.com/en/contact/sales-offices">representatives</a> or leave a message
+                    via the
+                    <a href="https://www.deltapsu.com/en/contact/support">Contact Us</a> form.
 
-                            
-                                <td><a href="https://www.deltapsu.com/tools/product-selector" target="_blank"><img  height="150"  src="https://www.deltapsu.com/frontend-asset/image/Product-selector_button.png" alt="img"></a></td>
-                                <td><a href="https://www.deltapsu.com/tools/configurable-product-selection" target="_blank"><img   height="150"  src="https://www.deltapsu.com/frontend-asset/image/Configurableselector_button.png"></a></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding-left: 12px;">
-                            Best regards,<br>
-                            <a href="https://www.deltapsu.com">DeltaPSU.com</a>
-                        </td>
-                    </tr>
-                </tbody>
-             </table>  
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tbody>
+                            <tr>
+
+
+                                <td><a href="https://www.deltapsu.com/tools/product-selector" target="_blank"><img
+                                            height="150"
+                                            src="https://www.deltapsu.com/frontend-asset/image/Product-selector_button.png"
+                                            alt="img"></a></td>
+                                <td><a href="https://www.deltapsu.com/tools/configurable-product-selection"
+                                        target="_blank"><img height="150"
+                                            src="https://www.deltapsu.com/frontend-asset/image/Configurableselector_button.png"></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-left: 12px;">
+                    Best regards,<br>
+                    <a href="https://www.deltapsu.com">DeltaPSU.com</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 
 </html>
