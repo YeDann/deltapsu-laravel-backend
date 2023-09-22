@@ -3837,9 +3837,10 @@ class FrontendController extends Controller
        }
        public function changePassword($pin){
         //    return dd($pin);
-        $metatag = DB::table('meta_tag_page as mtp')->where('id',27)->get();
+          $metatag = DB::table('meta_tag_page as mtp')->where('id',27)->get();
            $sectionpin = session('pin');
-           if($sectionpin == $pin){
+           $user = DB::table('partner')->where('pin',$pin)->get();
+           if(isset($user)){
                   return view('front-end.resetPassword')->with('metatag',$metatag);
            }else{
             abort(404);
@@ -4382,7 +4383,3 @@ class FrontendController extends Controller
      
     
 }
-
-
-
-
