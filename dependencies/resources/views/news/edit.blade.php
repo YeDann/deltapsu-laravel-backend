@@ -9,22 +9,21 @@
     #test-label {
         height: 100px !important;
     }
-
 </style>
 @endsection
 @section('content')
 @if(Session::has('flash_message'))
-    <div class="alert alert-success" role="alert">
-        <button class="close" data-dismiss="alert"></button>
-        {!! Session('flash_message') !!}
-    </div>
-    @endif
-    @if(Session::has('error_message'))
-    <div class="alert alert-danger" role="alert">
-        <button class="close" data-dismiss="alert"></button>
-        {!! Session('error_message') !!}
-    </div>
-    @endif
+<div class="alert alert-success" role="alert">
+    <button class="close" data-dismiss="alert"></button>
+    {!! Session('flash_message') !!}
+</div>
+@endif
+@if(Session::has('error_message'))
+<div class="alert alert-danger" role="alert">
+    <button class="close" data-dismiss="alert"></button>
+    {!! Session('error_message') !!}
+</div>
+@endif
 <!-- Nav -->
 <div class="bg-body-light">
     <div class="content content-full">
@@ -55,7 +54,7 @@
                     <div class="block block-rounded block-bordered">
                         <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
                             @foreach ($language as $item)
-                            <input type="hidden" name="langloop[]" value="{{$item->name}}" >
+                            <input type="hidden" name="langloop[]" value="{{$item->name}}">
                             @if($loop->iteration == 1)
                             <li class="nav-item">
                                 <a class="nav-link active" href="#btabs-alt-static-{{$item->name}}"
@@ -80,36 +79,42 @@
                                 }
                             }
                           ?>
-                        
-                        <div class="tab-pane {{($loop->iteration == 1)?"active":""}}" id="btabs-alt-static-{{$item->name}}" role="tabpanel">
+
+                            <div class="tab-pane {{($loop->iteration == 1)?" active":""}}"
+                                id="btabs-alt-static-{{$item->name}}" role="tabpanel">
                                 <div class="form-group">
                                     <label for="">Title</label>
                                     <input type="text" class="form-control" name="title[{{$item->name}}]"
                                         value="{{isset($current->title) ? $current->title :''}}" required>
                                 </div>
                                 <div class="form-group">
-                                        <label for="">Excerpt</label>
-                                        <textarea rows="4" name="description[{{$item->name}}]"
-                                            class="jsnotenew form-control">{{isset($current->description) ? $current->description :''}}</textarea>
-                                    </div>
+                                    <label for="">Excerpt</label>
+                                    <textarea rows="4" name="description[{{$item->name}}]"
+                                        class="jsnotenew form-control">{{isset($current->description) ? $current->description :''}}</textarea>
+                                </div>
                                 <div class="form-group">
                                     <label for="">Content</label>
                                     <textarea name="content[{{$item->name}}]"
                                         class="jsnotenew form-control">{{isset($current->content) ? $current->content :''}}</textarea>
                                 </div>
-                               
+
                                 <div class="form-group w-50">
                                     <label>Old File</label>
-                                    <a target="_blank" href="{{config('app.url')}}/uploads_delta/{{isset($current->file) ? $current->file :''}}">{{isset($current->file) ? $current->file :''}}</a>
-                                       <input type="hidden" name="oldFile[{{$item->name}}]" value="{{isset($current->file) ? $current->file :''}}" >
-                                       @if(isset($current->file))
-                                                    <a href="{{route('removeFileNewsDoc',[$item->name,$contents[0]->id])}}" target="_blank" class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
-                                                        @endif
+                                    <a target="_blank"
+                                        href="{{config('app.url')}}/uploads_delta/{{isset($current->file) ? $current->file :''}}">{{isset($current->file)
+                                        ? $current->file :''}}</a>
+                                    <input type="hidden" name="oldFile[{{$item->name}}]"
+                                        value="{{isset($current->file) ? $current->file :''}}">
+                                    @if(isset($current->file))
+                                    <a href="{{route('removeFileNewsDoc',[$item->name,$contents[0]->id])}}"
+                                        target="_blank" class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
+                                    @endif
                                 </div>
                                 <div class="form-group w-50">
                                     <label>File <span class="req-fed">* Max File Size 20 MB</span></label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="Filelang[{{$item->name}}]" data-toggle="custom-file-input" id="file_input" >
+                                        <input type="file" class="custom-file-input" name="Filelang[{{$item->name}}]"
+                                            data-toggle="custom-file-input" id="file_input">
                                         <label class="custom-file-label" for="file_input">Choose file</label>
                                     </div>
                                 </div>
@@ -117,7 +122,8 @@
                                 <div class="form-group">
                                     <label for="">Meta - Title</label>
                                     <input type="meta_title[{{$item->name}}]" class="form-control"
-                                        name="meta_title[{{$item->name}}]" value="{{isset($current->meta_title) ? $current->meta_title :''}}">
+                                        name="meta_title[{{$item->name}}]"
+                                        value="{{isset($current->meta_title) ? $current->meta_title :''}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Meta - Description</label>
@@ -130,75 +136,74 @@
                                         class="form-control ">{{isset($current->meta_keywords) ? $current->meta_keywords :''}}</textarea>
                                 </div>
                             </div>
-                      
-                    @endforeach
-                </div>
-            </div>
-    </div>
-    <div class="col-md-12">
-            <div class="form-group">
-                    <label for="">News Type</label>
-                    <select name="newsType" class="form-control" id="">
-                        @foreach ($newsType as $type)
-                        @if($contents[0]->categories_id == $type->id)
-                        <option value="{{$type->id}}" selected>{{$type->name}}</option>
-                        @else
-                        <option value="{{$type->id}}">{{$type->name}}</option>
-                        @endif
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="example-text-input">Date info*</label>
-                    <input type="text" class="js-datepicker form-control" id="example-datepicker1"
-                        name="dateinfo" data-week-start="1" data-autoclose="true"
-                        data-today-highlight="true" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
-                        value="{{$contents[0]->date_info}}">
-                </div>
-                <div class="form-group">
-                    <label for="example-text-input">Date Publish*</label>
-                    <input type="text" class="js-datepicker form-control" id="example-datepicker1"
-                        name="datePublish" data-week-start="1" data-autoclose="true"
-                        data-today-highlight="true" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
-                        value="{{$contents[0]->date_publish}}">
-                </div>
-                <div class="form-group">
-                    <label class="d-block">News Status</label>
-                    <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                        <input type="radio" class="custom-control-input" id="status-line-1"
-                            name="newsStatus" value="1"  {{($contents[0]->status == 1) ?"checked":""}}>
-                        <label class="custom-control-label" for="status-line-1">Show</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                        <input type="radio" class="custom-control-input" id="status-line-2"
-                            name="newsStatus" value="0" {{($contents[0]->status == 0 ) ?"checked":""}}>
-                        <label class="custom-control-label" for="status-line-2">Hide</label>
-                    </div>
-                </div>
-        <div class="form-group">
-            <label for="example-text-input">Image-thumbnail</label>
-            <div id="imagePreview">
-                <img src="{{asset('/uploads_delta/'.$contents[0]->thumb)}}"
-                    class="img-thumbnail imagePreview" alt="">
-            <input type="hidden" name="oldfilethumb" value="{{$contents[0]->thumb}}" >
-            </div><br>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input"
-                    data-toggle="custom-file-input" id="image" name="thumb">
-                <label class="custom-file-label" for="fileImage">Choose file</label>
-            </div>
-        </div>
 
-        <div class="form-group text-center">
-                <button type="submit" class="btn btn-success text-uppercase col-2">Update 
-                </button>
-            <a href="{{route('news.index')}}" class="btn btn-secondary text-uppercase col-2">Cancel
-                </a>
-        </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">News Type</label>
+                        <select name="newsType" class="form-control" id="">
+                            @foreach ($newsType as $type)
+                            @if($contents[0]->categories_id == $type->id)
+                            <option value="{{$type->id}}" selected>{{$type->name}}</option>
+                            @else
+                            <option value="{{$type->id}}">{{$type->name}}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="example-text-input">Date info*</label>
+                        <input type="text" class="js-datepicker form-control" id="example-datepicker1" name="dateinfo"
+                            data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                            data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="{{$contents[0]->date_info}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="example-text-input">Date Publish*</label>
+                        <input type="text" class="js-datepicker form-control" id="example-datepicker1"
+                            name="datePublish" data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                            data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
+                            value="{{$contents[0]->date_publish}}">
+                    </div>
+                    <div class="form-group">
+                        <label class="d-block">News Status</label>
+                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                            <input type="radio" class="custom-control-input" id="status-line-1" name="newsStatus"
+                                value="1" {{($contents[0]->status == 1) ?"checked":""}}>
+                            <label class="custom-control-label" for="status-line-1">Show</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                            <input type="radio" class="custom-control-input" id="status-line-2" name="newsStatus"
+                                value="0" {{($contents[0]->status == 0 ) ?"checked":""}}>
+                            <label class="custom-control-label" for="status-line-2">Hide</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="example-text-input">Image-thumbnail</label>
+                        <div id="imagePreview">
+                            <img src="{{asset('/uploads_delta/'.$contents[0]->thumb)}}"
+                                class="img-thumbnail imagePreview" alt="">
+                            <input type="hidden" name="oldfilethumb" value="{{$contents[0]->thumb}}">
+                        </div><br>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" data-toggle="custom-file-input" id="image"
+                                name="thumb">
+                            <label class="custom-file-label" for="fileImage">Choose file</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-success text-uppercase col-2">Update
+                        </button>
+                        <a href="{{route('news.index')}}" class="btn btn-secondary text-uppercase col-2">Cancel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-</div>
-</form>
-</div>
 </div>
 </div>
 @endsection
@@ -213,7 +218,7 @@
     });
 
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

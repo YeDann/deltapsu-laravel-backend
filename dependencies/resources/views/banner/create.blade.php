@@ -35,40 +35,43 @@
                         <p>*Use "Enter" to Begin a new row</p>
                         <div class="form-group">
                             <label for="example-select">Mobile Title </label>
-                            <textarea  name="title_1" rows="3" class="form-control"></textarea>
+                            <textarea name="title_1" rows="3" class="form-control"></textarea>
                         </div>
                         <div class="form-group">
-                        
+
                             <label for="example-select">Desktop Title</label>
-                            <textarea  name="title_2" rows="3" class="form-control"></textarea>
+                            <textarea name="title_2" rows="3" class="form-control"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="example-select">Content </label>
-                            <textarea name="content"  class="jsnotenew"></textarea>
+                            <textarea name="content" class="jsnotenew"></textarea>
                         </div>
                         <div class="form-group">
-                                <label for="example-select">Link to</label>
-                                <span style="color:red;"> Link ex. https://www.delta.com"</span>
-                                <input type="text" class="form-control" name="btn_link" placeholder="Enter Link ex. https://www.delta.com">
-                            </div>
+                            <label for="example-select">Link to</label>
+                            <span style="color:red;"> Link ex. https://www.delta.com"</span>
+                            <input type="text" class="form-control" name="btn_link"
+                                placeholder="Enter Link ex. https://www.delta.com">
+                        </div>
                         <div class="form-group">
                             <label for="example-select">Button Name </label>
                             <input type="text" class="form-control" name="btn_name" placeholder="Enter Text">
                         </div>
                         <div class="form-group">
-                                <label class="d-block">Button Show</label>
-                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                        <input type="radio" class="custom-control-input" id="status-1" name="btn_status" value="1" checked>
-                                        <label class="custom-control-label" for="status-1">Show</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                        <input type="radio" class="custom-control-input" id="status-2" name="btn_status" value="0" >
-                                        <label class="custom-control-label" for="status-2">Hide</label>
-                                    </div>
-                               
+                            <label class="d-block">Button Show</label>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-1" name="btn_status"
+                                    value="1" checked>
+                                <label class="custom-control-label" for="status-1">Show</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-2" name="btn_status"
+                                    value="0">
+                                <label class="custom-control-label" for="status-2">Hide</label>
                             </div>
 
-                       
+                        </div>
+
+
                         <div class="form-group">
                             <label for="example-colorpicker2">Title Color</label>
                             <div class="js-colorpicker input-group" data-format="hex">
@@ -93,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="filename[mobile_image]" value="mobile_image" >
+                        <input type="hidden" name="filename[mobile_image]" value="mobile_image">
                         <input type="hidden" name="filename[destop_image]" value="destop_image">
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-vcenter">
@@ -119,8 +122,8 @@
                                             <span style="color:red">* Maximum 2mb </span>
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input"
-                                                    data-toggle="custom-file-input" id="mobile_image" name="fileimage[mobile_image]"
-                                                    value=" " accept="image/*">
+                                                    data-toggle="custom-file-input" id="mobile_image"
+                                                    name="fileimage[mobile_image]" value=" " accept="image/*">
                                                 <label id="label1" class="custom-file-label" for="mobile_image">Choose
                                                     file</label>
                                             </div>
@@ -128,7 +131,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-center">
-                                             Desktop Image
+                                            Desktop Image
                                         </td>
                                         <td class="font-w600">
                                             <img src="https://via.placeholder.com/3840x800.png"
@@ -138,8 +141,8 @@
                                             <span style="color:red">* Maximum 2mb </span>
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input"
-                                                    data-toggle="custom-file-input" id="destop_image" name="fileimage[destop_image]"
-                                                    value=" " accept="image/*">
+                                                    data-toggle="custom-file-input" id="destop_image"
+                                                    name="fileimage[destop_image]" value=" " accept="image/*">
                                                 <label id="label2" class="custom-file-label" for="destop_image">Choose
                                                     file</label>
                                             </div>
@@ -165,7 +168,7 @@
 @section('js')
 <script>
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

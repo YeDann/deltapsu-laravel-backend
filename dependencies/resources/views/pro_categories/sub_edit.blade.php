@@ -59,14 +59,17 @@
                                     }
                                ?>
                                 <input type="hidden" name="lang_loop[]" value="{{$item2->name}}">
-                                <input type="hidden" name="oldfile[{{$item2->name}}]" value="{{isset($current->file) ? $current->file :''}}">
-                               
-                                <div class="tab-pane {{($loop->iteration == 1) ? "active":""}}" id="btabs-alt-static-{{$item2->name}}" role="tabpanel">
-                                    <div class="form-group"> 
+                                <input type="hidden" name="oldfile[{{$item2->name}}]"
+                                    value="{{isset($current->file) ? $current->file :''}}">
+
+                                <div class="tab-pane {{($loop->iteration == 1) ? " active":""}}"
+                                    id="btabs-alt-static-{{$item2->name}}" role="tabpanel">
+                                    <div class="form-group">
                                         <label for="example-select"><span class="req-fed">*</span>Name</label>
                                         <input type="text"
                                             class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                            name="name[{{$item2->name}}]" value="{{isset($current->name) ? $current->name :''}}"
+                                            name="name[{{$item2->name}}]"
+                                            value="{{isset($current->name) ? $current->name :''}}"
                                             placeholder="Enter name...">
                                     </div>
                                     <div class="form-group">
@@ -79,13 +82,13 @@
                                         <textarea rows="4" class="form-control"
                                             name="contentAddType1[{{$item2->name}}]">{{isset($current->contenttype1) ? $current->contenttype1 :''}} </textarea>
                                     </div>
-            
+
                                     <div class="form-group">
                                         <label for="example-select">Overview(Industrial Power)</label>
                                         <textarea rows="4" class="form-control"
                                             name="contentAddType2[{{$item2->name}}]">{{isset($current->contenttype2) ? $current->contenttype2 :''}} </textarea>
                                     </div>
-            
+
                                     <div class="form-group">
                                         <label for="example-select">Overview (LED Driver)</label>
                                         <textarea rows="4" class="form-control"
@@ -93,12 +96,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="example-select"> Old File</label>
-                                        <a href="{{config('app.url')}}/medias/categories/{{isset($current->file) ? $current->file :''}}">{{isset($current->file) ? $current->file :''}}</a>
+                                        <a
+                                            href="{{config('app.url')}}/medias/categories/{{isset($current->file) ? $current->file :''}}">{{isset($current->file)
+                                            ? $current->file :''}}</a>
                                         @if(isset($current->file))
-                                        <a href="{{route('removefileDocSelectionGuide',[$subCategories[0]->sub_pro_id,$item2->name])}}"  class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
-                                            @endif
+                                        <a href="{{route('removefileDocSelectionGuide',[$subCategories[0]->sub_pro_id,$item2->name])}}"
+                                            class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
+                                        @endif
                                     </div>
-                                 
+
 
                                     <div class="form-group">
 
@@ -112,175 +118,185 @@
                                         </div>
                                     </div>
                                     @if($subCategories[0]->sub_pro_id == 7)
-                                
+
                                     <p>-- Detail Page --</p>
                                     <div class="form-group">
-                                    <label for="example-select">Content 1</label>
-                                    <textarea rows="4"  class="jssummernote"
-                                        name="content1[{{$item2->name}}]">{{isset($current->content1) ? $current->content1 :''}}</textarea>
+                                        <label for="example-select">Content 1</label>
+                                        <textarea rows="4" class="jssummernote"
+                                            name="content1[{{$item2->name}}]">{{isset($current->content1) ? $current->content1 :''}}</textarea>
                                     </div>
-             
+
                                     <div class="form-group">
-                                    <label for="example-select">Content 2</label>
-                                    <textarea rows="4"  class="jssummernote1"
-                                        name="content2[{{$item2->name}}]">{{isset($current->content2) ? $current->content2 :''}}</textarea>
+                                        <label for="example-select">Content 2</label>
+                                        <textarea rows="4" class="jssummernote1"
+                                            name="content2[{{$item2->name}}]">{{isset($current->content2) ? $current->content2 :''}}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="example-select">Safety Certificates</label>
-                                        <textarea rows="4"  class="jssummernote2"
+                                        <textarea rows="4" class="jssummernote2"
                                             name="safety_cer[{{$item2->name}}]">{{isset($current->safety_cer) ? $current->safety_cer :''}}</textarea>
                                     </div>
                                     <div class="form-group">
-                                            <label for="example-select"> Highlights & Features </label>
-                                            <textarea rows="4"  class="jssummernote3"
-                                                name="features[{{$item2->name}}]">{{isset($current->highlight) ? $current->highlight :''}}</textarea>
+                                        <label for="example-select"> Highlights & Features </label>
+                                        <textarea rows="4" class="jssummernote3"
+                                            name="features[{{$item2->name}}]">{{isset($current->highlight) ? $current->highlight :''}}</textarea>
                                     </div>
                                     <div class="form-group">
-                                     <label for="example-select">Dimensions </label>
-                                     <textarea rows="4"  class="jssummernote4"
-                                         name="dimensions[{{$item2->name}}]">{{isset($current->dimension) ? $current->dimension :''}}</textarea>
-                                  </div>
-                                  
-                                  <div class="form-group">
-                                     <label for="example-select">Unit Weight</label>
-                                     <textarea rows="4"  class="jssummernote5"
-                                         name="unit[{{$item2->name}}]">{{isset($current->unit_wight) ? $current->unit_wight :''}}</textarea>
-                                  </div>
-                                 
-                                 @endif
+                                        <label for="example-select">Dimensions </label>
+                                        <textarea rows="4" class="jssummernote4"
+                                            name="dimensions[{{$item2->name}}]">{{isset($current->dimension) ? $current->dimension :''}}</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="example-select">Unit Weight</label>
+                                        <textarea rows="4" class="jssummernote5"
+                                            name="unit[{{$item2->name}}]">{{isset($current->unit_wight) ? $current->unit_wight :''}}</textarea>
+                                    </div>
+
+                                    @endif
                                 </div>
 
-                               
-                             
+
+
                                 @endforeach
                             </div>
                         </div>
                     </div>
-              
+
                     <div class="col-lg-12">
-                     
+
                         <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-vcenter">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center" style="width: 10px;">
-                                                File Type
-                                            </th>
-                                            <th class="text-center" style="width:400px;">
-                                                 Old Image
-                                                </th>
-                                          
-                                            <th style="width: 300px;">Preview</th>
-                                            <th style="width: 300px;">Update File <span class="req-fed">* File Max Size 2 MB</span></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-center">
-                                                    thumbnail
-                                            </td>
-                                            <td class="">
-                                                    <img src="{{config('app.url')}}/medias/categories/{{$subCategories[0]->image}}"
-                                                        class="img-thumbnail res-image" alt="">
-                                                        <input type="hidden" name="oldfileimage" value="{{$subCategories[0]->image}}">
-                                                </td>
-                                            <td class="">
-                                                <img src="https://via.placeholder.com/375x184.png"
-                                                    class="img-thumbnail imagePreview2 res-image" alt="">
-                                            </td>
-    
-                                            <td class="">
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input"
-                                                        data-toggle="custom-file-input" id="thumbnail" name="thumbnail"
-                                                        value=" " accept="image/*">
-                                                    <label id="label1" class="custom-file-label" for="thumbnail">Choose file</label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <input type="hidden" name="typeImage[type1]"   value="type1">
-                                        <input type="hidden" name="typeImage[type2]"  value="type2" >
-                                        <input type="hidden" name="typeImage[type3]"  value="type3" >
-                              
+                            <table class="table table-bordered table-striped table-vcenter">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="width: 10px;">
+                                            File Type
+                                        </th>
+                                        <th class="text-center" style="width:400px;">
+                                            Old Image
+                                        </th>
 
-                                    
+                                        <th style="width: 300px;">Preview</th>
+                                        <th style="width: 300px;">Update File <span class="req-fed">* File Max Size 2
+                                                MB</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            thumbnail
+                                        </td>
+                                        <td class="">
+                                            <img src="{{config('app.url')}}/medias/categories/{{$subCategories[0]->image}}"
+                                                class="img-thumbnail res-image" alt="">
+                                            <input type="hidden" name="oldfileimage"
+                                                value="{{$subCategories[0]->image}}">
+                                        </td>
+                                        <td class="">
+                                            <img src="https://via.placeholder.com/375x184.png"
+                                                class="img-thumbnail imagePreview2 res-image" alt="">
+                                        </td>
 
-                                        <tr>
-                                            <td class="text-center">
-                                                    thumbnail (Medical Power)
-                                            </td>
-                                            <td class="">
-                                                <img src="{{config('app.url')}}/medias/categories/{{$subCategories[0]->image_type1}}"
-                                                    class="img-thumbnail res-image" alt="">
-                                                    <input type="hidden" name="oldfileytype[type1]" value="{{$subCategories[0]->image_type1}}">
-                                            </td>
-                                            <td class="">
-                                                    <img src="https://via.placeholder.com/375x184.png" class="img-thumbnail imagePreviewType1"
-                                                    alt="">
-                                            </td>
-                                            <td class="">
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input"
-                                                        data-toggle="custom-file-input" id="thumbnail1" name="thumbnailOpt[type1]"
-                                                        value=" " accept="image/*">
-                                                    <label id="labelType1" class="custom-file-label" for="thumbnail1">Choose file</label>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        <td class="">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input"
+                                                    data-toggle="custom-file-input" id="thumbnail" name="thumbnail"
+                                                    value=" " accept="image/*">
+                                                <label id="label1" class="custom-file-label" for="thumbnail">Choose
+                                                    file</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <input type="hidden" name="typeImage[type1]" value="type1">
+                                    <input type="hidden" name="typeImage[type2]" value="type2">
+                                    <input type="hidden" name="typeImage[type3]" value="type3">
 
-                                        <tr>
-                                            <td class="text-center">
-                                                    thumbnail (Industrial Power)
-                                            </td>
-                                            <td class="">
-                                                <img src="{{config('app.url')}}/medias/categories/{{$subCategories[0]->image_type2}}"
-                                                    class="img-thumbnail res-image" alt="">
-                                                    <input type="hidden" name="oldfileytype[type2]" value="{{$subCategories[0]->image_type2}}">
-                                            </td>
-                                            <td class="">
-                                                    <img src="https://via.placeholder.com/375x184.png" class="img-thumbnail imagePreviewType2"
-                                                    alt="">
-                                            </td>
-                                            <td class="">
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input"
-                                                        data-toggle="custom-file-input" id="thumbnail2" name="thumbnailOpt[type2]"
-                                                        value=" " accept="image/*">
-                                                    <label id="labelType2" class="custom-file-label" for="thumbnail2">Choose file</label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">
-                                                    thumbnail (LED Driver)
-                                            </td>
-                                            <td class="">
-                                                <img src="{{config('app.url')}}/medias/categories/{{$subCategories[0]->image_type3}}"
-                                                    class="img-thumbnail res-image" alt="">
-                                                    <input type="hidden" name="oldfileytype[type3]" value="{{$subCategories[0]->image_type3}}">
-                                            </td>
-                                            <td class="">
-                                                    <img src="https://via.placeholder.com/375x184.png" class="img-thumbnail imagePreviewType3"
-                                                    alt="">
-                                            </td>
-                                        
-                                            <td class="">
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input"
-                                                        data-toggle="custom-file-input" id="thumbnail3" name="thumbnailOpt[type3]"
-                                                        value=" " accept="image/*">
-                                                    <label id="labelType3" class="custom-file-label" for="thumbnail1">Choose file</label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                     
-                                    </tbody>
-                                </table>
-                            </div>
+
+
+
+                                    <tr>
+                                        <td class="text-center">
+                                            thumbnail (Medical Power)
+                                        </td>
+                                        <td class="">
+                                            <img src="{{config('app.url')}}/medias/categories/{{$subCategories[0]->image_type1}}"
+                                                class="img-thumbnail res-image" alt="">
+                                            <input type="hidden" name="oldfileytype[type1]"
+                                                value="{{$subCategories[0]->image_type1}}">
+                                        </td>
+                                        <td class="">
+                                            <img src="https://via.placeholder.com/375x184.png"
+                                                class="img-thumbnail imagePreviewType1" alt="">
+                                        </td>
+                                        <td class="">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input"
+                                                    data-toggle="custom-file-input" id="thumbnail1"
+                                                    name="thumbnailOpt[type1]" value=" " accept="image/*">
+                                                <label id="labelType1" class="custom-file-label" for="thumbnail1">Choose
+                                                    file</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="text-center">
+                                            thumbnail (Industrial Power)
+                                        </td>
+                                        <td class="">
+                                            <img src="{{config('app.url')}}/medias/categories/{{$subCategories[0]->image_type2}}"
+                                                class="img-thumbnail res-image" alt="">
+                                            <input type="hidden" name="oldfileytype[type2]"
+                                                value="{{$subCategories[0]->image_type2}}">
+                                        </td>
+                                        <td class="">
+                                            <img src="https://via.placeholder.com/375x184.png"
+                                                class="img-thumbnail imagePreviewType2" alt="">
+                                        </td>
+                                        <td class="">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input"
+                                                    data-toggle="custom-file-input" id="thumbnail2"
+                                                    name="thumbnailOpt[type2]" value=" " accept="image/*">
+                                                <label id="labelType2" class="custom-file-label" for="thumbnail2">Choose
+                                                    file</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">
+                                            thumbnail (LED Driver)
+                                        </td>
+                                        <td class="">
+                                            <img src="{{config('app.url')}}/medias/categories/{{$subCategories[0]->image_type3}}"
+                                                class="img-thumbnail res-image" alt="">
+                                            <input type="hidden" name="oldfileytype[type3]"
+                                                value="{{$subCategories[0]->image_type3}}">
+                                        </td>
+                                        <td class="">
+                                            <img src="https://via.placeholder.com/375x184.png"
+                                                class="img-thumbnail imagePreviewType3" alt="">
+                                        </td>
+
+                                        <td class="">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input"
+                                                    data-toggle="custom-file-input" id="thumbnail3"
+                                                    name="thumbnailOpt[type3]" value=" " accept="image/*">
+                                                <label id="labelType3" class="custom-file-label" for="thumbnail1">Choose
+                                                    file</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="col-lg-8">
                         <label for="example-select"><span class="req-fed">*</span> Main Categories</label>
-                        <select onchange="orderAddPro();" class="js-select2 form-control" name="main_categories[]" data-placeholder="Choose many.." multiple>
+                        <select onchange="orderAddPro();" class="js-select2 form-control" name="main_categories[]"
+                            data-placeholder="Choose many.." multiple>
                             <option></option>
                             @foreach ($mainCategories as $main)
                             <option value="{{$main->main_id}}">{{$main->name}}</option>
@@ -289,36 +305,39 @@
                             <option value="{{$incate->main_id}}" selected>{{$incate->name}}</option>
                             @endforeach
                         </select>
-                       
+
                         <div class="form-group mt-2">
                             <label for="example-select">Unit dimension</label>
                             <div style="color:red;">*Only H or D</div>
-                            <input type="text"
-                                class="form-control "
-                        name="unit_dimension" value="{{$subCategories[0]->unit_dimension}}" maxlength="2" placeholder="Enter text...">
+                            <input type="text" class="form-control " name="unit_dimension"
+                                value="{{$subCategories[0]->unit_dimension}}" maxlength="2" placeholder="Enter text...">
                         </div>
                         <div class="form-group">
-                                        <label for="example-select"> Old File Warranty</label>
-                                        <a href="{{config('app.url')}}/medias/categories/{{isset($subCategories[0]->warranty_file) ?$subCategories[0]->warranty_file:''}}">{{isset($subCategories[0]->warranty_file) ? $subCategories[0]->warranty_file :''}}</a>
-                                        @if(isset($subCategories[0]->warranty_file))
-                                        <a href="{{route('removefileDocWaranfile',$subCategories[0]->sub_pro_id)}}"  class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
-                                            @endif
-                                            <input type="hidden" name="oldfile_warranty_file" value="{{isset($subCategories[0]->warranty_file) ? $subCategories[0]->warranty_file :''}}">
-                                    </div>
+                            <label for="example-select"> Old File Warranty</label>
+                            <a
+                                href="{{config('app.url')}}/medias/categories/{{isset($subCategories[0]->warranty_file) ?$subCategories[0]->warranty_file:''}}">{{isset($subCategories[0]->warranty_file)
+                                ? $subCategories[0]->warranty_file :''}}</a>
+                            @if(isset($subCategories[0]->warranty_file))
+                            <a href="{{route('removefileDocWaranfile',$subCategories[0]->sub_pro_id)}}"
+                                class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
+                            @endif
+                            <input type="hidden" name="oldfile_warranty_file"
+                                value="{{isset($subCategories[0]->warranty_file) ? $subCategories[0]->warranty_file :''}}">
+                        </div>
                         <div class="form-group">
                             <label for="example-select"> Warranty Policy<span class="req-fed">* Max File
                                     Size 20 MB</span></label>
                             <div class="custom-file " style="width:100%;">
-                                <input type="file" class="custom-file-input file_input"
-                                    name="warranty_file" data-toggle="custom-file-input">
+                                <input type="file" class="custom-file-input file_input" name="warranty_file"
+                                    data-toggle="custom-file-input">
                                 <label class="custom-file-label" for="warranty_file">Choose file</label>
                             </div>
-                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                    @foreach ($orderCate as $cate)
-                    <input type="hidden" name="orderCate[{{$cate->main_cateid}}]" value="{{$cate->order_seq}}">
-                    @endforeach
+                        @foreach ($orderCate as $cate)
+                        <input type="hidden" name="orderCate[{{$cate->main_cateid}}]" value="{{$cate->order_seq}}">
+                        @endforeach
                     </div>
                     <div class="col-lg-12 mt-5 mb-5">
                         <div class="text-center form-group">
@@ -418,10 +437,10 @@
                         }
                     });
                 }
-  </script>
+</script>
 <script>
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

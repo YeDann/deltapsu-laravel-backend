@@ -27,94 +27,94 @@
             <form action="{{route('part_page_store')}}" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
                 @foreach ($language as $item)
-                    <input type="hidden" name="lang_loop[]" value="{{$item->name}}">
+                <input type="hidden" name="lang_loop[]" value="{{$item->name}}">
                 @endforeach
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
-                        <label for="example-select"><span class="req-fed">*</span>Title</label>
-                        <input type="text" class="form-control" name="title" placeholder="Enter text..." required>
+                            <label for="example-select"><span class="req-fed">*</span>Title</label>
+                            <input type="text" class="form-control" name="title" placeholder="Enter text..." required>
                         </div>
                     </div>
 
                     <div class="col-lg-12">
                         <div class="form-group">
-                        <label for="example-select"><span class="req-fed">*</span>Content</label>
-                        <textarea rows="4" name="content"
-                        class="jsnotenew form-control"></textarea>
+                            <label for="example-select"><span class="req-fed">*</span>Content</label>
+                            <textarea rows="4" name="content" class="jsnotenew form-control"></textarea>
                         </div>
                     </div>
 
                     <div class="col-lg-12">
                         <div class="form-group">
-                        <label for="example-select">Meta-title</label>
-                        <input type="text" class="form-control" name="meta_title" placeholder="Enter text..." >
+                            <label for="example-select">Meta-title</label>
+                            <input type="text" class="form-control" name="meta_title" placeholder="Enter text...">
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
-                        <label for="example-select">Meta-description</label>
-                        <input type="text" class="form-control" name="meta_desc" placeholder="Enter text..." >
+                            <label for="example-select">Meta-description</label>
+                            <input type="text" class="form-control" name="meta_desc" placeholder="Enter text...">
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
-                        <label for="example-select">Meta-keyword</label>
-                        <input type="text" class="form-control" name="meta_key" placeholder="Enter text..." >
+                            <label for="example-select">Meta-keyword</label>
+                            <input type="text" class="form-control" name="meta_key" placeholder="Enter text...">
                         </div>
                     </div>
                     <div class="col-lg-12">
-                    <div class="form-group">
-                        <label class="d-block">Status</label>
-                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                            <input type="radio" class="custom-control-input" id="status-line-1" name="status"
-                                value="1" checked>
-                            <label class="custom-control-label" for="status-line-1">Show</label>
+                        <div class="form-group">
+                            <label class="d-block">Status</label>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-line-1" name="status"
+                                    value="1" checked>
+                                <label class="custom-control-label" for="status-line-1">Show</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-line-2" name="status"
+                                    value="0">
+                                <label class="custom-control-label" for="status-line-2">Hide</label>
+                            </div>
                         </div>
-                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                            <input type="radio" class="custom-control-input" id="status-line-2" name="status"
-                                value="0">
-                            <label class="custom-control-label" for="status-line-2">Hide</label>
+                        <input type="hidden" name="filename[icon]" value="icon">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-vcenter">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="width: 10px;">
+                                            File Type
+                                        </th>
+
+                                        <th style="width:30%;">Preview</th>
+
+                                        <th>Upload File</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            Image
+                                        </td>
+
+                                        <td class="font-w600">
+                                            <img src="https://via.placeholder.com/1350x750.png"
+                                                class="img-thumbnail imagePreview1 res-image" alt="">
+                                        </td>
+
+
+                                        <td class="">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input"
+                                                    data-toggle="custom-file-input" id="icon" name="fileimage[icon]"
+                                                    value=" " accept="image/*">
+                                                <label id="label1" class="custom-file-label" for="icon">Choose
+                                                    file</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                    <input type="hidden" name="filename[icon]" value="icon" >
-                    <div class="table-responsive">
-                     <table class="table table-bordered table-striped table-vcenter">
-                         <thead>
-                             <tr>
-                                 <th class="text-center" style="width: 10px;">
-                                     File Type
-                                 </th>
-                               
-                                 <th style="width:30%;">Preview</th>
-                           
-                                 <th>Upload File</th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             <tr>
-                                 <td class="text-center">
-                                    Image
-                                 </td>
-                               
-                                 <td class="font-w600">
-                                     <img src="https://via.placeholder.com/1350x750.png"
-                                         class="img-thumbnail imagePreview1 res-image" alt="">
-                                 </td>
-                            
-                              
-                                 <td class="">
-                                     <div class="custom-file">
-                                         <input type="file" class="custom-file-input"
-                                             data-toggle="custom-file-input" id="icon" name="fileimage[icon]"
-                                             value=" " accept="image/*">
-                                         <label id="label1" class="custom-file-label" for="icon">Choose file</label>
-                                     </div>
-                                 </td>
-                             </tr>
-                         </tbody>
-                     </table>
-                 </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="text-center form-group mt-4">
@@ -132,9 +132,8 @@
 @endsection
 @section('js')
 <script>
-
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

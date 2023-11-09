@@ -1,92 +1,91 @@
 @extends('layouts.admin')
 @section('style')
 <style>
-        .card-header-collapes {
-            border: 1px solid gray;
-            padding: 10px;
-            border-radius: 4px;
-        }
-    
-        #accordion_input {
-            width: 100%;
-        }
-    
-        .card-body {
-            padding: 10px;
-        }
-    
-    
-    
-        .inline-box {
-            display: flex;
-            -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-        }
-    
-        .input-group-addon {
-            padding: 6px 12px;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1;
-            color: #555;
-            text-align: center;
-            background-color: #eee;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-    
-        .product-custom-field {
-            max-width: 150px;
-            display: inline-block;
-            margin-top: 5px;
-            margin-right: 5px;
-        }
-    
-        .product-custom-field-min {
-            max-width: 150px;
-            display: inline-block;
-            margin-top: 5px;
-            margin-right: 5px;
-        }
-    
-        .input-group-addon,
-        .input-group-btn {
-            width: 1%;
-            white-space: nowrap;
-            vertical-align: middle;
-        }
-    
-        .input-group {
-            position: relative;
-            display: table;
-            border-collapse: separate;
-        }
-    
-        .input-group input {
-            width: 100% !important;
-        }
-    
-        .input-group .form-control,
-        .input-group-addon,
-        .input-group-btn {
-            display: table-cell;
-        }
-    
-        .btn-add-input {
-            display: inline-block;
-        }
-    
-        .p-l {
-            border-top-right-radius: 0px;
-            border-bottom-right-radius: 0px;
-        }
-    
-        .p-r {
-            border-top-left-radius: 0px;
-            border-bottom-left-radius: 0px;
-        }
-    
-    </style>
+    .card-header-collapes {
+        border: 1px solid gray;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    #accordion_input {
+        width: 100%;
+    }
+
+    .card-body {
+        padding: 10px;
+    }
+
+
+
+    .inline-box {
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+
+    .input-group-addon {
+        padding: 6px 12px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1;
+        color: #555;
+        text-align: center;
+        background-color: #eee;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .product-custom-field {
+        max-width: 150px;
+        display: inline-block;
+        margin-top: 5px;
+        margin-right: 5px;
+    }
+
+    .product-custom-field-min {
+        max-width: 150px;
+        display: inline-block;
+        margin-top: 5px;
+        margin-right: 5px;
+    }
+
+    .input-group-addon,
+    .input-group-btn {
+        width: 1%;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    .input-group {
+        position: relative;
+        display: table;
+        border-collapse: separate;
+    }
+
+    .input-group input {
+        width: 100% !important;
+    }
+
+    .input-group .form-control,
+    .input-group-addon,
+    .input-group-btn {
+        display: table-cell;
+    }
+
+    .btn-add-input {
+        display: inline-block;
+    }
+
+    .p-l {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    .p-r {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+</style>
 @endsection
 @section('content')
 <!-- Nav -->
@@ -115,43 +114,50 @@
                 <!-- Basic Elements -->
                 <div class="row">
                     <div class="col-md-12">
-                    <input type="hidden" name="pro_id"  value="{{$products[0]->pro_id}}">
-                            <div class="form-group">
-                                    <label for="example-select">Product Code <span class="req-fed">*</span></label>
-                                    <input type="text"
-                                        class="form-control {{ $errors->has('productCode') ? 'is-invalid' : '' }}"
-                                        name="productCode" value="{{$products[0]->pro_code}}" placeholder="Enter name..."  required>
-                                </div>
-                                <span class="req-fed">Remark* Don't use ( & ) in product code</span>
-                                <div class="form-group">
-                                    <label for="example-select">Select Product Category <span class="req-fed">*</span></label><br>
-                                    {{-- <select class="js-select2 form-control" id="pro_categories" name="pro_categories" onchange="selectProductcategories()" data-placeholder="Choose one.." required>
-                                            <option></option>
-                                           @foreach($subCategories as $sub) 
-                                           @if($products[0]->pro_categories_id == $sub->sub_pro_id)
-                                            <option value="{{$sub->sub_pro_id}}" selected>{{$sub->name}}</option>
-                                            @else 
-                                            <option value="{{$sub->sub_pro_id}}" >{{$sub->name}}</option>
-                                            @endif
-                                            @endforeach
-                                        </select>     --}}
-                                        @foreach($subCategories as $sub)
-                                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                            <input type="checkbox" onclick="selectProductcategories({{$sub->sub_pro_id}})" class="custom-control-input" id="dataCate{{$sub->sub_pro_id}}" name="pro_categories[]"
-                                                value="{{$sub->sub_pro_id}}" {{in_array($sub->sub_pro_id, $arrProcate) ? 'checked':''}} >
-                                            <label class="custom-control-label"  for="dataCate{{$sub->sub_pro_id}}">{{$sub->name}}</label>
-                                        </div>
-                                        @endforeach
-                                </div>
-                                <div class="form-group">
-                                    <label for="example-select">Select Series <span class="req-fed">*</span></label>
-                                    <select class="js-select2 form-control" id="SeriesId" name="Series" data-placeholder="Choose one.." required>
-                                            <option></option>
-                                        </select>    
-                               </div>
-                                <div class="form-group">
-                                    <label class="d-block">Segment  <span class="req-fed">*</span></label>
-                                        <?php 
+                        <input type="hidden" name="pro_id" value="{{$products[0]->pro_id}}">
+                        <div class="form-group">
+                            <label for="example-select">Product Code <span class="req-fed">*</span></label>
+                            <input type="text"
+                                class="form-control {{ $errors->has('productCode') ? 'is-invalid' : '' }}"
+                                name="productCode" value="{{$products[0]->pro_code}}" placeholder="Enter name..."
+                                required>
+                        </div>
+                        <span class="req-fed">Remark* Don't use ( & ) in product code</span>
+                        <div class="form-group">
+                            <label for="example-select">Select Product Category <span
+                                    class="req-fed">*</span></label><br>
+                            {{-- <select class="js-select2 form-control" id="pro_categories" name="pro_categories"
+                                onchange="selectProductcategories()" data-placeholder="Choose one.." required>
+                                <option></option>
+                                @foreach($subCategories as $sub)
+                                @if($products[0]->pro_categories_id == $sub->sub_pro_id)
+                                <option value="{{$sub->sub_pro_id}}" selected>{{$sub->name}}</option>
+                                @else
+                                <option value="{{$sub->sub_pro_id}}">{{$sub->name}}</option>
+                                @endif
+                                @endforeach
+                            </select> --}}
+                            @foreach($subCategories as $sub)
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="checkbox" onclick="selectProductcategories({{$sub->sub_pro_id}})"
+                                    class="custom-control-input" id="dataCate{{$sub->sub_pro_id}}"
+                                    name="pro_categories[]" value="{{$sub->sub_pro_id}}" {{in_array($sub->sub_pro_id,
+                                $arrProcate) ? 'checked':''}} >
+                                <label class="custom-control-label"
+                                    for="dataCate{{$sub->sub_pro_id}}">{{$sub->name}}</label>
+                            </div>
+                            @endforeach
+                        </div>
+                        <div class="form-group">
+                            <label for="example-select">Select Series <span class="req-fed">*</span></label>
+                            <select class="js-select2 form-control" id="SeriesId" name="Series"
+                                data-placeholder="Choose one.." required>
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="d-block">Segment <span class="req-fed">*</span></label>
+                            <?php 
                                         $check1 = false;
                                         $check2 = false;
                                         $check3  = false;
@@ -167,106 +173,120 @@
                                                }
                                           }
                                         ?>
-                                    <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                        <input type="checkbox" class="custom-control-input" id="status_induc" name="status_certificate[]"
-                                            value="1" {{ $check1 ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="status_induc">Industrial</label>
-                                    </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="checkbox" class="custom-control-input" id="status_induc"
+                                    name="status_certificate[]" value="1" {{ $check1 ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="status_induc">Industrial</label>
+                            </div>
 
-                                    <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                        <input type="checkbox" class="custom-control-input" id="status_medical" name="status_certificate[]"
-                                            value="2" {{ $check2 ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="status_medical">Medical</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                        <input type="checkbox" class="custom-control-input" id="status_residen" name="status_certificate[]"
-                                            value="3" {{ $check3 ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="status_residen">Lighting & Signage</label>
-                                    </div>
-                                </div>
-                             
-                                <div class="form-group">
-                                        <label>Dimension L</label>
-                                        <label><span class="req-fed">Choice A: Use numeric value for simple display L x W x D. Choice B: Use HTML to display any free text and ignore dimensionW and dimensionD  </span></label>
-                                        <input type="text" class="form-control" value="{{$products[0]->dimensionL}}"  name="dimensionL" placeholder="Enter ..." >
-                                </div>
-                                <div class="form-group">
-                                        <label>Dimension W</label>
-                                        <input type="text" class="form-control" value="{{$products[0]->dimensionW}}"  name="dimensionw" placeholder="Enter ..." >
-                                </div>
-                                <div class="form-group">
-                                        <label>Dimension D</label>
-                                        <input type="text" class="form-control"  value="{{$products[0]->dimensionD}}" name="dimensionD" placeholder="Enter ..." >
-                                </div>
-                                <div class="form-group">
-                                        <label>Unit Weight <span style="color:red;">(kg only)</span></label>
-                                        <input type="text" class="form-control" value="{{$products[0]->unit_weight}}"  name="unitWeight" placeholder="Enter ..." >
-                                </div>
-                                <div class="form-group">
-                                        <label class="d-block">Status <span class="req-fed">*</span></label>
-                                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                <input type="radio" class="custom-control-input" id="status_none" name="status_pro" value="1" {{ ($products[0]->status_product == 1 ) ? 'checked' : '' }}  >
-                                                <label class="custom-control-label" for="status_none">None</label>
-                                            </div>
-                                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                <input type="radio" class="custom-control-input" id="status_new" name="status_pro" value="2" {{ ($products[0]->status_product == 2 ) ? 'checked' : '' }}>
-                                                <label class="custom-control-label" for="status_new">NEW</label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                <input type="radio" class="custom-control-input" id="status_update" name="status_pro" value="3"  {{ ($products[0]->status_product == 3 ) ? 'checked' : '' }}>
-                                                <label class="custom-control-label" for="status_update">UPDATED</label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input" id="status_eol" name="status_pro" value="4" {{ ($products[0]->status_product == 4 ) ? 'checked' : '' }} >
-                                                    <label class="custom-control-label" for="status_eol">EOL</label>
-                                                </div>
-                                       
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Tag</label>
-                                      <select name="tag[]" class="form-control js-example-tags" data-placeholder="Enter tag.." multiple="multiple">
-                                        <option></option>
-                                        @foreach ($products_input as $pro)
-                                        <option value="{{$pro->pro_code}}" {{in_array($pro->pro_code,$arrtags)?'selected':'' }}>{{$pro->pro_code}}</option>
-                                        @endforeach
-                                        @foreach ($arrtags as $tag)
-                                        <option value="{{$tag}}" {{!in_array($tag,$proInarr)?'selected':'' }}>{{$tag}}</option>
-                                        @endforeach
-                                      </select>
-                                    </div>
-                                        <div class="form-group">
-                                            <label>Related Products</label>
-                                            <select  id="relatePro" class="js-select2 form-control" name="relatePro[]" data-placeholder="Choose many.."  multiple>
-                                                <option></option>
-                                                 @foreach ($products_input2 as $pro)
-                                                    <option value="{{$pro->pro_id}}" {{in_array($pro->pro_id,$product_related )?'selected':'' }}>{{$pro->pro_code}}</option>
-                                                  @endforeach
-                                             </select>
-                                        </div>
-                                      
-            
-                                  
-                             
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="checkbox" class="custom-control-input" id="status_medical"
+                                    name="status_certificate[]" value="2" {{ $check2 ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="status_medical">Medical</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="checkbox" class="custom-control-input" id="status_residen"
+                                    name="status_certificate[]" value="3" {{ $check3 ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="status_residen">Lighting & Signage</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Dimension L</label>
+                            <label><span class="req-fed">Choice A: Use numeric value for simple display L x W x D.
+                                    Choice B: Use HTML to display any free text and ignore dimensionW and dimensionD
+                                </span></label>
+                            <input type="text" class="form-control" value="{{$products[0]->dimensionL}}"
+                                name="dimensionL" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Dimension W</label>
+                            <input type="text" class="form-control" value="{{$products[0]->dimensionW}}"
+                                name="dimensionw" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Dimension D</label>
+                            <input type="text" class="form-control" value="{{$products[0]->dimensionD}}"
+                                name="dimensionD" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Unit Weight <span style="color:red;">(kg only)</span></label>
+                            <input type="text" class="form-control" value="{{$products[0]->unit_weight}}"
+                                name="unitWeight" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label class="d-block">Status <span class="req-fed">*</span></label>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status_none" name="status_pro"
+                                    value="1" {{ ($products[0]->status_product == 1 ) ? 'checked' : '' }} >
+                                <label class="custom-control-label" for="status_none">None</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status_new" name="status_pro"
+                                    value="2" {{ ($products[0]->status_product == 2 ) ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="status_new">NEW</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status_update" name="status_pro"
+                                    value="3" {{ ($products[0]->status_product == 3 ) ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="status_update">UPDATED</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status_eol" name="status_pro"
+                                    value="4" {{ ($products[0]->status_product == 4 ) ? 'checked' : '' }} >
+                                <label class="custom-control-label" for="status_eol">EOL</label>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Tag</label>
+                            <select name="tag[]" class="form-control js-example-tags" data-placeholder="Enter tag.."
+                                multiple="multiple">
+                                <option></option>
+                                @foreach ($products_input as $pro)
+                                <option value="{{$pro->pro_code}}" {{in_array($pro->pro_code,$arrtags)?'selected':''
+                                    }}>{{$pro->pro_code}}</option>
+                                @endforeach
+                                @foreach ($arrtags as $tag)
+                                <option value="{{$tag}}" {{!in_array($tag,$proInarr)?'selected':'' }}>{{$tag}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Related Products</label>
+                            <select id="relatePro" class="js-select2 form-control" name="relatePro[]"
+                                data-placeholder="Choose many.." multiple>
+                                <option></option>
+                                @foreach ($products_input2 as $pro)
+                                <option value="{{$pro->pro_id}}" {{in_array($pro->pro_id,$product_related
+                                    )?'selected':'' }}>{{$pro->pro_code}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+
+
+
                         <div class="block block-rounded block-bordered">
                             <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
                                 @foreach ($products as $item)
                                 @if($loop->iteration == 1)
                                 <li class="nav-item">
-                                    <a class="nav-link active"  href="#btabs-alt-static-{{$item->local}}"
+                                    <a class="nav-link active" href="#btabs-alt-static-{{$item->local}}"
                                         style="text-transform: capitalize;">{{$item->local}}</a>
                                 </li>
                                 @else
                                 <li class="nav-item">
-                                    <a class="nav-link "  href="#btabs-alt-static-{{$item->local}}"
+                                    <a class="nav-link " href="#btabs-alt-static-{{$item->local}}"
                                         style="text-transform: capitalize;">{{$item->local}}</a>
                                 </li>
                                 @endif
                                 @endforeach
                                 @foreach ($language as $alang)
                                 <li class="nav-item">
-                                        <a class="nav-link "  href="#btabs-alt-static-{{$alang->name}}"
-                                            style="text-transform: capitalize;">{{$alang->name}}</a>
-                                    </li>
+                                    <a class="nav-link " href="#btabs-alt-static-{{$alang->name}}"
+                                        style="text-transform: capitalize;">{{$alang->name}}</a>
+                                </li>
                                 @endforeach
                             </ul>
                             <div class="block-content tab-content">
@@ -274,48 +294,68 @@
                                 <input type="hidden" name="lang_loop[]" value="{{$item->local}}">
                                 @if($loop->iteration == 1)
                                 <div class="tab-pane active" id="btabs-alt-static-{{$item->local}}" role="tabpanel">
-                                  
+
                                     <div class="form-group">
                                         <label for="">Highlights & Features</label>
-                                    <textarea name="overview[{{$item->local}}]" class="jsnotenew">{{$item->content_1}}</textarea>
+                                        <textarea name="overview[{{$item->local}}]"
+                                            class="jsnotenew">{{$item->content_1}}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Content</label>
-                                        <textarea name="content[{{$item->local}}]" class="jsnotenew">{{$item->content_2}}</textarea>
+                                        <textarea name="content[{{$item->local}}]"
+                                            class="jsnotenew">{{$item->content_2}}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label class="d-block">Show/hide language</label>
-                                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input" id="status-0{{$item->local}}" name="status[{{$item->local}}]" value="1" {{ ($item->showstatus == 1 ) ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="status-0{{$item->local}}">Show</label>
-                                                </div>
-                                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input" id="status-3{{$item->local}}" name="status[{{$item->local}}]" value="0" {{ ($item->showstatus == 0 ) ? 'checked' : '' }} >
-                                                    <label class="custom-control-label" for="status-3{{$item->local}}">Hide</label>
-                                                </div>
-                                           
+                                        <div
+                                            class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                            <input type="radio" class="custom-control-input"
+                                                id="status-0{{$item->local}}" name="status[{{$item->local}}]" value="1"
+                                                {{ ($item->showstatus == 1 ) ? 'checked' : '' }}>
+                                            <label class="custom-control-label"
+                                                for="status-0{{$item->local}}">Show</label>
                                         </div>
+                                        <div
+                                            class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                            <input type="radio" class="custom-control-input"
+                                                id="status-3{{$item->local}}" name="status[{{$item->local}}]" value="0"
+                                                {{ ($item->showstatus == 0 ) ? 'checked' : '' }} >
+                                            <label class="custom-control-label"
+                                                for="status-3{{$item->local}}">Hide</label>
+                                        </div>
+
+                                    </div>
                                 </div>
                                 @else
                                 <div class="tab-pane" id="btabs-alt-static-{{$item->local}}" role="tabpanel">
                                     <div class="form-group">
                                         <label for="">Highlights & Features</label>
-                                        <textarea name="overview[{{$item->local}}]" class="jsnotenew">{{$item->content_1}}</textarea>
+                                        <textarea name="overview[{{$item->local}}]"
+                                            class="jsnotenew">{{$item->content_1}}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Content</label>
-                                        <textarea name="content[{{$item->local}}]" class="jsnotenew">{{$item->content_2}}</textarea>
+                                        <textarea name="content[{{$item->local}}]"
+                                            class="jsnotenew">{{$item->content_2}}</textarea>
                                     </div>
                                     <div class="form-group">
-                                           <label class="d-block">show/hide language</label>
-                                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input" id="status-1{{$item->local}}" name="status[{{$item->local}}]" value="1" {{ ($item->showstatus == 1 ) ? 'checked' : '' }}  >
-                                                    <label class="custom-control-label" for="status-1{{$item->local}}">Show</label>
-                                                </div>
-                                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input" id="status-2{{$item->local}}" name="status[{{$item->local}}]" value="0" {{ ($item->showstatus == 0 ) ? 'checked' : '' }} >
-                                                    <label class="custom-control-label" for="status-2{{$item->local}}">Hide</label>
-                                                </div>
+                                        <label class="d-block">show/hide language</label>
+                                        <div
+                                            class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                            <input type="radio" class="custom-control-input"
+                                                id="status-1{{$item->local}}" name="status[{{$item->local}}]" value="1"
+                                                {{ ($item->showstatus == 1 ) ? 'checked' : '' }} >
+                                            <label class="custom-control-label"
+                                                for="status-1{{$item->local}}">Show</label>
+                                        </div>
+                                        <div
+                                            class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                            <input type="radio" class="custom-control-input"
+                                                id="status-2{{$item->local}}" name="status[{{$item->local}}]" value="0"
+                                                {{ ($item->showstatus == 0 ) ? 'checked' : '' }} >
+                                            <label class="custom-control-label"
+                                                for="status-2{{$item->local}}">Hide</label>
+                                        </div>
                                     </div>
                                 </div>
                                 @endif
@@ -323,31 +363,38 @@
                                 @foreach ($language as $alang)
                                 <input type="hidden" name="lang_loop[]" value="{{$alang->name}}">
                                 <div class="tab-pane" id="btabs-alt-static-{{$alang->name}}" role="tabpanel">
-                                        <div class="form-group">
-                                            <label for="">Highlights & Features</label>
-                                            <textarea name="overview[{{$alang->name}}]" class="jsnotenew"></textarea>
+                                    <div class="form-group">
+                                        <label for="">Highlights & Features</label>
+                                        <textarea name="overview[{{$alang->name}}]" class="jsnotenew"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Content</label>
+                                        <textarea name="content[{{$alang->name}}]" class="jsnotenew"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="d-block">Show Status</label>
+                                        <div
+                                            class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                            <input type="radio" class="custom-control-input"
+                                                id="status-1{{$alang->name}}" name="status[{{$alang->name}}]" value="1"
+                                                checked>
+                                            <label class="custom-control-label"
+                                                for="status-1{{$alang->name}}">Show</label>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="">Content</label>
-                                            <textarea name="content[{{$alang->name}}]" class="jsnotenew"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                                <label class="d-block">Show Status</label>
-                                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                        <input type="radio" class="custom-control-input" id="status-1{{$alang->name}}" name="status[{{$alang->name}}]" value="1" checked >
-                                                        <label class="custom-control-label" for="status-1{{$alang->name}}">Show</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                        <input type="radio" class="custom-control-input" id="status-2{{$item->local}}" name="status[{{$alang->name}}]" value="0">
-                                                        <label class="custom-control-label" for="status-2{{$alang->name}}">Hide</label>
-                                                    </div>
+                                        <div
+                                            class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                            <input type="radio" class="custom-control-input"
+                                                id="status-2{{$item->local}}" name="status[{{$alang->name}}]" value="0">
+                                            <label class="custom-control-label"
+                                                for="status-2{{$alang->name}}">Hide</label>
                                         </div>
                                     </div>
+                                </div>
                                 @endforeach
                             </div>
                         </div>
                     </div>
-             
+
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-vcenter">
@@ -369,7 +416,7 @@
                                         <td class="font-w600">
                                             <img src="{{config('app.url')}}/upload/thumbs/{{$products[0]->picture}}"
                                                 class="img-thumbnail" alt="">
-                                                <input type="hidden" value="{{$products[0]->picture}}" name="oldFile">
+                                            <input type="hidden" value="{{$products[0]->picture}}" name="oldFile">
                                         </td>
                                         <td class="font-w600">
                                             <img src="https://via.placeholder.com/200x200.png"
@@ -378,8 +425,8 @@
                                         <td class="">
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input"
-                                                    data-toggle="custom-file-input" id="thumbnail"
-                                                    name="thumbnail" value="no image" accept="image/*">
+                                                    data-toggle="custom-file-input" id="thumbnail" name="thumbnail"
+                                                    value="no image" accept="image/*">
                                                 <label id="label2" class="custom-file-label" for="thumbnail">Choose
                                                     file</label>
                                             </div>
@@ -388,47 +435,37 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div id="contenttdata"> 
+                        <div id="contenttdata">
                         </div>
                         <div class="col-md-12">
-                        <div class="form-group mt-5">
-                            <label class="d-block">Enable/Disable</label>
-                            <div
-                                class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="radio" class="custom-control-input"
-                                    id="status-cl1en" name="enable_pro" value="1"
-                                     {{$products[0]->enable_pro == 1 ?'checked':''}}>
-                                <label class="custom-control-label"
-                                    for="status-cl1en">Enable</label>
+                            <div class="form-group mt-5">
+                                <label class="d-block">Enable/Disable</label>
+                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                    <input type="radio" class="custom-control-input" id="status-cl1en" name="enable_pro"
+                                        value="1" {{$products[0]->enable_pro == 1 ?'checked':''}}>
+                                    <label class="custom-control-label" for="status-cl1en">Enable</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                    <input type="radio" class="custom-control-input" id="status-cl2en" name="enable_pro"
+                                        value="0" {{$products[0]->enable_pro == 0 ?'checked':''}}>
+                                    <label class="custom-control-label" for="status-cl2en">Disable</label>
+                                </div>
                             </div>
-                            <div
-                                class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="radio" class="custom-control-input"
-                                    id="status-cl2en" name="enable_pro" value="0"  {{$products[0]->enable_pro == 0 ?'checked':''}}>
-                                <label class="custom-control-label"
-                                    for="status-cl2en">Disable</label>
-                            </div>
-                        </div>
 
-                        <div class="form-group mt-5">
-                            <label class="d-block">Is manaul page show?</label>
-                            <div
-                                class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="radio" class="custom-control-input"
-                                    id="status-manaul" name="manaul_status" value="1"
-                                     {{$products[0]->manaul_page == 1 ?'checked':''}}>
-                                <label class="custom-control-label"
-                                    for="status-manaul">Show</label>
+                            <div class="form-group mt-5">
+                                <label class="d-block">Is manaul page show?</label>
+                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                    <input type="radio" class="custom-control-input" id="status-manaul"
+                                        name="manaul_status" value="1" {{$products[0]->manaul_page == 1 ?'checked':''}}>
+                                    <label class="custom-control-label" for="status-manaul">Show</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                    <input type="radio" class="custom-control-input" id="status-manaul2"
+                                        name="manaul_status" value="0" {{$products[0]->manaul_page == 0 ?'checked':''}}>
+                                    <label class="custom-control-label" for="status-manaul2">Hide</label>
+                                </div>
                             </div>
-                            <div
-                                class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="radio" class="custom-control-input"
-                                    id="status-manaul2" name="manaul_status" value="0"  {{$products[0]->manaul_page == 0 ?'checked':''}}>
-                                <label class="custom-control-label"
-                                    for="status-manaul2">Hide</label>
-                            </div>
-                        </div>
-                        
+
 
                         </div>
                         <div class="form-group text-center mt-5">
@@ -447,8 +484,7 @@
 @endsection
 @section('js')
 <script>
-      
-         $(".js-example-tags").select2({
+    $(".js-example-tags").select2({
           tags: true
          });
         
@@ -908,7 +944,7 @@
     }
 
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 
@@ -939,6 +975,6 @@
 
     });
 
-      </script>
+</script>
 
 @endsection

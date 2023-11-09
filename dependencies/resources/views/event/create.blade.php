@@ -11,9 +11,8 @@
     }
 
     .btn-outline-secondary {
-        border-color: #dcdcdc!important;
+        border-color: #dcdcdc !important;
     }
-
 </style>
 @endsection
 @section('content')
@@ -24,7 +23,7 @@
             <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Event</h1>
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('event.index')}}">Events</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('event.index')}}">Events</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Create</li>
                 </ol>
             </nav>
@@ -42,7 +41,7 @@
                 {{csrf_field()}}
                 <!-- Basic Elements -->
                 @foreach($language as $item)
-                <input type="hidden" name="langloop[]" value="{{$item->name}}" >
+                <input type="hidden" name="langloop[]" value="{{$item->name}}">
                 @endforeach
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-xl-8">
@@ -57,26 +56,31 @@
                                 <img src="https://via.placeholder.com/415x250.png" class="img-thumbnail imagePreview"
                                     alt="">
                             </div><br>
-                           
+
                             <div class="custom-file " style="width: 50%;">
-                                    <input type="file"
-                                        class="custom-file-input {{ $errors->has('thumbnail') ? 'is-invalid' : '' }}"
-                                        data-toggle="custom-file-input" id="thumbnail" name="file[thumbnail]" accept="image/*">
-                                    <label class="custom-file-label" id="label2" for="fileImage">Choose file</label>
-                                    <input type="hidden" name="namefile[thumbnail]" value="thumbnail" >
-                                </div>
+                                <input type="file"
+                                    class="custom-file-input {{ $errors->has('thumbnail') ? 'is-invalid' : '' }}"
+                                    data-toggle="custom-file-input" id="thumbnail" name="file[thumbnail]"
+                                    accept="image/*">
+                                <label class="custom-file-label" id="label2" for="fileImage">Choose file</label>
+                                <input type="hidden" name="namefile[thumbnail]" value="thumbnail">
+                            </div>
                         </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="example-text-input">Date Start</label>
-                                    <input type="text" class="js-datepicker form-control {{ $errors->has('date_start') ? 'is-invalid' : '' }}"  data-week-start="1" data-autoclose="true"
-                                    data-today-highlight="true" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" name="date_start">
+                                    <input type="text"
+                                        class="js-datepicker form-control {{ $errors->has('date_start') ? 'is-invalid' : '' }}"
+                                        data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                                        data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" name="date_start">
                                 </div>
                                 <div class="col-md-4">
                                     <label for="example-text-input">Date End</label>
-                                    <input type="text" class="js-datepicker form-control {{ $errors->has('date_start') ? 'is-invalid' : '' }}"  data-week-start="1" data-autoclose="true"
-                                    data-today-highlight="true" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" name="date_end">
+                                    <input type="text"
+                                        class="js-datepicker form-control {{ $errors->has('date_start') ? 'is-invalid' : '' }}"
+                                        data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                                        data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" name="date_end">
                                 </div>
                             </div>
                         </div>
@@ -84,11 +88,15 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="">Time Start</label>
-                                    <input id="timeStart" class="form-control {{ $errors->has('time_start') ? 'is-invalid' : '' }}" placeholder="00:00" name="time_start" />
+                                    <input id="timeStart"
+                                        class="form-control {{ $errors->has('time_start') ? 'is-invalid' : '' }}"
+                                        placeholder="00:00" name="time_start" />
                                 </div>
                                 <div class="col-md-4">
                                     <label for="">Time End</label>
-                                    <input id="timeEnd" class="form-control {{ $errors->has('time_end') ? 'is-invalid' : '' }}"  placeholder="00:00" name="time_end" />
+                                    <input id="timeEnd"
+                                        class="form-control {{ $errors->has('time_end') ? 'is-invalid' : '' }}"
+                                        placeholder="00:00" name="time_end" />
                                 </div>
                             </div>
                         </div>
@@ -107,14 +115,13 @@
                         </div>
                         <div class="form-group">
                             <label for="">location</label>
-                            <input type="text" class="form-control" name="location" >
+                            <input type="text" class="form-control" name="location">
                         </div>
-                        
+
                         <div class="form-group">
-                                <label for="">Excerpt</label>
-                                <textarea rows="4" name="description"
-                                    class="jsnotenew form-control"></textarea>
-                            </div>
+                            <label for="">Excerpt</label>
+                            <textarea rows="4" name="description" class="jsnotenew form-control"></textarea>
+                        </div>
                         <div class="form-group">
                             <label for="">Content</label>
                             <textarea name="content" class="jsnotenew form-control"></textarea>
@@ -132,12 +139,12 @@
                             <label for="">Meta - Keywords</label>
                             <textarea name="metaKeyword" class="form-control "></textarea>
                         </div>
-                        
+
                         <div class="form-group text-center">
-                            <button class="btn btn-success col-md-2" type="submit">Create 
+                            <button class="btn btn-success col-md-2" type="submit">Create
                             </button>
                             <a href="{{route('event.index')}}" class="btn btn-secondary col-md-2">
-                                Cancel 
+                                Cancel
                             </a>
                         </div>
                     </div>
@@ -162,7 +169,7 @@
     });
    
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

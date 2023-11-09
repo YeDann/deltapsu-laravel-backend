@@ -9,10 +9,10 @@
     #test-label {
         height: 100px !important;
     }
-    .btn-outline-secondary {
-        border-color: #dcdcdc!important;
-    }
 
+    .btn-outline-secondary {
+        border-color: #dcdcdc !important;
+    }
 </style>
 @endsection
 @section('content')
@@ -46,7 +46,7 @@
                     <div class="block block-rounded block-bordered">
                         <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
                             @foreach ($language as $item)
-                            <input type="hidden" name="langloop[]" value="{{$item->name}}" >
+                            <input type="hidden" name="langloop[]" value="{{$item->name}}">
                             @if($loop->iteration == 1)
                             <li class="nav-item">
                                 <a class="nav-link active" href="#btabs-alt-static-{{$item->name}}"
@@ -60,7 +60,7 @@
                             @endif
                             @endforeach
                         </ul>
-                    
+
                         <div class="block-content tab-content">
                             @foreach ($language as $item)
                             <?php 
@@ -72,7 +72,8 @@
                                 }
                             }
                           ?>
-                        <div class="tab-pane {{($loop->iteration == 1)?"active":""}}" id="btabs-alt-static-{{$item->name}}" role="tabpanel">
+                            <div class="tab-pane {{($loop->iteration == 1)?" active":""}}"
+                                id="btabs-alt-static-{{$item->name}}" role="tabpanel">
                                 <div class="form-group">
                                     <label for="">Title</label>
                                     <input type="text" class="form-control" name="title[{{$item->name}}]"
@@ -80,25 +81,27 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Excerpt</label>
-                                    <textarea  name="description[{{$item->name}}]"
-                                        class="jsnotenew form-control"  rows="4">{{isset($current->description) ? $current->description :''}}</textarea>
+                                    <textarea name="description[{{$item->name}}]" class="jsnotenew form-control"
+                                        rows="4">{{isset($current->description) ? $current->description :''}}</textarea>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="">Content</label>
                                     <textarea name="content[{{$item->name}}]"
                                         class="jsnotenew form-control">{{isset($current->content) ? $current->content :''}}</textarea>
                                 </div>
                                 <div class="form-group">
-                                        <label for="">Location</label>
-                                        <input type="text" class="form-control" name="location[{{$item->name}}]" value="{{isset($current->location) ? $current->location :''}}" >
-                                    </div>
-                                    
+                                    <label for="">Location</label>
+                                    <input type="text" class="form-control" name="location[{{$item->name}}]"
+                                        value="{{isset($current->location) ? $current->location :''}}">
+                                </div>
+
                                 <hr>
                                 <div class="form-group">
                                     <label for="">Meta - Title</label>
                                     <input type="meta_title[{{$item->name}}]" class="form-control"
-                                        name="meta_title[{{$item->name}}]" value="{{isset($current->meta_title) ? $current->meta_title :''}}">
+                                        name="meta_title[{{$item->name}}]"
+                                        value="{{isset($current->meta_title) ? $current->meta_title :''}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="">Meta - Description</label>
@@ -121,14 +124,16 @@
                             <div class="col-md-6">
                                 <label for="example-text-input">Date Start</label>
                                 <input type="text" class="js-datepicker form-control" id="example-datepicker1"
-                                    name="date_start" data-week-start="1" data-autoclose="true" data-today-highlight="true"
-                                    data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="{{$contents[0]->date_publish}}">
+                                    name="date_start" data-week-start="1" data-autoclose="true"
+                                    data-today-highlight="true" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
+                                    value="{{$contents[0]->date_publish}}">
                             </div>
                             <div class="col-md-6">
                                 <label for="example-text-input">Date End</label>
                                 <input type="text" class="js-datepicker form-control" id="example-datepicker1"
-                                    name="date_end" data-week-start="1" data-autoclose="true" data-today-highlight="true"
-                                    data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="{{$contents[0]->date_end}}">
+                                    name="date_end" data-week-start="1" data-autoclose="true"
+                                    data-today-highlight="true" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
+                                    value="{{$contents[0]->date_end}}">
                             </div>
                         </div>
                     </div>
@@ -136,38 +141,39 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="">Time Start</label>
-                                <input id="timeStart" class="form-control" value="{{$contents[0]->time_start}}" name="time_start" />
+                                <input id="timeStart" class="form-control" value="{{$contents[0]->time_start}}"
+                                    name="time_start" />
                             </div>
                             <div class="col-md-6">
                                 <label for="">Time End</label>
-                                <input id="timeEnd" class="form-control"  value="{{$contents[0]->time_end}}"  name="time_end" />
+                                <input id="timeEnd" class="form-control" value="{{$contents[0]->time_end}}"
+                                    name="time_end" />
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="d-block">Event Status</label>
                         <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                            <input type="radio" class="custom-control-input" id="status-line-1"
-                                name="status" value="1"  {{($contents[0]->status == 1) ?"checked":""}}>
+                            <input type="radio" class="custom-control-input" id="status-line-1" name="status" value="1"
+                                {{($contents[0]->status == 1) ?"checked":""}}>
                             <label class="custom-control-label" for="status-line-1">Show</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                            <input type="radio" class="custom-control-input" id="status-line-2"
-                                name="status" value="0" {{($contents[0]->status == 0 ) ?"checked":""}}>
+                            <input type="radio" class="custom-control-input" id="status-line-2" name="status" value="0"
+                                {{($contents[0]->status == 0 ) ?"checked":""}}>
                             <label class="custom-control-label" for="status-line-2">Hide</label>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="example-text-input">Image-thumbnail</label>
                         <div id="imagePreview">
-                            <img src="{{asset('/uploads_delta/'.$contents[0]->thumb)}}" class="img-thumbnail imagePreview"
-                                alt="">
-                                <input type="hidden" name="oldfilethumb" value="{{$contents[0]->thumb}}" >
+                            <img src="{{asset('/uploads_delta/'.$contents[0]->thumb)}}"
+                                class="img-thumbnail imagePreview" alt="">
+                            <input type="hidden" name="oldfilethumb" value="{{$contents[0]->thumb}}">
                         </div><br>
                         <div class="custom-file w-50">
-                            <input type="file"
-                                class="custom-file-input"
-                                data-toggle="custom-file-input" id="image" name="thumb">
+                            <input type="file" class="custom-file-input" data-toggle="custom-file-input" id="image"
+                                name="thumb">
                             <label class="custom-file-label" for="image">Choose file</label>
                         </div>
                     </div>
@@ -175,7 +181,7 @@
                     <div class="form-group text-center">
                         <button type="submit" class="btn btn-success text-uppercase col-2  mb-4">Update
                         </button>
-                        <a href="{{route('event.index')}}" class="btn btn-secondary text-uppercase col-2  mb-4">Cancel 
+                        <a href="{{route('event.index')}}" class="btn btn-secondary text-uppercase col-2  mb-4">Cancel
                         </a>
                     </div>
                 </div>
@@ -195,7 +201,7 @@
 <script src="{{asset('backend-asset/js/plugins/ckeditor/ckeditor.js')}}"></script>
 <script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
 <script>
-     $('#eventExcerpt').summernote({
+    $('#eventExcerpt').summernote({
         tabsize: 2,
         height: 200
     });
@@ -205,7 +211,7 @@
    
 
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

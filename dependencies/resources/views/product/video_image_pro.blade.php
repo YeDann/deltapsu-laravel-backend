@@ -39,11 +39,13 @@
             </h3>
             <div class="block-options">
                 <div class="block-options-item">
-                
+
                 </div>
                 <div class="block-options-item">
-                    <button data-toggle="modal" data-target="#modal-block-create_video" class="btn btn-success">Create Video</button>
-                    <button data-toggle="modal" data-target="#modal-block-create_Image" class="btn btn-success">Create Image</button>
+                    <button data-toggle="modal" data-target="#modal-block-create_video" class="btn btn-success">Create
+                        Video</button>
+                    <button data-toggle="modal" data-target="#modal-block-create_Image" class="btn btn-success">Create
+                        Image</button>
                 </div>
             </div>
         </div>
@@ -62,20 +64,21 @@
                     @foreach ($vieo_img as $item)
                     <td class="text-center">{{$loop->iteration}}</td>
                     <td class="d-none d-sm-table-cell">
-                     
+
                         @if($item->type == 1)
-                      <img  width="20%" src="{{config('app.url')}}/uploads_delta/{{$item->content}}">
-                        @else 
-                        <iframe  src="{{$item->content}}"
-                        width="50%" height="200px" frameborder="0" allowfullscreen></iframe>
+                        <img width="20%" src="{{config('app.url')}}/uploads_delta/{{$item->content}}">
+                        @else
+                        <iframe src="{{$item->content}}" width="50%" height="200px" frameborder="0"
+                            allowfullscreen></iframe>
                         @endif
                     </td>
                     <td class="d-none d-sm-table-cell">{{$item->created_at}}</td>
                     <td class="text-center">
-                          
-                            <button class="btn btn-info" onclick="editContent({{$item->id}} ,{{$item->type}})">Edit</button>
-                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
-                       
+
+                        <button class="btn btn-info" onclick="editContent({{$item->id}} ,{{$item->type}})">Edit</button>
+                        <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});"
+                            data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+
                     </td>
                     </tr>
                     @endforeach
@@ -85,40 +88,42 @@
         </div>
     </div>
 </div>
- <!-- Vertically Centered Block Modal -->
- <div class="modal" id="modal-block-vcenter" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="block block-themed block-transparent mb-0">
-                    <div class="block-header bg-danger">
-                        <h3 class="block-title">!! Warning </h3>
-                        <div class="block-options">
-                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
-                                <i class="fa fa-fw fa-times"></i>
-                            </button>
-                        </div>
+<!-- Vertically Centered Block Modal -->
+<div class="modal" id="modal-block-vcenter" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-danger">
+                    <h3 class="block-title">!! Warning </h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
                     </div>
-                    <form action="{{route('deleteVideImagePro')}}" method="POST" >
-                        {{csrf_field()}}
-                      
+                </div>
+                <form action="{{route('deleteVideImagePro')}}" method="POST">
+                    {{csrf_field()}}
+
                     <div class="block-content">
                         <input type="hidden" name="itemId" id="itemId">
-                        <input type="hidden" name="pro_id" value="{{$products[0]->pro_id}}" >
+                        <input type="hidden" name="pro_id" value="{{$products[0]->pro_id}}">
                         <p>Data will be lost?</p>
                     </div>
                     <div class="block-content block-content-full text-right bg-light">
                         <button type="button" class="btn  btn-light" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">OK</button>
                     </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- END Vertically Centered Block Modal -->
+</div>
+<!-- END Vertically Centered Block Modal -->
 
-     <!-- Vertically Centered Block Modal -->
- <div class="modal" id="modal-block-create_video" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter" aria-hidden="true">
+<!-- Vertically Centered Block Modal -->
+<div class="modal" id="modal-block-create_video" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="block block-themed block-transparent mb-0">
@@ -130,31 +135,30 @@
                         </button>
                     </div>
                 </div>
-                <form action="{{route('SaveVideoPro')}}" method="POST" >
+                <form action="{{route('SaveVideoPro')}}" method="POST">
                     {{csrf_field()}}
-                  
-                <div class="block-content">
-                    <div class="form-group">
-                        <label for="example-select">Youtube Link <span class="req-fed">*</span></label>
-                        <p>Example Link  https://youtu.be/aovZiyKb4NE </p>
-                        <p id="text_arr" style="color:red"></p>
-                        <input type="text"
-                            class="form-control"
-                            name="link" value=""  id="linkyoutube" onkeyup="playyourtest()" placeholder="Enter LInk...">
-                            <input type="hidden" name="pro_image_id" id="video_id" >
-                            <input type="hidden" name="type" value="2" >
-                            <input type="hidden" name="pro_id" value="{{$products[0]->pro_id}}" >
-                            <input type="hidden" name="newlink" id='linkyourtube' >
-                            <div id="oldlink" class="mt-2"> 
+
+                    <div class="block-content">
+                        <div class="form-group">
+                            <label for="example-select">Youtube Link <span class="req-fed">*</span></label>
+                            <p>Example Link https://youtu.be/aovZiyKb4NE </p>
+                            <p id="text_arr" style="color:red"></p>
+                            <input type="text" class="form-control" name="link" value="" id="linkyoutube"
+                                onkeyup="playyourtest()" placeholder="Enter LInk...">
+                            <input type="hidden" name="pro_image_id" id="video_id">
+                            <input type="hidden" name="type" value="2">
+                            <input type="hidden" name="pro_id" value="{{$products[0]->pro_id}}">
+                            <input type="hidden" name="newlink" id='linkyourtube'>
+                            <div id="oldlink" class="mt-2">
                             </div>
-                            <iframe id="abc_frame" src=""
-                            width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+                            <iframe id="abc_frame" src="" width="100%" height="315" frameborder="0"
+                                allowfullscreen></iframe>
+                        </div>
                     </div>
-                </div>
-                <div class="block-content block-content-full text-right bg-light">
-                    <button type="button" class="btn  btn-light" data-dismiss="modal">Close</button>
-                    <button type="submit" id="savedata" class="btn btn-success d-none">Save</button>
-                </div>
+                    <div class="block-content block-content-full text-right bg-light">
+                        <button type="button" class="btn  btn-light" data-dismiss="modal">Close</button>
+                        <button type="submit" id="savedata" class="btn btn-success d-none">Save</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -163,55 +167,55 @@
 <!-- END Vertically Centered Block Modal -->
 
 
-    <!-- Vertically Centered Block Modal -->
-    <div class="modal" id="modal-block-create_Image" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="block block-themed block-transparent mb-0">
-                    <div class="block-header bg-primary">
-                        <h3 class="block-title">Image </h3>
-                        <div class="block-options">
-                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
-                                <i class="fa fa-fw fa-times"></i>
-                            </button>
-                        </div>
+<!-- Vertically Centered Block Modal -->
+<div class="modal" id="modal-block-create_Image" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-primary">
+                    <h3 class="block-title">Image </h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
                     </div>
-                    <form action="{{route('SaveImagePro')}}" method="POST"  enctype="multipart/form-data" >
-                        {{csrf_field()}}
-                      
+                </div>
+                <form action="{{route('SaveImagePro')}}" method="POST" enctype="multipart/form-data">
+                    {{csrf_field()}}
+
                     <div class="block-content">
                         <div class="form-group">
                             <p style="color:red">Max Size 2 MB ,png ,jpeg</p>
                             <label for="example-select">Image <span class="req-fed">*</span></label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input"
-                                    data-toggle="custom-file-input" id="thumbnail" name="thumbnail"
-                                    value="no image" accept="image/*">
+                                <input type="file" class="custom-file-input" data-toggle="custom-file-input"
+                                    id="thumbnail" name="thumbnail" value="no image" accept="image/*">
                                 <label id="label2" class="custom-file-label" for="thumbnail">Choose
                                     file</label>
                             </div>
-                                <input type="hidden" name="oldImage" id="oldImage" >
-                                <input type="hidden" name="pro_image_id" id="image_id" >
-                                <input type="hidden" name="type" value="1" >
-                                <input type="hidden" name="pro_id" value="{{$products[0]->pro_id}}" >
-                                
-                                <img src="https://via.placeholder.com/200x200.png"
-                                class="img-thumbnail imagePreview2" alt="">
-                                <div id="old_img"> 
-                                </div>
-                           
+                            <input type="hidden" name="oldImage" id="oldImage">
+                            <input type="hidden" name="pro_image_id" id="image_id">
+                            <input type="hidden" name="type" value="1">
+                            <input type="hidden" name="pro_id" value="{{$products[0]->pro_id}}">
+
+                            <img src="https://via.placeholder.com/200x200.png" class="img-thumbnail imagePreview2"
+                                alt="">
+                            <div id="old_img">
+                            </div>
+
                         </div>
                     </div>
                     <div class="block-content block-content-full text-right bg-light">
                         <button type="button" class="btn  btn-light" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">Save</button>
                     </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- END Vertically Centered Block Modal -->
+</div>
+<!-- END Vertically Centered Block Modal -->
 
 
 @endsection
@@ -267,7 +271,7 @@
 
     }
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

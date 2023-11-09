@@ -26,29 +26,29 @@
         <div class="block-content">
             <form action="{{route('part_page_update')}}" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
-                 <input type="hidden" name="page_id" value="{{$static_content[0]->id}}">
+                <input type="hidden" name="page_id" value="{{$static_content[0]->id}}">
                 <div class="row">
                     <div class="col-lg-12">
-                    <div class="block block-rounded block-bordered">
-                        <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
-                            @foreach ($language as $item)
-                            <input type="hidden" name="lang_loop[]" value="{{$item->name}}" >
-                            @if($loop->iteration == 1)
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#btabs-alt-static-{{$item->name}}"
-                                    style="text-transform: capitalize;">{{$item->name}}</a>
-                            </li>
-                            @else
-                            <li class="nav-item">
-                                <a class="nav-link " href="#btabs-alt-static-{{$item->name}}"
-                                    style="text-transform: capitalize;">{{$item->name}}</a>
-                            </li>
-                            @endif
-                            @endforeach
-                        </ul>
-                        <div class="block-content tab-content">
-                            @foreach ($language as $item)
-                            <?php 
+                        <div class="block block-rounded block-bordered">
+                            <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
+                                @foreach ($language as $item)
+                                <input type="hidden" name="lang_loop[]" value="{{$item->name}}">
+                                @if($loop->iteration == 1)
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#btabs-alt-static-{{$item->name}}"
+                                        style="text-transform: capitalize;">{{$item->name}}</a>
+                                </li>
+                                @else
+                                <li class="nav-item">
+                                    <a class="nav-link " href="#btabs-alt-static-{{$item->name}}"
+                                        style="text-transform: capitalize;">{{$item->name}}</a>
+                                </li>
+                                @endif
+                                @endforeach
+                            </ul>
+                            <div class="block-content tab-content">
+                                @foreach ($language as $item)
+                                <?php 
                             $current = null;
                             foreach($static_content as $item2) { 
                                 if ($item->name == $item2->local) {
@@ -57,101 +57,109 @@
                                 }
                             }
                           ?>
-                        
-                        <div class="tab-pane {{($loop->iteration == 1)?"active":""}}" id="btabs-alt-static-{{$item->name}}" role="tabpanel">
-                         
-                                <div class="form-group">
-                                <label for="example-select"><span class="req-fed">*</span>Title</label>
-                                <input type="text" class="form-control" name="title[{{$item->name}}]" value="{{isset($current->title)? $current->title:'' }}"  placeholder="Enter text..." >
+
+                                <div class="tab-pane {{($loop->iteration == 1)?" active":""}}"
+                                    id="btabs-alt-static-{{$item->name}}" role="tabpanel">
+
+                                    <div class="form-group">
+                                        <label for="example-select"><span class="req-fed">*</span>Title</label>
+                                        <input type="text" class="form-control" name="title[{{$item->name}}]"
+                                            value="{{isset($current->title)? $current->title:'' }}"
+                                            placeholder="Enter text...">
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <label for="example-select"><span class="req-fed">*</span>Content</label>
+                                        <textarea rows="4" name="content[{{$item->name}}]"
+                                            class="jsnotenew form-control">{{isset($current->content)? $current->content:'' }}</textarea>
+                                    </div>
+
                                 </div>
-                           
-        
-                           
-                                <div class="form-group">
-                                <label for="example-select"><span class="req-fed">*</span>Content</label>
-                                <textarea rows="4" name="content[{{$item->name}}]"
-                                class="jsnotenew form-control">{{isset($current->content)? $current->content:'' }}</textarea>
-                                </div>
-                          
-                        </div>
-                        @endforeach
-                        </div>
-                    </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                        <label for="example-select">Meta-title</label>
-                        <input type="text" class="form-control" name="meta_title" value=" {{$static_content[0]->meta_title}}" placeholder="Enter text..." >
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
-                        <label for="example-select">Meta-description</label>
-                        <input type="text" class="form-control" name="meta_desc" value=" {{$static_content[0]->meta_description}}" placeholder="Enter text..." >
+                            <label for="example-select">Meta-title</label>
+                            <input type="text" class="form-control" name="meta_title"
+                                value=" {{$static_content[0]->meta_title}}" placeholder="Enter text...">
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
-                        <label for="example-select">Meta-keyword</label>
-                        <input type="text" class="form-control" name="meta_key" value=" {{$static_content[0]->meta_keyword}}"  placeholder="Enter text..." >
+                            <label for="example-select">Meta-description</label>
+                            <input type="text" class="form-control" name="meta_desc"
+                                value=" {{$static_content[0]->meta_description}}" placeholder="Enter text...">
                         </div>
                     </div>
                     <div class="col-lg-12">
-                    <div class="form-group">
-                        <label class="d-block">Status</label>
-                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                            <input type="radio" class="custom-control-input" id="status-line-1" name="status"
-                                value="1" {{$static_content[0]->status == 1 ? 'checked':''}}>
-                            <label class="custom-control-label" for="status-line-1">Show</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                            <input type="radio" class="custom-control-input" id="status-line-2" name="status"
-                                value="0"  {{$static_content[0]->status == 2 ? 'checked':''}}>
-                            <label class="custom-control-label" for="status-line-2">Hide</label>
+                        <div class="form-group">
+                            <label for="example-select">Meta-keyword</label>
+                            <input type="text" class="form-control" name="meta_key"
+                                value=" {{$static_content[0]->meta_keyword}}" placeholder="Enter text...">
                         </div>
                     </div>
-                    <input type="hidden" name="filename[icon]" value="icon" >
-                    <div class="table-responsive">
-                     <table class="table table-bordered table-striped table-vcenter">
-                         <thead>
-                             <tr>
-                                 <th class="text-center" style="width: 10px;">
-                                     File Type
-                                 </th>
-                               
-                                 <th style="width:30%;">Preview</th>
-                                 <th style="width:30%;">Old Image</th>
-                                 <th>Upload File</th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             <tr>
-                                 <td class="text-center">
-                                    Image
-                                 </td>
-                               
-                                 <td class="font-w600">
-                                     <img src="https://via.placeholder.com/1350x750.png"
-                                         class="img-thumbnail imagePreview1 res-image" alt="">
-                                 </td>
-                                 <td class="text-center">
-                                         <img src="{{config('app.url')}}/medias/static_content/{{isset($static_content[0]->icon)? $static_content[0]->icon:''}}"
-                                             class="img-thumbnail res-image" alt="">
-                                             <input type="hidden" name="oldfile[icon]" value="{{isset($static_content[0]->icon)? $static_content[0]->icon:''}}" >
-                                     </td>
-                              
-                                 <td class="">
-                                     <div class="custom-file">
-                                         <input type="file" class="custom-file-input"
-                                             data-toggle="custom-file-input" id="icon" name="fileimage[icon]"
-                                             value=" " accept="image/*">
-                                         <label id="label1" class="custom-file-label" for="icon">Choose file</label>
-                                     </div>
-                                 </td>
-                             </tr>
-                         </tbody>
-                     </table>
-                 </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label class="d-block">Status</label>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-line-1" name="status"
+                                    value="1" {{$static_content[0]->status == 1 ? 'checked':''}}>
+                                <label class="custom-control-label" for="status-line-1">Show</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-line-2" name="status"
+                                    value="0" {{$static_content[0]->status == 2 ? 'checked':''}}>
+                                <label class="custom-control-label" for="status-line-2">Hide</label>
+                            </div>
+                        </div>
+                        <input type="hidden" name="filename[icon]" value="icon">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-vcenter">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="width: 10px;">
+                                            File Type
+                                        </th>
+
+                                        <th style="width:30%;">Preview</th>
+                                        <th style="width:30%;">Old Image</th>
+                                        <th>Upload File</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            Image
+                                        </td>
+
+                                        <td class="font-w600">
+                                            <img src="https://via.placeholder.com/1350x750.png"
+                                                class="img-thumbnail imagePreview1 res-image" alt="">
+                                        </td>
+                                        <td class="text-center">
+                                            <img src="{{config('app.url')}}/medias/static_content/{{isset($static_content[0]->icon)? $static_content[0]->icon:''}}"
+                                                class="img-thumbnail res-image" alt="">
+                                            <input type="hidden" name="oldfile[icon]"
+                                                value="{{isset($static_content[0]->icon)? $static_content[0]->icon:''}}">
+                                        </td>
+
+                                        <td class="">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input"
+                                                    data-toggle="custom-file-input" id="icon" name="fileimage[icon]"
+                                                    value=" " accept="image/*">
+                                                <label id="label1" class="custom-file-label" for="icon">Choose
+                                                    file</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <div class="col-lg-12">
@@ -170,9 +178,8 @@
 @endsection
 @section('js')
 <script>
-
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

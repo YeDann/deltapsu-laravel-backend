@@ -9,10 +9,10 @@
     #test-label {
         height: 100px !important;
     }
-    .img-thumbnail{
+
+    .img-thumbnail {
         width: 50%;
     }
-
 </style>
 @endsection
 @section('content')
@@ -23,7 +23,7 @@
             <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Product News</h1>
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('news.index')}}">Product News</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('news.index')}}">Product News</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Create</li>
                 </ol>
             </nav>
@@ -41,7 +41,7 @@
                 {{csrf_field()}}
                 <!-- Basic Elements -->
                 @foreach($language as $item)
-                <input type="hidden" name="langloop[]" value="{{$item->name}}" >
+                <input type="hidden" name="langloop[]" value="{{$item->name}}">
                 @endforeach
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-xl-8">
@@ -51,7 +51,8 @@
                                 name="title" placeholder="Title..." required>
                         </div>
                         <div class="form-group mt-3">
-                            <label for="example-text-input">Image thumbnail <span class="req-fed">* Max File Size 2 MB</span></label>
+                            <label for="example-text-input">Image thumbnail <span class="req-fed">* Max File Size 2
+                                    MB</span></label>
                             <div id="imagePreview">
                                 <img src="https://via.placeholder.com/415x250.png" class="img-thumbnail imagePreview"
                                     alt="">
@@ -59,13 +60,14 @@
                             <div class="custom-file " style="width: 50%;">
                                 <input type="file"
                                     class="custom-file-input {{ $errors->has('thumbnail') ? 'is-invalid' : '' }}"
-                                    data-toggle="custom-file-input" id="thumbnail" name="file[thumbnail]" accept="image/*">
+                                    data-toggle="custom-file-input" id="thumbnail" name="file[thumbnail]"
+                                    accept="image/*">
                                 <label class="custom-file-label" id="label2" for="fileImage">Choose file</label>
-                                <input type="hidden" name="namefile[thumbnail]" value="thumbnail" >
+                                <input type="hidden" name="namefile[thumbnail]" value="thumbnail">
                             </div>
                         </div>
                         <hr>
-                        
+
                         <div class="form-group w-50">
                             <label for="">News Type</label>
                             <select name="newsType" class="form-control" id="" required>
@@ -77,15 +79,15 @@
                         <div class="form-group w-50">
                             <label for="example-text-input">Date info<span class="req-fed">*</span></label>
                             <input type="text" class="js-datepicker form-control" id="example-datepicker1"
-                                name="dateinfo" data-week-start="1" data-autoclose="true"
-                                data-today-highlight="true" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
-                                value="" required>
+                                name="dateinfo" data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                                data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="" required>
                         </div>
                         <div class="form-group w-50">
                             <label for="example-text-input">Date Publish<span class="req-fed">*</span></label>
-                            <input type="text" class="js-datepicker form-control {{ $errors->has('datePublish') ? 'is-invalid' : '' }}" 
-                            name="datePublish" data-week-start="1" data-autoclose="true"
-                                data-today-highlight="true" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" name="datePublish" required>
+                            <input type="text"
+                                class="js-datepicker form-control {{ $errors->has('datePublish') ? 'is-invalid' : '' }}"
+                                name="datePublish" data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                                data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" name="datePublish" required>
                         </div>
                         <div class="form-group">
                             <label class="d-block">News Status</label>
@@ -103,21 +105,21 @@
                         <hr>
                         <div class="form-group">
                             <label for="">Excerpt</label>
-                            <textarea rows="4" name="description"
-                                class="jsnotenew form-control"></textarea>
+                            <textarea rows="4" name="description" class="jsnotenew form-control"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="">Content</label>
                             <textarea name="content" class="jsnotenew form-control"></textarea>
                         </div>
                         <div class="form-group w-50">
-                                <label>File <span class="req-fed">* Max File Size 20 MB</span></label>
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="file[newsfile]" data-toggle="custom-file-input" id="file_input" >
-                                    <label class="custom-file-label" for="file_input">Choose file</label>
-                                    <input type="hidden" name="namefile[newsfile]" value="newsfile" >
-                                </div>
+                            <label>File <span class="req-fed">* Max File Size 20 MB</span></label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="file[newsfile]"
+                                    data-toggle="custom-file-input" id="file_input">
+                                <label class="custom-file-label" for="file_input">Choose file</label>
+                                <input type="hidden" name="namefile[newsfile]" value="newsfile">
                             </div>
+                        </div>
                         <hr>
                         <div class="form-group">
                             <label for="">Meta - Title</label>
@@ -135,7 +137,7 @@
                             <button class="btn btn-success col-md-2" type="submit">Create
                             </button>
                             <a href="{{route('news.index')}}" class="btn btn-secondary col-md-2">
-                                Cancel 
+                                Cancel
                             </a>
                         </div>
                     </div>
@@ -156,7 +158,7 @@
     });
 
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

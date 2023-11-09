@@ -18,18 +18,18 @@
 </div>
 <!-- Content -->
 <div class="content">
-        @if(Session::has('flash_message'))
-        <div class="alert alert-success" role="alert">
-            <button class="close" data-dismiss="alert"></button>
-            {!! Session('flash_message') !!}
-        </div>
-        @endif
-        @if(Session::has('error_message'))
-        <div class="alert alert-danger" role="alert">
-            <button class="close" data-dismiss="alert"></button>
-            {!! Session('error_message') !!}
-        </div>
-        @endif
+    @if(Session::has('flash_message'))
+    <div class="alert alert-success" role="alert">
+        <button class="close" data-dismiss="alert"></button>
+        {!! Session('flash_message') !!}
+    </div>
+    @endif
+    @if(Session::has('error_message'))
+    <div class="alert alert-danger" role="alert">
+        <button class="close" data-dismiss="alert"></button>
+        {!! Session('error_message') !!}
+    </div>
+    @endif
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
             <h3 class="block-title">Information</h3>
@@ -39,19 +39,21 @@
                 {{csrf_field()}}
                 <!-- Basic Elements -->
                 <div class="row">
-                <input type="hidden" name="type_id" value="{{$typeid}}" >
-                <input type="hidden" name="con_id" value="{{isset($static_content[0]->sta_id)? $static_content[0]->sta_id:''}}" >
-               
+                    <input type="hidden" name="type_id" value="{{$typeid}}">
+                    <input type="hidden" name="con_id"
+                        value="{{isset($static_content[0]->sta_id)? $static_content[0]->sta_id:''}}">
+
                     <div class="col-lg-12">
                         <div class="block block-rounded block-bordered">
                             <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
                                 @foreach ($language as $item)
                                 <li class="nav-item">
-                                    <a class="nav-link {{($loop->iteration == 1)?'active':''}}" href="#btabs-alt-static-{{$item->name}}"
+                                    <a class="nav-link {{($loop->iteration == 1)?'active':''}}"
+                                        href="#btabs-alt-static-{{$item->name}}"
                                         style="text-transform: capitalize;">{{$item->name}}</a>
                                 </li>
                                 @endforeach
-                           
+
                             </ul>
                             <div class="block-content tab-content">
                                 @foreach ($language as $item)
@@ -71,26 +73,29 @@
                                         <label for="example-select">Title</label>
                                         <input type="text"
                                             class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                            name="name[{{$item->name}}]" value="{{isset($current->title)? $current->title:''}}" placeholder=" Enter text...">
+                                            name="name[{{$item->name}}]"
+                                            value="{{isset($current->title)? $current->title:''}}"
+                                            placeholder=" Enter text...">
                                     </div>
                                     <div class="form-group">
-                                            <label for="">Content</label>
-                                            <textarea name="content[{{$item->name}}]" class="jssummernote1">{{isset($current->content)? $current->content:''}}</textarea>
-                                        </div>
+                                        <label for="">Content</label>
+                                        <textarea name="content[{{$item->name}}]"
+                                            class="jssummernote1">{{isset($current->content)? $current->content:''}}</textarea>
+                                    </div>
                                 </div>
                                 @endforeach
                             </div>
-                         
 
-                            <input type="hidden" name="filename[destop]" value="destop" >
-                               <div class="table-responsive d-none">
+
+                            <input type="hidden" name="filename[destop]" value="destop">
+                            <div class="table-responsive d-none">
                                 <table class="table table-bordered table-striped table-vcenter">
                                     <thead>
                                         <tr>
                                             <th class="text-center" style="width: 10px;">
                                                 File Type
                                             </th>
-                                          
+
                                             <th style="width:500px;">Preview</th>
                                             <th style="width:500px;">Old Image</th>
                                             <th>Upload File</th>
@@ -99,48 +104,54 @@
                                     <tbody>
                                         <tr>
                                             <td class="text-center">
-                                               Image
+                                                Image
                                             </td>
-                                          
+
                                             <td class="font-w600">
                                                 <img src="https://via.placeholder.com/1350x750.png"
                                                     class="img-thumbnail imagePreview1 res-image" alt="">
                                             </td>
                                             <td class="text-center">
-                                                    <img src="{{config('app.url')}}/medias/static_content/{{isset($static_content[0]->destop_image)? $static_content[0]->destop_image:''}}"
-                                                        class="img-thumbnail res-image" alt="">
-                                                        <input type="hidden" name="oldfile[destop]" value="{{isset($static_content[0]->destop_image)? $static_content[0]->destop_image:''}}" >
-                                                </td>
-                                         
+                                                <img src="{{config('app.url')}}/medias/static_content/{{isset($static_content[0]->destop_image)? $static_content[0]->destop_image:''}}"
+                                                    class="img-thumbnail res-image" alt="">
+                                                <input type="hidden" name="oldfile[destop]"
+                                                    value="{{isset($static_content[0]->destop_image)? $static_content[0]->destop_image:''}}">
+                                            </td>
+
                                             <td class="">
                                                 <div class="custom-file">
                                                     <input type="file" class="custom-file-input"
-                                                        data-toggle="custom-file-input" id="destop" name="fileimage[destop]"
-                                                        value=" " accept="image/*">
-                                                    <label id="label1" class="custom-file-label" for="destop">Choose file</label>
+                                                        data-toggle="custom-file-input" id="destop"
+                                                        name="fileimage[destop]" value=" " accept="image/*">
+                                                    <label id="label1" class="custom-file-label" for="destop">Choose
+                                                        file</label>
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                           
+
                         </div>
                         <div class="form-group">
                             <label class="d-block">Show</label>
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                    <input type="radio" class="custom-control-input" id="status-1" name="status" value="1" {{isset($static_content[0]->status)&& $static_content[0]->status == 1 ? 'checked':''}}>
-                                    <label class="custom-control-label" for="status-1">Show</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                    <input type="radio" class="custom-control-input" id="status-2" name="status" value="0"  {{isset($static_content[0]->status)&& $static_content[0]->status == 0 ? 'checked':''}}>
-                                    <label class="custom-control-label" for="status-2">Hide</label>
-                                </div>
-                           
+                                <input type="radio" class="custom-control-input" id="status-1" name="status" value="1"
+                                    {{isset($static_content[0]->status)&& $static_content[0]->status == 1 ?
+                                'checked':''}}>
+                                <label class="custom-control-label" for="status-1">Show</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-2" name="status" value="0"
+                                    {{isset($static_content[0]->status)&& $static_content[0]->status == 0 ?
+                                'checked':''}}>
+                                <label class="custom-control-label" for="status-2">Hide</label>
+                            </div>
+
                         </div>
                         <div class="text-center form-group">
                             <button class="btn btn-info" type="submit">Update </button>
-                          
+
                         </div>
                     </div>
                 </div>
@@ -152,7 +163,7 @@
 @section('js')
 <script>
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

@@ -9,7 +9,6 @@
     #test-label {
         height: 100px !important;
     }
-
 </style>
 @endsection
 @section('content')
@@ -20,7 +19,7 @@
             <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Technical Article</h1>
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"> <a href="{{route('technical.index')}}" >Technical Articles</a></li>
+                    <li class="breadcrumb-item"> <a href="{{route('technical.index')}}">Technical Articles</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Create</li>
                 </ol>
             </nav>
@@ -38,7 +37,7 @@
                 {{csrf_field()}}
                 <!-- Basic Elements -->
                 @foreach($language as $item)
-                <input type="hidden" name="langloop[]" value="{{$item->name}}" >
+                <input type="hidden" name="langloop[]" value="{{$item->name}}">
                 @endforeach
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-xl-8">
@@ -58,7 +57,7 @@
                                     class="custom-file-input {{ $errors->has('thumbnail') ? 'is-invalid' : '' }}"
                                     data-toggle="custom-file-input" id="image" name="file[thumbnail]" accept="image/*">
                                 <label class="custom-file-label" for="image">Choose file</label>
-                                <input type="hidden" name="namefile[thumbnail]" value="thumbnail" >
+                                <input type="hidden" name="namefile[thumbnail]" value="thumbnail">
                             </div>
                         </div>
                         <hr>
@@ -71,17 +70,17 @@
                             </select>
                         </div>
                         <div class="form-group w-50">
-                                <label for="example-text-input">Date info<span class="req-fed">*</span></label>
-                                <input type="text" class="js-datepicker form-control" id="example-datepicker1"
-                                    name="dateinfo" data-week-start="1" data-autoclose="true"
-                                    data-today-highlight="true" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
-                                    value="" required>
-                            </div>
+                            <label for="example-text-input">Date info<span class="req-fed">*</span></label>
+                            <input type="text" class="js-datepicker form-control" id="example-datepicker1"
+                                name="dateinfo" data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                                data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="" required>
+                        </div>
                         <div class="form-group w-50">
                             <label for="example-text-input">Date Publish *</label>
-                            <input type="text" class="js-datepicker form-control {{ $errors->has('datePublish') ? 'is-invalid' : '' }}" 
-                            name="datePublish" data-week-start="1" data-autoclose="true"
-                                data-today-highlight="true" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" name="datePublish">
+                            <input type="text"
+                                class="js-datepicker form-control {{ $errors->has('datePublish') ? 'is-invalid' : '' }}"
+                                name="datePublish" data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                                data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" name="datePublish">
                         </div>
                         <div class="form-group">
                             <label class="d-block">Status</label>
@@ -98,32 +97,31 @@
                         </div>
                         <hr>
                         <div class="form-group">
-                                <label for="">Excerpt</label>
-                                <textarea rows="4" name="description"
-                                    class="jsnotenew form-control"></textarea>
-                            </div>
+                            <label for="">Excerpt</label>
+                            <textarea rows="4" name="description" class="jsnotenew form-control"></textarea>
+                        </div>
                         <div class="form-group">
                             <label for="">Content</label>
                             <textarea name="content" class="jsnotenew form-control"></textarea>
                         </div>
                         <hr>
                         <div class="form-group">
-                                <label for="">Meta - Title</label>
-                                <input type="text" class="form-control" name="metaTitle" value="">
-                            </div>
-                            <div class="form-group">
-                                <label for="">Meta - Description</label>
-                                <textarea name="metaDescription" class="form-control"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Meta - Keywords</label>
-                                <textarea name="metaKeyword" class="form-control "></textarea>
-                            </div>
+                            <label for="">Meta - Title</label>
+                            <input type="text" class="form-control" name="metaTitle" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Meta - Description</label>
+                            <textarea name="metaDescription" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Meta - Keywords</label>
+                            <textarea name="metaKeyword" class="form-control "></textarea>
+                        </div>
                         <div class="form-group text-center">
-                            <button class="btn btn-success col-md-2" type="submit">Create 
+                            <button class="btn btn-success col-md-2" type="submit">Create
                             </button>
                             <a href="{{route('technical.index')}}" class="btn btn-secondary col-md-2">
-                                Cancel 
+                                Cancel
                             </a>
                         </div>
                     </div>
@@ -144,7 +142,7 @@
     });
 
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

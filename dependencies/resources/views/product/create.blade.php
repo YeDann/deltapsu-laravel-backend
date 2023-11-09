@@ -85,7 +85,6 @@
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
     }
-
 </style>
 @endsection
 @section('content')
@@ -116,12 +115,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                           
+
                             <label for="example-select">Product Code <span class="req-fed">*</span></label>
                             <input type="text"
                                 class="form-control {{ $errors->has('productCode') ? 'is-invalid' : '' }}"
                                 name="productCode" value="{{old('productCode')}}" placeholder="Enter name..." required>
-                                <span class="req-fed">Remark* Don't use ( & ) in product code</span>
+                            <span class="req-fed">Remark* Don't use ( & ) in product code</span>
                         </div>
                         {{-- <div class="form-group">
                             <label for="example-select"> <span class="req-fed">*</span></label>
@@ -136,12 +135,14 @@
                         </div> --}}
 
                         <div class="form-group">
-                            <label class="d-block">Select Product Category  <span class="req-fed">*</span></label>
+                            <label class="d-block">Select Product Category <span class="req-fed">*</span></label>
                             @foreach($subCategories as $sub)
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="checkbox" onclick="selectProductcategories({{$sub->sub_pro_id}})" class="custom-control-input" id="dataCate{{$sub->sub_pro_id}}" name="pro_categories[]"
-                                    value="{{$sub->sub_pro_id}}" >
-                                <label class="custom-control-label" for="dataCate{{$sub->sub_pro_id}}">{{$sub->name}}</label>
+                                <input type="checkbox" onclick="selectProductcategories({{$sub->sub_pro_id}})"
+                                    class="custom-control-input" id="dataCate{{$sub->sub_pro_id}}"
+                                    name="pro_categories[]" value="{{$sub->sub_pro_id}}">
+                                <label class="custom-control-label"
+                                    for="dataCate{{$sub->sub_pro_id}}">{{$sub->name}}</label>
                             </div>
                             @endforeach
                             <input type="hidden" name="categorie" id="categories">
@@ -154,24 +155,24 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="d-block">Segment  <span class="req-fed">*</span></label>
+                            <label class="d-block">Segment <span class="req-fed">*</span></label>
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="checkbox" class="custom-control-input" id="status_induc" name="status_certificate[]"
-                                    value="1" checked>
+                                <input type="checkbox" class="custom-control-input" id="status_induc"
+                                    name="status_certificate[]" value="1" checked>
                                 <label class="custom-control-label" for="status_induc">Industrial</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="checkbox" class="custom-control-input" id="status_medical" name="status_certificate[]"
-                                    value="2">
+                                <input type="checkbox" class="custom-control-input" id="status_medical"
+                                    name="status_certificate[]" value="2">
                                 <label class="custom-control-label" for="status_medical">Medical</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="checkbox" class="custom-control-input" id="status_residen" name="status_certificate[]"
-                                    value="3">
+                                <input type="checkbox" class="custom-control-input" id="status_residen"
+                                    name="status_certificate[]" value="3">
                                 <label class="custom-control-label" for="status_residen">Lighting & Signage</label>
                             </div>
                         </div>
-                       
+
                         <div class="form-group">
                             <label>Dimension L</label>
                             <label><span class="req-fed">Choice A: Use numeric value for simple display L x W x D.
@@ -217,62 +218,61 @@
                         </div>
                         <div class="form-group">
                             <label>Tag</label>
-                          <select name="tag[]" class="form-control js-example-tags"  data-placeholder="Enter tag.." multiple="multiple">
-                            <option></option>
-                            @foreach ($products as $pro)
-                          <option value="{{$pro->pro_code}}">{{$pro->pro_code}}</option>
-                            @endforeach
-                          </select>
+                            <select name="tag[]" class="form-control js-example-tags" data-placeholder="Enter tag.."
+                                multiple="multiple">
+                                <option></option>
+                                @foreach ($products as $pro)
+                                <option value="{{$pro->pro_code}}">{{$pro->pro_code}}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">
                             <label>Related Products</label>
-                            <select  id="relatePro" class="js-select2 form-control" name="relatePro[]" data-placeholder="Choose many.."  multiple>
+                            <select id="relatePro" class="js-select2 form-control" name="relatePro[]"
+                                data-placeholder="Choose many.." multiple>
                                 <option></option>
                                 @foreach ($products as $pro)
                                 <option value="{{$pro->pro_id}}">{{$pro->pro_code}}</option>
-                                  @endforeach
-                             </select>
+                                @endforeach
+                            </select>
                         </div>
 
 
 
 
                         <div class="block block-rounded block-bordered">
-                          
+
                             <div class="block-content tab-content">
                                 @foreach ($language as $item)
                                 <input type="hidden" name="lang_loop[]" value="{{$item->name}}">
                                 @endforeach
 
                                 <div class="form-group">
-                                        <label for="">Highlights & Features</label>
-                                        <textarea name="overview" class="jsnotenew"></textarea>
+                                    <label for="">Highlights & Features</label>
+                                    <textarea name="overview" class="jsnotenew"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Content</label>
+                                    <textarea name="content" class="jsnotenew"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="d-block">show/hide language</label>
+                                    <div
+                                        class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                        <input type="radio" class="custom-control-input" id="status-1en" name="status"
+                                            value="1" checked>
+                                        <label class="custom-control-label" for="status-1en">Show</label>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="">Content</label>
-                                        <textarea name="content" class="jsnotenew"></textarea>
+                                    <div
+                                        class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                        <input type="radio" class="custom-control-input" id="status-2en" name="status"
+                                            value="0">
+                                        <label class="custom-control-label" for="status-2en">Hide</label>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="d-block">show/hide language</label>
-                                        <div
-                                            class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                            <input type="radio" class="custom-control-input"
-                                                id="status-1en" name="status" value="1"
-                                                checked>
-                                            <label class="custom-control-label"
-                                                for="status-1en">Show</label>
-                                        </div>
-                                        <div
-                                            class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                            <input type="radio" class="custom-control-input"
-                                                id="status-2en" name="status" value="0">
-                                            <label class="custom-control-label"
-                                                for="status-2en">Hide</label>
-                                        </div>
 
-                                    </div>
-                                 
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -328,8 +328,8 @@
                                         @foreach ($pd_fields as $field)
                                         @if($sect->sectid == $field->section_id)
                                         @if($field->type == "text")
-                                        <input type="hidden" class="form-control"
-                                        name="productfieldText[]" value="{{$field->pd_field_id}}">
+                                        <input type="hidden" class="form-control" name="productfieldText[]"
+                                            value="{{$field->pd_field_id}}">
                                         <div class="data-text">
                                             <div class="form-group">
                                                 <label class="d-block">{{$field->field_name}}</label>
@@ -339,62 +339,65 @@
                                         </div>
                                         @else
                                         <div class="data-number">
-                                                <input type="hidden" class="form-control"
-                                                name="productfieldNumbers[]" value="{{$field->pd_field_id}}">
+                                            <input type="hidden" class="form-control" name="productfieldNumbers[]"
+                                                value="{{$field->pd_field_id}}">
                                             <div class="form-group">
                                                 <label class="d-block">{{$field->field_name}}</label>
                                                 <div
                                                     class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input" onchange="selectinputtype({{$field->pd_field_id}} ,1);"
-                                                        id="status_input_sig{{$field->pd_field_id}}" name="status_input[{{$field->pd_field_id}}]"
-                                                        value="1" checked>
+                                                    <input type="radio" class="custom-control-input"
+                                                        onchange="selectinputtype({{$field->pd_field_id}} ,1);"
+                                                        id="status_input_sig{{$field->pd_field_id}}"
+                                                        name="status_input[{{$field->pd_field_id}}]" value="1" checked>
                                                     <label class="custom-control-label"
                                                         for="status_input_sig{{$field->pd_field_id}}">Single</label>
                                                 </div>
                                                 <div
                                                     class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input"  onchange="selectinputtype({{$field->pd_field_id}} ,2);"
-                                                        id="status_input_Mutl{{$field->pd_field_id}}" name="status_input[{{$field->pd_field_id}}]"
-                                                        value="2">
+                                                    <input type="radio" class="custom-control-input"
+                                                        onchange="selectinputtype({{$field->pd_field_id}} ,2);"
+                                                        id="status_input_Mutl{{$field->pd_field_id}}"
+                                                        name="status_input[{{$field->pd_field_id}}]" value="2">
                                                     <label class="custom-control-label"
                                                         for="status_input_Mutl{{$field->pd_field_id}}">Multiple</label>
                                                 </div>
                                                 <div
                                                     class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input"  onchange="selectinputtype({{$field->pd_field_id}} ,3);"
-                                                        id="status_input_Rang{{$field->pd_field_id}}" name="status_input[{{$field->pd_field_id}}]"
-                                                        value="3">
+                                                    <input type="radio" class="custom-control-input"
+                                                        onchange="selectinputtype({{$field->pd_field_id}} ,3);"
+                                                        id="status_input_Rang{{$field->pd_field_id}}"
+                                                        name="status_input[{{$field->pd_field_id}}]" value="3">
                                                     <label class="custom-control-label"
                                                         for="status_input_Rang{{$field->pd_field_id}}">Range</label>
                                                 </div>
                                             </div>
-                                         
+
                                             <div class="mulltiple-box{{$field->pd_field_id}} d-none">
                                                 <div class="product-custom-field addfield1">
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon p-l">1</span>
-                                                        <input name="inputNumber[{{$field->pd_field_id}}][m][1]" type="number"
-                                                             class="form-control">
-                                                        <span
-                                                            class="input-group-addon number_type_remove p-r" onclick="deletemutifield({{$field->pd_field_id}} , 1);">-</span>
+                                                        <input name="inputNumber[{{$field->pd_field_id}}][m][1]"
+                                                            type="number" class="form-control">
+                                                        <span class="input-group-addon number_type_remove p-r"
+                                                            onclick="deletemutifield({{$field->pd_field_id}} , 1);">-</span>
                                                     </div>
                                                 </div>
                                                 <div class="product-custom-field addfield2">
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon p-l">2</span>
-                                                        <input name="inputNumber[{{$field->pd_field_id}}][m][2]" type="number"
-                                                            step="any" class="form-control">
-                                                        <span
-                                                            class="input-group-addon number_type_remove p-r" onclick="deletemutifield({{$field->pd_field_id}} , 2);">-</span>
+                                                        <input name="inputNumber[{{$field->pd_field_id}}][m][2]"
+                                                            type="number" step="any" class="form-control">
+                                                        <span class="input-group-addon number_type_remove p-r"
+                                                            onclick="deletemutifield({{$field->pd_field_id}} , 2);">-</span>
                                                     </div>
                                                 </div>
                                                 <div class="product-custom-field addfield3">
                                                     <div class="form-group input-group">
                                                         <span class="input-group-addon p-l">3</span>
-                                                        <input name="inputNumber[{{$field->pd_field_id}}][m][3]" type="number"
-                                                             step="any" class="form-control">
-                                                        <span
-                                                            class="input-group-addon number_type_remove p-r" onclick="deletemutifield({{$field->pd_field_id}} , 3);">-</span>
+                                                        <input name="inputNumber[{{$field->pd_field_id}}][m][3]"
+                                                            type="number" step="any" class="form-control">
+                                                        <span class="input-group-addon number_type_remove p-r"
+                                                            onclick="deletemutifield({{$field->pd_field_id}} , 3);">-</span>
                                                     </div>
                                                 </div>
                                                 <div class="btn-add-input">
@@ -405,32 +408,32 @@
                                                         </button>
                                                     </div>
                                                 </div>
-                                             
+
                                             </div>
                                             <div class="range-box{{$field->pd_field_id}} d-none">
-                                            <div class="product-custom-field-min">
-                                                <div class="form-group input-group">
-                                                    <span class="input-group-addon p-l">Min</span>
-                                                    <input name="inputNumber[{{$field->pd_field_id}}][r][1]" type="number" step="any" 
-                                                        class="form-control">
+                                                <div class="product-custom-field-min">
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon p-l">Min</span>
+                                                        <input name="inputNumber[{{$field->pd_field_id}}][r][1]"
+                                                            type="number" step="any" class="form-control">
 
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="product-custom-field-min">
-                                                <div class="form-group input-group">
-                                                    <span class="input-group-addon p-l">Max</span>
-                                                    <input name="inputNumber[{{$field->pd_field_id}}][r][2]" type="number" step="any" 
-                                                        class="form-control">
+                                                <div class="product-custom-field-min">
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon p-l">Max</span>
+                                                        <input name="inputNumber[{{$field->pd_field_id}}][r][2]"
+                                                            type="number" step="any" class="form-control">
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </div>
                                             <div class="single-box{{$field->pd_field_id}}">
-                                            <div class="product-custom-field-min">
-                                                <div class="form-group input-group ">
-                                                    <input name="inputNumber[{{$field->pd_field_id}}][s][1]" type="number" step="any" 
-                                                        class="form-control">
+                                                <div class="product-custom-field-min">
+                                                    <div class="form-group input-group ">
+                                                        <input name="inputNumber[{{$field->pd_field_id}}][s][1]"
+                                                            type="number" step="any" class="form-control">
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </div>
                                         </div>
                                         @endif
@@ -444,38 +447,28 @@
 
                         <div class="form-group">
                             <label class="d-block">Enable/ Disable</label>
-                            <div
-                                class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="radio" class="custom-control-input"
-                                    id="status-cl1en" name="enable_pro" value="1"
-                                    checked>
-                                <label class="custom-control-label"
-                                    for="status-cl1en">Enable</label>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-cl1en" name="enable_pro"
+                                    value="1" checked>
+                                <label class="custom-control-label" for="status-cl1en">Enable</label>
                             </div>
-                            <div
-                                class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="radio" class="custom-control-input"
-                                    id="status-cl2en" name="enable_pro" value="0">
-                                <label class="custom-control-label"
-                                    for="status-cl2en">Disable</label>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-cl2en" name="enable_pro"
+                                    value="0">
+                                <label class="custom-control-label" for="status-cl2en">Disable</label>
                             </div>
                         </div>
                         <div class="form-group mt-5">
                             <label class="d-block">Is manaul page show?</label>
-                            <div
-                                class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="radio" class="custom-control-input"
-                                    id="status-manaul" name="manaul_status" value="1"
-                                    checked>
-                                <label class="custom-control-label"
-                                    for="status-cl1en">Show</label>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-manaul" name="manaul_status"
+                                    value="1" checked>
+                                <label class="custom-control-label" for="status-cl1en">Show</label>
                             </div>
-                            <div
-                                class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="radio" class="custom-control-input"
-                                    id="status-manaul2" name="manaul_status" value="0"  >
-                                <label class="custom-control-label"
-                                    for="status-manaul2">Hide</label>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-manaul2"
+                                    name="manaul_status" value="0">
+                                <label class="custom-control-label" for="status-manaul2">Hide</label>
                             </div>
                         </div>
 
@@ -564,7 +557,7 @@
 </script>
 <script>
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

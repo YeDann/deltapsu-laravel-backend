@@ -1,92 +1,91 @@
 @extends('layouts.admin')
 @section('style')
 <style>
-        .card-header-collapes {
-            border: 1px solid gray;
-            padding: 10px;
-            border-radius: 4px;
-        }
-    
-        #accordion_input {
-            width: 100%;
-        }
-    
-        .card-body {
-            padding: 10px;
-        }
-    
-    
-    
-        .inline-box {
-            display: flex;
-            -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-        }
-    
-        .input-group-addon {
-            padding: 6px 12px;
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1;
-            color: #555;
-            text-align: center;
-            background-color: #eee;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-    
-        .product-custom-field {
-            max-width: 150px;
-            display: inline-block;
-            margin-top: 5px;
-            margin-right: 5px;
-        }
-    
-        .product-custom-field-min {
-            max-width: 150px;
-            display: inline-block;
-            margin-top: 5px;
-            margin-right: 5px;
-        }
-    
-        .input-group-addon,
-        .input-group-btn {
-            width: 1%;
-            white-space: nowrap;
-            vertical-align: middle;
-        }
-    
-        .input-group {
-            position: relative;
-            display: table;
-            border-collapse: separate;
-        }
-    
-        .input-group input {
-            width: 100% !important;
-        }
-    
-        .input-group .form-control,
-        .input-group-addon,
-        .input-group-btn {
-            display: table-cell;
-        }
-    
-        .btn-add-input {
-            display: inline-block;
-        }
-    
-        .p-l {
-            border-top-right-radius: 0px;
-            border-bottom-right-radius: 0px;
-        }
-    
-        .p-r {
-            border-top-left-radius: 0px;
-            border-bottom-left-radius: 0px;
-        }
-    
-    </style>
+    .card-header-collapes {
+        border: 1px solid gray;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    #accordion_input {
+        width: 100%;
+    }
+
+    .card-body {
+        padding: 10px;
+    }
+
+
+
+    .inline-box {
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+
+    .input-group-addon {
+        padding: 6px 12px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1;
+        color: #555;
+        text-align: center;
+        background-color: #eee;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .product-custom-field {
+        max-width: 150px;
+        display: inline-block;
+        margin-top: 5px;
+        margin-right: 5px;
+    }
+
+    .product-custom-field-min {
+        max-width: 150px;
+        display: inline-block;
+        margin-top: 5px;
+        margin-right: 5px;
+    }
+
+    .input-group-addon,
+    .input-group-btn {
+        width: 1%;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    .input-group {
+        position: relative;
+        display: table;
+        border-collapse: separate;
+    }
+
+    .input-group input {
+        width: 100% !important;
+    }
+
+    .input-group .form-control,
+    .input-group-addon,
+    .input-group-btn {
+        display: table-cell;
+    }
+
+    .btn-add-input {
+        display: inline-block;
+    }
+
+    .p-l {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    .p-r {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+</style>
 @endsection
 @section('content')
 <!-- Nav -->
@@ -115,82 +114,97 @@
                 <!-- Basic Elements -->
                 <div class="row">
                     <div class="col-md-12">
-                    <input type="hidden" name="pro_id"  value="{{$products[0]->pro_id}}">
-                            <div class="form-group">
-                                    <label for="example-select">Product Code <span class="req-fed">*</span></label>
-                                    <input type="text"
-                                        class="form-control {{ $errors->has('productCode') ? 'is-invalid' : '' }}"
-                                        name="productCode" value="{{$products[0]->pro_code}}" placeholder="Enter name..."  required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="example-select">Select Product Categorie <span class="req-fed">*</span></label>
-                                    <select class="js-select2 form-control" id="pro_categories" name="pro_categories" onchange="selectProductcategories()" data-placeholder="Choose one.." required>
-                                            <option></option>
-                                           @foreach($subCategories as $sub) 
-                                           @if($products[0]->pro_categories_id == $sub->sub_pro_id)
-                                            <option value="{{$sub->sub_pro_id}}" selected>{{$sub->name}}</option>
-                                            @else 
-                                            <option value="{{$sub->sub_pro_id}}" >{{$sub->name}}</option>
-                                            @endif
-                                            @endforeach
-                                        </select>    
-                                </div>
-                                <div class="form-group">
-                                        <label for="example-select">Select Serie <span class="req-fed">*</span></label>
-                                        <select class="js-select2 form-control" id="SeriesId" name="Series" data-placeholder="Choose one.." required>
-                                                <option></option>
-                                            </select>    
-                                </div>
-                                <div class="form-group">
-                                        <label>Dimension L</label>
-                                        <label><span class="req-fed">Choice A: Use numeric value for simple display L x W x D. Choice B: Use HTML to display any free text and ignore dimensionW and dimensionD  </span></label>
-                                        <input type="text" class="form-control" value="{{$products[0]->dimensionL}}"  name="dimensionL" placeholder="Enter ..." >
-                                </div>
-                                <div class="form-group">
-                                        <label>Dimension W</label>
-                                        <input type="text" class="form-control" value="{{$products[0]->dimensionW}}"  name="dimensionw" placeholder="Enter ..." >
-                                </div>
-                                <div class="form-group">
-                                        <label>Dimension D</label>
-                                        <input type="text" class="form-control"  value="{{$products[0]->dimensionD}}" name="dimensionD" placeholder="Enter ..." >
-                                </div>
-                                <div class="form-group">
-                                        <label>Unit Weight</label>
-                                        <input type="text" class="form-control" value="{{$products[0]->unit_weight}}"  name="unitWeight" placeholder="Enter ..." >
-                                </div>
-                                <div class="form-group">
-                                        <label class="d-block">Status <span class="req-fed">*</span></label>
-                                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                <input type="radio" class="custom-control-input" id="status_none" name="status_pro" value="1" {{ ($products[0]->status_product == 1 ) ? 'checked' : '' }}  >
-                                                <label class="custom-control-label" for="status_none">None</label>
-                                            </div>
-                                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                <input type="radio" class="custom-control-input" id="status_new" name="status_pro" value="2" {{ ($products[0]->status_product == 2) ? 'checked' : '' }}>
-                                                <label class="custom-control-label" for="status_new">NEW</label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                <input type="radio" class="custom-control-input" id="status_update" name="status_pro" value="3"  {{ ($products[0]->status_product == 3 ) ? 'checked' : '' }}>
-                                                <label class="custom-control-label" for="status_update">UPDATED</label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input" id="status_eol" name="status_pro" value="4" {{ ($products[0]->status_product == 4 ) ? 'checked' : '' }} >
-                                                    <label class="custom-control-label" for="status_eol">EOL</label>
-                                                </div>
-                                       
-                                    </div>
-                                  
-                             
+                        <input type="hidden" name="pro_id" value="{{$products[0]->pro_id}}">
+                        <div class="form-group">
+                            <label for="example-select">Product Code <span class="req-fed">*</span></label>
+                            <input type="text"
+                                class="form-control {{ $errors->has('productCode') ? 'is-invalid' : '' }}"
+                                name="productCode" value="{{$products[0]->pro_code}}" placeholder="Enter name..."
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="example-select">Select Product Categorie <span class="req-fed">*</span></label>
+                            <select class="js-select2 form-control" id="pro_categories" name="pro_categories"
+                                onchange="selectProductcategories()" data-placeholder="Choose one.." required>
+                                <option></option>
+                                @foreach($subCategories as $sub)
+                                @if($products[0]->pro_categories_id == $sub->sub_pro_id)
+                                <option value="{{$sub->sub_pro_id}}" selected>{{$sub->name}}</option>
+                                @else
+                                <option value="{{$sub->sub_pro_id}}">{{$sub->name}}</option>
+                                @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="example-select">Select Serie <span class="req-fed">*</span></label>
+                            <select class="js-select2 form-control" id="SeriesId" name="Series"
+                                data-placeholder="Choose one.." required>
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Dimension L</label>
+                            <label><span class="req-fed">Choice A: Use numeric value for simple display L x W x D.
+                                    Choice B: Use HTML to display any free text and ignore dimensionW and dimensionD
+                                </span></label>
+                            <input type="text" class="form-control" value="{{$products[0]->dimensionL}}"
+                                name="dimensionL" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Dimension W</label>
+                            <input type="text" class="form-control" value="{{$products[0]->dimensionW}}"
+                                name="dimensionw" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Dimension D</label>
+                            <input type="text" class="form-control" value="{{$products[0]->dimensionD}}"
+                                name="dimensionD" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label>Unit Weight</label>
+                            <input type="text" class="form-control" value="{{$products[0]->unit_weight}}"
+                                name="unitWeight" placeholder="Enter ...">
+                        </div>
+                        <div class="form-group">
+                            <label class="d-block">Status <span class="req-fed">*</span></label>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status_none" name="status_pro"
+                                    value="1" {{ ($products[0]->status_product == 1 ) ? 'checked' : '' }} >
+                                <label class="custom-control-label" for="status_none">None</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status_new" name="status_pro"
+                                    value="2" {{ ($products[0]->status_product == 2) ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="status_new">NEW</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status_update" name="status_pro"
+                                    value="3" {{ ($products[0]->status_product == 3 ) ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="status_update">UPDATED</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status_eol" name="status_pro"
+                                    value="4" {{ ($products[0]->status_product == 4 ) ? 'checked' : '' }} >
+                                <label class="custom-control-label" for="status_eol">EOL</label>
+                            </div>
+
+                        </div>
+
+
                         <div class="block block-rounded block-bordered">
                             <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
                                 @foreach ($products as $item)
                                 @if($loop->iteration == 1)
                                 <li class="nav-item">
-                                    <a class="nav-link active" onclick="selectlang('{{$item->local}}')" href="#btabs-alt-static-{{$item->local}}"
+                                    <a class="nav-link active" onclick="selectlang('{{$item->local}}')"
+                                        href="#btabs-alt-static-{{$item->local}}"
                                         style="text-transform: capitalize;">{{$item->local}}</a>
                                 </li>
                                 @else
                                 <li class="nav-item">
-                                    <a class="nav-link " onclick="selectlang('{{$item->local}}')" href="#btabs-alt-static-{{$item->local}}"
+                                    <a class="nav-link " onclick="selectlang('{{$item->local}}')"
+                                        href="#btabs-alt-static-{{$item->local}}"
                                         style="text-transform: capitalize;">{{$item->local}}</a>
                                 </li>
                                 @endif
@@ -201,48 +215,68 @@
                                 <input type="hidden" name="lang_loop[]" value="{{$item->local}}">
                                 @if($loop->iteration == 1)
                                 <div class="tab-pane active" id="btabs-alt-static-{{$item->local}}" role="tabpanel">
-                                  
+
                                     <div class="form-group">
                                         <label for="">Highlights & Features</label>
-                                    <textarea name="overview[{{$item->local}}]" class="jssummernote">{{$item->content_1}}</textarea>
+                                        <textarea name="overview[{{$item->local}}]"
+                                            class="jssummernote">{{$item->content_1}}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Content</label>
-                                        <textarea name="content[{{$item->local}}]" class="jssummernote1">{{$item->content_2}}</textarea>
+                                        <textarea name="content[{{$item->local}}]"
+                                            class="jssummernote1">{{$item->content_2}}</textarea>
                                     </div>
                                     <div class="form-group">
-                                            <label class="d-block">Show Status</label>
-                                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input" id="status-0{{$item->local}}" name="status[{{$item->local}}]" value="1" {{ ($item->showstatus == 1 ) ? 'checked' : '' }}>
-                                                    <label class="custom-control-label" for="status-0{{$item->local}}">Show</label>
-                                                </div>
-                                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input" id="status-3{{$item->local}}" name="status[{{$item->local}}]" value="0" {{ ($item->showstatus == 0 ) ? 'checked' : '' }} >
-                                                    <label class="custom-control-label" for="status-3{{$item->local}}">Hide</label>
-                                                </div>
-                                           
+                                        <label class="d-block">Show Status</label>
+                                        <div
+                                            class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                            <input type="radio" class="custom-control-input"
+                                                id="status-0{{$item->local}}" name="status[{{$item->local}}]" value="1"
+                                                {{ ($item->showstatus == 1 ) ? 'checked' : '' }}>
+                                            <label class="custom-control-label"
+                                                for="status-0{{$item->local}}">Show</label>
                                         </div>
+                                        <div
+                                            class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                            <input type="radio" class="custom-control-input"
+                                                id="status-3{{$item->local}}" name="status[{{$item->local}}]" value="0"
+                                                {{ ($item->showstatus == 0 ) ? 'checked' : '' }} >
+                                            <label class="custom-control-label"
+                                                for="status-3{{$item->local}}">Hide</label>
+                                        </div>
+
+                                    </div>
                                 </div>
                                 @else
                                 <div class="tab-pane" id="btabs-alt-static-{{$item->local}}" role="tabpanel">
                                     <div class="form-group">
                                         <label for="">Highlights & Features</label>
-                                        <textarea name="overview[{{$item->local}}]" class="jssummernote">{{$item->content_1}}</textarea>
+                                        <textarea name="overview[{{$item->local}}]"
+                                            class="jssummernote">{{$item->content_1}}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Content</label>
-                                        <textarea name="content[{{$item->local}}]" class="jssummernote1">{{$item->content_2}}</textarea>
+                                        <textarea name="content[{{$item->local}}]"
+                                            class="jssummernote1">{{$item->content_2}}</textarea>
                                     </div>
                                     <div class="form-group">
-                                            <label class="d-block">Show Status</label>
-                                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input" id="status-1{{$item->local}}" name="status[{{$item->local}}]" value="1" {{ ($item->showstatus == 1 ) ? 'checked' : '' }}  >
-                                                    <label class="custom-control-label" for="status-1{{$item->local}}">Show</label>
-                                                </div>
-                                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                                    <input type="radio" class="custom-control-input" id="status-2{{$item->local}}" name="status[{{$item->local}}]" value="0" {{ ($item->showstatus == 0 ) ? 'checked' : '' }} >
-                                                    <label class="custom-control-label" for="status-2{{$item->local}}">Hide</label>
-                                                </div>
+                                        <label class="d-block">Show Status</label>
+                                        <div
+                                            class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                            <input type="radio" class="custom-control-input"
+                                                id="status-1{{$item->local}}" name="status[{{$item->local}}]" value="1"
+                                                {{ ($item->showstatus == 1 ) ? 'checked' : '' }} >
+                                            <label class="custom-control-label"
+                                                for="status-1{{$item->local}}">Show</label>
+                                        </div>
+                                        <div
+                                            class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                            <input type="radio" class="custom-control-input"
+                                                id="status-2{{$item->local}}" name="status[{{$item->local}}]" value="0"
+                                                {{ ($item->showstatus == 0 ) ? 'checked' : '' }} >
+                                            <label class="custom-control-label"
+                                                for="status-2{{$item->local}}">Hide</label>
+                                        </div>
                                     </div>
                                 </div>
                                 @endif
@@ -279,8 +313,8 @@
                                         <td class="">
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input"
-                                                    data-toggle="custom-file-input" id="thumbnail"
-                                                    name="thumbnail" value="no image" accept="image/*">
+                                                    data-toggle="custom-file-input" id="thumbnail" name="thumbnail"
+                                                    value="no image" accept="image/*">
                                                 <label id="label2" class="custom-file-label" for="thumbnail">Choose
                                                     file</label>
                                             </div>
@@ -289,7 +323,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div id="contenttdata"> 
+                        <div id="contenttdata">
                         </div>
                         <div class="form-group text-center mt-5">
                             <button class="btn btn-info" type="submit">Update
@@ -307,9 +341,7 @@
 @endsection
 @section('js')
 <script>
-      
-        
-        $('.jssummernote').summernote({
+    $('.jssummernote').summernote({
           tabsize: 2,
           height: 200
         });
@@ -596,10 +628,10 @@
             selectProductcategories();
             getHtmlContent('en');
         });
-      </script>
+</script>
 <script>
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

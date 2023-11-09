@@ -32,7 +32,7 @@
                 <!-- Basic Elements -->
                 <div class="row push">
                     <div class="col-lg-12">
-                    <div class="block block-rounded block-bordered">
+                        <div class="block block-rounded block-bordered">
                             <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
                                 @foreach ($language as $item)
                                 @if($loop->iteration == 1)
@@ -60,48 +60,58 @@
                                 }
                            ?>
                                 <input type="hidden" name="lang_loop[]" value="{{$item->name}}">
-                                <div class="tab-pane {{($loop->iteration == 1)?"active":""}}" id="btabs-alt-static-{{$item->name}}" role="tabpanel">
+                                <div class="tab-pane {{($loop->iteration == 1)?" active":""}}"
+                                    id="btabs-alt-static-{{$item->name}}" role="tabpanel">
                                     <p>*Use "Enter" to Begin a new row</p>
-                                        <div class="form-group">
-                                            <label for="example-select">Mobile Title </label>
-                                            <textarea  name="title_1[{{$item->name}}]" rows="3" class="form-control">{{isset($current->title)? $current->title:""}}</textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="example-select">Desktop Title</label>
-                                            <textarea  name="title_2[{{$item->name}}]" rows="3" class="form-control">{{isset($current->title2)? $current->title2:""}}</textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="example-select">Content </label>
-                                            <textarea name="content[{{$item->name}}]"  class="jsnotenew">{{isset($current->content)? $current->content:""}}</textarea>
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="example-select">Link  </label>
-                                                <span style="color:red;">  ( Example. https://www.delta.com" )</span>
-                                                <input type="text" class="form-control" name="btn_link[{{$item->name}}]" value="{{isset($current->btn_link)? $current->btn_link:""}}" placeholder="Enter Link ex. https://www.delta.com">
-                                            </div>
-                                        <div class="form-group">
-                                            <label for="example-select">Button Name </label>
-                                            <input type="text" class="form-control" name="btn_name[{{$item->name}}]" value="{{isset($current->btn_name)? $current->btn_name:""}}" placeholder="Enter Text">
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="example-select">Mobile Title </label>
+                                        <textarea name="title_1[{{$item->name}}]" rows="3"
+                                            class="form-control">{{isset($current->title)? $current->title:""}}</textarea>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="example-select">Desktop Title</label>
+                                        <textarea name="title_2[{{$item->name}}]" rows="3"
+                                            class="form-control">{{isset($current->title2)? $current->title2:""}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-select">Content </label>
+                                        <textarea name="content[{{$item->name}}]"
+                                            class="jsnotenew">{{isset($current->content)? $current->content:""}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-select">Link </label>
+                                        <span style="color:red;"> ( Example. https://www.delta.com" )</span>
+                                        <input type="text" class="form-control" name="btn_link[{{$item->name}}]"
+                                            value="{{isset($current->btn_link)? $current->btn_link:""}}"
+                                            placeholder="Enter Link ex. https://www.delta.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-select">Button Name </label>
+                                        <input type="text" class="form-control" name="btn_name[{{$item->name}}]"
+                                            value="{{isset($current->btn_name)? $current->btn_name:""}}"
+                                            placeholder="Enter Text">
+                                    </div>
+                                </div>
                                 @endforeach
                             </div>
                         </div>
-                
+
                         <div class="form-group">
-                                <label class="d-block">Button Show</label>
-                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                        <input type="radio" class="custom-control-input" id="status-1" name="btn_status" value="1"  {{$bannerslide[0]->btn_status == 1 ?'checked':'' }}>
-                                        <label class="custom-control-label" for="status-1">Show</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                        <input type="radio" class="custom-control-input" id="status-2" name="btn_status" value="0"  {{$bannerslide[0]->btn_status == 0 ?'checked':'' }} >
-                                        <label class="custom-control-label" for="status-2">Hide</label>
-                                    </div>
-                               
+                            <label class="d-block">Button Show</label>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-1" name="btn_status"
+                                    value="1" {{$bannerslide[0]->btn_status == 1 ?'checked':'' }}>
+                                <label class="custom-control-label" for="status-1">Show</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-2" name="btn_status"
+                                    value="0" {{$bannerslide[0]->btn_status == 0 ?'checked':'' }} >
+                                <label class="custom-control-label" for="status-2">Hide</label>
                             </div>
 
-                       
+                        </div>
+
+
                         <div class="form-group">
                             <label for="example-colorpicker2">Title Color</label>
                             <div class="js-colorpicker input-group" data-format="hex">
@@ -126,7 +136,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" name="filename[mobile_image]" value="mobile_image" >
+                        <input type="hidden" name="filename[mobile_image]" value="mobile_image">
                         <input type="hidden" name="filename[destop_image]" value="destop_image">
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-vcenter">
@@ -146,9 +156,9 @@
                                             Mobile Image
                                         </td>
                                         <td class="text-center">
-                                                <img src="{{config('app.url')}}/medias/banners/{{$bannerslide[0]->image}}"
-                                                    class="img-thumbnail res-image" alt="">
-                                            </td>
+                                            <img src="{{config('app.url')}}/medias/banners/{{$bannerslide[0]->image}}"
+                                                class="img-thumbnail res-image" alt="">
+                                        </td>
                                         <td class="font-w600">
                                             <img src="https://via.placeholder.com/750x700.png"
                                                 class="img-thumbnail imagePreview1 res-image" alt="">
@@ -157,33 +167,35 @@
                                             <div class="custom-file">
                                                 <span style="color:red">* Maximum 2mb </span>
                                                 <input type="file" class="custom-file-input"
-                                                    data-toggle="custom-file-input" id="mobile_image" name="fileimage[mobile_image]"
-                                                    value=" " accept="image/*">
+                                                    data-toggle="custom-file-input" id="mobile_image"
+                                                    name="fileimage[mobile_image]" value=" " accept="image/*">
                                                 <label id="label1" class="custom-file-label" for="mobile_image">Choose
                                                     file</label>
-                                                    <input type="hidden" name="oldfile[mobile_image]" value="{{$bannerslide[0]->image}}" >
+                                                <input type="hidden" name="oldfile[mobile_image]"
+                                                    value="{{$bannerslide[0]->image}}">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="text-center">
-                                             Desktop Image
+                                            Desktop Image
                                         </td>
                                         <td class="text-center">
-                                                <img src="{{config('app.url')}}/medias/banners/{{$bannerslide[0]->image_destop}}"
-                                                    class="img-thumbnail res-image" alt="">
-                                            </td>
+                                            <img src="{{config('app.url')}}/medias/banners/{{$bannerslide[0]->image_destop}}"
+                                                class="img-thumbnail res-image" alt="">
+                                        </td>
                                         <td class="font-w600">
                                             <img src="https://via.placeholder.com/3840x800.png"
                                                 class="img-thumbnail imagePreview2 res-image" alt="">
-                                                <input type="hidden" name="oldfile[destop_image]" value="{{$bannerslide[0]->image_destop}}" >
+                                            <input type="hidden" name="oldfile[destop_image]"
+                                                value="{{$bannerslide[0]->image_destop}}">
                                         </td>
                                         <td class="">
                                             <div class="custom-file">
                                                 <span style="color:red">* Maximum 2mb </span>
                                                 <input type="file" class="custom-file-input"
-                                                    data-toggle="custom-file-input" id="destop_image" name="fileimage[destop_image]"
-                                                    value=" " accept="image/*">
+                                                    data-toggle="custom-file-input" id="destop_image"
+                                                    name="fileimage[destop_image]" value=" " accept="image/*">
                                                 <label id="label2" class="custom-file-label" for="destop_image">Choose
                                                     file</label>
                                             </div>
@@ -209,7 +221,7 @@
 @section('js')
 <script>
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

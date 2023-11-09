@@ -1,165 +1,197 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1.0,maximum-scale=1,user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
-    <link rel="shortcut icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
-    <link rel="icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
-    <!-- CSRF Token -->
-    <meta name="robots" content="index, follow">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    @yield('meta')
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet"  rel="preload" type="text/css" href="{{asset('/frontend-asset/css/font.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}"  media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/header-front.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/container.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/home.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/news.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/login.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/details.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/result-page.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product-comparison.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.theme.default.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/font-awesome.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/datatables.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}" media="screen">
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/slick.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}"  media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello2.css')}}" media="screen"/>
-    @yield('css')
-    <style>
-      /* select */
-    .form-control{
-        font-size: 14px;
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1, minimum-scale=1.0,maximum-scale=1,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
+  <link rel="shortcut icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
+  <link rel="icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
+  <!-- CSRF Token -->
+  <meta name="robots" content="index, follow">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  @yield('meta')
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" rel="preload" type="text/css" href="{{asset('/frontend-asset/css/min/font.min.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/header-front.min.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/container.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/home.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/news.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/login.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/details.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/result-page.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/product-comparison.min.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/fontello.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css"
+    href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/owl.theme.default.min.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/product.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/font-awesome.min.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/datatables.min.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css"
+    href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}" media="screen">
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/slick.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/jquery.datepicker.min.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/zabuto_calendar.min.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/fontello2.min.css')}}" media="screen" />
+  @yield('css')
+  <style>
+    /* select */
+    .form-control {
+      font-size: 14px;
       -webkit-appearance: none;
       -moz-appearance: none;
       border-radius: 0;
-      border: 1px solid #444444; background-position: right 50%;
+      border: 1px solid #444444;
+      background-position: right 50%;
       background-repeat: no-repeat;
-      background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
+      background-image: url('{{asset(' frontend-asset/image/arrow-down.svg')}}');
       padding: .375rem 1.5rem;
-  
+
     }
-    .form-control:disabled, .form-control[readonly] {
+
+    .form-control:disabled,
+    .form-control[readonly] {
       background-color: #F2F2F2;
       border: 1px solid #C1C1C1 !important;
       opacity: 1;
       color: #C1C1C1;
-      background-image:none;
+      background-image: none;
     }
+
     .form-control:focus {
       color: #495057;
       background-color: #fff;
       border-color: #80bdff;
       outline: none;
       box-shadow: none;
-      }
-      input[type=text],input[type=email]{
-      background-image:none;
-      
-      }
-      .input-label{
-          position: relative;
-      }
-      input[required] + label {
-          color: #707070;
-          font-family: Arial;
-          font-size: 14px;
-          position: absolute;
-          bottom: 0;
-          left: 12px;  /* the negative of the input width */
-      }
-      
-      .form-control:focus {
+    }
+
+    input[type=text],
+    input[type=email] {
+      background-image: none;
+
+    }
+
+    .input-label {
+      position: relative;
+    }
+
+    input[required]+label {
+      color: #707070;
+      font-family: Arial;
+      font-size: 14px;
+      position: absolute;
+      bottom: 0;
+      left: 12px;
+      /* the negative of the input width */
+    }
+
+    .form-control:focus {
       color: #495057;
       background-color: #fff;
       border-color: #80bdff;
       outline: none;
       box-shadow: none;
-      }
- 
-      
-      .color-yellow{
-        background-color: #252A2C;
-        color: #fff;
-        text-align: center;
-        position: relative;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 99;
-      }
-   
-      html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
-        padding: 20px 9px;
-      }
-      html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
-        padding: 20px 9px;
-      }
-      a#CybotCookiebotDialogPoweredbyCybot,
-      div#CybotCookiebotDialogPoweredByText {
-        display: none !important;
-      }
-      #CookiebotWidget .CookiebotWidget-body .CookiebotWidget-main-logo {
-         display: none !important;
-      }
-   
-      #CybotCookiebotDialogHeader {
-         width: 0px !important;
-     }
-     #CybotCookiebotDialog.CybotEdge {
-      padding:12px !important;
-     }
-     
-     #CybotCookiebotDialog.CybotEdge .CybotCookiebotDialogBodyBottomWrapper {
-       margin-top: 0 !important;
     }
+
+
+    .color-yellow {
+      background-color: #252A2C;
+      color: #fff;
+      text-align: center;
+      position: relative;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 99;
+    }
+
+    html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
+      padding: 20px 9px;
+    }
+
+    html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
+      padding: 20px 9px;
+    }
+
+    a#CybotCookiebotDialogPoweredbyCybot,
+    div#CybotCookiebotDialogPoweredByText {
+      display: none !important;
+    }
+
+    #CookiebotWidget .CookiebotWidget-body .CookiebotWidget-main-logo {
+      display: none !important;
+    }
+
+    #CybotCookiebotDialogHeader {
+      width: 0px !important;
+    }
+
+    #CybotCookiebotDialog.CybotEdge {
+      padding: 12px !important;
+    }
+
+    #CybotCookiebotDialog.CybotEdge .CybotCookiebotDialogBodyBottomWrapper {
+      margin-top: 0 !important;
+    }
+
     /* #CybotCookiebotDialog.CybotEdge.CybotMultilevel .CybotCookiebotDialogBodyBottomWrapper {
     border-top: none !important;
     } */
 
-    @media screen and (min-width: 1280px){
+    @media screen and (min-width: 1280px) {
       #CybotCookiebotDialog.CybotEdge.CybotMultilevel .CybotCookiebotDialogBodyBottomWrapper {
-    border-top: 1px solid #fff !important;
+        border-top: 1px solid #fff !important;
 
       }
     }
+
     #CookiebotWidget .CookiebotWidget-body .CookiebotWidget-consents-list li.CookiebotWidget-approved svg {
-    fill: #0087DC !important;
+      fill: #0087DC !important;
     }
+
     #CookiebotWidget .CookiebotWidget-consent-details button {
-    color: #0087DC !important;
-   }
-    #CookiebotWidget #CookiebotWidget-buttons #CookiebotWidget-btn-change{
+      color: #0087DC !important;
+    }
+
+    #CookiebotWidget #CookiebotWidget-buttons #CookiebotWidget-btn-change {
       background-color: #0087DC !important;
-       border-color:#0087DC !important;
+      border-color: #0087DC !important;
     }
-    #CookiebotWidget #CookiebotWidget-buttons #CookiebotWidget-btn-withdraw{
-      border-color:#0087DC !important;
+
+    #CookiebotWidget #CookiebotWidget-buttons #CookiebotWidget-btn-withdraw {
+      border-color: #0087DC !important;
     }
-      
+
     @media only screen and (max-width: 1366px) {
-          html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
-          padding: 20px 4px !important;
+      html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
+        padding: 20px 4px !important;
       }
+
       html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
         padding: 20px 4px !important;
         font-size: 14px !important;
       }
     }
-  
   </style>
 
-<?php
+  <?php
 $lanngCookie = "EN";
 $langch = str_replace('_', '-', app()->getLocale());
 
@@ -178,24 +210,25 @@ $langch = str_replace('_', '-', app()->getLocale());
 ?>
 
 
-<script id="Cookiebot"  data-culture="{{$lanngCookie}}" src="https://consent.cookiebot.com/uc.js" data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a"  type="text/javascript"></script> 
+  <script id="Cookiebot" data-culture="{{$lanngCookie}}" src="https://consent.cookiebot.com/uc.js"
+    data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" type="text/javascript"></script>
 
-    <!-- Fonts -->
-    <!-- Styles -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    
-     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-67607418-1"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
+  <!-- Fonts -->
+  <!-- Styles -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-67607418-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-67607418-1');
-      </script>
+  </script>
 
-      <!-- Google Tag Manager -->
-        <script>
-          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             
@@ -204,39 +237,39 @@ $langch = str_replace('_', '-', app()->getLocale());
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             
             })(window,document,'script','dataLayer','GTM-PBXMMSN');
-        </script>
-      <!-- End Google Tag Manager -->
-    
+  </script>
+  <!-- End Google Tag Manager -->
+
 </head>
+
 <body>
-    @include('layouts.header-front')
-    @yield('container')
-    @include('layouts.footer')
+  @include('layouts.header-front')
+  @yield('container')
+  @include('layouts.footer')
 
-<script type="text/javascript" src="{{asset('/frontend-asset/js/popper.min.js')}}" ></script>
-<script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap.min.js')}}" ></script>
-<script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap-select.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('/frontend-asset/js/map.js')}}"></script>
-<script type="text/javascript" src="{{asset('/frontend-asset/js/product.js')}}"></script>
-<script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
-<script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/popper.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap-select.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/map.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/product.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
 
-<script type="text/javascript" src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
-{{-- <script type="text/javascript" src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en"
-async defer>
-</script> --}}
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
+  {{-- <script type="text/javascript"
+    src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en" async defer>
+  </script> --}}
 
 
 
-<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-    async defer>
-</script>
-<script>
-  if ('loading' in HTMLImageElement.prototype) {
+  <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
+  </script>
+  <script>
+    if ('loading' in HTMLImageElement.prototype) {
     const images = document.querySelectorAll('img[loading="lazy"]');
     images.forEach(img => {
       img.src = img.dataset.src;
@@ -257,9 +290,9 @@ async defer>
       'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js';
     document.body.appendChild(script);
   }
-</script>
-<script type="text/javascript">
-  var verifyCallbackData = function(response) {
+  </script>
+  <script type="text/javascript">
+    var verifyCallbackData = function(response) {
     $('#keyrecapgui').val(response);
   };
   var onloadCallback = function() {
@@ -284,19 +317,18 @@ async defer>
                     return true;
                 }
       }
-</script>
+  </script>
 
- <!-- Google Tag Manager (noscript) -->
- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBXMMSN"
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBXMMSN" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
 
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
   <!-- End Google Tag Manager (noscript) -->
-  
-    @yield('js')
-   
-    <script>
-      // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
+
+  @yield('js')
+
+  <script>
+    // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
   Object.defineProperty(Array.prototype, 'findIndex', {
     value: function(predicate) {
@@ -340,9 +372,9 @@ if (!Array.prototype.findIndex) {
     }
   });
 }
-      </script>
-    <script>
-        var w = document.documentElement.clientWidth;
+  </script>
+  <script>
+    var w = document.documentElement.clientWidth;
         var h = document.documentElement.clientHeight;
 
        $(window).scroll(function() {
@@ -360,9 +392,9 @@ if (!Array.prototype.findIndex) {
          }, 1000);
          return false;
        });
-</script>
-        <script>
-          function subscribe() {
+  </script>
+  <script>
+    function subscribe() {
               document.getElementById("inp3").focus();
               $('#cxacceptPrivacy_data').val(0);
               $("#cxacceptPrivacy_data").prop("checked",false);
@@ -383,10 +415,10 @@ if (!Array.prototype.findIndex) {
 
                 });  
             });
-        </script>
-      
-           <script>
-            /* navbar */
+  </script>
+
+  <script>
+    /* navbar */
               $('#nav-two').addClass('scrolled');
             $(document).ready(function() {
               $('#nav-two li a').on("click", function() {
@@ -432,9 +464,9 @@ if (!Array.prototype.findIndex) {
 
     
             
-        </script>
-      <script>
-       $('.btn-sidenav').css('visibility','hidden');
+  </script>
+  <script>
+    $('.btn-sidenav').css('visibility','hidden');
      
          function toggle_visibility(id) {
             var e = document.getElementById(id);
@@ -528,15 +560,15 @@ if (!Array.prototype.findIndex) {
             document.getElementById("filterMobileLdist").style.width = "0";
             document.getElementById("filterMobileClose").style.display ="none";
           }
-      </script>
-      <script>
-         $('select[name*="state"]').prop('disabled', true);
+  </script>
+  <script>
+    $('select[name*="state"]').prop('disabled', true);
         $('select[name*="country"]').on('change', function() {
           $('select[name*="state"]').prop('disabled', false);
         });
-       </script>
-      <script>
-        $("#nav-comparison").hide();
+  </script>
+  <script>
+    $("#nav-comparison").hide();
         $("#nav-comparison-mobile").hide();
         
         function showNavCoparison(id ,cateid){
@@ -679,9 +711,9 @@ if (!Array.prototype.findIndex) {
 
         }
 
-      </script>
-       <script>
-         $( "#formseachall" ).submit(function( event ) {
+  </script>
+  <script>
+    $( "#formseachall" ).submit(function( event ) {
               var key = $('#searchinput').val();
               var newkey = key.replace(/[/]/g,'@');
             //  console.log();
@@ -696,9 +728,9 @@ if (!Array.prototype.findIndex) {
          });
 
 
-        </script>
-        <script>
-          $(document).ready(function() {
+  </script>
+  <script>
+    $(document).ready(function() {
             //  checkCookie();
           });
           function resetTime(){
@@ -763,9 +795,9 @@ if (!Array.prototype.findIndex) {
              localStorage.setItem('isshow', 1);
            
           }
-     </script>
-      <script>
-        $("div.sp-dropdown" ).on("mouseleave", function() {
+  </script>
+  <script>
+    $("div.sp-dropdown" ).on("mouseleave", function() {
              $('#nav-uderline').removeClass('active');
               $('.sp-dropdown').removeClass('show');
               $('.sub-menu').removeClass('active');
@@ -773,9 +805,9 @@ if (!Array.prototype.findIndex) {
               $('.drp-subthree').css('display','none');
         })
      
-      </script>
-      <script>
-        function downloadGUI(file , procode ,proCate){
+  </script>
+  <script>
+    function downloadGUI(file , procode ,proCate){
           $('#procodeGui').val(procode);
           $('#procateGui').val(proCate);
           $('#fileguidownload').val(file);
@@ -825,9 +857,9 @@ if (!Array.prototype.findIndex) {
           });
         @endif
 
-      </script>
-      <script>
-        navigator.sayswho= (function(){
+  </script>
+  <script>
+    navigator.sayswho= (function(){
             var ua= navigator.userAgent, tem, 
             M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
             if(/trident/i.test(M[1])){
@@ -850,9 +882,10 @@ if (!Array.prototype.findIndex) {
                 document.getElementById("alert-browser-check").style.display ="block";
                }
 
-      </script>
+  </script>
 
-     
 
-      </body>
+
+</body>
+
 </html>

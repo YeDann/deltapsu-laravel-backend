@@ -29,49 +29,47 @@
                 <!-- Basic Elements -->
                 <div class="row">
                     <div class="col-lg-12">
-                          <div class="form-group">
-                                 <label for="example-select"><span class="req-fed">*</span>Name</label>
-                                    <input type="text"
-                                        class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                        name="name" placeholder="Enter Name..." required>
-                           </div>
-                           <div class="form-group">
+                        <div class="form-group">
+                            <label for="example-select"><span class="req-fed">*</span>Name</label>
+                            <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                name="name" placeholder="Enter Name..." required>
+                        </div>
+                        <div class="form-group">
                             <label>Related Products</label>
-                            <select  id="relatePro" class="js-select2 form-control" name="relatePro[]" data-placeholder="Choose many.."  multiple>
+                            <select id="relatePro" class="js-select2 form-control" name="relatePro[]"
+                                data-placeholder="Choose many.." multiple>
                                 <option></option>
                                 @foreach ($products as $pro)
                                 <option value="{{$pro->pro_id}}">{{$pro->pro_code}}</option>
-                                  @endforeach
-                             </select>
-                           </div>
+                                @endforeach
+                            </select>
+                        </div>
 
-                           <div class="form-group">
+                        <div class="form-group">
                             <label for="example-select"><span class="req-fed">*</span>Link</label>
-                            <input type="text"
-                                class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}"
+                            <input type="text" class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}"
                                 name="link" placeholder="Enter Link..." required>
-                          </div>
-                            <div class="form-group">
-                                <img src="https://via.placeholder.com/200x200.png"
-                                class="img-thumbnail imagePreview2" alt="">
-                            </div>
-                            
-                          <div class="form-group">
+                        </div>
+                        <div class="form-group">
+                            <img src="https://via.placeholder.com/200x200.png" class="img-thumbnail imagePreview2"
+                                alt="">
+                        </div>
+
+                        <div class="form-group">
                             <label for="example-select"><span class="req-fed">*</span>Logo</label>
-                         
-                           <label for="example-select">Image <span class="req-fed">* Max File Size 2 MB</span></label>
-                           <div class="custom-file">
-                            <input type="file" class="custom-file-input"
-                                data-toggle="custom-file-input" id="thumbnail" name="thumbnail"
-                                value="no image" accept="image/*">
-                            <label id="label2" class="custom-file-label" for="thumbnail">Choose
-                                file</label>
+
+                            <label for="example-select">Image <span class="req-fed">* Max File Size 2 MB</span></label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" data-toggle="custom-file-input"
+                                    id="thumbnail" name="thumbnail" value="no image" accept="image/*">
+                                <label id="label2" class="custom-file-label" for="thumbnail">Choose
+                                    file</label>
                             </div>
-                         </div>
-                              
-                       
+                        </div>
+
+
                     </div>
-              
+
                     <div class="col-lg-12 mt-5">
                         <div class="text-center form-group">
                             <button class="btn btn-success" type="submit">Create </button>
@@ -88,8 +86,8 @@
 @endsection
 @section('js')
 <script>
-   var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+    var previewImage = function (input, block) {
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 

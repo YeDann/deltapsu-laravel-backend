@@ -26,59 +26,63 @@
         <div class="block-content">
             <form action="{{route('succes_stories_update')}}" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
-            <input type="hidden" name="story_id_main" value="{{$AllsuccessStory[0]->id}}">
+                <input type="hidden" name="story_id_main" value="{{$AllsuccessStory[0]->id}}">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
-                        <label for="example-select"><span class="req-fed">*</span>Model Name</label>
-                           <select class="js-select2 form-control" name="model[]" data-placeholder="Choose many.." required multiple>
-                            <option></option>
-                            @foreach ($products as $item)
-                            @if(in_array($item->pro_code, $arrModel))
-                            <option value="{{$item->pro_code}}" selected>{{$item->pro_code}}</option> 
-                            @else 
-                            <option value="{{$item->pro_code}}" >{{$item->pro_code}}</option> 
-                            @endif   
-                            @endforeach
-                          </select>
-                        </div>
-                    </div>
-                   
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                        <label for="example-select"><span class="req-fed">*</span>Application</label>
-                        <input type="text" class="form-control" name="application" value="{{$AllsuccessStory[0]->application}}" placeholder="Enter text..." >
+                            <label for="example-select"><span class="req-fed">*</span>Model Name</label>
+                            <select class="js-select2 form-control" name="model[]" data-placeholder="Choose many.."
+                                required multiple>
+                                <option></option>
+                                @foreach ($products as $item)
+                                @if(in_array($item->pro_code, $arrModel))
+                                <option value="{{$item->pro_code}}" selected>{{$item->pro_code}}</option>
+                                @else
+                                <option value="{{$item->pro_code}}">{{$item->pro_code}}</option>
+                                @endif
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
                     <div class="col-lg-12">
                         <div class="form-group">
-                        <label for="example-select">End Customer <span class="req-fed">*</span></label>
-                        <input type="text" class="form-control" name="endCustomer"  value="{{$AllsuccessStory[0]->endCustomer}}" placeholder="Enter text..." >
+                            <label for="example-select"><span class="req-fed">*</span>Application</label>
+                            <input type="text" class="form-control" name="application"
+                                value="{{$AllsuccessStory[0]->application}}" placeholder="Enter text...">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="example-select">End Customer <span class="req-fed">*</span></label>
+                            <input type="text" class="form-control" name="endCustomer"
+                                value="{{$AllsuccessStory[0]->endCustomer}}" placeholder="Enter text...">
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
-                        <label for="example-select">Country <span class="req-fed">*</span></label>
-                        <select name="country"   class="form-control" id="country"  required>
-                            <option value="">Please Select</option>
-                            @foreach ($countries as $country)
-                            @if($AllsuccessStory[0]->country == $country->name )
-                            <option value="{{$country->name}}" selected>{{$country->name}}</option> 
-                            @else 
-                            <option value="{{$country->name}}" >{{$country->name}}</option> 
-                            @endif   
-                            @endforeach
-                        </select>
+                            <label for="example-select">Country <span class="req-fed">*</span></label>
+                            <select name="country" class="form-control" id="country" required>
+                                <option value="">Please Select</option>
+                                @foreach ($countries as $country)
+                                @if($AllsuccessStory[0]->country == $country->name )
+                                <option value="{{$country->name}}" selected>{{$country->name}}</option>
+                                @else
+                                <option value="{{$country->name}}">{{$country->name}}</option>
+                                @endif
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
-                        <label for="example-select">Message</label>
-                        <textarea name="message" class="jsnotenew form-control"  placeholder="MESSAGE" rows="10" >{{$AllsuccessStory[0]->message}}</textarea>
+                            <label for="example-select">Message</label>
+                            <textarea name="message" class="jsnotenew form-control" placeholder="MESSAGE"
+                                rows="10">{{$AllsuccessStory[0]->message}}</textarea>
                         </div>
                     </div>
-                  
+
                     <div class="col-lg-12">
                         <div class="text-center form-group mt-4">
                             <button class="btn btn-info" type="submit">Update </button>
@@ -95,9 +99,8 @@
 @endsection
 @section('js')
 <script>
-
     var previewImage = function (input, block) {
-        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
 
