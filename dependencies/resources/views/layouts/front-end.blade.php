@@ -13,42 +13,39 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   @yield('meta')
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" rel="preload" type="text/css" href="{{asset('/frontend-asset/css/min/font.min.css')}}"
+  <link rel="stylesheet" rel="preload" type="text/css" href="{{asset('/frontend-asset/min/font.min.css')}}"
     media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/header-front.min.css')}}"
-    media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/container.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/home.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/news.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/login.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/details.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/result-page.min.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/product-comparison.min.css')}}"
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/header-front.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/container.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/home.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/news.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/login.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/details.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/result-page.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/product-comparison.min.css')}}"
     media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}"
     media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/fontello.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/fontello.min.css')}}" media="screen" />
   <link rel="stylesheet" type="text/css"
     href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}"
     media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/owl.theme.default.min.css')}}"
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/owl.theme.default.min.css')}}"
     media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/product.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/font-awesome.min.css')}}"
-    media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/datatables.min.css')}}"
-    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/product.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/font-awesome.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/datatables.min.css')}}" media="screen" />
   <link rel="stylesheet" type="text/css"
     href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}" media="screen">
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/slick.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/slick.min.css')}}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/jquery.datepicker.min.css')}}"
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/jquery.datepicker.min.css')}}"
     media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/zabuto_calendar.min.css')}}"
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/zabuto_calendar.min.css')}}"
     media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/min/fontello2.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/fontello2.min.css')}}" media="screen" />
   @yield('css')
   <style>
     /* select */

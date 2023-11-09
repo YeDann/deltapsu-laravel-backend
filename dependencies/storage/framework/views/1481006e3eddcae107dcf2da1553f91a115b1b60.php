@@ -1,1 +1,0 @@
-<?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/Deltapsu_Production/dependencies/resources/views/front-end/subcribes.blade.php ENDPATH**/ ?>
