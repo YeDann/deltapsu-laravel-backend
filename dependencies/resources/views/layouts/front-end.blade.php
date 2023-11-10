@@ -208,7 +208,7 @@ $langch = str_replace('_', '-', app()->getLocale());
 
 
   <script id="Cookiebot" data-culture="{{$lanngCookie}}" src="https://consent.cookiebot.com/uc.js"
-    data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" type="text/javascript"></script>
+    data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" framework="TCFv2.2" type="text/javascript"></script>
 
   <!-- Fonts -->
   <!-- Styles -->
