@@ -54,6 +54,7 @@ Route::post('/getProductByType','FrontendController@getProductByType')->name('ge
 Route::post('/loadImageProByArr','FrontendController@loadImageProByArr')->name('loadImageProByArr');
 Route::get('/searchAll/{key?}','FrontendController@searchAll')->name('searchAll');
 Route::get('/searchByTag/{key?}','FrontendController@searchByTag')->name('searchByTag');
+Route::get('/searchByOptionalModel/{key?}','FrontendController@searchByOptionalModel')->name('searchByOptionalModel');
 Route::post('/loadpdf','FrontendController@loadPdffilePDF')->name('loadPdffilePDF');
 Route::post('/loadcsv','FrontendController@loadPdffile')->name('loadPdffile');
 Route::post('savepdfConfig','FrontendController@savepdfConfig')->name('savepdfConfig');
@@ -172,9 +173,6 @@ Route::get('getfeatureProduct','GetDataController@getfeatureProduct')->name('get
 Route::get('getCreateDataFilter','GetDataController@getCreateDataFilter')->name('getCreateDataFilter');
 Route::get('getExcelProCategories','GetDataController@getExcelProCategories')->name('getExcelProCategories');
 
-Route::get('getExcelProTag','GetDataController@getExcelProTag')->name('getExcelProTag');
-Route::post('importProductTag','GetDataController@importProductTag')->name('importProductTag');
-
 
 Route::get('static_content/{id?}','StaticContentController@index')->name('static_content');
 Route::post('storeContent','StaticContentController@store')->name('storeContent');
@@ -205,6 +203,15 @@ Route::post('store_spelang','DucumentController@store_spelang')->name('store_spe
 Route::post('Update_spelang','DucumentController@Update_spelang')->name('Update_spelang');
 Route::post('deleteSpecailLang','DucumentController@deleteSpecailLang')->name('deleteSpecailLang');
 Route::post('searhModelProductByCatedoc','DucumentController@searhModelProductByCatedoc')->name('searhModelProductByCatedoc');
+
+//Import Optional Model and Export Tag
+
+
+Route::get('export_tags','ImportTagsController@exports_tags')->name('exports_tags');
+Route::get('import_tags','ImportTagsController@getExcelProTag')->name('getExcelProTag');
+Route::get('import_optional_model','ImportTagsController@getExcelProOptional')->name('getExcelProOptional');
+Route::post('importProductTag','ImportTagsController@importProductTag')->name('importProductTag');
+Route::post('importProductOptionalModel','ImportTagsController@importProductOptionalModel')->name('importProductOptionalModel');
 
 
 
