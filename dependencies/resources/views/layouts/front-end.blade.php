@@ -208,11 +208,12 @@ $langch = str_replace('_', '-', app()->getLocale());
 
 
   <script id="Cookiebot" data-culture="{{$lanngCookie}}" src="https://consent.cookiebot.com/uc.js"
-    data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-framework="TCFv2.2" type="text/javascript"></script>
+    data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-framework="TCFv2.2" type="text/javascript" async defer>
+  </script>
 
   <!-- Fonts -->
   <!-- Styles -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" async defer></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-67607418-1"></script>
