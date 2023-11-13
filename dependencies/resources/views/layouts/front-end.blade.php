@@ -213,7 +213,7 @@ $langch = str_replace('_', '-', app()->getLocale());
 
   <!-- Fonts -->
   <!-- Styles -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js" async defer></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-67607418-1"></script>
@@ -246,7 +246,7 @@ $langch = str_replace('_', '-', app()->getLocale());
   @include('layouts.footer')
 
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/popper.min.js')}}"></script>
-  <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/bootstrap.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap.min.js')}}"></script>
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/bootstrap-select.min.js')}}"></script>
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/map.js')}}"></script>
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/product.js')}}"></script>
