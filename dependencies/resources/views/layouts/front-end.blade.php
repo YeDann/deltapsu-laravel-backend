@@ -250,7 +250,7 @@ $langch = str_replace('_', '-', app()->getLocale());
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/bootstrap-select.min.js')}}"></script>
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/map.js')}}"></script>
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/product.js')}}"></script>
-  <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
