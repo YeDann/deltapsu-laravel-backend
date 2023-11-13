@@ -245,7 +245,7 @@ $langch = str_replace('_', '-', app()->getLocale());
   @yield('container')
   @include('layouts.footer')
 
-  <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/popper.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/popper.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap.min.js')}}"></script>
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/bootstrap-select.min.js')}}"></script>
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/map.js')}}"></script>
@@ -258,12 +258,6 @@ $langch = str_replace('_', '-', app()->getLocale());
 
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
-  {{-- <script type="text/javascript"
-    src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en" async defer>
-  </script> --}}
-
-
-
   <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
   </script>
   <script>
