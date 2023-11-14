@@ -252,9 +252,9 @@ $langch = str_replace('_', '-', app()->getLocale());
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/product.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
-  <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
-  <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
-  <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
 
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
   <script type="text/javascript" async defer src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
