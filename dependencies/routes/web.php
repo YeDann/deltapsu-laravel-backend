@@ -208,6 +208,7 @@ Route::post('searhModelProductByCatedoc','DucumentController@searhModelProductBy
 
 
 Route::get('export_tags','ImportTagsController@exports_tags')->name('exports_tags');
+Route::get('export_static','ImportTagsController@export_static')->name('export_static');
 Route::get('import_tags','ImportTagsController@getExcelProTag')->name('getExcelProTag');
 Route::get('import_optional_model','ImportTagsController@getExcelProOptional')->name('getExcelProOptional');
 Route::post('importProductTag','ImportTagsController@importProductTag')->name('importProductTag');

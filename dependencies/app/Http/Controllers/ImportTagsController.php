@@ -145,6 +145,32 @@ return redirect()->route('getExcelProTag')->with('error_message', 'No file');
       })->export('csv');
       }
     }
+    public function export_static(){
+      $static_word = DB::table('static_keyword as w')
+        ->join('static_keyword_translations as skt','skt.key_word','=','w.key_word')
+        ->where('skt.local','en')
+        ->select('w.*','skt.*')
+        ->get();
+
+      if(isset($static_word)){
+        Excel::create('static_keyword', function ($excel) use ($static_word )  {
+          $excel->sheet('static_keyword', function ($sheet) use ($static_word) {
+            $arr1 = array("key", "Word EN"); 
+              $sheet->row(1,$arr1);
+              $i = 2;
+              foreach ($static_word as $key) {
+            
+                $sheet->row($i, [
+                  $key->key_word,
+                  $key->word,
+                  ]);
+               $i++;
+              }
+          });
+      })->export('csv');
+      }
+    }
+    
 }
 
 ?>
