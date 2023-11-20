@@ -44,9 +44,13 @@ class ImportTagsController extends Controller
     
        if(!empty($data) && $data->count()) {
         foreach ($data as $key => $value) {
+          // return dd($value);
         $pro = DB::table('products as p')->where('p.pro_code',trim($value->model))->first();
+        if(isset($pro)){
+          DB::table('product_tags')->where('product_id',$pro->pro_id)->delete();
+          DB::table('product_optional_model')->where('product_id',$pro->pro_id)->delete();
+        }
         if(isset($pro) && isset($value->tags) && $value->tags != null){
-            DB::table('product_tags')->where('product_id',$pro->pro_id)->delete();
                 $arr = [];
                 $arr = explode(",",$value->tags);
             
@@ -62,8 +66,21 @@ class ImportTagsController extends Controller
                    }
                 }
         }
-           
+        if(isset($pro) && isset($value->optional_model) && $value->optional_model != null){
+            $arr = [];
+            $arr = explode(",",$value->optional_model);
         
+            if(count($arr) > 0){
+               foreach($arr as $optional_model){
+                DB::table('product_optional_model')->insert(
+                    [
+                        "optional_model" => $optional_model,
+                        "product_id" => $pro->pro_id,
+                    ]
+                );
+               }
+            }
+        }
       }
     }
     return redirect()->route('getExcelProTag')->with('flash_message', 'create data Successfully');
@@ -98,7 +115,6 @@ if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
                         "product_id" => $pro->pro_id,
                     ]
                 );
-
                }
             }
     }

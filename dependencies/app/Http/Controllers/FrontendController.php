@@ -2702,10 +2702,74 @@ class FrontendController extends Controller
             }
               $i++;
           }
-          $pro_results  = [];
-          $pro_results = array_merge($pro_collec, $data1); 
+      
+          $pro_collec_2 = array_merge($pro_collec, $data1); 
 
-        //   return dd($pro_results);
+
+          $ProOptionalModel  = DB::table('product_optional_model as op')
+           ->join('products as p', 'p.pro_id', '=', 'op.product_id')
+           ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+           ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+           ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+           ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+           ->where('spt.local' ,$lang)
+           ->where('st.local' ,$lang)
+           ->where('p.enable_pro' ,1)
+           ->where('op.optional_model', 'LIKE', '%'.$keypro.'%')
+           ->select('p.*','spt.name as catename','phc.categories_id','sp.url_item' ,'st.title as seName','op.*')
+           ->get();
+        //    return dd($products);
+
+           $data1 = [];
+           $i = 0;
+          foreach($ProOptionalModel as $pro3){
+              $arraysub3 = [];
+              $tags3 = [];
+              $optional_models3 = [];
+              $arraysub3 = DB::table('product_has_property as ph')
+              ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
+              ->join('product_field as pf','pf.id' ,'=','ph.type_id')
+              ->join('product_field_translation as pft','ph.type_id' ,'=','pft.product_field_id')
+              ->where('ph.product_id',$pro3->pro_id)
+              ->where('pht.local' ,'en')
+              ->where('pft.local' ,$lang)
+              ->whereIn('ph.type_id',[4,3,8,31])
+              ->orderBy('ph.type_id' ,'asc')
+              ->select('pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
+              ->get();
+              $tags3 = DB::table('product_tags as ptag')
+              ->where('ptag.product_id' ,$pro3->pro_id)
+              ->select('ptag.*')
+              ->get();
+              $optional_models3 = DB::table('product_optional_model as op')
+              ->where('op.product_id' ,$pro3->pro_id)
+              ->select('op.*')
+              ->get();
+            
+              if (!in_array($pro3->pro_id, $checkArr) && self::checkContentPro($pro3->pro_id)){
+                array_push($checkArr, $pro3->pro_id);
+
+              $data1[$i] = [
+                  "pro_id"=>$pro3->pro_id,
+                  "tag_m"=>$pro3->optional_model,
+                  "pro_code"=>$pro3->pro_code,
+                  "url_item"=>$pro3->url_item,
+                  "catename"=>$pro3->catename,
+                  "cateid"=>$pro3->categories_id,
+                  "picture"=>$pro3->picture,
+                  "status_product"=>$pro3->status_product,
+                  "content" =>$arraysub3,
+                  "tags" =>$tags3,
+                  "optional_models" =>$optional_models3,
+                  "dimensionL"=>$pro3->dimensionL,
+                  "dimensionW"=>$pro3->dimensionW,
+                  "dimensionD"=>$pro3->dimensionD,
+              ];
+            }
+              $i++;
+          }
+          $pro_results  = [];
+          $pro_results = array_merge($pro_collec_2, $data1); 
 
           $news = DB::table('product_news_has_categories as pnc')
           ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
