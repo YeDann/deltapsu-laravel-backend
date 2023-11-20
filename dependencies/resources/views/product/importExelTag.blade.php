@@ -18,37 +18,51 @@
 </div>
 <!-- Content -->
 <div class="content">
+
+    @if(Session::has('flash_message'))
+    <div class="alert alert-success" role="alert">
+        <button class="close" data-dismiss="alert"></button>
+        {!! Session('flash_message') !!}
+    </div>
+    @endif
+    @if(Session::has('error_message'))
+    <div class="alert alert-danger" role="alert">
+        <button class="close" data-dismiss="alert"></button>
+        {!! Session('error_message') !!}
+    </div>
+    @endif
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
             <h3 class="block-title">Import data</h3>
         </div>
         <div class="block-content">
             {{-- <form action="{{route('importProdoctCate')}}" method="POST" enctype="multipart/form-data"> --}}
-        <form action="{{route('importProductTag')}}" method="POST" enctype="multipart/form-data">
-                {{csrf_field()}}
-                <div class="row push">
-                    <div class="col-lg-4">
-                        <p class="text-muted">
-                        </p>
-                    </div>
-                    <div class="col-lg-8 col-xl-5">
-                        <div class="form-group">
-                            <label for="example-select">File <span class="req-fed">* Max File Size 20 MB</span></label>
-                            <div class="custom-file " style="width:100%;">
-                                <input type="file" class="custom-file-input" name="file"
-                                    data-toggle="custom-file-input">
-                                <label class="custom-file-label" for="file">Choose file</label>
+                <form action="{{route('importProductTag')}}" method="POST" enctype="multipart/form-data">
+                    {{csrf_field()}}
+                    <div class="row push">
+                        <div class="col-lg-4">
+                            <p class="text-muted">
+                            </p>
+                        </div>
+                        <div class="col-lg-8 col-xl-5">
+                            <div class="form-group">
+                                <label for="example-select">File <span class="req-fed">* Max File Size 20
+                                        MB</span></label>
+                                <div class="custom-file " style="width:100%;">
+                                    <input type="file" class="custom-file-input" name="file"
+                                        data-toggle="custom-file-input">
+                                    <label class="custom-file-label" for="file">Choose file</label>
+                                </div>
+                            </div>
+                            <div class="text-center form-group">
+                                <button class="btn btn-success" type="submit">Create </button>
+                                <a href="{{route('section.index')}}" class="btn btn-secondary">
+                                    Cancel
+                                </a>
                             </div>
                         </div>
-                        <div class="text-center form-group">
-                            <button class="btn btn-success" type="submit">Create </button>
-                            <a href="{{route('section.index')}}" class="btn btn-secondary">
-                                Cancel
-                            </a>
-                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
         </div>
     </div>
 </div>

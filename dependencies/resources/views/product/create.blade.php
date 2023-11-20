@@ -221,11 +221,20 @@
                             <select name="tag[]" class="form-control js-example-tags" data-placeholder="Enter tag.."
                                 multiple="multiple">
                                 <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Optional Model</label>
+                            <select name="optional_models[]" class="form-control js-example-tags"
+                                data-placeholder="Enter Optional Model" multiple="multiple">
+                                <option></option>
                                 @foreach ($products as $pro)
                                 <option value="{{$pro->pro_code}}">{{$pro->pro_code}}</option>
                                 @endforeach
                             </select>
                         </div>
+
+
 
                         <div class="form-group">
                             <label>Related Products</label>

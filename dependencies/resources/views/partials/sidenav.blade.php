@@ -12,37 +12,42 @@
     <!-- Side Navigation -->
     <div class="content-side content-side-full">
         <ul class="nav-main">
-            <li class="nav-main-item {{(isset($name) && $name == 'Home')?"open":""}}">
+            <li class="nav-main-item {{(isset($name) && $name == 'Home')?" open":""}}">
                 <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                     aria-expanded="false" href="#">
                     <span class="nav-main-link-name">HOME</span>
                 </a>
                 <ul class="nav-main-submenu">
                     <li class="nav-main-item">
-                    <a class="nav-main-link {{(isset($menu) && $menu == 'bannerslide')?"active":""}}" href="{{route('bannerSlide.index')}}">
+                        <a class="nav-main-link {{(isset($menu) && $menu == 'bannerslide')?" active":""}}"
+                            href="{{route('bannerSlide.index')}}">
                             <span class="nav-main-link-name">Banner Slide</span>
                         </a>
                     </li>
                     <li class="nav-main-item">
-                        <a class="nav-main-link {{(isset($menu) && $menu == 'ProductSection')?"active":""}}" href="{{route('ProductSelection')}}" >
+                        <a class="nav-main-link {{(isset($menu) && $menu == 'ProductSection')?" active":""}}"
+                            href="{{route('ProductSelection')}}">
                             <span class="nav-main-link-name">Product Selector</span>
                         </a>
                     </li>
                     <li class="nav-main-item">
-                        <a class="nav-main-link {{(isset($menu) && $menu == 'static_content')?"active":""}}" href="{{route('static_content' ,1)}}" href="#">
+                        <a class="nav-main-link {{(isset($menu) && $menu == 'static_content')?" active":""}}"
+                            href="{{route('static_content' ,1)}}" href="#">
                             <span class="nav-main-link-name">Edit information</span>
                         </a>
                     </li>
                     <li class="nav-main-item">
-                            <a class="nav-main-link {{(isset($menu) && $menu == 'featureProduct')?"active":""}}" href="{{route('featureProduct')}}">
-                                <span class="nav-main-link-name">The latest Series</span>
-                            </a>
-                        </li>
-                        {{-- <li class="nav-main-item">
-                            <a class="nav-main-link {{(isset($menu) && $menu == 'popUp')?"active":""}}" href="{{route('popUp' ,2)}}">
-                                <span class="nav-main-link-name">PopUp</span>
-                            </a>
-                        </li> --}}
+                        <a class="nav-main-link {{(isset($menu) && $menu == 'featureProduct')?" active":""}}"
+                            href="{{route('featureProduct')}}">
+                            <span class="nav-main-link-name">The latest Series</span>
+                        </a>
+                    </li>
+                    {{-- <li class="nav-main-item">
+                        <a class="nav-main-link {{(isset($menu) && $menu == 'popUp')?" active":""}}"
+                            href="{{route('popUp' ,2)}}">
+                            <span class="nav-main-link-name">PopUp</span>
+                        </a>
+                    </li> --}}
                 </ul>
             </li>
 
@@ -91,73 +96,73 @@
                     <li class="nav-main-item">
                         @if($menu == "mainCategories")
                         <a class="nav-main-link active" href="{{route('mainprotype.index')}}">
-                    <span class="nav-main-link-name">Main Categories</span>
+                            <span class="nav-main-link-name">Main Categories</span>
+                        </a>
+                        @else
+                        <a class="nav-main-link" href="{{route('mainprotype.index')}}">
+                            <span class="nav-main-link-name">Main Categories</span>
+                        </a>
+                        @endif
+                    </li>
+                    <li class="nav-main-item">
+                        @if($menu == "subCategories")
+                        <a class="nav-main-link active" href="{{route('subCategories')}}">
+                            <span class="nav-main-link-name">Product Categories</span>
+                        </a>
+                        @else
+                        <a class="nav-main-link" href="{{route('subCategories')}}">
+                            <span class="nav-main-link-name">Product Categories</span>
+                        </a>
+                        @endif
+                    </li>
+
+                    <li class="nav-main-item">
+                        @if($menu == "series")
+                        <a class="nav-main-link active" href="{{route('series_all')}}">
+                            <span class="nav-main-link-name">Series</span>
+                        </a>
+                        @else
+                        <a class="nav-main-link" href="{{route('series_all')}}">
+                            <span class="nav-main-link-name">Series</span>
+                        </a>
+                        @endif
+                    </li>
+
+                    <li class="nav-main-item">
+                        @if($menu == "product_field")
+                        <a class="nav-main-link active" href="{{route('product-field.index')}}">
+                            <span class="nav-main-link-name ">Product Field</span>
+                        </a>
+                        @else
+                        <a class="nav-main-link" href="{{route('product-field.index')}}">
+                            <span class="nav-main-link-name ">Product Field</span>
+                        </a>
+                        @endif
+                    </li>
+                    <li class="nav-main-item">
+                        @if($menu == "section")
+                        <a class="nav-main-link active" href="{{route('section.index')}}">
+                            <span class="nav-main-link-name">Section</span>
+                        </a>
+                        @else
+                        <a class="nav-main-link" href="{{route('section.index')}}">
+                            <span class="nav-main-link-name">Section</span>
+                        </a>
+                        @endif
+                    </li>
+
+                    @if($menu == "external_link")
+                    <a class="nav-main-link active" href="{{route('externallist')}}">
+                        <span class="nav-main-link-name">External Link </span>
                     </a>
                     @else
-                    <a class="nav-main-link" href="{{route('mainprotype.index')}}">
-                        <span class="nav-main-link-name">Main Categories</span>
+                    <a class="nav-main-link" href="{{route('externallist')}}">
+                        <span class="nav-main-link-name">External Link</span>
                     </a>
                     @endif
             </li>
-            <li class="nav-main-item">
-                @if($menu == "subCategories")
-                <a class="nav-main-link active" href="{{route('subCategories')}}">
-                    <span class="nav-main-link-name">Product Categories</span>
-                </a>
-                @else
-                <a class="nav-main-link" href="{{route('subCategories')}}">
-                    <span class="nav-main-link-name">Product Categories</span>
-                </a>
-                @endif
-            </li>
 
-            <li class="nav-main-item">
-                @if($menu == "series")
-                <a class="nav-main-link active" href="{{route('series_all')}}">
-                    <span class="nav-main-link-name">Series</span>
-                </a>
-                @else
-                <a class="nav-main-link" href="{{route('series_all')}}">
-                    <span class="nav-main-link-name">Series</span>
-                </a>
-                @endif
-            </li>
 
-            <li class="nav-main-item">
-                @if($menu == "product_field")
-                <a class="nav-main-link active" href="{{route('product-field.index')}}">
-                    <span class="nav-main-link-name ">Product Field</span>
-                </a>
-                @else
-                <a class="nav-main-link" href="{{route('product-field.index')}}">
-                    <span class="nav-main-link-name ">Product Field</span>
-                </a>
-                @endif
-            </li>
-            <li class="nav-main-item">
-            @if($menu == "section")
-             <a class="nav-main-link active" href="{{route('section.index')}}">
-            <span class="nav-main-link-name">Section</span>
-            </a>
-            @else
-            <a class="nav-main-link" href="{{route('section.index')}}">
-                <span class="nav-main-link-name">Section</span>
-            </a>
-            @endif
-            </li>
-
-            @if($menu == "external_link")
-            <a class="nav-main-link active" href="{{route('externallist')}}">
-           <span class="nav-main-link-name">External Link </span>
-           </a>
-           @else
-           <a class="nav-main-link" href="{{route('externallist')}}">
-               <span class="nav-main-link-name">External Link</span>
-           </a>
-           @endif
-           </li>
-
-       
 
         </ul>
         </li>
@@ -179,37 +184,37 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                        <a class="nav-main-link" href="{{route('mainprotype.index')}}">
-                <span class="nav-main-link-name">Main Categories</span>
-                </a>
-        </li>
-        <li class="nav-main-item">
-            <a class="nav-main-link" href="{{route('subCategories')}}">
-                <span class="nav-main-link-name">Product Categories</span>
-            </a>
-        </li>
-        <li class="nav-main-item">
-        <a class="nav-main-link" href="{{route('series_all')}}">
-            <span class="nav-main-link-name ">Series</span>
-        </a>
-        </li>
-        <li class="nav-main-item">
-            <a class="nav-main-link" href="{{route('product-field.index')}}">
-                <span class="nav-main-link-name ">Product Field</span>
-            </a>
-        </li>
-        <li class="nav-main-item">
-                        <a class="nav-main-link" href="{{route('section.index')}}">
-        <span class="nav-main-link-name">Section</span>
-        </a>
-        </li>
-        <li class="nav-main-item">
-            <a class="nav-main-link" href="{{route('externallist')}}">
-            <span class="nav-main-link-name">External Link</span>
-            </a>
-            </li>
+                    <a class="nav-main-link" href="{{route('mainprotype.index')}}">
+                        <span class="nav-main-link-name">Main Categories</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('subCategories')}}">
+                        <span class="nav-main-link-name">Product Categories</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('series_all')}}">
+                        <span class="nav-main-link-name ">Series</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('product-field.index')}}">
+                        <span class="nav-main-link-name ">Product Field</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('section.index')}}">
+                        <span class="nav-main-link-name">Section</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('externallist')}}">
+                        <span class="nav-main-link-name">External Link</span>
+                    </a>
+                </li>
 
-        </ul>
+            </ul>
         </li>
         @endif
         @if($name == "product_doc")
@@ -295,21 +300,24 @@
             </a>
             <ul class="nav-main-submenu">
                 <li class="nav-main-item">
-                   <a class="nav-main-link {{($menu == 'config_products_model') ? 'active':''}}" href="{{route('configurableProduct')}}">
+                    <a class="nav-main-link {{($menu == 'config_products_model') ? 'active':''}}"
+                        href="{{route('configurableProduct')}}">
                         <span class="nav-main-link-name ">Configurable Model</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link {{($menu == 'config_products_history') ? 'active':''}}"  href="{{route('getHistoryConfig')}}">
+                    <a class="nav-main-link {{($menu == 'config_products_history') ? 'active':''}}"
+                        href="{{route('getHistoryConfig')}}">
                         <span class="nav-main-link-name ">Configuration History</span>
                     </a>
                 </li>
-                <li class="nav-main-item"> 
-                    <a class="nav-main-link {{($menu == 'enquiryContact') ? 'active':''}}" href="{{route('getEnquiryContact')}}">
+                <li class="nav-main-item">
+                    <a class="nav-main-link {{($menu == 'enquiryContact') ? 'active':''}}"
+                        href="{{route('getEnquiryContact')}}">
                         <span class="nav-main-link-name ">Enquiry Contact</span>
                     </a>
                 </li>
-               
+
             </ul>
         </li>
         @else
@@ -322,7 +330,7 @@
             <ul class="nav-main-submenu">
 
                 <li class="nav-main-item">
-                <a class="nav-main-link" href="{{route('configurableProduct')}}">
+                    <a class="nav-main-link" href="{{route('configurableProduct')}}">
                         <span class="nav-main-link-name ">Configurable Model</span>
                     </a>
                 </li>
@@ -336,7 +344,7 @@
                         <span class="nav-main-link-name ">Enquiry Contact</span>
                     </a>
                 </li>
-               
+
             </ul>
         </li>
         @endif
@@ -423,34 +431,34 @@
                 </a>
         </li>
         <li class="nav-main-item">
-                @if($name == "subscribe")
-                <a class="nav-main-link active" href="{{route('subscribers_index')}}">
+            @if($name == "subscribe")
+            <a class="nav-main-link active" href="{{route('subscribers_index')}}">
                 @else
                 <a class="nav-main-link" href="{{route('subscribers_index')}}">
-                @endif
-                <span class="nav-main-link-name text-uppercase">Subscribe</span>
+                    @endif
+                    <span class="nav-main-link-name text-uppercase">Subscribe</span>
                 </a>
         </li>
         <li class="nav-main-item">
             @if($name == "gui_dowload")
             <a class="nav-main-link active" href="{{route('gui_dowload_index')}}">
-            @else
-            <a class="nav-main-link" href="{{route('gui_dowload_index')}}">
-            @endif
-            <span class="nav-main-link-name text-uppercase">GUI Downloads</span>
-            </a>
-    </li>
+                @else
+                <a class="nav-main-link" href="{{route('gui_dowload_index')}}">
+                    @endif
+                    <span class="nav-main-link-name text-uppercase">GUI Downloads</span>
+                </a>
+        </li>
         {{-- <li class="nav-main-item">
             @if($name == "feedbackEmail")
             <a class="nav-main-link active" href="{{route('emailnotification',1)}}">
-            @else
-            <a class="nav-main-link" href="{{route('emailnotification',1)}}">
-            @endif
-            <span class="nav-main-link-name text-uppercase">Email Notification</span>
-            </a>
+                @else
+                <a class="nav-main-link" href="{{route('emailnotification',1)}}">
+                    @endif
+                    <span class="nav-main-link-name text-uppercase">Email Notification</span>
+                </a>
         </li> --}}
 
-    <li class="nav-main-item {{$name == "feedbackEmail"?'open':''}}">
+        <li class="nav-main-item {{$name == " feedbackEmail"?'open':''}}">
             <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                 aria-expanded="false" href="#">
 
@@ -474,49 +482,57 @@
                 </li>
             </ul>
         </li>
-     
-        <li class="nav-main-item {{(isset($name) && $name == 'Resource')?"open":""}}">
-            <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+
+        <li class="nav-main-item {{(isset($name) && $name == 'Resource')?" open":""}}">
+            <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                aria-expanded="false" href="#">
                 <span class="nav-main-link-name">RESOURCES</span>
             </a>
             <ul class="nav-main-submenu">
-                <li class="nav-main-item {{(isset($menu) && $menu == 'faq')?"open":""}}">
-                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                <li class="nav-main-item {{(isset($menu) && $menu == 'faq')?" open":""}}">
+                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                        aria-expanded="false" href="#">
                         <span class="nav-main-link-name">FAQs</span>
-                       
+
                     </a>
                     <ul class="nav-main-submenu">
                         <li class="nav-main-item ">
-                           <a class="nav-main-link {{(isset($submenu) && $submenu =='faq_categories')?"active":""}}" href="{{route('FaqCategories.index')}}">
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='faq_categories')?" active":""}}"
+                                href="{{route('FaqCategories.index')}}">
                                 <span class="nav-main-link-name">Categories</span>
                             </a>
                         </li>
                         <li class="nav-main-item">
-                            <a class="nav-main-link {{(isset($submenu) && $submenu =='faq_list')?"active":""}}" href="{{route('Faq.index')}}">
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='faq_list')?" active":""}}"
+                                href="{{route('Faq.index')}}">
                                 <span class="nav-main-link-name">FAQs</span>
                             </a>
                         </li>
                         <li class="nav-main-item">
-                            <a class="nav-main-link {{(isset($submenu) && $submenu == 'faqbanner')?"active":""}}" href="{{route('static_content',7)}}" href="#">
+                            <a class="nav-main-link {{(isset($submenu) && $submenu == 'faqbanner')?" active":""}}"
+                                href="{{route('static_content',7)}}" href="#">
                                 <span class="nav-main-link-name">FAQs Banner</span>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="nav-main-item {{(isset($menu) && $menu == 'marketing_resource')?"open":""}}">
-                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                <li class="nav-main-item {{(isset($menu) && $menu == 'marketing_resource')?" open":""}}">
+                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                        aria-expanded="false" href="#">
                         <span class="nav-main-link-name">Marketing Resources</span>
-                       
+
                     </a>
                     <ul class="nav-main-submenu">
                         <li class="nav-main-item ">
-                        <a class="nav-main-link {{(isset($submenu) && $submenu =='marketing_categories')?"active":""}}" href="{{route('MarketResourceCategories.index')}}">
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='marketing_categories')?"
+                                active":""}}" href="{{route('MarketResourceCategories.index')}}">
                                 <span class="nav-main-link-name">Categories</span>
-                               
+
                             </a>
                         </li>
                         <li class="nav-main-item">
-                            <a class="nav-main-link {{(isset($submenu) && $submenu =='market_resource')?"active":""}}" href="{{route('MarketResource.index')}}">
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='market_resource')?" active":""}}"
+                                href="{{route('MarketResource.index')}}">
                                 <span class="nav-main-link-name">Marketing Resources</span>
                             </a>
                         </li>
@@ -527,51 +543,56 @@
         <li class="nav-main-item">
             @if($name == "feedbackform")
             <a class="nav-main-link active" href="{{route('feedbackform','All')}}">
-            @else
-            <a class="nav-main-link" href="{{route('feedbackform','All')}}">
-            @endif
-            <span class="nav-main-link-name text-uppercase">Feedback Form</span>
-            </a>
-       </li>
-
-        <li class="nav-main-item {{(isset($name) && $name == 'contact_us')?"open":""}}">
-                <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
-                    <span class="nav-main-link-name">CONTACT US</span>
+                @else
+                <a class="nav-main-link" href="{{route('feedbackform','All')}}">
+                    @endif
+                    <span class="nav-main-link-name text-uppercase">Feedback Form</span>
                 </a>
-                <ul class="nav-main-submenu">
-                    <li class="nav-main-item {{(isset($menu) && $menu == 'sales_offices')?"open":""}}">
-                        <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
-                            <span class="nav-main-link-name">Sales Offices</span>
-                           
-                        </a>
-                        <ul class="nav-main-submenu">
+        </li>
+
+        <li class="nav-main-item {{(isset($name) && $name == 'contact_us')?" open":""}}">
+            <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                aria-expanded="false" href="#">
+                <span class="nav-main-link-name">CONTACT US</span>
+            </a>
+            <ul class="nav-main-submenu">
+                <li class="nav-main-item {{(isset($menu) && $menu == 'sales_offices')?" open":""}}">
+                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                        aria-expanded="false" href="#">
+                        <span class="nav-main-link-name">Sales Offices</span>
+
+                    </a>
+                    <ul class="nav-main-submenu">
                         <li class="nav-main-item ">
-                               <a class="nav-main-link {{(isset($submenu) && $submenu =='continents_type1')?"active":""}}"  href="{{route('getContinent' ,1)}}">
-                                    <span class="nav-main-link-name">Continents</span>
-                                </a>
-                            </li>
-                           
-                        </ul>
-                    </li>
-                    <li class="nav-main-item {{(isset($menu) && $menu == 'distributors')?"open":""}}">
-                            <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
-                                <span class="nav-main-link-name">Distributors</span>
-                               
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='continents_type1')?" active":""}}"
+                                href="{{route('getContinent' ,1)}}">
+                                <span class="nav-main-link-name">Continents</span>
                             </a>
-                            <ul class="nav-main-submenu">
-                            <li class="nav-main-item">
-                                   <a class="nav-main-link {{(isset($submenu) && $submenu =='continents_type2')?"active":""}}" href="{{route('getContinent' ,2)}}">
-                                        <span class="nav-main-link-name">Continents</span>
-                                    </a>
-                                </li>
-                               
-                            </ul>
                         </li>
-                 
-                </ul>
-            </li>
-       
-    
+
+                    </ul>
+                </li>
+                <li class="nav-main-item {{(isset($menu) && $menu == 'distributors')?" open":""}}">
+                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                        aria-expanded="false" href="#">
+                        <span class="nav-main-link-name">Distributors</span>
+
+                    </a>
+                    <ul class="nav-main-submenu">
+                        <li class="nav-main-item">
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='continents_type2')?" active":""}}"
+                                href="{{route('getContinent' ,2)}}">
+                                <span class="nav-main-link-name">Continents</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+            </ul>
+        </li>
+
+
         @if($name == "setting")
         <li class="nav-main-item open">
             <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
@@ -581,30 +602,36 @@
             </a>
             <ul class="nav-main-submenu">
                 <li class="nav-main-item">
-                        <a class="nav-main-link {{(isset($menu) && $menu == 'User')?"active":""}}" href="{{route('language.index')}}">
-                            <span class="nav-main-link-name ">Language</span>
-                        </a>
+                    <a class="nav-main-link {{(isset($menu) && $menu == 'User')?" active":""}}"
+                        href="{{route('language.index')}}">
+                        <span class="nav-main-link-name ">Language</span>
+                    </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link {{(isset($menu) && $menu == 'staticword')?"active":""}}"" href="{{route('static_word')}}">
+                    <a class="nav-main-link {{(isset($menu) && $menu == 'staticword')?" active":""}}""
+                        href="{{route('static_word')}}">
                         <span class="nav-main-link-name ">Static Word</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link {{(isset($menu) && $menu == 'metatags')?"active":""}}"" href="{{route('metaTags')}}">
+                    <a class="nav-main-link {{(isset($menu) && $menu == 'metatags')?" active":""}}""
+                        href="{{route('metaTags')}}">
                         <span class="nav-main-link-name ">Meta Tags</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link {{(isset($menu) && $menu == 'privacyPoli')?"active":""}}" href="{{route('static_content' ,5)}}" href="#">
+                    <a class="nav-main-link {{(isset($menu) && $menu == 'privacyPoli')?" active":""}}"
+                        href="{{route('static_content' ,5)}}" href="#">
                         <span class="nav-main-link-name">Privacy Policy</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link {{(isset($menu) && $menu == 'termsofuse')?"active":""}}" href="{{route('static_content' ,6)}}" href="#">
+                    <a class="nav-main-link {{(isset($menu) && $menu == 'termsofuse')?" active":""}}"
+                        href="{{route('static_content' ,6)}}" href="#">
                         <span class="nav-main-link-name">Terms of Use</span>
                     </a>
                 </li>
+
             </ul>
         </li>
         @else
@@ -631,21 +658,23 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link {{(isset($menu) && $menu == 'static_content')?"active":""}}" href="{{route('static_content' ,5)}}" href="#">
+                    <a class="nav-main-link {{(isset($menu) && $menu == 'static_content')?" active":""}}"
+                        href="{{route('static_content' ,5)}}" href="#">
                         <span class="nav-main-link-name">Privacy Policy</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link {{(isset($menu) && $menu == 'static_content')?"active":""}}" href="{{route('static_content' ,6)}}" href="#">
+                    <a class="nav-main-link {{(isset($menu) && $menu == 'static_content')?" active":""}}"
+                        href="{{route('static_content' ,6)}}" href="#">
                         <span class="nav-main-link-name">Terms of Use</span>
                     </a>
                 </li>
-              
+
             </ul>
         </li>
         @endif
 
-        <li class="nav-main-item  {{(isset($name) && $name == 'User')?"open":""}}">
+        <li class="nav-main-item  {{(isset($name) && $name == 'User')?" open":""}}">
             <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                 aria-expanded="false" href="#">
 
@@ -653,50 +682,57 @@
             </a>
             <ul class="nav-main-submenu">
                 <li class="nav-main-item">
-                       <a class="nav-main-link  {{(isset($menu) && $menu == 'backenduser')?"active":""}}" href="{{route('backendUser.index')}}">
+                    <a class="nav-main-link  {{(isset($menu) && $menu == 'backenduser')?" active":""}}"
+                        href="{{route('backendUser.index')}}">
                         <span class="nav-main-link-name ">BackEnd User</span>
-                       </a>
+                    </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link  {{(isset($menu) && $menu == 'partner')?"active":""}}" href="{{route('partner.index')}}">
-                     <span class="nav-main-link-name ">Partner User</span>
+                    <a class="nav-main-link  {{(isset($menu) && $menu == 'partner')?" active":""}}"
+                        href="{{route('partner.index')}}">
+                        <span class="nav-main-link-name ">Partner User</span>
                     </a>
-             </li>
+                </li>
             </ul>
         </li>
-        <li class="nav-main-item  {{(isset($name) && $name == 'partnersAuthenicate')?"open":""}}">
+        <li class="nav-main-item  {{(isset($name) && $name == 'partnersAuthenicate')?" open":""}}">
             <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                 aria-expanded="false" href="#">
                 <span class="nav-main-link-name text-uppercase">Partners</span>
             </a>
             <ul class="nav-main-submenu">
                 <li class="nav-main-item">
-                       <a class="nav-main-link  {{(isset($menu) && $menu == 'proLaunchSchedule')?"active":""}}" href="{{route('pro_lauch')}}">
+                    <a class="nav-main-link  {{(isset($menu) && $menu == 'proLaunchSchedule')?" active":""}}"
+                        href="{{route('pro_lauch')}}">
                         <span class="nav-main-link-name ">Product Launch Schedule</span>
-                       </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link  {{(isset($menu) && $menu == 'succesStory')?"active":""}}" href="{{route('successStory')}}">
-                     <span class="nav-main-link-name ">Success Stories</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link  {{(isset($menu) && $menu == 'Sales_Kits')?"active":""}}" href="{{route('partner_doc_index',[1 ,'Sales_Kit'])}}">
-                     <span class="nav-main-link-name ">Sales Kit</span>
+                    <a class="nav-main-link  {{(isset($menu) && $menu == 'succesStory')?" active":""}}"
+                        href="{{route('successStory')}}">
+                        <span class="nav-main-link-name ">Success Stories</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link  {{(isset($menu) && $menu == 'Product_Cross_Reference')?"active":""}}" href="{{route('partner_doc_index' ,[2 ,'Product_Cross_Reference'])}}">
-                     <span class="nav-main-link-name ">Product Cross Reference</span>
+                    <a class="nav-main-link  {{(isset($menu) && $menu == 'Sales_Kits')?" active":""}}"
+                        href="{{route('partner_doc_index',[1 ,'Sales_Kit'])}}">
+                        <span class="nav-main-link-name ">Sales Kit</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
-                <a class="nav-main-link  {{(isset($menu) && $menu == 'page_info')?"active":""}}" href="{{route('partner_page')}}">
-                     <span class="nav-main-link-name ">Pages information</span>
+                    <a class="nav-main-link  {{(isset($menu) && $menu == 'Product_Cross_Reference')?" active":""}}"
+                        href="{{route('partner_doc_index' ,[2 ,'Product_Cross_Reference'])}}">
+                        <span class="nav-main-link-name ">Product Cross Reference</span>
                     </a>
                 </li>
-              
-                
+                <li class="nav-main-item">
+                    <a class="nav-main-link  {{(isset($menu) && $menu == 'page_info')?" active":""}}"
+                        href="{{route('partner_page')}}">
+                        <span class="nav-main-link-name ">Pages information</span>
+                    </a>
+                </li>
+
+
             </ul>
         </li>
         </ul>

@@ -253,6 +253,25 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>Optional Model</label>
+                            <select name="optional_models[]" class="form-control js-example-tags"
+                                data-placeholder="Enter Optional Model.." multiple="multiple">
+                                <option></option>
+                                @foreach ($products_input as $pro)
+                                <option value="{{$pro->pro_code}}" {{in_array($pro->
+                                    pro_code,$arrOptionalPro)?'selected':''}}>
+                                    {{$pro->pro_code}}</option>
+                                @endforeach
+                                @foreach ($arrOptionalPro as $optinal)
+                                <option value="{{$optinal}}" {{!in_array($optinal,$proInarr)?'selected':'' }}>
+                                    {{$optinal}}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+
+                        <div class="form-group">
                             <label>Related Products</label>
                             <select id="relatePro" class="js-select2 form-control" name="relatePro[]"
                                 data-placeholder="Choose many.." multiple>

@@ -159,14 +159,7 @@ class ImportController extends Controller
       if(isset($products)){
         Excel::create('products', function ($excel) use ($products ,$language, $pd_field ,$arrNotfound)  {
           $excel->sheet('products', function ($sheet) use ($products,$language, $pd_field , $arrNotfound) {
-            $arr1 = array("pro_code", "pro_categories 1", "pro_categories 2","series", "dimensionL" ,"dimensionW" ,"dimensionD","unit_weight","Status","Show ManaulPage","Industrial Power", "Medical Power","Lighting & Signage"); 
-            // $arr2 = [];
-            // foreach($pd_field as $pfield){
-            //   array_push($arr2,$pfield->field_name.'('.$pfield->product_field_id.')');
-             
-            // }
-          
-            // $arr1 = array_merge($arr1, $arr2);  
+            $arr1 = array("pro_code", "pro_categories 1", "pro_categories 2","series", "dimensionL" ,"dimensionW" ,"dimensionD","unit_weight","Status","Show ManaulPage",'Highlights & Features',"Industrial Power", "Medical Power","Lighting & Signage"); 
               $sheet->row(1,$arr1);
               $i = 2;
               foreach ($products as $pro) {
@@ -242,6 +235,7 @@ class ImportController extends Controller
                   $pro->unit_weight,
                   $pro->enable_pro == 1 ?'Yes':'No',
                   $pro->manaul_page == 1 ?'Yes':'No',
+                  strip_tags($pro->content_1),
                 ];
            
                 // foreach($language as $lang){

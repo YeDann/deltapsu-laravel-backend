@@ -112,6 +112,7 @@ class ProductsController extends Controller
         $status_input = $request->status_input;   
         $certificate =  $request->status_certificate;
         $tags  = $request->tag;
+        $optional_models = $request->optional_models;
         $relatePros  = $request->relatePro;
         $pro_categories  = $request->pro_categories;
       
@@ -194,6 +195,16 @@ class ProductsController extends Controller
                 );
             }
         }
+            if(isset($optional_models)){
+                foreach($optional_models as $optional){
+                    DB::table('product_optional_model')->insert(
+                        [
+                            "optional_model" => $optional,
+                            "product_id" => $pro_id,
+                        ]
+                    );
+                }
+            }
         if(isset($relatePros)){
             foreach($relatePros as $relatePro){
                 DB::table('product_related')->insert(
@@ -422,7 +433,15 @@ public function edit($id){
         array_push($arrtags ,$tag->tag);
     }
 
-    // return dd($arrtags);
+    $optional_pro = DB::table('product_optional_model as op')
+    ->where('op.product_id',$id)
+    ->select('op.*')
+    ->get();
+
+    $arrOptionalPro = [];
+    foreach($optional_pro as $item){
+        array_push($arrOptionalPro ,$item->optional_model);
+    }
 
     $products_input  = DB::table('products as p')
     ->select('p.*')
@@ -446,6 +465,7 @@ public function edit($id){
     ->with('products_input2',$products_input2)
     ->with('product_related',$arrRelate)
     ->with('arrtags',$arrtags)
+    ->with('arrOptionalPro',$arrOptionalPro)
     ->with('proInarr',$proInarr)
     ->with('cerpros',$cerpros)
     ->with('propertys' ,$KeepResult)
@@ -472,6 +492,7 @@ public function update(Request $request){
     $oldFile = $request->oldFile;
     $certificate =  $request->status_certificate;
     $tags  = $request->tag;
+    $optional_models  = $request->optional_models;
     $relatePros  = $request->relatePro;
     $pro_categories = $request->pro_categories;
     $productfieldNumbers = array_unique($inputfiledNum);
@@ -548,6 +569,17 @@ public function update(Request $request){
                     DB::table('product_tags')->insert(
                         [
                             "tag" => $tag,
+                            "product_id" => $pro_id,
+                        ]
+                    );
+                }
+            }
+            DB::table('product_optional_model')->where('product_id',$pro_id)->delete();
+            if(isset($optional_models)){
+                foreach($optional_models as $optional){
+                    DB::table('product_optional_model')->insert(
+                        [
+                            "optional_model" => $optional,
                             "product_id" => $pro_id,
                         ]
                     );
