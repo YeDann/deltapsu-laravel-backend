@@ -12,7 +12,7 @@
 /dependencies/bootstrap/compiled.php
 /dependencies/app/storage/
 dependencies/storage/logs/laravel.log
-/dependencies/storage/framework/views
+/dependencies/storage/framework/views/
 # Laravel 5 & Lumen specific
 /dependencies/public/storage
 /dependencies/public/hot
