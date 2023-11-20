@@ -333,7 +333,7 @@
                                                     @foreach ($pro['optional_models'] as $optional)
                                                     <a
                                                         class="text-tag {{$pro['tag_m'] == $optional->optional_model ?'hightlight':'' }}"><span
-                                                            onclick="viewOptionalKey('{{$optional->optional_model}}')">{{$optional->optional_model}}{{$loop->iteration
+                                                            onclick="viewOptionalModel('{{$optional->optional_model}}' ,'{{$pro['catename']}}'  ,'{{$pro['pro_code']}}')">{{$optional->optional_model}}{{$loop->iteration
                                                             != $loop->count?',':'' }} </span></a>
                                                     @endforeach
                                                 </div>
@@ -535,7 +535,7 @@
                                                 @foreach ($pro['optional_models'] as $optional)
                                                 <a
                                                     class="text-tag {{$pro['tag_m'] == $optional->optional_model ?'hightlight':'' }}"><span
-                                                        onclick="viewOptionalKey('{{$optional->optional_model}}')">{{$optional->optional_model}}{{$loop->iteration
+                                                        onclick="viewOptionalModel('{{$optional->optional_model}}' ,'{{$pro['catename']}}'  ,'{{$pro['pro_code']}}')">{{$optional->optional_model}}{{$loop->iteration
                                                         != $loop->count?',':'' }} </span></a>
                                                 @endforeach
                                             </div>
@@ -964,6 +964,11 @@
             var newkey = key.replace(/[/]/g,'@');
               event.preventDefault();
               window.location = '{{route('searchByOptionalModel')}}/'+newkey;
+    }
+    function viewOptionalModel(key , cate , product_code){
+            var newkey = key.replace(/[/]/g,'@');
+              event.preventDefault();
+              window.location = '{{route('productsDetailsByType')}}/'+cate+'/'+ product_code +'?optional_model='+newkey;
     }
 </script>
 <script>
