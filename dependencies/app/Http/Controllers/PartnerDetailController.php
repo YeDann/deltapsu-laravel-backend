@@ -176,7 +176,7 @@ public function pro_lauch_DetailEdit($headid ,$id){
            $file =  $request->file;
           if(isset($file)){
             $fileName = preg_replace('/\s+/', '', uniqid().$file->getClientOriginalName());
-            $file->move(base_path('/../medias/marketing_resources'),$fileName);
+            $file->move(base_path('/../medias/partner/marketing_resources'),$fileName);
           }else{
             $fileName = '';
           }
@@ -217,7 +217,7 @@ public function pro_lauch_DetailEdit($headid ,$id){
 
             if($emptyornot){
                      $fileName[$lang] = preg_replace('/\s+/', '', uniqid().$loopfile[$lang]->getClientOriginalName());
-                     $loopfile[$lang]->move(base_path('/../medias/marketing_resources'),$fileName[$lang]);
+                     $loopfile[$lang]->move(base_path('/../medias/partner/marketing_resources'),$fileName[$lang]);
                      $arrayfileName[$lang] = $fileName[$lang];
                  
             }else{

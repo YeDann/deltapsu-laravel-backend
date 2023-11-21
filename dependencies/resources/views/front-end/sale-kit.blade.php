@@ -1,10 +1,8 @@
 @extends('layouts.front-end')
 @section('css')
-<link rel="stylesheet" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}" >
+<link rel="stylesheet" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}">
 <style>
-@media (max-width: 992px){
-  
-}
+    @media (max-width: 992px) {}
 </style>
 @endsection
 @section('meta')
@@ -20,10 +18,14 @@
         <div class="container">
             <nav aria-label="breadcrumb" id="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a href="#"> {{$staticContent['Partners']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a href="{{route('marketingResources')}}">{{$staticContent['Marketing_Resources']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['Sales_kit']}}</a></li>
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a href="#">
+                            {{$staticContent['Partners']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a
+                            href="{{route('marketingResources')}}">{{$staticContent['Marketing_Resources']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
+                            href="#">{{$staticContent['Sales_kit']}}</a></li>
                 </ol>
             </nav>
         </div>
@@ -34,22 +36,24 @@
     <div class="container">
         <h2 class="text-title-delta visible-up-922">{{$staticContent['Sales_kit']}}</h2>
         <h3 class="text-title-delta invisible-up-922">{{$staticContent['Sales_kit']}}</h3>
-        <p class="text-center mb-5" >{{$staticContent['Sales_Kit_will_help_technicians']}}</p>
+        <p class="text-center mb-5">{{$staticContent['Sales_Kit_will_help_technicians']}}</p>
         <div class="content-seles-kit">
             @foreach ($product_docs as $item)
-                <div class="resources-download ">
-                    <div class="detail-download ">
+            <div class="resources-download ">
+                <div class="detail-download ">
                     <h5>{{$item->name}}</h5>
-                        <p>{{$staticContent['Uploaded_on']}} {{$item->date_info}}</p>
-                        {{-- <p>{{$staticContent['Uploaded_on']}} 13-Mar-2019   |  PDF, 4.7 MB</p> --}}
-                    </div>
-                <a href="{{config('app.url')}}/medias/marketing_resources/{{$item->file}}" download="{{$item->name}}{{$item->date_info}}"><button class="btn-downlode ">{{$staticContent['Downloads']}}</button></a>
+                    <p>{{$staticContent['Uploaded_on']}} {{$item->date_info}}</p>
+                    {{-- <p>{{$staticContent['Uploaded_on']}} 13-Mar-2019 | PDF, 4.7 MB</p> --}}
                 </div>
+                <a href="{{config('app.url')}}/file_doc/marketing_resources/{{$item->file}}"
+                    download="{{$item->name}}{{$item->date_info}}"><button
+                        class="btn-downlode ">{{$staticContent['Downloads']}}</button></a>
+            </div>
             @endforeach
-        
-        
+
+
         </div>
-    </div> 
+    </div>
 </div>
 
 
@@ -61,6 +65,6 @@
 
 <script>
 
-    
+
 </script>
 @endsection

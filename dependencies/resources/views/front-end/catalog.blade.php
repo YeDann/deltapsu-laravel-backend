@@ -1,34 +1,39 @@
 @extends('layouts.front-end')
 @section('css')
 <style>
-
     .tab-content>.active {
         justify-content: unset !important;
-        
+
         display: block;
     }
-    .tab-content{
+
+    .tab-content {
         margin-top: 24px;
     }
-    .search-space{
+
+    .search-space {
         margin-bottom: 24px;
     }
+
     .nav-tabs .nav-link {
         margin: -2px 32px;
     }
-    .box-search-input{
+
+    .box-search-input {
         width: 270px;
     }
 
-    @media (max-width:375px){
-        .box-search-filter{
+    @media (max-width:375px) {
+        .box-search-filter {
             width: 70%;
         }
-        .btn-search-border{
+
+        .btn-search-border {
             width: 25%;
         }
     }
-    .tab-content>.active{
+
+    .tab-content>.active {
         margin: 0;
     }
 </style>
@@ -46,18 +51,23 @@
         <div class="container">
             <nav aria-label="breadcrumb" id="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a
-                            href="#" data-toggle="dropdown" id="tools-dropdown">{{$staticContent['nav_dowloads']}}</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['nav_dowloads']}}</a></li>
-                                <hr>
-                                <li><a href="{{route('index','catalogs')}}">{{$staticContent['catalogs']}}</a></li>
-                                <li><a href="{{route('index','product-documents')}}">{{$staticContent['Product_Documents']}}</a></li>
-                                {{-- <li><a href="{{route('index','login')}}">PARTNERS</a></li> --}}
-                              </ul>   
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
+                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['nav_dowloads']}}</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['nav_dowloads']}}</a>
+                            </li>
+                            <hr>
+                            <li><a href="{{route('index','catalogs')}}">{{$staticContent['catalogs']}}</a></li>
+                            <li><a
+                                    href="{{route('index','product-documents')}}">{{$staticContent['Product_Documents']}}</a>
+                            </li>
+                            {{-- <li><a href="{{route('index','login')}}">PARTNERS</a></li> --}}
+                        </ul>
                     </li>
-                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['catalogs']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
+                            href="#">{{$staticContent['catalogs']}}</a></li>
                 </ol>
             </nav>
         </div>
@@ -104,60 +114,66 @@ function getDateformat($date){
         </select>
         <div class="row">
             <div class="col-md-12">
-                    <div class="nav nav-tabs d-flex justify-content-center border-b-2px visible-up-922 mb-4" id="nav-tab" role="tablist">
-                        @foreach ($margetCate as $cate)
-                            <a class="nav-item nav-link font-size-tab {{$loop->iteration == 1?'active':'' }}" onclick="setdatainput({{$cate->cate_id}});" id="pop-tab{{$cate->cate_id}}" data-toggle="tab" href="#pop{{$cate->cate_id}}"
-                                role="tab" aria-controls="pop{{$cate->cate_id}}" aria-selected="true" data-val="{{$cate->cate_id}}">{{$cate->name}}
-                            </a>
-                        @endforeach
-                    </div>
-                <div class="tab-content" id="nav-tabContent">
-                
+                <div class="nav nav-tabs d-flex justify-content-center border-b-2px visible-up-922 mb-4" id="nav-tab"
+                    role="tablist">
                     @foreach ($margetCate as $cate)
-                    <div class="tab-pane fade {{$loop->iteration == 1?'show active':'' }} " id="pop{{$cate->cate_id}}" role="tabpanel" aria-labelledby="pop{{$cate->cate_id}}-tab">
-                        <form  onsubmit="searchmarketingbycate()">
-                        <div class="search-space d-flex justify-content-center w-100">
-                            <div class="box-search-input  mr-3">
-                           
-                                <div class="box-search-icon">
-                                    <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
+                    <a class="nav-item nav-link font-size-tab {{$loop->iteration == 1?'active':'' }}"
+                        onclick="setdatainput({{$cate->cate_id}});" id="pop-tab{{$cate->cate_id}}" data-toggle="tab"
+                        href="#pop{{$cate->cate_id}}" role="tab" aria-controls="pop{{$cate->cate_id}}"
+                        aria-selected="true" data-val="{{$cate->cate_id}}">{{$cate->name}}
+                    </a>
+                    @endforeach
+                </div>
+                <div class="tab-content" id="nav-tabContent">
+
+                    @foreach ($margetCate as $cate)
+                    <div class="tab-pane fade {{$loop->iteration == 1?'show active':'' }} " id="pop{{$cate->cate_id}}"
+                        role="tabpanel" aria-labelledby="pop{{$cate->cate_id}}-tab">
+                        <form onsubmit="searchmarketingbycate()">
+                            <div class="search-space d-flex justify-content-center w-100">
+                                <div class="box-search-input  mr-3">
+
+                                    <div class="box-search-icon">
+                                        <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
+                                    </div>
+                                    <label for="searchinput" class="searchinput-filters-input">
+                                        <input type="hidden" name="cateid" value="1">
+                                        <input type="text" name="modelname"
+                                            placeholder="{{$staticContent['Search_By_Name']}}">
+                                    </label>
                                 </div>
-                                <label for="searchinput" class="searchinput-filters-input">
-                                    <input type="hidden" name="cateid" value="1"  >
-                                    <input type="text" name="modelname"  placeholder="{{$staticContent['Search_By_Name']}}">
-                                </label>
+
+                                <button class="btn-search-border">{{$staticContent['Search']}} </button>
+
                             </div>
-                         
-                            <button class="btn-search-border">{{$staticContent['Search']}} </button>
-                            
-                        </div>
                         </form>
-                        <div class="contentdatasearch"> 
-                    
-                        @foreach ($margeting as $marget)
-                        @if($marget->cate_id == $cate->cate_id )
-                        <div class="resources-download">
-                            <div class="detail-download ">
-                              <h5>{{$marget->name}}</h5>
-                                {{-- <p  >{{$staticContent['Uploaded_on']}} 13-Mar-2019   |   4.7 MB</p> --}}
-                                <?php
+                        <div class="contentdatasearch">
+
+                            @foreach ($margeting as $marget)
+                            @if($marget->cate_id == $cate->cate_id )
+                            <div class="resources-download">
+                                <div class="detail-download ">
+                                    <h5>{{$marget->name}}</h5>
+                                    {{-- <p>{{$staticContent['Uploaded_on']}} 13-Mar-2019 | 4.7 MB</p> --}}
+                                    <?php
                                 $date = getDateformat($marget->created_at);
                                ?>
-                                <p>{{$staticContent['Uploaded_on']}} {{$date['d'].'-'.$date['m'].'-'.$date['y']}} </p>
-                            </div>
-                            <a href="{{route('marketingLink',$marget->file)}}" target="_blank"  >
-                                <button class="btn-downlode">{{$staticContent['Downloads']}}</button>
-                            </a>
+                                    <p>{{$staticContent['Uploaded_on']}} {{$date['d'].'-'.$date['m'].'-'.$date['y']}}
+                                    </p>
+                                </div>
+                                <a href="{{route('marketingLink',$marget->file)}}" target="_blank">
+                                    <button class="btn-downlode">{{$staticContent['Downloads']}}</button>
+                                </a>
 
+                            </div>
+                            @endif
+                            @endforeach
                         </div>
-                        @endif
-                        @endforeach
-                      </div>
-                       
+
                     </div>
                     @endforeach
 
-                 
+
                 </div>
             </div>
         </div>
@@ -171,7 +187,7 @@ function getDateformat($date){
 @section('js')
 
 <script>
-      function selectdocumentType(){
+    function selectdocumentType(){
         var typetab =  $('#select-catalogs').val();
         $('#pop-tab'+typetab).click();
 

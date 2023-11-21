@@ -276,7 +276,7 @@ class PartnerController extends Controller
          if(count($data_image) > 0){
            DB::table('success_storys_image')->where('id',$id)->delete();
            foreach($data_image as $item){
-               $file_pointer = base_path('/../medias/marketing_resources/').$item->image;
+               $file_pointer = base_path('/../medias/partner/marketing_resources/').$item->image;
                if (file_exists($file_pointer) && isset($item->image) ) {
                    unlink($file_pointer);
                    DB::table('success_storys_image')->where('id' ,$item->id)->delete();
@@ -304,7 +304,7 @@ class PartnerController extends Controller
         if ($request->hasFile('file')) {
             $image = $request->file('file'); 
             $imgName = uniqid().".".$image->getClientOriginalExtension();
-            $image->move(base_path('/../medias/marketing_resources'),$imgName);
+            $image->move(base_path('/../medias/partner/marketing_resources'),$imgName);
        
             DB::table('success_storys_image')->insert(
                 [
@@ -325,7 +325,7 @@ class PartnerController extends Controller
         $id = $request->itemId;
      
         $data = DB::table('success_storys_image')->where('id' ,$id)->get();
-        $file_pointer = base_path('/../medias/marketing_resources/').$data[0]->image;
+        $file_pointer = base_path('/../medias/partner/marketing_resources/').$data[0]->image;
         if (file_exists($file_pointer) && isset($data[0]->image) ) {
             unlink($file_pointer);
             DB::table('success_storys_image')->where('id' ,$id)->delete();
