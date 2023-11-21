@@ -2770,7 +2770,7 @@ class FrontendController extends Controller
            ->where('st.local' ,$lang)
            ->where('p.enable_pro' ,1)
            ->where('op.optional_model', 'LIKE', '%'.$keypro.'%')
-           ->select('p.*','op.optional_model as pro_code','spt.name as catename','phc.categories_id','sp.url_item' ,'st.title as seName','op.*')
+           ->select('p.*','spt.name as catename','phc.categories_id','sp.url_item' ,'st.title as seName','op.*')
            ->get();
         //    return dd($products);
 
