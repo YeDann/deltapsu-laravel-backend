@@ -4386,9 +4386,35 @@ class FrontendController extends Controller
         ->where('st.file' ,$doc)
         ->select('st.*')
         ->first();
-        return dd($path)
+
+        $margeting = DB::table('marketing_resource as mr')
+                ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+                ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
+                ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
+                ->where('mrt.local', '=', $lang)
+                ->where('mrt.file', '=',$doc)
+                ->whereIn('permar.permission_id', [1,2])
+                ->select('mr.*' ,'mrt.*')
+                ->first();
+
+         $margeting_public = DB::table('marketing_resource as mr')
+                ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+                ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
+                ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
+                ->where('mrt.local', '=', $lang)
+                ->where('mrt.file', '=',$doc)
+                ->whereIn('permar.permission_id', [3])
+                ->select('mr.*' ,'mrt.*')
+                ->first();
+     
         $sectionId = session('partner_id');
-        if(isset($sales_kits) && $sectionId){
+        if(isset($sales_kits) && isset($sectionId)){
+           return response()->file($path);
+      
+        }else if(isset($margeting) && isset($sectionId)){
+           return response()->file($path);
+          
+        }else if(isset($margeting_public)){
            return response()->file($path);
         }else{
           return redirect()->route('index','login');
