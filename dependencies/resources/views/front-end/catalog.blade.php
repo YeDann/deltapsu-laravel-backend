@@ -227,7 +227,7 @@ function getDateformat($date){
             html +=  '<h5>'+value['name']+'</h5>';
             html += '<p>{{$staticContent['Uploaded_on']}} '+ setformatdate(value['created_at'])+' </p>';
             html += '</div>';
-            html += '<a href="{{config('app.url')}}/fie_doc/marketing_resources/'+value['file']+'"  download="" >';
+            html += '<a href="{{config('app.url')}}/file_doc/marketing_resources/'+value['file']+'"  download="" >';
             html += '<button class="btn-downlode">{{$staticContent['Downloads']}}</button>';
             html += '</a>';
             html += '</div>'

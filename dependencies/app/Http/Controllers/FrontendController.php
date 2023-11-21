@@ -4386,6 +4386,7 @@ class FrontendController extends Controller
         ->where('st.file' ,$doc)
         ->select('st.*')
         ->first();
+        return dd($path)
         $sectionId = session('partner_id');
         if(isset($sales_kits) && $sectionId){
            return response()->file($path);

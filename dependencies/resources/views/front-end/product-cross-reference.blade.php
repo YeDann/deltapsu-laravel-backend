@@ -57,7 +57,7 @@
                     <h5>{{$item->name}}</h5>
                     <p>{{$staticContent['Uploaded_on']}} {{$item->date_info}}</p>
                 </div>
-                <a href="{{config('app.url')}}/fie_doc/marketing_resources/{{$item->file}}" download=""><button
+                <a href="{{config('app.url')}}/file_doc/marketing_resources/{{$item->file}}" download=""><button
                         class="btn-downlode ">{{$staticContent['Downloads']}}</button></a>
             </div>
             @endforeach

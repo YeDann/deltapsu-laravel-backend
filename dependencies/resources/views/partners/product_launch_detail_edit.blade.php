@@ -103,7 +103,7 @@
                                         <div class="form-group">
                                             <label for="example-select"> Old File</label>
                                             <a
-                                                href="{{config('app.url')}}/fie_doc/marketing_resources/{{isset($current->file) ? $current->file :''}}">{{isset($current->file)
+                                                href="{{config('app.url')}}/file_doc/marketing_resources/{{isset($current->file) ? $current->file :''}}">{{isset($current->file)
                                                 ? $current->file :''}}</a>
                                         </div>
                                         <input type="hidden" name="oldfile[{{$item->name}}]"
