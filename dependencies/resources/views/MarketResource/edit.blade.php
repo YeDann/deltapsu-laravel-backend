@@ -10,7 +10,8 @@
             <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Edit Marketing Resource </h1>
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"> <a href="{{route('MarketResource.index')}}">All Marketing Resource</a></li>
+                    <li class="breadcrumb-item"> <a href="{{route('MarketResource.index')}}">All Marketing Resource</a>
+                    </li>
                     <li class="breadcrumb-item active" aria-current="page">Edit</li>
                 </ol>
             </nav>
@@ -38,10 +39,10 @@
         <div class="block-content">
             <form action="{{route('update_MarketResource')}}" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
-            <input type="hidden" name="mr_id" value="{{$margeting[0]->id}}">
+                <input type="hidden" name="mr_id" value="{{$margeting[0]->id}}">
                 <!-- Basic Elements -->
                 <div class="row push">
-                  
+
                     <div class="col-lg-12">
                         <div class="block block-rounded block-bordered">
                             <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
@@ -71,61 +72,74 @@
                                 }
                            ?>
                                 <input type="hidden" name="lang_loop[]" value="{{$item->name}}">
-                                <div class="tab-pane {{($loop->iteration == 1)?"active":""}}" id="btabs-alt-static-{{$item->name}}" role="tabpanel">
-                                        <div class="form-group">
-                                            <label for="example-select">Title</label>
-                                            <input type="text"
-                                                class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                        name="name[{{$item->name}}]" value="{{isset($current->name)? $current->name:""}}" placeholder="Enter name...">
-                                        </div>
-                                        <div class="form-group">
-                                                <label for="example-select"> Old File</label>
-                                                <a href="{{config('app.url')}}/medias/marketing_resources/{{isset($current->file) ? $current->file :''}}">{{isset($current->file) ? $current->file :''}}</a>
-                                                
-                                                @if(isset($current->file))
-                                                <a href="{{route('removefileMargeting',[$margeting[0]->id,$item->name])}}"  class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
-                                                    @endif
-                                                <input type="hidden" name="oldfile[{{$item->name}}]" value="{{isset($current->file) ? $current->file :''}}">
-                                            </div>
-                                        <div class="form-group">
-                                                <label for="example-select">File <span class="req-fed">* Max File Size 80 MB</span></label>
-                                                <div class="custom-file " style="width:100%;">
-                                                    <input type="file" class="custom-file-input" id="file_input{{$item->name}}" onchange="checkmaxsize(`file_input{{$item->name}}` ,'file_lable{{$item->name}}')"  name="file[{{$item->name}}]"
-                                                        data-toggle="custom-file-input">
-                                                    <label class="custom-file-label file_lable{{$item->name}}"  for="file">Choose file</label>
-                                                </div>
-                                               
-                                            </div>
+                                <div class="tab-pane {{($loop->iteration == 1)?" active":""}}"
+                                    id="btabs-alt-static-{{$item->name}}" role="tabpanel">
+                                    <div class="form-group">
+                                        <label for="example-select">Title</label>
+                                        <input type="text"
+                                            class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                            name="name[{{$item->name}}]"
+                                            value="{{isset($current->name)? $current->name:""}}"
+                                            placeholder="Enter name...">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="example-select"> Old File</label>
+                                        <a
+                                            href="{{config('app.url')}}/medias/partner/marketing_resources/{{isset($current->file) ? $current->file :''}}">{{isset($current->file)
+                                            ? $current->file :''}}</a>
+
+                                        @if(isset($current->file))
+                                        <a href="{{route('removefileMargeting',[$margeting[0]->id,$item->name])}}"
+                                            class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
+                                        @endif
+                                        <input type="hidden" name="oldfile[{{$item->name}}]"
+                                            value="{{isset($current->file) ? $current->file :''}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-select">File <span class="req-fed">* Max File Size 80
+                                                MB</span></label>
+                                        <div class="custom-file " style="width:100%;">
+                                            <input type="file" class="custom-file-input" id="file_input{{$item->name}}"
+                                                onchange="checkmaxsize(`file_input{{$item->name}}` ,'file_lable{{$item->name}}')"
+                                                name="file[{{$item->name}}]" data-toggle="custom-file-input">
+                                            <label class="custom-file-label file_lable{{$item->name}}" for="file">Choose
+                                                file</label>
+                                        </div>
+
+                                    </div>
+                                </div>
                                 @endforeach
                             </div>
-                           
+
                         </div>
                         <div class="form-group">
-                                <label for="example-select">Select Categories <span class="req-fed">*</span></label>
-                                <select class="js-select2 form-control" name="mr_categories" data-placeholder="Choose one.." required>
-                                        <option></option>
-                                    @foreach ($margetCates as $item)
-                                    @if($item->cate_id == $margeting[0]->cate_id)
-                                    <option value="{{$item->cate_id}}" selected>{{$item->name}}</option>
-                                    @else 
-                                    <option value="{{$item->cate_id}}">{{$item->name}}</option>
-                                    @endif
-                                    @endforeach
-                                       
-                                </select>
-                                </div>
+                            <label for="example-select">Select Categories <span class="req-fed">*</span></label>
+                            <select class="js-select2 form-control" name="mr_categories" data-placeholder="Choose one.."
+                                required>
+                                <option></option>
+                                @foreach ($margetCates as $item)
+                                @if($item->cate_id == $margeting[0]->cate_id)
+                                <option value="{{$item->cate_id}}" selected>{{$item->name}}</option>
+                                @else
+                                <option value="{{$item->cate_id}}">{{$item->name}}</option>
+                                @endif
+                                @endforeach
+
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label class="d-block">Status</label>
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                    <input type="radio" class="custom-control-input" id="status-1" name="status" value="1" {{$margeting[0]->status == 1 ?"checked":""}} >
-                                    <label class="custom-control-label" for="status-1">Show</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                    <input type="radio" class="custom-control-input" id="status-2" name="status" value="0" {{$margeting[0]->status == 0 ?"checked":""}}>
-                                    <label class="custom-control-label" for="status-2">Hide</label>
-                                </div>
-                           
+                                <input type="radio" class="custom-control-input" id="status-1" name="status" value="1"
+                                    {{$margeting[0]->status == 1 ?"checked":""}} >
+                                <label class="custom-control-label" for="status-1">Show</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-2" name="status" value="0"
+                                    {{$margeting[0]->status == 0 ?"checked":""}}>
+                                <label class="custom-control-label" for="status-2">Hide</label>
+                            </div>
+
                         </div>
                         <div class="text-center form-group">
                             <button class="btn btn-info" type="submit">Update </button>
@@ -141,8 +155,8 @@
 </div>
 @endsection
 @section('js')
-  <script>
-      function checkmaxsize(id ,lableid){
+<script>
+    function checkmaxsize(id ,lableid){
           console.log(lableid);
          var file =  $('#'+id)[0].files[0];
          var FileSize = file.size / 1024 / 1024; // in MB
@@ -156,5 +170,5 @@
           };
 
       }
-      </script>
+</script>
 @endsection

@@ -6,14 +6,17 @@
         border-collapse: unset;
         border-spacing: 0px 16px;
     }
+
     .table {
         margin-top: -1rem;
         margin-bottom: 0;
     }
+
     .space-listviews {
         margin-top: 4px;
     }
-    .table thead th{
+
+    .table thead th {
         vertical-align: middle !important;
     }
 
@@ -22,44 +25,55 @@
         border-top: 2px solid transparent !important;
         border-bottom: 2px solid #E3EFF8;
     }
-    
 
-    .text-middle-td{
+
+    .text-middle-td {
         padding: 1rem !important;
     }
- 
-    .table th{
+
+    .table th {
         padding: 3px 10px !important;
     }
-    .list-group{
+
+    .list-group {
         margin-top: 20px;
     }
-   .select-minimize {
-    width: 60px !important;
-   }
-    .box-news-detail{
+
+    .select-minimize {
+        width: 60px !important;
+    }
+
+    .box-news-detail {
         border: 2px solid #E3EFF8;
         padding: 24px;
     }
+
     /* tab */
-    .calendar-month-tab input { 
-        display: none; 
-    }   /* hide radio buttons */
-    input + label { 
-       /*  display: inline-block ; */
-       margin-bottom: -2px;
-       cursor: pointer;
-    }   /* show labels in line */
-    .calendar-month-tab{
+    .calendar-month-tab input {
+        display: none;
+    }
+
+    /* hide radio buttons */
+    input+label {
+        /*  display: inline-block ; */
+        margin-bottom: -2px;
+        cursor: pointer;
+    }
+
+    /* show labels in line */
+    .calendar-month-tab {
         border-bottom: 2px solid #E3EFF8;
         margin-bottom: 1em;
         display: flex;
         justify-content: space-around;
     }
+
     input:checked+label {
         border-bottom: 2px solid #0087DC;
     }
-    #next-year::before,#last-year::before{
+
+    #next-year::before,
+    #last-year::before {
         position: absolute;
         bottom: -8px;
         font-family: 'FontAwesome';
@@ -67,42 +81,52 @@
         font-size: 24px;
         cursor: pointer;
     }
-    #next-year::before{
+
+    #next-year::before {
         left: 0;
         content: "\f054";
         margin-left: 24px;
     }
-    #last-year::before{
+
+    #last-year::before {
         right: 0;
         content: "\f053";
         margin-right: 24px;
     }
-    .calendar-year-tab a{
+
+    .calendar-year-tab a {
         height: 24px;
         position: relative;
     }
-    .calendar-year-tab a:hover{
+
+    .calendar-year-tab a:hover {
         text-decoration: none;
     }
+
     .scrollbar {
         overflow-y: scroll;
         height: 278px;
     }
-    .img-event-slide{
+
+    .img-event-slide {
         height: 160px;
     }
-    .event-content-text  .post-meta{
+
+    .event-content-text .post-meta {
         font-size: 12px;
     }
-    .read-more-slide{
+
+    .read-more-slide {
         font-size: 12px;
         font-weight: bold;
         color: #5F5F5F;
     }
+
     .read-more-slide:hover {
-    text-decoration: none !important;
+        text-decoration: none !important;
     }
-    .success-stories-list{
+
+    .success-stories-list {
         padding-right: 2rem;
         padding-left: 2rem;
         padding-bottom: 1.5rem;
@@ -110,24 +134,28 @@
         border-bottom: 2px solid#E3EFF8;
 
     }
-    .mystoriesbtn.active{
+
+    .mystoriesbtn.active {
         border: 1px solid #0087DC;
         background-color: #ffffff;
-        color:#000;
+        color: #000;
     }
-    .bg-color-suces{
+
+    .bg-color-suces {
         background-color: #F0F5FA;
         padding: 20px !important;
-         position: relative;
-         top: -16px;
+        position: relative;
+        top: -16px;
     }
-    .bg-widt{
+
+    .bg-widt {
         background-color: #F0F5FA;
         position: relative;
-         top: -16px;
-         width: 40px;
+        top: -16px;
+        width: 40px;
     }
-    .wid-20{
+
+    .wid-20 {
         margin-bottom: 24px;
     }
 </style>
@@ -145,10 +173,14 @@
         <div class="container">
             <nav aria-label="breadcrumb" id="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a href="#"> {{$staticContent['Partners']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a href="{{route('marketingResources')}}">{{$staticContent['Marketing_Resources']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['Success_Stories']}}</a></li>
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a href="#">
+                            {{$staticContent['Partners']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a
+                            href="{{route('marketingResources')}}">{{$staticContent['Marketing_Resources']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
+                            href="#">{{$staticContent['Success_Stories']}}</a></li>
                 </ol>
             </nav>
         </div>
@@ -161,9 +193,11 @@
         <h3 class="text-title-delta invisible-up-922 title_data">{{$staticContent['Success_Stories']}}</h3>
         <div class="visible-up-922">
             <div class="my-3">
-            <a class="btn btn-subscribe mr-3" href="{{route('addSuccessStories')}}">+{{$staticContent['add']}}</a>
-                <div  class="btn btn-boxen mystoriesbtn" onclick="loadMystoryContent();">{{$staticContent['My_Stories']}}</div>
-                <div  class="btn btn-boxen mystoriesbtnAll d-none" onclick="loadContent();">{{$staticContent['All_Stories']}} </div>
+                <a class="btn btn-subscribe mr-3" href="{{route('addSuccessStories')}}">+{{$staticContent['add']}}</a>
+                <div class="btn btn-boxen mystoriesbtn" onclick="loadMystoryContent();">{{$staticContent['My_Stories']}}
+                </div>
+                <div class="btn btn-boxen mystoriesbtnAll d-none" onclick="loadContent();">
+                    {{$staticContent['All_Stories']}} </div>
             </div>
             <table id="" class="table " cellspacing="5em" width="100%">
                 <thead>
@@ -180,41 +214,46 @@
                 <tbody id="contentloaddes">
                 </tbody>
             </table>
-            <div class="text-center mt-5"  style="" >
-                <div id="loadMore" class="btn btn-boxen" onclick="loadeMore(event,4)">{{$staticContent['See_More']}}</div>
+            <div class="text-center mt-5" style="">
+                <div id="loadMore" class="btn btn-boxen" onclick="loadeMore(event,4)">{{$staticContent['See_More']}}
+                </div>
             </div>
         </div>
         <div class="invisible-up-922">
             <div class="success-storie-btn">
                 <div>
-                     <a class="btn btn-subscribe mr-3" href="{{route('addSuccessStories')}}">+{{$staticContent['add']}}</a>
-                     <div  class="btn btn-boxen mystoriesbtn" onclick="loadMystoryContent();">{{$staticContent['My_Stories']}}</div>
-                     <div  class="btn btn-boxen mystoriesbtnAll d-none" onclick="loadContent();">{{$staticContent['All_Stories']}}</div>
+                    <a class="btn btn-subscribe mr-3"
+                        href="{{route('addSuccessStories')}}">+{{$staticContent['add']}}</a>
+                    <div class="btn btn-boxen mystoriesbtn" onclick="loadMystoryContent();">
+                        {{$staticContent['My_Stories']}}</div>
+                    <div class="btn btn-boxen mystoriesbtnAll d-none" onclick="loadContent();">
+                        {{$staticContent['All_Stories']}}</div>
                 </div>
             </div>
-        <div id="contentloadmobile">
-        </div>
-            <div class="text-center mt-5"  style="" >
-                <div  id="loadMore_mobile" onclick="loadeMoreMobile(event,4)" class="btn btn-boxen">{{$staticContent['See_More']}}</div>
+            <div id="contentloadmobile">
+            </div>
+            <div class="text-center mt-5" style="">
+                <div id="loadMore_mobile" onclick="loadeMoreMobile(event,4)" class="btn btn-boxen">
+                    {{$staticContent['See_More']}}</div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 
 <div id="alertImage" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-            <input type="hidden"  id="story_id">
-            <h5 class="modal-title"> {{$staticContent['Are_you_sure_to_delete_image']}}</h5>
+        <div class="modal-content">
+            <div class="modal-body">
+                <input type="hidden" id="story_id">
+                <h5 class="modal-title"> {{$staticContent['Are_you_sure_to_delete_image']}}</h5>
+            </div>
+            <div class="modal-footer">
+                <div class="btn btn-boxen" onclick="closedeleteStory();">{{$staticContent['Cancel']}}</div>
+                <div class="btn btn-subscribe" onclick="onconfirmdeleteStories();">{{$staticContent['Delete']}}</div>
+            </div>
         </div>
-        <div class="modal-footer">
-            <div class="btn btn-boxen" onclick="closedeleteStory();">{{$staticContent['Cancel']}}</div>
-         <div class="btn btn-subscribe" onclick="onconfirmdeleteStories();">{{$staticContent['Delete']}}</div>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
 
 @endsection
@@ -223,7 +262,7 @@
 @section('js')
 
 <script>
-      var AllsuccessStory = <?= json_encode($AllsuccessStory);?>;
+    var AllsuccessStory = <?= json_encode($AllsuccessStory);?>;
       var sectionId = <?= json_encode($sectionId);?>;
       var image_story = <?= json_encode($image_story);?>;
       
@@ -292,7 +331,7 @@
              html += '<div class="row">';
              $.each(image_story, function(index2,img){
              if(img['fk_story_id'] == story['id'] ){
-             html += '<img class="wid-20 col-3" src="{{config('app.url')}}/medias/marketing_resources/'+img['image']+'">';
+             html += '<img class="wid-20 col-3" src="{{config('app.url')}}/fie_doc/marketing_resources/'+img['image']+'">';
              }
              });
              html += '</div>';
@@ -374,7 +413,7 @@
              html += '<div class="row">';
              $.each(image_story, function(index2,img){
              if(img['fk_story_id'] == story['id'] ){
-             html += '<img class="wid-20 col-3" src="{{config('app.url')}}/medias/marketing_resources/'+img['image']+'">';
+             html += '<img class="wid-20 col-3" src="{{config('app.url')}}/fie_doc/marketing_resources/'+img['image']+'">';
              }
              });
              html += '</div>';

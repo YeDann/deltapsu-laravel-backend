@@ -92,7 +92,7 @@
                         <tr>
                             <td class="text-center">{{$i}}</td>
                             <td class="font-w600">
-                                <img src="{{config('app.url')}}/medias/marketing_resources/{{$data->image}}"
+                                <img src="{{config('app.url')}}/fie_doc/marketing_resources/{{$data->image}}"
                                     width="120px;">
                             </td>
                             <td>
