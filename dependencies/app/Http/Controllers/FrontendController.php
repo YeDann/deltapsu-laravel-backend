@@ -1000,6 +1000,18 @@ class FrontendController extends Controller
             ->orderBy('p.created_at', 'desc')
             ->first();
              array_push($products, $datapro);
+             $optional_product = DB::table('product_optional_model as po')
+                    ->join('products as p', 'p.pro_id', '=', 'po.product_id')
+                    ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+                    ->where('pt.local',$prolang)
+                    ->where('p.enable_pro' ,1)
+                    ->where('po.product_id' ,$pro->pro_id)
+                    ->select('p.*','pt.*','po.optional_model as pro_code' )
+                    ->orderBy('p.created_at', 'desc')
+                    ->get();
+                    foreach($optional_product as $optional_model){
+                        array_push($products,$optional_model);
+                    }
         }
     
     }
@@ -1208,11 +1220,20 @@ class FrontendController extends Controller
         ->where('p.enable_pro',1)
         ->first();
 
-       
+        $check_2 = DB::table('product_optional_model as po')
+        ->join('products as p', 'p.pro_id', '=', 'po.product_id')
+        ->where('po.optional_model',$proCode)
+        ->select('p.pro_code','po.optional_model')
+        ->first();
 
         if(isset($check->pro_id)){
             $prolang =  self::checkLang($lang ,$check->pro_id);
-        }else{
+        
+        }
+        else if($check_2){
+            return redirect()->route('productsDetailsByType',[$catename,$check_2->pro_code] );
+        }
+        else{
  
             abort(404);
         }
@@ -1466,8 +1487,8 @@ class FrontendController extends Controller
             ->select('sp.*', 'spt.*')
             ->orderBy('spt.name', 'asc')
             ->get();
-
-        $products = DB::table('products as p')
+         $products = [];
+         $seachpro = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
             ->join('product_has_categories as phc', 'p.pro_id', '=', 'phc.product_id')
             ->where('pt.local' ,$lang)
@@ -1476,6 +1497,25 @@ class FrontendController extends Controller
             ->select('p.*', 'pt.*')
             ->orderBy('p.pro_code', 'asc')
             ->get();
+            foreach($seachpro as $pro){
+            if(self::checkContentPro($pro->pro_id)){
+                array_push($products,$pro);
+                $optional_product = DB::table('product_optional_model as po')
+                    ->join('products as p', 'p.pro_id', '=', 'po.product_id')
+                    ->join('product_has_categories as phc', 'p.pro_id', '=', 'phc.product_id')
+                    ->where('p.enable_pro' ,1)
+                    ->where('phc.categories_id' ,$cateid)
+                    ->where('po.product_id' ,$pro->pro_id)
+                    ->select('p.*','po.optional_model as pro_code')
+                    ->orderBy('p.pro_code', 'asc')
+                    ->get();
+                    foreach($optional_product as $optional_model){
+                        array_push($products,$optional_model);
+                    }
+
+        
+            } 
+        }
         $pd_field = DB::table('product_field as pf')
         ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
         ->where('pft.local', '=', $lang)
@@ -1527,7 +1567,21 @@ class FrontendController extends Controller
 
         foreach($seachpro as $pro){
             if(self::checkContentPro($pro->pro_id)){
-              array_push($products,$pro);
+                array_push($products,$pro);
+                $optional_product = DB::table('product_optional_model as po')
+                    ->join('products as p', 'p.pro_id', '=', 'po.product_id')
+                    ->join('product_has_categories as phc', 'p.pro_id', '=', 'phc.product_id')
+                    ->where('p.enable_pro' ,1)
+                    ->where('phc.categories_id' ,$cateid)
+                    ->where('po.product_id' ,$pro->pro_id)
+                    ->select('p.*','po.optional_model as pro_code')
+                    ->orderBy('p.pro_code', 'asc')
+                    ->get();
+                    foreach($optional_product as $optional_model){
+                        array_push($products,$optional_model);
+                    }
+
+        
             } 
         }
 
@@ -2716,7 +2770,7 @@ class FrontendController extends Controller
            ->where('st.local' ,$lang)
            ->where('p.enable_pro' ,1)
            ->where('op.optional_model', 'LIKE', '%'.$keypro.'%')
-           ->select('p.*','spt.name as catename','phc.categories_id','sp.url_item' ,'st.title as seName','op.*')
+           ->select('p.*','op.optional_model as pro_code','spt.name as catename','phc.categories_id','sp.url_item' ,'st.title as seName','op.*')
            ->get();
         //    return dd($products);
 
@@ -4109,13 +4163,31 @@ class FrontendController extends Controller
        public function searhProductByType(Request $request){
         $type_id  = $request->type_id;
         $products = [];
-        $products  = DB::table('products as p')
+
+        $seachpro  = DB::table('products as p')
         ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
         ->where('phc.categories_id' ,$type_id)
         ->where('p.enable_pro' ,1)
         ->select('p.*')
         ->orderBy('p.pro_code','asc')
         ->get();
+
+        foreach($seachpro as $pro){
+            if(self::checkContentPro($pro->pro_id)){
+                array_push($products,$pro);
+                $optional_product = DB::table('product_optional_model as po')
+                    ->join('products as p', 'p.pro_id', '=', 'po.product_id')
+                    ->where('po.product_id' ,$pro->pro_id)
+                    ->select('p.*','po.optional_model as pro_code')
+                    ->orderBy('p.pro_code', 'asc')
+                    ->get();
+                    foreach($optional_product as $optional_model){
+                        array_push($products,$optional_model);
+                    }
+
+        
+            } 
+        }
      
         return response()->json([
             'results' =>$products,

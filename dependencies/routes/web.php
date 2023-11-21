@@ -165,6 +165,9 @@ Route::post('SaveImagePro','ProductVideoImageController@SaveImagePro')->name('Sa
 Route::post('getProImageContent','ProductVideoImageController@getProImageContent')->name('getProImageContent');
 Route::post('deleteVideImagePro','ProductVideoImageController@deleteVideImagePro')->name('deleteVideImagePro');
 
+
+Route::get('optional_models/{id?}','OptionalModelController@index')->name('optional_models');
+Route::post('saveOptionalModel','OptionalModelController@saveOptionalModel')->name('saveOptionalModel');
 //Route::get('getAllProduct','GetDataController@getAllProduct')->name('getAllProducts');
 Route::get('getAllSubCategories','GetDataController@getAllSubCategories')->name('getAllSubCategories');
 //Route::get('getAllSeries','GetDataController@getAllSeries')->name('getAllSeries');

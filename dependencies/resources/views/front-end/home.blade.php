@@ -27,21 +27,23 @@
         overflow: hidden;
     }
 
-  
+
 
     .product-selector-list:hover .text-title-dark,
     .product-selector-mobile:hover .text-title-dark {
         color: #0087DC !important;
-      
+
     }
 
     .product-selector-list:hover,
     .product-selector-mobile:hover {
         border-color: #0087DC;
     }
+
     .product-selector-list:hover a {
         text-decoration: none;
     }
+
     .product-selector-list {
         margin-left: auto;
         margin-right: auto;
@@ -54,7 +56,7 @@
         margin-bottom: 1rem;
     }
 
-  
+
 
     .btn.focus,
     .btn:focus {
@@ -65,41 +67,45 @@
     .ttt {
         transform: scaleX(0);
     }
-    #producttype.owl-carousel .owl-stage-outer{
-    
-    }
-    .midle-item{
-      margin: 0;
-      position: absolute;             
-      top: 50%;                       
-      transform: translate(0, -50%)
-   }
-   .in-volt{
-    height: 73px;
-    overflow: hidden;
-   }
-   .mr-lr-feture{
-       padding-left: 30px;
-       padding-right: 30px;
-   }
-   .posit-btn-mobile{
-    position: absolute;
-    bottom: 70px;
-    transform: translate(-50%, 50%);
-   }
-   .padd-mobile-slide{
-             background: linear-gradient(to bottom, #fff, transparent, transparent);
-            background-size: cover;
-            background-position: top center, bottom center;
-            background-size: 100% 100%;
-            padding-bottom: 2%;
-            padding-left: 20px;
-            padding-right: 20px;
-   }
-   .btn-subscribe{
-       z-index: 999;
-   }
 
+    #producttype.owl-carousel .owl-stage-outer {}
+
+    .midle-item {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%)
+    }
+
+    .in-volt {
+        height: 73px;
+        overflow: hidden;
+    }
+
+    .mr-lr-feture {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .posit-btn-mobile {
+        position: absolute;
+        bottom: 70px;
+        transform: translate(-50%, 50%);
+    }
+
+    .padd-mobile-slide {
+        background: linear-gradient(to bottom, #fff, transparent, transparent);
+        background-size: cover;
+        background-position: top center, bottom center;
+        background-size: 100% 100%;
+        padding-bottom: 2%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .btn-subscribe {
+        z-index: 999;
+    }
 </style>
 @endsection
 @section('meta')
@@ -125,13 +131,14 @@
             @foreach ($banners as $banner)
             <div class="item banner-item">
                 <a href="{{$banner->btn_link}}">
-                <div loading="lazy"  data-src="{{config('app.url')}}/medias/banners/{{$banner->image_destop}}" class="slide">
-                    <div class="slide-content">
-                        @if($banner->title2 != null ||  $banner->content != null)
-                        <div class="container">
-                            <div class="bg-w-banner">
-                                <h1 class="text-title-banner" style="color:{{ $banner->title_color}}">
-                                    <?php
+                    <div loading="lazy" data-src="{{config('app.url')}}/medias/banners/{{$banner->image_destop}}"
+                        class="slide">
+                        <div class="slide-content">
+                            @if($banner->title2 != null || $banner->content != null)
+                            <div class="container">
+                                <div class="bg-w-banner">
+                                    <h1 class="text-title-banner" style="color:{{ $banner->title_color}}">
+                                        <?php
                                     $str = $banner->title2;
                                     $st = explode("\n", $str);
                                     for ($k = 0; $k < count($st); $k++) {
@@ -140,20 +147,20 @@
                                                 . '</div>';
                                     }
                                     ?>
-                                </h1>
-                            <div class="text-p-banner my-2" style="color:{{ $banner->content_color}}">
-                                    {!!$banner->content!!}
+                                    </h1>
+                                    <div class="text-p-banner my-2" style="color:{{ $banner->content_color}}">
+                                        {!!$banner->content!!}
+                                    </div>
+                                    @if($banner->btn_status == 1)
+                                    <button class="btn btn-subscribe">{{$banner->btn_name}}</button>
+
+                                    @endif
                                 </div>
-                                @if($banner->btn_status == 1)
-                                <button class="btn btn-subscribe">{{$banner->btn_name}}</button>
-                             
-                                @endif
                             </div>
+                            @endif
                         </div>
-                        @endif
                     </div>
-                </div>
-            </a>
+                </a>
             </div>
             @endforeach
         </div>
@@ -167,13 +174,14 @@
             @foreach ($banners as $banner)
             <div class="item banner-item ">
                 <a href="{{$banner->btn_link}}">
-                <div loading="lazy"  data-src="{{config('app.url')}}/medias/banners/{{$banner->image}}" class="slide" >
-                    <div class="slide-content">
-                        @if($banner->title2 != null)
-                        <div class="container ">
-                            <div class="">
-                            <h2 class="text-title-banner" style="color:{{ $banner->title_color}}">
-                                <?php
+                    <div loading="lazy" data-src="{{config('app.url')}}/medias/banners/{{$banner->image}}"
+                        class="slide">
+                        <div class="slide-content">
+                            @if($banner->title2 != null)
+                            <div class="container ">
+                                <div class="">
+                                    <h2 class="text-title-banner" style="color:{{ $banner->title_color}}">
+                                        <?php
                                 $str = $banner->title;
                                 $st = explode("\n", $str);
                                 for ($k = 0; $k < count($st); $k++) {
@@ -182,16 +190,17 @@
                                             . '</div>';
                                 }
                                 ?>
-                            </h2>
-                            @if($banner->btn_status == 1)
-                            <button class="btn btn-subscribe mt-3 posit-btn-mobile">{{$banner->btn_name}}</button>
-                            @endif
+                                    </h2>
+                                    @if($banner->btn_status == 1)
+                                    <button
+                                        class="btn btn-subscribe mt-3 posit-btn-mobile">{{$banner->btn_name}}</button>
+                                    @endif
+                                </div>
                             </div>
+                            @endif
                         </div>
-                        @endif
                     </div>
-                </div>
-            </a>
+                </a>
             </div>
             @endforeach
         </div>
@@ -207,22 +216,24 @@
             <div class="product-selector-list border-2px d-flex align-items-center">
                 <div class="m-auto">
                     <a href="{{ route('producsList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])}}">
-                     @if($sub->image != null)
-                    <img  data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy" class="lazyload"  alt="{{$sub->image}}">
-                    @else
-                    <img  data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy" class="lazyload"  alt="blank.png">
-                    @endif
-                    <div style="height: 50px; " class="d-flex">
-                        <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$sub->name}}</h4>
-                    </div>
+                        @if($sub->image != null)
+                        <img data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy"
+                            class="lazyload" alt="{{$sub->image}}">
+                        @else
+                        <img data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy" class="lazyload"
+                            alt="blank.png">
+                        @endif
+                        <div style="height: 50px; " class="d-flex">
+                            <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$sub->name}}</h4>
+                        </div>
                     </a>
-              
+
                 </div>
-                
+
             </div>
             @endforeach
         </div>
-     </div>
+    </div>
 </div>
 <div class="visible-mobile">
     <div class="box-product-selector padd-left-rbox">
@@ -230,24 +241,27 @@
         <div id="product-selector-carousel-mobile" class="owl-carousel owl-theme product-selector text-center">
             @foreach($subCategories as $sub)
             <div class="product-selector-list ">
-                <div class="border-2px d-flex h-100 p-1 align-items-center" style="    box-shadow: 0px 4px 5px 2px rgba(0, 0, 0, 0.09);">
+                <div class="border-2px d-flex h-100 p-1 align-items-center"
+                    style="    box-shadow: 0px 4px 5px 2px rgba(0, 0, 0, 0.09);">
                     <div class="m-auto">
                         <a href="{{ route('producsList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])}}">
-                        @if($sub->image != null)
-                            <img  data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy" class="lazyload"  alt="{{$sub->image}}">
+                            @if($sub->image != null)
+                            <img data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy"
+                                class="lazyload" alt="{{$sub->image}}">
                             @else
-                            <img  data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy" class="lazyload"  alt="blank.png">
+                            <img data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy" class="lazyload"
+                                alt="blank.png">
                             @endif
-                        <div style="height: 50px; " class="d-flex">
-                            <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$sub->name}}</h4>
-                        </div>
+                            <div style="height: 50px; " class="d-flex">
+                                <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$sub->name}}</h4>
+                            </div>
                         </a>
                     </div>
                 </div>
             </div>
             @endforeach
         </div>
-   </div>
+    </div>
 </div>
 <!-- application -->
 <div class="visible-tablets-up">
@@ -256,19 +270,21 @@
             <h2 class="text-title-delta-home ">{{$staticContent['Applications']}}</h2>
             <div class="grid-container">
                 @foreach ($applications as $item)
-                <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->applica_id.'-'.$item->name)])}}" class="" style="">
+                <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->applica_id.'-'.$item->name)])}}"
+                    class="" style="">
                     <div class="grid-item ">
-                        <div  data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy" class="grid-sub-pic">
-                          
+                        <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy"
+                            class="grid-sub-pic">
+
                         </div>
                         <div class="grid-sub-text">
                             <img src="{{config('app.url')}}/medias/categories/{{$item->color_icon}}" alt="">
                             <p class="">{{$item->name}}</p>
-                            
+
                             <ul class="app-detail-bullet">
                                 {{-- <li>Escalator & Elvator</li>
-                                    <li>CCTV Surveilance</li>
-                                    <li>HVAC Control</li> --}}
+                                <li>CCTV Surveilance</li>
+                                <li>HVAC Control</li> --}}
                                 <?php
                                     $str = $item->overview;
                                     $st = explode("\n", $str);
@@ -300,12 +316,16 @@
             <h2 class="text-title-delta-home">{{$staticContent['Applications']}}</h2>
             <div class="grid-container">
                 @foreach ($applications as $item)
-                <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->applica_id.'-'.$item->name)])}}" class="blogBox-mb moreBox-mb" style="display: none;">
+                <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->applica_id.'-'.$item->name)])}}"
+                    class="blogBox-mb moreBox-mb" style="display: none;">
                     <div class="grid-item ">
-                        <div  data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy"  class="grid-sub-pic">
+                        <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy"
+                            class="grid-sub-pic">
                         </div>
                         <div class="grid-sub-text">
-                            <img  class="lazyload" data-src="{{config('app.url')}}/medias/categories/{{$item->color_icon}}" loading="lazy"   alt="">
+                            <img class="lazyload"
+                                data-src="{{config('app.url')}}/medias/categories/{{$item->color_icon}}" loading="lazy"
+                                alt="">
                             <p class="">{{$item->name}}</p>
                             <ul class="app-detail-bullet">
 
@@ -359,60 +379,66 @@ function retextdata($arr ,$unit){
                 <div class="series-list-home">
                     <div class="">
                         <div class="d-block ">
-                            <div class="m-auto series-img" >
+                            <div class="m-auto series-img">
                                 @if($serie->se_id == 26)
                                 <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
-                                @else
-                                <a style="color:inherit;" class="" href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
-                                @endif
-                                    @if(isset($serie->image))
-                                    <img data-src="{{config('app.url')}}/medias/categories/{{$serie->image}}" loading="lazy" class="img-fluid m-auto lazyload"
-                                        src="" alt="">
                                     @else
-                                    <img data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy" class="img-fluid m-auto lazyload"  alt="">
-                                    @endif
-                                </a>
+                                    <a style="color:inherit;" class=""
+                                        href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        @endif
+                                        @if(isset($serie->image))
+                                        <img data-src="{{config('app.url')}}/medias/categories/{{$serie->image}}"
+                                            loading="lazy" class="img-fluid m-auto lazyload" src="" alt="">
+                                        @else
+                                        <img data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy"
+                                            class="img-fluid m-auto lazyload" alt="">
+                                        @endif
+                                    </a>
                             </div>
                         </div>
                         <div class="series-text text-center">
                             <div class="d-flex h-title">
                                 @if($serie->se_id == 26)
-                                <a style="color:inherit;"  class="m-auto" href="{{route('configurableProductDetail')}}">
-                                 @else 
-                                 <a style="color:inherit;" class="m-auto" href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
-                                 @endif
-                                    <h3 class="text-dark  m-0">{{$serie->title}}</h3>
-                                </a>
+                                <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
+                                    @else
+                                    <a style="color:inherit;" class="m-auto"
+                                        href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        @endif
+                                        <h3 class="text-dark  m-0">{{$serie->title}}</h3>
+                                    </a>
                             </div>
                             @if($serie->se_id == 26)
-                            <a style="color:inherit;"  class="m-auto" href="{{route('configurableProductDetail')}}">
-                             @else 
-                            <a style="color:inherit;" class="m-auto" href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
-                             @endif
-                            <div class="series-text-detail">
-                                {!! $serie->overview_content !!}
-                            </div>
-                             </a>
+                            <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
+                                @else
+                                <a style="color:inherit;" class="m-auto"
+                                    href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                    @endif
+                                    <div class="series-text-detail">
+                                        {!! $serie->overview_content !!}
+                                    </div>
+                                </a>
                         </div>
                     </div>
                     <div class="series-icon ">
                         <div class="icon-app-detail">
                             @foreach ($series_has_application as $item)
                             @if($item->se_id == $serie->se_id)
-                                <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->id.'-'.$item->name)])}}"  data-toggle="tooltip" data-placement="top" title="{{$item->name}}" class="icon btn-icon-app itemhorver{{$item->id}}"
-                                    style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
-                                  <script>
-                                       $(".itemhorver{{$item->id}}").hover(function(){
+                            <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->id.'-'.$item->name)])}}"
+                                data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
+                                class="icon btn-icon-app itemhorver{{$item->id}}"
+                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
+                            <script>
+                                $(".itemhorver{{$item->id}}").hover(function(){
                                             $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
                                             }, function(){
                                             $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->icon}}')");
                                             });
-                                    </script>                             
-                           @endif
-                           @endforeach
+                            </script>
+                            @endif
+                            @endforeach
                         </div>
                     </div>
-                </div>   
+                </div>
                 @endforeach
             </div>
         </div>
@@ -429,60 +455,66 @@ function retextdata($arr ,$unit){
                 <div class="series-list-home">
                     <div class="">
                         <div class="d-block ">
-                            <div class="m-auto series-img" >
+                            <div class="m-auto series-img">
                                 @if($serie->se_id == 26)
                                 <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
-                                @else
-                                <a style="color:inherit;" class="" href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
-                                @endif
-                                   @if(isset($serie->image))
-                                    <img data-src="{{config('app.url')}}/medias/categories/{{$serie->image}}" loading="lazy" class="img-fluid m-auto lazyload"
-                                        src="" alt="">
                                     @else
-                                    <img data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy" class="img-fluid m-auto lazyload"  alt="">
-                                    @endif
-                                </a>
+                                    <a style="color:inherit;" class=""
+                                        href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        @endif
+                                        @if(isset($serie->image))
+                                        <img data-src="{{config('app.url')}}/medias/categories/{{$serie->image}}"
+                                            loading="lazy" class="img-fluid m-auto lazyload" src="" alt="">
+                                        @else
+                                        <img data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy"
+                                            class="img-fluid m-auto lazyload" alt="">
+                                        @endif
+                                    </a>
                             </div>
                         </div>
                         <div class="series-text text-center">
                             <div class="d-flex h-title">
                                 @if($serie->se_id == 26)
-                                <a style="color:inherit;"  class="m-auto" href="{{route('configurableProductDetail')}}">
-                                 @else 
-                                 <a style="color:inherit;" class="m-auto" href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
-                                 @endif
-                                    <h3 class="text-dark  m-0">{{$serie->title}}</h3>
-                                </a>
+                                <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
+                                    @else
+                                    <a style="color:inherit;" class="m-auto"
+                                        href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        @endif
+                                        <h3 class="text-dark  m-0">{{$serie->title}}</h3>
+                                    </a>
                             </div>
                             @if($serie->se_id == 26)
-                            <a style="color:inherit;"  class="m-auto" href="{{route('configurableProductDetail')}}">
-                             @else 
-                            <a style="color:inherit;" class="m-auto" href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
-                             @endif
-                            <div class="series-text-detail">
-                                {!! $serie->overview_content !!}
-                            </div>
-                             </a>
+                            <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
+                                @else
+                                <a style="color:inherit;" class="m-auto"
+                                    href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                    @endif
+                                    <div class="series-text-detail">
+                                        {!! $serie->overview_content !!}
+                                    </div>
+                                </a>
                         </div>
                     </div>
                     <div class="series-icon ">
                         <div class="icon-app-detail">
                             @foreach ($series_has_application as $item)
                             @if($item->se_id == $serie->se_id)
-                                <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->id.'-'.$item->name)])}}"  data-toggle="tooltip" data-placement="top" title="{{$item->name}}" class="icon btn-icon-app itemhorver{{$item->id}}"
-                                    style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
-                                  <script>
-                                       $(".itemhorver{{$item->id}}").hover(function(){
+                            <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->id.'-'.$item->name)])}}"
+                                data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
+                                class="icon btn-icon-app itemhorver{{$item->id}}"
+                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
+                            <script>
+                                $(".itemhorver{{$item->id}}").hover(function(){
                                             $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
                                             }, function(){
                                             $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->icon}}')");
                                             });
-                                    </script>                             
-                           @endif
-                           @endforeach
+                            </script>
+                            @endif
+                            @endforeach
                         </div>
                     </div>
-                </div>   
+                </div>
                 @endforeach
             </div>
         </div>
@@ -499,35 +531,36 @@ function retextdata($arr ,$unit){
                     @if(isset($events[0]))
                     <div class="card">
                         <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
-                        <div class="post-image">
-                            <img data-src="{{config('app.url')}}/uploads_delta/{{$events[0]['thumb']}}" loading="lazy" alt=""
-                                class="img-responsive lazyload">
-                        </div>
+                            <div class="post-image">
+                                <img data-src="{{config('app.url')}}/uploads_delta/{{$events[0]['thumb']}}"
+                                    loading="lazy" alt="" class="img-responsive lazyload">
+                            </div>
                         </a>
                         <div class="news-content w-100">
 
 
                             <div class="post-meta">
                                 <span class="author text-uppercase">
-                                        <i class="zmdi zmdi-calendar-alt"></i>
-                                        {{$events[0]['date']}} 
+                                    <i class="zmdi zmdi-calendar-alt"></i>
+                                    {{$events[0]['date']}}
                                 </span>
                                 <span class="locations">
                                     &nbsp; <i class="zmdi zmdi-pin"></i> {{$events[0]['location']}}
                                 </span>
                             </div>
-                         
+
                             <h4 class="post-header title-new">
                                 <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
-                                {{$events[0]['title']}}
-                               </a>
+                                    {{$events[0]['title']}}
+                                </a>
                             </h4>
-                          
+
                             <p>
                                 {!! iconv_substr(strip_tags($events[0]['content']),0,90,'UTF-8') !!} ...
                             </p>
                         </div>
-                        <a href="{{route('updateEventDetail',$events[0]['slug'])}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                        <a href="{{route('updateEventDetail',$events[0]['slug'])}}"
+                            class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                     @endif
                     <div class="box-btn-boxen">
@@ -539,42 +572,44 @@ function retextdata($arr ,$unit){
                     @if(isset($news[0]))
                     <div class="card">
                         <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
-                        <div class="post-image">
-                            <img data-src="{{config('app.url')}}/uploads_delta/{{$news[0]['thumb']}}" loading="lazy" alt=""
-                                class="img-responsive lazyload">
-                        </div>
+                            <div class="post-image">
+                                <img data-src="{{config('app.url')}}/uploads_delta/{{$news[0]['thumb']}}" loading="lazy"
+                                    alt="" class="img-responsive lazyload">
+                            </div>
                         </a>
                         <div class="news-content w-100">
-                   
+
                             <div class="post-meta">
-                                <a href="{{route('updateNewsDetail',['name'=> $news[0]['slug']])}}" >
+                                <a href="{{route('updateNewsDetail',['name'=> $news[0]['slug']])}}">
                                     <span class="sub-news" style="color:{{$news[0]['color_type']}}">
-                                            {{$news[0]['cateName']}}
+                                        {{$news[0]['cateName']}}
                                     </span>
-                                    </a>
-                                 
-                                    <img class="line-symbol"src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
+                                </a>
+
+                                <img class="line-symbol" src="{{asset('/frontend-asset/image/line-symbol.svg')}}"
+                                    alt="">
                                 <span class="author text-uppercase">
-                                    {{$news[0]['date']}}  <i class="zmdi zmdi-calendar-alt"></i>
-                                
-                                     
-                                   
+                                    {{$news[0]['date']}} <i class="zmdi zmdi-calendar-alt"></i>
+
+
+
                                 </span>
                                 @if(isset($news[0]['location']))
                                 <span class="locations">
-                                    &nbsp;    <i class="zmdi zmdi-pin"></i> {{$news[0]['location']}}
+                                    &nbsp; <i class="zmdi zmdi-pin"></i> {{$news[0]['location']}}
                                 </span>
                                 @endif
                             </div>
                             <h4 class="post-header title-new">
                                 <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
-                                {{$news[0]['title']}}
+                                    {{$news[0]['title']}}
                                 </a>
                             </h4>
                             <p> {!! iconv_substr(strip_tags($news[0]['content']),0,90,'UTF-8') !!} ...
                             </p>
                         </div>
-                        <a href="{{route('updateNewsDetail',$news[0]['slug'])}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                        <a href="{{route('updateNewsDetail',$news[0]['slug'])}}"
+                            class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                     @endif
                     <div class="box-btn-boxen">
@@ -583,26 +618,26 @@ function retextdata($arr ,$unit){
                 </div>
                 <div class="col-lg-4">
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
-                 
+
                     <div class="card">
-                    <a href="{{route('index','faqs')}}" >
-                        <div class="post-image w-100" >
-                       
-                        <img data-src="{{config('app.url')}}/medias/static_content/{{$faqbanner->destop_image}}" loading="lazy" alt=""
-                             class="img-responsive lazyload">
-                        </div>
+                        <a href="{{route('index','faqs')}}">
+                            <div class="post-image w-100">
+
+                                <img data-src="{{config('app.url')}}/medias/static_content/{{$faqbanner->destop_image}}"
+                                    loading="lazy" alt="" class="img-responsive lazyload">
+                            </div>
                         </a>
                         <div class="news-content w-100">
                             <div class="post-meta">
-                               
-                               
+
+
                             </div>
-                            <a href="{{route('index','faqs')}}" >
-                            <h4 class="post-header title-new">
-                                 FAQs
-                            </h4>
+                            <a href="{{route('index','faqs')}}">
+                                <h4 class="post-header title-new">
+                                    FAQs
+                                </h4>
                             </a>
-                            <p>  
+                            <p>
                             </p>
 
                         </div>
@@ -625,43 +660,45 @@ function retextdata($arr ,$unit){
                     @if(isset($events[0]))
                     <div class="card">
                         <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
-                        <div class="post-image">
-                            @if(isset($events[0]['thumb']))
-                            <img src="{{config('app.url')}}/uploads_delta/{{$events[0]['thumb']}}" alt=""
-                                class="img-responsive">
-                             @else 
-                             <img src="{{config('app.url')}}/frontend-asset/image/upcoming-img.png" alt=""
-                             class="img-responsive">
-                            @endif
-                        </div>
+                            <div class="post-image">
+                                @if(isset($events[0]['thumb']))
+                                <img src="{{config('app.url')}}/uploads_delta/{{$events[0]['thumb']}}" alt=""
+                                    class="img-responsive">
+                                @else
+                                <img src="{{config('app.url')}}/frontend-asset/image/upcoming-img.png" alt=""
+                                    class="img-responsive">
+                                @endif
+                            </div>
                         </a>
                         <div class="news-content w-100">
                             <?php
                             // $date = getDateformat(isset($events[0]->date_publish)? $events[0]->date_publish:'00:00:00');
                             //  $endDate = getDateformat(isset($events[0]->date_end)? $events[0]->date_end:'00:00:00');
-                             ?> 
-                          
+                             ?>
+
                             <div class="post-meta">
                                 <span class="author text-uppercase">
-                                        {{-- <i class="zmdi zmdi-calendar-alt"></i>    {{ $date['m'].' '.$date['d'] .''.(isset($endDate['d'])?' - '.$endDate['d']:'').' '.$date['y']}} --}}
+                                    {{-- <i class="zmdi zmdi-calendar-alt"></i> {{ $date['m'].' '.$date['d']
+                                    .''.(isset($endDate['d'])?' - '.$endDate['d']:'').' '.$date['y']}} --}}
                                 </span>
-                           
+
                                 @if(isset($events[0]['location']))
                                 <span class="locations">
-                                        <i class="zmdi zmdi-pin"></i> {{$events[0]['location']}}
+                                    <i class="zmdi zmdi-pin"></i> {{$events[0]['location']}}
                                 </span>
                                 @endif
                             </div>
                             <h4 class="post-header title-new">
                                 <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
-                                {{$events[0]['title']}}
+                                    {{$events[0]['title']}}
                                 </a>
                             </h4>
                             {{-- <p> {!! iconv_substr(strip_tags($events[0]->content),0,90,'UTF-8') !!} ...
                             </p> --}}
 
                         </div>
-                        <a href="{{route('updateEventDetail',$events[0]['slug'])}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                        <a href="{{route('updateEventDetail',$events[0]['slug'])}}"
+                            class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                     @endif
                     <div class="box-btn-boxen">
@@ -673,45 +710,47 @@ function retextdata($arr ,$unit){
                     @if(isset($news[0]))
                     <div class="card">
                         <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
-                        <div class="post-image">
-                            @if(isset($news[0]['thumb']))
-                            <img data-src="{{config('app.url')}}/uploads_delta/{{$news[0]['thumb']}}" loading="lazy" alt=""
-                                class="img-responsive lazyload">
-                            @else 
-                            <img data-src="{{config('app.url')}}/frontend-asset/image/upcoming-img.png" loading="lazy" alt=""
-                            class="img-responsive lazyload">
-                            @endif
-                        </div>
+                            <div class="post-image">
+                                @if(isset($news[0]['thumb']))
+                                <img data-src="{{config('app.url')}}/uploads_delta/{{$news[0]['thumb']}}" loading="lazy"
+                                    alt="" class="img-responsive lazyload">
+                                @else
+                                <img data-src="{{config('app.url')}}/frontend-asset/image/upcoming-img.png"
+                                    loading="lazy" alt="" class="img-responsive lazyload">
+                                @endif
+                            </div>
                         </a>
                         <div class="news-content w-100">
                             <div class="post-meta">
-                                <a href="{{route('updateNewsDetail',['name'=> $news[0]['slug']])}}" >
+                                <a href="{{route('updateNewsDetail',['name'=> $news[0]['slug']])}}">
                                     <span class="sub-news" style="color:{{$news[0]['color_type']}}">
-                                            {{$news[0]['cateName']}}
+                                        {{$news[0]['cateName']}}
                                     </span>
-                                    </a>
-                                    <img class="line-symbol"src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
+                                </a>
+                                <img class="line-symbol" src="{{asset('/frontend-asset/image/line-symbol.svg')}}"
+                                    alt="">
                                 <span class="author text-uppercase">
-                                        <i class="zmdi zmdi-calendar-alt"></i> 
-                                    
-                                         {{$news[0]['date']}}
+                                    <i class="zmdi zmdi-calendar-alt"></i>
+
+                                    {{$news[0]['date']}}
                                 </span>
                                 @if(isset($news[0]['location']))
                                 <span class="locations">
-                                        <i class="zmdi zmdi-pin"></i>{{$news[0]['location']}}
+                                    <i class="zmdi zmdi-pin"></i>{{$news[0]['location']}}
                                 </span>
                                 @endif
                             </div>
-                           
+
                             <h4 class="post-header title-new">
                                 <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
-                                {{$news[0]['title']}}
+                                    {{$news[0]['title']}}
                                 </a>
                             </h4>
-                       
+
 
                         </div>
-                        <a href="{{route('updateNewsDetail',$news[0]['slug'])}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                        <a href="{{route('updateNewsDetail',$news[0]['slug'])}}"
+                            class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                     @endif
                     <div class="box-btn-boxen">
@@ -721,35 +760,35 @@ function retextdata($arr ,$unit){
                 <div class="col-md-6">
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
                     <div class="card">
-                        <a href="{{route('index','faqs')}}" >
-                            <div class="post-image w-100" >
-                                <img src="{{config('app.url')}}/medias/static_content/{{$faqbanner->destop_image}}" alt=""
-                                class="img-responsive">
-                                 {{-- <img src="{{config('app.url')}}/frontend-asset/image/faqs.jpg" alt=""
-                                 class="img-responsive"> --}}
+                        <a href="{{route('index','faqs')}}">
+                            <div class="post-image w-100">
+                                <img src="{{config('app.url')}}/medias/static_content/{{$faqbanner->destop_image}}"
+                                    alt="" class="img-responsive">
+                                {{-- <img src="{{config('app.url')}}/frontend-asset/image/faqs.jpg" alt=""
+                                    class="img-responsive"> --}}
                             </div>
-                            </a>
-                            <div class="news-content w-100">
-                                <div class="post-meta">
-                                   
-                                   
-                                </div>
-                                <a href="{{route('index','faqs')}}" >
+                        </a>
+                        <div class="news-content w-100">
+                            <div class="post-meta">
+
+
+                            </div>
+                            <a href="{{route('index','faqs')}}">
                                 <h4 class="post-header title-new">
-                                     FAQs
+                                    FAQs
                                 </h4>
-                                </a>
-                                <p>  
-                                </p>
-    
-                            </div>
-                            <a href="{{route('index','faqs')}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                            </a>
+                            <p>
+                            </p>
+
                         </div>
-                        <div class="box-btn-boxen">
-                            <a class="btn btn-boxen" href="{{route('index','faqs')}}">{{$staticContent['See_All']}}</a>
-                        </div>
+                        <a href="{{route('index','faqs')}}" class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
-                   
+                    <div class="box-btn-boxen">
+                        <a class="btn btn-boxen" href="{{route('index','faqs')}}">{{$staticContent['See_All']}}</a>
+                    </div>
+                </div>
+
             </div>
             {{-- <h2 class="text-title-delta-home">{{$staticContent['Latest_Article']}}</h2>
             <div class="row">
@@ -757,48 +796,50 @@ function retextdata($arr ,$unit){
                 <div class="col-md-6 mb-4">
                     <div class="card">
                         <a href="{{route('updateTechnicalDetail',$tech->slug)}}">
-                        <div class="post-image">
+                            <div class="post-image">
                                 @if(isset($tech->thumb))
                                 <img src="{{config('app.url')}}/uploads_delta/{{$tech->thumb}}" alt=""
                                     class="img-responsive">
-                                 @else 
-                                 <img src="{{config('app.url')}}/frontend-asset/image/upcoming-img.png" alt=""
-                                 class="img-responsive">
-                                 @endif
-                        </div>
+                                @else
+                                <img src="{{config('app.url')}}/frontend-asset/image/upcoming-img.png" alt=""
+                                    class="img-responsive">
+                                @endif
+                            </div>
                         </a>
                         <div class="news-content w-100">
                             <div class="post-meta">
                                 @if(isset($tech->date_info))
-                              
+
                                 <span class="author text-uppercase">
-                                        <i class="zmdi zmdi-calendar-alt"></i>
-                                        {{$teachdate['m'].' '.$teachdate['d'].' '.$teachdate['y']}}
+                                    <i class="zmdi zmdi-calendar-alt"></i>
+                                    {{$teachdate['m'].' '.$teachdate['d'].' '.$teachdate['y']}}
                                 </span>
                                 @endif
                                 @if(isset($tech->location))
                                 <span class="locations">
-                                        <i class="zmdi zmdi-pin"></i>{{$tech->location}}
+                                    <i class="zmdi zmdi-pin"></i>{{$tech->location}}
                                 </span>
                                 @endif
                             </div>
                             <h4 class="post-header title-new">
                                 <a href="{{route('updateTechnicalDetail',$tech->slug)}}">
-                                {{$tech->title}}
+                                    {{$tech->title}}
                                 </a>
                             </h4>
                             <p> {!! iconv_substr(strip_tags($tech->content),0,90,'UTF-8') !!} ...
                             </p>
 
                         </div>
-                        <a href="{{route('updateTechnicalDetail',$tech->slug)}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                        <a href="{{route('updateTechnicalDetail',$tech->slug)}}"
+                            class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                 </div>
                 @endforeach
-               
+
             </div>
             <div class="box-btn-boxen text-center">
-                <a class="btn btn-boxen" href="{{route('index','technical-articles')}}">{{$staticContent['See_All']}}</a>
+                <a class="btn btn-boxen"
+                    href="{{route('index','technical-articles')}}">{{$staticContent['See_All']}}</a>
             </div> --}}
         </div>
 
@@ -814,29 +855,29 @@ function retextdata($arr ,$unit){
                 <div class="text-be-first">
                     {!! $static_content->content !!}
                 </div>
-                <a href="{{route('index','product-documents')}}" >
-                <button class="btn btn-subscribe" href="">{{$staticContent['Learn_More']}}</button>
+                <a href="{{route('index','product-documents')}}">
+                    <button class="btn btn-subscribe" href="">{{$staticContent['Learn_More']}}</button>
                 </a>
             </div>
 
-            <img loading="lazy" data-src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}" class="image-doc lazyload"
-                alt="">
+            <img loading="lazy" data-src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}"
+                class="image-doc lazyload" alt="">
         </div>
     </div>
 </div>
 <div class="visible-nav-minimize">
     <div class="box-product-document-mobile"
-        style=" background: url('{{asset('frontend-asset/image/Docdownload-BG.jpg')}}');">
-        <img class="image-doc lazyload" loading="lazy" data-src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}"
-            alt="">
+        style=" background: url('{{asset('frontend-asset/image/Docdownload-BG.webp')}}');">
+        <img class="image-doc lazyload" loading="lazy"
+            data-src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}" alt="">
         <div class="container">
             <div class="box-product-document-all">
                 <h2 class="text-title-banner">{{$static_content->title}}</h2>
                 <div class="text-be-first">
                     {!! $static_content->content !!}
                 </div>
-                <a href="{{route('index','product-documents')}}" >
-                <button class="btn btn-subscribe" href="">{{$staticContent['Learn_More']}}</button>
+                <a href="{{route('index','product-documents')}}">
+                    <button class="btn btn-subscribe" href="">{{$staticContent['Learn_More']}}</button>
                 </a>
             </div>
         </div>
