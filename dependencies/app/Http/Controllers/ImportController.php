@@ -153,14 +153,22 @@ class ImportController extends Controller
       ->orderBy('pt.showstatus' ,'desc')
       ->orderBy('p.created_at', 'desc')
       ->get();
+   
+      $doc_cate = DB::table('products_documents_categories as doc_cate')
+      ->orderBy('doc_cate.title' ,'asc')
+      ->pluck('doc_cate.title')
+      ->toArray();
+      //  return dd($doc_cate ,'doc_cate');
+  
       $arrNotfound = [];
       $language = DB::table('language')->get();
       $pd_field = DB::table('product_field_translation as pft')->where('local','en')->get();
       if(isset($products)){
-        Excel::create('products', function ($excel) use ($products ,$language, $pd_field ,$arrNotfound)  {
-          $excel->sheet('products', function ($sheet) use ($products,$language, $pd_field , $arrNotfound) {
+        Excel::create('products', function ($excel) use ($products ,$language, $pd_field ,$arrNotfound ,$doc_cate)  {
+          $excel->sheet('products', function ($sheet) use ($products,$language, $pd_field , $arrNotfound,$doc_cate) {
             $arr1 = array("pro_code", "pro_categories 1", "pro_categories 2","series", "dimensionL" ,"dimensionW" ,"dimensionD","unit_weight","Status","Show ManaulPage",'Highlights & Features',"Industrial Power", "Medical Power","Lighting & Signage"); 
-              $sheet->row(1,$arr1);
+            $firstColum = array_merge($arr1, $doc_cate);  
+            $sheet->row(1,$firstColum);
               $i = 2;
               foreach ($products as $pro) {
                 $subCategories = DB::table('sub_pro_categories as sc')
@@ -174,6 +182,8 @@ class ImportController extends Controller
                 if(count($subCategories) == 0){
                   array_push($arrNotfound ,$pro->pro_categories_id);
                 }
+
+
             
 
                 // $arraysub = DB::table('product_has_property as ph')
@@ -212,9 +222,9 @@ class ImportController extends Controller
                
 
                 $arrcon2 = [];
-                array_push($arrcon2,count($cer1) > 0?'Y':'');
-                array_push($arrcon2,count($cer2) > 0 ?'Y':'');
-                array_push($arrcon2,count($cer3) > 0?'Y':'');
+                array_push($arrcon2,count($cer1) > 0?'Y':'N');
+                array_push($arrcon2,count($cer2) > 0 ?'Y':'N');
+                array_push($arrcon2,count($cer3) > 0?'Y':'N');
               
                 $procategories = DB::table('product_has_categories as pc')
                 ->leftjoin('sub_pro_categories_translation as spt','spt.sub_pro_id','=','pc.categories_id')
@@ -222,8 +232,7 @@ class ImportController extends Controller
                 ->where('pc.product_id',$pro->pro_id)
                 ->select('spt.name')
                 ->get();
-                // return dd($procategories);
-           
+
                 $arrcon1  =  [
                   $pro->pro_code,
                   isset($procategories[0]->name) && count($procategories) > 0 ?$procategories[0]->name:'',
@@ -237,22 +246,44 @@ class ImportController extends Controller
                   $pro->manaul_page == 1 ?'Yes':'No',
                   strip_tags($pro->content_1),
                 ];
-           
-                // foreach($language as $lang){
-                //   $pro_tran = DB::table('products_translation as pt')
-                //   ->where('pt.local' ,$lang->name)
-                //   ->select('pt.*')
-                //   ->get();
-                //   array_push($arrcon2,''.$pro_tran[0]->content_1);
-                // }
-               
-                $arrcon1 = array_merge($arrcon1, $arrcon2);  
+
+                $documents =  self::getProductDocument($doc_cate ,$pro->pro_id);
+                $collection = array_merge($arrcon2, $documents);  
+                $arrcon1 = array_merge($arrcon1, $collection);  
                       $sheet->row($i,$arrcon1);
                       $i++;
               }
           });
       })->export('csv');
       }
+    }
+    function getProductDocument($cates ,$pro_id){
+      $appUrl = config('app.url');
+      $arr_doc = [];
+      foreach ($cates as $cate) {
+        $documents = DB::table('product_has_documents as phd')
+          ->join('products as p','p.pro_id','=','phd.product_id')
+          ->join('product_ducuments as pd','phd.document_id','=','pd.doc_id')
+          ->join('product_ducument_translations as pdt','pdt.doc_fk_id','=','pd.doc_id')
+          ->join('products_documents_categories as pdc','pdc.id','=','pd.cate_id')
+          ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
+          ->where('pdt.local','en')
+          ->where('pdct.local','en')
+          ->where('pdt.file','!=','')
+          ->where('pdt.file','!=',null)
+          ->where('pdc.title',$cate)
+          ->where('p.pro_id',$pro_id)
+          ->select('p.pro_code','pd.doc_id','phd.product_id','pdct.lable' ,'pdc.slug' ,'pdt.name','pdc.title as catename','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id')
+          ->orderBy('pdc.title','asc')
+          ->first();
+          if(isset($documents)){
+            array_push($arr_doc,$appUrl.'products/download/'.$documents->slug.'/'.$documents->pro_code);
+          }else{
+            array_push($arr_doc, '');
+          }
+      }
+    // return dd($arr_doc,$cates);
+      return $arr_doc;
     }
     public function getExportProductProperty(){
 

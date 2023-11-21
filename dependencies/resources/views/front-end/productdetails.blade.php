@@ -539,6 +539,28 @@
                                 str_replace("/uploads_delta",config('app.url')."/uploads_delta",$product[0]['content_1'])
                                 !!}
                             </div>
+                            <h5 class="text-color-delta mt-2">Optional Models </h5>
+                            @if(count($optional_pro) > 0)
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Model</th>
+                                        <th class="text-center">Remark</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($optional_pro as $optional)
+                                    <tr>
+                                        <td class="text-center">
+                                            <span class="text-tag"
+                                                onclick="viewOptionalModel('{{$optional->optional_model}}')">{{$optional->optional_model}}</span>
+                                        </td>
+                                        <td class="text-center">{{$optional->remark}}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @endif
 
                             <h5 class="text-color-delta mt-2">{{$staticContent['Tags']}} </h5>
 
@@ -547,13 +569,12 @@
                                 $loop->count?',':'' }}</span>
                             @endforeach
 
-                            <h5 class="text-color-delta mt-2">Optional Models </h5>
 
-                            @foreach ($optional_pro as $optional)
-                            <span onclick="viewOptionalModel('{{$optional->optional_model}}')"
+                            {{-- @foreach ($optional_pro as $optional) --}}
+                            {{-- <span onclick="viewOptionalModel('{{$optional->optional_model}}')"
                                 class="text-tag">{{$optional->optional_model}}{{$loop->iteration !=
-                                $loop->count?',':'' }}</span>
-                            @endforeach
+                                $loop->count?',':'' }}</span> --}}
+                            {{-- @endforeach --}}
 
                             {{-- <a href="{{route('searchByTag')}}/{{$tag->tag}}"></a> --}}
 
