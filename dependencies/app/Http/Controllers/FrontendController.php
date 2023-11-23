@@ -1276,6 +1276,7 @@ class FrontendController extends Controller
         ->get();
         $tags_pro = DB::table('product_tags as pt')
         ->where('pt.product_id',$pro->pro_id)
+        ->where('pt.tag','!=',' ')
         ->select('pt.*')
         ->get();
 
