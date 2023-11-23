@@ -324,8 +324,8 @@
                                                     @foreach ($pro['tags'] as $tag)
                                                     <a
                                                         class="text-tag {{$pro['tag_m'] == $tag->tag ?'hightlight':'' }}"><span
-                                                            onclick="viewKey('{{$tag->tag}}')">{{$tag->tag}}{{$loop->iteration
-                                                            != $loop->count?',':'' }} </span></a>
+                                                            onclick="viewKey('{{$tag->tag}}')">{{$tag->tag}}{{
+                                                            $loop->last ? '' : ',' }} </span></a>
                                                     @endforeach
                                                 </div>
                                                 <div class="tag-seach">
@@ -528,8 +528,8 @@
                                                 <h6 class="text-title-ft-sub mt-2">Tags</h6>
                                                 @foreach ($pro['tags'] as $tag)
                                                 <a class="text-tag {{$pro['tag_m'] == $tag->tag ?'hightlight':'' }}"><span
-                                                        onclick="viewKey('{{$tag->tag}}')">{{$tag->tag}}{{$loop->iteration
-                                                        != $loop->count?',':'' }} </span></a>
+                                                        onclick="viewKey('{{$tag->tag}}')">{{$tag->tag}}{{
+                                                        $loop->last ? '' : ',' }}</span></a>
                                                 @endforeach
                                                 <h6 class="text-title-ft-sub mt-2">Optional Models</h6>
                                                 @foreach ($pro['optional_models'] as $optional)

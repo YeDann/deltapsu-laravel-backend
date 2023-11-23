@@ -565,8 +565,8 @@
                             <h5 class="text-color-delta mt-2">{{$staticContent['Tags']}} </h5>
 
                             @foreach ($tags_pro as $tag)
-                            <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}}{{$loop->iteration !=
-                                $loop->count?',':'' }}</span>
+                            <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}} {{$tag->tag}}{{
+                                $loop->last ? '' : ',' }}</span>
                             @endforeach
 
 
@@ -859,17 +859,35 @@
                         </div>
                     </div>
                     <div class="w-100 mb-2 mt-4">
+                        <h5 class="text-color-delta mt-2">Optional Models </h5>
+                        @if(count($optional_pro) > 0)
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Model</th>
+                                    <th class="text-center">Remark</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($optional_pro as $optional)
+                                <tr>
+                                    <td class="text-center">
+                                        <span class="text-tag"
+                                            onclick="viewOptionalModel('{{$optional->optional_model}}')">{{$optional->optional_model}}</span>
+                                    </td>
+                                    <td class="text-center">{{$optional->remark}}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        @endif
                         <h5 class="text-color-delta mt-2">{{$staticContent['Tags']}}</h5>
 
                         @foreach ($tags_pro as $tag)
-                        <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}}{{$loop->iteration !=
-                            $loop->count?',':'' }}</span>
+                        <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}} {{$tag->tag}}{{
+                            $loop->last ? '' : ',' }}</span>
                         @endforeach
-                        @foreach ($optional_pro as $optional)
-                        <span onclick="viewOptionalModel('{{$optional->optional_model}}')"
-                            class="text-tag">{{$optional->optional_model}}{{$loop->iteration !=
-                            $loop->count?',':'' }}</span>
-                        @endforeach
+
 
                         {{-- <h5 class="text-color-delta  text-center">MODEL NUMBERING</h5>
                         <div class="d-flex justify-content-center">
