@@ -565,7 +565,7 @@
                             <h5 class="text-color-delta mt-2">{{$staticContent['Tags']}} </h5>
 
                             @foreach ($tags_pro as $tag)
-                            <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}} {{$tag->tag}}{{
+                            <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}}{{
                                 $loop->last ? '' : ',' }}</span>
                             @endforeach
 
@@ -884,7 +884,7 @@
                         <h5 class="text-color-delta mt-2">{{$staticContent['Tags']}}</h5>
 
                         @foreach ($tags_pro as $tag)
-                        <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}} {{$tag->tag}}{{
+                        <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}}{{
                             $loop->last ? '' : ',' }}</span>
                         @endforeach
 
