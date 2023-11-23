@@ -1247,7 +1247,7 @@ class FrontendController extends Controller
         $vieo_img = DB::table('product_image as pm')
         ->where('pm.pro_id' ,$pro->pro_id)
         ->select('pm.*')
-        ->orderBy('pm.order_seq' ,'asc')
+        ->orderBy('pm.created_at' ,'asc')
         ->get();
         $tags_pro = DB::table('product_tags as pt')
         ->where('pt.product_id',$pro->pro_id)
