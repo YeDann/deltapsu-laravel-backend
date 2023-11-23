@@ -277,7 +277,7 @@ class ImportController extends Controller
           ->orderBy('pdc.title','asc')
           ->first();
           if(isset($documents)){
-            array_push($arr_doc,$appUrl.'products/download/'.$documents->slug.'/'.$documents->pro_code);
+            array_push($arr_doc,$appUrl.'/products/download/'.$documents->slug.'/'.$documents->pro_code);
           }else{
             array_push($arr_doc, '');
           }
