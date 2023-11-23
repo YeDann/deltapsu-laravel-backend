@@ -2600,6 +2600,7 @@ class FrontendController extends Controller
 
               $tags = DB::table('product_tags as ptag')
               ->where('ptag.product_id' ,$pro->pro_id)
+              ->where('ptag.tag','!=',' ')
               ->select('ptag.*')
               ->get();
               $optional_models = DB::table('product_optional_model as op')
@@ -2664,6 +2665,7 @@ class FrontendController extends Controller
 
              $tags = DB::table('product_tags as ptag')
              ->where('ptag.product_id' ,$pro->pro_id)
+             ->where('ptag.tag','!=',' ')
              ->select('ptag.*')
              ->get();
              $optional_models = DB::table('product_optional_model as op')
@@ -2728,6 +2730,7 @@ class FrontendController extends Controller
               ->get();
               $tags2 = DB::table('product_tags as ptag')
               ->where('ptag.product_id' ,$pro2->pro_id)
+              ->where('ptag.tag','!=',' ')
               ->select('ptag.*')
               ->get();
               $optional_models2 = DB::table('product_optional_model as op')
