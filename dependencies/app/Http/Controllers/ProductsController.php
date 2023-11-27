@@ -574,9 +574,27 @@ public function update(Request $request){
                     );
                 }
             }
-            DB::table('product_optional_model')->where('product_id',$pro_id)->delete();
+        
             if(isset($optional_models)){
+      
                 foreach($optional_models as $optional){
+                $optional_pro = DB::table('product_optional_model as op')
+                ->where('op.product_id',$pro_id)
+                ->where('op.optional_model',$optional)
+                ->select('op.*')
+                ->first();
+
+                DB::table('product_optional_model')->where('id',$optional_pro->id)->delete();
+
+                if(!isset($optional_pro))
+                    DB::table('product_optional_model')->insert(
+                        [
+                            "optional_model" => $optional,
+                            "product_id" => $pro_id,
+                            "remark" => $optional_pro->remark,
+                        ]
+                    );
+                }else{
                     DB::table('product_optional_model')->insert(
                         [
                             "optional_model" => $optional,
