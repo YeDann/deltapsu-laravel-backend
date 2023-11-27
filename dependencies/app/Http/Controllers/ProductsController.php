@@ -603,6 +603,7 @@ public function update(Request $request){
                     );
                 }
             }
+          }
         
            
             if(isset($relatePros)){
