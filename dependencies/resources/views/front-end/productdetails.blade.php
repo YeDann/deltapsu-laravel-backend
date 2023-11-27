@@ -540,15 +540,15 @@
                                 !!}
                             </div>
                             {{-- <h5 class="text-color-delta mt-2">Optional Models </h5> --}}
-                            <div id="box-optional-model" class="box-optional-model">
-                                <div class="collapsed" data-toggle="collapse" data-parent="#box-optional-model"
-                                    href="#collapse-box-optional-model">
+                            <div id="box-optional-model" class="box-doc-type">
+                                <div class="box-doc-list collapsed fliter_type hide-box" data-toggle="collapse"
+                                    data-parent="#box-optional-model" href="#collapse-box-optional-model">
                                     <a class="card-title text-sixteen-dark">
-
-                                        Optional Models
+                                        <h5 class="text-color-delta mt-2">Optional Models </h5>
                                     </a>
                                 </div>
-                                <div id="collapse-box-optional-model" class="box-list-optional-model collapse"
+                                <div id="collapse-box-optional-model"
+                                    class="box-doc-list collapsed fliter_type hide-box"
                                     data-parent="#box-optional-model">
                                     @if(count($optional_pro) > 0)
                                     <table class="table table-bordered">
