@@ -1185,6 +1185,15 @@ class FrontendController extends Controller
       
         if(isset($_GET['optional_model'])){
             $optional_model = $this->validateInput($_GET['optional_model'] ,'text',true);
+                $optional_model_code  = str_replace("@", "/", $optional_model);
+                $check_optional = DB::table('products as p')
+                ->where('p.pro_code',$optional_model_code)
+                ->where('p.enable_pro',1)
+                ->first();
+              if($check_optional){
+                return redirect()->route('productsDetailsByType',[$catename,$optional_model_code] );
+              }
+
         }
         // return dd($optional_model);
       
