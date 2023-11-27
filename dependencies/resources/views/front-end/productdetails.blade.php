@@ -539,28 +539,41 @@
                                 str_replace("/uploads_delta",config('app.url')."/uploads_delta",$product[0]['content_1'])
                                 !!}
                             </div>
-                            <h5 class="text-color-delta mt-2">Optional Models </h5>
-                            @if(count($optional_pro) > 0)
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">Model</th>
-                                        <th class="text-center">Remark</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($optional_pro as $optional)
-                                    <tr>
-                                        <td class="text-center">
-                                            <span class="text-tag"
-                                                onclick="viewOptionalModel('{{$optional->optional_model}}')">{{$optional->optional_model}}</span>
-                                        </td>
-                                        <td class="text-center">{{$optional->remark}}</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            @endif
+                            {{-- <h5 class="text-color-delta mt-2">Optional Models </h5> --}}
+                            <div id="box-optional-model" class="box-optional-model">
+                                <div class="collapsed" data-toggle="collapse" data-parent="#box-optional-model"
+                                    href="#collapse-box-optional-model">
+                                    <a class="card-title text-sixteen-dark">
+
+                                        Optional Models
+                                    </a>
+                                </div>
+                                <div id="collapse-box-optional-model" class="box-list-optional-model collapse"
+                                    data-parent="#box-optional-model">
+                                    @if(count($optional_pro) > 0)
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Model</th>
+                                                <th class="text-center">Remark</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($optional_pro as $optional)
+                                            <tr>
+                                                <td class="text-center">
+                                                    <span class="text-tag"
+                                                        onclick="viewOptionalModel('{{$optional->optional_model}}')">{{$optional->optional_model}}</span>
+                                                </td>
+                                                <td class="text-center">{{$optional->remark}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    @endif
+                                </div>
+                            </div>
+
 
                             <h5 class="text-color-delta mt-2">{{$staticContent['Tags']}} </h5>
 
