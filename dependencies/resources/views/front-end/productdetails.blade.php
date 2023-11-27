@@ -544,7 +544,7 @@
                                 <div class="box-doc-list collapsed fliter_type hide-box" data-toggle="collapse"
                                     data-parent="#box-optional-model" href="#collapse-box-optional-model">
                                     <a class="card-title text-sixteen-dark">
-                                        <h5 class="text-color-delta mt-2">Optional Models </h5>
+                                        Optional Models
                                     </a>
                                 </div>
                                 <div id="collapse-box-optional-model"
