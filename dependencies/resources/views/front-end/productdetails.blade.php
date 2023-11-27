@@ -541,8 +541,8 @@
                             </div>
                             {{-- <h5 class="text-color-delta mt-2">Optional Models </h5> --}}
                             <div id="box-optional-model" class="box-doc-type">
-                                <div class="box-doc-list collapsed fliter_type hide-box" data-toggle="collapse"
-                                    data-parent="#box-optional-model" href="#collapse-box-optional-model">
+                                <div class="box-doc-list-sub" data-toggle="collapse" data-parent="#box-optional-model"
+                                    href="#collapse-box-optional-model">
                                     <a class="card-title text-sixteen-dark">
                                         Optional Models
                                     </a>
