@@ -196,6 +196,39 @@
             margin-right: 90px;
             margin-bottom: 10px;
         }
+    }
+
+    .box-optional-model .box-optional-model-list:after {
+        font-family: 'Material-Design-Iconic-Font';
+        content: "\f273";
+        float: right;
+        font-size: 24px;
+        color: #444444;
+    }
+
+    .box-optional-model .box-optional-model-list.collapsed:after {
+        /* symbol for "collapsed" panels */
+
+        content: "\f278";
+    }
+
+    .box-optional-model-list {
+        font-size: 18px;
+        line-height: 30px;
+        font-family: 'DeltaSans';
+        font-weight: bolder;
+        margin-bottom: -2px;
+        border-top: 2px solid #E3EFF8;
+        border-bottom: 2px solid #E3EFF8;
+        margin-top: 20px;
+        padding: 10px 0px;
+        color: #0087dc !important;
+    }
+
+    .table-optional-model .thead-gray th {
+        color: #000000;
+        background-color: #dee2e6;
+        border: 1px solid #000000;
 
     }
 </style>
@@ -539,20 +572,24 @@
                                 str_replace("/uploads_delta",config('app.url')."/uploads_delta",$product[0]['content_1'])
                                 !!}
                             </div>
+
                             {{-- <h5 class="text-color-delta mt-2">Optional Models </h5> --}}
-                            <div id="box-optional-model" class="box-doc-type">
-                                <div class="box-doc-list collapsed fliter_type hide-box" data-toggle="collapse"
-                                    data-parent="#box-optional-model" href="#collapse-box-optional-model">
+                            @if(count($optional_pro) > 0)
+                            <div id="box-optional-model" class="box-optional-model">
+                                <div class="box-optional-model-list" data-toggle="collapse"
+                                    data-target="#collapse-box-optional-model" aria-expanded="true"
+                                    aria-controls="collapse-box-optional-model" href="#collapse-box-optional-model">
                                     <a class="card-title text-sixteen-dark">
                                         Optional Models
                                     </a>
                                 </div>
-                                <div id="collapse-box-optional-model" class="" data-parent="#box-optional-model">
+                                <div id="collapse-box-optional-model" aria-labelledby="collapse-box-optional-model"
+                                    class="box-doc-list-sub collapse show" data-parent="#box-optional-model">
                                     @if(count($optional_pro) > 0)
-                                    <table class="table table-bordered">
-                                        <thead>
+                                    <table class="table table-bordered table-optional-model">
+                                        <thead class="thead-gray">
                                             <tr>
-                                                <th class="text-center">Model</th>
+                                                <th class="text-center" style="width: 40%">Model</th>
                                                 <th class="text-center">Remark</th>
                                             </tr>
                                         </thead>
@@ -571,14 +608,16 @@
                                     @endif
                                 </div>
                             </div>
+                            @endif
 
-
+                            @if(count($tags_pro) > 0)
                             <h5 class="text-color-delta mt-2">{{$staticContent['Tags']}} </h5>
 
                             @foreach ($tags_pro as $tag)
                             <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}}{{
                                 $loop->last ? '' : ',' }}</span>
                             @endforeach
+                            @endif
 
 
                             {{-- @foreach ($optional_pro as $optional) --}}
@@ -870,34 +909,49 @@
                         </div>
                     </div>
                     <div class="w-100 mb-2 mt-4">
-                        <h5 class="text-color-delta mt-2">Optional Models </h5>
                         @if(count($optional_pro) > 0)
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Model</th>
-                                    <th class="text-center">Remark</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($optional_pro as $optional)
-                                <tr>
-                                    <td class="text-center">
-                                        <span class="text-tag"
-                                            onclick="viewOptionalModel('{{$optional->optional_model}}')">{{$optional->optional_model}}</span>
-                                    </td>
-                                    <td class="text-center">{{$optional->remark}}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div id="box-optional-model" class="box-optional-model">
+                            <div class="box-optional-model-list" data-toggle="collapse"
+                                data-target="#collapse-box-optional-model" aria-expanded="true"
+                                aria-controls="collapse-box-optional-model" href="#collapse-box-optional-model">
+                                <a class="card-title text-sixteen-dark">
+                                    Optional Models
+                                </a>
+                            </div>
+                            <div id="collapse-box-optional-model" aria-labelledby="collapse-box-optional-model"
+                                class="box-doc-list-sub collapse show" data-parent="#box-optional-model">
+                                @if(count($optional_pro) > 0)
+                                <table class="table table-bordered table-optional-model">
+                                    <thead class="thead-gray">
+                                        <tr>
+                                            <th class="text-center" style="width: 40%">Model</th>
+                                            <th class="text-center">Remark</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($optional_pro as $optional)
+                                        <tr>
+                                            <td class="text-center">
+                                                <span class="text-tag"
+                                                    onclick="viewOptionalModel('{{$optional->optional_model}}')">{{$optional->optional_model}}</span>
+                                            </td>
+                                            <td class="text-center">{{$optional->remark}}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                @endif
+                            </div>
+                        </div>
                         @endif
+                        @if(count($tags_pro) > 0)
                         <h5 class="text-color-delta mt-2">{{$staticContent['Tags']}}</h5>
 
                         @foreach ($tags_pro as $tag)
                         <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}}{{
                             $loop->last ? '' : ',' }}</span>
                         @endforeach
+                        @endif
 
 
                         {{-- <h5 class="text-color-delta  text-center">MODEL NUMBERING</h5>
