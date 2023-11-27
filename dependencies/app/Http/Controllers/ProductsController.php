@@ -586,7 +586,7 @@ public function update(Request $request){
 
                 DB::table('product_optional_model')->where('id',$optional_pro->id)->delete();
 
-                if(!isset($optional_pro))
+                if(!isset($optional_pro)){
                     DB::table('product_optional_model')->insert(
                         [
                             "optional_model" => $optional,
