@@ -208,7 +208,6 @@
 
     .box-optional-model .box-optional-model-list.collapsed:after {
         /* symbol for "collapsed" panels */
-
         content: "\f278";
     }
 
@@ -226,9 +225,9 @@
     }
 
     .table-optional-model .thead-gray th {
-        color: #000000;
+        color: #000;
         background-color: #dee2e6;
-        border: 1px solid #000000;
+        border: 1px solid white;
 
     }
 </style>
@@ -576,7 +575,7 @@
                             {{-- <h5 class="text-color-delta mt-2">Optional Models </h5> --}}
                             @if(count($optional_pro) > 0)
                             <div id="box-optional-model" class="box-optional-model">
-                                <div class="box-optional-model-list" data-toggle="collapse"
+                                <div class="box-optional-model-list collapsed" data-toggle="collapse"
                                     data-target="#collapse-box-optional-model" aria-expanded="true"
                                     aria-controls="collapse-box-optional-model" href="#collapse-box-optional-model">
                                     <a class="card-title text-sixteen-dark">
@@ -584,7 +583,7 @@
                                     </a>
                                 </div>
                                 <div id="collapse-box-optional-model" aria-labelledby="collapse-box-optional-model"
-                                    class="box-doc-list-sub collapse show" data-parent="#box-optional-model">
+                                    class="box-doc-list-sub collapse" data-parent="#box-optional-model">
                                     @if(count($optional_pro) > 0)
                                     <table class="table table-bordered table-optional-model">
                                         <thead class="thead-gray">
@@ -912,14 +911,14 @@
                         @if(count($optional_pro) > 0)
                         <div id="box-optional-model" class="box-optional-model">
                             <div class="box-optional-model-list" data-toggle="collapse"
-                                data-target="#collapse-box-optional-model" aria-expanded="true"
+                                data-target="#collapse-box-optional-model collapsed" aria-expanded="true"
                                 aria-controls="collapse-box-optional-model" href="#collapse-box-optional-model">
                                 <a class="card-title text-sixteen-dark">
                                     Optional Models
                                 </a>
                             </div>
                             <div id="collapse-box-optional-model" aria-labelledby="collapse-box-optional-model"
-                                class="box-doc-list-sub collapse show" data-parent="#box-optional-model">
+                                class="box-doc-list-sub collapse" data-parent="#box-optional-model">
                                 @if(count($optional_pro) > 0)
                                 <table class="table table-bordered table-optional-model">
                                     <thead class="thead-gray">
