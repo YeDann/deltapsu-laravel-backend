@@ -80,7 +80,7 @@ class MarketResourceController extends Controller
             if ($request->hasFile("file")) {
                 $imageFile = $request->file("file");
                 $imageName = preg_replace('/\s+/','',self::fileformat($imageFile));
-                $imageFile->move(base_path('/../medias/marketing_resources'),$imageName);
+                $imageFile->move(base_path('/../medias/partner/marketing_resources'),$imageName);
             }
 
             $id = DB::table('marketing_resource')->insertGetID(
@@ -164,7 +164,7 @@ class MarketResourceController extends Controller
                $emptyornot = isset($loopfile[$lang]);
                if($emptyornot){
                         $fileName[$lang] = preg_replace('/\s+/', '', self::fileformat($loopfile[$lang]));
-                        $loopfile[$lang]->move(base_path('/../medias/marketing_resources'),$fileName[$lang]);
+                        $loopfile[$lang]->move(base_path('/../medias/partner/marketing_resources'),$fileName[$lang]);
                         $arrayfileName[$lang] = $fileName[$lang];
                }else{
                  $arrayfileName[$lang] = $oldfile[$lang];

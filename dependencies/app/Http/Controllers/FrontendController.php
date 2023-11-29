@@ -1281,7 +1281,7 @@ class FrontendController extends Controller
         $vieo_img = DB::table('product_image as pm')
         ->where('pm.pro_id' ,$pro->pro_id)
         ->select('pm.*')
-        ->orderBy('pm.order_seq' ,'asc')
+        ->orderBy('pm.created_at' ,'asc')
         ->get();
         $tags_pro = DB::table('product_tags as pt')
         ->where('pt.product_id',$pro->pro_id)
@@ -3614,7 +3614,7 @@ class FrontendController extends Controller
            if ($request->hasFile('file')) {
                $image = $request->file('file'); 
                $imgName = uniqid().".".$image->getClientOriginalExtension();
-               $image->move(base_path('/../medias/marketing_resources'),$imgName);
+               $image->move(base_path('/../medias/partner/marketing_resources'),$imgName);
                DB::table('success_storys_image')->insert(
                    [
                        'fk_story_id' => $id,
@@ -3715,7 +3715,7 @@ class FrontendController extends Controller
         // $id = $request->img_id;
         $id = $this->validateInput($request->img_id,'number',true);
         $data = DB::table('success_storys_image')->where('id' ,$id)->get();
-        $file_pointer = base_path('/../medias/marketing_resources/').$data[0]->image;
+        $file_pointer = base_path('/../medias/partner/marketing_resources/').$data[0]->image;
         if (file_exists($file_pointer) && isset($data[0]->image) ) {
             unlink($file_pointer);
   
@@ -3736,7 +3736,7 @@ class FrontendController extends Controller
           if(count($data_image) > 0){
             DB::table('success_storys_image')->where('id',$id)->delete();
             foreach($data_image as $item){
-                $file_pointer = base_path('/../medias/marketing_resources/').$item->image;
+                $file_pointer = base_path('/../medias/partner/marketing_resources/').$item->image;
                 if (file_exists($file_pointer) && isset($item->image) ) {
                     unlink($file_pointer);
                     DB::table('success_storys_image')->where('id' ,$item->id)->delete();
@@ -4456,7 +4456,7 @@ class FrontendController extends Controller
         return response()->file($path);
       }
       public function marketingLink($image){
-        $path =  base_path('../medias/marketing_resources/').$image; 
+        $path =  base_path('../medias/partner/marketing_resources/').$image; 
         if(file_exists($path)){
             return response()->file($path);
         }else{
@@ -4772,7 +4772,50 @@ class FrontendController extends Controller
     }
  
 
+    public function checkpermission($doc){
+        $path =  base_path('../medias/partner/marketing_resources/').$doc; 
+        $lang = App::getLocale();
+        $sales_kits = DB::table('partner_documents as s')
+        ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
+        ->where('st.local' ,$lang)
+        ->where('st.file' ,$doc)
+        ->select('st.*')
+        ->first();
 
+        $margeting = DB::table('marketing_resource as mr')
+                ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+                ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
+                ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
+                ->where('mrt.local', '=', $lang)
+                ->where('mrt.file', '=',$doc)
+                ->whereIn('permar.permission_id', [1,2])
+                ->select('mr.*' ,'mrt.*')
+                ->first();
+
+         $margeting_public = DB::table('marketing_resource as mr')
+                ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+                ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
+                ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
+                ->where('mrt.local', '=', $lang)
+                ->where('mrt.file', '=',$doc)
+                ->whereIn('permar.permission_id', [3])
+                ->select('mr.*' ,'mrt.*')
+                ->first();
+     
+        $sectionId = session('partner_id');
+        if(isset($sales_kits) && isset($sectionId)){
+           return response()->file($path);
+      
+        }else if(isset($margeting) && isset($sectionId)){
+           return response()->file($path);
+          
+        }else if(isset($margeting_public)){
+           return response()->file($path);
+        }else{
+          return redirect()->route('index','login');
+        }
+
+      }
        
        
      
