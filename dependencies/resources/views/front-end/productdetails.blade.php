@@ -211,6 +211,19 @@
         content: "\f278";
     }
 
+    .box-optional-model-mobile .box-optional-model-list:after {
+        font-family: 'Material-Design-Iconic-Font';
+        content: "\f273";
+        float: right;
+        font-size: 24px;
+        color: #444444;
+    }
+
+    .box-optional-model-mobile .box-optional-model-list.collapsed:after {
+        /* symbol for "collapsed" panels */
+        content: "\f278";
+    }
+
     .box-optional-model-list {
         font-size: 18px;
         line-height: 30px;
@@ -273,8 +286,50 @@
                             {{$staticContent['Series']}}</a>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb-ative" aria-current="page">
-                        <a href="#">{{$product[0]['pro_code']}}</a>
+                        <a
+                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['cate_name']) ,'pro_code' => $product[0]['pro_code']])}}">{{$product[0]['pro_code']}}</a>
                     </li>
+                    @if($optional_model)
+                    <li class="breadcrumb-item active text-breadcrumb-ative" aria-current="page">
+                        <a
+                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['cate_name']) ,'pro_code' => $product[0]['pro_code']])}}?optional_model={{$optional_model}}">{{$optional_model}}</a>
+                    </li>
+                    @endif
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="products-index-nav invisible-up-922">
+    <div class="bg-bredcrumb">
+        <div class="container">
+            <nav aria-label="breadcrumb" id="breadcrumb">
+                <ol class="breadcrumb">
+                    {{-- <li class="breadcrumb-item text-breadcrumb-home">
+                        <a href="{{route('index','home')}}">{{$staticContent['Home']}}</a>
+                    </li>
+                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page">
+                        <a href="#">{{$staticContent['Products']}}</a>
+                    </li> --}}
+                    {{-- <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page">
+                        <a
+                            href="{{ route('producsList',[preg_replace('/\s+/', '-',  $product[0]['cate_name']),$product[0]['cate_id']])}}">{{$product[0]['cate_name']}}</a>
+                    </li> --}}
+                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page">
+                        <a
+                            href="{{ route('producsList',[preg_replace('/\s+/', '-', $product[0]['cate_name']),$product[0]['cate_id'],$product[0]['serie_name'],$product[0]['serie_id']])}}">{{$product[0]['serie_name']}}
+                            {{$staticContent['Series']}}</a>
+                    </li>
+                    <li class="breadcrumb-item active text-breadcrumb-ative" aria-current="page">
+                        <a
+                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['cate_name']) ,'pro_code' => $product[0]['pro_code']])}}">{{$product[0]['pro_code']}}</a>
+                    </li>
+                    @if($optional_model)
+                    <li class="breadcrumb-item active text-breadcrumb-ative" aria-current="page">
+                        <a
+                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['cate_name']) ,'pro_code' => $product[0]['pro_code']])}}?optional_model={{$optional_model}}">{{$optional_model}}</a>
+                    </li>
+                    @endif
                 </ol>
             </nav>
         </div>
@@ -771,7 +826,12 @@
                 <h4 class="my-1 text-center"> {{$product[0]['cate_name']}}</h4>
                 <h4 class="my-1 text-center">{{$product[0]['serie_name']}} {{$staticContent['Series']}}</h4>
                 <h3 class="text-color-delta my-1 text-center">
-                    {{$product[0]['pro_code']}}</h3>
+                    @if($optional_model)
+                    {{$optional_model}}</h3>
+                @else
+                {{$product[0]['pro_code']}}</h3>
+                @endif
+
             </div>
             <div class="my-4">
                 <a
@@ -908,17 +968,18 @@
                         </div>
                     </div>
                     <div class="w-100 mb-2 mt-4">
+
                         @if(count($optional_pro) > 0)
-                        <div id="box-optional-model" class="box-optional-model">
-                            <div class="box-optional-model-list" data-toggle="collapse"
-                                data-target="#collapse-box-optional-model collapsed" aria-expanded="true"
-                                aria-controls="collapse-box-optional-model" href="#collapse-box-optional-model">
+                        <div id="box-optional-model" class="box-optional-model-mobile">
+                            <div class="box-optional-model-list collapsed" data-toggle="collapse"
+                                data-target="#collapse-box-optional-model-mobile" aria-expanded="true"
+                                aria-controls="collapse-box-optional-model" href="#collapse-box-optional-model-mobile">
                                 <a class="card-title text-sixteen-dark">
                                     Optional Models
                                 </a>
                             </div>
-                            <div id="collapse-box-optional-model" aria-labelledby="collapse-box-optional-model"
-                                class="box-doc-list-sub collapse" data-parent="#box-optional-model">
+                            <div id="collapse-box-optional-model-mobile" aria-labelledby="collapse-box-optional-model"
+                                class="collapse" data-parent="#box-optional-model-mobile">
                                 @if(count($optional_pro) > 0)
                                 <table class="table table-bordered table-optional-model">
                                     <thead class="thead-gray">
