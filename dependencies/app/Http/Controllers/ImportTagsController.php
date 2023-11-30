@@ -55,14 +55,16 @@ class ImportTagsController extends Controller
                 $arr = explode(",",$value->tags);
             
                 if(count($arr) > 0){
+              
                    foreach($arr as $tag){
-                    DB::table('product_tags')->insert(
+                      if(isset($tag) && $tag != ''){
+                        DB::table('product_tags')->insert(
                         [
                             "tag" => $tag,
                             "product_id" => $pro->pro_id,
                         ]
-                    );
-
+                       );
+                     }
                    }
                 }
         }
@@ -72,12 +74,14 @@ class ImportTagsController extends Controller
         
             if(count($arr) > 0){
                foreach($arr as $optional_model){
+                if(isset($optional_model) && $optional_model != ''){
                 DB::table('product_optional_model')->insert(
                     [
                         "optional_model" => $optional_model,
                         "product_id" => $pro->pro_id,
                     ]
                 );
+                }
                }
             }
         }
