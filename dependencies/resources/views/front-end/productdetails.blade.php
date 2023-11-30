@@ -654,7 +654,7 @@
                                                     <span class="text-tag"
                                                         onclick="viewOptionalModel('{{$optional->optional_model}}')">{{$optional->optional_model}}</span>
                                                 </td>
-                                                <td class="text-center">{{!!$optional->remark!!}}</td>
+                                                <td class="text-center">{!!$optional->remark!!}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
@@ -995,7 +995,7 @@
                                                 <span class="text-tag"
                                                     onclick="viewOptionalModel('{{$optional->optional_model}}')">{{$optional->optional_model}}</span>
                                             </td>
-                                            <td class="text-center">{{$optional->remark}}</td>
+                                            <td class="text-center">{!!$optional->remark!!}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>
