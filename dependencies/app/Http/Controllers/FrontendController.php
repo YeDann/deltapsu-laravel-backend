@@ -4375,9 +4375,16 @@ class FrontendController extends Controller
         }
          return $String;
     }
+
+    public function loginDocPartner($doc){
+       $metatag = DB::table('meta_tag_page as mtp')->where('id',26)->get();
+        return  view('front-end.login-doc-partner')
+        ->with('doc' ,$doc)
+        ->with('metatag' ,$metatag);
+    }
  
 
-    public function checkpermission2($doc){
+    public function checkpermission($doc){
         $path =  base_path('../medias/partner/marketing_resources/').$doc; 
         $lang = App::getLocale();
         $sales_kits = DB::table('partner_documents as s')
@@ -4386,7 +4393,6 @@ class FrontendController extends Controller
         ->where('st.file' ,$doc)
         ->select('st.*')
         ->first();
-        return dd('dddd');
 
         $margeting = DB::table('marketing_resource as mr')
                 ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
@@ -4407,22 +4413,71 @@ class FrontendController extends Controller
                 ->whereIn('permar.permission_id', [3])
                 ->select('mr.*' ,'mrt.*')
                 ->first();
-     
-        $sectionId = session('partner_id');
-        return dd($sectionId);
-        if(isset($sales_kits) && isset($sectionId)){
-           return response()->file($path);
-      
-        }else if(isset($margeting) && isset($sectionId)){
-           return response()->file($path);
-          
-        }else if(isset($margeting_public)){
+    
+        if(isset($margeting_public)){
            return response()->file($path);
         }else{
-          return redirect()->route('index','login');
+          return redirect()->route('loginDocPartner',$doc );
         }
 
       }
+
+
+      public function partnerLoginDoc(Request $request){
+        $str = $this->validateInput($request->email,'text',true);
+        $doc = $this->validateInput($request->doc,'text',true);
+            $username =  strtolower($str);
+            $partner = DB::table('partner')->where('email',$username)->where('status',1)->get();
+        
+            if(count($partner) != 0){
+                $checkPas = false;
+                $inputpassword = $this->validateInput($request->password,'password',true);
+               if(isset($inputpassword) && $inputpassword != null ){
+                   $checkPas = Hash::check($inputpassword,$partner[0]->password);
+               }
+                //return dd($checkPas);
+                if($checkPas) {
+                    $path =  base_path('../medias/partner/marketing_resources/').$doc; 
+                    $lang = App::getLocale();
+                    $sales_kits = DB::table('partner_documents as s')
+                    ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
+                    ->where('st.local' ,$lang)
+                    ->where('st.file' ,$doc)
+                    ->select('st.*')
+                    ->first();
+               
+
+                    $margeting = DB::table('marketing_resource as mr')
+                            ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+                            ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
+                            ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
+                            ->where('mrt.local', '=', $lang)
+                            ->where('mrt.file', '=',$doc)
+                            ->whereIn('permar.permission_id', [1,2])
+                            ->select('mr.*' ,'mrt.*')
+                            ->first();
+
+                    $margeting_public = DB::table('marketing_resource as mr')
+                            ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+                            ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
+                            ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
+                            ->where('mrt.local', '=', $lang)
+                            ->where('mrt.file', '=',$doc)
+                            ->whereIn('permar.permission_id', [3])
+                            ->select('mr.*' ,'mrt.*')
+                            ->first();
+
+                            return response()->file($path);
+        
+    
+                }else{
+                    return back()->with('flash_message_eror', 'Password Not Correct');
+                }  
+            }else{
+                return back()->with('flash_message_eror', 'No user account found in the system.');
+            }
+            return back()->with('flash_message_eror', 'Eror');
+        }
        
        
      
