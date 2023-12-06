@@ -4377,7 +4377,7 @@ class FrontendController extends Controller
     }
  
 
-    public function checkpermission($doc){
+    public function checkpermission2($doc){
         $path =  base_path('../medias/partner/marketing_resources/').$doc; 
         $lang = App::getLocale();
         $sales_kits = DB::table('partner_documents as s')
@@ -4386,6 +4386,7 @@ class FrontendController extends Controller
         ->where('st.file' ,$doc)
         ->select('st.*')
         ->first();
+        return dd('dddd');
 
         $margeting = DB::table('marketing_resource as mr')
                 ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')

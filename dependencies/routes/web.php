@@ -34,7 +34,7 @@ Route::group([
 Route::get('/{page?}','FrontendController@index')->name('index');
 Route::get('/download/{doc?}','FrontendController@oldDoc')->name('downloadDocData');
 Route::get('/download/resources-leaflets/{doc?}','FrontendController@downloadoldLeaflets')->name('downloadoldLeaflets');
-Route::get('/file_doc/marketing_resources/{doc?}','FrontendController@checkpermission')->name('checkpermission');
+Route::get('/file_doc/marketing_resources/{doc?}','FrontendController@checkpermission2')->name('checkpermission2');
 
 Route::get('/main/download_guide/{doc?}','FrontendController@downloadGuide')->name('download_guide');
 Route::get('/tools/configurable-product-selection','FrontendController@configurableProduct')->name('configurableproduct');
