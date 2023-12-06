@@ -4408,6 +4408,7 @@ class FrontendController extends Controller
                 ->first();
      
         $sectionId = session('partner_id');
+        return dd($sectionId);
         if(isset($sales_kits) && isset($sectionId)){
            return response()->file($path);
       
