@@ -4467,7 +4467,11 @@ class FrontendController extends Controller
                             ->select('mr.*' ,'mrt.*')
                             ->first();
 
-                            return response()->file($path);
+                            if(file_exists($path)){
+                              return response()->file($path);
+                            }else{
+                                return abort(404);
+                            }
         
     
                 }else{
