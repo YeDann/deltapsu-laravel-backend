@@ -35,6 +35,7 @@ Route::get('/{page?}','FrontendController@index')->name('index');
 Route::get('/download/{doc?}','FrontendController@oldDoc')->name('downloadDocData');
 Route::get('/download/resources-leaflets/{doc?}','FrontendController@downloadoldLeaflets')->name('downloadoldLeaflets');
 Route::get('/file_doc/marketing_resources/{doc?}','FrontendController@checkpermission')->name('checkpermission');
+
 Route::post('partnerLoginDoc','FrontendController@partnerLoginDoc')->name('partnerLoginDoc');
 Route::get('/loginDocPartner/{doc?}','FrontendController@loginDocPartner')->name('loginDocPartner');
 Route::get('/main/download_guide/{doc?}','FrontendController@downloadGuide')->name('download_guide');
