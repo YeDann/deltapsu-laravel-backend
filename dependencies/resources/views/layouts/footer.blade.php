@@ -154,7 +154,7 @@
                         </div> --}}
                     </div>{{-- TOOL&UPDATE --}}
                     <div class="col-xl-2 col-lg-2">
-                        <div class="text-footer-main ">
+                        {{-- <div class="text-footer-main ">
                             <h6>{{isset($staticContent['About'])?$staticContent['About']:"About"}}</h6>
                         </div>
                         @foreach ($navaboutus as $abt)
@@ -165,7 +165,7 @@
                             </a>
                         </div>
                         @endforeach
-                        <br>
+                        <br> --}}
                         <div class="text-footer-main  footer-two">
                             <h6>{{isset($staticContent['Downloads'])?$staticContent['Downloads']:"Downloads"}}</h6>
                         </div>
