@@ -4385,20 +4385,22 @@ class FrontendController extends Controller
  
 
     public function checkpermission($doc){
-
-        if($doc == '62b571d7f2b16MDS_SalesKit_JUN_2022_Rev00.pdf'){
-            return redirect()->route('loginDocPartner',$doc );
-        }
         $path =  base_path('../medias/partner/marketing_resources/').$doc; 
         $lang = App::getLocale();
-        $sales_kits = DB::table('partner_documents as s')
-        ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
-        ->where('st.local' ,$lang)
-        ->where('st.file' ,$doc)
-        ->select('st.*')
-        ->first();
+     
+        $partner_id = session('partner_id');
+        $partner = DB::table('partner')->where('id',$partner_id)->where('status',1)->first();
 
-        $margeting = DB::table('marketing_resource as mr')
+        $margeting = null;
+        $sales_kits = DB::table('partner_documents as s')
+            ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
+            ->where('st.local' ,$lang)
+            ->where('st.file' ,$doc)
+            ->select('st.*')
+            ->first();
+    
+        if(isset($partner) && $partner->role == 2 || isset($partner) && $partner->role == 1 ){
+         $margeting = DB::table('marketing_resource as mr')
                 ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
                 ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
                 ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
@@ -4407,6 +4409,7 @@ class FrontendController extends Controller
                 ->whereIn('permar.permission_id', [1,2])
                 ->select('mr.*' ,'mrt.*')
                 ->first();
+        }
 
          $margeting_public = DB::table('marketing_resource as mr')
                 ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
@@ -4420,8 +4423,15 @@ class FrontendController extends Controller
     
         if(isset($margeting_public)){
            return response()->file($path);
-        }else{
-          return redirect()->route('loginDocPartner',$doc );
+        }
+        else if(isset($sales_kits)){
+            return redirect()->route('loginDocPartner',$doc );
+        }
+        else if(isset($margeting)){
+            return response()->file($path);
+        }
+        else{
+            return abort(404);
         }
 
       }
@@ -4443,14 +4453,18 @@ class FrontendController extends Controller
                 if($checkPas) {
                     $path =  base_path('../medias/partner/marketing_resources/').$doc; 
                     $lang = App::getLocale();
-                    $sales_kits = DB::table('partner_documents as s')
-                    ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
-                    ->where('st.local' ,$lang)
-                    ->where('st.file' ,$doc)
-                    ->select('st.*')
-                    ->first();
+                    $sales_kits = null;
+                    if($partner[0]->role == 2){
+                        $sales_kits = DB::table('partner_documents as s')
+                        ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
+                        ->where('st.local' ,$lang)
+                        ->where('st.file' ,$doc)
+                        ->select('st.*')
+                        ->first();
+                    }
                
-
+                    $margeting = null;
+                 if($partner[0]->role == 2 || $partner[0]->role == 1 ){
                     $margeting = DB::table('marketing_resource as mr')
                             ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
                             ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
@@ -4460,6 +4474,7 @@ class FrontendController extends Controller
                             ->whereIn('permar.permission_id', [1,2])
                             ->select('mr.*' ,'mrt.*')
                             ->first();
+                    }
 
                     $margeting_public = DB::table('marketing_resource as mr')
                             ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
@@ -4470,13 +4485,23 @@ class FrontendController extends Controller
                             ->whereIn('permar.permission_id', [3])
                             ->select('mr.*' ,'mrt.*')
                             ->first();
-
-                            if(file_exists($path)){
-                              return response()->file($path);
-                            }else{
-                                return abort(404);
+                          
+                            if($sales_kits){
+                                   if(file_exists($path)){
+                                    return response()->file($path);
+                                    }else{
+                                        return abort(404);
+                                    }
+                            }else if($margeting){
+                                if(file_exists($path)){
+                                    return response()->file($path);
+                                    }else{
+                                        return abort(404);
+                                }
                             }
-        
+                            else{
+                                return back()->with('flash_message_eror', 'Permission Not Correct');
+                            }
     
                 }else{
                     return back()->with('flash_message_eror', 'Password Not Correct');
