@@ -4385,6 +4385,7 @@ class FrontendController extends Controller
  
 
     public function checkpermission($doc){
+        return redirect()->route('loginDocPartner',$doc );
         $path =  base_path('../medias/partner/marketing_resources/').$doc; 
         $lang = App::getLocale();
         $sales_kits = DB::table('partner_documents as s')
