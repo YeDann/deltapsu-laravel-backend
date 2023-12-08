@@ -45,7 +45,7 @@
                     <p>{{$staticContent['Uploaded_on']}} {{$item->date_info}}</p>
                     {{-- <p>{{$staticContent['Uploaded_on']}} 13-Mar-2019 | PDF, 4.7 MB</p> --}}
                 </div>
-                <a href="{{config('app.url')}}/file_doc/marketing_resources/{{$item->file}}" target="_blank"><button
+                <a href="{{route('checkpermission',$item->file)}}" target="_blank"><button
                         class="btn-downlode ">{{$staticContent['Downloads']}}</button></a>
             </div>
             @endforeach
