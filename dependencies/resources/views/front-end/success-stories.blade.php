@@ -331,7 +331,7 @@
              html += '<div class="row">';
              $.each(image_story, function(index2,img){
              if(img['fk_story_id'] == story['id'] ){
-             html += '<img class="wid-20 col-3" src="{{config('app.url')}}/file_doc/marketing_resources/'+img['image']+'">';
+             html += '<img class="wid-20 col-3" src="{{config('app.url')}}/file_doc_2/marketing_resources/'+img['image']+'">';
              }
              });
              html += '</div>';
@@ -413,7 +413,7 @@
              html += '<div class="row">';
              $.each(image_story, function(index2,img){
              if(img['fk_story_id'] == story['id'] ){
-             html += '<img class="wid-20 col-3" src="{{config('app.url')}}/file_doc/marketing_resources/'+img['image']+'">';
+             html += '<img class="wid-20 col-3" src="{{config('app.url')}}/file_doc_2/marketing_resources/'+img['image']+'">';
              }
              });
              html += '</div>';
