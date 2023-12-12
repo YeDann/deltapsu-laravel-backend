@@ -1,0 +1,9 @@
+
+
+  .text-info ul li {
+    list-style-type: none;
+}
+.text-info ul li:before {
+    content: '• ';
+    margin-left: -1em;
+}
