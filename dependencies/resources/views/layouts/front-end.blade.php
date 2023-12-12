@@ -221,8 +221,8 @@ $langch = str_replace('_', '-', app()->getLocale());
 
   <!-- Fonts -->
   <!-- Styles -->
-  {{-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> --}}
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  {{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> --}}
 
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
