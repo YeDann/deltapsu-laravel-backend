@@ -26,6 +26,6 @@ return [
     '*.pdf', //Ignore all routes with final .pdf
     '*/downloads/*',//Ignore all routes that contain 'downloads'
     'assets/*', // Ignore all routes with the 'assets' prefix
-];
+]
 
 ];
