@@ -23,38 +23,9 @@ return [
     |
     */
     'skip' => [
-        '*.xml',
-        '*.less',
-        '*.pdf',
-        '*.doc',
-        '*.txt',
-        '*.ico',
-        '*.rss',
-        '*.zip',
-        '*.mp3',
-        '*.rar',
-        '*.exe',
-        '*.wmv',
-        '*.doc',
-        '*.avi',
-        '*.ppt',
-        '*.mpg',
-        '*.mpeg',
-        '*.tif',
-        '*.wav',
-        '*.mov',
-        '*.psd',
-        '*.ai',
-        '*.xls',
-        '*.mp4',
-        '*.m4a',
-        '*.swf',
-        '*.dat',
-        '*.dmg',
-        '*.iso',
-        '*.flv',
-        '*.m4v',
-        '*.torrent'
-    ],
+    '*.pdf', //Ignore all routes with final .pdf
+    '*/downloads/*',//Ignore all routes that contain 'downloads'
+    'assets/*', // Ignore all routes with the 'assets' prefix
+];
 
 ];
