@@ -52,7 +52,7 @@ mix.js([
  'public/oldjs/owl.carousel.min.js',
  // 'public/oldjs/datatables.min.js',
  'public/oldjs/slick.min.js',
- 'public/oldjs/nouislider.min.js',
+ // 'public/oldjs/nouislider.min.js',
  'public/oldjs/zabuto_calendar.min.js',
  'public/oldjs/mb5.js',
 ], 'public/js/all.js');
