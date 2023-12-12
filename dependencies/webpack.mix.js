@@ -42,22 +42,5 @@ mix.styles([
 ], 'public/css/all.css');
 
 
-mix.js([
- // 'public/oldjs/popper.min.js',
- // 'public/oldjs/bootstrap.min.js',
- 'public/oldjs/bootstrap-select.min.js',
- 'public/oldjs/map.js',
- 'public/oldjs/product.js',
- 'public/oldjs/owl.carousel.js',
- 'public/oldjs/owl.carousel.min.js',
- // 'public/oldjs/datatables.min.js',
- // 'public/oldjs/slick.min.js',
- // 'public/oldjs/nouislider.min.js',
- 'public/oldjs/zabuto_calendar.min.js',
- 'public/oldjs/mb5.js',
-], 'public/js/all.js');
 
-mix.js([
- 'public/oldjs/popper.min.js',
- 'public/oldjs/bootstrap.min.js',
-], 'public/js/bootstrapAll.js');
+
