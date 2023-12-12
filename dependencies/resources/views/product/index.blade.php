@@ -38,18 +38,22 @@
             </h3>
             <div class="block-options">
                 <div class="block-options-item">
-                
+
                 </div>
                 <div class="block-options-item">
                     <a href="{{route('products.create')}}" class="btn btn-success">Create</a>
                     {{-- <a href="{{route('getExcelProduct')}}" class="btn btn-primary">Import Product Feild</a>
-                 
-                  <a href="{{route('getExcelProductCerti')}}" class="btn btn-primary">Import Certificate By Product</a> 
-  
-                  <a href="{{route('getExcelProCategories')}}" class="btn btn-outline-primary">Import Product Categories</a> --}}
-                  {{-- <a href="{{route('getExcelProCategories')}}" class="btn btn-outline-primary">Import Product status</a> --}}
 
-                       {{-- <a href="{{route('getExcelProTag')}}" class="btn btn-outline-primary">Import Product Tags</a> --}}
+                    <a href="{{route('getExcelProductCerti')}}" class="btn btn-primary">Import Certificate By
+                        Product</a>
+
+                    <a href="{{route('getExcelProCategories')}}" class="btn btn-outline-primary">Import Product
+                        Categories</a> --}}
+                    {{-- <a href="{{route('getExcelProCategories')}}" class="btn btn-outline-primary">Import Product
+                        status</a> --}}
+
+                    {{-- <a href="{{route('getExcelProTag')}}" class="btn btn-outline-primary">Import Product Tags</a>
+                    --}}
 
                     <a href="{{route('getExportProduct')}}" class="btn btn-outline-primary">Export Products</a>
                     <!-- <a href="{{route('getExportProductProperty')}}" class="btn btn-outline-primary">Export Products pros</a> -->
@@ -75,13 +79,19 @@
                     <td class="d-none d-sm-table-cell">{{$item->created_at}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->updated_at}}</td>
                     <td class="text-center">
-                            <a href="{{route('getDocument' ,$item->pro_id)}}" class="btn btn-outline-info">Documents</a>
-                            <a href="{{route('duplicateProduct' ,$item->pro_id)}}" class="btn btn-outline-info">Duplicate</a>
-                            <a href="{{route('videos_images' ,$item->pro_id)}}" class="btn btn-outline-info">Videos & Images</a>
-                          
-                                <a href="{{route('editproduct' ,$item->pro_id)}}" class="btn btn-primary">Edit</a>
-                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->pro_id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
-                       
+                        <a href="{{route('getDocument' ,$item->pro_id)}}"
+                            class="btn btn-outline-info mt-2">Documents</a>
+                        <a href="{{route('duplicateProduct' ,$item->pro_id)}}"
+                            class="btn btn-outline-info mt-2">Duplicate</a>
+                        <a href="{{route('videos_images' ,$item->pro_id)}}" class="btn btn-outline-info mt-2">Videos &
+                            Images</a>
+                        <a href="{{route('optional_models' ,$item->pro_id)}}" class="btn btn-outline-info mt-2">Optional
+                            Models</a>
+
+                        <a href="{{route('editproduct' ,$item->pro_id)}}" class="btn btn-primary mt-2">Edit</a>
+                        <button type="button" class="btn btn-danger mt-2" onclick="ondelelete({{$item->pro_id}});"
+                            data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+
                     </td>
                     </tr>
                     @endforeach
@@ -91,22 +101,23 @@
         </div>
     </div>
 </div>
- <!-- Vertically Centered Block Modal -->
- <div class="modal" id="modal-block-vcenter" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="block block-themed block-transparent mb-0">
-                    <div class="block-header bg-danger">
-                        <h3 class="block-title">!! Warning </h3>
-                        <div class="block-options">
-                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
-                                <i class="fa fa-fw fa-times"></i>
-                            </button>
-                        </div>
+<!-- Vertically Centered Block Modal -->
+<div class="modal" id="modal-block-vcenter" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-danger">
+                    <h3 class="block-title">!! Warning </h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
                     </div>
-                    <form action="{{route('deleteProduct')}}" method="POST" >
-                        {{csrf_field()}}
-                      
+                </div>
+                <form action="{{route('deleteProduct')}}" method="POST">
+                    {{csrf_field()}}
+
                     <div class="block-content">
                         <input type="hidden" name="itemId" id="itemId">
                         <p>Data will be lost?</p>
@@ -115,19 +126,17 @@
                         <button type="button" class="btn  btn-light" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">OK</button>
                     </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- END Vertically Centered Block Modal -->
+</div>
+<!-- END Vertically Centered Block Modal -->
 
 
 @endsection
 @section('js')
 <script>
-
-
     function ondelelete(id){
          $('#itemId').val(id);
 

@@ -307,6 +307,8 @@ table.model-num tbody td:last-child {
     content: "\f278";
 }
 
+
+
 .box-spc:after {
     font-family: 'Material-Design-Iconic-Font';
     content: "\f273";

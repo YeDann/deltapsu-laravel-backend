@@ -615,47 +615,7 @@ class GetDataController extends Controller
          ->with('name', "product");
     }
 
-    public function importProductTag(Request $request){
-
-        if ($request->hasFile('file')) {
-            $extension = File::extension($request->file->getClientOriginalName());
-            if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
-                $path = $request->file->getRealPath();
-                $data = Excel::load($path, function ($reader) {})->get();
-            }
-            
-               if(!empty($data) && $data->count()) {
-                foreach ($data as $key => $value) {
-               
-                    $pro = DB::table('products as p')->where('p.pro_code',trim($value->product_code))->first();
-                    // return dd($value->tags);
-                if(isset($pro) && isset($value->tags) && $value->tags != null){
-                        $arr = [];
-                        $arr = explode(",",$value->tags);
-                    
-                        if(count($arr) > 0){
-                           foreach($arr as $tag){
-                            DB::table('product_tags')->insert(
-                                [
-                                    "tag" => $tag,
-                                    "product_id" => $pro->pro_id,
-                                ]
-                            );
-
-                           }
-                        }
-                    
-                    
-                }
-                   
-                
-              }
-            }
-            return redirect()->route('products.index')->with('flash_message', 'create data Successfully');
-          }
-          return redirect()->route('products.index')->with('error_message', 'No file');
-
-    }
+ 
 
     public function CheckApiMail(Request $request){
         $datamacht = [];
