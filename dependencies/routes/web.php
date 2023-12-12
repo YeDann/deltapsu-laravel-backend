@@ -28,7 +28,7 @@ Route::get('/products/download/{cate_name?}/{modelname?}','FrontendController@do
 Route::get('/products/download/{lang?}/{cate_name?}/{modelname?}','FrontendController@downloadFIleManual')->name('downloadFIleManual');
 Route::group([
      'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ,'HtmlMinifier']
         ], function() {
 
 Route::get('/{page?}','FrontendController@index')->name('index');

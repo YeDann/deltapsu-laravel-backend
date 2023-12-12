@@ -27,6 +27,7 @@ class Kernel extends HttpKernel
     //     \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class,
      //  \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class, // Note: This middleware invokes "RemoveComments::class" before it runs.
     //     \RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
+    
     ];
 
     /**
@@ -73,6 +74,7 @@ class Kernel extends HttpKernel
         'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
         'localeViewPath' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
         'cors' => \App\Http\Middleware\Cors::class, 
+        'HtmlMinifier' => \App\Http\Middleware\HtmlMinifier::class,
     ];
 
     /**
