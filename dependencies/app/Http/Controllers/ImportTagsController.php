@@ -104,31 +104,23 @@ if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
 
    if(!empty($data) && $data->count()) {
     foreach ($data as $key => $value) {
-      // return dd($value);
-    $pro = DB::table('products as p')->where('p.pro_code',trim($value->model))->first();
-    if(isset($pro) && isset($value->optional_model) && $value->optional_model != null){
-        DB::table('product_optional_model')->where('product_id',$pro->pro_id)->delete();
-            $arr = [];
-            $arr = explode(",",$value->optional_model);
-        
-            if(count($arr) > 0){
-               foreach($arr as $optional_model){
-                DB::table('product_optional_model')->insert(
-                    [
-                        "optional_model" => $optional_model,
-                        "product_id" => $pro->pro_id,
-                    ]
-                );
-               }
-            }
+    //  return dd($value);
+ 
+    $optional = DB::table('product_optional_model as op')->where('op.optional_model','LIKE', '%'.trim($value->model).'%')->first();
+    if(isset($optional) && isset($value->description) && $value->description != null){
+         DB::table('product_optional_model')->where('id' ,$optional->id)->update(
+                [
+                    "remark" =>  $value->description,
+                ]
+            );
     }
        
     
   }
 }
-return redirect()->route('getExcelProTag')->with('flash_message', 'create data Successfully');
+return redirect()->route('getExcelProOptional')->with('flash_message', 'create data Successfully');
 }
-return redirect()->route('getExcelProTag')->with('error_message', 'No file');
+return redirect()->route('getExcelProOptional')->with('error_message', 'No file');
 
 }
    

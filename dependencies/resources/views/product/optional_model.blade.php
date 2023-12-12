@@ -55,7 +55,7 @@
           <tr>
             <th class="text-center" style="width: 5%;">No.</th>
             <th class="d-none d-sm-table-cell" style="width: 20%;">Optional Models</th>
-            <th class="d-none d-sm-table-cell" style="width: 20%;">Remark</th>
+            <th class="d-none d-sm-table-cell" style="width: 20%;">Description</th>
             <th style="width: 20%;" class="text-center">Manage</th>
           </tr>
         </thead>
@@ -113,7 +113,7 @@
               <input type="text" class="form-control" id="modelName" name="modelName" placeholder="Enter ...">
             </div>
             <div class="form-group">
-              <label>Remark</label>
+              <label>Description</label>
               <input type="text" class="form-control" id="remark" name="remark" placeholder="Enter ...">
             </div>
 

@@ -665,7 +665,7 @@
                             @endif
 
                             @if(count($tags_pro) > 0)
-                            <h5 class="text-color-delta mt-5">{{$staticContent['Tags']}} </h5>
+                            <h5 class="text-color-delta mt-4">{{$staticContent['Tags']}} </h5>
 
                             @foreach ($tags_pro as $tag)
                             <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}}{{
@@ -1005,7 +1005,7 @@
                         </div>
                         @endif
                         @if(count($tags_pro) > 0)
-                        <h5 class="text-color-delta mt-5">{{$staticContent['Tags']}}</h5>
+                        <h5 class="text-color-delta mt-4">{{$staticContent['Tags']}}</h5>
 
                         @foreach ($tags_pro as $tag)
                         <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}}{{
