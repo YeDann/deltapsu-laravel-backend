@@ -75,12 +75,16 @@ class ImportTagsController extends Controller
             if(count($arr) > 0){
                foreach($arr as $optional_model){
                 if(isset($optional_model) && $optional_model != ''){
-                DB::table('product_optional_model')->insert(
-                    [
-                        "optional_model" => $optional_model,
-                        "product_id" => $pro->pro_id,
-                    ]
-                );
+                  $optional = DB::table('product_optional_model as op')->where('op.optional_model','LIKE', '%'.trim($optional_model).'%')->first();
+                   if(!isset($optional)){
+                    DB::table('product_optional_model')->insert(
+                        [
+                            "optional_model" => trim($optional_model),
+                            "product_id" => $pro->pro_id,
+                        ]
+                    );
+                   }
+                   
                 }
                }
             }
