@@ -256,21 +256,16 @@ $langch = str_replace('_', '-', app()->getLocale());
   @include('layouts.footer')
   <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/all.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
-  {{-- <script type="text/javascript" src="{{asset('/frontend-asset/js/popper.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/popper.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap-select.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/map.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/product.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script> --}}
-  {{--
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
-
-
   <script type="text/javascript" src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script> --}}
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
   <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
   </script>
   <script>

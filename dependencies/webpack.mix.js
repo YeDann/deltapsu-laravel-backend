@@ -43,8 +43,8 @@ mix.styles([
 
 
 mix.js([
- 'public/oldjs/popper.min.js',
- 'public/oldjs/bootstrap.min.js',
+ // 'public/oldjs/popper.min.js',
+ // 'public/oldjs/bootstrap.min.js',
  'public/oldjs/bootstrap-select.min.js',
  'public/oldjs/map.js',
  'public/oldjs/product.js',
@@ -56,3 +56,8 @@ mix.js([
  'public/oldjs/zabuto_calendar.min.js',
  'public/oldjs/mb5.js',
 ], 'public/js/all.js');
+
+mix.js([
+ 'public/oldjs/popper.min.js',
+ 'public/oldjs/bootstrap.min.js',
+], 'public/js/bootstrapAll.js');
