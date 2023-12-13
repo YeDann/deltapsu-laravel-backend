@@ -4784,6 +4784,7 @@ class FrontendController extends Controller
         $lang = App::getLocale();
      
         $partner_id = session('partner_id');
+        return dd($partner_id);
         $partner = DB::table('partner')->where('id',$partner_id)->where('status',1)->first();
 
         $margeting = null;
