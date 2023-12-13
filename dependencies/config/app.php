@@ -178,7 +178,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Sichikawa\LaravelSendgridDriver\SendgridTransportServiceProvider::class,
         NZTim\Mailchimp\MailchimpServiceProvider::class,
-        Devfactory\Minify\Facades\MinifyFacade::class,
+        // Devfactory\Minify\Facades\MinifyFacade::class,
     ],
 
     /*
@@ -233,7 +233,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Mailchimp' => NZTim\Mailchimp\MailchimpFacade::class,
-        'Minify'    => Devfactory\Minify\Facades\MinifyFacade::class,
+        // 'Minify'    => Devfactory\Minify\Facades\MinifyFacade::class,
     ],
 
 ];
