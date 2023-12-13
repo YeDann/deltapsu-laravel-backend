@@ -4820,7 +4820,12 @@ class FrontendController extends Controller
            return response()->file($path);
         }
         else if(isset($sales_kits)){
-            return redirect()->route('loginDocPartner',$doc );
+            if(file_exists($path) && isset($partner_id)){
+                return response()->file($path);
+              }else{
+                return redirect()->route('loginDocPartner',$doc );
+              }                     
+          
         }
         else if(isset($margeting)){
             return response()->file($path);
