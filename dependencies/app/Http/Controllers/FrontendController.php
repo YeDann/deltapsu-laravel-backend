@@ -337,7 +337,7 @@ class FrontendController extends Controller
                 ->select('shp.app_id','app.*' ,'appt.name','shp.se_id' )
                 ->get();
 
-            return  view('front-end.home')
+            return  view('front-end-minify.home')
             ->with('series_has_application',$series_has_application)
             ->with('series',$series)
             ->with('faqbanner',$faqbanner)
