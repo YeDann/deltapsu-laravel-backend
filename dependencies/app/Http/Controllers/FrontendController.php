@@ -4785,7 +4785,6 @@ class FrontendController extends Controller
         $lang = App::getLocale();
      
         $partner_id = session('partner_id');
-        // return dd($partner_id);
         $partner = DB::table('partner')->where('id',$partner_id)->where('status',1)->first();
 
         $margeting = null;
@@ -4819,18 +4818,18 @@ class FrontendController extends Controller
                 ->first();
     
         if(isset($margeting_public)){
-           return response()->file($path);
+           return response()->download($path);
         }
         else if(isset($sales_kits)){
             if(file_exists($path) && isset($partner_id)){
-                return  self::downloadFileByPath($path);
+                return  response()->download($path);
               }else{
                 return redirect()->route('loginDocPartner',$doc );
               }                     
           
         }
         else if(isset($margeting)){
-            return response()->file($path);
+            return response()->download($path);
         }
         else{
             return abort(404);
