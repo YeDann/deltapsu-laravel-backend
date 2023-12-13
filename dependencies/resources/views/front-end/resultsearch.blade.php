@@ -787,7 +787,7 @@
                                 </p>
                             </div>
                             <a
-                                href="{{config('app.url')}}/medias/marketing_resources/{{isset($current->file)? $current->file:""}} ">
+                                href="{{config('app.url')}}/file_doc_2/marketing_resources/{{isset($current->file)? $current->file:""}} ">
                                 <button class="btn-downlode">{{$staticContent['Downloads']}}</button>
                             </a>
                         </div>

@@ -215,14 +215,33 @@ $langch = str_replace('_', '-', app()->getLocale());
 ?>
 
 
-  {{-- <script id="Cookiebot" data-culture="{{$lanngCookie}}" src="https://consent.cookiebot.com/uc.js"
+  <script id="Cookiebot" data-culture="{{$lanngCookie}}" src="https://consent.cookiebot.com/uc.js"
     data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-framework="TCFv2.2" type="text/javascript" async defer>
-  </script> --}}
+  </script>
+  <script id="CookiebotConfiguration" type="application/json" data-cookieconsent="ignore">
+    {
+      "Frameworks": {
+        "IABTCF2": {
+          "AllowedVendors": [2, 6, 8],
+          "AllowedGoogleACVendors": [],
+          "AllowedPurposes": [1, 2],
+          "AllowedSpecialPurposes": [],
+          "AllowedFeatures": [1],
+          "AllowedSpecialFeatures": [1],
+          "VendorRestrictions": [
+            {
+              "VendorId": 2,
+              "DisallowPurposes": [2, 3, 4]
+            }
+          ]
+        }
+      }
+    }
+  </script>
 
   <!-- Fonts -->
   <!-- Styles -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  {{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> --}}
 
 
   <!-- Global site tag (gtag.js) - Google Analytics -->

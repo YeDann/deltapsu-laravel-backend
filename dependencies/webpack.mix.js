@@ -42,5 +42,20 @@ mix.styles([
 ], 'public/css/all.css');
 
 
+mix.scripts([
+ 'public/oldjs/nouislider.js',
+ 'public/oldjs/datatables.js',
+ 'public/oldjs/bootstrap.js',
+ 'public/oldjs/bootstrap-select.min.js',
+ 'public/oldjs/map.js',
+ 'public/oldjs/product.js',
+ 'public/oldjs/owl.carousel.js',
+ 'public/oldjs/owl.carousel.min.js',
+ 'public/oldjs/slick.min.js',
+ 'public/oldjs/zabuto_calendar.min.js',
+ 'public/oldjs/mb5.js',
+], 'public/js/all.js');
+
+
 
 

@@ -358,7 +358,7 @@
             html += '<td class="text-middle-td">'+pro_launch['op_wattage'] +'</td>';
             html += '<td class="text-middle-td">'+pro_launch['phase'] +'</td>';
             html += '<td class="text-middle-td">'+pro_launch['remark'] +'</td>';
-            html += '<td class="text-middle-td"> <a href="{{config('app.url')}}/file_doc/marketing_resources/'+pro_launch['file']+'" download > <div class="btn btn-ft w-100"> {{$staticContent['Downloads']}}</div></td>';
+            html += '<td class="text-middle-td"> <a href="{{config('app.url')}}/file_doc_2/marketing_resources/'+pro_launch['file']+'" download > <div class="btn btn-ft w-100"> {{$staticContent['Downloads']}}</div></td>';
             html += '</tr>';
 
             mobilehtml += '<div class="product-launch-list">';
@@ -381,7 +381,7 @@
             mobilehtml += '<h6 class="text-color-delta">REMARKs</h6>';
             mobilehtml += '<p class="text-one">'+pro_launch['remark'] +'</p>';
             mobilehtml += '</div>';
-            mobilehtml +=  '<a href="{{config('app.url')}}/file_doc/marketing_resources/'+pro_launch['file']+'" download >';
+            mobilehtml +=  '<a href="{{config('app.url')}}/file_doc_2/marketing_resources/'+pro_launch['file']+'" download >';
             mobilehtml += '<div class="btn btn-subscribe mt-2">PRE-LIM DS</div>';
             mobilehtml += ' </a>';
             mobilehtml += ' </div>';
