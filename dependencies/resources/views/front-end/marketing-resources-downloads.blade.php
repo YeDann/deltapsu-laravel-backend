@@ -163,10 +163,16 @@ function getDateformat($date){
                                     <p>{{$staticContent['Uploaded_on']}} {{$date['d'].'-'.$date['m'].'-'.$date['y']}}
                                     </p>
                                 </div>
-                                <a href="{{config('app.url')}}/file_doc_2/marketing_resources/{{$marget->file}}"
+                                {{-- <a href="{{config('app.url')}}/file_doc_2/marketing_resources/{{$marget->file}}"
                                     download="{{$marget->name}}">
                                     <button class="btn-downlode">{{$staticContent['Downloads']}}</button>
-                                </a>
+                                </a> --}}
+                                <form method="POST" action="{{route('partnerLoginDoc_success')}}">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="section_id" value={{session('partner_id')}}>
+                                    <input type="hidden" name="doc" value="{{$marget->file}}">
+                                    <button class=" btn-downlode" type="submit">{{$staticContent['Downloads']}}</button>
+                                </form>
                             </div>
                             @endif
                             @endforeach

@@ -45,8 +45,15 @@
                     <p>{{$staticContent['Uploaded_on']}} {{$item->date_info}}</p>
                     {{-- <p>{{$staticContent['Uploaded_on']}} 13-Mar-2019 | PDF, 4.7 MB</p> --}}
                 </div>
-                <a href="{{route('checkpermission',$item->file)}}" target="_blank"><button
-                        class="btn-downlode ">{{$staticContent['Downloads']}}</button></a>
+                {{-- <a href="{{route('checkpermission',$item->file)}}" target="_blank"><button
+                        class="btn-downlode ">{{$staticContent['Downloads']}}</button></a> --}}
+
+                <form method="POST" action="{{route('partnerLoginDoc_success')}}">
+                    {{csrf_field()}}
+                    <input type="hidden" name="section_id" value={{session('partner_id')}}>
+                    <input type="hidden" name="doc" value={{$item->file}}>
+                    <button class="btn-downlode" type="submit">{{$staticContent['Downloads']}}</button>
+                </form>
             </div>
             @endforeach
 

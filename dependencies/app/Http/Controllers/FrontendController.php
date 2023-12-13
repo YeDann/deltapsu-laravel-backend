@@ -4821,11 +4821,7 @@ class FrontendController extends Controller
            return response()->download($path);
         }
         else if(isset($sales_kits)){
-            if(file_exists($path) && isset($partner_id)){
-                return  response()->download($path);
-              }else{
-                return redirect()->route('loginDocPartner',$doc );
-              }                     
+            return redirect()->route('loginDocPartner',$doc );                 
           
         }
         else if(isset($margeting)){
@@ -4877,6 +4873,79 @@ class FrontendController extends Controller
                             ->first();
                     }
 
+                            $margeting_public = DB::table('marketing_resource as mr')
+                            ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+                            ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
+                            ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
+                            ->where('mrt.local', '=', $lang)
+                            ->where('mrt.file', '=',$doc)
+                            ->whereIn('permar.permission_id', [3])
+                            ->select('mr.*' ,'mrt.*')
+                            ->first();
+                          
+                            if($sales_kits){
+                                   if(file_exists($path)){
+                                    return response()->file($path);
+                                    }else{
+                                        return abort(404);
+                                    }
+                            }else if($margeting){
+                                if(file_exists($path)){
+                                    return response()->file($path);
+                                    }else{
+                                        return abort(404);
+                                }
+                            
+                            }else if($margeting_public){
+                                if(file_exists($path)){
+                                    return response()->file($path);
+                                    }else{
+                                        return abort(404);
+                                }
+                            }
+                            else{
+                                return back()->with('flash_message_eror', 'Permission Not Correct');
+                            }
+    
+                }else{
+                    return back()->with('flash_message_eror', 'Password Not Correct');
+                }  
+            }else{
+                return back()->with('flash_message_eror', 'No user account found in the system.');
+            }
+            return back()->with('flash_message_eror', 'Eror');
+        }
+        public function partnerLoginDoc_success(Request $request ){
+            $doc = $this->validateInput($request->doc,'text',true);
+            $section_id = $request->section_id;
+            if(isset($section_id)){
+                $partner = DB::table('partner')->where('id',$section_id)->where('status',1)->get();
+
+                $path =  base_path('../medias/partner/marketing_resources/').$doc; 
+                    $lang = App::getLocale();
+                    $sales_kits = null;
+                    if($partner[0]->role == 2){
+                        $sales_kits = DB::table('partner_documents as s')
+                        ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
+                        ->where('st.local' ,$lang)
+                        ->where('st.file' ,$doc)
+                        ->select('st.*')
+                        ->first();
+                    }
+               
+                    $margeting = null;
+                 if($partner[0]->role == 2 || $partner[0]->role == 1 ){
+                    $margeting = DB::table('marketing_resource as mr')
+                            ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+                            ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
+                            ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
+                            ->where('mrt.local', '=', $lang)
+                            ->where('mrt.file', '=',$doc)
+                            ->whereIn('permar.permission_id', [1,2])
+                            ->select('mr.*' ,'mrt.*')
+                            ->first();
+                    }
+
                     $margeting_public = DB::table('marketing_resource as mr')
                             ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
                             ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
@@ -4899,38 +4968,22 @@ class FrontendController extends Controller
                                     }else{
                                         return abort(404);
                                 }
+                            
+                            }else if($margeting_public){
+                                if(file_exists($path)){
+                                    return response()->file($path);
+                                    }else{
+                                        return abort(404);
+                                }
                             }
                             else{
-                                return back()->with('flash_message_eror', 'Permission Not Correct');
+                                return abort(401);
                             }
-    
-                }else{
-                    return back()->with('flash_message_eror', 'Password Not Correct');
-                }  
             }else{
-                return back()->with('flash_message_eror', 'No user account found in the system.');
+                return redirect()->route('loginDocPartner',$doc );
             }
-            return back()->with('flash_message_eror', 'Eror');
+     
         }
-       
-       
-        function downloadFileByPath($path)
-            {
-                $file = File::get($path);
-                $etag = md5($file);
-
-                $response = Response::make($file, 200);
-                $response->header('Content-Type', File::mimeType($path));
-                $response->header('Content-Disposition', 'attachment; filename="'.File::name($path).'"');
-                $response->header('ETag', $etag);
-                $response->header('Cache-Control', 'public, max-age=0, must-revalidate');
-
-                if ($response->isNotModified(request())) {
-                    return $response;
-                }
-
-                return $response;
-            }
      
     
 }
