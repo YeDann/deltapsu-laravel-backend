@@ -179,6 +179,8 @@ return [
         Sichikawa\LaravelSendgridDriver\SendgridTransportServiceProvider::class,
         NZTim\Mailchimp\MailchimpServiceProvider::class,
         // Devfactory\Minify\Facades\MinifyFacade::class,
+        HTMLMin\HTMLMin\HTMLMinServiceProvider::class,
+    
     ],
 
     /*
@@ -234,6 +236,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Mailchimp' => NZTim\Mailchimp\MailchimpFacade::class,
         // 'Minify'    => Devfactory\Minify\Facades\MinifyFacade::class,
+        'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class
     ],
 
 ];
