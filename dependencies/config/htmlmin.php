@@ -59,6 +59,7 @@ return [
     'ignore' => [
         'resources/views/mail',
         'resources/views/front-end',
+        'resources/views/product_doc',
     ],
 
 ];
