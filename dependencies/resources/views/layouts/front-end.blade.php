@@ -254,7 +254,20 @@ $langch = str_replace('_', '-', app()->getLocale());
   @include('layouts.header-front')
   @yield('container')
   @include('layouts.footer')
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
+  {!! Minify::javascript(asset('/frontend-asset/js/nouislider.min.js')) !!}
+  {!! Minify::javascript(asset('/frontend-asset/js/datatables.min.js')) !!}
+  {!! Minify::javascript(asset('/frontend-asset/js/popper.min.js')) !!}
+  {!! Minify::javascript(asset('/frontend-asset/js/bootstrap.min.js')) !!}
+  {!! Minify::javascript(asset('/frontend-asset/js/bootstrap-select.min.js')) !!}
+  {!! Minify::javascript(asset('/frontend-asset/js/map.js')) !!}
+  {!! Minify::javascript(asset('/frontend-asset/js/product.js')) !!}
+  {!! Minify::javascript(asset('/frontend-asset/js/owl.carousel.js')) !!}
+  {!! Minify::javascript(asset('/frontend-asset/js/owl.carousel.min.js')) !!}
+  {!! Minify::javascript(asset('/frontend-asset/js/slick.min.js')) !!}
+  {!! Minify::javascript(asset('/frontend-asset/js/zabuto_calendar.min.js')) !!}
+  {!! Minify::javascript(asset('/frontend-asset/js/mb5.js')) !!}
+
+  {{-- <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/popper.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap.min.js')}}"></script>
@@ -265,7 +278,7 @@ $langch = str_replace('_', '-', app()->getLocale());
   <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script> --}}
   <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
   </script>
   <script>
