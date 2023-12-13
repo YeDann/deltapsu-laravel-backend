@@ -28,6 +28,7 @@ use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
 use App\Mail\ExceptionOccured;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 class FrontendController extends Controller
 {
  
@@ -4784,7 +4785,7 @@ class FrontendController extends Controller
         $lang = App::getLocale();
      
         $partner_id = session('partner_id');
-        return dd($partner_id);
+        // return dd($partner_id);
         $partner = DB::table('partner')->where('id',$partner_id)->where('status',1)->first();
 
         $margeting = null;
@@ -4822,7 +4823,7 @@ class FrontendController extends Controller
         }
         else if(isset($sales_kits)){
             if(file_exists($path) && isset($partner_id)){
-                return response()->file($path);
+                return  self::downloadFileByPath($path);
               }else{
                 return redirect()->route('loginDocPartner',$doc );
               }                     
@@ -4914,6 +4915,23 @@ class FrontendController extends Controller
         }
        
        
+        function downloadFileByPath($path)
+            {
+                $file = File::get($path);
+                $etag = md5($file);
+
+                $response = Response::make($file, 200);
+                $response->header('Content-Type', File::mimeType($path));
+                $response->header('Content-Disposition', 'attachment; filename="'.File::name($path).'"');
+                $response->header('ETag', $etag);
+                $response->header('Cache-Control', 'public, max-age=0, must-revalidate');
+
+                if ($response->isNotModified(request())) {
+                    return $response;
+                }
+
+                return $response;
+            }
      
     
 }
