@@ -4825,7 +4825,7 @@ class FrontendController extends Controller
           
         }
         else if(isset($margeting)){
-            return response()->download($path);
+            return redirect()->route('loginDocPartner',$doc );  
         }
         else{
             return abort(404);
