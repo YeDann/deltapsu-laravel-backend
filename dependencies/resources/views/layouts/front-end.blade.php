@@ -13,47 +13,41 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   @yield('meta')
   <!-- Bootstrap CSS -->
+
+  <link rel="stylesheet" type="text/css" type="text/css" href="{{asset('/frontend-asset/css/font.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/header-front.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/container.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/home.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/news.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/login.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/details.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/result-page.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product-comparison.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/vanilla-calendar.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/fontello.css')}}" />
+
+
+
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.theme.default.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.carousel.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/font-awesome.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/datatables.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/slick.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello2.css')}}" media="screen" />
+
   {{--
-  <link rel="stylesheet" rel="preload" type="text/css" href="{{asset('/frontend-asset/min/font.min.css')}}"
-    media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/header-front.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/container.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/home.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/news.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/login.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/details.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/result-page.min.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/product-comparison.min.css')}}"
-    media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}"
-    media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/fontello.min.css')}}" media="screen" /> --}}
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all.css')}}"> --}}
   <link rel="stylesheet" type="text/css"
     href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" />
 
   <link rel="stylesheet" type="text/css"
     href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}">
 
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all.css')}}">
-
-
-  {{--
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/owl.theme.default.min.css')}}"
-    media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/product.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/font-awesome.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/datatables.min.css')}}" media="screen" />
-
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/slick.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/jquery.datepicker.min.css')}}"
-    media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/zabuto_calendar.min.css')}}"
-    media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/min/fontello2.min.css')}}" media="screen" />
-  --}}
   @yield('css')
   <style>
     /* select */
@@ -218,7 +212,7 @@ $langch = str_replace('_', '-', app()->getLocale());
   <script id="Cookiebot" data-culture="{{$lanngCookie}}" src="https://consent.cookiebot.com/uc.js"
     data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-framework="TCFv2.2" type="text/javascript" async defer>
   </script>
-  <script id="CookiebotConfiguration" type="application/json" data-cookieconsent="ignore">
+  <script id="CookiebotConfiguration" type="application/json" data-cookieconsent="ignore" async defer>
     {
       "Frameworks": {
         "IABTCF2": {
@@ -245,8 +239,8 @@ $langch = str_replace('_', '-', app()->getLocale());
 
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-67607418-1"></script>
-  <script>
+  <script async defer src="https://www.googletagmanager.com/gtag/js?id=UA-67607418-1"></script>
+  <script async defer>
     window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -254,7 +248,7 @@ $langch = str_replace('_', '-', app()->getLocale());
   </script>
 
   <!-- Google Tag Manager -->
-  <script>
+  <script async defer>
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
