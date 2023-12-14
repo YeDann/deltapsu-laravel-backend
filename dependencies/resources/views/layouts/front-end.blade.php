@@ -24,7 +24,7 @@
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/details.css')}}" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/result-page.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product-comparison.css')}}" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello.css')}}" />
 
 
@@ -35,7 +35,7 @@
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/font-awesome.css')}}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/datatables.css')}}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/slick.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello2.css')}}" media="screen" />
