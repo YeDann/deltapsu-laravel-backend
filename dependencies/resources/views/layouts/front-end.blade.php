@@ -24,8 +24,8 @@
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/details.css')}}" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/result-page.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product-comparison.css')}}" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/vanilla-calendar.css')}}" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/fontello.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello.css')}}" />
 
 
 
