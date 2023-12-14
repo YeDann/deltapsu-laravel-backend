@@ -14,8 +14,9 @@
   @yield('meta')
   <!-- Bootstrap CSS -->
 
+  {{--
   <link rel="stylesheet" rel="preload" type="text/css" type="text/css" type="text/css"
-    href="{{asset('/frontend-asset/css/font.css')}}" />
+    href="{{asset('/frontend-asset/css/font.css')}}" /> --}}
   {{--
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.css')}}" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/header-front.css')}}" />
