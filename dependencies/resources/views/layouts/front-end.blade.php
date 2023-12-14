@@ -14,7 +14,9 @@
   @yield('meta')
   <!-- Bootstrap CSS -->
 
-  <link rel="stylesheet" type="text/css" type="text/css" href="{{asset('/frontend-asset/css/font.css')}}" />
+  <link rel="stylesheet" rel="preload" type="text/css" type="text/css" type="text/css"
+    href="{{asset('/frontend-asset/css/font.css')}}" />
+  {{--
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.css')}}" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/header-front.css')}}" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/container.css')}}" />
@@ -38,7 +40,37 @@
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello2.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello2.css')}}" media="screen" /> --}}
+
+
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/header-front.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/container.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/home.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/news.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/login.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/details.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/result-page.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product-comparison.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css"
+    href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontNews.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.theme.default.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/font-awesome.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/datatables.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css"
+    href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}" media="screen">
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/slick.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" media="screen" />
 
   {{--
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all.css')}}"> --}}
