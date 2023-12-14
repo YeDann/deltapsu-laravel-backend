@@ -43,6 +43,7 @@
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello2.css')}}" media="screen" /> --}}
 
 
+  {{--
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/header-front.css')}}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/container.css')}}" media="screen" />
@@ -71,9 +72,10 @@
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" media="screen" />
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" media="screen" />
+  --}}
 
-  {{--
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all.css')}}"> --}}
+
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all.css')}}">
   <link rel="stylesheet" type="text/css"
     href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" />
 
