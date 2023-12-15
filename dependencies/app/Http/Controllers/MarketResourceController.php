@@ -80,7 +80,7 @@ class MarketResourceController extends Controller
             if ($request->hasFile("file")) {
                 $imageFile = $request->file("file");
                 $imageName = preg_replace('/\s+/','',self::fileformat($imageFile));
-                $imageFile->move(base_path('/../medias/partner/marketing_resources'),$imageName);
+                $imageFile->move(base_path('/../uploads_delta/partner/marketing_resources'),$imageName);
             }
 
             $id = DB::table('marketing_resource')->insertGetID(
@@ -164,10 +164,10 @@ class MarketResourceController extends Controller
                $emptyornot = isset($loopfile[$lang]);
                if($emptyornot){
                         $fileName[$lang] = preg_replace('/\s+/', '', self::fileformat($loopfile[$lang]));
-                        $loopfile[$lang]->move(base_path('/../medias/partner/marketing_resources'),$fileName[$lang]);
+                        $loopfile[$lang]->move(base_path('/../uploads_delta/partner/marketing_resources'),$fileName[$lang]);
                         $arrayfileName[$lang] = $fileName[$lang];
                         if(isset($oldfile[$lang])){
-                            $file_pointer = base_path('/../medias/partner/marketing_resources/').$oldfile[$lang];
+                            $file_pointer = base_path('/../uploads_delta/partner/marketing_resources/').$oldfile[$lang];
                             if (file_exists($file_pointer)) {
                                 unlink($file_pointer);
                             }
@@ -241,7 +241,7 @@ class MarketResourceController extends Controller
         ->select('mr.*' ,'mrt.*')
         ->get();
      foreach($margeting  as $mar){
-        $file_pointer2 = base_path('/../medias/partner/marketing_resources/').$mar->file;
+        $file_pointer2 = base_path('/../uploads_delta/partner/marketing_resources/').$mar->file;
         if (file_exists($file_pointer2) && isset($mar->file)) {
             unlink($file_pointer2);
         }

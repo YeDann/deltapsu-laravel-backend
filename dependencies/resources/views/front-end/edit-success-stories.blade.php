@@ -345,7 +345,8 @@
             <div class="row mb-4">
                 @foreach ($image_story as $item)
                 <div class="col-2" id="oldimg{{$item->id}}">
-                    <img class="w-100" src="{{config('app.url')}}/medias/partner/marketing_resources/{{$item->image}}">
+                    <img class="w-100"
+                        src="{{config('app.url')}}/uploads_delta/partner/marketing_resources/{{$item->image}}">
                     <button class="delete_img" type="button" onclick="deleteImage({{$item->id}})">X</button>
                 </div>
 

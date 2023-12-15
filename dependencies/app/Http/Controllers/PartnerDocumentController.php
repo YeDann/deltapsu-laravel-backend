@@ -77,7 +77,7 @@ class PartnerDocumentController extends Controller
          $typeName = $request->typeName;
          if(isset($filesale)){
             $fileName = preg_replace('/\s+/', '', uniqid().$filesale->getClientOriginalName());
-            $filesale->move(base_path('/../medias/partner/marketing_resources'),$fileName);
+            $filesale->move(base_path('/../uploads_delta/partner/marketing_resources'),$fileName);
             
          }else{
             $fileName = '';
@@ -114,10 +114,10 @@ class PartnerDocumentController extends Controller
     
                 if($emptyornot){
                          $fileName[$lang] = preg_replace('/\s+/', '', uniqid().$loopfile[$lang]->getClientOriginalName());
-                         $loopfile[$lang]->move(base_path('/../medias/partner/marketing_resources'),$fileName[$lang]);
+                         $loopfile[$lang]->move(base_path('/../uploads_delta/partner/marketing_resources'),$fileName[$lang]);
                          $arrayfileName[$lang] = $fileName[$lang];
                          if(isset($oldfile[$lang])){
-                            $file_pointer = base_path('/../medias/partner/marketing_resources/').$oldfile[$lang];
+                            $file_pointer = base_path('/../uploads_delta/partner/marketing_resources/').$oldfile[$lang];
                             if (file_exists($file_pointer)) {
                                 unlink($file_pointer);
                             }

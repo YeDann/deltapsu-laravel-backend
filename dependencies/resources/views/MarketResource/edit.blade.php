@@ -85,7 +85,7 @@
                                     <div class="form-group">
                                         <label for="example-select"> Old File</label>
                                         <a
-                                            href="{{config('app.url')}}/medias/partner/marketing_resources/{{isset($current->file) ? $current->file :''}}">{{isset($current->file)
+                                            href="{{config('app.url')}}/uploads_delta/partner/marketing_resources/{{isset($current->file) ? $current->file :''}}">{{isset($current->file)
                                             ? $current->file :''}}</a>
 
                                         @if(isset($current->file))
