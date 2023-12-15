@@ -313,6 +313,14 @@ class NewsController extends Controller
                         $fileName[$lang] = preg_replace('/\s+/', '', uniqid().$loopfile[$lang]->getClientOriginalName());
                         $loopfile[$lang]->move(base_path('/../uploads_delta'),$fileName[$lang]);
                         $arrayfileName[$lang] = $fileName[$lang];
+                
+                        if(isset($oldfile[$lang])){
+                            $file_pointer = base_path('/../uploads_delta/').$oldfile[$lang];
+                            if (file_exists($file_pointer)) {
+                                unlink($file_pointer);
+                            }
+                        }
+                        
                }else{
                  $arrayfileName[$lang] = $oldfile[$lang];
                }
@@ -402,7 +410,7 @@ class NewsController extends Controller
     
         foreach($con_trans  as $cot){
             if($cot->file != null && $cot->file != '' ){
-                $file_pointer = base_path('/../uploads_delta').$cot->file;
+                $file_pointer = base_path('/../uploads_delta/').$cot->file;
                 if (file_exists($file_pointer) && isset($cot->file)) {
                     unlink($file_pointer);
                 }
@@ -534,7 +542,7 @@ class NewsController extends Controller
 
            foreach($con_trans  as $cot){
             if($cot->file != null && $cot->file != '' ){
-               $file_pointer = base_path('/../uploads_delta').$cot->file;
+               $file_pointer = base_path('/../uploads_delta/').$cot->file;
                if (file_exists($file_pointer) && isset($cot->file)) {
                    unlink($file_pointer);
                }

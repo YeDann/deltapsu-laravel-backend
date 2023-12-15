@@ -622,10 +622,17 @@ class DucumentController extends Controller
            foreach($loop as $lang){
                $emptyornot = isset($loopfile[$lang]);
                if($emptyornot){
-                $file_pointer = base_path('/../upload/product_files').$oldfile[$lang];
+               
                         $fileName[$lang] = preg_replace('/\s+/', '', self::fileformat($loopfile[$lang]));
                         $loopfile[$lang]->move(base_path('/../upload/product_files'),$fileName[$lang]);
                         $arrayfileName[$lang] = $fileName[$lang];
+
+                        if(isset($oldfile[$lang])){
+                            $file_pointer = base_path('/../upload/product_files/').$oldfile[$lang];
+                            if (file_exists($file_pointer)) {
+                                unlink($file_pointer);
+                            }
+                        }
                }else{
                 $arrayfileName[$lang] = $oldfile[$lang];
                }

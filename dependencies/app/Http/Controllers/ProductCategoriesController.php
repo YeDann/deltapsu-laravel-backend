@@ -375,6 +375,13 @@ class ProductCategoriesController extends Controller
                     $fileName[$lang] = preg_replace('/\s+/', '', self::fileformat($loopfile[$lang]));
                     $loopfile[$lang]->move(base_path('/../medias/categories'),$fileName[$lang]);
                     $arrayfileName[$lang] = $fileName[$lang];
+
+                    if(isset($oldfile[$lang])){
+                            $file_pointer = base_path('/../medias/categories/').$oldfile[$lang];
+                            if (file_exists($file_pointer)) {
+                                unlink($file_pointer);
+                            }
+                        }
                }else{
                 $arrayfileName[$lang] = $oldfile[$lang];
                }

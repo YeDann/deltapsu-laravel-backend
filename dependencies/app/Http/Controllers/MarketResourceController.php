@@ -166,6 +166,12 @@ class MarketResourceController extends Controller
                         $fileName[$lang] = preg_replace('/\s+/', '', self::fileformat($loopfile[$lang]));
                         $loopfile[$lang]->move(base_path('/../medias/partner/marketing_resources'),$fileName[$lang]);
                         $arrayfileName[$lang] = $fileName[$lang];
+                        if(isset($oldfile[$lang])){
+                            $file_pointer = base_path('/../medias/partner/marketing_resources/').$oldfile[$lang];
+                            if (file_exists($file_pointer)) {
+                                unlink($file_pointer);
+                            }
+                        }
                }else{
                  $arrayfileName[$lang] = $oldfile[$lang];
                }
@@ -235,7 +241,7 @@ class MarketResourceController extends Controller
         ->select('mr.*' ,'mrt.*')
         ->get();
      foreach($margeting  as $mar){
-        $file_pointer2 = base_path('/../uploads_delta').$mar->file;
+        $file_pointer2 = base_path('/../medias/partner/marketing_resources/').$mar->file;
         if (file_exists($file_pointer2) && isset($mar->file)) {
             unlink($file_pointer2);
         }
