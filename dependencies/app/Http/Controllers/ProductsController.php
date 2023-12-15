@@ -574,6 +574,14 @@ public function update(Request $request){
                     );
                 }
             }
+            $optional_old = DB::table('product_optional_model as op')
+                ->where('op.product_id',$pro_id)
+                ->get();
+            foreach ($optional_old as $value) {
+                if(!in_array($value->optional_model,$optional_models)){
+                    DB::table('product_optional_model')->where('id',$value->id)->delete();
+                }
+            }
         
             if(isset($optional_models)){
       
