@@ -252,13 +252,13 @@ $langch = str_replace('_', '-', app()->getLocale());
 
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async defer src="https://www.googletagmanager.com/gtag/js?id=UA-67607418-1"></script>
+  {{-- <script async defer src="https://www.googletagmanager.com/gtag/js?id=UA-67607418-1"></script>
   <script async defer>
     window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-67607418-1');
-  </script>
+  </script> --}}
 
   <!-- Google Tag Manager -->
   <script async defer>
