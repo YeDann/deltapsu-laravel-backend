@@ -66,6 +66,11 @@ class ProductVideoImageController extends Controller
             $imageName = uniqid().$imageFile->getClientOriginalName();
             $imageNameSpace =  preg_replace('/\s+/', '', $imageName);
             $imageFile->move(base_path('/../uploads_delta'), preg_replace('/\s+/', '', $imageName));
+
+            $file_pointer = base_path('/../uploads_delta/').$oldImage;
+            if (file_exists($file_pointer) && $oldImage != null ) {
+                unlink($file_pointer);
+            }
         }else{
             if($oldImage != null){
                 $imageNameSpace = $oldImage;

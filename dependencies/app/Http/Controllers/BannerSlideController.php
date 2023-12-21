@@ -92,7 +92,11 @@ class BannerSlideController extends Controller
                     $fileName = preg_replace('/\s+/', '', uniqid().$arrayfile[$value]->getClientOriginalName());
                     $arrayfile[$value]->move(base_path('/../medias/banners'),$fileName);
                     $arrayfileName[$value] = $fileName;
-                
+
+                    $file_pointer = base_path('/../medias/banners/').$oldfile[$value];
+                    if (file_exists($file_pointer) && $oldfile[$value] != null ) {
+                        unlink($file_pointer);
+                    }
               }else{
                 $arrayfileName[$value] = $oldfile[$value];     
               } 

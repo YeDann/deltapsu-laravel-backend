@@ -496,6 +496,7 @@ public function update(Request $request){
     $relatePros  = $request->relatePro;
     $pro_categories = $request->pro_categories;
     $productfieldNumbers = array_unique($inputfiledNum);
+    $oldFile = $request->oldFile;
     $validate = Validator::make($request->all(), [
         'productCode' => 'required',
     ]);
@@ -507,7 +508,13 @@ public function update(Request $request){
             $thumbnailImage = $request->file('thumbnail');
             $thumbnailName = uniqid() . "." . $thumbnailImage->getClientOriginalExtension();
             $thumbnailImage->move(base_path('/../upload/thumbs/'), preg_replace('/\s+/', '', $thumbnailName));
-           DB::table('products')->where('pro_id',$pro_id)->update(
+             
+            $file_pointer = base_path('/../upload/thumbs/').$oldFile;
+            if (file_exists($file_pointer) && $oldFile != null ) {
+                unlink($file_pointer);
+            }
+
+            DB::table('products')->where('pro_id',$pro_id)->update(
             [
                 'picture' => preg_replace('/\s+/', '', $thumbnailName),
                 'pro_code'=>$request->productCode,

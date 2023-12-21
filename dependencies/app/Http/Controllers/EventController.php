@@ -258,6 +258,11 @@ class EventController extends Controller
             $imageFile = $request->file("thumb");
             $imageName = uniqid().$imageFile->getClientOriginalName();
             $imageFile->move(base_path('/../uploads_delta'), preg_replace('/\s+/', '', $imageName));
+
+            $file_pointer = base_path('/../uploads_delta/').$oldfilethumb;
+            if (file_exists($file_pointer) && $oldfilethumb != null ) {
+                unlink($file_pointer);
+            }
         }
         $id = DB::table('contents')->where('id',$eventId)->update(
             [
