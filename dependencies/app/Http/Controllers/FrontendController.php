@@ -4958,14 +4958,14 @@ class FrontendController extends Controller
                           
                             if($sales_kits){
                                    if(file_exists($path)){
-                                    ob_end_clean();
+                                    // ob_end_clean();
                                     return response()->file($path);
                                     }else{
                                         return abort(404);
                                     }
                             }else if($margeting){
                                 if(file_exists($path)){
-                                    ob_end_clean();
+                                    // ob_end_clean();
                                     return response()->file($path);
                                     }else{
                                         return abort(404);
@@ -4973,7 +4973,7 @@ class FrontendController extends Controller
                             
                             }else if($margeting_public){
                                 if(file_exists($path)){
-                                    ob_end_clean();
+                                    // ob_end_clean();
                                     return response()->file($path);
                                     }else{
                                         return abort(404);
