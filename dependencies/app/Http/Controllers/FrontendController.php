@@ -4829,9 +4829,7 @@ class FrontendController extends Controller
         }
         else{
             return abort(404);
-        }else{
-            return redirect()->route('loginDocPartner',$doc );  
-        } 
+        }
 
       }
 
