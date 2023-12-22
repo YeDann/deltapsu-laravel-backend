@@ -4817,20 +4817,21 @@ class FrontendController extends Controller
                 ->select('mr.*' ,'mrt.*')
                 ->first();
     
-        // if(isset($margeting_public)){
-        //    return response()->download($path);
-        // }
-        // else if(isset($sales_kits)){
-        //     return redirect()->route('loginDocPartner',$doc );                 
+        if(isset($margeting_public)){
+           return response()->download($path);
+        }
+        else if(isset($sales_kits)){
+            return redirect()->route('loginDocPartner',$doc );                 
           
-        // }
-        // else if(isset($margeting)){
-        //     return redirect()->route('loginDocPartner',$doc );  
-        // }
-        // else{
-        //     return abort(404);
-        // }
-        return redirect()->route('loginDocPartner',$doc );  
+        }
+        else if(isset($margeting)){
+            return redirect()->route('loginDocPartner',$doc );  
+        }
+        else{
+            return abort(404);
+        }else{
+            return redirect()->route('loginDocPartner',$doc );  
+        } 
 
       }
 
