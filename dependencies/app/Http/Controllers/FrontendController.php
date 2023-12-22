@@ -4885,20 +4885,20 @@ class FrontendController extends Controller
                           
                             if($sales_kits){
                                    if(file_exists($path)){
-                                    return response()->file($path);
+                                    return response()->download($path);
                                     }else{
                                         return abort(404);
                                     }
                             }else if($margeting){
                                 if(file_exists($path)){
-                                    return response()->file($path);
+                                    return response()->download($path);
                                     }else{
                                         return abort(404);
                                 }
                             
                             }else if($margeting_public){
                                 if(file_exists($path)){
-                                    return response()->file($path);
+                                    return response()->download($path);
                                     }else{
                                         return abort(404);
                                 }
