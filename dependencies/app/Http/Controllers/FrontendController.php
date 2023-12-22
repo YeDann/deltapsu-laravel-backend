@@ -4794,6 +4794,7 @@ class FrontendController extends Controller
             ->where('st.file' ,$doc)
             ->select('st.*')
             ->first();
+      
     
         if(isset($partner) && $partner->role == 2 || isset($partner) && $partner->role == 1 ){
          $margeting = DB::table('marketing_resource as mr')
@@ -4821,8 +4822,7 @@ class FrontendController extends Controller
            return response()->download($path);
         }
         else if(isset($sales_kits)){
-            return redirect()->route('loginDocPartner',$doc );                 
-          
+            return redirect()->route('loginDocPartner',$doc );
         }
         else if(isset($margeting)){
             return redirect()->route('loginDocPartner',$doc );  

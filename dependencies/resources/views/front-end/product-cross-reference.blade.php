@@ -57,8 +57,15 @@
                     <h5>{{$item->name}}</h5>
                     <p>{{$staticContent['Uploaded_on']}} {{$item->date_info}}</p>
                 </div>
-                <a href="{{config('app.url')}}/file_doc_2/marketing_resources/{{$item->file}}" download=""><button
-                        class="btn-downlode ">{{$staticContent['Downloads']}}</button></a>
+                {{-- <a href="{{config('app.url')}}/file_doc_2/marketing_resources/{{$item->file}}" download=""><button
+                        class="btn-downlode ">{{$staticContent['Downloads']}}</button></a> --}}
+
+                <form method="POST" action="{{route('partnerLoginDoc_success')}}">
+                    {{csrf_field()}}
+                    <input type="hidden" name="section_id" value={{session('partner_id')}}>
+                    <input type="hidden" name="doc" value={{$item->file}}>
+                    <button class="btn-downlode" type="submit">{{$staticContent['Downloads']}}</button>
+                </form>
             </div>
             @endforeach
 
