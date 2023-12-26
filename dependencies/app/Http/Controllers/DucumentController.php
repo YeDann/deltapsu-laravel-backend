@@ -619,7 +619,7 @@ class DucumentController extends Controller
     private function UpdateOldfile($loopfile ,$loop ,$oldfile){
         // return dd($oldfile);
         $arrayfileName = [];
-           return dd($loopfile)
+           return dd($loopfile);
            foreach($loop as $lang){
                $emptyornot = isset($loopfile[$lang]);
                if($emptyornot){
