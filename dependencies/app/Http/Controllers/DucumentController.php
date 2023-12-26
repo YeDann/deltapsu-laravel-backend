@@ -627,12 +627,12 @@ class DucumentController extends Controller
                         $loopfile[$lang]->move(base_path('/../upload/product_files'),$fileName[$lang]);
                         $arrayfileName[$lang] = $fileName[$lang];
 
-                        if(isset($oldfile[$lang])){
-                            $file_pointer = base_path('/../upload/product_files/').$oldfile[$lang];
-                            if (file_exists($file_pointer)) {
-                                unlink($file_pointer);
-                            }
-                        }
+                        // if(isset($oldfile[$lang])){
+                        //     $file_pointer = base_path('/../upload/product_files/').$oldfile[$lang];
+                        //     if (file_exists($file_pointer)) {
+                        //         unlink($file_pointer);
+                        //     }
+                        // }
                }else{
                 $arrayfileName[$lang] = $oldfile[$lang];
                }
