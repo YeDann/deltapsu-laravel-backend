@@ -1187,12 +1187,13 @@ class FrontendController extends Controller
         if(isset($_GET['optional_model'])){
             $optional_model = $this->validateInput($_GET['optional_model'] ,'text',true);
                 $optional_model_code  = str_replace("@", "/", $optional_model);
+                $catename_new  = str_replace("@", "/", $catename);
                 $check_optional = DB::table('products as p')
                 ->where('p.pro_code',$optional_model_code)
                 ->where('p.enable_pro',1)
                 ->first();
               if($check_optional){
-                return redirect()->route('productsDetailsByType',[$catename,$optional_model_code] );
+                return redirect()->route('productsDetailsByType',[$catename_new,$optional_model_code] );
               }
 
         }
@@ -1241,7 +1242,8 @@ class FrontendController extends Controller
         
         }
         else if($check_2){
-            return redirect()->route('productsDetailsByType',[$catename,$check_2->pro_code] );
+            $pro_code_n  = str_replace("@", "/", $check_2->pro_code);
+            return redirect()->route('productsDetailsByType',[$catename,$pro_code_n] );
         }
         else{
  
