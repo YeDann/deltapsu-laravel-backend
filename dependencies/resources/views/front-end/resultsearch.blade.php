@@ -967,6 +967,8 @@
     }
     function viewOptionalModel(key , cate , product_code){
             var newkey = key.replace(/[/]/g,'@');
+             product_code = key.replace(/[/]/g,'@');
+             cate = key.replace(/[/]/g,'@');
               event.preventDefault();
               window.location = '{{route('productsDetailsByType')}}/'+cate+'/'+ product_code +'?optional_model='+newkey;
     }
