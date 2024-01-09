@@ -1243,7 +1243,8 @@ class FrontendController extends Controller
         }
         else if($check_2){
             $pro_code_n  = str_replace("/", "@",$check_2->pro_code);
-            return redirect()->route('productsDetailsByType',[$catename,$pro_code_n]);
+            $optional_model_n  = str_replace("/", "@",$optional_model);
+            return redirect()->route('productsDetailsByType',[$catename,$pro_code_n ,"optional_model" => $optional_model_n]);
         }
         else{
  
