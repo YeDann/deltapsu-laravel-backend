@@ -52,7 +52,7 @@
                         <p class="text-muted">
                             Drag and drop sections for your file uploads
                         </p>
-                        <p style="color:red"> *accept file type .png .jpeg
+                        <p style="color:red"> *accept file type .png .jpeg .webp
                         <p>
                         <p style="color:red"> *max file 2 MB
                         <p>

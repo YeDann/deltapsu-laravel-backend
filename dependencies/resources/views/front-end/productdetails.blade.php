@@ -287,12 +287,12 @@
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb-ative" aria-current="page">
                         <a
-                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['cate_name']) ,'pro_code' => $product[0]['pro_code']])}}">{{$product[0]['pro_code']}}</a>
+                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['cate_name']) ,'pro_code' => setTextpro($product[0]['pro_code']) ])}}">{{$product[0]['pro_code']}}</a>
                     </li>
                     @if($optional_model)
                     <li class="breadcrumb-item active text-breadcrumb-ative" aria-current="page">
                         <a
-                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['cate_name']) ,'pro_code' => $product[0]['pro_code']])}}?optional_model={{$optional_model}}">{{$optional_model}}</a>
+                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['cate_name']) ,'pro_code' => setTextpro($product[0]['pro_code'])])}}?optional_model={{setTextpro($optional_model)}}">{{$optional_model}}</a>
                     </li>
                     @endif
                 </ol>
@@ -322,12 +322,12 @@
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb-ative" aria-current="page">
                         <a
-                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['cate_name']) ,'pro_code' => $product[0]['pro_code']])}}">{{$product[0]['pro_code']}}</a>
+                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['cate_name']) ,'pro_code' => setTextpro($product[0]['pro_code'])])}}">{{$product[0]['pro_code']}}</a>
                     </li>
                     @if($optional_model)
                     <li class="breadcrumb-item active text-breadcrumb-ative" aria-current="page">
                         <a
-                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['cate_name']) ,'pro_code' => $product[0]['pro_code']])}}?optional_model={{$optional_model}}">{{$optional_model}}</a>
+                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['cate_name']) ,'pro_code' => setTextpro($product[0]['pro_code'])])}}?optional_model={{$optional_model}}">{{$optional_model}}</a>
                     </li>
                     @endif
                 </ol>

@@ -967,8 +967,10 @@
     }
     function viewOptionalModel(key , cate , product_code){
             var newkey = key.replace(/[/]/g,'@');
+            var  new_product_code = product_code.replace(/[/]/g,'@');
+            var new_cate = cate.replace(/[/]/g,'@');
               event.preventDefault();
-              window.location = '{{route('productsDetailsByType')}}/'+cate+'/'+ product_code +'?optional_model='+newkey;
+              window.location = '{{route('productsDetailsByType')}}/'+new_cate+'/'+ new_product_code +'?optional_model='+newkey;
     }
 </script>
 <script>
