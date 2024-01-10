@@ -1,15 +1,7 @@
 <!DOCTYPE html>
-<?php
-$lanngCookie = "en";
-$langch = str_replace('_', '-', app()->getLocale());
- if($langch == 'jp'){
-  $lanngCookie = "ja";
- }else{
-  $lanngCookie = $langch;
- }
-?>
 
-<html lang="{{$lanngCookie}}">
+
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
   <meta charset="utf-8">
