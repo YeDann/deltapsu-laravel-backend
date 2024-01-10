@@ -1,5 +1,15 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<?php
+$lanngCookie = "en";
+$langch = str_replace('_', '-', app()->getLocale());
+ if($langch == 'jp'){
+  $lanngCookie = "ja";
+ }else{
+  $lanngCookie = $langch;
+ }
+?>
+
+<html lang="{{$lanngCookie}}">
 
 <head>
   <meta charset="utf-8">
@@ -203,48 +213,10 @@
     }
   </style>
 
-  <?php
-$lanngCookie = "EN";
-$langch = str_replace('_', '-', app()->getLocale());
-
- if($langch == 'cn'){
-  $lanngCookie = "ZH";
- }else if($langch == 'tw'){
-  $lanngCookie = "ZH-HANT";
- }else if($langch == 'de'){
-  $lanngCookie = "DE";
- }else if($langch == 'ru'){
-  $lanngCookie = "RU";
- }else if($langch == 'jp'){
-  $lanngCookie = "JA";
- }
-
-?>
-
-
-  <script id="Cookiebot" data-culture="{{$lanngCookie}}" src="https://consent.cookiebot.com/uc.js"
-    data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-framework="TCFv2.2" type="text/javascript" async defer>
-  </script>
-  <script id="CookiebotConfiguration" type="application/json" data-cookieconsent="ignore" async defer>
-    {
-      "Frameworks": {
-        "IABTCF2": {
-          "AllowedVendors": [2, 6, 8],
-          "AllowedGoogleACVendors": [],
-          "AllowedPurposes": [1, 2],
-          "AllowedSpecialPurposes": [],
-          "AllowedFeatures": [1],
-          "AllowedSpecialFeatures": [1],
-          "VendorRestrictions": [
-            {
-              "VendorId": 2,
-              "DisallowPurposes": [2, 3, 4]
-            }
-          ]
-        }
-      }
-    }
-  </script>
+  <!-- Cookie Consent by https://www.cookiewow.com -->
+  <script type="text/javascript" src="https://cookiecdn.com/cwc.js"></script>
+  <script id="cookieWow" type="text/javascript" src="https://cookiecdn.com/configs/isdrQgNbPRiipXK3h8oR8R1N"
+    data-cwcid="isdrQgNbPRiipXK3h8oR8R1N"></script>
 
   <!-- Fonts -->
   <!-- Styles -->
