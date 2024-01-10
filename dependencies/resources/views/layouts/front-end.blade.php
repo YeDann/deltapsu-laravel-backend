@@ -335,6 +335,7 @@
        });
     function setLangCookie(){
         var lang = "{{ str_replace('_', '-', app()->getLocale()) }}";
+        console.log(lang,'lang')
         if(lang == "jp"){
           window.cwcCookieBanner.setLang('ja')
         }
