@@ -329,6 +329,17 @@
   <!-- End Google Tag Manager (noscript) -->
 
   @yield('js')
+  <script>
+    $(document).ready(function() {
+      setLangCookie();
+       });
+    function setLangCookie(){
+        var lang = "{{ str_replace('_', '-', app()->getLocale()) }}";
+        if(lang == "jp"){
+          window.cwcCookieBanner.setLang('ja')
+        }
+      } 
+  </script>
 
   <script>
     // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex

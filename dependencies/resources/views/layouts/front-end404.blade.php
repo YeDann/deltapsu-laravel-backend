@@ -1,172 +1,188 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=1.0,maximum-scale=1,user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
-    <link rel="shortcut icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
-    <link rel="icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
-    <!-- CSRF Token -->
-    <meta name="robots" content="noindex">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}"  media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/header-front.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/container.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/home.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/news.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/login.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/details.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/result-page.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product-comparison.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontNews.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.theme.default.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/font-awesome.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/datatables.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}" media="screen">
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/slick.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}"  media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" media="screen" />
-  
+  <meta charset="utf-8">
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1, minimum-scale=1.0,maximum-scale=1,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
+  <link rel="shortcut icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
+  <link rel="icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
+  <!-- CSRF Token -->
+  <meta name="robots" content="noindex">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/header-front.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/container.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/home.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/news.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/login.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/details.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/result-page.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product-comparison.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css"
+    href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}"
+    media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontNews.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.theme.default.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/font-awesome.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/datatables.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css"
+    href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}" media="screen">
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/slick.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" media="screen" />
 
 
-    @yield('css')
-    <style>
-      /* select */
-    .form-control{
-        font-size: 14px;
+
+  @yield('css')
+  <style>
+    /* select */
+    .form-control {
+      font-size: 14px;
       -webkit-appearance: none;
       -moz-appearance: none;
       border-radius: 0;
-      border: 1px solid #444444; background-position: right 50%;
+      border: 1px solid #444444;
+      background-position: right 50%;
       background-repeat: no-repeat;
-      background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
+      background-image: url('{{asset(' frontend-asset/image/arrow-down.svg')}}');
       padding: .375rem 1.5rem;
-  
+
     }
-    .form-control:disabled, .form-control[readonly] {
+
+    .form-control:disabled,
+    .form-control[readonly] {
       background-color: #F2F2F2;
       border: 1px solid #C1C1C1 !important;
       opacity: 1;
       color: #C1C1C1;
-      background-image:none;
+      background-image: none;
     }
+
     .form-control:focus {
       color: #495057;
       background-color: #fff;
       border-color: #80bdff;
       outline: none;
       box-shadow: none;
-      }
-      input[type=text],input[type=email]{
-      background-image:none;
-      
-      }
-      .input-label{
-          position: relative;
-      }
-      input[required] + label {
-          color: #707070;
-          font-family: Arial;
-          font-size: 14px;
-          position: absolute;
-          bottom: 0;
-          left: 12px;  /* the negative of the input width */
-      }
-      
-      .form-control:focus {
+    }
+
+    input[type=text],
+    input[type=email] {
+      background-image: none;
+
+    }
+
+    .input-label {
+      position: relative;
+    }
+
+    input[required]+label {
+      color: #707070;
+      font-family: Arial;
+      font-size: 14px;
+      position: absolute;
+      bottom: 0;
+      left: 12px;
+      /* the negative of the input width */
+    }
+
+    .form-control:focus {
       color: #495057;
       background-color: #fff;
       border-color: #80bdff;
       outline: none;
       box-shadow: none;
-      }
- 
-      
-      body{
-          font-family: 'DeltaSans' !important;
-      }
-      html[lang="cn"] body,
-      html[lang="cn"] h1,
-      html[lang="cn"] h2,
-      html[lang="cn"] h3,
-      html[lang="cn"] h4,
-      html[lang="cn"] h5,
-      html[lang="cn"] a,
-      html[lang="cn"] button,
-      html[lang="cn"] span,
-      html[lang="cn"] .link-nav-first,
-      html[lang="cn"] label{  
-        font-family:'NotosansCN','DeltaSans'  !important;
-      }
+    }
 
-  
 
-      html[lang="tw"] body,
-      html[lang="tw"] h1,
-      html[lang="tw"] h2,
-      html[lang="tw"] h3,
-      html[lang="tw"] h4,
-      html[lang="tw"] h5,
-      html[lang="tw"] a,
-      html[lang="tw"] button,
-      html[lang="tw"] div,
-      html[lang="tw"] span ,
-      html[lang="tw"] .link-nav-first,
-      html[lang="tw"] label {  
-        font-family:'NotosansTw','DeltaSans'!important ;
-      }
+    body {
+      font-family: 'DeltaSans' !important;
+    }
 
-      
-      html[lang="jp"] body,
-      html[lang="jp"] h1,
-      html[lang="jp"] h2,
-      html[lang="jp"] h3,
-      html[lang="jp"] h4,
-      html[lang="jp"] h5,
-      html[lang="jp"] a,
-      html[lang="jp"] button,
-      html[lang="jp"] div,
-      html[lang="jp"] span ,
-      html[lang="jp"] .link-nav-first,
-      html[lang="jp"] label {  
-        font-family: 'NotosansJP','DeltaSans'!important ;
-      }
-      .color-yellow{
-        background-color: #252A2C;
-        color: #fff;
-        text-align: center;
-        position: relative;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 99;
-      }
-      
-      
+    html[lang="cn"] body,
+    html[lang="cn"] h1,
+    html[lang="cn"] h2,
+    html[lang="cn"] h3,
+    html[lang="cn"] h4,
+    html[lang="cn"] h5,
+    html[lang="cn"] a,
+    html[lang="cn"] button,
+    html[lang="cn"] span,
+    html[lang="cn"] .link-nav-first,
+    html[lang="cn"] label {
+      font-family: 'NotosansCN', 'DeltaSans' !important;
+    }
+
+
+
+    html[lang="tw"] body,
+    html[lang="tw"] h1,
+    html[lang="tw"] h2,
+    html[lang="tw"] h3,
+    html[lang="tw"] h4,
+    html[lang="tw"] h5,
+    html[lang="tw"] a,
+    html[lang="tw"] button,
+    html[lang="tw"] div,
+    html[lang="tw"] span,
+    html[lang="tw"] .link-nav-first,
+    html[lang="tw"] label {
+      font-family: 'NotosansTw', 'DeltaSans' !important;
+    }
+
+
+    html[lang="jp"] body,
+    html[lang="jp"] h1,
+    html[lang="jp"] h2,
+    html[lang="jp"] h3,
+    html[lang="jp"] h4,
+    html[lang="jp"] h5,
+    html[lang="jp"] a,
+    html[lang="jp"] button,
+    html[lang="jp"] div,
+    html[lang="jp"] span,
+    html[lang="jp"] .link-nav-first,
+    html[lang="jp"] label {
+      font-family: 'NotosansJP', 'DeltaSans' !important;
+    }
+
+    .color-yellow {
+      background-color: #252A2C;
+      color: #fff;
+      text-align: center;
+      position: relative;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 99;
+    }
   </style>
-    <!-- Fonts -->
-    <!-- Styles -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-67607418-1"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
+  <!-- Fonts -->
+  <!-- Styles -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-67607418-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-67607418-1');
-      </script>
+  </script>
 
-      <!-- Google Tag Manager -->
-        <script>
-          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             
@@ -175,33 +191,37 @@
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             
             })(window,document,'script','dataLayer','GTM-PBXMMSN');
-        </script>
-      <!-- End Google Tag Manager -->
-    
-</head>
-<body>
-  
-    @yield('container')
+  </script>
+  <!-- End Google Tag Manager -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
-<script src="{{asset('/frontend-asset/js/map.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/product.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/dropzone.js')}}"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.3/nouislider.min.js"></script>
-<script src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
-<script src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
-<script src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en"
-async defer>
-</script>
-<script type="text/javascript">
-  var verifyCallback = function(response) {
+</head>
+
+<body>
+
+  @yield('container')
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+  <script src="{{asset('/frontend-asset/js/map.js')}}"></script>
+  <script src="{{asset('/frontend-asset/js/product.js')}}"></script>
+  <script src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
+  <script src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
+  <script src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
+  <script src="{{asset('/frontend-asset/js/dropzone.js')}}"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.3/nouislider.min.js"></script>
+  <script src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>
+  <script src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
+  <script src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
+  <script src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en" async defer>
+  </script>
+  <script type="text/javascript">
+    var verifyCallback = function(response) {
     // $('#keyrecapGui').val(response);
     $('#submitGuiDownload').prepend('<input type="hidden" name="keyresponseCap" value="' + response + '">');
   };
@@ -222,20 +242,21 @@ async defer>
     event.preventDefault();
  });
 
-</script>
+  </script>
 
- <!-- Google Tag Manager (noscript) -->
- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBXMMSN"
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBXMMSN" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
 
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
   <!-- End Google Tag Manager (noscript) -->
-  
-    @yield('js')
-    <script>
-       $(document).ready(function() {
+
+  @yield('js')
+  <script>
+    $(document).ready(function() {
         msieversion();
        });
+
+  
       function msieversion() 
             {
                 var ua = window.navigator.userAgent;
@@ -262,9 +283,9 @@ async defer>
 
                 return false;
             }
-      </script>
-    <script>
-      // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
+  </script>
+  <script>
+    // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
   Object.defineProperty(Array.prototype, 'findIndex', {
     value: function(predicate) {
@@ -308,9 +329,9 @@ if (!Array.prototype.findIndex) {
     }
   });
 }
-      </script>
-    <script>
-        var w = document.documentElement.clientWidth;
+  </script>
+  <script>
+    var w = document.documentElement.clientWidth;
         var h = document.documentElement.clientHeight;
 
        $(window).scroll(function() {
@@ -328,9 +349,9 @@ if (!Array.prototype.findIndex) {
          }, 1000);
          return false;
        });
-</script>
-        <script>
-          function subscribe() {
+  </script>
+  <script>
+    function subscribe() {
               document.getElementById("inp3").focus();
               $('#cxacceptPrivacy_data').val(0);
               $("#cxacceptPrivacy_data").prop("checked",false);
@@ -351,10 +372,10 @@ if (!Array.prototype.findIndex) {
 
                 });  
             });
-        </script>
-      
-           <script>
-            /* navbar */
+  </script>
+
+  <script>
+    /* navbar */
               $('#nav-two').addClass('scrolled');
             $(document).ready(function() {
               $('#nav-two li a').on("click", function() {
@@ -400,9 +421,9 @@ if (!Array.prototype.findIndex) {
 
     
             
-        </script>
-      <script>
-       $('.btn-sidenav').css('visibility','hidden');
+  </script>
+  <script>
+    $('.btn-sidenav').css('visibility','hidden');
      
          function toggle_visibility(id) {
             var e = document.getElementById(id);
@@ -496,15 +517,15 @@ if (!Array.prototype.findIndex) {
             document.getElementById("filterMobileLdist").style.width = "0";
             document.getElementById("filterMobileClose").style.display ="none";
           }
-      </script>
-      <script>
-         $('select[name*="state"]').prop('disabled', true);
+  </script>
+  <script>
+    $('select[name*="state"]').prop('disabled', true);
         $('select[name*="country"]').on('change', function() {
           $('select[name*="state"]').prop('disabled', false);
         });
-       </script>
-      <script>
-        $("#nav-comparison").hide();
+  </script>
+  <script>
+    $("#nav-comparison").hide();
         $("#nav-comparison-mobile").hide();
         
         function showNavCoparison(id ,cateid){
@@ -647,9 +668,9 @@ if (!Array.prototype.findIndex) {
 
         }
 
-      </script>
-       <script>
-         $( "#formseachall" ).submit(function( event ) {
+  </script>
+  <script>
+    $( "#formseachall" ).submit(function( event ) {
               var key = $('#searchinput').val();
               var newkey = key.replace(/[/]/g,'@');
             //  console.log();
@@ -664,9 +685,9 @@ if (!Array.prototype.findIndex) {
          });
 
 
-        </script>
-        <script>
-          $(document).ready(function() {
+  </script>
+  <script>
+    $(document).ready(function() {
              checkCookie();
           });
           function resetTime(){
@@ -731,9 +752,9 @@ if (!Array.prototype.findIndex) {
              localStorage.setItem('isshow', 1);
            
           }
-     </script>
-      <script>
-        $("div.sp-dropdown" ).on("mouseleave", function() {
+  </script>
+  <script>
+    $("div.sp-dropdown" ).on("mouseleave", function() {
              $('#nav-uderline').removeClass('active');
               $('.sp-dropdown').removeClass('show');
               $('.sub-menu').removeClass('active');
@@ -741,9 +762,9 @@ if (!Array.prototype.findIndex) {
               $('.drp-subthree').css('display','none');
         })
      
-      </script>
-      <script>
-        function downloadGUI(file , procode){
+  </script>
+  <script>
+    function downloadGUI(file , procode){
           $('#procodeGui').val(procode);
           $('#fileguidownload').val(file);
         }
@@ -792,9 +813,9 @@ if (!Array.prototype.findIndex) {
           });
         @endif
 
-      </script>
-      <script>
-        navigator.sayswho= (function(){
+  </script>
+  <script>
+    navigator.sayswho= (function(){
             var ua= navigator.userAgent, tem, 
             M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
             if(/trident/i.test(M[1])){
@@ -817,9 +838,10 @@ if (!Array.prototype.findIndex) {
                 document.getElementById("alert-browser-check").style.display ="block";
                }
 
-      </script>
+  </script>
 
-     
 
-      </body>
+
+</body>
+
 </html>
