@@ -220,9 +220,10 @@ $langch = str_replace('_', '-', app()->getLocale());
   </style>
 
   <!-- Cookie Consent by https://www.cookiewow.com -->
+  <!-- Cookie Consent by https://www.cookiewow.com -->
   <script type="text/javascript" src="https://cookiecdn.com/cwc.js"></script>
-  <script id="cookieWow" type="text/javascript" src="https://cookiecdn.com/configs/isdrQgNbPRiipXK3h8oR8R1N"
-    data-cwcid="isdrQgNbPRiipXK3h8oR8R1N"></script>
+  <script id="cookieWow" type="text/javascript" src="https://cookiecdn.com/configs/i7aRCyw6TPKrRYdtQqZzuN3Y"
+    data-cwcid="i7aRCyw6TPKrRYdtQqZzuN3Y"></script>
 
   <!-- Fonts -->
   <!-- Styles -->
