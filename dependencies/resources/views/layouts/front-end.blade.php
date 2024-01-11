@@ -711,15 +711,15 @@ if (!Array.prototype.findIndex) {
         }
         function setlocaltion(lang ,link){
           // console.log(lang);
-          if(lang == 'jp'){
-            window.cwcCookieBanner.setLang('ja') 
-          }else if(lang == 'cn'){
-            window.cwcCookieBanner.setLang('zh') 
-          }else if(lang == 'tw'){
-            window.cwcCookieBanner.setLang('zh') 
-          }else{
-            window.cwcCookieBanner.setLang('en') 
-          }
+          // if(lang == 'jp'){
+          //   window.cwcCookieBanner.setLang('ja') 
+          // }else if(lang == 'cn'){
+          //   window.cwcCookieBanner.setLang('zh') 
+          // }else if(lang == 'tw'){
+          //   window.cwcCookieBanner.setLang('zh') 
+          // }else{
+          //   window.cwcCookieBanner.setLang('en') 
+          // }
           $.ajax({
            url: "{{route('setlocaltion')}}",
            data: {
