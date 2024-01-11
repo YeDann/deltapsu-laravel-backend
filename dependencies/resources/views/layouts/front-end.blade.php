@@ -15,7 +15,7 @@ $langch = str_replace('_', '-', app()->getLocale());
 
 ?>
 
-<html lang="{{$lanngCookie}}">
+<html html_lang="{{ str_replace('_', '-', app()->getLocale()) }}" lang="{{$lanngCookie}}">
 
 <head>
   <meta charset="utf-8">
