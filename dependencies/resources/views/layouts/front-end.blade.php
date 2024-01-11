@@ -1,7 +1,22 @@
 <!DOCTYPE html>
+<?php
+$lanngCookie = "en";
+$langch = str_replace('_', '-', app()->getLocale());
 
+ if($langch == 'jp'){
+  $lanngCookie = "ja";
+ }else if($langch == 'cn'){
+  $lanngCookie = "zh";
+ }else if($langch == 'tw'){
+  $lanngCookie = "zh";
+ }else{
+  $lanngCookie = $langch;
+ }
 
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+?>
+
+<html html_lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+  lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
   <meta charset="utf-8">
@@ -329,18 +344,6 @@
   <!-- End Google Tag Manager (noscript) -->
 
   @yield('js')
-  <script>
-    $(document).ready(function() {
-      setLangCookie();
-       });
-    function setLangCookie(){
-        var lang = "{{ str_replace('_', '-', app()->getLocale()) }}";
-        console.log(lang,'lang')
-        if(lang == "jp"){
-          window.cwcCookieBanner.setLang('ja')
-        }
-      } 
-  </script>
 
   <script>
     // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
