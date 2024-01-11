@@ -15,8 +15,7 @@ $langch = str_replace('_', '-', app()->getLocale());
 
 ?>
 
-<html html_lang="{{ str_replace('_', '-', app()->getLocale()) }}"
-  lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html html_lang="{{ str_replace('_', '-', app()->getLocale()) }}" lang="{{$langch}}">
 
 <head>
   <meta charset="utf-8">
