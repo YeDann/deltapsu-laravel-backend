@@ -4338,9 +4338,19 @@ class FrontendController extends Controller
 
         $typefile = $this->validateInput($typefilePar,'text',true);
         $chmodel = $this->validateInput($modelPar,'text',true);
-        $strmodel =  str_replace("@", "/", $chmodel);
+       
+        $strmodel =  str_replace("@", "/", trim($chmodel));
+        $check_2 = DB::table('product_optional_model as po')
+        ->join('products as p', 'p.pro_id', '=', 'po.product_id')
+        ->where('po.optional_model',$strmodel)
+        ->select('p.pro_code','po.optional_model')
+        ->first();
+
+        if(isset($check_2)){
+            $strmodel = $check_2->pro_code;
+        }
   
-        $documents = self::getDoc($typefile,$strmodel );
+        $documents = self::getDoc($typefile,$strmodel);
           $file = null;
           if(isset($documents[0]->file)){
             $file = $documents[0]->file;
@@ -4388,8 +4398,19 @@ class FrontendController extends Controller
 
         $typefile = $this->validateInput($typefilePar,'text',true);
         $chmodel = $this->validateInput($modelPar,'text',true);
-        $strmodel =  str_replace("@", "/", $chmodel);
-        $stringM =  str_replace("-", "", $chmodel);
+        $strmodel =  str_replace("@", "/", trim($chmodel));
+        $stringM =  str_replace("-", "", $strmodel);
+
+        $check_2 = DB::table('product_optional_model as po')
+        ->join('products as p', 'p.pro_id', '=', 'po.product_id')
+        ->where('po.optional_model',$stringM)
+        ->select('p.pro_code','po.optional_model')
+        ->first();
+
+        if(isset($check_2)){
+            $stringM = $check_2->pro_code;
+        }
+  
         $queryString = preg_replace('/[^A-Za-z0-9\-]/','',$stringM);
         $query = DB::table('product_has_documents as phd')
         ->join('products as p','p.pro_id','=','phd.product_id')
