@@ -219,7 +219,7 @@ $langch = str_replace('_', '-', app()->getLocale());
     }
 
     .cwc-cookie-banner-ui-sdk {
-      opacity: 0.2 !important;
+      background-color: rgb(0, 0, 0, 0.2) !important;
     }
   </style>
 
