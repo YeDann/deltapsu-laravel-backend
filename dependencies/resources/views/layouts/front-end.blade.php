@@ -208,11 +208,11 @@ $langch = str_replace('_', '-', app()->getLocale());
     }
 
     @media only screen and (max-width: 1366px) {
-      html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
+      html[html_lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
         padding: 20px 4px !important;
       }
 
-      html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
+      html[html_lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
         padding: 20px 4px !important;
         font-size: 14px !important;
       }
@@ -220,6 +220,36 @@ $langch = str_replace('_', '-', app()->getLocale());
 
     .cwc-cookie-banner-ui-sdk .cwc-css-1bzsri5-cwc {
       background-color: rgb(0, 0, 0, 0.6) !important;
+    }
+
+
+
+    .cwc-cookie-banner-ui-sdk,
+    .cwc-cookie-banner-ui-sdk button,
+    .cwc-cookie-banner-ui-sdk span,
+    .cwc-cookie-banner-ui-sdk a {
+      font-family: 'DeltaSans' !important;
+    }
+
+    html[html_lang="ru"] .cwc-cookie-banner-ui-sdk,
+    .cwc-cookie-banner-ui-sdk button,
+    .cwc-cookie-banner-ui-sdk span,
+    .cwc-cookie-banner-ui-sdk a {
+      font-family: 'Inter', 'DeltaSans', sans-serif !important;
+    }
+
+    html[html_lang="cn"] .cwc-cookie-banner-ui-sdk,
+    .cwc-cookie-banner-ui-sdk button,
+    .cwc-cookie-banner-ui-sdk span,
+    .cwc-cookie-banner-ui-sdk a {
+      font-family: 'Microsoft Yahei', 'DeltaSans', sans-serif !important;
+    }
+
+    html[html_lang="tw"] .cwc-cookie-banner-ui-sdk,
+    .cwc-cookie-banner-ui-sdk button,
+    .cwc-cookie-banner-ui-sdk span,
+    .cwc-cookie-banner-ui-sdk a {
+      font-family: 'Noto Sans TC', 'DeltaSans', sans-serif !important;
     }
   </style>
 
