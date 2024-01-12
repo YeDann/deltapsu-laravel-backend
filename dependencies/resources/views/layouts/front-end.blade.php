@@ -219,7 +219,7 @@ $langch = str_replace('_', '-', app()->getLocale());
     }
 
     .cwc-banner-content {
-      background-color: rgba(0, 0, 0, 0.3);
+      background-color: rgb(0, 0, 0, 0.5) !important;
     }
   </style>
 
