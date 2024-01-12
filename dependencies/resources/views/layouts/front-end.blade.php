@@ -218,8 +218,8 @@ $langch = str_replace('_', '-', app()->getLocale());
       }
     }
 
-    .cwc-banner-content {
-      background-color: rgb(0, 0, 0, 0.5) !important;
+    .cwc-cookie-banner-ui-sdk {
+      opacity: 0.2 !important;
     }
   </style>
 
