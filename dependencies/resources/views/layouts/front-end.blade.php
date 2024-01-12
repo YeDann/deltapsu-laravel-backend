@@ -218,7 +218,7 @@ $langch = str_replace('_', '-', app()->getLocale());
       }
     }
 
-    .cwc-cookie-banner-ui-sdk {
+    .cwc-cookie-banner-ui-sdk .cwc-css-16kp71z-cwc {
       background-color: rgb(0, 0, 0, 0.6) !important;
     }
 
