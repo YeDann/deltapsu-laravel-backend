@@ -217,6 +217,10 @@ $langch = str_replace('_', '-', app()->getLocale());
         font-size: 14px !important;
       }
     }
+
+    .cwc-banner-content {
+      opacity: 0.5;
+    }
   </style>
 
   <!-- Cookie Consent by https://www.cookiewow.com -->
