@@ -255,8 +255,8 @@ $langch = str_replace('_', '-', app()->getLocale());
 
   <!-- Cookie Consent by https://www.cookiewow.com -->
   <script type="text/javascript" src="https://cookiecdn.com/cwc.js"></script>
-  <script id="cookieWow" type="text/javascript" src="https://cookiecdn.com/configs/QCpdMWAZzK3aPN8JBDMiPWQN"
-    data-cwcid="QCpdMWAZzK3aPN8JBDMiPWQN"></script>
+  <script id="cookieWow" type="text/javascript" src="https://cookiecdn.com/configs/oECu4Fwmu7jeXBix4ycjxPKJ"
+    data-cwcid="oECu4Fwmu7jeXBix4ycjxPKJ"></script>
 
   <!-- Fonts -->
   <!-- Styles -->
