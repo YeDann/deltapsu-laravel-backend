@@ -1,5 +1,21 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<?php
+$lanngCookie = "en";
+$langch = str_replace('_', '-', app()->getLocale());
+
+ if($langch == 'jp'){
+  $lanngCookie = "ja";
+ }else if($langch == 'cn'){
+  $lanngCookie = "zh";
+ }else if($langch == 'tw'){
+  $lanngCookie = "zh";
+ }else{
+  $lanngCookie = $langch;
+ }
+
+?>
+
+<html html_lang="{{ str_replace('_', '-', app()->getLocale()) }}" Lang="{{$lanngCookie}}">
 
 <head>
   <meta charset="utf-8">
@@ -192,59 +208,57 @@
     }
 
     @media only screen and (max-width: 1366px) {
-      html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
+      html[html_lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
         padding: 20px 4px !important;
       }
 
-      html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
+      html[html_lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
         padding: 20px 4px !important;
         font-size: 14px !important;
       }
     }
+
+    .cwc-cookie-banner-ui-sdk .cwc-banner-container {
+      background-color: rgb(0, 0, 0, 0.8) !important;
+    }
+
+
+
+
+
+    html[html_lang="ru"] .cwc-cookie-banner-ui-sdk,
+    .cwc-cookie-banner-ui-sdk button,
+    .cwc-cookie-banner-ui-sdk span,
+    .cwc-cookie-banner-ui-sdk a {
+      font-family: 'Inter', 'DeltaSans', sans-serif !important;
+    }
+
+    html[html_lang="cn"] .cwc-cookie-banner-ui-sdk,
+    .cwc-cookie-banner-ui-sdk button,
+    .cwc-cookie-banner-ui-sdk span,
+    .cwc-cookie-banner-ui-sdk a {
+      font-family: 'Microsoft Yahei', 'DeltaSans', sans-serif !important;
+    }
+
+    html[html_lang="tw"] .cwc-cookie-banner-ui-sdk,
+    .cwc-cookie-banner-ui-sdk button,
+    .cwc-cookie-banner-ui-sdk span,
+    .cwc-cookie-banner-ui-sdk a {
+      font-family: 'Noto Sans TC', 'DeltaSans', sans-serif !important;
+    }
+
+    .cwc-cookie-banner-ui-sdk,
+    .cwc-cookie-banner-ui-sdk button,
+    .cwc-cookie-banner-ui-sdk span,
+    .cwc-cookie-banner-ui-sdk a {
+      font-family: 'DeltaSans' !important;
+    }
   </style>
 
-  <?php
-$lanngCookie = "EN";
-$langch = str_replace('_', '-', app()->getLocale());
-
- if($langch == 'cn'){
-  $lanngCookie = "ZH";
- }else if($langch == 'tw'){
-  $lanngCookie = "ZH-HANT";
- }else if($langch == 'de'){
-  $lanngCookie = "DE";
- }else if($langch == 'ru'){
-  $lanngCookie = "RU";
- }else if($langch == 'jp'){
-  $lanngCookie = "JA";
- }
-
-?>
-
-
-  <script id="Cookiebot" data-culture="{{$lanngCookie}}" src="https://consent.cookiebot.com/uc.js"
-    data-cbid="0b87f4dd-13cf-473e-b5c7-019f4154d02a" data-framework="TCFv2.2" type="text/javascript" async defer>
-  </script>
-  <script id="CookiebotConfiguration" type="application/json" data-cookieconsent="ignore" async defer>
-    {
-      "Frameworks": {
-        "IABTCF2": {
-          "AllowedVendors": [2, 6, 8],
-          "AllowedGoogleACVendors": [],
-          "AllowedPurposes": [1, 2],
-          "AllowedSpecialPurposes": [],
-          "AllowedFeatures": [1],
-          "AllowedSpecialFeatures": [1],
-          "VendorRestrictions": [
-            {
-              "VendorId": 2,
-              "DisallowPurposes": [2, 3, 4]
-            }
-          ]
-        }
-      }
-    }
-  </script>
+  <!-- Cookie Consent by https://www.cookiewow.com -->
+  <script type="text/javascript" src="https://cookiecdn.com/cwc.js"></script>
+  <script id="cookieWow" type="text/javascript" src="https://cookiecdn.com/configs/oECu4Fwmu7jeXBix4ycjxPKJ"
+    data-cwcid="oECu4Fwmu7jeXBix4ycjxPKJ"></script>
 
   <!-- Fonts -->
   <!-- Styles -->
@@ -733,6 +747,15 @@ if (!Array.prototype.findIndex) {
         }
         function setlocaltion(lang ,link){
           // console.log(lang);
+          // if(lang == 'jp'){
+          //   window.cwcCookieBanner.setLang('ja') 
+          // }else if(lang == 'cn'){
+          //   window.cwcCookieBanner.setLang('zh') 
+          // }else if(lang == 'tw'){
+          //   window.cwcCookieBanner.setLang('zh') 
+          // }else{
+          //   window.cwcCookieBanner.setLang('en') 
+          // }
           $.ajax({
            url: "{{route('setlocaltion')}}",
            data: {
