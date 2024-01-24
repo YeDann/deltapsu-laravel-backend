@@ -223,27 +223,31 @@ class FrontendController extends Controller
                     ->orderBy('ph.type_id' ,'asc')
                     ->select('pht.value_text','ph.*','pft.field_name as fieldCate','pf.unit_name')
                     ->get();
-                if(!in_array($pro->pro_id, $procheckarr)){
-                    if(self::checkContentPro($pro->pro_id)){
-                        array_push($procheckarr,$pro->pro_id);
-                        $data[$i] = [
-                            "pro_id"=>$pro->pro_id,
-                            "pro_code"=>$pro->pro_code,
-                            "cateid"=>$pro->cateid,
-                            "catename"=>$pro->catename,
-                            "picture"=>$pro->picture,
-                            "unit_dimension"=>$pro->unit_dimension,
-                            "status_product"=>$pro->status_product,
-                            "content" =>$arraysub,
-                            "dimensionL"=>$pro->dimensionL,
-                            "dimensionW"=>$pro->dimensionW,
-                            "dimensionD"=>$pro->dimensionD,
-                        ];
+                    if(isset($pro)){
+                            if(!in_array($pro->pro_id, $procheckarr)){
+                            if(self::checkContentPro($pro->pro_id)){
+                                array_push($procheckarr,$pro->pro_id);
+                                $data[$i] = [
+                                    "pro_id"=>$pro->pro_id,
+                                    "pro_code"=>$pro->pro_code,
+                                    "cateid"=>$pro->cateid,
+                                    "catename"=>$pro->catename,
+                                    "picture"=>$pro->picture,
+                                    "unit_dimension"=>$pro->unit_dimension,
+                                    "status_product"=>$pro->status_product,
+                                    "content" =>$arraysub,
+                                    "dimensionL"=>$pro->dimensionL,
+                                    "dimensionW"=>$pro->dimensionW,
+                                    "dimensionD"=>$pro->dimensionD,
+                                ];
+                            }
+                        }
+                        $i++;
                     }
-                }
+                
                 
              
-                    $i++;
+                   
                 }
                 $now = date('Y-m-d');
                 $events_q = DB::table('contents as c')
