@@ -3785,7 +3785,7 @@ class FrontendController extends Controller
         }
         $ticket_id = null;
         
-        if(true){
+        if($body->success){
     
            $subject = $this->validateInput($request->subject,'text',true);
            $name = $this->validateInput($request->name,'text',true);
@@ -3965,17 +3965,15 @@ class FrontendController extends Controller
              }
           }
          
-        //    try {
+           try {
            
-        //     $emaillog = Mail::to($emailsend)->send(new Contact($request->except('_token'),$ticket_id));
-        //     Log::channel('mail_log')->info('[Success] message : Send Mail to '.implode(",",$emailsend));
-        //     return \Redirect::back()->with("message","Send Email Successfully");
-        //    } catch (\Swift_RfcComplianceException  $ex) {
-        //     Log::channel('mail_log')->info('[Error] '.\Carbon\Carbon::now().' message :'. $ex->getMessage());
-        //      return \Redirect::back()->with("message_eror","Can not send");
-        //    }
-
-           $emaillog = Mail::to($emailsend)->send(new Contact($request->except('_token'),$ticket_id));
+            $emaillog = Mail::to($emailsend)->send(new Contact($request->except('_token'),$ticket_id));
+            Log::channel('mail_log')->info('[Success] message : Send Mail to '.implode(",",$emailsend));
+            return \Redirect::back()->with("message","Send Email Successfully");
+           } catch (\Swift_RfcComplianceException  $ex) {
+            Log::channel('mail_log')->info('[Error] '.\Carbon\Carbon::now().' message :'. $ex->getMessage());
+             return \Redirect::back()->with("message_eror","Can not send");
+           }
 
          }else{
             return \Redirect::back()->with("message_eror_notvertify","Can not send");
