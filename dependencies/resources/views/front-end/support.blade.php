@@ -1,100 +1,119 @@
 @extends('layouts.front-end')
 @section('css')
 <style>
-
-    .banner-type-product-all{
+    .banner-type-product-all {
         height: 432px;
     }
-    @media (max-width:768px){
-        .banner-type-product-all{
+
+    @media (max-width:768px) {
+        .banner-type-product-all {
             height: 250px;
-        }   
+        }
     }
-   
+
     /* select */
-	.form-control{
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		border-radius: 0;
-		border: 1px solid #444444; background-position: right 50%;
-		background-repeat: no-repeat;
-		background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
-        font-size:16px;
+    .form-control {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        border-radius: 0;
+        border: 1px solid #444444;
+        background-position: right 50%;
+        background-repeat: no-repeat;
+        background-image: url('{{asset(' frontend-asset/image/arrow-down.svg')}}');
+        font-size: 16px;
     }
-    
-	.form-control:disabled, .form-control[readonly] {
-		background-color: #F2F2F2;
-		border: 1px solid #C1C1C1 !important;
-		opacity: 1;
-		color: #C1C1C1;
-		background-image:unset;
-	}
-	.form-control:focus {
-		color: #495057;
-		background-color: #fff;
-		border-color: #80bdff;
-		outline: unset;
-		box-shadow: unset;
+
+    .form-control:disabled,
+    .form-control[readonly] {
+        background-color: #F2F2F2;
+        border: 1px solid #C1C1C1 !important;
+        opacity: 1;
+        color: #C1C1C1;
+        background-image: unset;
     }
-    input[type=text],input[type=email]{
-		background-image:unset;
-		
+
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #80bdff;
+        outline: unset;
+        box-shadow: unset;
     }
-    .input-label{
+
+    input[type=text],
+    input[type=email] {
+        background-image: unset;
+
+    }
+
+    .input-label {
         position: relative;
     }
-    .box-support-detail input[required] + label {
+
+    .box-support-detail input[required]+label {
         color: #707070;
         font-family: Arial;
         font-size: 14px;
         position: absolute;
         bottom: 0;
-        left: 18px ;  /* the negative of the input width */
+        left: 18px;
+        /* the negative of the input width */
     }
-    textarea[required] + label {
+
+    textarea[required]+label {
         color: #707070;
         font-family: Arial;
         font-size: 14px;
         position: absolute;
         top: 12px;
-        left: 12px;  /* the negative of the input width */
+        left: 12px;
+        /* the negative of the input width */
     }
-    input[required=required] + label:after {
-        content:'*';
-       /*  color: red; */
+
+    input[required=required]+label:after {
+        content: '*';
+        /*  color: red; */
     }
 
     /* show the placeholder when input has no content (no content = invalid) */
-    input[required=required]:invalid + label{
+    input[required=required]:invalid+label {
         display: inline-block;
         padding-left: .375rem;
     }
-    textarea[required=required]:invalid + label{
+
+    textarea[required=required]:invalid+label {
         display: inline-block;
     }
+
     /* hide the placeholder when input has some text typed in */
-    input[required]:valid + label,input[required]:focus+label,textarea[required]:valid + label{
+    input[required]:valid+label,
+    input[required]:focus+label,
+    textarea[required]:valid+label {
         display: none;
     }
+
     .d-flex.mr-b-12px .input-label:first-child {
         margin-right: 12px;
     }
+
     .d-flex.mr-b-12px .input-label:last-child {
         margin-left: 12px;
     }
+
     textarea {
         height: 15%;
     }
-   
-textarea{
-    padding-left: 12px;
-}
-.tel-not-req{
-    background-color: #F2F2F2 !important;
-    border: 1px solid #C1C1C1 !important;
-    opacity: 1;
-    color: #C1C1C1;
-}
+
+    textarea {
+        padding-left: 12px;
+    }
+
+    .tel-not-req {
+        background-color: #F2F2F2 !important;
+        border: 1px solid #C1C1C1 !important;
+        opacity: 1;
+        color: #C1C1C1;
+    }
 </style>
 @endsection
 @section('meta')
@@ -110,19 +129,24 @@ textarea{
         <div class="container">
             <nav aria-label="breadcrumb" id="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a
-                            href="#" data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Supports']}}</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Supports']}}</a></li>
-                                <hr>
-                                <li><a href="{{route('contactSupport')}}">{{$staticContent['contact_us']}}</a></li>
-                                <li><a href="{{route('contactSalesOffices')}}">{{$staticContent['sales_offices']}}</a></li>
-                                <li><a href="{{route('contactFindDistributor')}}">{{$staticContent['find_a_distributor']}}</a></li>
-                                <li><a href="{{route('index','faqs')}}">{{$staticContent['FAQs']}}</a></li>
-                              </ul>   
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
+                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Supports']}}</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Supports']}}</a>
+                            </li>
+                            <hr>
+                            <li><a href="{{route('contactSupport')}}">{{$staticContent['contact_us']}}</a></li>
+                            <li><a href="{{route('contactSalesOffices')}}">{{$staticContent['sales_offices']}}</a></li>
+                            <li><a
+                                    href="{{route('contactFindDistributor')}}">{{$staticContent['find_a_distributor']}}</a>
+                            </li>
+                            <li><a href="{{route('index','faqs')}}">{{$staticContent['FAQs']}}</a></li>
+                        </ul>
                     </li>
-                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['contact_us']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
+                            href="#">{{$staticContent['contact_us']}}</a></li>
 
                 </ol>
             </nav>
@@ -136,125 +160,149 @@ textarea{
     <div class="container">
         <h2 class="text-title-delta visible-tablets-up">{{$staticContent['what_type_of_support']}}</h2>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['what_type_of_support']}}</h3>
-    <form id="submitSupport"  onsubmit="return validateForm(this)"  action="{{route('SubmitContact')}}" method="POST">
-        {{csrf_field()}}
-        <p>{{$staticContent['support_from_up_text']}}</p>
-     
-        <div class="add-space-mobile">
-            <div class="row">
-                <label class="col-12 text-title-detail-dark">{{$staticContent['Subject']}}<span class="red">*</span></label>
-                <div class="col-12 w-100 mb-4">  
+        <form id="submitSupport" onsubmit="return validateForm(this)" action="{{route('SubmitContact')}}" method="POST">
+            {{csrf_field()}}
+            <p>{{$staticContent['support_from_up_text']}}</p>
+
+            <div class="add-space-mobile">
+                <div class="row">
+                    <label class="col-12 text-title-detail-dark">{{$staticContent['Subject']}}<span
+                            class="red">*</span></label>
+                    <div class="col-12 w-100 mb-4">
                         <select id="subjectType" name="subject" class="form-control" required>
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Subject']}}</option>
-                            <option value="0" {{isset($contactlink) && $contactlink =='Sale-Enquiries'?'selected':'' }} >Sales Enquiry</option>
-                            <option value="Products and Service Support" {{ isset($contactlink) && $contactlink =='Products-and-Service-Support'?'selected':'' }}>Products and Service Support</option>
+                            <option value="0" {{isset($contactlink) && $contactlink=='Sale-Enquiries' ?'selected':'' }}>
+                                Sales Enquiry</option>
+                            <option value="Products and Service Support" {{ isset($contactlink) &&
+                                $contactlink=='Products-and-Service-Support' ?'selected':'' }}>Products and Service
+                                Support</option>
                             <option value="General Comments">General Comments</option>
                             {{-- <option value="Problems and Bugs">Problems and Bugs</option> --}}
                         </select>
+                    </div>
                 </div>
-            </div>
-            <div class="row  ">
-                <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
-                    <label class="text-title-detail-dark">{{$staticContent['Name']}}<span class="red">*</span></label>
-                    <input type="text" class="form-control" name="name" pattern="[A-Za-zก-๏\s]+"  required="required" placeholder="Name">
+                <div class="row  ">
+                    <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
+                        <label class="text-title-detail-dark">{{$staticContent['Name']}}<span
+                                class="red">*</span></label>
+                        <input type="text" class="form-control" name="name" pattern="[A-Za-zก-๏\s]+" required="required"
+                            placeholder="Name">
+                    </div>
+                    <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
+                        <label class="text-title-detail-dark">{{$staticContent['Email_Address']}}<span
+                                class="red">*</span></label>
+                        <input type="email" class="form-control" name="email" title="Incorrect Format Email"
+                            placeholder="Email Address" required>
+                    </div>
+
+
                 </div>
-                <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
-                    <label class="text-title-detail-dark">{{$staticContent['Email_Address']}}<span class="red">*</span></label>
-                    <input type="email" class="form-control" name="email"  title="Incorrect Format Email"  placeholder="Email Address" required>
-                </div>
-           
-             
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
-                    <label class="text-title-detail-dark">{{$staticContent['Company']}}<span class="red">*</span></label>
-                    <input type="text" class="form-control" name="company" pattern="[A-Za-zก-๏\s().]+" required="required" placeholder="Company"> 
-                </div>
-                <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
-                    <label class="text-title-detail-dark">{{$staticContent['Product_Type']}}<span class="red">*</span></label> 
-                        <select  id="type_id" name="type_id"  class="form-control" onchange="selectType();" required >
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
+                        <label class="text-title-detail-dark">{{$staticContent['Company']}}<span
+                                class="red">*</span></label>
+                        <input type="text" class="form-control" name="company" pattern="[A-Za-zก-๏\s().]+"
+                            required="required" placeholder="Company">
+                    </div>
+                    <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
+                        <label class="text-title-detail-dark">{{$staticContent['Product_Type']}}<span
+                                class="red">*</span></label>
+                        <select id="type_id" name="type_id" class="form-control" onchange="selectType();" required>
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Type']}}</option>
                             @foreach ($subCategories as $sub)
                             @if(in_array($sub->sub_pro_id, $arr_settype))
-                            <option value="{{$sub->sub_pro_id}}" >{{$sub->name}}</option> 
+                            <option value="{{$sub->sub_pro_id}}">{{$sub->name}}</option>
                             @endif
                             @endforeach
                         </select>
                         <input type="hidden" name="type_name" id="type_name">
                         <input type="hidden" name="config_id" id="config_id">
                         <input type="hidden" name="enquireStatus" id="enquireStatus">
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-12  select input-label w-100 mb-4">
-                    <label class="text-title-detail-dark">{{$staticContent['Country']}}<span class="red">*</span></label>
-                    <select name="country"  class="form-control required" onchange="selectCountry();" id="countryemailId"  required>
-                        <option value="">{{$staticContent['Select']}} {{$staticContent['Country']}}</option>
-                        @foreach ($countryemails as $email)
-                          <option value="{{$email->country}}">{{$email->country}}</option>
-                        @endforeach
-                    </select>
-                </div> 
-                <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
-                    <label class="text-title-detail-dark">{{$staticContent['Model']}}<span class="red">*</span></label>
-                        <select id="model_id"  name="model_name"  class="form-control"  disabled required>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12  select input-label w-100 mb-4">
+                        <label class="text-title-detail-dark">{{$staticContent['Country']}}<span
+                                class="red">*</span></label>
+                        <select name="country" class="form-control required" onchange="selectCountry();"
+                            id="countryemailId" required>
+                            <option value="">{{$staticContent['Select']}} {{$staticContent['Country']}}</option>
+                            @foreach ($countryemails as $email)
+                            <option value="{{$email->country}}">{{$email->country}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
+                        <label class="text-title-detail-dark">{{$staticContent['Model']}}<span
+                                class="red">*</span></label>
+                        <select id="model_id" name="model_name" class="form-control" disabled required>
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Model']}}</option>
                         </select>
-                </div>
-            
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-12 select02 input-label w-100 mb-4" id="box_state_con">
-                    <label class="text-title-detail-dark">{{$staticContent['City_State']}} <span id="r_q_contry" class="red"></span></label>
-                    <select name="state" class="form-control" id="stateId" >
-                        <option value="" data-color="red">{{$staticContent['Select']}} {{$staticContent['City_State']}}</option>
-                    </select>
-                </div>
-                <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
-                    <label class="text-title-detail-dark">{{$staticContent['Phone_Number']}}</label>
-                    <input type="tel" class="form-control tel-not-req" name="tel" pattern="^[0-9-+\s()]*$" maxlength="13" title="Incorrect Format Number only and Special Charecter +,-" placeholder="{{$staticContent['Phone_Number']}}"  >
-                </div>
-            </div>
-            <div class="row ">
-                <div class="col-12">
-                    <label class="text-title-detail-dark mt-4">{{$staticContent['Message']}}<span class="red">*</span></label>
-                    <div class="input-label">
-                        <textarea name="message" id="message" class="w-100" required="required" rows="10"></textarea>
-                        <label for="message">{{$staticContent['Message']}}</label>
                     </div>
-                   
-                    <div class="box-input-checkbox">
-                        <input class="inp-cbx" name="prichk" id="privacycheck" value="1" onclick="onacceptionPolicy()"  type="checkbox"
-                            style="display: none;" />
-                        <label class="cbx" for="privacycheck"><span>
-                                <svg width="12px" height="10px" viewbox="0 0 12 10">
-                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                                </svg></span><span style="padding-left:9px;">  {{$staticContent['By_submitting_this_form']}} <a target="_blank" href="{{route('privacyPolicy')}}" class=" text-underline">{{$staticContent['Privacy_Policy']}}</a><text class="red">*</text></span> </label>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 select02 input-label w-100 mb-4" id="box_state_con">
+                        <label class="text-title-detail-dark">{{$staticContent['City_State']}} <span id="r_q_contry"
+                                class="red"></span></label>
+                        <select name="state" class="form-control" id="stateId">
+                            <option value="" data-color="red">{{$staticContent['Select']}}
+                                {{$staticContent['City_State']}}</option>
+                        </select>
                     </div>
- 
-                    <div class="box-input-checkbox">
-                        <input class="inp-cbx" name="checkData" id="cx-sign-up"  value="1" type="checkbox"
-                            style="display: none;" />
-                        <label class="cbx" for="cx-sign-up"><span>
-                                <svg width="12px" height="10px" viewbox="0 0 12 10">
-                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                                </svg></span><span>{{$staticContent['Sign_up_for_newsletter']}}</span></label>
+                    <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
+                        <label class="text-title-detail-dark">{{$staticContent['Phone_Number']}}</label>
+                        <input type="tel" class="form-control tel-not-req" name="tel" pattern="^[0-9-+\s()]*$"
+                            maxlength="13" title="Incorrect Format Number only and Special Charecter +,-"
+                            placeholder="{{$staticContent['Phone_Number']}}">
                     </div>
-                       
-                        <form action="?" method="POST" >
+                </div>
+                <div class="row ">
+                    <div class="col-12">
+                        <label class="text-title-detail-dark mt-4">{{$staticContent['Message']}}<span
+                                class="red">*</span></label>
+                        <div class="input-label">
+                            <textarea name="message" id="message" class="w-100" required="required"
+                                rows="10"></textarea>
+                            <label for="message">{{$staticContent['Message']}}</label>
+                        </div>
+
+                        <div class="box-input-checkbox">
+                            <input class="inp-cbx" name="prichk" id="privacycheck" value="1"
+                                onclick="onacceptionPolicy()" type="checkbox" style="display: none;" />
+                            <label class="cbx" for="privacycheck"><span>
+                                    <svg width="12px" height="10px" viewbox="0 0 12 10">
+                                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                    </svg></span><span style="padding-left:9px;">
+                                    {{$staticContent['By_submitting_this_form']}} <a target="_blank"
+                                        href="{{route('privacyPolicy')}}"
+                                        class=" text-underline">{{$staticContent['Privacy_Policy']}}</a><text
+                                        class="red">*</text></span> </label>
+                        </div>
+
+                        <div class="box-input-checkbox">
+                            <input class="inp-cbx" name="checkData" id="cx-sign-up" value="1" type="checkbox"
+                                style="display: none;" />
+                            <label class="cbx" for="cx-sign-up"><span>
+                                    <svg width="12px" height="10px" viewbox="0 0 12 10">
+                                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                                    </svg></span><span>{{$staticContent['Sign_up_for_newsletter']}}</span></label>
+                        </div>
+
+                        <form action="?" method="POST">
                             <div class="mt-4" id="recap_vertify"></div>
                             <br>
-                          </form>
-                      <input type="hidden" id="keyrecap" name="keyrecap" >
-                    <button class="btn-subscribe" type="submit">{{$staticContent['Send']}}</button>
+                        </form>
+                        <input type="hidden" id="keyrecap" name="keyrecap">
+                        <button class="btn-subscribe" type="submit">{{$staticContent['Send']}}</button>
+                    </div>
+
                 </div>
-                
             </div>
-        </div>
-    </form>
-  
-   
-        
+        </form>
+
+
+
     </div>
 </div>
 @endsection
@@ -262,14 +310,13 @@ textarea{
 
 
 <script type="text/javascript">
-
-        var verifyCallback = function(response) {
+    var verifyCallback = function(response) {
                 $('#keyrecap').val(response);
             };
             var onloadCallback = function() {
                 grecaptcha.render('recap_vertify', {
                 // 'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-                'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
+                'sitekey' : '6LfGGV0pAAAAAKeEC0S7wzsPbAM1fvB3Tp2wtSYJ',
                 'callback' : verifyCallback,
                 'theme' : 'light'
                 });
@@ -295,10 +342,10 @@ textarea{
                     return true;
                 }
       }
-  </script>
+</script>
 
 <script>
-        $('select').change(function(){
+    $('select').change(function(){
              $(this).parent().attr('style','--color:'+$(this).find(':selected').data('color'));
         })
         var modelId =  <?= json_encode(session('enquireModel'));?>;
