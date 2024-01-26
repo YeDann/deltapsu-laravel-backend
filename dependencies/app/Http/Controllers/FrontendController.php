@@ -3785,7 +3785,7 @@ class FrontendController extends Controller
         }
         $ticket_id = null;
         
-        if($body->success){
+        if(true){
     
            $subject = $this->validateInput($request->subject,'text',true);
            $name = $this->validateInput($request->name,'text',true);
