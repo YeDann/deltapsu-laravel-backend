@@ -990,6 +990,7 @@ class FrontendController extends Controller
         ->get();
         // return dd(count($product_has_prm));
         //Check Eror input content product
+        $productCodeArr = [];
         if(count($product_has_prm) >= 4){
             array_push($arrproid, $pro->pro_id);
             $prolang =  self::checkLang($lang,$pro->pro_id);
@@ -1001,6 +1002,8 @@ class FrontendController extends Controller
             ->select('p.*', 'pt.*')
             ->orderBy('p.created_at', 'desc')
             ->first();
+           
+             array_push($productCodeArr,trim($datapro->pro_code));
              array_push($products, $datapro);
              $optional_product = DB::table('product_optional_model as po')
                     ->join('products as p', 'p.pro_id', '=', 'po.product_id')
@@ -1008,12 +1011,13 @@ class FrontendController extends Controller
                     ->where('pt.local',$prolang)
                     ->where('p.enable_pro' ,1)
                     ->where('po.product_id' ,$pro->pro_id)
-                    ->where('po.optional_model','!=' ,$pro->pro_code)
                     ->select('p.*','pt.*','po.optional_model as pro_code' )
                     ->orderBy('p.created_at', 'desc')
                     ->get();
                     foreach($optional_product as $optional_model){
-                        array_push($products,$optional_model);
+                      if (!in_array(trim($optional_model->pro_code), $productCodeArr)) {
+                          array_push($products,$optional_model);
+                        }
                     }
         }
     
