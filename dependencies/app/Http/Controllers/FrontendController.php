@@ -1008,6 +1008,7 @@ class FrontendController extends Controller
                     ->where('pt.local',$prolang)
                     ->where('p.enable_pro' ,1)
                     ->where('po.product_id' ,$pro->pro_id)
+                    ->where('po.optional_model','!=' ,$pro->pro_code)
                     ->select('p.*','pt.*','po.optional_model as pro_code' )
                     ->orderBy('p.created_at', 'desc')
                     ->get();
