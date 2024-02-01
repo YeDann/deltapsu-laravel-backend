@@ -1015,7 +1015,7 @@ class FrontendController extends Controller
                     ->orderBy('p.created_at', 'desc')
                     ->get();
                     foreach($optional_product as $optional_model){
-                      if (!in_array(trim($optional_model->pro_code), $productCodeArr)) {
+                      if (!in_array(trim($optional_model->optional_model), $productCodeArr)) {
                           array_push($products,$optional_model);
                         }
                     }
