@@ -349,43 +349,6 @@
             var html2 = "";
             $.each(documents_cate, function(index,cate_doc){
 
-             if(cate_doc['id'] == 1 || cate_doc['id'] == 46 || cate_doc['id'] == 38){
-                html2 += ' <div class="box-for-collap">'
-                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
-                html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
-                html2 += '  href="#collapse-image'+cate_doc['id']+'">';
-                html2 += '<h5 class="invisible-up-922">'+cate_doc['title']+'</h5>';
-                html2 += '<h4 class="visible-up-922">'+cate_doc['title'] +'</h4>';    
-                html2 += '</div>';
-                html2 += ' <div id="collapse-image'+cate_doc['id']+'" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
-                html2 += '<div class="force-overflow">';
-              $.each(documents, function(index,doc){  
-                if(doc['product_id'] == model_id){ 
-                if(doc['cate_id'] == 1 || doc['cate_id'] == 46 || doc['cate_id'] == 38 ){
-                html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
-                html2 += '<div class="detail-downlode">';
-                html2 += '<p class="text-dark text-bold">'+doc['catename']+'</p>';
-                if(doc['created_at'] != null){
-                html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} '+setformatdate(doc['created_at']) +'</p>';
-                }else{
-                    html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} - </p>';
-                }
-             
-                html2 += '</div>';
-                html2 += '<a href="{{route('downloadFIle')}}/'+cate_doc['slug']+'/'+productKey(procode)+'" target="_blank">';
-                html2 += '<button class="btn-downlode ">{{$staticContent['Downloads']}}</button>';
-                html2 += ' </a>' ;
-                html2 += ' </div>' ;
-                }
-                }
-                });  
-
-                html2 += '</div>';
-                html2 += ' </div>';
-                html2 += ' </div>';
-              }
-
-
               if( cate_doc['id'] == 2 || cate_doc['id'] == 4){
                 html2 += ' <div class="box-for-collap">'
                 html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
@@ -428,6 +391,36 @@
             html2 += ' <div class="box-for-collap">'
                 html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
+                html2 += '  href="#collapse-image1">';
+                html2 += '<h5 class="invisible-up-922">Manual</h5>';
+                html2 += '<h4 class="visible-up-922">Manual</h4>';    
+                html2 += '</div>';
+                html2 += ' <div id="collapse-image1" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
+                html2 += '<div class="force-overflow">';
+               $.each(documents, function(index,doc){  
+                if(doc['product_id'] == model_id){ 
+                if(doc['cate_id'] == 1 || doc['cate_id'] == 46 || doc['cate_id'] == 38){
+                html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
+                html2 += '<div class="detail-downlode">';
+                html2 += '<p class="text-dark text-bold">'+doc['catename']+'</p>';
+                if(doc['created_at'] != null){
+                html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} '+setformatdate(doc['created_at']) +'</p>';
+                }else{
+                    html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} - </p>';
+                }
+             
+                html2 += '</div>';
+                html2 += '<a href="{{route('downloadFIle')}}/'+doc['slug']+'/'+productKey(procode)+'" target="_blank">';
+                html2 += '<button class="btn-downlode ">{{$staticContent['Downloads']}}</button>';
+                html2 += ' </a>' ;
+                html2 += ' </div>' ;
+                }
+                }
+                });  
+
+            html2 += ' <div class="box-for-collap">'
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image_other">';
                 html2 += '<h5 class="invisible-up-922">Mechanical Drawing & 3D Drawings</h5>';
                 html2 += '<h4 class="visible-up-922">Mechanical Drawing & 3D Drawings</h4>';    
@@ -454,7 +447,7 @@
             $.each(documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                  if(doc['main_cate_id'] != 2 && doc['main_cate_id'] != 3){
-                    if(doc['cate_id'] != 1 && doc['cate_id'] != 2 && doc['cate_id'] != 4 && doc['cate_id'] != 5 ){
+                    if(doc['cate_id'] != 1 && doc['cate_id'] != 2 && doc['cate_id'] != 4 && doc['cate_id'] != 5 && doc['cate_id'] != 46 && doc['cate_id'] != 38 ){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
                 html2 += '<div class="detail-downlode">';
                 html2 += '<p class="text-dark text-bold">'+doc['catename']+'</p>';
