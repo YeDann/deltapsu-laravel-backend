@@ -1005,20 +1005,20 @@ class FrontendController extends Controller
            
              array_push($productCodeArr,trim($datapro->pro_code));
              array_push($products, $datapro);
-             $optional_product = DB::table('product_optional_model as po')
-                    ->join('products as p', 'p.pro_id', '=', 'po.product_id')
-                    ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-                    ->where('pt.local',$prolang)
-                    ->where('p.enable_pro' ,1)
-                    ->where('po.product_id' ,$pro->pro_id)
-                    ->select('p.*','pt.*','po.optional_model as pro_code' )
-                    ->orderBy('p.created_at', 'desc')
-                    ->get();
-                    foreach($optional_product as $optional_model){
-                      if (!in_array(trim($optional_model->pro_code), $productCodeArr)) {
-                          array_push($products,$optional_model);
-                        }
-                    }
+            //  $optional_product = DB::table('product_optional_model as po')
+            //         ->join('products as p', 'p.pro_id', '=', 'po.product_id')
+            //         ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+            //         ->where('pt.local',$prolang)
+            //         ->where('p.enable_pro' ,1)
+            //         ->where('po.product_id' ,$pro->pro_id)
+            //         ->select('p.*','pt.*','po.optional_model as pro_code' )
+            //         ->orderBy('p.created_at', 'desc')
+            //         ->get();
+            //         foreach($optional_product as $optional_model){
+            //           if (!in_array(trim($optional_model->pro_code), $productCodeArr)) {
+            //               array_push($products,$optional_model);
+            //             }
+            //         }
         }
     
     }
