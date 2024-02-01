@@ -417,6 +417,9 @@
                 }
                 }
                 });  
+                html2 += '</div>';
+                html2 += ' </div>';
+                html2 += ' </div>';
 
             html2 += ' <div class="box-for-collap">'
                 html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
