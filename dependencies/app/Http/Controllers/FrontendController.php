@@ -1020,7 +1020,7 @@ class FrontendController extends Controller
                     foreach($optional_product as $optional){
                    
                       if (!in_array(trim($optional->optional_model), $productCodeArr)) {
-                        return dd($optional->optional_model);
+                        // return dd($optional->optional_model);
                           array_push($products,$optional);
                         }
                     }
