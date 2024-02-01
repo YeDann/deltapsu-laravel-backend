@@ -136,11 +136,8 @@
         -moz-appearance: none;
         background-position: right 50%;
         background-repeat: no-repeat;
-        background-image: url({{asset('frontend-asset/image/arrow-down.svg')
-    }
-    });
-    top: 6px;
-
+        background-image: url('{{asset(' frontend-asset/image/arrow-down.svg')}}');
+        top: 6px;
     }
 
     .select2-container--default .select2-selection--single .select2-selection__arrow b {
