@@ -6,30 +6,37 @@
         margin-top: 12px;
         display: block;
     }
+
     /* .tab-content{
         margin-top: 12px;
     } */
-    .search-space{
+    .search-space {
         margin-bottom: 24px;
-    }.nav-tabs .nav-link {
-    margin: 0 29px;
     }
-    .mr-b-1{
+
+    .nav-tabs .nav-link {
+        margin: 0 29px;
+    }
+
+    .mr-b-1 {
         margin-bottom: 1px;
     }
 
-    td .select-selected::before{
+    td .select-selected::before {
         top: 10px;
     }
+
     /* Point the arrow upwards when the select box is open (active): */
     .select-selected .select-arrow-active:after {
         border-color: transparent transparent #fff transparent;
         top: 7px;
     }
+
     /* active  */
     .select-arrow-active {
         border: 1px solid #0087DC;
     }
+
     /* style the items (options), including the selected item: */
     .select-items div,
     .select-selected {
@@ -44,9 +51,10 @@
         color: #000000;
         padding: 6px 26px;
         height: 32px;
-        
+
     }
-    .select-items{
+
+    .select-items {
         cursor: pointer;
         position: absolute;
         background-color: none;
@@ -57,17 +65,21 @@
         background-color: #E9E9E9 !important;
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
+
     /* Hide the items when the select box is closed: */
     .select-hide {
         display: none;
     }
-    .same-as-selected{
+
+    .same-as-selected {
         position: relative;
     }
+
     .select-items div:hover {
         background-color: #ffffff;
     }
-    .same-as-selected::after{
+
+    .same-as-selected::after {
         position: absolute;
         content: "\f00c";
         top: 6px;
@@ -76,48 +88,54 @@
         height: 0;
         font-family: 'FontAwesome';
     }
-    .datasheet-select{
+
+    .datasheet-select {
         padding: 24px 12px;
     }
-  
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 <style>
-  .select2-container .select2-selection--single {
-    height: 40px;
-    border-radius: 0px;
-   }
-   .select2-container .select2-selection--single .select2-selection__rendered{
-       padding-top: 6px;
-       padding-bottom: 6px
-   }
-   .select2-container--default .select2-selection--single .select2-selection__arrow{
-    font-size: 14px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-position: right 50%;
-    background-repeat: no-repeat;
-    background-image: url({{asset('frontend-asset/image/arrow-down.svg')}});
-    top: 6px;
-  
-   }
-   .select2-container--default .select2-selection--single .select2-selection__arrow b{
-       display: none;
-   }
-   .tab-box-lang{
-       padding: 10px;
-       border: 2px solid #E3EFF8;
-       border-left: 1px solid #E3EFF8;
-       border-right: 1px solid #E3EFF8;
-       border-bottom: 0px;
-       cursor: pointer;
-    
-   }
-   .tab-box-lang.active{
-     background-color: #0087DC;
-     color: #E9E9E9;
-   }
+    .select2-container .select2-selection--single {
+        height: 40px;
+        border-radius: 0px;
+    }
 
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        padding-top: 6px;
+        padding-bottom: 6px
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        font-size: 14px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-position: right 50%;
+        background-repeat: no-repeat;
+        background-image: url({{asset('frontend-asset/image/arrow-down.svg')
+    }
+    });
+    top: 6px;
+
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow b {
+        display: none;
+    }
+
+    .tab-box-lang {
+        padding: 10px;
+        border: 2px solid #E3EFF8;
+        border-left: 1px solid #E3EFF8;
+        border-right: 1px solid #E3EFF8;
+        border-bottom: 0px;
+        cursor: pointer;
+
+    }
+
+    .tab-box-lang.active {
+        background-color: #0087DC;
+        color: #E9E9E9;
+    }
 </style>
 @endsection
 @section('meta')
@@ -133,8 +151,10 @@
         <div class="container">
             <nav aria-label="breadcrumb" id="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['Installation_Manual_&_Datasheet_Download']}}</a></li>
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
+                            href="#">{{$staticContent['Installation_Manual_&_Datasheet_Download']}}</a></li>
                 </ol>
             </nav>
         </div>
@@ -143,78 +163,83 @@
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
 <section class="box-news ">
     <div class="container">
-        <h2 class="text-title-delta visible-tablets-up">{{$staticContent['Installation_Manual_&_Datasheet_Download']}}</h2>
+        <h2 class="text-title-delta visible-tablets-up">{{$staticContent['Installation_Manual_&_Datasheet_Download']}}
+        </h2>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['Installation_Manual_&_Datasheet_Download']}}</h3>
         <div class="row">
             <div class="col-xl-3 col-lg-4  col-md-12 mb-4 padding-mobile">
-                        <div class="search-filter-action border-2px">
-                        <p class="text-sixteen-dark">{{$staticContent['Search_By_Model_Name']}}</p>
-                        <div class="box-search-input  mr-3">
-                            <div class="box-search-icon">
-                                <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
-                            </div>
-                            <label for="key_mobile" class="searchinput-filters-input">
-                                {{-- <input type="text" id="key_model_input" placeholder="{{$staticContent['Search_By_Model_Name']}}"> --}}
-                                <select id="key_model_input" class="js-example-basic-single form-control" >
-                                    <option></option>
-                                    @foreach ($products as $pro)
-                                    <option value="{{$pro->pro_code}}" >{{$pro->pro_code}}</option> 
-                                    @endforeach
-                                </select>
-                                <input type="hidden" id="model_id_key" >
-                            </label>
+                <div class="search-filter-action border-2px">
+                    <p class="text-sixteen-dark">{{$staticContent['Search_By_Model_Name']}}</p>
+                    <div class="box-search-input  mr-3">
+                        <div class="box-search-icon">
+                            <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                         </div>
-                        <div class="search-filter-action-btn text-center">
-                            <button onclick="keySearch();" class="btn-filters btn-search">{{$staticContent['Search']}}</button>
-                        </div>
-                    </div>
-                    <h5 class="text-center pad-12px">{{$staticContent['Or']}}</h5>
-                    <div class="datasheet-select border-2px">
-                        <p class="text-dark text-bold mr-b-1">{{$staticContent['Type']}}</p>
-                         
-                            <select id="type_id" onchange="selectType();" class="form-control">
-                                @foreach ($subCategories as $sub)
-                                @if($loop->iteration == 1)
-                                <option value="{{$sub->sub_pro_id}}" selected>{{$sub->name}}</option> 
-                                 @else 
-                                <option value="{{$sub->sub_pro_id}}" >{{$sub->name}}</option> 
-                                 @endif 
+                        <label for="key_mobile" class="searchinput-filters-input">
+                            {{-- <input type="text" id="key_model_input"
+                                placeholder="{{$staticContent['Search_By_Model_Name']}}"> --}}
+                            <select id="key_model_input" class="js-example-basic-single form-control">
+                                <option></option>
+                                @foreach ($products as $pro)
+                                <option value="{{$pro->pro_code}}">{{$pro->pro_code}}</option>
                                 @endforeach
                             </select>
-                        
-                        <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Series']}}</p>
-                        
-                            <select id="serie_id" onchange="onSelectSeries();" class="form-control">
-                                <option value="0">{{$staticContent['Please_Select']}}*</option>
-                            </select>
-                       
-                        <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Model']}}</p>
-                       
-                            <select id="model_id" onchange="onSelectProduct();" class="form-control">
-                                <option value="0">{{$staticContent['Please_Select']}}*</option>
-                            </select>
-                            <input type="hidden" id="modelme1">
-                        
+                            <input type="hidden" id="model_id_key">
+                        </label>
                     </div>
+                    <div class="search-filter-action-btn text-center">
+                        <button onclick="keySearch();"
+                            class="btn-filters btn-search">{{$staticContent['Search']}}</button>
+                    </div>
+                </div>
+                <h5 class="text-center pad-12px">{{$staticContent['Or']}}</h5>
+                <div class="datasheet-select border-2px">
+                    <p class="text-dark text-bold mr-b-1">{{$staticContent['Type']}}</p>
+
+                    <select id="type_id" onchange="selectType();" class="form-control">
+                        @foreach ($subCategories as $sub)
+                        @if($loop->iteration == 1)
+                        <option value="{{$sub->sub_pro_id}}" selected>{{$sub->name}}</option>
+                        @else
+                        <option value="{{$sub->sub_pro_id}}">{{$sub->name}}</option>
+                        @endif
+                        @endforeach
+                    </select>
+
+                    <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Series']}}</p>
+
+                    <select id="serie_id" onchange="onSelectSeries();" class="form-control">
+                        <option value="0">{{$staticContent['Please_Select']}}*</option>
+                    </select>
+
+                    <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Model']}}</p>
+
+                    <select id="model_id" onchange="onSelectProduct();" class="form-control">
+                        <option value="0">{{$staticContent['Please_Select']}}*</option>
+                    </select>
+                    <input type="hidden" id="modelme1">
+
+                </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-12">
-               
-                    <div class="image-datasheet" id="content_pro">
-                    </div>
-                    
+
+                <div class="image-datasheet" id="content_pro">
+                </div>
+
             </div>
-        
+
             <div class="col-xl-6 col-lg-5 col-md-12 pl-2 collapse-padding-mobile">
                 <div class="invisible-up-922 text-center">
                     <h3 class="text-color-delta text-bold my-5">{{$staticContent['Downloads']}}</h3>
                 </div>
                 <div class="d-flex">
                     @foreach ($showlangOb as $ob)
-                <div class="tab-box-lang {{$loop->iteration == 1 ?'active':''}} tab{{$ob['langName']}}" id="tabdata{{$ob['langName']}}" onclick="changeTablang('{{$ob['langName']}}');">{{$ob['langFull']}}</div>
+                    <div class="tab-box-lang {{$loop->iteration == 1 ?'active':''}} tab{{$ob['langName']}}"
+                        id="tabdata{{$ob['langName']}}" onclick="changeTablang('{{$ob['langName']}}');">
+                        {{$ob['langFull']}}</div>
                     @endforeach
-                  
-                    
-               </div>
+
+
+                </div>
                 <div id="pro_docType" class="product-document-type" id="product-document-type">
                 </div>
             </div>
@@ -234,7 +259,7 @@
 });
 </script>
 <script>
-        var series =  <?= json_encode($series);?>;
+    var series =  <?= json_encode($series);?>;
         var products =  <?= json_encode($products);?>;
         var documents_cate =  <?= json_encode($documents_cate);?>;
         var documents =  <?= json_encode($documents);?>;
@@ -373,7 +398,7 @@
                 if(doc['local'] == lang){
                     if(doc['file'] != null && doc['file'] != '' ){
                   if(doc['product_id'] == model_id){ 
-                   if(doc['cate_id'] == 1 || doc['cate_id'] == 46 ){
+                   if(doc['cate_id'] == 1 || doc['cate_id'] == 46 || doc['cate_id'] == 38 ){
                
                      html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
                      html2 += '<div class="detail-downlode">';
