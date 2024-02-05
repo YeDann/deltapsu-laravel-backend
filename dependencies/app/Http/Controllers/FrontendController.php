@@ -981,6 +981,7 @@ class FrontendController extends Controller
     ->get();
 
     $products = [];
+    $productCodeArr = [];
     foreach($searchPro as $pro){
         $product_has_prm = DB::table('product_has_property as ph')
         ->whereIn('ph.type_id',[4,3,8,31])
@@ -990,7 +991,7 @@ class FrontendController extends Controller
         ->get();
         // return dd(count($product_has_prm));
         //Check Eror input content product
-        $productCodeArr = [];
+    
         if(count($product_has_prm) >= 4){
             array_push($arrproid, $pro->pro_id);
             $prolang =  self::checkLang($lang,$pro->pro_id);
@@ -1018,15 +1019,14 @@ class FrontendController extends Controller
                 
                 
                     foreach($optional_product as $optional){
-                   
-                      if (!in_array(trim($optional->optional_model), $productCodeArr)) {
-                        // return dd($optional->optional_model);
+                        if (!in_array(trim($optional->optional_model), $productCodeArr)) {
                           array_push($products,$optional);
                         }
                     }
         }
     
     }
+    $pro_new = self::removeDuplicates($products ,'pro_code');
 
 //    return dd($products);
     // return dd(count($products));
@@ -1114,7 +1114,7 @@ class FrontendController extends Controller
         ->with('certi_products',$certi_products)
         ->with('documents_cate',$documents_cate)
         ->with('section',$section)
-        ->with('products',$products)
+        ->with('products',$pro_new)
         ->with('filter_pro',$filter_pro)
         ->with('pd_field',$pd_field)
         ->with('product_has_property',$product_has_property)
@@ -1125,6 +1125,22 @@ class FrontendController extends Controller
         ->with('series',$series)
         ->with('se_id',$se_id);
     }
+
+    function removeDuplicates($array, $propertyName) {
+    $uniqueValues = array();
+    $resultArray = array();
+
+    foreach ($array as $item) {
+        $propertyValue = $item->$propertyName;
+
+        if (!in_array($propertyValue, $uniqueValues)) {
+            $uniqueValues[] = $propertyValue;
+            $resultArray[] = $item;
+        }
+    }
+    return $resultArray;
+   }
+
     public function loadPropoperty(Request $request)
     {
         // $data = $request->data;
@@ -1541,6 +1557,7 @@ class FrontendController extends Controller
         
             } 
         }
+        $pro_new = self::removeDuplicates($products ,'pro_code');
         $pd_field = DB::table('product_field as pf')
         ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
         ->where('pft.local', '=', $lang)
@@ -1575,7 +1592,7 @@ class FrontendController extends Controller
         ->with('section' ,$section)
         ->with('Categories' ,$Categories)
         ->with('pd_field' ,$pd_field)
-        ->with('products' ,$products);
+        ->with('products' ,$pro_new);
     }
     public function getProductByType(Request $request)
     {   $lang = App::getLocale();
@@ -1609,9 +1626,10 @@ class FrontendController extends Controller
         
             } 
         }
-
+        
+        $pro_new = self::removeDuplicates($products ,'pro_code');
         return response()->json([
-            'data' => $products
+            'data' => $pro_new
         ],200);
     }
     public function clearproductsection(Request $request){
@@ -4216,9 +4234,9 @@ class FrontendController extends Controller
         
             } 
         }
-     
+        $pro_new = self::removeDuplicates($products ,'pro_code');
         return response()->json([
-            'results' =>$products,
+            'results' =>$pro_new,
          ], 200);
 
        }
