@@ -5,12 +5,17 @@
         border-top: 2px solid #E3EFF8;
     }
 
-    img {
+    .content img {
         max-width: 100%;
     }
 
     .content b {
         font-weight: bold;
+    }
+
+    .content table img {
+        /* Your specific styles for images within tables */
+        /* If you want to ignore images inside tables, you can leave this empty */
     }
 </style>
 @endsection
