@@ -5,8 +5,8 @@
         border-top: 2px solid #E3EFF8;
     }
 
-    .table img {
-        max-width: auto !important;
+    .content .table p img {
+        max-width: 500%;
     }
 
     .content p img {
