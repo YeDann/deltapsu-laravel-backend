@@ -6,30 +6,37 @@
         margin-top: 12px;
         display: block;
     }
+
     /* .tab-content{
         margin-top: 12px;
     } */
-    .search-space{
+    .search-space {
         margin-bottom: 24px;
-    }.nav-tabs .nav-link {
-    margin: 0 29px;
     }
-    .mr-b-1{
+
+    .nav-tabs .nav-link {
+        margin: 0 29px;
+    }
+
+    .mr-b-1 {
         margin-bottom: 1px;
     }
 
-    td .select-selected::before{
+    td .select-selected::before {
         top: 10px;
     }
+
     /* Point the arrow upwards when the select box is open (active): */
     .select-selected .select-arrow-active:after {
         border-color: transparent transparent #fff transparent;
         top: 7px;
     }
+
     /* active  */
     .select-arrow-active {
         border: 1px solid #0087DC;
     }
+
     /* style the items (options), including the selected item: */
     .select-items div,
     .select-selected {
@@ -44,9 +51,10 @@
         color: #000000;
         padding: 6px 26px;
         height: 32px;
-        
+
     }
-    .select-items{
+
+    .select-items {
         cursor: pointer;
         position: absolute;
         background-color: none;
@@ -57,17 +65,21 @@
         background-color: #E9E9E9 !important;
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
+
     /* Hide the items when the select box is closed: */
     .select-hide {
         display: none;
     }
-    .same-as-selected{
+
+    .same-as-selected {
         position: relative;
     }
+
     .select-items div:hover {
         background-color: #ffffff;
     }
-    .same-as-selected::after{
+
+    .same-as-selected::after {
         position: absolute;
         content: "\f00c";
         top: 6px;
@@ -76,34 +88,37 @@
         height: 0;
         font-family: 'FontAwesome';
     }
-    .datasheet-select{
+
+    .datasheet-select {
         padding: 24px 12px;
     }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 <style>
-  .select2-container .select2-selection--single {
-    height: 40px;
-    border-radius: 0px;
-   }
-   .select2-container .select2-selection--single .select2-selection__rendered{
-       padding-top: 6px;
-       padding-bottom: 6px
-   }
-   .select2-container--default .select2-selection--single .select2-selection__arrow{
-    font-size: 14px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-position: right 50%;
-    background-repeat: no-repeat;
-    background-image: url({{asset('frontend-asset/image/arrow-down.svg')}});
-    top: 6px;
-  
-   }
-   .select2-container--default .select2-selection--single .select2-selection__arrow b{
-       display: none;
-   }
+    .select2-container .select2-selection--single {
+        height: 40px;
+        border-radius: 0px;
+    }
 
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        padding-top: 6px;
+        padding-bottom: 6px
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        font-size: 14px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-position: right 50%;
+        background-repeat: no-repeat;
+        background-image: url('{{asset(' frontend-asset/image/arrow-down.svg')}}');
+        top: 6px;
+
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow b {
+        display: none;
+    }
 </style>
 @endsection
 @section('meta')
@@ -119,20 +134,23 @@
         <div class="container">
             <nav aria-label="breadcrumb" id="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
                     {{-- <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a
                             href="#" data-toggle="dropdown" id="tools-dropdown">DOWNLOADS</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" id="tools-dropdown" class="text-bold">DOWNLOADS</a></li>
-                                <hr>
-                                <li><a href="{{route('index','catalogs')}}">CATALOGS</a></li>
-                                <li><a href="">PRODUCT DOCUMENTS</a></li>
-                              
-                                
-                              </ul>   
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="tools-dropdown" class="text-bold">DOWNLOADS</a></li>
+                            <hr>
+                            <li><a href="{{route('index','catalogs')}}">CATALOGS</a></li>
+                            <li><a href="">PRODUCT DOCUMENTS</a></li>
+
+
+                        </ul>
                     </li> --}}
-                    <li class="breadcrumb-item text-breadcrumb"><a href="{{route('index','partners')}}">{{$staticContent['Partners']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['Product_Documents']}}</a></li>
+                    <li class="breadcrumb-item text-breadcrumb"><a
+                            href="{{route('index','partners')}}">{{$staticContent['Partners']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
+                            href="#">{{$staticContent['Product_Documents']}}</a></li>
                 </ol>
             </nav>
         </div>
@@ -145,69 +163,70 @@
         <h3 class="text-title-delta visible-mobile">{{$staticContent['Product_Documents']}}</h3>
         <div class="row">
             <div class="col-xl-3 col-lg-4  col-md-12 mb-4 padding-mobile">
-                        <div class="search-filter-action border-2px">
-                        <p class="text-sixteen-dark">{{$staticContent['Search_By_Model_Name']}}</p>
-                        <div class="box-search-input  mr-3">
-                            <div class="box-search-icon">
-                                <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
-                            </div>
-                            <label for="key_mobile" class="searchinput-filters-input">
-                                <select id="key_model_input" class="js-example-basic-single form-control" >
-                                    <option></option>
-                                    @foreach ($products as $pro)
-                                    <option value="{{$pro->pro_code}}" >{{$pro->pro_code}}</option> 
-                                    @endforeach
-                                </select>
-                                <input type="hidden" id="model_id_key" >
-                            </label>
+                <div class="search-filter-action border-2px">
+                    <p class="text-sixteen-dark">{{$staticContent['Search_By_Model_Name']}}</p>
+                    <div class="box-search-input  mr-3">
+                        <div class="box-search-icon">
+                            <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                         </div>
-                        <div class="search-filter-action-btn text-center">
-                            <button onclick="keySearch();" class="btn-filters btn-search">{{$staticContent['Search']}}</button>
-                        </div>
-                    </div>
-                    <h5 class="text-center pad-12px">{{$staticContent['Or']}}</h5>
-                    <div class="datasheet-select border-2px">
-                        <p class="text-dark text-bold mr-b-1">{{$staticContent['Type']}}</p>
-                         
-                            <select id="type_id" onchange="selectType();" class="form-control">
-                                @foreach ($subCategories as $sub)
-                                @if($loop->iteration == 1)
-                                <option value="{{$sub->sub_pro_id}}" selected>{{$sub->name}}</option> 
-                                 @else 
-                                <option value="{{$sub->sub_pro_id}}" >{{$sub->name}}</option> 
-                                 @endif 
+                        <label for="key_mobile" class="searchinput-filters-input">
+                            <select id="key_model_input" class="js-example-basic-single form-control">
+                                <option></option>
+                                @foreach ($products as $pro)
+                                <option value="{{$pro->pro_code}}">{{$pro->pro_code}}</option>
                                 @endforeach
                             </select>
-                        
-                        <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Series']}}</p>
-                        
-                            <select id="serie_id" onchange="onSelectSeries();" class="form-control">
-                                <option value="0">{{$staticContent['Please_Select']}}*</option>
-                            </select>
-                       
-                        <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Model']}}</p>
-                       
-                            <select id="model_id" onchange="onSelectProduct();" class="form-control">
-                                <option value="0">{{$staticContent['Please_Select']}}*</option>
-                            </select>
-                        
+                            <input type="hidden" id="model_id_key">
+                        </label>
                     </div>
+                    <div class="search-filter-action-btn text-center">
+                        <button onclick="keySearch();"
+                            class="btn-filters btn-search">{{$staticContent['Search']}}</button>
+                    </div>
+                </div>
+                <h5 class="text-center pad-12px">{{$staticContent['Or']}}</h5>
+                <div class="datasheet-select border-2px">
+                    <p class="text-dark text-bold mr-b-1">{{$staticContent['Type']}}</p>
+
+                    <select id="type_id" onchange="selectType();" class="form-control">
+                        @foreach ($subCategories as $sub)
+                        @if($loop->iteration == 1)
+                        <option value="{{$sub->sub_pro_id}}" selected>{{$sub->name}}</option>
+                        @else
+                        <option value="{{$sub->sub_pro_id}}">{{$sub->name}}</option>
+                        @endif
+                        @endforeach
+                    </select>
+
+                    <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Series']}}</p>
+
+                    <select id="serie_id" onchange="onSelectSeries();" class="form-control">
+                        <option value="0">{{$staticContent['Please_Select']}}*</option>
+                    </select>
+
+                    <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Model']}}</p>
+
+                    <select id="model_id" onchange="onSelectProduct();" class="form-control">
+                        <option value="0">{{$staticContent['Please_Select']}}*</option>
+                    </select>
+
+                </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-12">
-                    <div class="image-datasheet" id="content_pro">
-                    </div>
-                    
+                <div class="image-datasheet" id="content_pro">
+                </div>
+
             </div>
-        
+
             <div class="col-xl-6 col-lg-5 col-md-12 pl-2 collapse-padding-mobile">
                 <div class="invisible-up-922 text-center">
                     <h3 class="text-color-delta text-bold my-5">{{$staticContent['Downloads']}}</h3>
                 </div>
                 <div id="pro_docType" class="product-document-type" id="product-document-type">
-   
+
+                </div>
             </div>
         </div>
-    </div>
 </section>
 
 
@@ -222,7 +241,7 @@
 });
 </script>
 <script>
-        var series =  <?= json_encode($series);?>;
+    var series =  <?= json_encode($series);?>;
         var products =  <?= json_encode($products);?>;
         var documents_cate =  <?= json_encode($documents_cate);?>;
         var documents =  <?= json_encode($documents);?>;
@@ -329,7 +348,8 @@
             });
             var html2 = "";
             $.each(documents_cate, function(index,cate_doc){
-             if(cate_doc['id'] == 1 || cate_doc['id'] == 2 || cate_doc['id'] == 4){
+
+              if( cate_doc['id'] == 2 || cate_doc['id'] == 4){
                 html2 += ' <div class="box-for-collap">'
                 html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
@@ -339,7 +359,7 @@
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image'+cate_doc['id']+'" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-            $.each(documents, function(index,doc){  
+              $.each(documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                 if(doc['cate_id'] == cate_doc['id']){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
@@ -359,11 +379,47 @@
                 }
                 }
                 });  
+
                 html2 += '</div>';
                 html2 += ' </div>';
                 html2 += ' </div>';
               }
+
+
             });
+
+            html2 += ' <div class="box-for-collap">'
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
+                html2 += '  href="#collapse-image1">';
+                html2 += '<h5 class="invisible-up-922">Manual</h5>';
+                html2 += '<h4 class="visible-up-922">Manual</h4>';    
+                html2 += '</div>';
+                html2 += ' <div id="collapse-image1" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
+                html2 += '<div class="force-overflow">';
+               $.each(documents, function(index,doc){  
+                if(doc['product_id'] == model_id){ 
+                if(doc['cate_id'] == 1 || doc['cate_id'] == 46 || doc['cate_id'] == 38){
+                html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
+                html2 += '<div class="detail-downlode">';
+                html2 += '<p class="text-dark text-bold">'+doc['catename']+'</p>';
+                if(doc['created_at'] != null){
+                html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} '+setformatdate(doc['created_at']) +'</p>';
+                }else{
+                    html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} - </p>';
+                }
+             
+                html2 += '</div>';
+                html2 += '<a href="{{route('downloadFIle')}}/'+doc['slug']+'/'+productKey(procode)+'" target="_blank">';
+                html2 += '<button class="btn-downlode ">{{$staticContent['Downloads']}}</button>';
+                html2 += ' </a>' ;
+                html2 += ' </div>' ;
+                }
+                }
+                });  
+                html2 += '</div>';
+                html2 += ' </div>';
+                html2 += ' </div>';
 
             html2 += ' <div class="box-for-collap">'
                 html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
@@ -394,7 +450,7 @@
             $.each(documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                  if(doc['main_cate_id'] != 2 && doc['main_cate_id'] != 3){
-                    if(doc['cate_id'] != 1 && doc['cate_id'] != 2 && doc['cate_id'] != 4 && doc['cate_id'] != 5 ){
+                    if(doc['cate_id'] != 1 && doc['cate_id'] != 2 && doc['cate_id'] != 4 && doc['cate_id'] != 5 && doc['cate_id'] != 46 && doc['cate_id'] != 38 ){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
                 html2 += '<div class="detail-downlode">';
                 html2 += '<p class="text-dark text-bold">'+doc['catename']+'</p>';
