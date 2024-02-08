@@ -16,6 +16,7 @@
     .content table img {
         /* Your specific styles for images within tables */
         /* If you want to ignore images inside tables, you can leave this empty */
+        max-width: none;
     }
 </style>
 @endsection
