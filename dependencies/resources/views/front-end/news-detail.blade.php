@@ -9,7 +9,11 @@
         max-width: auto !important;
     }
 
-    .content img {
+    .content p img {
+        max-width: 100%;
+    }
+
+    .content div img {
         max-width: 100%;
     }
 
