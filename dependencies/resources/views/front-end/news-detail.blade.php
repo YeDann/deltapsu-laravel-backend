@@ -5,7 +5,7 @@
         border-top: 2px solid #E3EFF8;
     }
 
-    .content img {
+    .content p img {
         max-width: 100%;
     }
 
