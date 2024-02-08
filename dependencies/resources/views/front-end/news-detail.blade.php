@@ -5,16 +5,16 @@
         border-top: 2px solid #E3EFF8;
     }
 
-    .content p img {
+    .table img {
+        max-width: auto !important;
+    }
+
+    .content img {
         max-width: 100%;
     }
 
     .content b {
         font-weight: bold;
-    }
-
-    .table img {
-        max-width: auto !important;
     }
 </style>
 @endsection
