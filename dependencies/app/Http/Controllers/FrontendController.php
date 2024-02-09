@@ -604,6 +604,7 @@ class FrontendController extends Controller
         }
         if($page =='partners'){ 
             $sectionId = session('partner_id');
+            self::checkExpiryLogin();
             if($sectionId == null){
                 return redirect()->route('index','login');
             }else{
@@ -833,6 +834,7 @@ class FrontendController extends Controller
   }
     public function loginpartner(){
         $sectionId = session('partner_id');
+        self::checkExpiryLogin();
         if($sectionId == null){
             return  view('front-end.login');
         }else{
@@ -842,6 +844,15 @@ class FrontendController extends Controller
     // public  function redirectFeedback(){
      
     // }
+
+    private function checkExpiryLogin(){
+           $expiry = session('expiry_partner');
+            $now = now();
+            if($now >= $expiry){
+                session()->forget(['partner_id', 'partner_firstname' ,'partner_lastname' ,'partner_lastname' ,'partner_phone' ,'partner_role' ,'partner_email']);
+                return redirect()->route('index','login');
+            }
+    }
 
     public function configurableProduct(){
     	$lang = App::getLocale();
@@ -2193,6 +2204,7 @@ class FrontendController extends Controller
     }
     public function productLaunchSchedule(){
         $sectionId = session('partner_id');
+        self::checkExpiryLogin();
         if($sectionId == null){
             return redirect()->route('index','login');
         }
@@ -2215,6 +2227,7 @@ class FrontendController extends Controller
     public function marketingResources(){
         $lang = App::getLocale();
         $sectionId = session('partner_id');
+        self::checkExpiryLogin();
         if($sectionId == null){
             return redirect()->route('index','login');
         }
@@ -2232,6 +2245,7 @@ class FrontendController extends Controller
         $lang = App::getLocale();
         $sectionId = session('partner_id');
         $roleId = session('partner_role');
+        self::checkExpiryLogin();
         if($sectionId == null){
             return redirect()->route('index','login');
         }
@@ -2258,6 +2272,7 @@ class FrontendController extends Controller
     public function saleKit(){
         $lang = App::getLocale();
         $sectionId = session('partner_id');
+        self::checkExpiryLogin();
         if($sectionId == null){
             return redirect()->route('index','login');
         }
@@ -2273,6 +2288,7 @@ class FrontendController extends Controller
     public function productCrossReference(){
         $lang = App::getLocale();
         $sectionId = session('partner_id');
+        self::checkExpiryLogin();
         if($sectionId == null){
             return redirect()->route('index','login');
         }
@@ -2294,6 +2310,7 @@ class FrontendController extends Controller
         ->where('pit.local' ,$lang)
         ->get();
         $sectionId = session('partner_id');
+        self::checkExpiryLogin();
         if($sectionId == null){
             return redirect()->route('index','login');
         }
@@ -2329,7 +2346,7 @@ class FrontendController extends Controller
         }
 
         $sectionId = session('partner_id');
-
+        self::checkExpiryLogin();
         if($sectionId == null){
             return redirect()->route('index','login');
         }
@@ -2340,6 +2357,7 @@ class FrontendController extends Controller
     }
     public function successStories(){
         $sectionId = session('partner_id');
+        self::checkExpiryLogin();
         if($sectionId == null){
             return redirect()->route('index','login');
         }
@@ -2360,6 +2378,7 @@ class FrontendController extends Controller
     public function addSuccessStories(){
         $lang = App::getLocale();
         $sectionId = session('partner_id');
+        self::checkExpiryLogin();
         if($sectionId == null){
             return redirect()->route('index','login');
         }
@@ -2376,6 +2395,7 @@ class FrontendController extends Controller
         $id = $this->validateInput($idPar ,'number',true);
         $lang = App::getLocale();
         $sectionId = session('partner_id');
+        self::checkExpiryLogin();
         if($sectionId == null){
             return redirect()->route('index','login');
         }
@@ -2412,6 +2432,7 @@ class FrontendController extends Controller
     }
     public function productDocLogin(){
         $sectionId = session('partner_id');
+        self::checkExpiryLogin();
         if($sectionId == null){
             return redirect()->route('index','login');
         }
@@ -3609,12 +3630,14 @@ class FrontendController extends Controller
                     $member_phone = $partner[0]->phone;
                     $member_email = $partner[0]->email;
                     $member_role =  $partner[0]->role;
+                    $expiry = now()->addMinutes(120);
                     session(['partner_id' => $member_id]);
                     session(['partner_firstname' => $member_firstname]);
                     session(['partner_lastname' => $member_lastname]);
                     session(['partner_phone' => $member_phone]);
                     session(['partner_role' => $member_role]);
                     session(['partner_email' => $member_email]);
+                    session(['expiry_partner' => $expiry]);
                 
                     return redirect()->route('index','partners')->with('flash_message', 'Login is Success');
     
