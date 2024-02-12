@@ -729,7 +729,7 @@ class FrontendController extends Controller
             return redirect()->route('index','subscribes');
          }
         if($page == 'logoutfrontend'){
-            session()->forget(['partner_id', 'partner_firstname' ,'partner_lastname' ,'partner_lastname' ,'partner_phone' ,'partner_role' ,'partner_email']);
+            session()->forget(['partner_id', 'partner_firstname' ,'partner_lastname' ,'partner_lastname' ,'partner_phone' ,'partner_role' ,'partner_email','expiry_partner']);
             return redirect()->back()->with('logout', 'successfully');
         }
         if($page =='feedback'){
@@ -851,11 +851,11 @@ class FrontendController extends Controller
             $now = now();
             if(isset($expiry)){
                 if($now >= $expiry){
-                    session()->forget(['partner_id', 'partner_firstname' ,'partner_lastname' ,'partner_lastname' ,'partner_phone' ,'partner_role' ,'partner_email']);
+                    session()->forget(['partner_id', 'partner_firstname' ,'partner_lastname' ,'partner_lastname' ,'partner_phone' ,'partner_role' ,'partner_email','expiry_partner']);
                     return redirect()->route('index','login');
                 }
             }else{
-                session()->forget(['partner_id', 'partner_firstname' ,'partner_lastname' ,'partner_lastname' ,'partner_phone' ,'partner_role' ,'partner_email']);
+                session()->forget(['partner_id', 'partner_firstname' ,'partner_lastname' ,'partner_lastname' ,'partner_phone' ,'partner_role' ,'partner_email','expiry_partner']);
                 return redirect()->route('index','login');
             }
       }
