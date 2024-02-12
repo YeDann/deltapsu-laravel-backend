@@ -845,14 +845,20 @@ class FrontendController extends Controller
      
     // }
 
+
     private function checkExpiryLogin(){
            $expiry = session('expiry_partner');
             $now = now();
-            if($now >= $expiry){
+            if(isset($expiry)){
+                if($now >= $expiry){
+                    session()->forget(['partner_id', 'partner_firstname' ,'partner_lastname' ,'partner_lastname' ,'partner_phone' ,'partner_role' ,'partner_email']);
+                    return redirect()->route('index','login');
+                }
+            }else{
                 session()->forget(['partner_id', 'partner_firstname' ,'partner_lastname' ,'partner_lastname' ,'partner_phone' ,'partner_role' ,'partner_email']);
                 return redirect()->route('index','login');
             }
-    }
+      }
 
     public function configurableProduct(){
     	$lang = App::getLocale();
