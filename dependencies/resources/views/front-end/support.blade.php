@@ -167,8 +167,8 @@
                 @endif
             </div>
         </div>
-        {{-- <h2 class="text-title-delta visible-tablets-up">{{$staticContent['what_type_of_support']}}</h2>
-        <h3 class="text-title-delta visible-mobile">{{$staticContent['what_type_of_support']}}</h3> --}}
+        <h2 class="text-title-delta visible-tablets-up">{{$staticContent['what_type_of_support']}}</h2>
+        <h3 class="text-title-delta visible-mobile">{{$staticContent['what_type_of_support']}}</h3>
         <form id="submitSupport" onsubmit="return validateForm(this)" action="{{route('SubmitContact')}}" method="POST">
             {{csrf_field()}}
             <p>{{$staticContent['support_from_up_text']}}</p>
