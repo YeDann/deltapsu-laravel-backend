@@ -276,6 +276,11 @@
     margin-left: 10px;
     color: #000;
   }
+
+  .f-size-enquiry-mobile {
+    font-size: 20px !important;
+    color: #000;
+  }
 </style>
 
 <div class="invisible-nav-minimize">
@@ -731,7 +736,7 @@
           {{$staticContent['Subscribe']}}</a>
       </div>
       <div class="d-flex">
-        <i class="icon-facon mr-1 icon-find-dis-blue f-size-enquiry"></i><a href="{{route('contactSupport')}}"
+        <i class="icon-facon mr-1 icon-find-dis-blue f-size-enquiry-mobile"></i><a href="{{route('contactSupport')}}"
           class="a-link-hover">
           {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}</a>
       </div>
