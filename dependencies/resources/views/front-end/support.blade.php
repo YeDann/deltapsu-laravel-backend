@@ -157,7 +157,7 @@
     style="background-image: url('{{asset('frontend-asset/image/Group 1834@2x.png')}}');">
 </div>
 <div class="box-support-detail mb-5">
-    <div class="container">
+    <div class="container mt-3">
         <div class="row">
             <div class="col-12">
                 @if(isset($static_content) && isset($static_content->content) )
