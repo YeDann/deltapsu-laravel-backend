@@ -3,7 +3,9 @@
 <link rel="stylesheet" href="{{asset('/frontend-asset/css/jquery.steps.css')}}">
 
 <link rel="stylesheet" href="{{asset('/frontend-asset/css/procompare.css')}}">
-{{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> --}}
+{{--
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> --}}
 <style type="text/css">
 	#configurable-t-0::after {
 		content: "\f2fb";
@@ -243,10 +245,12 @@
 	.d-p-cal {
 		display: table-cell !important;
 	}
-	.btn-enquiry:disabled{
-		color:#000;
+
+	.btn-enquiry:disabled {
+		color: #000;
 		background-color: #e7e9ed !important;
 	}
+
 	/* #PDFconfigurable{
 		display: none;
 	} */
@@ -273,8 +277,11 @@
 							<li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Tools']}}</a></li>
 							<hr>
 							<li><a href="{{route('productFinder')}}">{{$staticContent['Product_Selector']}}</a></li>
-							<li><a href="{{route('configurableproduct')}}">{{$staticContent['configurable_power_selector']}}</a></li>
-							<li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a></li>
+							<li><a
+									href="{{route('configurableproduct')}}">{{$staticContent['configurable_power_selector']}}</a>
+							</li>
+							<li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a>
+							</li>
 						</ul>
 					</li>
 					<li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
@@ -311,15 +318,18 @@
 					</div>
 					<div class="col-lg-4 col-md-12">
 						<div class="content">
-							<p class="mb-1"><b class="text-sixteen-delta">{{$staticContent['Highlights_Features']}}</b></p>
+							<p class="mb-1"><b class="text-sixteen-delta">{{$staticContent['Highlights_Features']}}</b>
+							</p>
 							<div class="text-info">
 							</div>
 							{{-- <p class="my-1"><b>LOBORTIS CONSEQUAT LIGULA</b></p> --}}
-							<p class="m-0"><span class="text-sixteen-delta c_delta"><b>{{$staticContent['Unit_Weight']}}</b></span>
+							<p class="m-0"><span
+									class="text-sixteen-delta c_delta"><b>{{$staticContent['Unit_Weight']}}</b></span>
 							</p>
 							<p class="c_delta_weight text-detail-describe m-0"></p>
 							<br>
-							<p class="m-0"><span class="text-sixteen-delta c_delta"><b>{{$staticContent['Dimensions']}} (L x W x
+							<p class="m-0"><span class="text-sixteen-delta c_delta"><b>{{$staticContent['Dimensions']}}
+										(L x W x
 										H)</b></span></p>
 							<p class="c_delta_mm text-detail-describe m-0"></p>
 							<p class="c_delta_inc text-detail-describe m-0"></p>
@@ -348,7 +358,8 @@
 								<h5 class="visible-up-922">{{$staticContent['Select_Output(s)']}}</h5>
 								<div class="slot ">
 								</div>
-								<button class="btn btn-subscribe btn-xs mt-2 ml-mobile-6px" id="addmore" onclick="addSlotOutput()">
+								<button class="btn btn-subscribe btn-xs mt-2 ml-mobile-6px" id="addmore"
+									onclick="addSlotOutput()">
 									<i class="zmdi zmdi-plus"></i>
 									{{$staticContent['Add_More_Output']}}
 								</button>
@@ -359,15 +370,15 @@
 										<label for="output_total">
 											<h5>{{$staticContent['Total_No_of_Output']}}</h5>
 										</label>
-										<input type="text" id="output_total" name="output_total" class="form-control" value="1"
-											disabled="disabled">
+										<input type="text" id="output_total" name="output_total" class="form-control"
+											value="1" disabled="disabled">
 									</div>
 									<div class="col-4 offset-4 column-total">
 										<label for="power">
 											<h5>{{$staticContent['Total_Output_Power']}}</h5>
 										</label>
-										<input type="text" id="power" name="power" class="form-control" value="" disabled="disabled"
-											placeholder="Total Power">
+										<input type="text" id="power" name="power" class="form-control" value=""
+											disabled="disabled" placeholder="Total Power">
 									</div>
 								</div>
 
@@ -375,13 +386,16 @@
 									<div class="col-lg-6 col-md-12 mt-3">
 										<label for="">
 											<h5>{{$staticContent['Option']}}
-												<span  class="wrp-icons">
-													<img id="option_ti"  class="align-baseline" src="{{asset('frontend-asset/image/tooltip.svg')}}"
+												<span class="wrp-icons">
+													<img id="option_ti" class="align-baseline"
+														src="{{asset('frontend-asset/image/tooltip.svg')}}"
 														data-toggle="tooltip" data-placement="top"
 														title="{{$staticContent['Inlet_Type_description']}}">
-												</span></h5>
+												</span>
+											</h5>
 										</label>
-										<select class="form-control" id="terminal" onchange="getToSummary();getToTerimal();">
+										<select class="form-control" id="terminal"
+											onchange="getToSummary();getToTerimal();">
 											<option value="1">T for American terminal</option>
 											<option value="2">E for European terminal</option>
 											<option value="3">C for C14</option>
@@ -391,16 +405,18 @@
 										<label for="">
 											<h5>{{$staticContent['Communication']}}
 												<span class="wrp-icons">
-													<img class="align-baseline" src="{{asset('frontend-asset/image/tooltip.svg')}}"
+													<img class="align-baseline"
+														src="{{asset('frontend-asset/image/tooltip.svg')}}"
 														data-toggle="tooltip" data-placement="top"
 														title="{{$staticContent['Communication_description']}}">
-												</span></h5>
+												</span>
+											</h5>
 										</label>
 										<select class="form-control" id="bus" onchange="getToSummary()">
 											{{-- <option selected="selected" value="0">Default PMBus</option>
-									<option value="1">RS232 adapter</option>
-									<option value="2">USB adapter</option>
-									<option value="3">RS485 adapter</option> --}}
+											<option value="1">RS232 adapter</option>
+											<option value="2">USB adapter</option>
+											<option value="3">RS485 adapter</option> --}}
 										</select>
 									</div>
 
@@ -410,17 +426,23 @@
 										<label for="">
 											<h5>{{$staticContent['Control_Code']}}
 												<span class="wrp-icons">
-													<img class="align-baseline" src="{{asset('frontend-asset/image/tooltip.svg')}}"
+													<img class="align-baseline"
+														src="{{asset('frontend-asset/image/tooltip.svg')}}"
 														data-toggle="tooltip" data-placement="top"
 														title="{{$staticContent['Control_Code_description']}}">
-												</span></h5>
+												</span>
+											</h5>
 										</label>
 										<select class="form-control" id="logic" onchange="getToSummary()">
-											<option selected="selected" value="0">{{$staticContent['Nomal_Logic_&_Normal_Fan_Direction']}}
+											<option selected="selected" value="0">
+												{{$staticContent['Nomal_Logic_&_Normal_Fan_Direction']}}
 											</option>
-											<option value="1">{{$staticContent['Reversed_Logic_&_Normal_Fan_Direction']}}</option>
-											<option value="2">{{$staticContent['Nomal_Logic_&_Reversed_Fan_Direction']}} </option>
-											<option value="3">{{$staticContent['Reversed_Logic_&_Reversed_Fan_Direction']}}</option>
+											<option value="1">
+												{{$staticContent['Reversed_Logic_&_Normal_Fan_Direction']}}</option>
+											<option value="2">{{$staticContent['Nomal_Logic_&_Reversed_Fan_Direction']}}
+											</option>
+											<option value="3">
+												{{$staticContent['Reversed_Logic_&_Reversed_Fan_Direction']}}</option>
 										</select>
 									</div>
 								</div>
@@ -445,9 +467,10 @@
 			<section>
 				<div class="heading-for-mobile text-center invisible-up-922">
 					<img class="img-fluid mb-2 img-step" src="{{asset('/frontend-asset/image/icon/Step3.svg')}}">
-					<h4 class="text-color-delta">{{$staticContent['Select_Parallel_Connection(s)']}}<span class="wrp-icons">
-							<img class="img-tooltip" src="{{asset('frontend-asset/image/tooltip.svg')}}" data-toggle="tooltip"
-								data-placement="top"
+					<h4 class="text-color-delta">{{$staticContent['Select_Parallel_Connection(s)']}}<span
+							class="wrp-icons">
+							<img class="img-tooltip" src="{{asset('frontend-asset/image/tooltip.svg')}}"
+								data-toggle="tooltip" data-placement="top"
 								title="Select Logic for remote on/off function. Normal logic is power supply default on, reserved logic is default off.">
 						</span></h4>
 				</div>
@@ -455,7 +478,8 @@
 					<div class="col-lg-8 col-md-12">
 						<h5 class="text-center visible-up-922">{{$staticContent['Select_Parallel_Connection(s)']}}
 							<span class="wrp-icons">
-								<img src="{{asset('frontend-asset/image/tooltip.svg')}}" data-toggle="tooltip" data-placement="top"
+								<img src="{{asset('frontend-asset/image/tooltip.svg')}}" data-toggle="tooltip"
+									data-placement="top"
 									title="Select Logic for remote on/off function. Normal logic is power supply default on, reserved logic is default off.">
 							</span>
 						</h5>
@@ -467,145 +491,158 @@
 									<td></td>
 									<td>Code</td>
 									<td>{{$staticContent['Slot']}}1</td>
-						<td>{{$staticContent['Slot']}}2</td>
-						<td>{{$staticContent['Slot']}}3</td>
-						<td>{{$staticContent['Slot']}}4</td>
-						<td>{{$staticContent['Slot']}}5</td>
-						<td>{{$staticContent['Slot']}}6</td>
-						</tr>
-						</thead>
-						<tbody>
-							<tr id="parallel0">
-								<td class="d-flex"><input type="radio" value="0" name="parallel" checked="checked"><label></label></td>
-								<td>0</td>
-								<td colspan="6"></td>
-							</tr>
-							<tr id="parallelA">
-								<td class="input d-flex"><input type="radio" value="A" name="parallel"><label></label></td>
-								<td>A</td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="4"></td>
-							</tr>
-							<tr id="parallelB">
-								<td class="input d-flex"><input type="radio" value="B" name="parallel"><label></label></td>
-								<td>B</td>
-								<td colspan="1"></td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="3"></td>
-							</tr>
-							<tr id="parallelC">
-								<td class="input d-flex"><input type="radio" value="C" name="parallel"><label></label></td>
-								<td>C</td>
-								<td colspan="2"></td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="2"></td>
-							</tr>
-							<tr id="parallelD">
-								<td class="input d-flex"><input type="radio" value="D" name="parallel"><label></label></td>
-								<td>D</td>
-								<td colspan="3"></td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="1"></td>
-							</tr>
-							<tr id="parallelE">
-								<td class="input d-flex"><input type="radio" value="E" name="parallel"><label></label></td>
-								<td>E</td>
-								<td colspan="4"></td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-							</tr>
-							<tr id="parallelF">
-								<td class="input d-flex"><input type="radio" value="F" name="parallel"><label></label></td>
-								<td>F</td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="2"></td>
-							</tr>
-							<tr id="parallelG">
-								<td class="input d-flex"><input type="radio" value="G" name="parallel"><label></label></td>
-								<td>G</td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="1"></td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="1"></td>
-							</tr>
-							<tr id="parallelH">
-								<td class="input d-flex"><input type="radio" value="H" name="parallel"><label></label></td>
-								<td>H</td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="2"></td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-							</tr>
-							<tr id="parallelI">
-								<td class="input d-flex"><input type="radio" value="I" name="parallel"><label></label></td>
-								<td>I</td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-							</tr>
-							<tr id="parallelJ">
-								<td class="input d-flex"><input type="radio" value="J" name="parallel"><label></label></td>
-								<td>J</td>
-								<td colspan="1"></td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="1"></td>
-							</tr>
-							<tr id="parallelK">
-								<td class="input d-flex"><input type="radio" value="K" name="parallel"><label></label></td>
-								<td>K</td>
-								<td colspan="1"></td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="1"></td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-							</tr>
-							<tr id="parallelL">
-								<td class="input d-flex"><input type="radio" value="L" name="parallel"><label></label></td>
-								<td>L</td>
-								<td colspan="2"></td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-								<td colspan="2" class="line">
-									<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-								</td>
-							</tr>
-						</tbody>
+									<td>{{$staticContent['Slot']}}2</td>
+									<td>{{$staticContent['Slot']}}3</td>
+									<td>{{$staticContent['Slot']}}4</td>
+									<td>{{$staticContent['Slot']}}5</td>
+									<td>{{$staticContent['Slot']}}6</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr id="parallel0">
+									<td class="d-flex"><input type="radio" value="0" name="parallel"
+											checked="checked"><label></label></td>
+									<td>0</td>
+									<td colspan="6"></td>
+								</tr>
+								<tr id="parallelA">
+									<td class="input d-flex"><input type="radio" value="A"
+											name="parallel"><label></label></td>
+									<td>A</td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="4"></td>
+								</tr>
+								<tr id="parallelB">
+									<td class="input d-flex"><input type="radio" value="B"
+											name="parallel"><label></label></td>
+									<td>B</td>
+									<td colspan="1"></td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="3"></td>
+								</tr>
+								<tr id="parallelC">
+									<td class="input d-flex"><input type="radio" value="C"
+											name="parallel"><label></label></td>
+									<td>C</td>
+									<td colspan="2"></td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="2"></td>
+								</tr>
+								<tr id="parallelD">
+									<td class="input d-flex"><input type="radio" value="D"
+											name="parallel"><label></label></td>
+									<td>D</td>
+									<td colspan="3"></td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="1"></td>
+								</tr>
+								<tr id="parallelE">
+									<td class="input d-flex"><input type="radio" value="E"
+											name="parallel"><label></label></td>
+									<td>E</td>
+									<td colspan="4"></td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+								</tr>
+								<tr id="parallelF">
+									<td class="input d-flex"><input type="radio" value="F"
+											name="parallel"><label></label></td>
+									<td>F</td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="2"></td>
+								</tr>
+								<tr id="parallelG">
+									<td class="input d-flex"><input type="radio" value="G"
+											name="parallel"><label></label></td>
+									<td>G</td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="1"></td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="1"></td>
+								</tr>
+								<tr id="parallelH">
+									<td class="input d-flex"><input type="radio" value="H"
+											name="parallel"><label></label></td>
+									<td>H</td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="2"></td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+								</tr>
+								<tr id="parallelI">
+									<td class="input d-flex"><input type="radio" value="I"
+											name="parallel"><label></label></td>
+									<td>I</td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+								</tr>
+								<tr id="parallelJ">
+									<td class="input d-flex"><input type="radio" value="J"
+											name="parallel"><label></label></td>
+									<td>J</td>
+									<td colspan="1"></td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="1"></td>
+								</tr>
+								<tr id="parallelK">
+									<td class="input d-flex"><input type="radio" value="K"
+											name="parallel"><label></label></td>
+									<td>K</td>
+									<td colspan="1"></td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="1"></td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+								</tr>
+								<tr id="parallelL">
+									<td class="input d-flex"><input type="radio" value="L"
+											name="parallel"><label></label></td>
+									<td>L</td>
+									<td colspan="2"></td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+									<td colspan="2" class="line">
+										<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+									</td>
+								</tr>
+							</tbody>
 						</table> --}}
 					</div>
 				</div>
@@ -619,232 +656,252 @@
 				<div id="configurable-summary">
 					<div class="d-flex flex-wrap border-2px-unmobile" id="savethis">
 						{{-- <div class="col-12"> --}}
-						<div class="summary-subbody">
-							<!-- <h5 class="text-color-delta">{{$staticContent['Factory_Model_Name']}} :</h5>
+							<div class="summary-subbody">
+								<!-- <h5 class="text-color-delta">{{$staticContent['Factory_Model_Name']}} :</h5>
 							<h3 class="factory text-normal"></h3> -->
 
-							<h5 class="text-color-delta">{{$staticContent['Customer_Model_Name']}} :</h5>
-							<h3 class="customer text-normal"></h3>
-						</div>
-						<div class="summary-subbody d-flex flex-wrap justify-content-start">
-							<div class="col-lg-3 col-md-12 img-summary-add" ></div>
-							<div class="col-lg-9 col-md-12" id="text-summary">
-								<div class="col-lg-4 col-md-12">
-									<p class="mb-1"><b class="text-sixteen-delta">{{$staticContent['Highlights_Features']}}</b></p>
-									<div class="text-info"></div>
-									<p class="m-0"><span
-											class="text-sixteen-delta c_delta"><b>{{$staticContent['Unit_Weight']}}</b></span></p>
-									<p class="c_delta_weight text-detail-describe m-0"></p>
-									<br>
-									<p class="m-0"><span class="text-sixteen-delta c_delta"><b>{{$staticContent['Dimensions']}} (L x W x
-												H)</b></span></p>
-									<p class="c_delta_mm text-detail-describe m-0"></p>
-									<p class="c_delta_inc text-detail-describe m-0"></p>
-								</div>
+								<h5 class="text-color-delta">{{$staticContent['Customer_Model_Name']}} :</h5>
+								<h3 class="customer text-normal"></h3>
 							</div>
-						</div>
-						<div class="summary-subbody w-100">
-							<h3>{{$staticContent['General_Description']}}</h3>
-							<div class="row add-space-mobile" style="">
-								<div class="col-lg-6 col-md-12">
-									<div class="describe-list">
-										<p class="text-sixteen-delta">{{$staticContent['Total_Output_Power']}} :</p>
-										<p class="text-detail-describe" id="sumpower">-</p>
-									</div>
-									<div class="describe-list">
-										<p class="text-sixteen-delta">{{$staticContent['Configuration_Modular_Parts']}}:</p>
-										<p class="text-detail-describe" id="customer"></p>
-										<p class="text-detail-describe" id="model-fac"></p>
-										<p class="text-detail-describe" style="display:none;" id="factory"></p>
-
-									</div>
-									<div class="describe-list">
-										<p class="text-sixteen-delta"># {{$staticContent['of_slots']}} :</p>
-										<p class="text-detail-describe" id="numoutput"></p>
-									</div>
-									<div class="describe-list">
-										<p class="text-sixteen-delta">{{$staticContent['Inlet_Type']}} :</p>
-										<p class="text-detail-describe" id="inlet"></p>
-									</div>
-									<div class="describe-list">
-										<p class="text-sixteen-delta">{{$staticContent['Communication']}} :</p>
-										<p class="text-detail-describe" id="commu"></p>
-									</div>
-									<div class="describe-list">
-										<p class="text-sixteen-delta">{{$staticContent['Control_Code']}}:</p>
-										<p class="text-detail-describe" id="control-code"></p>
-									</div>
-								</div>
-								<div class="col-lg-6 col-md-12 column-model">
-									<div class="describe-list">
-										<p class="text-sixteen-delta">{{$staticContent['Module(s)']}} :</p>
-										<div id="list-slot" class="text-detail-describe"></div>
-									</div>
-								</div>
-								<div class="col-lg-12 col-md-12 column-model">
-
-									<div id="bg-slot02">
-										<div class="preview d-flex " id="port02">
-										</div>
-									</div>
-									<div class="w-100">
-										<div class="" style="margin-top:24px;">
-											<p class="text-sixteen-delta">{{$staticContent['Parallel_Detail']}}</p>
-											<div id="data_table2_con"></div>
-											{{-- <table class="w-100 parallel"style="margin-top:12px;">
-														<thead>
-															<tr class="header-td">
-																<td ></td>
-																<td>Code</td>
-																<td>{{$staticContent['Slot']}}1</td>
-											<td>{{$staticContent['Slot']}}2</td>
-											<td>{{$staticContent['Slot']}}3</td>
-											<td>{{$staticContent['Slot']}}4</td>
-											<td>{{$staticContent['Slot']}}5</td>
-											<td>{{$staticContent['Slot']}}6</td>
-											</tr>
-											</thead>
-											<tbody>
-												<tr id="parallel0">
-													<td><input type="radio" value="0" name="parallel-2" checked="checked"><label></label></td>
-													<td>0</td>
-													<td colspan="6"></td>
-												</tr>
-												<tr id="parallelA">
-													<td class="input"><input type="radio" value="A" name="parallel-2"><label></label></td>
-													<td>A</td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="4"></td>
-												</tr>
-												<tr id="parallelB">
-													<td class="input"><input type="radio" value="B" name="parallel-2"><label></label></td>
-													<td>B</td>
-													<td colspan="1"></td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="3"></td>
-												</tr>
-												<tr id="parallelC">
-													<td class="input"><input type="radio" value="C" name="parallel-2"><label></label></td>
-													<td>C</td>
-													<td colspan="2"></td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="2"></td>
-												</tr>
-												<tr id="parallelD">
-													<td class="input"><input type="radio" value="D" name="parallel-2"><label></label></td>
-													<td>D</td>
-													<td colspan="3"></td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="1"></td>
-												</tr>
-												<tr id="parallelE">
-													<td class="input"><input type="radio" value="E" name="parallel-2"><label></label></td>
-													<td>E</td>
-													<td colspan="4"></td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-												</tr>
-												<tr id="parallelF">
-													<td class="input"><input type="radio" value="F" name="parallel-2"><label></label></td>
-													<td>F</td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="2"></td>
-												</tr>
-												<tr id="parallelG">
-													<td class="input"><input type="radio" value="G" name="parallel-2"><label></label></td>
-													<td>G</td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="1"></td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="1"></td>
-												</tr>
-												<tr id="parallelH">
-													<td class="input"><input type="radio" value="H" name="parallel-2"><label></label></td>
-													<td>H</td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="2"></td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-												</tr>
-												<tr id="parallelI">
-													<td class="input"><input type="radio" value="I" name="parallel-2"><label></label></td>
-													<td>I</td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-												</tr>
-												<tr id="parallelJ">
-													<td class="input"><input type="radio" value="J" name="parallel-2"><label></label></td>
-													<td>J</td>
-													<td colspan="1"></td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="1"></td>
-												</tr>
-												<tr id="parallelK">
-													<td class="input"><input type="radio" value="K" name="parallel-2"><label></label></td>
-													<td>K</td>
-													<td colspan="1"></td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="1"></td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-												</tr>
-												<tr id="parallelL">
-													<td class="input"><input type="radio" value="L" name="parallel-2"><label></label></td>
-													<td>L</td>
-													<td colspan="2"></td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-													<td colspan="2" class="line">
-														<div class="bg-box h-25 w-75 mx-auto rounded"></div>
-													</td>
-												</tr>
-											</tbody>
-											</table> --}}
-
-										</div>
+							<div class="summary-subbody d-flex flex-wrap justify-content-start">
+								<div class="col-lg-3 col-md-12 img-summary-add"></div>
+								<div class="col-lg-9 col-md-12" id="text-summary">
+									<div class="col-lg-4 col-md-12">
+										<p class="mb-1"><b
+												class="text-sixteen-delta">{{$staticContent['Highlights_Features']}}</b>
+										</p>
+										<div class="text-info"></div>
+										<p class="m-0"><span
+												class="text-sixteen-delta c_delta"><b>{{$staticContent['Unit_Weight']}}</b></span>
+										</p>
+										<p class="c_delta_weight text-detail-describe m-0"></p>
+										<br>
+										<p class="m-0"><span
+												class="text-sixteen-delta c_delta"><b>{{$staticContent['Dimensions']}}
+													(L x W x
+													H)</b></span></p>
+										<p class="c_delta_mm text-detail-describe m-0"></p>
+										<p class="c_delta_inc text-detail-describe m-0"></p>
 									</div>
 								</div>
 							</div>
-						</div>
+							<div class="summary-subbody w-100">
+								<h3>{{$staticContent['General_Description']}}</h3>
+								<div class="row add-space-mobile" style="">
+									<div class="col-lg-6 col-md-12">
+										<div class="describe-list">
+											<p class="text-sixteen-delta">{{$staticContent['Total_Output_Power']}} :</p>
+											<p class="text-detail-describe" id="sumpower">-</p>
+										</div>
+										<div class="describe-list">
+											<p class="text-sixteen-delta">
+												{{$staticContent['Configuration_Modular_Parts']}}:</p>
+											<p class="text-detail-describe" id="customer"></p>
+											<p class="text-detail-describe" id="model-fac"></p>
+											<p class="text-detail-describe" style="display:none;" id="factory"></p>
 
-						{{-- </div> --}}
+										</div>
+										<div class="describe-list">
+											<p class="text-sixteen-delta"># {{$staticContent['of_slots']}} :</p>
+											<p class="text-detail-describe" id="numoutput"></p>
+										</div>
+										<div class="describe-list">
+											<p class="text-sixteen-delta">{{$staticContent['Inlet_Type']}} :</p>
+											<p class="text-detail-describe" id="inlet"></p>
+										</div>
+										<div class="describe-list">
+											<p class="text-sixteen-delta">{{$staticContent['Communication']}} :</p>
+											<p class="text-detail-describe" id="commu"></p>
+										</div>
+										<div class="describe-list">
+											<p class="text-sixteen-delta">{{$staticContent['Control_Code']}}:</p>
+											<p class="text-detail-describe" id="control-code"></p>
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-12 column-model">
+										<div class="describe-list">
+											<p class="text-sixteen-delta">{{$staticContent['Module(s)']}} :</p>
+											<div id="list-slot" class="text-detail-describe"></div>
+										</div>
+									</div>
+									<div class="col-lg-12 col-md-12 column-model">
+
+										<div id="bg-slot02">
+											<div class="preview d-flex " id="port02">
+											</div>
+										</div>
+										<div class="w-100">
+											<div class="" style="margin-top:24px;">
+												<p class="text-sixteen-delta">{{$staticContent['Parallel_Detail']}}</p>
+												<div id="data_table2_con"></div>
+												{{-- <table class="w-100 parallel" style="margin-top:12px;">
+													<thead>
+														<tr class="header-td">
+															<td></td>
+															<td>Code</td>
+															<td>{{$staticContent['Slot']}}1</td>
+															<td>{{$staticContent['Slot']}}2</td>
+															<td>{{$staticContent['Slot']}}3</td>
+															<td>{{$staticContent['Slot']}}4</td>
+															<td>{{$staticContent['Slot']}}5</td>
+															<td>{{$staticContent['Slot']}}6</td>
+														</tr>
+													</thead>
+													<tbody>
+														<tr id="parallel0">
+															<td><input type="radio" value="0" name="parallel-2"
+																	checked="checked"><label></label></td>
+															<td>0</td>
+															<td colspan="6"></td>
+														</tr>
+														<tr id="parallelA">
+															<td class="input"><input type="radio" value="A"
+																	name="parallel-2"><label></label></td>
+															<td>A</td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="4"></td>
+														</tr>
+														<tr id="parallelB">
+															<td class="input"><input type="radio" value="B"
+																	name="parallel-2"><label></label></td>
+															<td>B</td>
+															<td colspan="1"></td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="3"></td>
+														</tr>
+														<tr id="parallelC">
+															<td class="input"><input type="radio" value="C"
+																	name="parallel-2"><label></label></td>
+															<td>C</td>
+															<td colspan="2"></td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="2"></td>
+														</tr>
+														<tr id="parallelD">
+															<td class="input"><input type="radio" value="D"
+																	name="parallel-2"><label></label></td>
+															<td>D</td>
+															<td colspan="3"></td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="1"></td>
+														</tr>
+														<tr id="parallelE">
+															<td class="input"><input type="radio" value="E"
+																	name="parallel-2"><label></label></td>
+															<td>E</td>
+															<td colspan="4"></td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+														</tr>
+														<tr id="parallelF">
+															<td class="input"><input type="radio" value="F"
+																	name="parallel-2"><label></label></td>
+															<td>F</td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="2"></td>
+														</tr>
+														<tr id="parallelG">
+															<td class="input"><input type="radio" value="G"
+																	name="parallel-2"><label></label></td>
+															<td>G</td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="1"></td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="1"></td>
+														</tr>
+														<tr id="parallelH">
+															<td class="input"><input type="radio" value="H"
+																	name="parallel-2"><label></label></td>
+															<td>H</td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="2"></td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+														</tr>
+														<tr id="parallelI">
+															<td class="input"><input type="radio" value="I"
+																	name="parallel-2"><label></label></td>
+															<td>I</td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+														</tr>
+														<tr id="parallelJ">
+															<td class="input"><input type="radio" value="J"
+																	name="parallel-2"><label></label></td>
+															<td>J</td>
+															<td colspan="1"></td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="1"></td>
+														</tr>
+														<tr id="parallelK">
+															<td class="input"><input type="radio" value="K"
+																	name="parallel-2"><label></label></td>
+															<td>K</td>
+															<td colspan="1"></td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="1"></td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+														</tr>
+														<tr id="parallelL">
+															<td class="input"><input type="radio" value="L"
+																	name="parallel-2"><label></label></td>
+															<td>L</td>
+															<td colspan="2"></td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+															<td colspan="2" class="line">
+																<div class="bg-box h-25 w-75 mx-auto rounded"></div>
+															</td>
+														</tr>
+													</tbody>
+												</table> --}}
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							{{--
+						</div> --}}
 					</div>
 				</div>
 				<button id="savedataauto" onclick="addToiframe()" class="d-none">Save to pdf</button>
@@ -882,8 +939,10 @@
 								<h6> Country <span style="color: red">*</span> :</h6>
 							</label>
 							<div class="">
-								<select name="country" class="form-control" onchange="selectCountry();" id="countryemailId" required>
-									<option value="0">{{$staticContent['Select']}} {{$staticContent['Country']}}</option>
+								<select name="country" class="form-control" onchange="selectCountry();"
+									id="countryemailId" required>
+									<option value="0">{{$staticContent['Select']}} {{$staticContent['Country']}}
+									</option>
 									@foreach ($countryemails as $email)
 									<option value="{{$email->country}}">{{$email->country}}</option>
 									@endforeach
@@ -896,7 +955,8 @@
 							</label>
 							<div class="">
 								<select name="state" class="form-control" id="stateId">
-									<option value="" data-color="red">{{$staticContent['Select']}} {{$staticContent['City_State']}}
+									<option value="" data-color="red">{{$staticContent['Select']}}
+										{{$staticContent['City_State']}}
 									</option>
 								</select>
 							</div>
@@ -909,8 +969,8 @@
 								<h6>Email <span style="color: red">*</span> :</h6>
 							</label>
 							<div class="">
-								<input type="email" name="email" id="input-email" aria-describedby="emailHelp" class="form-control"
-									required>
+								<input type="email" name="email" id="input-email" aria-describedby="emailHelp"
+									class="form-control" required>
 							</div>
 						</div>
 					</div>
@@ -919,8 +979,8 @@
 							<h6>Firstname, Lastname <span style="color: red">*</span> :</h6>
 						</label>
 						<div class="">
-							<input type="text" name="name" pattern="[A-Za-zก-๏\s]+" title="" id="name-sale" class="form-control"
-								required>
+							<input type="text" name="name" pattern="[A-Za-zก-๏\s]+" title="" id="name-sale"
+								class="form-control" required>
 						</div>
 					</div>
 					<div class="col-12">
@@ -960,23 +1020,27 @@
 						</div>
 					</div>
 					<div class="col-12">
-						<input class="inp-cbx" value="0" name="checkData" onchange="checkdata();" id="checkdataSub" type="checkbox"
-							style="display: none;" />
+						<input class="inp-cbx" value="0" name="checkData" onchange="checkdata();" id="checkdataSub"
+							type="checkbox" style="display: none;" />
 						<label class="cbx" for="checkdataSub"><span>
 								<svg width="12px" height="10px" viewbox="0 0 12 10">
 									<polyline points="1.5 6 4.5 9 10.5 1"></polyline>
 								</svg></span><span>Sign up for newsletter</span></label>
 
-								<div class="box-input-checkbox">
-                        <input class="inp-cbx" name="prichk" id="privacycheck" value="1" onclick="onacceptionPolicy()"  type="checkbox"
-                            style="display: none;" />
-                        <label class="cbx" for="privacycheck"><span>
-                                <svg width="12px" height="10px" viewbox="0 0 12 10">
-                                    <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                                </svg></span><span style="padding-left:9px;">  {{$staticContent['By_submitting_this_form']}} <a target="_blank" href="{{route('privacyPolicy')}}" class=" text-underline">{{$staticContent['Privacy_Policy']}}</a><text class="red">*</text></span> </label>
-                          </div>
+						<div class="box-input-checkbox">
+							<input class="inp-cbx" name="prichk" id="privacycheck" value="1"
+								onclick="onacceptionPolicy()" type="checkbox" style="display: none;" />
+							<label class="cbx" for="privacycheck"><span>
+									<svg width="12px" height="10px" viewbox="0 0 12 10">
+										<polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+									</svg></span><span style="padding-left:9px;">
+									{{$staticContent['By_submitting_this_form']}} <a target="_blank"
+										href="{{route('privacyPolicy')}}"
+										class=" text-underline">{{$staticContent['Privacy_Policy']}}</a><text
+										class="red">*</text></span> </label>
+						</div>
 					</div>
-					<div  class="red" id="error-massage">
+					<div class="red" id="error-massage">
 					</div>
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-subscribe">Send</button>
@@ -1006,7 +1070,7 @@
 @section('js')
 <script type="text/javascript" src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>
 <script>
-       $(document).ready(function() {
+	$(document).ready(function() {
         msieversion();
        });
       function msieversion() 
@@ -1035,7 +1099,7 @@
 
                 return false;
             }
-      </script>
+</script>
 <script type="text/javascript">
 	var verifyCallback = function(response) {
 	  // alert(response);
@@ -1044,8 +1108,8 @@
 	var onloadCallback = function() {
 	  grecaptcha.render('recap_vertify', {
 	//    'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-        // 'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
-								'sitekey' : '6LcPwHQpAAAAAL5BjEcFskLuvXnrUP9aNeeCv_9R',
+         'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
+								//'sitekey' : '6LcPwHQpAAAAAL5BjEcFskLuvXnrUP9aNeeCv_9R',
 		'callback' : verifyCallback,
 		'theme' : 'light'
 	  });
