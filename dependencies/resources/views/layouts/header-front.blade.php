@@ -890,7 +890,8 @@
 </div>
 <ul id="distributor" class="img-pop">
   <li>
-    <a href="{{route('contactSupport')}}" class="skype"><span>{{$staticContent['contact_us']}}</span><i
+    <a href="{{route('contactSupport')}}" class="skype"><span>
+        {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}</span><i
         class="demo-icon icon-facon icon-find-dis-blue"></i></a>
   </li>
 </ul>
