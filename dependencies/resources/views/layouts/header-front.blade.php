@@ -273,7 +273,7 @@
 
   .f-size-enquiry {
     font-size: 16px !important;
-    margin-left: 4px;
+    margin-left: 10px;
     color: #000;
   }
 </style>
@@ -312,7 +312,7 @@
       </a>
       <span class="fs-front">|</span>
       <a class="d-flex" href="{{route('contactSupport')}}">
-        <i class="icon-facon icon-find-dis-blue f-size-enquiry"></i>
+        <i class="icon-facon mr-1 icon-find-dis-blue f-size-enquiry"></i>
         <div class="link-nav-first">
           {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}
         </div>
