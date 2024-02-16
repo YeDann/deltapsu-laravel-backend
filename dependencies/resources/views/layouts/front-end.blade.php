@@ -352,8 +352,8 @@ $langch = str_replace('_', '-', app()->getLocale());
   var onloadCallback = function() {
     grecaptcha.render('recap_vertifygetGui', {
     //  'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-       // 'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
-      'sitekey' : '6LfGGV0pAAAAAKeEC0S7wzsPbAM1fvB3Tp2wtSYJ',
+       'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
+     //'sitekey' : '6LfGGV0pAAAAAKeEC0S7wzsPbAM1fvB3Tp2wtSYJ',
       'callback' : verifyCallbackData,
       'theme' : 'light'
     });
