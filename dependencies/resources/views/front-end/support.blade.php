@@ -158,8 +158,17 @@
 </div>
 <div class="box-support-detail mb-5">
     <div class="container">
-        <h2 class="text-title-delta visible-tablets-up">{{$staticContent['what_type_of_support']}}</h2>
-        <h3 class="text-title-delta visible-mobile">{{$staticContent['what_type_of_support']}}</h3>
+        <div class="row">
+            <div class="col-12">
+                @if(isset($static_content) && isset($static_content->content) )
+                <div class="content">
+                    <?php echo $static_content->content ?>
+                </div>
+                @endif
+            </div>
+        </div>
+        {{-- <h2 class="text-title-delta visible-tablets-up">{{$staticContent['what_type_of_support']}}</h2>
+        <h3 class="text-title-delta visible-mobile">{{$staticContent['what_type_of_support']}}</h3> --}}
         <form id="submitSupport" onsubmit="return validateForm(this)" action="{{route('SubmitContact')}}" method="POST">
             {{csrf_field()}}
             <p>{{$staticContent['support_from_up_text']}}</p>

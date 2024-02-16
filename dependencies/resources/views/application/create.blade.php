@@ -47,6 +47,11 @@
                                 <label for="">Application Example</label>
                                 <textarea name="content" class="jsnotenew"></textarea>
                             </div>
+
+                            <div class="form-group">
+                                <label for="">Content</label>
+                                <textarea name="content_2" class="jsnotenew"></textarea>
+                            </div>
                             <p style="color:#0087DC">Can use "Enter" to Begin new bullet or new row</p>
                             <div class="form-group">
                                 <label for="">Typical Application</label>

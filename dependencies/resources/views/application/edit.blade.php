@@ -87,6 +87,11 @@
                                             class="jsnotenew">{{isset($current->content)?$current->content :''}}</textarea>
                                     </div>
                                     <div class="form-group">
+                                        <label for="">Content</label>
+                                        <textarea name="content_2[{{$item->name}}]"
+                                            class="jsnotenew">{{isset($current->content_2)?$current->content_2 :''}}</textarea>
+                                    </div>
+                                    <div class="form-group">
                                         <p style="color:#0087DC">Can use "Enter" to Begin new bullet or new row</p>
                                         <label for="">Typical application</label>
                                         <textarea rows="4" name="overview[{{$item->name}}]"

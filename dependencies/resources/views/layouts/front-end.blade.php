@@ -434,10 +434,10 @@ if (!Array.prototype.findIndex) {
        $(window).scroll(function() {
           if ($(window).scrollTop() > 300) {
             $('#scrollUp').fadeIn();
-            $('#distributor').fadeIn();
+            // $('#distributor').fadeIn();
           } else {
             $('#scrollUp').fadeOut();
-            $('#distributor').fadeOut();
+            // $('#distributor').fadeOut();
           }
         });
        $('#scrollUp').click(function () {

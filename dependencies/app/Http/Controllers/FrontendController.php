@@ -1894,7 +1894,7 @@ class FrontendController extends Controller
         ->join('application_translation as apt','ap.id','=','apt.app_id')
         ->where('apt.local','=',$lang)
         ->where('ap.id' , $id)
-        ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,'apt.content' ,'apt.overview' ,'apt.overview_text')
+        ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,'apt.content','apt.content_2' ,'apt.overview' ,'apt.overview_text')
         ->orderBy('ap.order_seq' ,'asc')
         ->first();
 
@@ -1907,7 +1907,7 @@ class FrontendController extends Controller
         ->join('application_translation as apt','ap.id','=','apt.app_id')
         ->where('apt.local','=',$lang)
         ->where('ap.id','!=' , $id)
-        ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,'apt.content' ,'apt.overview')
+        ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,'apt.content' ,'apt.content_2' ,'apt.overview')
         ->orderBy('ap.order_seq' ,'asc')
         ->get();
         
@@ -2094,6 +2094,14 @@ class FrontendController extends Controller
         ->where('sct.local',  $lang)
         ->orderBy('sct.name', 'asc')
         ->get();
+
+        $static_content = DB::table('static_content as st')
+            ->join('static_content_translations as sct','st.sta_id','=','sct.sta_fk_id')
+            ->where('type_con_id',8)
+            ->select('st.*','sct.*')
+            ->where('sct.local','=',$lang)
+            ->first();
+
         
         $series =  DB::table('series_has_pro_categories as sc')
             ->join('series as s' ,'sc.se_id' ,'=' ,'s.se_id')
@@ -2121,6 +2129,7 @@ class FrontendController extends Controller
             ->with('arr_settype' ,$arr_settype)
             ->with('metatag' ,$metatag)
             ->with('subCategories' ,$subCategories)
+            ->with('static_content' ,$static_content)
             ->with('series' ,$series);
     }
     public function contactSalesOffices(){

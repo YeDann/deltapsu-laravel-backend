@@ -36,6 +36,7 @@
                             <span class="nav-main-link-name">Edit information</span>
                         </a>
                     </li>
+
                     <li class="nav-main-item">
                         <a class="nav-main-link {{(isset($menu) && $menu == 'featureProduct')?" active":""}}"
                             href="{{route('featureProduct')}}">
@@ -556,6 +557,12 @@
                 <span class="nav-main-link-name">CONTACT US</span>
             </a>
             <ul class="nav-main-submenu">
+                <li class="nav-main-item">
+                    <a class="nav-main-link {{(isset($menu) && $menu == 'static_content_8')?" active":""}}"
+                        href="{{route('static_content' ,8)}}" href="#">
+                        <span class="nav-main-link-name">Edit information</span>
+                    </a>
+                </li>
                 <li class="nav-main-item {{(isset($menu) && $menu == 'sales_offices')?" open":""}}">
                     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                         aria-expanded="false" href="#">
@@ -573,6 +580,7 @@
                     </ul>
                 </li>
                 <li class="nav-main-item {{(isset($menu) && $menu == 'distributors')?" open":""}}">
+
                     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
                         aria-expanded="false" href="#">
                         <span class="nav-main-link-name">Distributors</span>

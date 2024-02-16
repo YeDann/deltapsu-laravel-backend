@@ -78,6 +78,7 @@
 
                                 <div class="tab-pane {{($loop->iteration == 1)?'active':''}}"
                                     id="btabs-alt-static-{{$item->name}}" role="tabpanel">
+                                    @if($typeid != 8)
                                     <div class="form-group">
                                         <label for="example-select">Title</label>
                                         <input type="text"
@@ -86,6 +87,7 @@
                                             value="{{isset($current->title)? $current->title:''}}"
                                             placeholder=" Enter text...">
                                     </div>
+                                    @endif
                                     <div class="form-group">
                                         <label for="">Content</label>
                                         <textarea name="content[{{$item->name}}]"
@@ -96,7 +98,7 @@
                             </div>
                             @endif
                             <input type="hidden" name="filename[destop]" value="destop">
-                            @if($typeid != 5 && $typeid != 6)
+                            @if($typeid != 5 && $typeid != 6 && $typeid != 8)
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped table-vcenter">
                                     <thead>

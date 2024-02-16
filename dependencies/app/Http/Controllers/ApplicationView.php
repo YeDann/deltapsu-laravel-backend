@@ -124,6 +124,7 @@ class ApplicationView extends Controller
             $arrayfilesave = self::SaveimageArray($fileimage ,$arrfilename);
             $name = $request->name;
             $content = $request->content;
+            $content_2 = $request->content_2;
             $overview = $request->overview;
             $overview_text = $request->overview_text;
             $appId = DB::table('application')->insertGetID(
@@ -146,6 +147,7 @@ class ApplicationView extends Controller
                     "name" => $name,
                     "overview" => $overview,
                     "content" => $content,
+                    "content_2" => $content_2,
                     "overview_text" => $overview_text,
                     "local" => $lang
                 ]
@@ -231,6 +233,7 @@ class ApplicationView extends Controller
         } else {
             $name = $request->name;
             $content = $request->content;
+            $content_2 = $request->content_2;
             $overview = $request->overview;
             $overview_text = $request->overview_text;
             
@@ -256,6 +259,7 @@ class ApplicationView extends Controller
                     "name" => $name[$lang],
                     "overview" => $overview[$lang],
                     "content" => $content[$lang],
+                    "content_2"=> isset($content_2[$lang])? $content_2[$lang] :$content_2['en'],
                     "overview_text" => $overview_text[$lang],
                     
                 ]
@@ -267,6 +271,7 @@ class ApplicationView extends Controller
                         "name" => $name[$lang],
                         "overview" => $overview[$lang],
                         "content" => $content[$lang],
+                        "content_2"=> isset($content_2[$lang])? $content_2[$lang] :$content_2['en'],
                         "overview_text" => $overview_text[$lang],
                         "lang"=>$lang
                         

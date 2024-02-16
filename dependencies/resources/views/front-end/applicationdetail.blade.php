@@ -1,165 +1,200 @@
 @extends('layouts.front-end')
 @section('css')
 <style>
-
-
-    #slide-application .owl-item div{
+    #slide-application .owl-item div {
         height: 360px;
         background-size: cover;
         background-repeat: no-repeat;
 
     }
-    
-   
+
+
     #slide-application-mobile .owl-item div {
         height: 250px;
         background-size: cover;
         background-repeat: no-repeat;
     }
 
-    #slide-application .owl-dots,#slide-application-mobile .owl-dots {
+    #slide-application .owl-dots,
+    #slide-application-mobile .owl-dots {
         position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
     }
-    .image-slide{
+
+    .image-slide {
         padding-right: 18px;
     }
-    .app-text-detail{
+
+    .app-text-detail {
         padding-left: 18px;
     }
-    #related-product .item-related ,#related-product-mobile .item-related {
+
+    #related-product .item-related,
+    #related-product-mobile .item-related {
         width: 100%;
         height: 200px;
         border: 2px solid #E3EFF8;
         background-size: cover;
         background: no-repeat;
         text-align: center;
-     
+
     }
-    #related-product .item-related:hover,#related-product-mobile .item-related:hover{
+
+    #related-product .item-related:hover,
+    #related-product-mobile .item-related:hover {
         border: 2px solid #0087DC;
     }
 
-    #related-product .item-related img,#related-product-mobile .item-related img{
+    #related-product .item-related img,
+    #related-product-mobile .item-related img {
         padding-top: 10px;
-        max-width:100%;
+        max-width: 100%;
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 20px;
     }
- 
-    .item-related:hover .text-title-twenty-dark{
+
+    .item-related:hover .text-title-twenty-dark {
         color: #0087DC;
     }
+
     .item-related:hover .text-hover {
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
         visibility: visible;
     }
+
     .text-hover {
         visibility: hidden;
         line-height: 1;
-        color:#5F5F5F;
+        color: #5F5F5F;
         font-size: 14px;
-        
+
     }
-    .other-applications-grid{
+
+    .other-applications-grid {
         display: flex;
         flex-wrap: wrap;
     }
-    .other-applications-list{
+
+    .other-applications-list {
         height: auto;
         padding: 24px;
         border: 2px solid #E3EFF8;
         margin-bottom: 20px;
-        
+
     }
-    .other-applications-list img{
+
+    .other-applications-list img {
         width: 64px;
     }
-    .other-applications-grid-mobile{
+
+    .other-applications-grid-mobile {
         display: flex;
         flex-wrap: wrap;
     }
-    .other-applications-grid-mobile-list{
+
+    .other-applications-grid-mobile-list {
         border: 2px solid #E3EFF8;
         display: block;
-        margin:12px 0;
+        margin: 12px 0;
     }
+
     @media only screen and (max-width:1365px) {
-    
-    .other-applications-list{
-        flex: 0 0 0 30%;
-        margin: 12px;
-        padding: 10px;
-    }
-    
-}
-    @media only screen and (max-width:1200px) {
-    
-        .other-applications-list{
+
+        .other-applications-list {
             flex: 0 0 0 30%;
             margin: 12px;
             padding: 10px;
         }
-        
+
     }
+
+    @media only screen and (max-width:1200px) {
+
+        .other-applications-list {
+            flex: 0 0 0 30%;
+            margin: 12px;
+            padding: 10px;
+        }
+
+    }
+
     @media only screen and (max-width:992px) {
-    
-    .other-applications-grid-mobile-list{
 
+        .other-applications-grid-mobile-list {}
 
     }
-    
- }
 
-    @media (max-width:560px){
-        .other-applications-grid-mobile{
+    @media (max-width:560px) {
+        .other-applications-grid-mobile {
             grid-template-columns: 1fr;
         }
-   
-        #related-product-mobile{
+
+        #related-product-mobile {
             padding-left: 10px;
             padding-right: 10px;
         }
-     #product-selector-carousel-mobile .owl-prev ,#related-product-mobile .owl-prev{
-        left: -20px;
+
+        #product-selector-carousel-mobile .owl-prev,
+        #related-product-mobile .owl-prev {
+            left: -20px;
+        }
+
+        #product-selector-carousel-mobile .owl-next,
+        #related-product-mobile .owl-next {
+            right: -20px;
+        }
     }
-    #product-selector-carousel-mobile .owl-next,#related-product-mobile .owl-next{
-        right: -20px;
-    }
-    }
-    p b{
+
+    p b {
         font-weight: bold;
     }
-    .text-title-twenty-dark{
+
+    .text-title-twenty-dark {
         line-height: 1;
     }
-    .h-text-app{
-      /* height: 50px; */
-    width: 163px;
-    top: 50%;
-    left: 30%;
-    -webkit-transform: translate(30%, -50%);
-    -ms-transform: translate(30%, -50%);
-    transform: translate(30%, -50%);
-    text-align: left;
-    vertical-align: middle;
-    position: absolute;
-    word-break: break-all;
+
+    .h-text-app {
+        /* height: 50px; */
+        width: 163px;
+        top: 50%;
+        left: 30%;
+        -webkit-transform: translate(30%, -50%);
+        -ms-transform: translate(30%, -50%);
+        transform: translate(30%, -50%);
+        text-align: left;
+        vertical-align: middle;
+        position: absolute;
+        word-break: break-all;
     }
-    .app-middle-box{
+
+    .app-middle-box {
         display: flex;
         height: 90px;
         position: relative;
     }
-    .other-applications-grid-mobile-list img{
+
+    .other-applications-grid-mobile-list img {
         height: 70px;
     }
-    
+
+    .content img {
+        max-width: 100%;
+    }
+
+    .content b {
+        font-weight: bold;
+    }
+
+    .content table img {
+        /* Your specific styles for images within tables */
+        /* If you want to ignore images inside tables, you can leave this empty */
+        max-width: none;
+    }
 </style>
 @endsection
 @section('meta')
@@ -175,18 +210,23 @@
         <div class="container">
             <nav aria-label="breadcrumb" id="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-                            <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a
-                                href="#" data-toggle="dropdown" id="tools-dropdown"> {{$staticContent['Applications']}}</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Applications']}}</a></li>
-                                    <hr>
-                                @foreach ($navapplication as $app)
-                                <li><a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}">{{$app->name}}</a></li>
-                                @endforeach 
-                                </ul>   
-                        </li>
-                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$application->name}}</a></li>
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
+                            data-toggle="dropdown" id="tools-dropdown"> {{$staticContent['Applications']}}</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Applications']}}</a>
+                            </li>
+                            <hr>
+                            @foreach ($navapplication as $app)
+                            <li><a
+                                    href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}">{{$app->name}}</a>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
+                            href="#">{{$application->name}}</a></li>
                 </ol>
             </nav>
         </div>
@@ -195,12 +235,13 @@
 <div class="visible-up-922">
     <div class="banner-type-product-all-new item "
         style="background:linear-gradient(90deg, rgba(68,68,68,0.45702030812324934) 0%, rgba(255,255,255,0) 50%),url('{{config('app.url')}}/medias/categories/{{$application->banner}}') center no-repeat; background-size: cover;">
-            {{-- style="background-color: #818181;background-image: url('');" --}}
+        {{-- style="background-color: #818181;background-image: url('');" --}}
         <div class="container">
             <div class="box-banner-pro-type-all-new ">
                 <div class="text-middle ">
                     <h1 class="text-title-white">{{$application->name}}</h1>
-                    <div class="text-white">   <?php
+                    <div class="text-white">
+                        <?php
                         $str = $application->overview_text;
                         $st = explode("\n", $str);
                         for ($k = 0; $k < count($st); $k++) {
@@ -208,7 +249,8 @@
                                     . $st[$k]
                                     . '</div>';
                         }
-                        ?></div>
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -217,14 +259,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-6 image-slide">
-                <div id="slide-application" class="owl-carousel owl-theme">
-                    @foreach ($image as $item)
-                <div class="item {{($loop->iteration == 1)?"active":""}}" style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'"></div>
-                    @endforeach
+                    <div id="slide-application" class="owl-carousel owl-theme">
+                        @foreach ($image as $item)
+                        <div class="item {{($loop->iteration == 1)?" active":""}}"
+                            style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                        </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="col-6 app-text-detail">
-                     {{-- <h3 class="text-color-delta">{{$staticContent['Application_Description']}}</h3> --}}
+                    {{-- <h3 class="text-color-delta">{{$staticContent['Application_Description']}}</h3> --}}
                     <?php echo $application->content ?>
 
                     <h3 class="text-color-delta mt-3">{{$staticContent['Typical_Applications']}}</h3>
@@ -257,11 +301,18 @@
                             echo '</ul>';
 
                         ?>
-             
+
                     </div>
                 </div>
             </div>
-            
+            <div class="row">
+                <div class="col-12">
+                    <div class="content">
+                        <?php echo $application->content_2 ?>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="box-relate-product ">
@@ -270,31 +321,31 @@
             <div id="related-product" class="owl-carousel owl-theme ft-products-body owl-loaded owl-drag mr-b-12px">
                 @foreach ($relatedApp as $serie)
                 <div class="item-related d-flex">
-                    <a style="color:inherit;" class="" href="{{ route('productBySeries',[$serie->title,$serie->se_id])}}">
-                    <div class="m-auto">
-                        {{-- <img src="{{asset('frontend-asset/image/CliQ VA@2x.png')}}" alt=""> --}}
-                        @if(isset($serie->image))
-                        <img 
-                            src="{{config('app.url')}}/medias/categories/{{$serie->image}}" alt="">
-                        @else
-                        <img  src="{{asset('frontend-asset/image/blank.png')}}" alt="">
-                        @endif
-                      <p class="text-title-twenty-dark">{{$serie->title}}</p>
-                     
-                        {{-- <p class="text-hover">{!!
-                            iconv_substr(strip_tags($serie->overview_content),0,90,'UTF-8') !!} ...</p> --}}
-                    </div>
-                   </a>
+                    <a style="color:inherit;" class=""
+                        href="{{ route('productBySeries',[$serie->title,$serie->se_id])}}">
+                        <div class="m-auto">
+                            {{-- <img src="{{asset('frontend-asset/image/CliQ VA@2x.png')}}" alt=""> --}}
+                            @if(isset($serie->image))
+                            <img src="{{config('app.url')}}/medias/categories/{{$serie->image}}" alt="">
+                            @else
+                            <img src="{{asset('frontend-asset/image/blank.png')}}" alt="">
+                            @endif
+                            <p class="text-title-twenty-dark">{{$serie->title}}</p>
+
+                            {{-- <p class="text-hover">{!!
+                                iconv_substr(strip_tags($serie->overview_content),0,90,'UTF-8') !!} ...</p> --}}
+                        </div>
+                    </a>
                 </div>
                 @endforeach
-              
+
             </div>
-            
+
             <p style="color:#9098a9;" class="text-center">{{$staticContent['This_is_general_information']}}</p>
             <div class="in-div-center mt-4 mb-5">
-                    <a href="{{route('contactSupport')}}"class="btn btn-border-delta">{{$staticContent['contact_us']}}</a>
+                <a href="{{route('contactSupport')}}" class="btn btn-border-delta">{{$staticContent['contact_us']}}</a>
             </div>
-            
+
         </div>
     </div>
     <div class="box-other-applications pb-5 ">
@@ -303,19 +354,20 @@
             <div class="row">
                 @foreach ($otherapp as $app)
                 <div class="col-lg-3">
-                    <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}" class="other-applications-list media">
-                    
+                    <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}"
+                        class="other-applications-list media">
+
                         <div class="app-middle-box align-self-center">
-                        <img class="mr-3" src="{{config('app.url')}}/medias/categories/{{$app->color_icon}}" >
-                        <div class="h-text-app">
-                            <h6 class="text-title-dark">{{$app->name}} </h6>
+                            <img class="mr-3" src="{{config('app.url')}}/medias/categories/{{$app->color_icon}}">
+                            <div class="h-text-app">
+                                <h6 class="text-title-dark">{{$app->name}} </h6>
+                            </div>
                         </div>
-                        </div>
-                     
-                      
+
+
                     </a>
                 </div>
-              
+
                 @endforeach
             </div>
         </div>
@@ -327,7 +379,7 @@
     </div>
     <div class="container">
         <h3 class="text-center text-color-delta mt-4">{{$application->name}}</h3>
-        <p class="text-center ">  
+        <p class="text-center ">
             <?php
             $str = $application->overview_text;
             $st = explode("\n", $str);
@@ -336,12 +388,13 @@
                         . $st[$k]
                         . '</div>';
             }
-            ?></p>
-   
- 
+            ?>
+        </p>
+
+
         {{-- <h4 class="text-color-delta">{{$staticContent['Application_Description']}}</h4> --}}
         <div class="text-editor">
-        <?php echo $application->content ?>
+            <?php echo $application->content ?>
         </div>
         <h4 class="text-color-delta mt-4">{{$staticContent['Typical_Applications']}}</h4>
         <div class="row type-applications">
@@ -377,55 +430,58 @@
         <div class="d-flex">
             <div id="slide-application-mobile" class="owl-carousel owl-theme mx-auto my-4">
                 @foreach ($image as $item)
-                <div class="item {{($loop->iteration == 1)?"active":""}}" style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'"></div>
+                <div class="item {{($loop->iteration == 1)?" active":""}}"
+                    style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                </div>
                 @endforeach
             </div>
         </div>
         <h3 class="text-title-delta">{{$staticContent['Related_Product_Series']}}</h3>
         <div>
-            
+
         </div>
         <div id="related-product-mobile" class="owl-carousel owl-theme ft-products-body owl-loaded owl-drag mr-b-12px">
             @foreach ($relatedApp as $serie)
             <div class="item-related d-flex">
                 <a style="color:inherit;" class="" href="{{ route('productBySeries',[$serie->title,$serie->se_id])}}">
-                <div class="m-auto">
-                    @if(isset($serie->image))
-                    <img 
-                        src="{{config('app.url')}}/medias/categories/{{$serie->image}}" alt="">
-                    @else
-                    <img  src="{{asset('frontend-asset/image/blank.png')}}" alt="">
-                    @endif
-                  <p class="text-title-twenty-dark">{{$serie->title}}</p>
-                    {{-- <p class="text-hover">{!!  iconv_substr(strip_tags($serie->overview_content),0,90,'UTF-8') !!} ...</p> --}}
-                </div>
-                <div class="d-"></div>
+                    <div class="m-auto">
+                        @if(isset($serie->image))
+                        <img src="{{config('app.url')}}/medias/categories/{{$serie->image}}" alt="">
+                        @else
+                        <img src="{{asset('frontend-asset/image/blank.png')}}" alt="">
+                        @endif
+                        <p class="text-title-twenty-dark">{{$serie->title}}</p>
+                        {{-- <p class="text-hover">{!! iconv_substr(strip_tags($serie->overview_content),0,90,'UTF-8')
+                            !!} ...</p> --}}
+                    </div>
+                    <div class="d-"></div>
                 </a>
             </div>
             @endforeach
         </div>
         <p style="color:#9098a9;" class="text-center mt-4">{{$staticContent['This_is_general_information']}}</p>
         <div class="in-div-center my-3">
-        <a href="{{route('contactSupport')}}"class="btn btn-border-delta mb-3">{{$staticContent['contact_us']}}</a>
+            <a href="{{route('contactSupport')}}" class="btn btn-border-delta mb-3">{{$staticContent['contact_us']}}</a>
         </div>
         <h3 class="text-title-delta">{{$staticContent['Other_Application']}}</h3>
         <div class="container">
-             <div  class="row">
+            <div class="row">
                 @foreach ($otherapp as $app)
-                
+
                 <div class="col-md-6">
-                    <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}" class="other-applications-grid-mobile-list">
-                        <img class="center my-2" src="{{config('app.url')}}/medias/categories/{{$app->color_icon}}" >
+                    <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}"
+                        class="other-applications-grid-mobile-list">
+                        <img class="center my-2" src="{{config('app.url')}}/medias/categories/{{$app->color_icon}}">
                         <h6 class="text-title-dark text-center">{{$app->name}}</h6>
                     </a>
                 </div>
-        
+
                 @endforeach
-             </div>
+            </div>
         </div>
-      
-    </div> 
-    
+
+    </div>
+
 </div>
 
 

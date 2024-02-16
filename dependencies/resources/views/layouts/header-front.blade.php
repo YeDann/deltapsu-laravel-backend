@@ -270,6 +270,12 @@
     height: 28px;
     margin-top: -2px;
   }
+
+  .f-size-enquiry {
+    font-size: 16px !important;
+    margin-left: 4px;
+    color: #000;
+  }
 </style>
 
 <div class="invisible-nav-minimize">
@@ -295,6 +301,7 @@
         class="fs-front">/</span> <a href="{{route('index','logoutfrontend')}}"
         class="pad-logout fs-front">{{$staticContent['Logout']}}</a>
       <span class="fs-front">|</span>
+
       @endif
       <a class="d-flex" onclick="subscribe()" data-toggle="modal" data-target="#subscribe-modal">
         <img class="mr-1" src="{{asset('frontend-asset/image/sub-new.svg')}}" alt="">
@@ -303,6 +310,14 @@
           {{isset($staticContent['Subscribe']) ? $staticContent['Subscribe']:'' }}
         </div>
       </a>
+      <span class="fs-front">|</span>
+      <a class="d-flex" href="{{route('contactSupport')}}">
+        <i class="icon-facon icon-find-dis-blue f-size-enquiry"></i>
+        <div class="link-nav-first">
+          {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}
+        </div>
+      </a>
+
       <span class="fs-front">|</span>
       <a class="lang-space link-nav-first dropdown-toggle text-uppercase" id="dropdown06" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
@@ -890,7 +905,8 @@
 </div>
 <ul id="distributor" class="img-pop">
   <li>
-    <a href="{{route('contactSupport')}}" class="skype"><span>{{$staticContent['contact_us']}}</span><i
+    <a href="{{route('contactSupport')}}" class="skype"><span>
+        {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}</span><i
         class="demo-icon icon-facon icon-find-dis-blue"></i></a>
   </li>
 </ul>

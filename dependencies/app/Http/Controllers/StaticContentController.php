@@ -35,6 +35,7 @@ class StaticContentController extends Controller
            $menuName = 'Home';
            $menu  = 'static_content';
            $submenu  = '';
+        
         if($typeid == 5 ){
             $menuName = 'setting';
             $menu  = 'privacyPoli';
@@ -46,6 +47,11 @@ class StaticContentController extends Controller
             $menuName = 'Resource';
             $menu  = 'faq';
             $submenu  = 'faqbanner';
+        }
+        else if($typeid == 8 ){
+            $menuName = 'contact_us';
+            $menu  = 'static_content_8';
+            $menu  = '';
         }
         
 
@@ -182,7 +188,7 @@ class StaticContentController extends Controller
             DB::table('static_content_translations')->insert(
                 [
                     "sta_fk_id" => $id,
-                    "title" => $name[$lang],
+                    "title" => isset($name[$lang]) ? $name[$lang]:'' ,
                     "content" => $content[$lang],
                     "local" => $lang
                 ]
