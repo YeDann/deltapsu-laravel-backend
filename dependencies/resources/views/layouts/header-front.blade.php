@@ -731,6 +731,11 @@
           {{$staticContent['Subscribe']}}</a>
       </div>
       <div class="d-flex">
+        <i class="icon-facon mr-1 icon-find-dis-blue f-size-enquiry"></i><a href="{{route('contactSupport')}}"
+          class="a-link-hover">
+          {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}</a>
+      </div>
+      <div class="d-flex">
         <div class="dropdown">
           <a class="dropdown-toggle cur-lang-new-g" data-toggle="dropdown">
             <img class="img-icon-golang" src="{{asset('frontend-asset/image/icon/Global.svg')}}">
