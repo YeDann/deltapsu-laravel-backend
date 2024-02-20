@@ -58,6 +58,35 @@
     height: 20px;
   }
 
+  .img-pop-destop {
+    list-style: none;
+    position: fixed;
+    top: 50%;
+    right: 0%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    z-index: 99;
+  }
+
+
+  .img-pop-destop li a {
+    display: block;
+    margin-left: -2px;
+    border: 2px solid #0087DC;
+    background: #FFF;
+    margin-bottom: 1em;
+    -webkit-transition: all .4s ease;
+    transition: all .4s ease;
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    padding: 8px;
+    width: 71px;
+    font-size: 16px;
+    background-color: #0087DC;
+    text-align: center;
+  }
+
   .img-pop {
     list-style: none;
     position: fixed;
@@ -119,25 +148,10 @@
     margin-left: 4px;
   }
 
-  .img-pop li .spotify {
-    background: rgba(39, 174, 96, 0.1);
-    border-color: #27ae60;
-    color: #27ae60;
+  .demo-icon-destop {
+    font-size: 35px;
   }
 
-  .img-pop li .spotify:hover {
-    background: #27ae60;
-  }
-
-  .img-pop li .soundcloud {
-    background: rgba(230, 126, 34, 0.1);
-    border-color: #e67e22;
-    color: #e67e22;
-  }
-
-  .img-pop li .soundcloud:hover {
-    background: #e67e22;
-  }
 
   .img-pop li .skype {
     background: #E3EFF8;
@@ -149,15 +163,6 @@
     background: #0087DC;
   }
 
-  .img-pop li .dribbble {
-    background: rgba(210, 82, 127, 0.1);
-    border-color: #D2527F;
-    color: #D2527F;
-  }
-
-  .img-pop li .dribbble:hover {
-    background: #d2527f;
-  }
 
   .fs-front {
     font-size: 16px;
@@ -913,13 +918,30 @@
     </div>
   </div>
 </div>
-<ul id="distributor" class="img-pop">
-  <li>
-    <a href="{{route('contactSupport')}}" class="skype"><span>
-        {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}</span><i
-        class="demo-icon icon-facon icon-find-dis-blue"></i></a>
-  </li>
-</ul>
+<div class="visible-tablets-up">
+  <ul id="distributor" class="img-pop-destop">
+    <li>
+      <a href="{{route('contactSupport')}}" class="skype">
+        <i class="demo-icon-destop icon-facon icon-find-dis-blue"></i>
+        <span>
+          Sales
+        </span>
+        <span>
+          Inquiry
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="visible-mobile">
+  <ul id="distributor" class="img-pop">
+    <li>
+      <a href="{{route('contactSupport')}}" class="skype"><span>
+          {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}</span><i
+          class="demo-icon icon-facon icon-find-dis-blue"></i></a>
+    </li>
+  </ul>
+</div>
 
 
 <div class="modal fade p-1" id="downloadgui-modal" tabindex="-1" role="dialog" aria-labelledby="subscribe-modal-title"
