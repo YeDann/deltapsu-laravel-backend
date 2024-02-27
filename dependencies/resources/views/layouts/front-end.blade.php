@@ -217,7 +217,7 @@ $langch = str_replace('_', '-', app()->getLocale());
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments)};
-    console.log('test')
+    // console.log('test')
 
     gtag('consent', 'default', {
       'ad_storage': 'denied',
@@ -251,7 +251,7 @@ $langch = str_replace('_', '-', app()->getLocale());
   <script type="text/javascript">
     function cwcCookieWrapper() {
       if (window?.cwcIsUserAccept === undefined) return
-      console.log(window.cwcIsUserAccept('analytics'),'window.cwcIsUserAccep');
+      // console.log(window.cwcIsUserAccept('analytics'),'window.cwcIsUserAccep');
       if (window.cwcIsUserAccept('analytics')) {
         gtag('consent', 'update', {
           'analytics_storage': 'granted'
