@@ -72,19 +72,27 @@
   .img-pop-destop li a {
     display: block;
     margin-left: -2px;
-    border: 2px solid #0087DC;
-    background: #FFF;
     margin-bottom: 1em;
     -webkit-transition: all .4s ease;
     transition: all .4s ease;
-    color: #fff;
     text-decoration: none;
     position: relative;
-    padding: 8px;
-    width: 71px;
+    padding: 4px;
+    width: 43px;
     font-size: 16px;
-    background-color: #0087DC;
+    background: #E3EFF8;
+    border: 2px solid #0087DC;
+    color: #0087DC;
     text-align: center;
+    height: 146px;
+    border-radius: 10px 0 0 10px;
+  }
+
+  .img-pop-destop li a span {
+    display: block;
+    white-space: nowrap;
+    transform: rotate(90deg);
+    margin-top: 10px;
   }
 
   .img-pop {
@@ -99,7 +107,7 @@
 
   .img-pop li a {
     display: block;
-    margin-left: -2px;
+    margin-left: 0px;
     height: 60px;
     width: 60px;
     border-radius: 25px 0 0 25px;
@@ -110,7 +118,7 @@
     transition: all .4s ease;
     color: #2980b9;
     text-decoration: none;
-    line-height: 60px;
+    line-height: 42px;
     position: relative;
 
   }
@@ -152,6 +160,19 @@
     font-size: 35px;
   }
 
+  .icon-sales-inquiry {
+    height: 25px;
+  }
+
+  .icon-sales-inquiry-mobile {
+    height: 26px;
+    margin-left: 8px;
+  }
+
+  .icon-img-menu-top {
+    height: 19px;
+  }
+
 
   .img-pop li .skype {
     background: #E3EFF8;
@@ -189,7 +210,7 @@
     }
 
     .img-pop li a span {
-      top: -11px;
+      top: 0px;
       padding: 0 17px 0 56px;
       position: absolute;
       right: -163px;
@@ -322,7 +343,8 @@
       </a>
       <span class="fs-front">|</span>
       <a class="d-flex" href="{{route('contactSupport')}}">
-        <i class="icon-facon mr-1 icon-find-dis-blue f-size-enquiry"></i>
+        {{-- <i class="icon-facon mr-1 icon-find-dis-blue f-size-enquiry"></i> --}}
+        <img src="{{asset('frontend-asset/image/question.webp')}}" alt="" class="mr-1 icon-img-menu-top">
         <div class="link-nav-first">
           {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}
         </div>
@@ -741,8 +763,9 @@
           {{$staticContent['Subscribe']}}</a>
       </div>
       <div class="d-flex">
-        <i class="icon-facon mr-1 icon-find-dis-blue f-size-enquiry-mobile"></i><a href="{{route('contactSupport')}}"
-          class="a-link-hover">
+        {{-- <i class="icon-facon mr-1 icon-find-dis-blue f-size-enquiry-mobile"></i> --}}
+        <img src="{{asset('frontend-asset/image/question.webp')}}" alt="" class="mr-2 icon-img-menu-top">
+        <a href="{{route('contactSupport')}}" class="a-link-hover">
           {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}</a>
       </div>
       <div class="d-flex">
@@ -922,13 +945,13 @@
   <ul id="distributor" class="img-pop-destop">
     <li>
       <a href="{{route('contactSupport')}}" class="skype">
-        <i class="demo-icon-destop icon-facon icon-find-dis-blue"></i>
+        {{-- <i class="demo-icon-destop icon-facon icon-find-dis-blue"></i> --}}
+        <img class="icon-sales-inquiry" src="{{asset('frontend-asset/image/question.webp')}}" />
         <span>
-          Sales
+          {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}
         </span>
-        <span>
-          Inquiry
-        </span>
+
+
       </a>
     </li>
   </ul>
@@ -937,8 +960,10 @@
   <ul id="distributor" class="img-pop">
     <li>
       <a href="{{route('contactSupport')}}" class="skype"><span>
-          {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}</span><i
-          class="demo-icon icon-facon icon-find-dis-blue"></i></a>
+          {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}</span>
+        {{-- <i class="demo-icon icon-facon icon-find-dis-blue"></i> --}}
+        <img class="icon-sales-inquiry-mobile" src="{{asset('frontend-asset/image/question.webp')}}" />
+      </a>
     </li>
   </ul>
 </div>
