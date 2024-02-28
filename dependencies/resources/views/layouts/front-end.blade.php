@@ -30,46 +30,6 @@ $langch = str_replace('_', '-', app()->getLocale());
   @yield('meta')
   <!-- Bootstrap CSS -->
 
-
-
-
-
-  {{--
-  <link rel="stylesheet" rel="preload" type="text/css" type="text/css" type="text/css"
-    href="{{asset('/frontend-asset/css/font.css')}}" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/header-front.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/container.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/home.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/news.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/login.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/details.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/result-page.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product-comparison.css')}}"
-    media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}"
-    media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css"
-    href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}"
-    media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontNews.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.theme.default.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/font-awesome.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/datatables.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css"
-    href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}" media="screen">
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/slick.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" media="screen" />
-  --}}
-
-
-
-
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all.css')}}">
   <link rel="stylesheet" type="text/css"
     href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" />
@@ -254,26 +214,24 @@ $langch = str_replace('_', '-', app()->getLocale());
       font-family: 'DeltaSans' !important;
     }
   </style>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments)};
+    // console.log('test')
 
-  <!-- Cookie Consent by https://www.cookiewow.com -->
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+    })
+  </script>
+
   <!-- Cookie Consent by https://www.cookiewow.com -->
   <script type="text/javascript" src="https://cookiecdn.com/cwc.js"></script>
   <script id="cookieWow" type="text/javascript" src="https://cookiecdn.com/configs/pQrmuDVDXDn7zcMpZAhB6Mum"
     data-cwcid="pQrmuDVDXDn7zcMpZAhB6Mum"></script>
 
-  <!-- Fonts -->
-  <!-- Styles -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  {{-- <script async defer src="https://www.googletagmanager.com/gtag/js?id=UA-67607418-1"></script>
-  <script async defer>
-    window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-67607418-1');
-  </script> --}}
 
   <!-- Google Tag Manager -->
   <script async defer>
@@ -289,24 +247,33 @@ $langch = str_replace('_', '-', app()->getLocale());
   </script>
   <!-- End Google Tag Manager -->
 
+
+  <script type="text/javascript">
+    function cwcCookieWrapper() {
+      if (window?.cwcIsUserAccept === undefined) return
+      // console.log(window.cwcIsUserAccept('analytics'),'window.cwcIsUserAccep');
+      if (window.cwcIsUserAccept('analytics')) {
+        gtag('consent', 'update', {
+          'analytics_storage': 'granted'
+        })
+      }
+
+      if (window.cwcIsUserAccept('marketing')) {
+        gtag('consent', 'update', {
+          'ad_storage': 'granted'
+        })
+      }
+    }
+
+    cwcCookieWrapper()
+  </script>
+
 </head>
 
 <body>
   @include('layouts.header-front')
   @yield('container')
   @include('layouts.footer')
-  {{-- {!! Minify::javascript(asset('/frontend-asset/js/nouislider.min.js')) !!}
-  {!! Minify::javascript(asset('/frontend-asset/js/datatables.min.js')) !!}
-  {!! Minify::javascript(asset('/frontend-asset/js/popper.min.js')) !!}
-  {!! Minify::javascript(asset('/frontend-asset/js/bootstrap.min.js')) !!}
-  {!! Minify::javascript(asset('/frontend-asset/js/bootstrap-select.min.js')) !!}
-  {!! Minify::javascript(asset('/frontend-asset/js/map.js')) !!}
-  {!! Minify::javascript(asset('/frontend-asset/js/product.js')) !!}
-  {!! Minify::javascript(asset('/frontend-asset/js/owl.carousel.js')) !!}
-  {!! Minify::javascript(asset('/frontend-asset/js/owl.carousel.min.js')) !!}
-  {!! Minify::javascript(asset('/frontend-asset/js/slick.min.js')) !!}
-  {!! Minify::javascript(asset('/frontend-asset/js/zabuto_calendar.min.js')) !!}
-  {!! Minify::javascript(asset('/frontend-asset/js/mb5.js')) !!} --}}
 
   <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
