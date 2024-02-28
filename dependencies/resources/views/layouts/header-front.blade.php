@@ -170,7 +170,13 @@
   }
 
   .icon-img-menu-top {
-    height: 19px;
+    height: 18px;
+    margin-top: 3px;
+  }
+
+  .icon-img-menu-top-mobile {
+    height: 23px;
+    margin-top: 13px;
   }
 
 
@@ -764,7 +770,7 @@
       </div>
       <div class="d-flex">
         {{-- <i class="icon-facon mr-1 icon-find-dis-blue f-size-enquiry-mobile"></i> --}}
-        <img src="{{asset('frontend-asset/image/question.webp')}}" alt="" class="mr-2 icon-img-menu-top">
+        <img src="{{asset('frontend-asset/image/question.webp')}}" alt="" class="mr-2 icon-img-menu-top-mobile">
         <a href="{{route('contactSupport')}}" class="a-link-hover">
           {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}</a>
       </div>
