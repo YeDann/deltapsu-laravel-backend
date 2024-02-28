@@ -114,6 +114,10 @@
         opacity: 1;
         color: #C1C1C1;
     }
+
+    .border-line-bt-text-editor {
+        border: 0.2px solid #b4b2b2;
+    }
 </style>
 @endsection
 @section('meta')
@@ -158,20 +162,23 @@
 </div>
 <div class="box-support-detail mb-5">
     <div class="container mt-3">
+
+        <h2 class="text-title-delta visible-tablets-up">{{$staticContent['what_type_of_support']}}</h2>
+        <h3 class="text-title-delta visible-mobile">{{$staticContent['what_type_of_support']}}</h3>
+        <p>{{$staticContent['support_from_up_text']}}</p>
         <div class="row">
             <div class="col-12">
+                <div class="border-line-bt-text-editor  mt-3 mb-2"></div>
                 @if(isset($static_content) && isset($static_content->content) )
-                <div class="content">
+                <div class="content mb-4">
                     <?php echo $static_content->content ?>
                 </div>
                 @endif
             </div>
         </div>
-        <h2 class="text-title-delta visible-tablets-up">{{$staticContent['what_type_of_support']}}</h2>
-        <h3 class="text-title-delta visible-mobile">{{$staticContent['what_type_of_support']}}</h3>
         <form id="submitSupport" onsubmit="return validateForm(this)" action="{{route('SubmitContact')}}" method="POST">
             {{csrf_field()}}
-            <p>{{$staticContent['support_from_up_text']}}</p>
+
 
             <div class="add-space-mobile">
                 <div class="row">
