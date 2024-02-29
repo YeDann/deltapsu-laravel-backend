@@ -349,7 +349,6 @@
       </a>
       <span class="fs-front">|</span>
       <a class="d-flex" href="{{route('contactSupport')}}">
-        {{-- <i class="icon-facon mr-1 icon-find-dis-blue f-size-enquiry"></i> --}}
         <img src="{{asset('frontend-asset/image/question.webp')}}" alt="" class="mr-2 icon-img-menu-top">
         <div class="link-nav-first">
           {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}
