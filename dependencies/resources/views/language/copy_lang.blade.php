@@ -66,7 +66,7 @@
                 <?php $i = 1?>
                 @foreach ($taskarr as $item)
                 <li id="td_{{$i}}" class="mb-5">{{$i}}.{{$item}} <button id="btn_add_otg{{$i}}"
-                        class="ml-5 btn btn-success" onclick="taskRequest({{$i}})">Add English</button></li>
+                        class="ml-5 btn btn-success" onclick="taskRequest({{$i}})">Add English language</button></li>
                 <?php $i++?>
                 @endforeach
             </ul>
