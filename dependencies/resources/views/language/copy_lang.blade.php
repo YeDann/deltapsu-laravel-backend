@@ -61,12 +61,12 @@
             <h3 class="block-title">Create Data</h3>
         </div>
         <div class="block-content">
-            <h2>Please add every data for copy data to new language </h2>
+            <h2>Please add every data for copy English data to new language </h2>
             <ul>
                 <?php $i = 1?>
                 @foreach ($taskarr as $item)
                 <li id="td_{{$i}}" class="mb-5">{{$i}}.{{$item}} <button id="btn_add_otg{{$i}}"
-                        class="ml-5 btn btn-success" onclick="taskRequest({{$i}})">Add</button></li>
+                        class="ml-5 btn btn-success" onclick="taskRequest({{$i}})">Add English language</button></li>
                 <?php $i++?>
                 @endforeach
             </ul>
