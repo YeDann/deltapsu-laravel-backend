@@ -1,38 +1,43 @@
 @extends('layouts.admin')
 @section('style')
- <style>
-     .select2-container .select2-selection--single {
+<style>
+    .select2-container .select2-selection--single {
         height: 44px;
-     }
-     .tick_ok{
-        content: " - OK";
-     }
-     .tick_ok-downloading{
-        content: "loading ... ";
-     }
-     .tick_ok-downloading::before { 
-      content: "loading ... ";
-      font-weight: bold;
-       color:#0665d0;
-     }
-     .tick_ok-downloading_eror{
+    }
 
-     }
-     .tick_ok-downloading_eror::before{
+    .tick_ok {
+        content: " - OK";
+    }
+
+    .tick_ok-downloading {
+        content: "loading ... ";
+    }
+
+    .tick_ok-downloading::before {
+        content: "loading ... ";
+        font-weight: bold;
+        color: #0665d0;
+    }
+
+    .tick_ok-downloading_eror {}
+
+    .tick_ok-downloading_eror::before {
         content: "Eror ... ";
         font-weight: bold;
-         color:red;
-     }
-     .tick_ok::before { 
-      content: "OK  ";
-      font-weight: bold;
-      color:green;
-     }
-     /* .hiding_btn{
+        color: red;
+    }
+
+    .tick_ok::before {
+        content: "OK  ";
+        font-weight: bold;
+        color: green;
+    }
+
+    /* .hiding_btn{
          visibility: hidden;
          display:none;
      } */
-     </style>
+</style>
 @endsection
 @section('content')
 <!-- Nav -->
@@ -56,46 +61,25 @@
             <h3 class="block-title">Create Data</h3>
         </div>
         <div class="block-content">
-             <h2>Please add every data for copy data to new language </h2>
-             <ul>
-                 <?php $i = 1?>
+            <h2>Please add every data for copy English data to new language </h2>
+            <ul>
+                <?php $i = 1?>
                 @foreach ($taskarr as $item)
-                  <li id="td_{{$i}}" class="mb-5">{{$i}}.{{$item}} <button id="btn_add_otg{{$i}}" class="ml-5 btn btn-success" onclick="taskRequest({{$i}})">Add</button></li>
-                 <?php $i++?>
-                 @endforeach
-             </ul>
-            
-           
+                <li id="td_{{$i}}" class="mb-5">{{$i}}.{{$item}} <button id="btn_add_otg{{$i}}"
+                        class="ml-5 btn btn-success" onclick="taskRequest({{$i}})">Add English</button></li>
+                <?php $i++?>
+                @endforeach
+            </ul>
+
+
         </div>
     </div>
 </div>
 @endsection
 @section('js')
 <script>
-
-//    var AllTask =  <?= json_encode($taskarr);?>;
-//    var countTask = 0;
-//    $(document).ready(function () {
-//     // createDataAllLang();
-//    });
-//    function createDataAllLang(){
-//     // var status  = taskRequest(1);
-//     //  console.log(status);
-//        console.log(AllTask.length);
-//        var task = 1;
-//     for(var i = 0;i < AllTask.length ; i++){
-//        console.log(AllTask[i] ,task );
-//        var status  = taskRequest(task);
-//        if(status){
-//          $('#td_'+task).addClass('tick_ok');
-//        }
-//        task++;
-//     }
-         
-//    }
-    
-
-  function taskRequest(task){
+    function taskRequest(task){
+        console.log(task , 1);
       $('#td_'+task).addClass('tick_ok-downloading');
       $('#btn_add_otg'+task).addClass('d-none');
         $.ajax({
