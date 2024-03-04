@@ -257,6 +257,7 @@ class LanguageController extends Controller
                                         "name" => $con->name,
                                         "overview" => $con->overview,
                                         "content" => $con->content,
+                                        "content_2" => $con->content_2,
                                         "overview_text" => $con->overview_text,
                                         "local" => $new_local
                                     ]
