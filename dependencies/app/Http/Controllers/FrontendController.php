@@ -3877,7 +3877,7 @@ class FrontendController extends Controller
            }
   
            if($subject == "0"){
-            $subject = 'Sale Enquiries';
+            $subject = 'Sales Inquiry';
            }
         //    return dd($request->config_id, $request->enquireStatus);
       
