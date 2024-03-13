@@ -88,6 +88,12 @@
     border-radius: 10px 0 0 10px;
   }
 
+  .img-pop-destop li a:hover {
+    cursor: pointer;
+    color: #fff;
+    background: #0087DC;
+  }
+
   .img-pop-destop li a span {
     display: block;
     white-space: nowrap;
@@ -206,7 +212,7 @@
       font-size: 25px;
       margin-left: 7px;
       position: relative;
-      top: -9px;
+      top: 0px;
     }
 
     .img-pop li a {
@@ -950,8 +956,9 @@
   <ul id="distributor" class="img-pop-destop">
     <li>
       <a href="{{route('contactSupport')}}" class="skype">
-        {{-- <i class="demo-icon-destop icon-facon icon-find-dis-blue"></i> --}}
-        <img class="icon-sales-inquiry" src="{{asset('frontend-asset/image/question.webp')}}" />
+        {{-- <i class="icon-facon icon-find-dis-blue"></i> --}}
+        {{-- <img class="icon-sales-inquiry" src="{{asset('frontend-asset/image/question.webp')}}" /> --}}
+        <i class="icon-facon3 icon-question"></i>
         <span>
           {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}
         </span>
@@ -967,7 +974,8 @@
       <a href="{{route('contactSupport')}}" class="skype"><span>
           {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}</span>
         {{-- <i class="demo-icon icon-facon icon-find-dis-blue"></i> --}}
-        <img class="icon-sales-inquiry-mobile" src="{{asset('frontend-asset/image/question.webp')}}" />
+        <i class="demo-icon icon-facon3 icon-question"></i>
+        {{-- <img class="icon-sales-inquiry-mobile" src="{{asset('frontend-asset/image/question.webp')}}" /> --}}
       </a>
     </li>
   </ul>
