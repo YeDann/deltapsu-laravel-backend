@@ -79,7 +79,6 @@
 @section('js')
 <script>
     function taskRequest(task){
-        console.log(task,'task')
       $('#td_'+task).addClass('tick_ok-downloading');
       $('#btn_add_otg'+task).addClass('d-none');
         $.ajax({
