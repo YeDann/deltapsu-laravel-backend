@@ -212,7 +212,7 @@
       font-size: 25px;
       margin-left: 7px;
       position: relative;
-      top: 0px;
+      top: -9px;
     }
 
     .img-pop li a {
