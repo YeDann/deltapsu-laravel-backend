@@ -36,7 +36,7 @@ class Contact extends Mailable
         $subject = 'Support';
  
         if($this->request['subject'] == "0"){
-            $subject = 'Sale Enquiries';
+            $subject = 'Sales Inquiry';
             $subjectName =  $subject.'_'.$this->ticket_id;
         }else if($this->request['enquireStatus'] == 3){
             $subject = 'Configurable Power PDF Download';

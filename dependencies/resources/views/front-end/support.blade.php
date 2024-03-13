@@ -179,7 +179,7 @@
                         <select id="subjectType" name="subject" class="form-control" required>
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Subject']}}</option>
                             <option value="0" {{isset($contactlink) && $contactlink=='Sale-Enquiries' ?'selected':'' }}>
-                                Sales Enquiry</option>
+                                Sales Inquiry</option>
                             <option value="Products and Service Support" {{ isset($contactlink) &&
                                 $contactlink=='Products-and-Service-Support' ?'selected':'' }}>Products and Service
                                 Support</option>
