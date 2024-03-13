@@ -163,7 +163,8 @@
   }
 
   .demo-icon-destop {
-    font-size: 35px;
+    font-size: 19px;
+
   }
 
   .icon-sales-inquiry {
@@ -958,7 +959,7 @@
       <a href="{{route('contactSupport')}}" class="skype">
         {{-- <i class="icon-facon icon-find-dis-blue"></i> --}}
         {{-- <img class="icon-sales-inquiry" src="{{asset('frontend-asset/image/question.webp')}}" /> --}}
-        <i class="icon-facon3 icon-question"></i>
+        <i class="demo-icon-destop icon-facon3 icon-question"></i>
         <span>
           {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}
         </span>
