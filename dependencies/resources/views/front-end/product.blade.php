@@ -272,7 +272,7 @@
 
     .icon-inquiry-product {
         font-size: 25px;
-        color: #fff;
+        color: #ffffff;
     }
 </style>
 @endsection
