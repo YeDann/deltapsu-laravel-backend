@@ -2,46 +2,54 @@
 @section('css')
 
 <style>
-   
     /* select */
-	.form-control{
+    .form-control {
         font-size: 14px;
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		border-radius: 0;
-		border: 1px solid #444444; background-position: right 50%;
-		background-repeat: no-repeat;
-		background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        border-radius: 0;
+        border: 1px solid #444444;
+        background-position: right 50%;
+        background-repeat: no-repeat;
+        background-image: url('{{asset(' frontend-asset/image/arrow-down.svg')}}');
         padding-right: 24px;
-	}
-	.form-control:disabled, .form-control[readonly] {
-		background-color: #F2F2F2;
-		border: 1px solid #C1C1C1 !important;
-		opacity: 1;
-		color: #C1C1C1;
-		background-image:unset;
-	}
-	.form-control:focus {
-		color: #495057;
-		background-color: #fff;
-		border-color: #80bdff;
-		outline: unset;
-		box-shadow: unset;
     }
-    input[type=text],input[type=email]{
-		background-image:unset;
-		
+
+    .form-control:disabled,
+    .form-control[readonly] {
+        background-color: #F2F2F2;
+        border: 1px solid #C1C1C1 !important;
+        opacity: 1;
+        color: #C1C1C1;
+        background-image: unset;
     }
-    .input-label{
+
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #80bdff;
+        outline: unset;
+        box-shadow: unset;
+    }
+
+    input[type=text],
+    input[type=email] {
+        background-image: unset;
+
+    }
+
+    .input-label {
         position: relative;
     }
-    input[required] + label {
+
+    input[required]+label {
         color: #707070;
         font-family: Arial;
         font-size: 14px;
         position: absolute;
         bottom: 0;
-        left: 12px;  /* the negative of the input width */
+        left: 12px;
+        /* the negative of the input width */
     }
 
     #showfiler a {
@@ -50,6 +58,7 @@
         color: #ffffff;
         font-weight: bold;
     }
+
     .accordion .card-header-filter:after {
         font-family: 'Material-Design-Iconic-Font';
         content: "\f273";
@@ -84,10 +93,12 @@
     .space-listviews {
         margin-top: 4px;
     }
-    .table thead th{
+
+    .table thead th {
         vertical-align: middle !important;
         text-align: center;
     }
+
     .table td {
         /* border-top: unset; */
     }
@@ -96,127 +107,148 @@
         border-top: 2px solid #E3EFF8 !important;
         border-bottom: 2px solid #E3EFF8;
     }
-    tbody td:first-child{
+
+    tbody td:first-child {
         border-left: 2px solid #E3EFF8;
     }
-    tbody td:last-child{
+
+    tbody td:last-child {
         border-right: 2px solid #E3EFF8;
     }
+
     /* tr td {
     padding: 10px;
     } */
-    
-    .table td, .table th {
+
+    .table td,
+    .table th {
         padding: 0;
     }
-    .table th{
-        padding: 3px 11px  !important;
+
+    .table th {
+        padding: 3px 11px !important;
     }
-    .list-group{
+
+    .list-group {
         margin-top: 20px;
     }
-    .modal-open{overflow:auto;padding-right:0 !important;}
-    @media(max-width:414px){
-        .selectSort{
+
+    .modal-open {
+        overflow: auto;
+        padding-right: 0 !important;
+    }
+
+    @media(max-width:414px) {
+        .selectSort {
             width: 200px;
             text-overflow: ellipsis;
         }
-        .form-control {
-        font-size: 12px !important;
-        padding: .375rem 6px !important; 
-        }
-     
-    }
-    @media(max-width:320px){
-     .selectSort {
-        width: 154px;
-     }
-   
-    }
- 
 
-    a{
+        .form-control {
+            font-size: 12px !important;
+            padding: .375rem 6px !important;
+        }
+
+    }
+
+    @media(max-width:320px) {
+        .selectSort {
+            width: 154px;
+        }
+
+    }
+
+
+    a {
         color: #0087DC;
     }
 
-    .in-volt{
+    .in-volt {
         height: 50px;
     }
 
-.w-tabfix{
-    position: relative;
-    cursor: pointer;
-}
+    .w-tabfix {
+        position: relative;
+        cursor: pointer;
+    }
 
- .w-tabfix:before {
-  right: 4.5px;
-  content: "\f106";
-  font-family: 'FontAwesome';
-  font-weight: 900;
-  font-size: 1rem; 
-   display: block;
-  visibility: visible;
-  position: absolute;
-  color: #fff;
-  top: 50%;
-  right: 0.25rem;
-  transform: translateY(calc(50% - 2rem));
-}
+    .w-tabfix:before {
+        right: 4.5px;
+        content: "\f106";
+        font-family: 'FontAwesome';
+        font-weight: 900;
+        font-size: 1rem;
+        display: block;
+        visibility: visible;
+        position: absolute;
+        color: #fff;
+        top: 50%;
+        right: 0.25rem;
+        transform: translateY(calc(50% - 2rem));
+    }
 
-.w-tabfix:after {
-  right:4.5px;
-  content: "\f107";
-  font-family: 'FontAwesome';
-  font-weight: 900;
-  font-size: 1rem; 
-  line-height: 7px;
-  display:block;
-  visibility: visible;
-  position: absolute;
-  color: #fff;
-  top: 50%;
-  right: 0.25rem;
-  transform: translateY(calc(50% - 0rem));
-}
-.w-tabfix.active{
-    color: #0087DC;
-}
-.pro_desc.w-tabfix:before {
-  color: #0087DC;
-  opacity: 1; }
- .pro_asc.w-tabfix:after {
-    color: #0087DC;
-  opacity: 1;
-  }
-  .w-td-con{
-      width: 83px;
-      word-break: break-all;
-  }
-  
+    .w-tabfix:after {
+        right: 4.5px;
+        content: "\f107";
+        font-family: 'FontAwesome';
+        font-weight: 900;
+        font-size: 1rem;
+        line-height: 7px;
+        display: block;
+        visibility: visible;
+        position: absolute;
+        color: #fff;
+        top: 50%;
+        right: 0.25rem;
+        transform: translateY(calc(50% - 0rem));
+    }
+
+    .w-tabfix.active {
+        color: #0087DC;
+    }
+
+    .pro_desc.w-tabfix:before {
+        color: #0087DC;
+        opacity: 1;
+    }
+
+    .pro_asc.w-tabfix:after {
+        color: #0087DC;
+        opacity: 1;
+    }
+
+    .w-td-con {
+        width: 83px;
+        word-break: break-all;
+    }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 <style>
-  .select2-container .select2-selection--single {
-    height: 40px;
-    border-radius: 0px;
-   }
-   .select2-container .select2-selection--single .select2-selection__rendered{
-       padding-top: 6px;
-       padding-bottom: 6px
-   }
-   .select2-container--default .select2-selection--single .select2-selection__arrow{
-    font-size: 14px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-position: right 50%;
-    background-repeat: no-repeat;
-    background-image: url({{asset('frontend-asset/image/arrow-down.svg')}});
-    top: 6px;
-  
-   }
-   .select2-container--default .select2-selection--single .select2-selection__arrow b{
-       display: none;
-   }
+    .select2-container .select2-selection--single {
+        height: 40px;
+        border-radius: 0px;
+    }
+
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        padding-top: 6px;
+        padding-bottom: 6px
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        font-size: 14px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-position: right 50%;
+        background-repeat: no-repeat;
+        background-image: url('{{asset(' frontend-asset/image/arrow-down.svg')}}');
+        top: 6px;
+
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow b {
+        display: none;
+    }
+
     /* Zoom In #1 */
     .hover01 figure img {
         -webkit-transform: scale(1);
@@ -224,15 +256,23 @@
         -webkit-transition: .3s ease-in-out;
         transition: .3s ease-in-out;
     }
+
     .hover01 figure:hover img {
         -webkit-transform: scale(1.12);
         transform: scale(1.12);
     }
-    .w-number{
+
+    .w-number {
         width: 20px !important;
     }
-    .w-120{
+
+    .w-120 {
         width: 130px;
+    }
+
+    .icon-inquiry-product {
+        font-size: 25px;
+        color: #E3EFF8;
     }
 </style>
 @endsection
@@ -254,7 +294,7 @@
                             <a href="{{route('index','home')}}">{{$staticContent['Home']}}</a>
                         </li>
                         <li class="breadcrumb-item active text-breadcrumb" aria-current="page">
-                            <a  href="#">{{$staticContent['Products']}}</a>
+                            <a href="#">{{$staticContent['Products']}}</a>
                         </li>
                     </ol>
                 </nav>
@@ -273,28 +313,30 @@
                         <div class="text-middle">
                             <h1 class="text-title-banner">{{$subCate->name}}</h1>
                             <div class="text-p-banner my-2">{!!$subCate->content!!}</div>
-                                @if(isset($subCate->file))
-                                <a class="text-color-delta text-bold" href="{{config('app.url')}}/medias/categories/{{$subCate->file}}" target="_blank"><img
-                                    class="align-baseline mr-2"  src="{{asset('frontend-asset/image/icon/download-icon.svg')}}" alt="">
-                                     {{$staticContent['Download_selection_guide']}}
-                                </a>
-                                @else
-                                {{-- <a class="text-color-delta text-bold" href="#"><img class="align-baseline mr-1" src="{{asset('frontend-asset/image/icon/download-icon.svg')}}" alt=""> Empty
-                                    selection
-                                    guide
-                                </a> --}}
-                                @endif
+                            @if(isset($subCate->file))
+                            <a class="text-color-delta text-bold"
+                                href="{{config('app.url')}}/medias/categories/{{$subCate->file}}" target="_blank"><img
+                                    class="align-baseline mr-2"
+                                    src="{{asset('frontend-asset/image/icon/download-icon.svg')}}" alt="">
+                                {{$staticContent['Download_selection_guide']}}
+                            </a>
+                            @else
+                            {{-- <a class="text-color-delta text-bold" href="#"><img class="align-baseline mr-1"
+                                    src="{{asset('frontend-asset/image/icon/download-icon.svg')}}" alt=""> Empty
+                                selection
+                                guide
+                            </a> --}}
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 banner-products-pic ">
                     {{-- <img src="{{asset('frontend-asset/image/DIN RAIL POWER SUPPLY@2x.png')}}" alt=""> --}}
                     @if(isset($subCate->image))
-                    <img class="img-fluid middle-img" 
-                        src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
+                    <img class="img-fluid middle-img" src="{{config('app.url')}}/medias/categories/{{$subCate->image}}"
+                        alt="">
                     @else
-                    <img class="img-fluid middle-img" 
-                        src="{{asset('frontend-asset/image/blank.png')}}" alt="">
+                    <img class="img-fluid middle-img" src="{{asset('frontend-asset/image/blank.png')}}" alt="">
                     @endif
                 </div>
             </div>
@@ -309,20 +351,22 @@
         <div class="container">
             <div class="py-xl-5 py-2 text-center">
                 <p class="text-delta text-bold mt-5">{{$subCate->name}}</p>
-                    @if(isset($subCate->file))
-                    <a href="{{config('app.url')}}/medias/categories/{{$subCate->file}}" download="{{$staticContent['Download_selection_guide']}}_{{$subCate->name}}"><img class="align-baseline mr-1" src="{{asset('frontend-asset/image/icon/download-icon.svg')}}" alt="">
-                        {{$staticContent['Download_selection_guide']}}
-                    </a>
-                    @else
-                    @endif
+                @if(isset($subCate->file))
+                <a href="{{config('app.url')}}/medias/categories/{{$subCate->file}}"
+                    download="{{$staticContent['Download_selection_guide']}}_{{$subCate->name}}"><img
+                        class="align-baseline mr-1" src="{{asset('frontend-asset/image/icon/download-icon.svg')}}"
+                        alt="">
+                    {{$staticContent['Download_selection_guide']}}
+                </a>
+                @else
+                @endif
             </div>
             <div class="">
                 @if(isset($subCate->image))
                 <img class="m-auto img-res-prolis" style=""
                     src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
                 @else
-                <img class="m-auto  img-res-prolis" style=""
-                    src="{{asset('frontend-asset/image/blank.png')}}" alt="">
+                <img class="m-auto  img-res-prolis" style="" src="{{asset('frontend-asset/image/blank.png')}}" alt="">
                 @endif
             </div>
         </div>
@@ -335,9 +379,9 @@
             <div class="col-lg-2 pr-0 col-xl-4 col-md-2 my-auto">
                 <div id="showfiler">
                     <a href="#sidebar" data-toggle="collapse" onclick="onclickshow(2);">
-                    <img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt="">
-                    {{$staticContent['Show_Filters']}}
-                     </a>
+                        <img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt="">
+                        {{$staticContent['Show_Filters']}}
+                    </a>
                 </div>
             </div>
             <div class="col-lg-10 col-xl-8 col-md-10 col-right my-auto">
@@ -349,15 +393,15 @@
                         <img src="{{asset('frontend-asset/image/icon/grid-icon.svg')}}" alt="">
                         {{-- <i class="fa fa-th icon-size-grid"></i> --}} {{-- Grid View --}}
                     </div>
-                    
+
                     <div class="grid-icon icon-list visible-upper-mobile" onclick="onclickListViewloadData();">
                         <img src="{{asset('frontend-asset/image/icon/list-icon.svg')}}" alt="">
                         {{-- <i class="fa fa-list icon-size-grid"></i> --}} {{-- List View --}}
                     </div>
                     <div class="text-lable my-auto">
-                         {{$staticContent['Sort_by']}} :
+                        {{$staticContent['Sort_by']}} :
                     </div>
-                    <div class="input-label">                      
+                    <div class="input-label">
                         <select id="selectSortDestop" onchange="onselectSortDestop();" class="form-control ">
                             <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
                             <option value="2">{{$staticContent['Output_Voltage_low_to_high']}}</option>
@@ -383,33 +427,37 @@
                     <label for="key_mobile" class="searchinput-filters">
                         <input type="text" id="key_mobile" placeholder="eg. DRC-24V100W1AZ">
                     </label>
-                    </div> --}}
-                    <div class="box-search-input  mr-3">
-                        <div class="box-search-icon">
-                            <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
-                        </div>
-                        <label for="key_mobile" class="searchinput-filters-input">
-                            {{-- <input type="text" id="key_mobile" placeholder="{{$staticContent['Search_By_Model_Name']}}"> --}}
-                            <select id="key_mobile" class="js-example-basic-single form-control" >
-                                <option></option>
-                                @foreach ($products as $pro)
-                                <option value="{{$pro->pro_code}}" >{{$pro->pro_code}}</option> 
-                                @endforeach
-                            </select>
-                        </label>
+                </div> --}}
+                <div class="box-search-input  mr-3">
+                    <div class="box-search-icon">
+                        <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                     </div>
-                <button onclick="onsearchProductMobile();" class="btn-filters btn-search search-btn-product-mobile">{{$staticContent['Search']}}</button>
+                    <label for="key_mobile" class="searchinput-filters-input">
+                        {{-- <input type="text" id="key_mobile"
+                            placeholder="{{$staticContent['Search_By_Model_Name']}}"> --}}
+                        <select id="key_mobile" class="js-example-basic-single form-control">
+                            <option></option>
+                            @foreach ($products as $pro)
+                            <option value="{{$pro->pro_code}}">{{$pro->pro_code}}</option>
+                            @endforeach
+                        </select>
+                    </label>
+                </div>
+                <button onclick="onsearchProductMobile();"
+                    class="btn-filters btn-search search-btn-product-mobile">{{$staticContent['Search']}}</button>
             </div>
-            
+
         </div>
         <div class="menu-filler-mobile-filter ">
-            <div class=" d-flex justify-content-between h-100"> 
+            <div class=" d-flex justify-content-between h-100">
                 <div id="showfiler-mobile" class="my-auto">
-                    <div style="color:#fff;" id="filterMobile-btn" onclick="OpenFiiter();" class="filter-mobile-link text-bold"><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt="">Filters</div>
+                    <div style="color:#fff;" id="filterMobile-btn" onclick="OpenFiiter();"
+                        class="filter-mobile-link text-bold"><img
+                            src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt="">Filters</div>
                 </div>
                 <div class="d-flex">
                     <p class="text-white my-auto mr-2 text-card-detial text-bold">Sort by:</p>
-                    <div class="input-label my-auto">                      
+                    <div class="input-label my-auto">
                         <select onchange="onselectSort();" class="form-control selectSort">
                             <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
                             <option value="2">{{$staticContent['Output_Voltage_low_to_high']}}</option>
@@ -418,39 +466,42 @@
                             <option value="5">{{$staticContent['Modifired_Date_newest_to_oldest']}}</option>
                         </select>
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
     </div>
-    
+
     <div class="filter-mobilenav" id="filterMobile">
         <div id="filterMobileClose" onclick="closeNavFilter()"></div>
         <div class="filter-mobile-list" id="filterMobileLdist">
-            
+
             <div class="accordion_mobile mx-3">
-            <div id="sort-filter-content_mobile" class="tap-filter mb-0"></div>
-                  
-                    <div class="box-btn-filters btn-box-addremove-filer text-center">
-                        <button class="btn-filters btn-addremove-filer" data-toggle="modal"
-                            data-target="#btn-addremove-filer-model">{{$staticContent['add']}} / {{$staticContent['Remove_Filter']}}</button>
-                    </div>
-                    <div class="box-btn-filters btn-box-clear-filer text-center">
-                        <button class="btn-filters btn-clear-filer" onclick="resetAllTab();" >{{$staticContent['Clear_Filters']}}</button>
-                    </div>
-             </div>
+                <div id="sort-filter-content_mobile" class="tap-filter mb-0"></div>
+
+                <div class="box-btn-filters btn-box-addremove-filer text-center">
+                    <button class="btn-filters btn-addremove-filer" data-toggle="modal"
+                        data-target="#btn-addremove-filer-model">{{$staticContent['add']}} /
+                        {{$staticContent['Remove_Filter']}}</button>
+                </div>
+                <div class="box-btn-filters btn-box-clear-filer text-center">
+                    <button class="btn-filters btn-clear-filer"
+                        onclick="resetAllTab();">{{$staticContent['Clear_Filters']}}</button>
+                </div>
+            </div>
         </div>
-        
+
     </div>
 </div>
 
 <div class="container">
     <!-- Modal -->
-    <div class="modal fade" id="btn-addremove-filer-model" tabindex="-1" role="dialog"
-        aria-labelledby="ModalLongTitle" aria-hidden="true" style="padding-right:0px !important;">
+    <div class="modal fade" id="btn-addremove-filer-model" tabindex="-1" role="dialog" aria-labelledby="ModalLongTitle"
+        aria-hidden="true" style="padding-right:0px !important;">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="title-cx" id="ModalLongTitle">{{$staticContent['add']}} /  {{$staticContent['Remove_Filter']}}</h4>
+                    <h4 class="title-cx" id="ModalLongTitle">{{$staticContent['add']}} /
+                        {{$staticContent['Remove_Filter']}}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -459,8 +510,10 @@
 
                 </div>
                 <div class="modal-footer">
-                    <span disabled="disabled" data-dismiss="modal" class="btn btn-sm btn-primary reset">{{$staticContent['Reset']}} </span>
-                    <span data-dismiss="modal"  class="btn btn-sm btn-primary btn-done"> {{$staticContent['Done']}} </span>
+                    <span disabled="disabled" data-dismiss="modal"
+                        class="btn btn-sm btn-primary reset">{{$staticContent['Reset']}} </span>
+                    <span data-dismiss="modal" class="btn btn-sm btn-primary btn-done"> {{$staticContent['Done']}}
+                    </span>
                 </div>
 
             </div>
@@ -480,26 +533,28 @@
                                     <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                                 </div>
                                 <label for="key_destop" class="searchinput-filters-input">
-                                    {{-- <input type="text" id="key_destop" placeholder="{{$staticContent['Search_By_Model_Name']}}"> --}}
-                                    <select id="key_destop" class="js-example-basic-single form-control" >
+                                    {{-- <input type="text" id="key_destop"
+                                        placeholder="{{$staticContent['Search_By_Model_Name']}}"> --}}
+                                    <select id="key_destop" class="js-example-basic-single form-control">
                                         <option></option>
                                         @foreach ($products as $pro)
-                                        <option value="{{$pro->pro_code}}" >{{$pro->pro_code}}</option> 
+                                        <option value="{{$pro->pro_code}}">{{$pro->pro_code}}</option>
                                         @endforeach
                                     </select>
 
                                 </label>
                             </div>
                             <div class="search-filter-action-btn text-center">
-                                <button  onclick="onsearchProduct();" class="btn-filters btn-search">{{$staticContent['Search']}}</button>
+                                <button onclick="onsearchProduct();"
+                                    class="btn-filters btn-search">{{$staticContent['Search']}}</button>
                             </div>
-                            
+
 
                         </div>
                     </div>
                     <div id="sort-filter-content" class="tap-filter mb-0">
-             
-                        
+
+
                     </div>
 
                     {{-- <div class="box-btn-filters btn-box-use-filer text-center">
@@ -507,17 +562,19 @@
                     </div> --}}
                     <div class="box-btn-filters btn-box-addremove-filer text-center">
                         <button class="btn-filters btn-addremove-filer" data-toggle="modal"
-                            data-target="#btn-addremove-filer-model"> {{$staticContent['add']}} / {{$staticContent['Remove_Filter']}}</button>
+                            data-target="#btn-addremove-filer-model"> {{$staticContent['add']}} /
+                            {{$staticContent['Remove_Filter']}}</button>
                     </div>
                     <div class="box-btn-filters btn-box-clear-filer text-center">
-                        <button class="btn-filters btn-clear-filer" onclick="resetAllTab();"> {{$staticContent['Clear_Filters']}}</button>
+                        <button class="btn-filters btn-clear-filer" onclick="resetAllTab();">
+                            {{$staticContent['Clear_Filters']}}</button>
                     </div>
                 </div>
             </div>
         </div>
-      
+
         <main class="col-md-12 p-l-2 p-t-2" id="contentProList">
-         
+
         </main>
     </div>
 </div>
@@ -1315,7 +1372,7 @@
 
         html += '<div class="w-100">';
         html += '<div class="boxlist-icon-img">';
-        html += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button></a>';
+        html += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></a>';
         html += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
         html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
         html += '</div>';
@@ -1405,7 +1462,7 @@
         html += '</div>'; 
         html += '<div class="w-100">';
         html += '<div class="boxlist-icon-img pd-mobile">';
-        html += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button></a>';
+        html += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
         html += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
         html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
         html += '</div>';
@@ -1504,7 +1561,7 @@
         html1 += '</a>';
         html1 += '<div class="w-100">';
         html1 += '<div class="boxlist-icon-img">';
-        html1 += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button></a>';
+        html1 += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
         html1 += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
         html1 += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
         html1 += '</div>';
@@ -3367,8 +3424,7 @@
 
 </script>
 <script>
-
-function loadeMore(event,i){
+    function loadeMore(event,i){
     if ($(".moreBox:hidden").length != 0) {
       $("#loadMore").show();
     }  
