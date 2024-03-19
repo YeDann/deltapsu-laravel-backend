@@ -1,5 +1,21 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<?php
+$lanngCookie = "en";
+$langch = str_replace('_', '-', app()->getLocale());
+
+ if($langch == 'jp'){
+  $lanngCookie = "ja";
+ }else if($langch == 'cn'){
+  $lanngCookie = "zh";
+ }else if($langch == 'tw'){
+  $lanngCookie = "zh";
+ }else{
+  $lanngCookie = $langch;
+ }
+
+?>
+
+<html html_lang="{{ str_replace('_', '-', app()->getLocale()) }}" Lang="{{$lanngCookie}}">
 
 <head>
   <meta charset="utf-8">
@@ -9,40 +25,18 @@
   <link rel="shortcut icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
   <link rel="icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
   <!-- CSRF Token -->
-  <meta name="robots" content="noindex">
+  <meta name="robots" content="index, follow">
   <meta name="csrf-token" content="{{ csrf_token() }}">
-
+  @yield('meta')
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/header-front.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/container.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/home.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/news.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/login.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/details.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/result-page.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product-comparison.css')}}"
-    media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}"
-    media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css"
-    href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}"
-    media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontNews.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.theme.default.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/owl.carousel.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/product.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/font-awesome.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/datatables.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css"
-    href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}" media="screen">
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/slick.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/nouislider.min.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/jquery.datepicker.css')}}" media="screen" />
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/zabuto_calendar.css')}}" media="screen" />
 
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello3.css')}}" />
+  <link rel="stylesheet" type="text/css"
+    href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" />
 
+  <link rel="stylesheet" type="text/css"
+    href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}">
 
   @yield('css')
   <style>
@@ -106,57 +100,6 @@
     }
 
 
-    body {
-      font-family: 'DeltaSans' !important;
-    }
-
-    html[lang="cn"] body,
-    html[lang="cn"] h1,
-    html[lang="cn"] h2,
-    html[lang="cn"] h3,
-    html[lang="cn"] h4,
-    html[lang="cn"] h5,
-    html[lang="cn"] a,
-    html[lang="cn"] button,
-    html[lang="cn"] span,
-    html[lang="cn"] .link-nav-first,
-    html[lang="cn"] label {
-      font-family: 'NotosansCN', 'DeltaSans' !important;
-    }
-
-
-
-    html[lang="tw"] body,
-    html[lang="tw"] h1,
-    html[lang="tw"] h2,
-    html[lang="tw"] h3,
-    html[lang="tw"] h4,
-    html[lang="tw"] h5,
-    html[lang="tw"] a,
-    html[lang="tw"] button,
-    html[lang="tw"] div,
-    html[lang="tw"] span,
-    html[lang="tw"] .link-nav-first,
-    html[lang="tw"] label {
-      font-family: 'NotosansTw', 'DeltaSans' !important;
-    }
-
-
-    html[lang="jp"] body,
-    html[lang="jp"] h1,
-    html[lang="jp"] h2,
-    html[lang="jp"] h3,
-    html[lang="jp"] h4,
-    html[lang="jp"] h5,
-    html[lang="jp"] a,
-    html[lang="jp"] button,
-    html[lang="jp"] div,
-    html[lang="jp"] span,
-    html[lang="jp"] .link-nav-first,
-    html[lang="jp"] label {
-      font-family: 'NotosansJP', 'DeltaSans' !important;
-    }
-
     .color-yellow {
       background-color: #252A2C;
       color: #fff;
@@ -167,21 +110,132 @@
       right: 0;
       z-index: 99;
     }
+
+    html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
+      padding: 20px 9px;
+    }
+
+    html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
+      padding: 20px 9px;
+    }
+
+    a#CybotCookiebotDialogPoweredbyCybot,
+    div#CybotCookiebotDialogPoweredByText {
+      display: none !important;
+    }
+
+    #CookiebotWidget .CookiebotWidget-body .CookiebotWidget-main-logo {
+      display: none !important;
+    }
+
+    #CybotCookiebotDialogHeader {
+      width: 0px !important;
+    }
+
+    #CybotCookiebotDialog.CybotEdge {
+      padding: 12px !important;
+    }
+
+    #CybotCookiebotDialog.CybotEdge .CybotCookiebotDialogBodyBottomWrapper {
+      margin-top: 0 !important;
+    }
+
+    /* #CybotCookiebotDialog.CybotEdge.CybotMultilevel .CybotCookiebotDialogBodyBottomWrapper {
+    border-top: none !important;
+    } */
+
+    @media screen and (min-width: 1280px) {
+      #CybotCookiebotDialog.CybotEdge.CybotMultilevel .CybotCookiebotDialogBodyBottomWrapper {
+        border-top: 1px solid #fff !important;
+
+      }
+    }
+
+    #CookiebotWidget .CookiebotWidget-body .CookiebotWidget-consents-list li.CookiebotWidget-approved svg {
+      fill: #0087DC !important;
+    }
+
+    #CookiebotWidget .CookiebotWidget-consent-details button {
+      color: #0087DC !important;
+    }
+
+    #CookiebotWidget #CookiebotWidget-buttons #CookiebotWidget-btn-change {
+      background-color: #0087DC !important;
+      border-color: #0087DC !important;
+    }
+
+    #CookiebotWidget #CookiebotWidget-buttons #CookiebotWidget-btn-withdraw {
+      border-color: #0087DC !important;
+    }
+
+    @media only screen and (max-width: 1366px) {
+      html[html_lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
+        padding: 20px 4px !important;
+      }
+
+      html[html_lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
+        padding: 20px 4px !important;
+        font-size: 14px !important;
+      }
+    }
+
+    .cwc-cookie-banner-ui-sdk .cwc-banner-container {
+      background-color: rgb(0, 0, 0, 0.8) !important;
+    }
+
+
+
+
+
+    html[html_lang="ru"] .cwc-cookie-banner-ui-sdk,
+    .cwc-cookie-banner-ui-sdk button,
+    .cwc-cookie-banner-ui-sdk span,
+    .cwc-cookie-banner-ui-sdk a {
+      font-family: 'Inter', 'DeltaSans', sans-serif !important;
+    }
+
+    html[html_lang="cn"] .cwc-cookie-banner-ui-sdk,
+    .cwc-cookie-banner-ui-sdk button,
+    .cwc-cookie-banner-ui-sdk span,
+    .cwc-cookie-banner-ui-sdk a {
+      font-family: 'Microsoft Yahei', 'DeltaSans', sans-serif !important;
+    }
+
+    html[html_lang="tw"] .cwc-cookie-banner-ui-sdk,
+    .cwc-cookie-banner-ui-sdk button,
+    .cwc-cookie-banner-ui-sdk span,
+    .cwc-cookie-banner-ui-sdk a {
+      font-family: 'Noto Sans TC', 'DeltaSans', sans-serif !important;
+    }
+
+    .cwc-cookie-banner-ui-sdk,
+    .cwc-cookie-banner-ui-sdk button,
+    .cwc-cookie-banner-ui-sdk span,
+    .cwc-cookie-banner-ui-sdk a {
+      font-family: 'DeltaSans' !important;
+    }
   </style>
-  <!-- Fonts -->
-  <!-- Styles -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-67607418-1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-67607418-1');
+    function gtag(){dataLayer.push(arguments)};
+    // console.log('test')
+
+    gtag('consent', 'default', {
+      'ad_storage': 'denied',
+      'analytics_storage': 'denied',
+    })
   </script>
 
+  <!-- Cookie Consent by https://www.cookiewow.com -->
+  <script type="text/javascript" src="https://cookiecdn.com/cwc.js"></script>
+  <script id="cookieWow" type="text/javascript" src="https://cookiecdn.com/configs/pQrmuDVDXDn7zcMpZAhB6Mum"
+    data-cwcid="pQrmuDVDXDn7zcMpZAhB6Mum"></script>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+
   <!-- Google Tag Manager -->
-  <script>
+  <script async defer>
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -194,55 +248,98 @@
   </script>
   <!-- End Google Tag Manager -->
 
+
+  <script type="text/javascript">
+    function cwcCookieWrapper() {
+      if (window?.cwcIsUserAccept === undefined) return
+      // console.log(window.cwcIsUserAccept('analytics'),'window.cwcIsUserAccep');
+      if (window.cwcIsUserAccept('analytics')) {
+        gtag('consent', 'update', {
+          'analytics_storage': 'granted'
+        })
+      }
+
+      if (window.cwcIsUserAccept('marketing')) {
+        gtag('consent', 'update', {
+          'ad_storage': 'granted'
+        })
+      }
+    }
+
+    cwcCookieWrapper()
+  </script>
+
 </head>
 
 <body>
-
+  @include('layouts.header-front')
   @yield('container')
+  @include('layouts.footer')
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/popper.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap-select.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/map.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/product.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
+  <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
   </script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
-  <script src="{{asset('/frontend-asset/js/map.js')}}"></script>
-  <script src="{{asset('/frontend-asset/js/product.js')}}"></script>
-  <script src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
-  <script src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
-  <script src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
-  <script src="{{asset('/frontend-asset/js/dropzone.js')}}"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.0.3/nouislider.min.js"></script>
-  <script src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>
-  <script src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
-  <script src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
-  <script src="https://www.recaptcha.net/recaptcha/api.js?onload=onloadCallback&render=explicit&hl=en" async defer>
+  <script>
+    if ('loading' in HTMLImageElement.prototype) {
+    const images = document.querySelectorAll('img[loading="lazy"]');
+    images.forEach(img => {
+      img.src = img.dataset.src;
+    });
+  
+    const imageDiv = document.querySelectorAll('div[loading="lazy"]');
+     imageDiv.forEach(imgD => {
+       imgD.style.backgroundImage = "url('"+imgD.dataset.src+"')";
+    });
+  } else {
+    const imageDiv = document.querySelectorAll('div[loading="lazy"]');
+     imageDiv.forEach(imgD => {
+       imgD.style.backgroundImage = "url('"+imgD.dataset.src+"')";
+    });
+    // Dynamically import the LazySizes library
+    const script = document.createElement('script');
+    script.src =
+      'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js';
+    document.body.appendChild(script);
+  }
   </script>
   <script type="text/javascript">
-    var verifyCallback = function(response) {
-    // $('#keyrecapGui').val(response);
-    $('#submitGuiDownload').prepend('<input type="hidden" name="keyresponseCap" value="' + response + '">');
+    var verifyCallbackData = function(response) {
+    $('#keyrecapgui').val(response);
   };
   var onloadCallback = function() {
     grecaptcha.render('recap_vertifygetGui', {
-      //'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
+    //  'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
        'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
-       //'sitekey' : '6LfGGV0pAAAAAKeEC0S7wzsPbAM1fvB3Tp2wtSYJ',
-      'callback' : verifyCallback,
+     //'sitekey' : '6LfGGV0pAAAAAKeEC0S7wzsPbAM1fvB3Tp2wtSYJ',
+      'callback' : verifyCallbackData,
       'theme' : 'light'
     });
   };
-  $("#submitGuiDownload").submit(function( event ) {
-    if($('#keyrecapGui').val() == ''){
-       alert('Please Vertify I am not a robot?');
-    }else{
-      $('#submitGuiDownload').submit();
-    }
-    event.preventDefault();
- });
+  
 
+  function validateFormGUI(form){
+               
+                if(!form.acceptPolicyGui.checked){
+                    $("#Support_policy_required").modal();
+                    return false;
+                }else if(form.keyresponseCap.value == ''){
+                    $("#downloadgui-modal-vetify-robot").modal();
+                    return false;
+                } else{
+                    return true;
+                }
+      }
   </script>
 
   <!-- Google Tag Manager (noscript) -->
@@ -252,39 +349,7 @@
   <!-- End Google Tag Manager (noscript) -->
 
   @yield('js')
-  <script>
-    $(document).ready(function() {
-        msieversion();
-       });
 
-  
-      function msieversion() 
-            {
-                var ua = window.navigator.userAgent;
-                var msie = ua.indexOf("MSIE");
-
-                if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) // If Internet Explorer, return version number
-                {
-                  var script = document.createElement('script');
-                    script.type = 'text/javascript';
-                    script.src = '{{asset('/frontend-asset/js/html2canvasie.js')}}';    
-
-                    document.getElementsByTagName('head')[0].appendChild(script);
-              
-                }
-                else  // If another browser, return 0
-                {
-                  var script = document.createElement('script');
-                    script.type = 'text/javascript';
-                    script.src = '{{asset('/frontend-asset/js/html2canvas.js')}}';    
-
-                    document.getElementsByTagName('head')[0].appendChild(script);
-                  
-                }
-
-                return false;
-            }
-  </script>
   <script>
     // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
@@ -338,10 +403,10 @@ if (!Array.prototype.findIndex) {
        $(window).scroll(function() {
           if ($(window).scrollTop() > 300) {
             $('#scrollUp').fadeIn();
-            $('#distributor').fadeIn();
+            // $('#distributor').fadeIn();
           } else {
             $('#scrollUp').fadeOut();
-            $('#distributor').fadeOut();
+            // $('#distributor').fadeOut();
           }
         });
        $('#scrollUp').click(function () {
@@ -652,6 +717,15 @@ if (!Array.prototype.findIndex) {
         }
         function setlocaltion(lang ,link){
           // console.log(lang);
+          // if(lang == 'jp'){
+          //   window.cwcCookieBanner.setLang('ja') 
+          // }else if(lang == 'cn'){
+          //   window.cwcCookieBanner.setLang('zh') 
+          // }else if(lang == 'tw'){
+          //   window.cwcCookieBanner.setLang('zh') 
+          // }else{
+          //   window.cwcCookieBanner.setLang('en') 
+          // }
           $.ajax({
            url: "{{route('setlocaltion')}}",
            data: {
@@ -689,7 +763,7 @@ if (!Array.prototype.findIndex) {
   </script>
   <script>
     $(document).ready(function() {
-             checkCookie();
+            //  checkCookie();
           });
           function resetTime(){
              var hours = 24; // Reset when storage is more than 24hours
@@ -765,8 +839,9 @@ if (!Array.prototype.findIndex) {
      
   </script>
   <script>
-    function downloadGUI(file , procode){
+    function downloadGUI(file , procode ,proCate){
           $('#procodeGui').val(procode);
+          $('#procateGui').val(proCate);
           $('#fileguidownload').val(file);
         }
         function checkacceptPolicy(){
