@@ -64,13 +64,22 @@
 @section('meta')
 <title>{{isset($contents[0]->title)? $contents[0]->title :''}}</title>
 <meta name="description"
-    content="{!! iconv_substr(strip_tags(isset($contents[0]->content)? $contents[0]->content:''),0,90,'UTF-8') !!}">
-<meta name="keywords" content="{{isset($contents[0]->title) ? $contents[0]->title :''}}">
+    content="{!! trim(iconv_substr(strip_tags(isset($contents[0]->content)? $contents[0]->content:''),0,90,'UTF-8')) !!}">
 <meta property="og:title" content="{{isset($contents[0]->title)? $contents[0]->title :''}}" />
 <meta property="og:description"
-    content="{!! iconv_substr(strip_tags(isset($contents[0]->content)? $contents[0]->content:''),0,90,'UTF-8') !!}" />
+    content="{!! trim(iconv_substr(strip_tags(isset($contents[0]->content)? $contents[0]->content:''),0,90,'UTF-8')) !!}" />
 <meta property="og:image"
     content="{{config('app.url')}}/uploads_delta/{{isset($contents[0]->thumb) ? $contents[0]->thumb :''}}" />
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
 @section('container')
 <div class="padding-top-content">
@@ -107,9 +116,9 @@
 <div class="box-events my-5 ">
     <div class="container">
         <div class="box-news-detail">
-            <h2 class="text-dark">
+            <h1 class="text-dark">
                 {{isset($contents[0]->title)? $contents[0]->title:'' }}
-            </h2>
+            </h1>
             <hr size="2">
             <?php
             function getDateformat($date){

@@ -11,9 +11,8 @@
     }
 
     .btn-outline-secondary {
-        border-color: #dcdcdc!important;
+        border-color: #dcdcdc !important;
     }
-
 </style>
 @endsection
 @section('content')
@@ -24,7 +23,7 @@
             <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Meta tags</h1>
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{route('metaTags')}}">Meta tags</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('metaTags')}}">Meta tags</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Create</li>
                 </ol>
             </nav>
@@ -40,16 +39,15 @@
         <div class="block-content mb-5">
             <form action="{{route('store_metaTag')}}" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
-     
+
                 <div class="row justify-content-center">
                     <div class="col-lg-8 col-xl-8">
                         <div class="form-group">
                             <label for="example-select">Page Name<span class="req-fed">*</span></label>
-                            <input type="text" class="form-control"
-                                name="page" placeholder="Enter Text." required>
+                            <input type="text" class="form-control" name="page" placeholder="Enter Text." required>
                         </div>
-               
-               
+
+
                         <div class="form-group">
                             <label for="">Meta - Title</label>
                             <input type="text" class="form-control" name="metaTitle" value="">
@@ -58,16 +56,16 @@
                             <label for="">Meta - Description</label>
                             <textarea name="metaDescription" class="form-control"></textarea>
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="">Meta - Keywords</label>
                             <textarea name="metaKeyword" class="form-control"></textarea>
-                        </div>
-                        
+                        </div> --}}
+
                         <div class="form-group text-center">
-                            <button class="btn btn-success" type="submit">Create 
+                            <button class="btn btn-success" type="submit">Create
                             </button>
                             <a href="{{route('metaTags')}}" class="btn btn-secondary">
-                                Cancel 
+                                Cancel
                             </a>
                         </div>
                     </div>

@@ -429,7 +429,8 @@ class ProductCategoriesController extends Controller
         $contentAddType2 = $request->contentAddType2;
         $contentAddType3 = $request->contentAddType3;
         $oldfile_warranty_file  = $request->oldfile_warranty_file;
-        // return dd($orderCate);
+        $url_item  = $request->url_item;
+        
         $arrayfileName = self::UpdateOldfile($thumbnailOpt, $typeImage ,$oldfileytype);
         // return dd($arrayfileName);
         $validate = Validator::make($request->all(), [
@@ -457,6 +458,7 @@ class ProductCategoriesController extends Controller
                         'image_type2' =>$arrayfileName['type2'],
                         'image_type3' =>$arrayfileName['type3'],
                         "unit_dimension" => $request->unit_dimension,
+                        'url_item' => $url_item,
                         'warranty_file'=>$warranty_file,
                         "updated_at" => \Carbon\Carbon::now(),
                     ]
@@ -469,6 +471,7 @@ class ProductCategoriesController extends Controller
                         'image_type3' =>$arrayfileName['type3'],
                         "unit_dimension" => $request->unit_dimension,
                         'warranty_file'=>$warranty_file,
+                        'url_item' => $url_item,
                         "updated_at" => \Carbon\Carbon::now(),
                     ]
                 );
@@ -504,12 +507,12 @@ class ProductCategoriesController extends Controller
                             "contenttype2" => $contentAddType2[$lang],
                             "contenttype3" => $contentAddType3[$lang],
                             "file" => $arrayfileName[$lang],
-                            "content1" => $content1[$lang],
-                            "content2" => $content2[$lang],
-                            "safety_cer" => $safety_cer[$lang],
-                            "highlight" => $features[$lang],
-                            "dimension" => $dimensions[$lang],
-                            "unit_wight" => $unit[$lang],
+                            "content1" => isset($content1[$lang]) ?  $content1[$lang] :null,
+                            "content2" => isset($content2[$lang]) ? $content2[$lang] : null ,
+                            "safety_cer" => isset($safety_cer[$lang]) ? $safety_cer[$lang] :null ,
+                            "highlight" => isset($features[$lang]) ? $features[$lang] : null ,
+                            "dimension" => isset($dimensions[$lang]) ? $dimensions[$lang] : null ,
+                            "unit_wight" => isset($unit[$lang]) ? $unit[$lang] : null,
                         ]
                     );
                    }else{
@@ -523,12 +526,12 @@ class ProductCategoriesController extends Controller
                             "contenttype2" => $contentAddType2[$lang],
                             "contenttype3" => $contentAddType3[$lang],
                             "file" => $arrayfileName[$lang],
-                            "content1" => $content1[$lang],
-                            "content2" => $content2[$lang],
-                            "safety_cer" => $safety_cer[$lang],
-                            "highlight" => $features[$lang],
-                            "dimension" => $dimensions[$lang],
-                            "unit_wight" => $unit[$lang],
+                            "content1" => isset($content1[$lang]) ?  $content1[$lang] :null,
+                            "content2" => isset($content2[$lang]) ? $content2[$lang] : null ,
+                            "safety_cer" => isset($safety_cer[$lang]) ? $safety_cer[$lang] :null ,
+                            "highlight" => isset($features[$lang]) ? $features[$lang] : null ,
+                            "dimension" => isset($dimensions[$lang]) ? $dimensions[$lang] : null ,
+                            "unit_wight" => isset($unit[$lang]) ? $unit[$lang] : null,
                             "local" => $lang,
                         ]
                     );

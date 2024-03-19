@@ -8,6 +8,21 @@
     }
 </style>
 @endsection
+@section('meta')
+<title>Configurable Power Detail | DeltaPSU</title>
+<meta name="description"
+    content="{!!  trim(iconv_substr(strip_tags(isset($subCategories[0]->content1 )? $subCategories[0]->content1:''),0,155,'UTF-8')) !!}">
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
+@endsection
 @section('container')
 <div class="padding-top-content">
 </div>
@@ -32,17 +47,8 @@
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
 <div class="box-configurable-detail mb-5">
     <div class="container">
-        <h2 class="text-title-delta visible-up-922">{{$staticContent['Configurable_Power']}}</h2>
+        <h1 class="text-title-delta visible-up-922">{{$staticContent['Configurable_Power']}}</h1>
         <h3 class="text-title-delta invisible-up-922">{{$staticContent['Configurable_Power']}}</h3>
-        {{-- <h3 class="text-capitalize visible-up-922">Configure a Power Supply in your way with Delta AC-DC
-            Configurable Power Supply</h3>
-        <h4 class="text-capitalize invisible-up-922">Configure a Power Supply in your way with Delta AC-DC Configurable
-            Power Supply</h4>
-        <p class="mb-4">Delta Electronics is the world’s largest provider of switching power supplies. With its
-            extensive experience in power supplies development and manufacturing, Delta created the MEG-A series
-            of AC-DC configurable power supply, for both medical and industrial applications. These isolated power
-            modules enable the users to configure and combine output up to a maximum 2,100
-            watts using single or dual output modules.</p> --}}
         <div class="text-editor mb-4">
             {!!$subCategories[0]->content1 !!}
         </div>

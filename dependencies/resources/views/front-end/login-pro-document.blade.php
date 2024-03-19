@@ -124,7 +124,16 @@
 @section('meta')
 <title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''}}">
-<meta name="keywords" content="{{isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''}}">
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
 @section('container')
 <div class="padding-top-content">
@@ -159,7 +168,7 @@
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
 <section class="box-news ">
     <div class="container">
-        <h2 class="text-title-delta visible-tablets-up">{{$staticContent['Product_Documents']}}</h2>
+        <h1 class="text-title-delta visible-tablets-up">{{$staticContent['Product_Documents']}}</h1>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['Product_Documents']}}</h3>
         <div class="row">
             <div class="col-xl-3 col-lg-4  col-md-12 mb-4 padding-mobile">

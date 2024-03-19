@@ -254,6 +254,16 @@
 <meta property="og:description"
     content="{{$product[0]['serie_name']}} {{$staticContent['Series']}} , {{$product[0]['cate_name']}}" />
 <meta property="og:image" content="{{config('app.url')}}/upload/thumbs/{{$product[0]['picture']}}" />
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
 <?php 
     function setTextpro($pro){
@@ -1394,9 +1404,8 @@
     style="background: url('{{asset('frontend-asset/image/product-detail/Help.jpg')}}') no-repeat; background-position: top center; background-size: cover; ">
     <div class="d-flex">
         <div class="box-lookingfor-content text-center">
-            <h1 class="text-white visible-up-922">{{$staticContent['Looking_for_support_for_this']}}</h1>
-            <h2 class="text-white invisible-up-922">{{$staticContent['Looking_for_support_for_this']}}</h2>
-            {{-- <p class="text-white visible-up-922">{{$staticContent['Looking_for_support_for_this_des']}}</p> --}}
+            <h2 class="text-white visible-up-922">{{$staticContent['Looking_for_support_for_this']}}</h2>
+            <h3 class="text-white invisible-up-922">{{$staticContent['Looking_for_support_for_this']}}</h3>
             <a href="{{route('contactSupport')}}"><button
                     class="btn-addcompare mt-3">{{$staticContent['Get_Support']}}</button></a>
         </div>

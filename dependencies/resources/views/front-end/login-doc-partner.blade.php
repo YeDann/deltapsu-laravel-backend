@@ -7,7 +7,16 @@
 @section('meta')
 <title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''}}">
-<meta name="keywords" content="{{isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''}}">
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
 @section('container')
 <div class="padding-top-content">
@@ -41,7 +50,7 @@
 {{-- <div class="visible-tablets-up visible-mobile"> --}}
   <div class="box-login pb-5">
     <div class="container">
-      <h2 class="text-title-delta">Document Download</h2>
+      <h1 class="text-title-delta">Document Download</h1>
       <form id="loginform" method="POST" action="{{route('partnerLoginDoc')}}">
         {{csrf_field()}}
         <div class="center">

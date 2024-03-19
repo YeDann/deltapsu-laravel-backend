@@ -53,7 +53,16 @@
 @section('meta')
 <title>{{isset($aboutus[0]->metaTitle)? $aboutus[0]->metaTitle :''}}</title>
 <meta name="description" content="{{isset($aboutus[0]->metaDescription)? $aboutus[0]->metaDescription :''}}">
-<meta name="keywords" content="{{isset($aboutus[0]->metaKeyword) ? $aboutus[0]->metaKeyword :''}}">
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
 @section('container')
 <div class="padding-top-content">
@@ -87,7 +96,7 @@
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
 <div class="box-deltapsu">
     <div class="container">
-        <h2 class="text-title-delta visible-up-922">{{$aboutus[0]->title}}</h2>
+        <h1 class="text-title-delta visible-up-922">{{$aboutus[0]->title}}</h1>
         <h3 class="text-title-delta invisible-up-922">{{$aboutus[0]->title}}</h3>
         <div class="text-detail">
             <?php echo $aboutus[0]->content  ?>

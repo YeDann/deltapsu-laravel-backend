@@ -63,7 +63,7 @@
 
 <div class="box-result-search">
     <div class="container">
-        <h2 class="text-title-delta visible-tablets-up">{{$staticContent['Search_Results']}}</h2>
+        <h1 class="text-title-delta visible-tablets-up">{{$staticContent['Search_Results']}}</h1>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['Search_Results']}}</h3>
         <select id="select-search-results" class="form-control mb-4">
             <option value="0">{{$staticContent['Products']}} ({{count($pro_results)}})</option>

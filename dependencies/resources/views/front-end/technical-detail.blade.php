@@ -1,20 +1,30 @@
 @extends('layouts.front-end')
 @section('css')
 <style>
-    
-    .box-news-detail{
+    .box-news-detail {
         border: 2px solid #E3EFF8;
         padding: 24px;
     }
-    hr{
+
+    hr {
         border-top: 2px solid #E3EFF8;
     }
 </style>
 @endsection
 @section('meta')
 <title>{{isset($contents[0]->title)? $contents[0]->title :''}}</title>
-<meta name="description" content="{!! iconv_substr(strip_tags(isset($contents[0]->content)? $contents[0]->content:''),0,90,'UTF-8') !!}">
-<meta name="keywords" content="{{isset($contents[0]->title) ? $contents[0]->title :''}}">
+<meta name="description"
+    content="{!! iconv_substr(strip_tags(isset($contents[0]->content)? $contents[0]->content:''),0,90,'UTF-8') !!}">
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
 @section('container')
 <div class="padding-top-content">
@@ -24,19 +34,24 @@
         <div class="container">
             <nav aria-label="breadcrumb" id="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a
-                        href="#" data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Updates']}}</a>
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
+                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Updates']}}</a>
                         <ul class="dropdown-menu">
                             <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Updates']}}</a></li>
                             <hr>
                             <li><a href="{{route('index','news')}}">{{$staticContent['Product_News']}}</a></li>
                             <li><a href="{{route('index','events')}}">{{$staticContent['Events']}}</a></li>
-                            <li><a href="{{route('index','technical-articles')}}">{{$staticContent['Technical_Articles']}}</a></li>
-                          </ul>   
-                   </li>
-                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a href="#">{{$staticContent['Technical_Articles']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['Technical_Articles']}} {{$staticContent['Details']}} </a></li>
+                            <li><a
+                                    href="{{route('index','technical-articles')}}">{{$staticContent['Technical_Articles']}}</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a
+                            href="#">{{$staticContent['Technical_Articles']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
+                            href="#">{{$staticContent['Technical_Articles']}} {{$staticContent['Details']}} </a></li>
                 </ol>
             </nav>
         </div>
@@ -46,10 +61,10 @@
 <section class="box-news  my-5 {{-- visible-up-922 --}}">
     <div class="container">
         <div class="box-news-detail">
-            <h2 class="text-dark">
+            <h1 class="text-dark">
                 {{isset($contents[0]->title)? $contents[0]->title:'' }}
-              
-            </h2>
+
+            </h1>
             <hr size="2">
             <div class="post-meta">
                 <span class="sub-news new">
@@ -86,11 +101,11 @@
                        return  $datearray;
                 }
                 ?>
-                 
-                <img class="line-symbol "src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
-                    <span class="date">
-                        <a href="#">
-                            <?php
+
+                <img class="line-symbol " src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
+                <span class="date">
+                    <a href="#">
+                        <?php
                             if(isset($contents[0]->date_info)){
                               $datenew = getDateformat($contents[0]->date_info);
                               echo $datenew['m'].' '.$datenew['d'] .' '.$datenew['y'];
@@ -99,16 +114,16 @@
                             }
 
                             ?>
-                        </a>
-                        </span>
+                    </a>
+                </span>
             </div>
             <div class="content">
                 @if(isset($contents[0]->content))
                 {!!$contents[0]->content!!}
                 @endif
-                        
+
             </div>
-            
+
         </div>
         <h3 class="text-center text-drak margin-title">RELATED NEWS</h3>
         <div class="row">
@@ -116,10 +131,10 @@
             <div class="col-lg-4 col-sm-6">
                 <div class="card">
                     <a href="{{route('updateTechnicalDetail',['name'=> $item->slug])}}">
-                    <div class="post-image">
-                        <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""
-                            class="img-responsive">
-                    </div>
+                        <div class="post-image">
+                            <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""
+                                class="img-responsive">
+                        </div>
                     </a>
                     <div class="news-content">
                         <div class="post-meta">
@@ -128,11 +143,11 @@
                                     {{$item->cateName}}
                                 </a>
                             </span>
-                        <img class="line-symbol"src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
+                            <img class="line-symbol" src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
                             <span class="date">
                                 <a href="#">
-                            
-                                     <?php
+
+                                    <?php
                                      if(isset($item->date_info)){
                                        $datenew2 = getDateformat($item->date_info);
                                        echo $datenew2['m'].' '.$datenew2['d'] .' '.$datenew2['y'];
@@ -145,18 +160,18 @@
                             </span>
                         </div>
                         <a href="{{route('updateTechnicalDetail',['name'=> $item->slug])}}">
-                        <h2 class="post-header title-new">
-                            {{$item->title}}
-                        </h2>
+                            <h2 class="post-header title-new">
+                                {{$item->title}}
+                            </h2>
                         </a>
                         <p>{!! iconv_substr(strip_tags($item->content),0,90,'UTF-8') !!} ...
                         </p>
-                        
+
                     </div>
-                    
-                <a href="{{route('updateTechnicalDetail',['name'=> $item->slug])}}" class="read-more">READ MORE</a>
+
+                    <a href="{{route('updateTechnicalDetail',['name'=> $item->slug])}}" class="read-more">READ MORE</a>
                 </div>
-              </div>  
+            </div>
             @endforeach
         </div>
     </div>

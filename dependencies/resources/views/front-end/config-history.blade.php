@@ -1,46 +1,57 @@
 @extends('layouts.front-end')
 @section('css')
-<link rel="stylesheet" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}" >
+<link rel="stylesheet" href="{{asset('/frontend-asset/css/vanilla-calendar-min.css')}}">
 <style>
-@media (max-width: 992px){
-    .resources-download {
-        padding: 12px;
-        margin: 0 -2rem;
+    @media (max-width: 992px) {
+        .resources-download {
+            padding: 12px;
+            margin: 0 -2rem;
+        }
     }
-}
-.bg-back{
-    background-color: #444444;
-    color:#fff;
-    font-weight: bold;
-     border: 1px solid  #E3EFF8;
-    font-size: 14px;
-   
-}
-.bg-bule{
-    background-color: #F0F5FA;
-    color:#444444;
-    font-weight: 400;
-    border: 1px solid  #E3EFF8;
-    font-size: 14px;
-   
-}
-.bg-bule.active{
-    color:#76B900;
-    font-weight: bold;
-}
-.bg-bule.no-active{
-    color:#F08200;
-    font-weight: bold;
-    
-}
 
+    .bg-back {
+        background-color: #444444;
+        color: #fff;
+        font-weight: bold;
+        border: 1px solid #E3EFF8;
+        font-size: 14px;
 
+    }
+
+    .bg-bule {
+        background-color: #F0F5FA;
+        color: #444444;
+        font-weight: 400;
+        border: 1px solid #E3EFF8;
+        font-size: 14px;
+
+    }
+
+    .bg-bule.active {
+        color: #76B900;
+        font-weight: bold;
+    }
+
+    .bg-bule.no-active {
+        color: #F08200;
+        font-weight: bold;
+
+    }
 </style>
 @endsection
 @section('meta')
 <title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''}}">
-<meta name="keywords" content="{{isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''}}">
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
 @section('container')
 <div class="padding-top-content">
@@ -50,10 +61,14 @@
         <div class="container">
             <nav aria-label="breadcrumb" id="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a href="#"> {{$staticContent['Partners']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a href="{{route('marketingResources')}}">{{$staticContent['Marketing_Resources']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['Configurable_History']}}</a></li>
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a href="#">
+                            {{$staticContent['Partners']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a
+                            href="{{route('marketingResources')}}">{{$staticContent['Marketing_Resources']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
+                            href="#">{{$staticContent['Configurable_History']}}</a></li>
                 </ol>
             </nav>
         </div>
@@ -72,137 +87,139 @@
                         <option value="">Default</option>
                         <option value="desc">Newest - Oldest</option>
                         <option value="asc">Oldest - Newest</option>
-<!--                         <option value="name_asc">Model Name A-Z</option>
+                        <!--                         <option value="name_asc">Model Name A-Z</option>
                         <option value="name_desc">Model Name Z-A</option> -->
                     </select>
                 </div>
             </div>
         </div>
         @foreach ($con_his as $item)
-        <div class="row mb-4 m-0 moreBox"  style="display: none;">
-            <div class="col-md-3 p-0 bg-back"> 
-                    <div class="p-2">Enquiry Date</div>
+        <div class="row mb-4 m-0 moreBox" style="display: none;">
+            <div class="col-md-3 p-0 bg-back">
+                <div class="p-2">Enquiry Date</div>
             </div>
-            <div class="col-md-3 p-0 bg-bule"> 
+            <div class="col-md-3 p-0 bg-bule">
                 <div class="p-2">{{$item->created_at}}</div>
             </div>
-            <div class="col-md-3 p-0  bg-back"> 
+            <div class="col-md-3 p-0  bg-back">
                 <div class="p-2"> Country</div>
             </div>
-            <div class="col-md-3 p-0 bg-bule"> 
+            <div class="col-md-3 p-0 bg-bule">
                 <div class="p-2">{{isset($item->country)?$item->country:'-'}}</div>
             </div>
-            <div class="col-md-3 p-0 bg-back"> 
+            <div class="col-md-3 p-0 bg-back">
                 <div class="p-2">
                     Factory Model Name
                 </div>
             </div>
-            <div class="col-md-3 p-0 bg-bule"> 
+            <div class="col-md-3 p-0 bg-bule">
                 <div class="p-2">
                     {{isset($item->factory_model)?$item->factory_model:'-'}}
                 </div>
             </div>
-            <div class="col-md-3 p-0 bg-back"> 
+            <div class="col-md-3 p-0 bg-back">
                 <div class="p-2">
                     Email
                 </div>
             </div>
-            <div class="col-md-3 p-0 bg-bule"> 
+            <div class="col-md-3 p-0 bg-bule">
                 <div class="p-2">
                     {{isset($item->email)?$item->email:'-'}}
                 </div>
             </div>
-            <div class="col-md-3 p-0 bg-back"> 
+            <div class="col-md-3 p-0 bg-back">
                 <div class="p-2">
                     Customer Model Name
                 </div>
             </div>
-            <div class="col-md-3 p-0 bg-bule"> 
+            <div class="col-md-3 p-0 bg-bule">
                 <div class="p-2">
                     {{$item->customer_model}}
                 </div>
             </div>
-            <div class="col-md-3 p-0 bg-back"> 
+            <div class="col-md-3 p-0 bg-back">
                 <div class="p-2">
                     Enquiry Status
                 </div>
             </div>
-            <div class="col-md-3 p-0 bg-bule  {{$item->type_his == 0?'no-active':'active'}}"> 
+            <div class="col-md-3 p-0 bg-bule  {{$item->type_his == 0?'no-active':'active'}}">
                 <div class="p-2">
                     {{$item->type_his == 0?'NO':''}}
                     {{$item->type_his == 3?'Send PDF':''}}
                     {{$item->type_his == 1?'YES':''}}
                 </div>
             </div>
-            <div class="col-md-3 p-0 bg-back"> 
+            <div class="col-md-3 p-0 bg-back">
                 <div class="p-2">
                     Message
                 </div>
             </div>
-            <div class="col-md-3 p-0 bg-bule"> 
+            <div class="col-md-3 p-0 bg-bule">
                 <div class="p-2">
                     {{isset($item->Message)?$item->Message:'-'}}
                 </div>
             </div>
-            <div class="col-md-3 p-0 bg-back"> 
+            <div class="col-md-3 p-0 bg-back">
                 <div class="p-2">
                     Configurable Detail
                 </div>
             </div>
-            <div class="col-md-3 p-0 bg-bule"> 
+            <div class="col-md-3 p-0 bg-bule">
                 <div class="p-2">
-                <a href="{{config('app.url')}}/config_history/{{$item->file}}" target="_blank">
-                    <button class="btn-downlode ">View</button>
-                </a>
+                    <a href="{{config('app.url')}}/config_history/{{$item->file}}" target="_blank">
+                        <button class="btn-downlode ">View</button>
+                    </a>
                 </div>
             </div>
         </div>
-        @endforeach 
-           <div class="row">
-               <div class="col-lg-12 text-center">
-                <div id="loadMore" class="btn btn-boxen" onclick="loadeMore(event,4)">{{$staticContent['See_More']}}</div>
-                   </div> 
-           </div>
-            {{-- @foreach ($con_his as $item)
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col"  class="bg-back">Enquiry Date</th>
-                    <th scope="col"  class="bg-bule">{{$item->created_at}}</th>
+        @endforeach
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div id="loadMore" class="btn btn-boxen" onclick="loadeMore(event,4)">{{$staticContent['See_More']}}
+                </div>
+            </div>
+        </div>
+        {{-- @foreach ($con_his as $item)
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="bg-back">Enquiry Date</th>
+                    <th scope="col" class="bg-bule">{{$item->created_at}}</th>
                     <th scope="col" class="bg-back">Country</th>
-                  <th scope="col"  class="bg-bule">{{isset($item->country)?$item->country:'-'}}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
+                    <th scope="col" class="bg-bule">{{isset($item->country)?$item->country:'-'}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
                     <th class="bg-back">Factory Model Name</th>
                     <td class="bg-bule">{{isset($item->factory_model)?$item->factory_model:'-'}} </td>
                     <td class="bg-back">Email</td>
                     <td class="bg-bule">{{isset($item->email)?$item->email:'-'}}</td>
-                  </tr>
-                  <tr>
-                    <th  class="bg-back">Customer Model Name</th>
+                </tr>
+                <tr>
+                    <th class="bg-back">Customer Model Name</th>
                     <td class="bg-bule">{{$item->factory_model}}</td>
                     <td class="bg-back"> Enquiry Status</td>
-                    <td class="bg-bule {{$item->type_his == 0?'no-active':'active'}}">{{$item->type_his == 0?'NO':'YES'}}</td>
-                  </tr>
-                  <tr>
-                    <th  class="bg-back">Message</th>
-                  <td class="bg-bule">{{isset($item->Message)?$item->Message:'-'}}</td>
-                    <td class="bg-back" >Configurable Detail</td>
+                    <td class="bg-bule {{$item->type_his == 0?'no-active':'active'}}">{{$item->type_his ==
+                        0?'NO':'YES'}}</td>
+                </tr>
+                <tr>
+                    <th class="bg-back">Message</th>
+                    <td class="bg-bule">{{isset($item->Message)?$item->Message:'-'}}</td>
+                    <td class="bg-back">Configurable Detail</td>
                     <td class="bg-bule"> <button class="btn-downlode ">View</button></td>
-                  </tr>
-                </tbody>
-              </table>
-            @endforeach --}}
-            
-      
-    </div> 
+                </tr>
+            </tbody>
+        </table>
+        @endforeach --}}
+
+
+    </div>
 </div>
 @endsection
 @section('js')
 <script>
-     $( document ).ready(function() {
+    $( document ).ready(function() {
         $(".moreBox").slice(0, 8).show();
     });
     function loadeMore(event,i){

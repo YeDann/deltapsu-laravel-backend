@@ -268,6 +268,37 @@ $langch = str_replace('_', '-', app()->getLocale());
 
     cwcCookieWrapper()
   </script>
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Delta Electronics (Thailand) Public Company Limited",
+    "alternateName": "Delta",
+    "url": "https://www.deltapsu.com/en",
+    "logo": "https://www.deltapsu.com/frontend-asset/image/DeltaPSU-Logo.svg",
+    "description": "World’s leading provider of power products and solutions.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+6627092800",
+      "contactType": "sales",
+      "areaServed": "TH",
+      "availableLanguage": "Thai"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "909 Soi 9, Moo 4, Bangpoo Industrial Estate (E.P.Z.), Pattana 1 Rd., T. Prakasa,",
+      "addressLocality": "Mueang Samut Prakan District",
+      "addressRegion": "Samut Prakarn",
+      "postalCode": "10280",
+      "addressCountry": "TH"
+    },
+    "sameAs": [
+      "https://www.facebook.com/DeltaPSU/",
+      "https://www.linkedin.com/company/deltapsu/"
+    ]
+  }
+  </script>
+
 
 </head>
 

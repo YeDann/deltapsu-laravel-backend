@@ -1,25 +1,28 @@
 @extends('layouts.front-end')
 @section('css')
 <style>
-
-.select-minimize {
+    .select-minimize {
         width: 350px;
     }
+
     #nav-tab a {
-        
-    
+
+
         width: 15%;
     }
+
     .nav-tabs .nav-link {
         margin: 0;
     }
+
     .font-size-tab {
-    font-size: 14px !important;
-    color: #000;
+        font-size: 14px !important;
+        color: #000;
     }
+
     .tab-content>.active {
-    display: block;
-}
+        display: block;
+    }
 </style>
 @endsection
 
@@ -31,18 +34,22 @@
         <div class="container">
             <nav aria-label="breadcrumb" id="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a
-                            href="#" data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Updates']}}</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Updates']}}</a></li>
-                                <hr>
-                                <li><a href="{{route('index','news')}}">{{$staticContent['Product_News']}}</a></li>
-                                <li><a href="{{route('index','events')}}">{{$staticContent['Events']}}</a></li>
-                                <li><a href="{{route('index','technical-articles')}}">{{$staticContent['Technical_Articles']}}</a></li>
-                              </ul>   
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
+                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Updates']}}</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Updates']}}</a></li>
+                            <hr>
+                            <li><a href="{{route('index','news')}}">{{$staticContent['Product_News']}}</a></li>
+                            <li><a href="{{route('index','events')}}">{{$staticContent['Events']}}</a></li>
+                            <li><a
+                                    href="{{route('index','technical-articles')}}">{{$staticContent['Technical_Articles']}}</a>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['Technical_Articles']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
+                            href="#">{{$staticContent['Technical_Articles']}}</a></li>
                 </ol>
             </nav>
         </div>
@@ -51,42 +58,47 @@
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
 <section class="box-news ">
     <div class="container">
-        <h2 class="text-title-delta ">{{$staticContent['Technical_Articles']}}</h2>
+        <h1 class="text-title-delta ">{{$staticContent['Technical_Articles']}}</h1>
         <select id="select-news" onchange="selectDatanews();" class="form-control invisible-up-922 mb-4">
             <option value="0">{{$staticContent['All']}}</option>
             @foreach ($news_type as $type)
             <option value="{{$type->id}}">{{$type->name}}</option>
-            @endforeach 
+            @endforeach
         </select>
         <div class="row">
             <div class="col-md-12 ">
-                <div class=" nav nav-tabs d-flex justify-content-between border-b-2px visible-up-922 mb-5" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link font-size-tab active" onclick="clicktabFist(0);" id="pop0-tab" data-toggle="tab" href="#pop0"
-                            role="tab" aria-controls="pop0" aria-selected="true" data-val="0">{{$staticContent['All']}}</a>
-                        @foreach ($news_type as $type)
-                        <a class="nav-item nav-link font-size-tab" onclick="clicktab({{$type->id}});" id="pop{{$type->id}}-tab" data-toggle="tab" href="#pop{{$type->id}}"
-                        role="tab" aria-controls="pop{{$type->id}}"  aria-selected="true" data-val="0">{{$type->name}}</a>  
-                        @endforeach
+                <div class=" nav nav-tabs d-flex justify-content-between border-b-2px visible-up-922 mb-5" id="nav-tab"
+                    role="tablist">
+                    <a class="nav-item nav-link font-size-tab active" onclick="clicktabFist(0);" id="pop0-tab"
+                        data-toggle="tab" href="#pop0" role="tab" aria-controls="pop0" aria-selected="true"
+                        data-val="0">{{$staticContent['All']}}</a>
+                    @foreach ($news_type as $type)
+                    <a class="nav-item nav-link font-size-tab" onclick="clicktab({{$type->id}});"
+                        id="pop{{$type->id}}-tab" data-toggle="tab" href="#pop{{$type->id}}" role="tab"
+                        aria-controls="pop{{$type->id}}" aria-selected="true" data-val="0">{{$type->name}}</a>
+                    @endforeach
 
                 </div>
                 <div class="tab-content add-space-mobile mb-5" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="pop0" role="tabpanel" aria-labelledby="pop0-tab">
                         <div class="grid-news" id="contentByType0">
                         </div>
-                        <div class="text-center mt-5"id="loadMore0" style="" onclick="loadeMore(event,0)">
+                        <div class="text-center mt-5" id="loadMore0" style="" onclick="loadeMore(event,0)">
                             <div class="btn btn-boxen">{{$staticContent['See_More']}}</div>
-                            </div>
+                        </div>
                     </div>
                     @foreach ($news_type as $type)
-                    <div class="tab-pane fade" id="pop{{$type->id}}" role="tabpanel" aria-labelledby="pop{{$type->id}}-tab">
+                    <div class="tab-pane fade" id="pop{{$type->id}}" role="tabpanel"
+                        aria-labelledby="pop{{$type->id}}-tab">
                         <div class="grid-news" id="contentByType{{$type->id}}">
                         </div>
-                        <div class="text-center mt-5"id="loadMore{{$type->id}}" style="" onclick="loadeMore(event,{{$type->id}})">
+                        <div class="text-center mt-5" id="loadMore{{$type->id}}" style=""
+                            onclick="loadeMore(event,{{$type->id}})">
                             <div class="btn btn-boxen">{{$staticContent['See_More']}}</div>
                         </div>
                     </div>
                     @endforeach
-                </div>     
+                </div>
             </div>
         </div>
     </div>
@@ -98,7 +110,7 @@
 
 @section('js')
 <script>
-        var news =  <?= json_encode($news);?>;
+    var news =  <?= json_encode($news);?>;
         $( document).ready(function () {
             clicktabFist(0);
         });
@@ -214,6 +226,6 @@
       }
   }
        
-    </script>
+</script>
 
 @endsection

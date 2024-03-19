@@ -450,6 +450,7 @@ class FrontendController extends Controller
             return  view('front-end.event')->with('events2' ,$events2)->with('events' ,$events)->with('metatag' ,$metatag);
         }
         if($page == 'technical-articles'){
+            return  abort(404);
             $lang = App::getLocale();
             $news_type = DB::table('tech_type as tc')
             ->join('tech_type_translation as tct','tc.id','=','tct.tech_id')
@@ -747,27 +748,6 @@ class FrontendController extends Controller
             return redirect()->route('contactSupport'); 
         } 
      
-        if($page == "checkPro3"){
-            $arrcheck = [];
-            $products = DB::table('products as p')
-            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-            ->where('pt.local' ,'en')
-            ->select('p.*', 'pt.*' )
-            ->orderBy('pt.showstatus' ,'desc')
-            ->orderBy('p.created_at', 'desc')
-            ->get();
-            foreach($products  as $pro){
-              $propertys = DB::table('product_has_property as ph')
-               ->where('type_value','number')
-               ->where('type_id',4)
-               ->where('product_id',$pro->pro_id)
-               ->get();
-               if(count($propertys) >= 2){
-                array_push($arrcheck , $pro->pro_id);
-               }
-            }
-            return dd($arrcheck ,'ok');
-        }
   
         abort(404);
          
@@ -946,6 +926,77 @@ class FrontendController extends Controller
         ->with('subCategories',$subCategories)
         ->with('cateid',$cateid)
         ->with('mainId',$mainId)
+        ->with('series',$series)
+        ->with('series_has_application',$series_has_application)
+        ->with('last_products',$status1_last)
+        ->with('last_products_2',$status2_last);
+    }
+
+    public function allproduct(){
+
+        $lang = App::getLocale();
+      
+        $status1_last = DB::table('least_products as lp')
+        ->join('least_products_translation as lpt', 'lp.id', '=', 'lpt.last_id')
+        ->Leftjoin('products as p', 'p.pro_id', '=', 'lp.product_id')
+        ->Leftjoin('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+        ->Leftjoin('sub_pro_categories_translation as subt', 'phc.categories_id', '=', 'subt.sub_pro_id')
+        ->select('lp.*', 'lpt.*' ,'p.pro_code' ,'p.picture' ,'subt.name as catename')
+        ->where('lp.status', 1)
+        ->where('lpt.local',  $lang)
+        ->where('subt.local',  $lang)
+        ->get();
+
+        $status2_last = DB::table('least_products as lp')
+        ->join('least_products_translation as lpt', 'lp.id', '=', 'lpt.last_id')
+        ->select('lp.*', 'lpt.*'  )
+        ->where('lp.status', 2)
+        ->where('lpt.local',  $lang)
+        ->get();
+
+
+        $mainCategories = DB::table('main_pro_categories as mp')
+        ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
+        ->where('mpt.local', '=',$lang)
+        ->select('mp.*', 'mpt.*')
+        ->orderBy('mp.order_seq','asc')
+        ->get();
+
+        $subCategories = DB::table('categories_has_main_pro as chmp')
+        ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
+        ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
+        ->select('sc.*', 'sct.*' ,'chmp.*')
+        ->where('sct.local',  $lang)
+        ->orderBy('chmp.order_seq', 'asc')
+        ->get();
+
+        $series = DB::table('series_has_pro_categories as sc')
+        ->join('series as s' ,'sc.se_id' ,'=' ,'s.se_id')
+        ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
+        ->where('st.local' ,$lang)
+        ->where('s.status' ,1)
+        ->select('s.*' ,'st.*' ,'sc.*')
+        ->orderBy('order_seq' ,'asc')
+        ->get();
+
+        $series_has_application = DB::table('series_has_application as shp')
+        ->join('application as app', 'app.id', '=', 'shp.app_id')
+        ->join('application_translation as appt' ,'appt.app_id' ,'=' ,'app.id')
+        ->where('appt.local' ,'en')
+        ->select('shp.app_id','app.*' ,'appt.name','shp.se_id' )
+        ->get();
+
+        $modeSeries = DB::table('mode_series as ms')
+        ->select('ms.*')
+        ->get();
+        $metatag = DB::table('meta_tag_page as mtp')->where('id',2)->get();
+        return  view('front-end.allproducts')
+        ->with('metatag',$metatag)
+        ->with('modeSeries',$modeSeries)
+        ->with('mainCategories',$mainCategories)
+        ->with('subCategories',$subCategories)
+        ->with('cateid',0)
+        ->with('mainId',0)
         ->with('series',$series)
         ->with('series_has_application',$series_has_application)
         ->with('last_products',$status1_last)
@@ -2047,6 +2098,7 @@ class FrontendController extends Controller
     }
     public function updateTechnicalDetail($namePar){
         $lang = App::getLocale();
+        return  abort(404);
         $name = $this->validateInput($namePar ,'text',true);
         $contents = DB::table('article_has_categories as anc')
         ->join('contents as c' ,'c.id' ,'=','anc.content_id')

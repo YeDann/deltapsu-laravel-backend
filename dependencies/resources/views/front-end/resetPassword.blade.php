@@ -7,7 +7,16 @@
 @section('meta')
 <title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''}}">
-<meta name="keywords" content="{{isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''}}">
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
 @section('container')
 <div class="padding-top-content">
@@ -17,18 +26,20 @@
         <div class="container">
             <nav aria-label="breadcrumb" id="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
                     {{-- <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a
-                           href="#" data-toggle="dropdown" id="tools-dropdown">DOWNLOADS</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" id="tools-dropdown" class="text-bold">DOWNLOADS</a></li>
-                                <hr>
-                                <li><a href="{{route('index','catalogs')}}">CATALOGS</a></li>
-                                <li><a href="{{route('index','product-documents')}}">PRODUCT DOCUMENTS</a></li>
-                            
-                              </ul>   
+                            href="#" data-toggle="dropdown" id="tools-dropdown">DOWNLOADS</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="tools-dropdown" class="text-bold">DOWNLOADS</a></li>
+                            <hr>
+                            <li><a href="{{route('index','catalogs')}}">CATALOGS</a></li>
+                            <li><a href="{{route('index','product-documents')}}">PRODUCT DOCUMENTS</a></li>
+
+                        </ul>
                     </li> --}}
-                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">Change Password</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">Change
+                            Password</a></li>
 
                 </ol>
             </nav>
@@ -39,46 +50,51 @@
 {{-- <div class="visible-tablets-up visible-mobile"> --}}
     <div class="box-login pb-5">
         <div class="container">
-            <h2 class="text-title-delta">Change Your Password</h2>
-              <form id="loginform" onsubmit="resetPassFunction()">
+            <h1 class="text-title-delta">Change Your Password</h1>
+            <form id="loginform" onsubmit="resetPassFunction()">
                 <div class="center">
                     <div id="requestpin" class="col-sm-6 w-100 mx-auto mb-3">
                         <label class="text-title-detail-dark">Pin*</label>
                         <input type="text" class="input-login" name="pin" id="pin" placeholder="Confirm Pin" required>
                     </div>
-                
+
                     <div id="requestpassword" class="col-sm-6 w-100 mx-auto mb-3">
                         <label class="text-title-detail-dark">{{$staticContent['Password']}}*</label>
-                        <input type="password" class="input-login" name="password" id="inputPassword" placeholder="{{$staticContent['Password']}}"  minlength="8" pattern="{8,}" title="Must contain at least 8 or more characters" required>
+                        <input type="password" class="input-login" name="password" id="inputPassword"
+                            placeholder="{{$staticContent['Password']}}" minlength="8" pattern="{8,}"
+                            title="Must contain at least 8 or more characters" required>
                     </div>
                     <div id="requestpasswordConfrim" class="col-sm-6 w-100 mx-auto mb-3">
                         <label class="text-title-detail-dark">*Confirm Password</label>
-                        <input type="password" class="input-login" on name="confrimpassword" id="confrimpassword" placeholder="Confirm Password" minlength="8" pattern="{8,}" title="Must contain at least 8 or more characters" required onkeyup="comfirmNewPass(); return false;">
+                        <input type="password" class="input-login" on name="confrimpassword" id="confrimpassword"
+                            placeholder="Confirm Password" minlength="8" pattern="{8,}"
+                            title="Must contain at least 8 or more characters" required
+                            onkeyup="comfirmNewPass(); return false;">
                         <div id="confirmMessage3"></div>
                     </div>
                     <h5 class="text-center" id="loginerormassage"></h5>
                     <h5 class="text-center" id="loginsuccessmassage"></h5>
-                  
+
                     <div class="col-sm-4 text-center mx-auto my-4">
-                        <button type="submit"  class="btn-subscribe">Change</button>
-                    </div> 
+                        <button type="submit" class="btn-subscribe">Change</button>
+                    </div>
                 </div>
-              </form>
-           
-                
-           
+            </form>
+
+
+
         </div>
-        
+
     </div>
 
 
 
-@endsection
+    @endsection
 
 
-@section('js')
-<script>
-    function comfirmNewPass()
+    @section('js')
+    <script>
+        function comfirmNewPass()
     {
         //Store the password field objects into variables ...
         var pass1 = document.getElementById('inputPassword');
@@ -103,10 +119,9 @@
     }  
     
    
-</script>
-<script>
-    
- function resetPassFunction(){
+    </script>
+    <script>
+        function resetPassFunction(){
     var  formData = {
                     'pin': $("#pin").val(),
                     'confrimpassword': $("#confrimpassword").val(),
@@ -147,7 +162,7 @@
        
          
     }
-</script>
+    </script>
 
 
-@endsection
+    @endsection

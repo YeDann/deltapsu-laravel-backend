@@ -200,7 +200,17 @@
 @section('meta')
 <title>{{isset($application->name)? $application->name :''}} | DeltaPSU</title>
 <meta name="description" content="{{isset($application->overview_text)? $application->overview_text:''}}">
-<meta name="keywords" content="{{isset($application->name) ? $application->name :''}}">
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
+
 @endsection
 @section('container')
 <div class="padding-top-content">

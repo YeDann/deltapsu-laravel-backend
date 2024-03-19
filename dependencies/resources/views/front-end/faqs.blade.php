@@ -1,21 +1,24 @@
 @extends('layouts.front-end')
 @section('css')
 <style>
-
-    .faqs-list{
+    .faqs-list {
         color: #0087DC;
         font-size: 16px;
     }
+
     a.btn:hover {
         color: #ffffff;
     }
-    .text-editor img{
-         max-width: 100%;
-     }
-     .text-editor b{
+
+    .text-editor img {
+        max-width: 100%;
+    }
+
+    .text-editor b {
         font-weight: bold;
-     }
-     .faqs-type .faqs-list:after {
+    }
+
+    .faqs-type .faqs-list:after {
         font-family: 'Material-Design-Iconic-Font';
         content: "";
         float: right;
@@ -25,19 +28,27 @@
         top: 50%;
         right: 0;
         transform: translate(-50%, -50%);
-   }
+    }
 
-.faqs-list a:hover p {
-    color: #0087DC;
-    text-decoration: underline;
-}
-
+    .faqs-list a:hover p {
+        color: #0087DC;
+        text-decoration: underline;
+    }
 </style>
 @endsection
 @section('meta')
 <title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''}}">
-<meta name="keywords" content="{{isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''}}">
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
 @section('container')
 <div class="padding-top-content">
@@ -47,19 +58,24 @@
         <div class="container">
             <nav aria-label="breadcrumb" id="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a
-                            href="#" data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Supports']}}</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Supports']}}</a></li>
-                                <hr>
-                                <li><a href="{{route('contactSupport')}}">{{$staticContent['contact_us']}}</a></li>
-                                <li><a href="{{route('contactSalesOffices')}}">{{$staticContent['sales_offices']}}</a></li>
-                                <li><a href="{{route('contactFindDistributor')}}">{{$staticContent['find_a_distributor']}}</a></li>
-                                <li><a href="{{route('index','faqs')}}">{{$staticContent['FAQs']}}</a></li>
-                              </ul>   
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
+                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Supports']}}</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Supports']}}</a>
+                            </li>
+                            <hr>
+                            <li><a href="{{route('contactSupport')}}">{{$staticContent['contact_us']}}</a></li>
+                            <li><a href="{{route('contactSalesOffices')}}">{{$staticContent['sales_offices']}}</a></li>
+                            <li><a
+                                    href="{{route('contactFindDistributor')}}">{{$staticContent['find_a_distributor']}}</a>
+                            </li>
+                            <li><a href="{{route('index','faqs')}}">{{$staticContent['FAQs']}}</a></li>
+                        </ul>
                     </li>
-                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['FAQs']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
+                            href="#">{{$staticContent['FAQs']}}</a></li>
 
                 </ol>
             </nav>
@@ -76,25 +92,26 @@
                 <select id="catefaqId" class="form-control" onchange="selectCategories();">
                     <option value="0">{{$staticContent['All_Categories']}}</option>
                     @foreach ($faq_categories as $item)
-                    <option value="{{$item->cate_id}}">{{$item->name}}</option> 
+                    <option value="{{$item->cate_id}}">{{$item->name}}</option>
                     @endforeach
                 </select>
             </div>
         </div>
         <div id="faqs" class="faqs-type">
-          
+
             {{-- <div class="box-for-collap">
                 <div class="faqs-list collapsed  hide-box " data-toggle="collapse" data-parent="#faqs-type"
-                        href="#collapse-question02" >
-                        WHAT IS POWER BOOST?
-                       
+                    href="#collapse-question02">
+                    WHAT IS POWER BOOST?
+
                 </div>
                 <div id="collapse-question02" class="faqs-list-sub collapse" data-parent="#faqs-type">
-                        <div class="force-overflow">
-                            <div>
-                                <p>It is the reserve power available constantly that allows reliable startup of loads with high inrush current.</p>    
-                            </div>
+                    <div class="force-overflow">
+                        <div>
+                            <p>It is the reserve power available constantly that allows reliable startup of loads with
+                                high inrush current.</p>
                         </div>
+                    </div>
                 </div>
             </div> --}}
         </div>
@@ -102,8 +119,8 @@
 </div>
 <div class="get-support" style="background: url('{{asset('frontend-asset/image/FAQ@2x.png')}}');">
     <div class="container text-center">
-        <h1 class="text-white visible-upper-mobile" >{{$staticContent['Still_have_question']}}</h1>
-        <h3 class="text-white visible-mobile my-3 mb-2" >{{$staticContent['Still_have_question']}}</h3>
+        <h1 class="text-white visible-upper-mobile">{{$staticContent['Still_have_question']}}</h1>
+        <h3 class="text-white visible-mobile my-3 mb-2">{{$staticContent['Still_have_question']}}</h3>
         <p class="text-white visible-upper-mobile my-3"></p>
         <a href="{{route('contactSupport')}}" class="btn btn-subscribe">{{$staticContent['Get_Support']}}</a>
     </div>

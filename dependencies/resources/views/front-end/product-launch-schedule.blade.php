@@ -157,7 +157,16 @@
 @section('meta')
 <title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''}}">
-<meta name="keywords" content="{{isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''}}">
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
 @section('container')
 <div class="padding-top-content">
@@ -193,7 +202,7 @@
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
 <div class="box-events mb-5">
     <div class="container">
-        <h2 class="text-title-delta visible-up-922">{{$staticContent['Product_launch_Schedule']}}</h2>
+        <h1 class="text-title-delta visible-up-922">{{$staticContent['Product_launch_Schedule']}}</h1>
         <h3 class="text-title-delta invisible-up-922">{{$staticContent['Product_launch_Schedule']}}</h3>
         <div class="calendar-year-tab d-flex justify-content-center mr-24px">
             <a id="last-year" onclick="Years(-1)"></a>

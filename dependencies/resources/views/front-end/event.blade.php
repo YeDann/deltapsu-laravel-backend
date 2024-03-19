@@ -1,33 +1,41 @@
 @extends('layouts.front-end')
 @section('css')
 <style>
-   
-   .select-minimize {
-    width: 60px !important;
-   }
-    .box-news-detail{
+    .select-minimize {
+        width: 60px !important;
+    }
+
+    .box-news-detail {
         border: 2px solid #E3EFF8;
         padding: 24px;
     }
+
     /* tab */
-    .calendar-month-tab input { 
-        display: none; 
-    }   /* hide radio buttons */
-    input + label { 
-       /*  display: inline-block ; */
-       margin-bottom: -2px;
-       cursor: pointer;
-    }   /* show labels in line */
-    .calendar-month-tab{
+    .calendar-month-tab input {
+        display: none;
+    }
+
+    /* hide radio buttons */
+    input+label {
+        /*  display: inline-block ; */
+        margin-bottom: -2px;
+        cursor: pointer;
+    }
+
+    /* show labels in line */
+    .calendar-month-tab {
         border-bottom: 2px solid #E3EFF8;
         margin-bottom: 1em;
         display: flex;
         justify-content: space-around;
     }
+
     input:checked+label {
         border-bottom: 2px solid #0087DC;
     }
-    #next-year::before,#last-year::before{
+
+    #next-year::before,
+    #last-year::before {
         position: absolute;
         bottom: -8px;
         font-family: 'FontAwesome';
@@ -35,60 +43,71 @@
         font-size: 24px;
         cursor: pointer;
     }
-    #next-year::before{
+
+    #next-year::before {
         left: 0;
         content: "\f054";
         margin-left: 24px;
     }
-    #last-year::before{
+
+    #last-year::before {
         right: 0;
         content: "\f053";
         margin-right: 24px;
     }
-    .calendar-year-tab a{
+
+    .calendar-year-tab a {
         height: 24px;
         position: relative;
     }
-    .calendar-year-tab a:hover{
+
+    .calendar-year-tab a:hover {
         text-decoration: none;
     }
+
     .scrollbar {
         overflow-y: scroll;
         height: 278px;
     }
-    .img-event-slide{
+
+    .img-event-slide {
         height: 160px;
     }
-    .event-content-text  .post-meta{
+
+    .event-content-text .post-meta {
         font-size: 12px;
     }
-    .read-more-slide{
+
+    .read-more-slide {
         font-size: 12px;
         font-weight: bold;
         color: #5F5F5F;
     }
+
     .read-more-slide:hover {
-    text-decoration: none !important;
+        text-decoration: none !important;
     }
-   
-    div.zabuto_calendar .table tr.calendar-dow-header th{
-        background-color:#0087DC;
+
+    div.zabuto_calendar .table tr.calendar-dow-header th {
+        background-color: #0087DC;
         color: #ffffff;
     }
- 
+
     .grey-done {
-    background-color: #d2d2d2;
+        background-color: #d2d2d2;
 
     }
-    .blue-on{
-    background-color: #0087DC;
-    color: #ffffff;
+
+    .blue-on {
+        background-color: #0087DC;
+        color: #ffffff;
     }
-    .calendar-month-header{
+
+    .calendar-month-header {
         display: none;
         visibility: hidden;
     }
-   
+
     div.zabuto_calendar .table tr td[title]:hover:after {
         content: attr(title);
         background-color: #0087DC;
@@ -97,15 +116,23 @@
         margin: -58px;
         padding: 7px;
         margin-top: -83px;
-}
-
-
+    }
 </style>
 @endsection
 @section('meta')
 <title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''}}">
-<meta name="keywords" content="{{isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''}}">
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
+
 @endsection
 @section('container')
 <div class="padding-top-content">
@@ -115,18 +142,22 @@
         <div class="container">
             <nav aria-label="breadcrumb" id="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a
-                            href="#" data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Updates']}}</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Updates']}}</a></li>
-                                <hr>
-                                <li><a href="{{route('index','news')}}">{{$staticContent['Product_News']}}</a></li>
-                                <li><a href="{{route('index','events')}}">{{$staticContent['Events']}}</a></li>
-                                {{-- <li><a href="{{route('index','technical-articles')}}">{{$staticContent['Technical_Articles']}}</a></li> --}}
-                              </ul>   
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
+                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Updates']}}</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Updates']}}</a></li>
+                            <hr>
+                            <li><a href="{{route('index','news')}}">{{$staticContent['Product_News']}}</a></li>
+                            <li><a href="{{route('index','events')}}">{{$staticContent['Events']}}</a></li>
+                            {{-- <li><a
+                                    href="{{route('index','technical-articles')}}">{{$staticContent['Technical_Articles']}}</a>
+                            </li> --}}
+                        </ul>
                     </li>
-                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['Events&Calendar']}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
+                            href="#">{{$staticContent['Events&Calendar']}}</a></li>
                 </ol>
             </nav>
         </div>
@@ -135,12 +166,12 @@
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
 <div class="box-events mb-5">
     <div class="container">
-        <h2 class="text-title-delta visible-up-922">{{$staticContent['Events&Calendar']}}</h2>
+        <h1 class="text-title-delta visible-up-922">{{$staticContent['Events&Calendar']}}</h1>
         <h3 class="text-title-delta invisible-up-922">{{$staticContent['Events&Calendar']}}</h3>
         <div class="calendar-year-tab d-flex justify-content-center mr-24px">
-            <a  id="last-year" onclick="Years(-1)"></a>
+            <a id="last-year" onclick="Years(-1)"></a>
             <h3 id="count-year"></h3>
-            <a  id="next-year" onclick="Years(1)"></a>
+            <a id="next-year" onclick="Years(1)"></a>
         </div>
         <select id="select-events" onchange="selectMonthPicker();" class="form-control invisible-up-922 mb-4">
             <option value="00">JAN</option>
@@ -157,43 +188,43 @@
             <option value="11">DEC</option>
         </select>
         <div class="calendar-month-tab visible-up-922">
-            <input type="radio" name="tabs" id="tab00"  onchange=" addCalendar(00)" />
+            <input type="radio" name="tabs" id="tab00" onchange=" addCalendar(00)" />
             <label for="tab00" class="text-bold">JAN</label>
             <input type="radio" name="tabs" id="tab01" onchange="  addCalendar(01)" />
             <label for="tab01" class="text-bold">FEB</label>
-            <input type="radio" name="tabs" id="tab02" onchange=" addCalendar(02)"  />
+            <input type="radio" name="tabs" id="tab02" onchange=" addCalendar(02)" />
             <label for="tab02" class="text-bold">MAR</label>
             <input type="radio" name="tabs" id="tab03" onchange="  addCalendar(03)" />
             <label for="tab03" class="text-bold">APR</label>
-            <input type="radio" name="tabs" id="tab04" onchange=" addCalendar(04)"  />
+            <input type="radio" name="tabs" id="tab04" onchange=" addCalendar(04)" />
             <label for="tab04" class="text-bold">MAY</label>
-            <input type="radio" name="tabs" id="tab05" onchange="  addCalendar(05)"/>
+            <input type="radio" name="tabs" id="tab05" onchange="  addCalendar(05)" />
             <label for="tab05" class="text-bold">JUN</label>
-            <input type="radio" name="tabs" id="tab06" onchange="addCalendar(06)"   />
+            <input type="radio" name="tabs" id="tab06" onchange="addCalendar(06)" />
             <label for="tab06" class="text-bold">JUL</label>
-            <input type="radio" name="tabs" id="tab07" onchange=" addCalendar(07)"  />
+            <input type="radio" name="tabs" id="tab07" onchange=" addCalendar(07)" />
             <label for="tab07" class="text-bold">AUG</label>
             <input type="radio" name="tabs" id="tab08" onchange=" addCalendar(08)" />
             <label for="tab08" class="text-bold">SEP</label>
             <input type="radio" name="tabs" id="tab09" onchange="  addCalendar(09)" />
             <label for="tab09" class="text-bold">OCT</label>
-            <input type="radio" name="tabs" id="tab10" onchange="  addCalendar(10)"/>
+            <input type="radio" name="tabs" id="tab10" onchange="  addCalendar(10)" />
             <label for="tab10" class="text-bold">NOV</label>
             <input type="radio" name="tabs" id="tab11" onchange=" addCalendar(11)" />
             <label for="tab11" class="text-bold">DEC</label>
 
         </div>
-        
+
         <div class="tab content1 mt-4">
             <div class=" visible-up-922">
                 <div class="row mr-b-12px">
                     <div class="col-8  pad-ar-24px">
                         <div class="border-2px p-3">
-                        <div class="scrollbar " id="style-1">
-                            <div class="force-overflow" id="content_event">
+                            <div class="scrollbar " id="style-1">
+                                <div class="force-overflow" id="content_event">
 
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                     <div class="col-4">
@@ -206,15 +237,15 @@
                     </div>
                 </div>
             </div>
-            <div  class="invisible-up-922"> 
+            <div class="invisible-up-922">
                 <div id="content_event_mobile" class="row">
                 </div>
             </div>
-            <div  class="invisible-up-922"> 
+            <div class="invisible-up-922">
                 <br>
                 <br>
                 <hr>
-               
+
             </div>
             <h2 class="text-title-delta">{{$staticContent['Upcoming_Event']}}</h2>
             <div class="row">
@@ -247,14 +278,14 @@
                                return  $datearray;
                         }
                     ?>
-                @foreach (array_slice($events->toArray(), 0, 3)  as $item)
+                @foreach (array_slice($events->toArray(), 0, 3) as $item)
                 <div class="col-lg-4 col-sm-6 col-md-6 mb-3">
                     <div class="card">
                         <a href="{{route('updateEventDetail',$item->slug )}}">
-                        <div class="post-image">
-                        <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""
-                                class="img-responsive">
-                        </div>
+                            <div class="post-image">
+                                <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""
+                                    class="img-responsive">
+                            </div>
                         </a>
                         <?php
                        
@@ -264,30 +295,33 @@
                         <div class="news-content">
                             <div class="post-meta">
                                 <span class="author text-uppercase">
-                                        <i class="zmdi zmdi-calendar-alt"></i> {{ $date['m'].' '.$date['d'].' - '.($date['m'] != $endDate['m'] ?$endDate['m']:"" ).' '.(isset($endDate['d'])?''.$endDate['d']:'').' '.$date['y']}}
+                                    <i class="zmdi zmdi-calendar-alt"></i> {{ $date['m'].' '.$date['d'].' -
+                                    '.($date['m'] != $endDate['m'] ?$endDate['m']:"" ).'
+                                    '.(isset($endDate['d'])?''.$endDate['d']:'').' '.$date['y']}}
                                 </span>
                                 <span class="locations ">
                                     &nbsp; <i class="zmdi zmdi-pin"></i> {{$item->location}}
                                 </span>
                             </div>
                             <a href="{{route('updateEventDetail',$item->slug )}}">
-                            <h3 class="post-header title-new">
-                                {{$item->title}}
-                            </h3>
+                                <h3 class="post-header title-new">
+                                    {{$item->title}}
+                                </h3>
                             </a>
-                            <p>  {!! iconv_substr(strip_tags($item->content),0,90,'UTF-8') !!} ...
+                            <p> {!! iconv_substr(strip_tags($item->content),0,90,'UTF-8') !!} ...
                             </p>
-                            
+
                         </div>
-                    <a href="{{route('updateEventDetail',$item->slug )}}"class="read-more">{{$staticContent['Read_More']}}</a>
+                        <a href="{{route('updateEventDetail',$item->slug )}}"
+                            class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                 </div>
                 @endforeach
-              
-                                        
+
+
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 
 
@@ -302,10 +336,9 @@
     //   {"date":"2019-03-02","badge":true,"title":"Example 2"}
     // ];
   
-    </script>
+</script>
 
 <script>
-
     var events =  <?= json_encode($events2);?>;
     var total;
     var years;

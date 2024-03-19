@@ -1,27 +1,30 @@
 @extends('layouts.front-end')
 @section('css')
 <style>
-
-    td .select-selected{
+    td .select-selected {
         padding: 8px 11px;
     }
-    
-    td .select-items div{
+
+    td .select-items div {
         padding: 8px 26px;
     }
-    td .select-selected,td .select-items div{
+
+    td .select-selected,
+    td .select-items div {
         text-transform: none;
     }
-    .box-comparison-list.collapsed{
-        color: #444444 ;
+
+    .box-comparison-list.collapsed {
+        color: #444444;
     }
+
     /* test */
     .comparison-type .comparison-list:after {
-    font-family: 'Material-Design-Iconic-Font';
-    content: "\f273";
-    float: right;
-    font-size: 24px;
-    color: #444444;
+        font-family: 'Material-Design-Iconic-Font';
+        content: "\f273";
+        float: right;
+        font-size: 24px;
+        color: #444444;
     }
 
     .comparison-type .comparison-list.collapsed:after {
@@ -36,56 +39,71 @@
         font-weight: bolder;
         padding: 1rem 5px;
         margin-bottom: -2px;
-        
+
     }
-    
+
     .comparison-list-sub {
         padding: 12px;
     }
+
     .force-overflow {
-    min-height: 200px;
+        min-height: 200px;
     }
-  
-    .comparison-list.collapsed{
-        color: #444444 ;
+
+    .comparison-list.collapsed {
+        color: #444444;
     }
+
     .col-xs-3 {
         width: 25%;
     }
+
     .add-compare-nav .container {
         display: flex;
         justify-content: space-between;
         height: 100%;
         padding: 14px 0;
     }
-    .box-comparison .container{
+
+    .box-comparison .container {
         position: relative;
     }
-    .downloade-pdf{
+
+    .downloade-pdf {
         position: absolute;
         right: 16px;
     }
+
     /* .downloade-pdf img{
         vertical-align: text-top;
     } */
-    .cd-products-columns{
+    .cd-products-columns {
         display: flex;
     }
 
-   .cd-products-table{
-    display: flex;
-   }
-   .clr-com{
-    margin-top: 10px;
-    cursor: pointer;
-   }
+    .cd-products-table {
+        display: flex;
+    }
 
+    .clr-com {
+        margin-top: 10px;
+        cursor: pointer;
+    }
 </style>
 @endsection
 @section('meta')
 <title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''}}">
-<meta name="keywords" content="{{isset($metatag[0]->meta_key) ? $metatag[0]->meta_key :''}}">
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
 @section('container')
 <div class="padding-top-content">
@@ -95,20 +113,26 @@
         <div class="bg-bredcrumb">
             <div class="container">
                 <nav aria-label="breadcrumb" id="breadcrumb">
-                  
+
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-                        <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a
-                                href="#" data-toggle="dropdown" id="tools-dropdown"> {{$staticContent['Tools']}}</a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Tools']}}</a></li>
-                                    <hr>
-                                    <li><a href="{{route('productFinder')}}">{{$staticContent['Product_Selector']}}</a></li>
-                                <li><a href="{{route('configurableproduct')}}">{{$staticContent['configurable_power_selector']}}</a></li>
-                                <li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a></li>
-                                </ul>   
+                        <li class="breadcrumb-item text-breadcrumb-home"><a
+                                href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                        <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
+                                data-toggle="dropdown" id="tools-dropdown"> {{$staticContent['Tools']}}</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Tools']}}</a>
+                                </li>
+                                <hr>
+                                <li><a href="{{route('productFinder')}}">{{$staticContent['Product_Selector']}}</a></li>
+                                <li><a
+                                        href="{{route('configurableproduct')}}">{{$staticContent['configurable_power_selector']}}</a>
+                                </li>
+                                <li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a>
+                                </li>
+                            </ul>
                         </li>
-                        <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">{{$staticContent['product_comparison']}}</a></li>
+                        <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
+                                href="#">{{$staticContent['product_comparison']}}</a></li>
                     </ol>
                 </nav>
             </div>
@@ -116,16 +140,17 @@
     </div>
     <div class="padding-top-content-breadcrumb"></div>
     <div class="add-compare-nav">
-        <div class="container">       
+        <div class="container">
             <table class="table table-coparision-detail " style="border:0px">
                 <thead>
                     <tr class="mr-12px">
                         <td class="col-xs-3">
-                                <h3 class="">{{$staticContent['product_comparison']}}</h3>
+                            <h3 class="">{{$staticContent['product_comparison']}}</h3>
                         </td>
                         <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
-                            <div >
-                                <select onchange="selectprocom1('procomnav1')" id="procomnav1" class="form-control w-100 pr-4 onchagetype ">
+                            <div>
+                                <select onchange="selectprocom1('procomnav1')" id="procomnav1"
+                                    class="form-control w-100 pr-4 onchagetype ">
                                     <option value="0">Please Select*</option>
                                     @foreach ($products as $item)
                                     <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
@@ -134,21 +159,23 @@
                             </div>
                         </td>
                         <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
-                            <div >
-                                <select onchange="selectprocom2('procomnav2')" id="procomnav2" class="form-control w-100 pr-4 onchagetype">
+                            <div>
+                                <select onchange="selectprocom2('procomnav2')" id="procomnav2"
+                                    class="form-control w-100 pr-4 onchagetype">
                                     <option value="0">Please Select*</option>
                                     @foreach ($products as $item)
-                                    <option  value="{{$item->pro_id}}">{{$item->pro_code}}</option>
+                                    <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </td>
                         <td class="col-xs-3 cc-box" style="padding-right:0px !important;  position:relative">
                             <div class="">
-                                <select onchange="selectprocom3('procomnav3')" id="procomnav3" class="form-control w-100 pr-4 onchagetype">
+                                <select onchange="selectprocom3('procomnav3')" id="procomnav3"
+                                    class="form-control w-100 pr-4 onchagetype">
                                     <option value="0">Please Select*</option>
                                     @foreach ($products as $item)
-                                    <option  value="{{$item->pro_id}}">{{$item->pro_code}}</option>
+                                    <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -156,119 +183,133 @@
                     </tr>
                 </thead>
             </table>
-        
+
         </div>
     </div>
     <div id="contentLodpdf" class="box-comparison mb-5">
         <div class="container">
-            <h2 class="text-title-delta">{{$staticContent['product_comparison']}}</h2>
+            <h1 class="text-title-delta">{{$staticContent['product_comparison']}}</h1>
             <p class="text-center text-sixteen-dark">{{$staticContent['Type']}}</p>
             <div class="d-flex mb-3">
                 <div class="mx-auto">
                     <select id="proType" class="form-control pr-4" onchange="chageProductType();">
                         <option value="0">{{$staticContent['Please_Select']}}*</option>
                         @foreach ($Categories as $item)
-                    <option {{($item->sub_pro_id == $cateid ?"selected":"")}} value="{{$item->sub_pro_id}}">{{$item->name}}</option>
+                        <option {{($item->sub_pro_id == $cateid ?"selected":"")}}
+                            value="{{$item->sub_pro_id}}">{{$item->name}}</option>
                         @endforeach
                     </select>
                 </div>
-             
-            {{-- <button onclick="loadhtml();"  class="downloade-pdf btn btn-subscribe">{{$staticContent['Download_as_CSV']}}</button> --}}
-            <div class="dropdown">
-                <button class="btn btn-subscribe dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{$staticContent['Downloads']}}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#" onclick="loadhtml();"  >{{$staticContent['Download_as_CSV']}}</a>
-                  <a class="dropdown-item" href="#" onclick="loadhtmlPDF();" >{{$staticContent['Download_AS_PDF']}}</a>
-                </div>
-              </div>
-            <form id="ContentCompare" action="{{route('loadPdffile')}}" method="POST">
-                {{csrf_field()}}
-                <input type="hidden" name="datacon" id="comtentcompare" >
-                <input  type="hidden" name="arr_con" id="arr_con" >
-                <input  type="hidden" name="type_name" id="typename" >
-            </form>
 
-            <form id="ContentComparePDF" action="{{route('loadPdffilePDF')}}" method="POST">
-                {{csrf_field()}}
-                <input type="hidden" name="datacon" id="comtentcompare2" >
-                <input  type="hidden" name="arr_con" id="arr_con2" >
-                <input  type="hidden" name="type_name" id="typename2" >
-            </form>
+                {{-- <button onclick="loadhtml();"
+                    class="downloade-pdf btn btn-subscribe">{{$staticContent['Download_as_CSV']}}</button> --}}
+                <div class="dropdown">
+                    <button class="btn btn-subscribe dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{$staticContent['Downloads']}}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#"
+                            onclick="loadhtml();">{{$staticContent['Download_as_CSV']}}</a>
+                        <a class="dropdown-item" href="#"
+                            onclick="loadhtmlPDF();">{{$staticContent['Download_AS_PDF']}}</a>
+                    </div>
+                </div>
+                <form id="ContentCompare" action="{{route('loadPdffile')}}" method="POST">
+                    {{csrf_field()}}
+                    <input type="hidden" name="datacon" id="comtentcompare">
+                    <input type="hidden" name="arr_con" id="arr_con">
+                    <input type="hidden" name="type_name" id="typename">
+                </form>
+
+                <form id="ContentComparePDF" action="{{route('loadPdffilePDF')}}" method="POST">
+                    {{csrf_field()}}
+                    <input type="hidden" name="datacon" id="comtentcompare2">
+                    <input type="hidden" name="arr_con" id="arr_con2">
+                    <input type="hidden" name="type_name" id="typename2">
+                </form>
             </div>
-            
-        
+
+
             <div class="box-product-comparison">
                 <div class="_table-responsive" style="margin-top:-1px">
                     <table class="table table-coparision-detail " style="border:0px">
-                    <tbody>
-                        <tr >
-                            <td class="col-xs-3">&nbsp;</td>
-
-                        {{-- @foreach ($data_re as $result)
-                        <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
-                            <img class="w-100" src="{{config('app.url')}}/upload/thumbs/{{$result->picture}}" alt="" >
-                            <p class="text-center text-dark">{{$result->seName}}</p>
-                            <p class="text-title-twentyfour-delta text-center">{{$result->pro_code}}</p>
-                            <div class="btn-center">
-                                <button class="btn-enquiry">ENQUIRY</button>
-                            </div>
-                        </td>
-                        @endforeach --}}
-
-                        <td id="imagepro_com1" class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
-                        
-                        </td>
-                        <td id="imagepro_com2" class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
-                        
-                        </td>
-                        <td id="imagepro_com3" class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
-                        
-                        </td>
-                
-                        </tr>
-                    </tbody>
-                    <thead>
+                        <tbody>
                             <tr>
-                            <td class="col-xs-3 text-center"><div onclick="clearProduct();" class="clr-com">{{$staticContent['Clear_All']}}</div></td>
-                            <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
-                            <div  >
-                                <select onchange="selectprocom1('procom1')" id="procom1" class="form-control w-100 pr-4 onchagetype ">
-                                    <option value="0">{{$staticContent['Please_Select']}}*</option>
-                                    @foreach ($products as $item)
-                                    <option  value="{{$item->pro_id}}">{{$item->pro_code}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            </td>
-                            <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
-                                <div >
-                                    <select onchange="selectprocom2('procom2')" id="procom2" class="form-control w-100 pr-4 onchagetype">
-                                        <option value="0">{{$staticContent['Please_Select']}}*</option>
-                                        @foreach ($products as $item)
-                                        <option  value="{{$item->pro_id}}">{{$item->pro_code}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </td>
-                            <td class="col-xs-3 cc-box" style="padding-right:0px !important;  position:relative">
-                                <div >
-                                    <select onchange="selectprocom3('procom3')" id="procom3" class="form-control w-100 pr-4 onchagetype">
-                                        <option value="0">{{$staticContent['Please_Select']}}*</option>
-                                        @foreach ($products as $item)
-                                    <option  value="{{$item->pro_id}}">{{$item->pro_code}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </td>
+                                <td class="col-xs-3">&nbsp;</td>
+
+                                {{-- @foreach ($data_re as $result)
+                                <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
+                                    <img class="w-100" src="{{config('app.url')}}/upload/thumbs/{{$result->picture}}"
+                                        alt="">
+                                    <p class="text-center text-dark">{{$result->seName}}</p>
+                                    <p class="text-title-twentyfour-delta text-center">{{$result->pro_code}}</p>
+                                    <div class="btn-center">
+                                        <button class="btn-enquiry">ENQUIRY</button>
+                                    </div>
+                                </td>
+                                @endforeach --}}
+
+                                <td id="imagepro_com1" class="col-xs-3 cc-box"
+                                    style="padding-bottom:0px; position:relative">
+
+                                </td>
+                                <td id="imagepro_com2" class="col-xs-3 cc-box"
+                                    style="padding-bottom:0px; position:relative">
+
+                                </td>
+                                <td id="imagepro_com3" class="col-xs-3 cc-box"
+                                    style="padding-bottom:0px; position:relative">
+
+                                </td>
+
+                            </tr>
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <td class="col-xs-3 text-center">
+                                    <div onclick="clearProduct();" class="clr-com">{{$staticContent['Clear_All']}}</div>
+                                </td>
+                                <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
+                                    <div>
+                                        <select onchange="selectprocom1('procom1')" id="procom1"
+                                            class="form-control w-100 pr-4 onchagetype ">
+                                            <option value="0">{{$staticContent['Please_Select']}}*</option>
+                                            @foreach ($products as $item)
+                                            <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
+                                    <div>
+                                        <select onchange="selectprocom2('procom2')" id="procom2"
+                                            class="form-control w-100 pr-4 onchagetype">
+                                            <option value="0">{{$staticContent['Please_Select']}}*</option>
+                                            @foreach ($products as $item)
+                                            <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="col-xs-3 cc-box" style="padding-right:0px !important;  position:relative">
+                                    <div>
+                                        <select onchange="selectprocom3('procom3')" id="procom3"
+                                            class="form-control w-100 pr-4 onchagetype">
+                                            <option value="0">{{$staticContent['Please_Select']}}*</option>
+                                            @foreach ($products as $item)
+                                            <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </td>
                             </tr>
                         </thead>
                     </table>
                 </div>
             </div>
             <div id="comparison" class="comparison-type">
-                </div> 
+            </div>
         </div>
     </div>
     {{-- <div class="box-need-compare-product "
@@ -276,10 +317,11 @@
         <div class="container">
             <div class="box-need-compare-product-all">
                 <h3 class="text-title-subscribe mb-5">{{$staticContent['Need_to_compare_other_product']}}</h3>
-                <button class="btn btn-subscribe" onclick="selectNewProductByType();">{{$staticContent['Select_Product']}}</button>
+                <button class="btn btn-subscribe"
+                    onclick="selectNewProductByType();">{{$staticContent['Select_Product']}}</button>
             </div>
-            
-         <img  class="image-doc" src="{{asset('frontend-asset/image/NEEDCOMPAREOTHERPRODUCTS.png')}}" alt=""> 
+
+            <img class="image-doc" src="{{asset('frontend-asset/image/NEEDCOMPAREOTHERPRODUCTS.png')}}" alt="">
         </div>
     </div> --}}
 </div>
@@ -288,10 +330,10 @@
         <div class="container">
             <div class="d-flex justify-content-between my-3">
                 <div id="nav_mobilepro1" class="text-center mr-2 w-100">
-            
+
                 </div>
                 <div id="nav_mobilepro2" class="text-center  ml-2 w-100">
-                 
+
                 </div>
             </div>
         </div>
@@ -303,32 +345,36 @@
             <select id="proType_mobile" class="form-control w-100 pr-4" onchange="chageProductTypeMobile();">
                 <option value="0">{{$staticContent['Please_Select']}}*</option>
                 @foreach ($Categories as $item)
-            <option {{($item->sub_pro_id == $cateid ?"selected":"")}} value="{{$item->sub_pro_id}}">{{$item->name}}</option>
+                <option {{($item->sub_pro_id == $cateid ?"selected":"")}} value="{{$item->sub_pro_id}}">{{$item->name}}
+                </option>
                 @endforeach
             </select>
         </div>
         <h5 class="text-center">{{$staticContent['Model']}}</h5>
-        <div class="d-flex justify-content-between mb-2" >
-            <select onchange="onSelectPromobile()"  id="procom-mobile1" class="form-control w-100 pr-4 mr-2 onchagetype_mobile ">
+        <div class="d-flex justify-content-between mb-2">
+            <select onchange="onSelectPromobile()" id="procom-mobile1"
+                class="form-control w-100 pr-4 mr-2 onchagetype_mobile ">
                 <option value="0">{{$staticContent['Please_Select']}}*</option>
                 @foreach ($products as $item)
-                <option value="{{$item->pro_id}}" >{{$item->pro_code}}</option>
+                <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
                 @endforeach
             </select>
             <input type="hidden" id="mobileindex" name="mobileindex" value="">
-            <select onchange="onSelectPromobile2()" id="procom-mobile2" class="form-control w-100 pr-4 ml-2 onchagetype_mobile ">
+            <select onchange="onSelectPromobile2()" id="procom-mobile2"
+                class="form-control w-100 pr-4 ml-2 onchagetype_mobile ">
                 <option value="0">{{$staticContent['Please_Select']}}*</option>
                 @foreach ($products as $item)
-                <option value="{{$item->pro_id}}" >{{$item->pro_code}}</option>
+                <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
                 @endforeach
             </select>
-            <input type="hidden" id="mobileindex2"  name="mobileindex2" value="">
+            <input type="hidden" id="mobileindex2" name="mobileindex2" value="">
         </div>
         <div class="product-comparison-selected-mobile">
             <div class="icon-pointer icon-prev">
-                <a id="predata" onclick="BackData()" class="p-4" ><i class="zmdi zmdi-chevron-left" aria-hidden="true"></i></a>
+                <a id="predata" onclick="BackData()" class="p-4"><i class="zmdi zmdi-chevron-left"
+                        aria-hidden="true"></i></a>
             </div>
-            <div  class="d-flex justify-content-between mb-3 ">
+            <div class="d-flex justify-content-between mb-3 ">
                 {{-- <div class="text-center mr-2">
                     <img class="img-fluid w-75 mb-2" src="{{asset('frontend-asset/image/pro1.png')}}" alt="">
                     <p class="text-two">CHROME 24V 91W</p>
@@ -336,37 +382,42 @@
                     <a class="btn btn-enquiry w-100" href="">ENQUIRY</a>
                 </div>
                 --}}
-                <div id="imagepro_com_mobile1" class="text-center mr-2"> 
+                <div id="imagepro_com_mobile1" class="text-center mr-2">
                 </div>
-                <div id="imagepro_com_mobile2" class="text-center  ml-2"> 
+                <div id="imagepro_com_mobile2" class="text-center  ml-2">
                 </div>
             </div>
             <div class="icon-pointer icon-next">
-                <a id="nextdata" onclick="NextData()" class="p-4"><i class="zmdi zmdi-chevron-right" aria-hidden="true"></i></a>
+                <a id="nextdata" onclick="NextData()" class="p-4"><i class="zmdi zmdi-chevron-right"
+                        aria-hidden="true"></i></a>
             </div>
         </div>
-        
-        
+
+
     </div>
     <div class="download-pdf-mobile py-3">
         <div class="container">
-            {{-- <div href="" class="btn btn-subscribe w-100 text-upercase" onclick="loadhtml();" >{{$staticContent['Download_as_CSV']}}</div> --}}
+            {{-- <div href="" class="btn btn-subscribe w-100 text-upercase" onclick="loadhtml();">
+                {{$staticContent['Download_as_CSV']}}</div> --}}
             <div class="dropdown">
-                <button class="btn btn-subscribe w-100 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button class="btn btn-subscribe w-100 dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{$staticContent['Downloads']}}
                 </button>
                 <div class="dropdown-menu  w-100" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#" onclick="loadhtml();"  >{{$staticContent['Download_as_CSV']}}</a>
-                  <a class="dropdown-item" href="#" onclick="loadhtmlPDF();" >{{$staticContent['Download_AS_PDF']}}</a>
+                    <a class="dropdown-item" href="#" onclick="loadhtml();">{{$staticContent['Download_as_CSV']}}</a>
+                    <a class="dropdown-item" href="#" onclick="loadhtmlPDF();">{{$staticContent['Download_AS_PDF']}}</a>
                 </div>
-              </div>
+            </div>
         </div>
     </div>
     <div id="comparison_mobile" class="comparison-collapse">
     </div>
-    {{-- <div class="box-need-to-comparison" style="background-image: url('{{asset('frontend-asset/image/Find-Product-BG@2x.png')}}');">
+    {{-- <div class="box-need-to-comparison"
+        style="background-image: url('{{asset('frontend-asset/image/Find-Product-BG@2x.png')}}');">
         <h3 class="text-color-delta mb-5">{{$staticContent['Need_to_compare_other_product']}}</h3>
-        <button onclick="selectNewProductByType();" class="btn btn-subscribe center">{{$staticContent['Select_Product']}}</button>
+        <button onclick="selectNewProductByType();"
+            class="btn btn-subscribe center">{{$staticContent['Select_Product']}}</button>
         <img class="img-fluid w-75 mb-2" src="{{asset('frontend-asset/image/NEEDCOMPAREOTHERPRODUCTS.png')}}" alt="">
     </div> --}}
 </div>
@@ -376,10 +427,10 @@
 
 
 @section('js')
- 
+
 
 <script>
-     $("#collapse-output").collapse('show');
+    $("#collapse-output").collapse('show');
      $("#collapse-input").collapse('show');
      $("#collapse-mechanical").collapse('show');
      /* nav show on div*/

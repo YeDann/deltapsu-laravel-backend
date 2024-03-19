@@ -45,6 +45,7 @@ Route::get('/products/series/{cate?}','FrontendController@oldlinkSeries')->name(
 Route::get('/products/{cateid?}/{pro_code?}','FrontendController@productsDetailsByType')->name('productsDetailsByType');
 Route::get('/products_search/search','FrontendController@resultSearch')->name('resultSearch');
 Route::get('/product/index/{cate_name?}/{cate_id?}/{mainId?}','FrontendController@allproductsByType')->name('allproductsByType');
+Route::get('/product/all-product-categories','FrontendController@allproduct')->name('allproduct');
 Route::get('/product/{cate_name?}/{cate_id?}/{se_name?}/{se_id?}','FrontendController@producsList')->name('producsList');
 Route::get('/productBySeries/{name?}/{series?}','FrontendController@productBySeries')->name('productBySeries');
 Route::get('/products/download/{cate_name?}/{modelname?}','FrontendController@downloadFIle')->name('downloadFIle');

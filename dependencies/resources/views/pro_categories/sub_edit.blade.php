@@ -305,6 +305,11 @@
                             <option value="{{$incate->main_id}}" selected>{{$incate->name}}</option>
                             @endforeach
                         </select>
+                        <div class="form-group mt-2">
+                            <label for="example-select">URL Name</label>
+                            <input type="text" class="form-control " name="url_item"
+                                value="{{$subCategories[0]->url_item}}" placeholder="Enter text...">
+                        </div>
 
                         <div class="form-group mt-2">
                             <label for="example-select">Unit dimension</label>
