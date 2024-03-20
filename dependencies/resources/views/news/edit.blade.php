@@ -1,13 +1,25 @@
 @extends('layouts.admin')
 @section('style')
-<link rel="stylesheet" href="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.css')}}">
-<link rel="stylesheet" href="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.css')}}">
-<link rel="stylesheet"
-    href="{{asset('backend-asset/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}">
 
 <style>
     #test-label {
         height: 100px !important;
+    }
+
+    #item-wrap {
+        margin: 8px 8px 8px 8px;
+        background: #eee;
+        padding: 5px 10px 30px 5px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        position: relative;
+    }
+
+    .text-count {
+        right: 7px;
+        bottom: 4px;
+        position: absolute;
+        font-size: 14px;
     }
 </style>
 @endsection
@@ -121,20 +133,32 @@
                                 <hr>
                                 <div class="form-group">
                                     <label for="">Meta - Title</label>
-                                    <input type="meta_title[{{$item->name}}]" class="form-control"
-                                        name="meta_title[{{$item->name}}]"
-                                        value="{{isset($current->meta_title) ? $current->meta_title :''}}">
+                                    <div id="item-wrap">
+                                        <input id="input-metaTitle-{{$item->name}}"
+                                            onkeyup="countCharacter('metaTitle-{{$item->name}}')"
+                                            type="meta_title[{{$item->name}}]" class="form-control"
+                                            name="meta_title[{{$item->name}}]"
+                                            value="{{isset($current->meta_title) ? $current->meta_title :''}}">
+                                        <div class="text-count">Count Character :
+                                            <span id="count-metaTitle-{{$item->name}}">
+                                                {{strlen($current->meta_title)}}</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Meta - Description</label>
-                                    <textarea name="meta_des[{{$item->name}}]"
-                                        class="form-control ">{{isset($current->meta_description) ? $current->meta_description :''}}</textarea>
+                                    <div id="item-wrap">
+                                        <textarea id="input-meta_des-{{$item->name}}"
+                                            onkeyup="countCharacter('meta_des-{{$item->name}}')"
+                                            name="meta_des[{{$item->name}}]"
+                                            class="form-control ">{{isset($current->meta_description) ? $current->meta_description :''}}</textarea>
+                                        <div class="text-count">Count Character :
+                                            <span id="count-meta_des-{{$item->name}}">
+                                                {{strlen($current->meta_description)}}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="">Meta - Keywords</label>
-                                    <textarea name="meta_key[{{$item->name}}]"
-                                        class="form-control ">{{isset($current->meta_keywords) ? $current->meta_keywords :''}}</textarea>
-                                </div>
+
                             </div>
 
                             @endforeach
@@ -208,15 +232,8 @@
 </div>
 @endsection
 @section('js')
-<script src="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.min.js')}}"></script>
-<script src="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.js')}}"></script>
-<script src="{{asset('backend-asset/js/plugins/ckeditor/ckeditor.js')}}"></script>
-<script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-<script>
-    jQuery(function () {
-        Dashmix.helpers(['datepicker', 'summernote', 'simplemde', 'ckeditor']);
-    });
 
+<script>
     var previewImage = function (input, block) {
         var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
@@ -257,5 +274,11 @@ $(document).on('change', '.custom-file-input', function () {
         };
     });
 
+</script>
+<script type="text/javascript">
+    function countCharacter(id){
+           var str = $('#input-'+id).val();
+          $('#count-'+id).text(str.length);
+      }
 </script>
 @endsection

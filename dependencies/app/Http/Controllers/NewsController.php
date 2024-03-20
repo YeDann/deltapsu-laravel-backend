@@ -247,7 +247,7 @@ class NewsController extends Controller
                                 "description"=>$request->description,
                                 "meta_title" => $metaTitle,
                                 "meta_description" => $metaDescription,
-                                "meta_keywords" => $metaKeyword,
+                                // "meta_keywords" => $metaKeyword,
                                 'file' => $arrFileName['newsfile'],
                                 "local"=>$lang,
                             ]
@@ -390,7 +390,7 @@ class NewsController extends Controller
                     "meta_title" => $meta_title[$lang],
                     "meta_description" => $meta_des[$lang],
                     "description"=>$description[$lang],
-                    "meta_keywords" => $meta_key[$lang],
+                    // "meta_keywords" => $meta_key[$lang],
                     'file' =>  $arrrayName[$lang],
                 ]
             );

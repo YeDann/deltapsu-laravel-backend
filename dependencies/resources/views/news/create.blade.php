@@ -1,9 +1,10 @@
 @extends('layouts.admin')
 @section('style')
+{{--
 <link rel="stylesheet" href="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.css')}}">
 <link rel="stylesheet" href="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.css')}}">
 <link rel="stylesheet"
-    href="{{asset('backend-asset/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}">
+    href="{{asset('backend-asset/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}"> --}}
 
 <style>
     #test-label {
@@ -12,6 +13,22 @@
 
     .img-thumbnail {
         width: 50%;
+    }
+
+    #item-wrap {
+        margin: 8px 8px 8px 8px;
+        background: #eee;
+        padding: 5px 10px 30px 5px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        position: relative;
+    }
+
+    .text-count {
+        right: 7px;
+        bottom: 4px;
+        position: absolute;
+        font-size: 14px;
     }
 </style>
 @endsection
@@ -123,39 +140,52 @@
                         <hr>
                         <div class="form-group">
                             <label for="">Meta - Title</label>
-                            <input type="text" class="form-control" name="metaTitle" value="">
+                            <div id="item-wrap">
+                                <input id="input-metaTitle-en" onkeyup="countCharacter('metaTitle-en')" type="text"
+                                    class="form-control" name="metaTitle" value="">
+                                <div class="text-count">Count Character :
+                                    <span id="count-metaTitle-en">
+                                        0</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Meta - Description</label>
+                                <div id="item-wrap">
+                                    <textarea id="input-metaDescription-en"
+                                        onkeyup="countCharacter('metaDescription-en')" name="metaDescription"
+                                        class="form-control"></textarea>
+                                    <div class="text-count">Count Character :
+                                        <span id="count-metaDescription-en">
+                                            0</span>
+                                    </div>
+                                </div>
+                                {{-- <div class="form-group">
+                                    <label for="">Meta - Keywords</label>
+                                    <textarea name="metaKeyword" class="form-control "></textarea>
+                                </div> --}}
+                                <div class="form-group">
+                                    <button class="btn btn-success col-md-2" type="submit">Create
+                                    </button>
+                                    <a href="{{route('news.index')}}" class="btn btn-secondary col-md-2">
+                                        Cancel
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="">Meta - Description</label>
-                            <textarea name="metaDescription" class="form-control"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Meta - Keywords</label>
-                            <textarea name="metaKeyword" class="form-control "></textarea>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-success col-md-2" type="submit">Create
-                            </button>
-                            <a href="{{route('news.index')}}" class="btn btn-secondary col-md-2">
-                                Cancel
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </form>
         </div>
     </div>
 </div>
 @endsection
 @section('js')
-<script src="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.min.js')}}"></script>
+{{-- <script src="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <script src="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.js')}}"></script>
 <script src="{{asset('backend-asset/js/plugins/ckeditor/ckeditor.js')}}"></script>
-<script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script> --}}
 <script>
-    jQuery(function () {
-        Dashmix.helpers(['datepicker', 'summernote', 'simplemde', 'ckeditor']);
-    });
+    // jQuery(function () {
+    //     Dashmix.helpers(['datepicker', 'summernote', 'simplemde', 'ckeditor']);
+    // });
 
     var previewImage = function (input, block) {
         var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
@@ -198,5 +228,11 @@ $(document).on('change', '#file_input', function () {
     });
 
 
+</script>
+<script type="text/javascript">
+    function countCharacter(id){
+           var str = $('#input-'+id).val();
+          $('#count-'+id).text(str.length);
+      }
 </script>
 @endsection
