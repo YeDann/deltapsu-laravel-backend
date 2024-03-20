@@ -59,9 +59,6 @@ class Controller extends BaseController
           }
           break;
          default:
-          //$str = addslashes($str);
-         
-          //return dd($str ,isset($str));
           if(isset($str) ){
             $str = htmlspecialchars($str, ENT_QUOTES);
             return array(true, $str);
@@ -93,7 +90,7 @@ class Controller extends BaseController
     
        protected function clean($string) {
         $string  =  str_replace(' ', '-', $string);
-        return preg_replace('/[^A-Za-z0-9ก-๙\-]/u', '',str_replace('&', '-and-', $string));
+        return preg_replace('/[^A-Za-z0-9ก-๙\-]/u', '',str_replace('and', '-', $string));
        }
 
        protected function unique_code_bysetf($limit)
