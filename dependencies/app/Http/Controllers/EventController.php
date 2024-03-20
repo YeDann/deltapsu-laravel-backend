@@ -176,7 +176,7 @@ class EventController extends Controller
                                 "meta_title" => $metaTitle,
                                 "location" =>$request->location,
                                 "meta_description" => $metaDescription,
-                                "meta_keywords" => $metaKeyword,
+                                // "meta_keywords" => $metaKeyword,
                                 "local"=>$lang,
                             ]
                         );
@@ -288,7 +288,7 @@ class EventController extends Controller
                     "location"=>$location[$lang],
                     "meta_title" => $meta_title[$lang],
                     "meta_description" => $meta_des[$lang],
-                    "meta_keywords" => $meta_key[$lang]
+                    // "meta_keywords" => $meta_key[$lang]
                 ]
             );
         }
