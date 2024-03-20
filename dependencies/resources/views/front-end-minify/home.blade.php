@@ -224,7 +224,7 @@
             @foreach($subCategories as $sub)
             <div class="product-selector-list border-2px d-flex align-items-center">
                 <div class="m-auto">
-                    <a href="{{ route('producsList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])}}">
+                    <a href="{{ route('producsList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
                         @if($sub->image != null)
                         <img data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy"
                             class="lazyload" alt="{{$sub->image}}">
@@ -253,7 +253,8 @@
                 <div class="border-2px d-flex h-100 p-1 align-items-center"
                     style="    box-shadow: 0px 4px 5px 2px rgba(0, 0, 0, 0.09);">
                     <div class="m-auto">
-                        <a href="{{ route('producsList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])}}">
+                        <a
+                            href="{{ route('producsList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
                             @if($sub->image != null)
                             <img data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy"
                                 class="lazyload" alt="{{$sub->image}}">
