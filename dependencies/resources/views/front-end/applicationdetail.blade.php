@@ -199,7 +199,13 @@
 @endsection
 @section('meta')
 <title>{{isset($application->name)? $application->name :''}} | DeltaPSU</title>
-<meta name="description" content="{{isset($application->overview_text)? $application->overview_text:''}}">
+<meta property="description"
+    content="{!! trim(iconv_substr(strip_tags(isset($application->content)? $application->content:''),0,155,'UTF-8')) !!}" />
+<meta property="og:title" content="{{isset($application->name)? $application->name :''}}  | DeltaPSU " />
+<meta property="og:description"
+    content="{!! trim(iconv_substr(strip_tags(isset($application->content)? $application->content:''),0,155,'UTF-8')) !!}" />
+<meta property="og:image"
+    content="{{config('app.url')}}/medias/categories/{{isset($application->banner)  ? $application->banner : '' }}" />
 <link rel="canonical" href="{{url()->current()}}" />
 <?php 
   $lang_seo = App::getLocale();
@@ -230,7 +236,7 @@
                             <hr>
                             @foreach ($navapplication as $app)
                             <li><a
-                                    href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}">{{$app->name}}</a>
+                                    href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}">{{$app->name}}</a>
                             </li>
                             @endforeach
                         </ul>
@@ -364,7 +370,7 @@
             <div class="row">
                 @foreach ($otherapp as $app)
                 <div class="col-lg-3">
-                    <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}"
+                    <a href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}"
                         class="other-applications-list media">
 
                         <div class="app-middle-box align-self-center">
@@ -479,7 +485,7 @@
                 @foreach ($otherapp as $app)
 
                 <div class="col-md-6">
-                    <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}"
+                    <a href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}"
                         class="other-applications-grid-mobile-list">
                         <img class="center my-2" src="{{config('app.url')}}/medias/categories/{{$app->color_icon}}">
                         <h6 class="text-title-dark text-center">{{$app->name}}</h6>

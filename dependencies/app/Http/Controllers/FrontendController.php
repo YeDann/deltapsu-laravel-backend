@@ -1940,7 +1940,23 @@ class FrontendController extends Controller
         $lang = App::getLocale();
         $myArray = explode('-', $name);
         $id =  $myArray[0];
-      
+        $str1 =  $myArray[1] ? $myArray[1] : '' ;
+        $str2 =  $myArray[2] ? $myArray[2] : '' ;
+        $string_name =  $str1.'-'.$str2;
+
+        if(isset($string_name) && isset($id) ){
+            return redirect()->route('appDetail',[ 'name' => preg_replace('/\s+/', '-',strtolower($string_name)) , 'id' => $id]);
+        }else{
+            abort(404);
+        }
+
+       
+    }
+
+    public function appDetailById($app_name, $app_id){
+        $name = $this->validateInput($app_name,'text',true);
+        $id =  $app_id;
+        $lang = App::getLocale();
         $application = DB::table('application as ap')
         ->join('application_translation as apt','ap.id','=','apt.app_id')
         ->where('apt.local','=',$lang)

@@ -84,6 +84,8 @@ Route::get('/partners/marketing-resources/product-documents','FrontendController
 Route::get('/tools/comparison','FrontendController@productCoparison')->name('productCoparison');
 Route::get('/tools/product-selector','FrontendController@productFinder')->name('productFinder');
 Route::get('/application/detail/{appname?}','FrontendController@applicationDetail')->name('applicationDetail');
+Route::get('/application/detail/{appname?}/{app_id?}','FrontendController@appDetailById')->name('appDetail');
+
 Route::get('/about-us/{pagename?}','FrontendController@aboutUs')->name('aboutUs');
 
 Route::get('/news/{name?}','FrontendController@updateNewsDetail')->name('updateNewsDetail');

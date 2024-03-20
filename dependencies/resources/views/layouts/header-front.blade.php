@@ -596,9 +596,13 @@
           aria-expanded="false">{{$staticContent['Applications']}} <i class="zmdi zmdi-chevron-down"></i></a>
         <div class="dropdown-menu s-menu" role="menu" aria-labelledby="dropdown03">
           @foreach ($navapplication as $app)
-          <a class="dropdown-item "
-            href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}">{{$app->name}}</a>
-          @endforeach
+          {{-- <a class="dropdown-item "
+            href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}">
+            --}}
+            <a class="dropdown-item"
+              href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}">
+              {{$app->name}}</a>
+            @endforeach
         </div>
       </li>
       {{-- Memu About Us --}}
@@ -856,9 +860,13 @@
       <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav3')"><i
           class="zmdi zmdi-chevron-left mr-1"></i>{{$staticContent['Tools']}}</a>
       @foreach ($navapplication as $app)
-      <a class="text-normal pl-3"
-        href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}">{{$app->name}}</a>
-      @endforeach
+      {{-- <a class="text-normal pl-3"
+        href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}">
+        --}}
+        <a class="text-normal pl-3"
+          href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}">
+          {{$app->name}}</a>
+        @endforeach
 
     </div>
     {{-- ABOUT --}}
