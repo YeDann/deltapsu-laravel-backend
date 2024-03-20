@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('style')
+
 <link rel="stylesheet" href="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.css')}}">
 <link rel="stylesheet" href="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.css')}}">
 <link rel="stylesheet"
@@ -12,6 +13,22 @@
 
     .btn-outline-secondary {
         border-color: #dcdcdc !important;
+    }
+
+    #item-wrap {
+        margin: 8px 8px 8px 8px;
+        background: #eee;
+        padding: 5px 10px 30px 5px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        position: relative;
+    }
+
+    .text-count {
+        right: 7px;
+        bottom: 4px;
+        position: absolute;
+        font-size: 14px;
     }
 </style>
 @endsection
@@ -127,18 +144,34 @@
                             <textarea name="content" class="jsnotenew form-control"></textarea>
                         </div>
                         <hr>
+
+
                         <div class="form-group">
                             <label for="">Meta - Title</label>
-                            <input type="text" class="form-control" name="metaTitle" value="">
+                            <span>Recommended 30-60 Character</span>
+                            <div id="item-wrap">
+                                <input id="input-metaTitle-en" onkeyup="countCharacter('metaTitle-en')" type="text"
+                                    class="form-control" name="metaTitle" value="">
+                                <div class="text-count">Count Character :
+                                    <span id="count-metaTitle-en">
+                                        0</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="">Meta - Description</label>
-                            <textarea name="metaDescription" class="form-control"></textarea>
+                            <span>Recommended 70-155 Character</span>
+                            <div id="item-wrap">
+                                <textarea rows="4" id="input-metaDescription-en"
+                                    onkeyup="countCharacter('metaDescription-en')" name="metaDescription"
+                                    class="form-control"></textarea>
+                                <div class="text-count">Count Character :
+                                    <span id="count-metaDescription-en">
+                                        0</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="">Meta - Keywords</label>
-                            <textarea name="metaKeyword" class="form-control "></textarea>
-                        </div>
+
 
                         <div class="form-group text-center">
                             <button class="btn btn-success col-md-2" type="submit">Create
@@ -165,9 +198,8 @@
 <script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
 <script>
     jQuery(function () {
-        Dashmix.helpers(['datepicker', 'summernote', 'simplemde', 'ckeditor']);
+        Dashmix.helpers(['datepicker', 'summernote']);
     });
-   
     var previewImage = function (input, block) {
         var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
@@ -214,5 +246,11 @@ $(document).on('change', '#file_input', function () {
             uiLibrary: 'bootstrap4'
     });
 
+</script>
+<script type="text/javascript">
+    function countCharacter(id){
+           var str = $('#input-'+id).val();
+          $('#count-'+id).text(str.length);
+      }
 </script>
 @endsection

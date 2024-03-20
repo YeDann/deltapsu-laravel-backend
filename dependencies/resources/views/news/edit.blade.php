@@ -132,7 +132,8 @@
                                 </div>
                                 <hr>
                                 <div class="form-group">
-                                    <label for="">Meta - Title</label>
+                                    <label for="">Meta - Title </label>
+                                    <span>Recommended 30-60 Character</span>
                                     <div id="item-wrap">
                                         <input id="input-metaTitle-{{$item->name}}"
                                             onkeyup="countCharacter('metaTitle-{{$item->name}}')"
@@ -147,12 +148,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Meta - Description</label>
+                                    <span>Recommended 70-155 Character</span>
                                     <div id="item-wrap">
-                                        <textarea id="input-meta_des-{{$item->name}}"
+                                        <textarea rows="4" id="input-meta_des-{{$item->name}}"
                                             onkeyup="countCharacter('meta_des-{{$item->name}}')"
                                             name="meta_des[{{$item->name}}]"
                                             class="form-control ">{{isset($current->meta_description) ? $current->meta_description :''}}</textarea>
-                                        <div class="text-count">Count Character :
+                                        <div class="text-count"> Count Character :
                                             <span id="count-meta_des-{{$item->name}}">
                                                 {{strlen($current->meta_description)}}</span>
                                         </div>

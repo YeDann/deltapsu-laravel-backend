@@ -381,7 +381,7 @@
                     </a>
                     @endif
                 </li>
-                <li class="nav-main-item">
+                {{-- <li class="nav-main-item">
                     @if($menu == "technical")
                     <a class="nav-main-link active" href="{{route('technical.index')}}">
                         <span class="nav-main-link-name ">Technical Articles</span>
@@ -391,7 +391,7 @@
                         <span class="nav-main-link-name ">Technical Articles</span>
                     </a>
                     @endif
-                </li>
+                </li> --}}
             </ul>
         </li>
         @else

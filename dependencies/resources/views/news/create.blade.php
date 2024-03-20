@@ -140,6 +140,7 @@
                         <hr>
                         <div class="form-group">
                             <label for="">Meta - Title</label>
+                            <span>Recommended 30-60 Character</span>
                             <div id="item-wrap">
                                 <input id="input-metaTitle-en" onkeyup="countCharacter('metaTitle-en')" type="text"
                                     class="form-control" name="metaTitle" value="">
@@ -148,30 +149,33 @@
                                         0</span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="">Meta - Description</label>
-                                <div id="item-wrap">
-                                    <textarea id="input-metaDescription-en"
-                                        onkeyup="countCharacter('metaDescription-en')" name="metaDescription"
-                                        class="form-control"></textarea>
-                                    <div class="text-count">Count Character :
-                                        <span id="count-metaDescription-en">
-                                            0</span>
-                                    </div>
-                                </div>
-                                {{-- <div class="form-group">
-                                    <label for="">Meta - Keywords</label>
-                                    <textarea name="metaKeyword" class="form-control "></textarea>
-                                </div> --}}
-                                <div class="form-group">
-                                    <button class="btn btn-success col-md-2" type="submit">Create
-                                    </button>
-                                    <a href="{{route('news.index')}}" class="btn btn-secondary col-md-2">
-                                        Cancel
-                                    </a>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Meta - Description</label>
+                            <span>Recommended 70-155 Character</span>
+                            <div id="item-wrap">
+                                <textarea rows="4" id="input-metaDescription-en"
+                                    onkeyup="countCharacter('metaDescription-en')" name="metaDescription"
+                                    class="form-control"></textarea>
+                                <div class="text-count">Count Character :
+                                    <span id="count-metaDescription-en">
+                                        0</span>
                                 </div>
                             </div>
                         </div>
+                        {{-- <div class="form-group">
+                            <label for="">Meta - Keywords</label>
+                            <textarea name="metaKeyword" class="form-control "></textarea>
+                        </div> --}}
+                        <div class="form-group">
+                            <button class="btn btn-success col-md-2" type="submit">Create
+                            </button>
+                            <a href="{{route('news.index')}}" class="btn btn-secondary col-md-2">
+                                Cancel
+                            </a>
+                        </div>
+
+
             </form>
         </div>
     </div>

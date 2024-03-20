@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('style')
+
 <link rel="stylesheet" href="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.css')}}">
 <link rel="stylesheet" href="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.css')}}">
 <link rel="stylesheet"
@@ -12,6 +13,22 @@
 
     .btn-outline-secondary {
         border-color: #dcdcdc !important;
+    }
+
+    #item-wrap {
+        margin: 8px 8px 8px 8px;
+        background: #eee;
+        padding: 5px 10px 30px 5px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        position: relative;
+    }
+
+    .text-count {
+        right: 7px;
+        bottom: 4px;
+        position: absolute;
+        font-size: 14px;
     }
 </style>
 @endsection
@@ -97,7 +114,7 @@
                                 </div>
 
                                 <hr>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="">Meta - Title</label>
                                     <input type="meta_title[{{$item->name}}]" class="form-control"
                                         name="meta_title[{{$item->name}}]"
@@ -107,12 +124,37 @@
                                     <label for="">Meta - Description</label>
                                     <textarea name="meta_des[{{$item->name}}]"
                                         class="form-control ">{{isset($current->meta_description) ? $current->meta_description :''}}</textarea>
+                                </div> --}}
+                                <div class="form-group">
+                                    <label for="">Meta - Title</label>
+                                    <span>Recommended 30-60 Character</span>
+                                    <div id="item-wrap">
+                                        <input id="input-metaTitle-{{$item->name}}"
+                                            onkeyup="countCharacter('metaTitle-{{$item->name}}')"
+                                            type="meta_title[{{$item->name}}]" class="form-control"
+                                            name="meta_title[{{$item->name}}]"
+                                            value="{{isset($current->meta_title) ? $current->meta_title :''}}">
+                                        <div class="text-count">Count Character :
+                                            <span id="count-metaTitle-{{$item->name}}">
+                                                {{strlen($current->meta_title)}}</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Meta - Keywords</label>
-                                    <textarea name="meta_key[{{$item->name}}]"
-                                        class="form-control ">{{isset($current->meta_keywords) ? $current->meta_keywords :''}}</textarea>
+                                    <label for="">Meta - Description</label>
+                                    <span>Recommended 70-155 Character</span>
+                                    <div id="item-wrap">
+                                        <textarea rows="4" id="input-meta_des-{{$item->name}}"
+                                            onkeyup="countCharacter('meta_des-{{$item->name}}')"
+                                            name="meta_des[{{$item->name}}]"
+                                            class="form-control ">{{isset($current->meta_description) ? $current->meta_description :''}}</textarea>
+                                        <div class="text-count">Count Character :
+                                            <span id="count-meta_des-{{$item->name}}">
+                                                {{strlen($current->meta_description)}}</span>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
                             @endforeach
                         </div>
@@ -198,7 +240,6 @@
 
 <script src="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <script src="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.js')}}"></script>
-<script src="{{asset('backend-asset/js/plugins/ckeditor/ckeditor.js')}}"></script>
 <script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
 <script>
     $('#eventExcerpt').summernote({
@@ -247,5 +288,11 @@
             uiLibrary: 'bootstrap4'
     });
 
+</script>
+<script type="text/javascript">
+    function countCharacter(id){
+           var str = $('#input-'+id).val();
+          $('#count-'+id).text(str.length);
+      }
 </script>
 @endsection
