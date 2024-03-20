@@ -279,8 +279,6 @@
 @section('meta')
 <title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''}}">
-<link rel="canonical"
-    href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$subCategories[0]->url_item}}/{{$subCategories[0]->sub_pro_id}}" />
 <?php 
   $lang_seo = App::getLocale();
   if($lang_seo == 'cn'){
@@ -288,9 +286,11 @@
   }else if($lang_seo == 'tw'){
     $lang_seo = 'zh-Hans-TW';
   }
+  $url_name = $subCategories[0]->url_item ? $subCategories[0]->url_item  : null;
+  $categories_id = $subCategories[0]->sub_pro_id ? $subCategories[0]->sub_pro_id  : null;
 ?>
-<link rel="alternate"
-    href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$subCategories[0]->url_item}}/{{$subCategories[0]->sub_pro_id}}"
+<link rel="canonical" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$url_name}}/{{$categories_id}}" />
+<link rel="alternate" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$url_name}}/{{$categories_id}}"
     hreflang="{{$lang_seo}}" />
 @endsection
 @section('container')
