@@ -591,12 +591,12 @@
           <li class="nav-item dropdown ">
             <a id="nav-uderline" class="nav-link " href="" id="dropdown02" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false"> {{isset($staticContent['Tools'])?
-              $staticContent['Tools'] :'Tools' }}<i class="zmdi zmdi-chevron-down"></i></a>
+              $staticContent['Tools'] :'Tools' }} <i class="zmdi zmdi-chevron-down"></i></a>
             <div class="dropdown-menu s-menu" role="menu" aria-labelledby="dropdown02">
               {{--
-          <li class="dropdown-item"> --}}<a class="dropdown-item"
-              href="{{route('productFinder')}}">{{isset($staticContent['Product_Selector'])?
-              $staticContent['Product_Selector'] :'Product Selector' }}</a>{{-- </li> --}}
+          <li class="dropdown-item"> --}}<a class="dropdown-item" href="{{route('productFinder')}}">
+              {{isset($staticContent['Product_Selector'])?
+              $staticContent['Product_Selector'] :'Product Selector' }} </a>{{-- </li> --}}
           {{-- <li class="dropdown-item"> --}}<a class="dropdown-item" href="{{route('configurableproduct')}}">
               {{isset($staticContent['configurable_power_selector'])?
               $staticContent['configurable_power_selector'] :'configurable power selector' }}</a>{{-- </li>
@@ -611,7 +611,7 @@
       <li class="nav-item dropdown ">
         <a id="nav-uderline" class="nav-link " href="" id="dropdown03" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false"> {{isset($staticContent['Applications'])?
-          $staticContent['Applications'] :'Applications' }}<i class="zmdi zmdi-chevron-down"></i></a>
+          $staticContent['Applications'] :'Applications' }} <i class="zmdi zmdi-chevron-down"></i></a>
         <div class="dropdown-menu s-menu" role="menu" aria-labelledby="dropdown03">
           @if(isset($navapplication))
           @foreach ($navapplication as $app)
@@ -637,7 +637,7 @@
       <li class="nav-item dropdown ">
         <a id="nav-uderline" class="nav-link" href="" id="dropdown05" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">{{isset($staticContent['Updates'])?
-          $staticContent['Updates'] :'Updates' }}<i class="zmdi zmdi-chevron-down"></i></a>
+          $staticContent['Updates'] :'Updates' }} <i class="zmdi zmdi-chevron-down"></i></a>
         <div class="dropdown-menu megamenu s-menu" aria-labelledby="dropdown05">
           <a class="dropdown-item" href="{{route('index','news')}}">
             {{isset($staticContent['Product_News'])?
