@@ -82,8 +82,8 @@
                                 {!!$office->content!!}
                             </div>
                             <a href="https://www.google.com/maps/?q={{$office->lat}},{{$office->lon}}&sensor=true"
-                                target="_blank"><button
-                                    class="btn-subscribe">{{$staticContent['GetDirection']}}</button></a>
+                                target="_blank"><button class="btn-subscribe">{{isset($staticContent['GetDirection'])?
+                                    $staticContent['GetDirection'] : 'Get Direction'}}</button></a>
                         </div>
                         @endif
                         @endforeach
