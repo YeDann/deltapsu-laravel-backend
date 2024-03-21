@@ -1939,18 +1939,22 @@ class FrontendController extends Controller
         $name = $this->validateInput($namePram,'text',true);
         $lang = App::getLocale();
         $myArray = explode('-', $name);
-        $id =  $myArray[0];
-        $str1 =  $myArray[1] ? $myArray[1] : '' ;
-        $str2 =  $myArray[2] ? $myArray[2] : '' ;
-        $string_name =  $str1.'-'.$str2;
-
+        $id =  $myArray[0] ? $myArray[0] : null;
+        $str1 =  $myArray[1] ? $myArray[1] : null ;
+        $str2 =  $myArray[2] ? $myArray[2] : null ;
+        $str3 =  $myArray[3] ? $myArray[3] : null ;
+        $string_name = $str1 ? $str1 : null  ;
+        if($str1 && $str2){
+            $string_name = $str1.'-'.$str2;
+        }
+        if($str1 && $str2 && $str3 ){
+            $string_name =  $str1.'-'.$str2.'-'.$str3;
+        }
         if(isset($string_name) && isset($id) ){
             return redirect()->route('appDetail',[ 'name' => preg_replace('/\s+/', '-',strtolower($string_name)) , 'id' => $id]);
         }else{
             abort(404);
         }
-
-       
     }
 
     public function appDetailById($app_name, $app_id){
