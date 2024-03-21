@@ -343,7 +343,8 @@
       <a class="pad-logout fs-front" href="{{route('index','login')}}"> <img
           src="{{asset('frontend-asset/image/person-login.svg')}}" alt="">{{session('partner_firstname')}}</a> <span
         class="fs-front">/</span> <a href="{{route('index','logoutfrontend')}}"
-        class="pad-logout fs-front">{{$staticContent['Logout']}}</a>
+        class="pad-logout fs-front">{{isset($staticContent['Logout'])?
+        $staticContent['Logout'] :'Logout' }}</a>
       <span class="fs-front">|</span>
 
       @endif
@@ -434,8 +435,8 @@
           </div>
           <label for="searchinput" class="searchinput mar-b">
             <form id="formseachall">
-              <input type="text" name="keysearch" id="searchinput"
-                placeholder="{{$staticContent['Search_by_keyword']}}">
+              <input type="text" name="keysearch" id="searchinput" placeholder="{{isset($staticContent['Search_by_keyword'])?
+                $staticContent['Search_by_keyword'] :'Search_by_keyword' }}">
             </form>
           </label>
         </div>
@@ -464,15 +465,18 @@
 
           <li class="nav-item dropdown">
             <a id="nav-uderline" class="nav-link" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">{{$staticContent['Products']}}
+              aria-expanded="false">{{isset($staticContent['Products'])?
+              $staticContent['Products'] :'Products' }}
 
               <i class="zmdi zmdi-chevron-down"></i>
             </a>
             <div class="dropdown-menu s-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
               <div class="dropdown-submenu">
                 <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1"
-                  href="#">{{$staticContent['Industrial_Power']}} <i class="zmdi zmdi-chevron-right"></i></a>
+                  href="#">{{isset($staticContent['Industrial_Power'])?
+                  $staticContent['Industrial_Power'] :'Industrial_Power' }} <i class="zmdi zmdi-chevron-right"></i></a>
                 <ul class="dropdown-menu drp-subthree">
+                  @if(isset($navcategories2))
                   @foreach ($navcategories2 as $subCate)
                   @if($subCate->main_cateid == 1)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}',2)"
@@ -496,6 +500,7 @@
                   </li>
                   @endif
                   @endforeach
+                  @endif
                   <div class="image-dropdown d-flex justify-content-center "
                     style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('{{asset('frontend-asset/image/Dropdown.jpg')}}')no-repeat;">
                     <img class="imageNav2 img-hove-on-dropdown lazyload" loading="lazy"
@@ -505,10 +510,11 @@
                 </ul>
               </div>
               <div class="dropdown-submenu">
-                <a id="sub2" class="sub-menu" onclick="mainCate('sub2')" tabindex="-1"
-                  href="#">{{$staticContent['Medical_Power']}} <i class="zmdi zmdi-chevron-right"></i></a>
+                <a id="sub2" class="sub-menu" onclick="mainCate('sub2')" tabindex="-1" href="#">
+                  {{isset($staticContent['Medical_Power'])?
+                  $staticContent['Medical_Power'] :'Medical Power' }}<i class="zmdi zmdi-chevron-right"></i></a>
                 <ul class="dropdown-menu drp-subthree">
-
+                  @if(isset($navcategories1))
                   @foreach ($navcategories1 as $subCate)
                   @if($subCate->main_cateid == 1)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}',1)"
@@ -532,6 +538,7 @@
                   </li>
                   @endif
                   @endforeach
+                  @endif
                   <div class="image-dropdown d-flex justify-content-center "
                     style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('{{asset('frontend-asset/image/Dropdown.jpg')}}')no-repeat;">
                     <img class="imageNav1 img-hove-on-dropdown lazyload"
@@ -542,7 +549,8 @@
               </div>
               <div class="dropdown-submenu">
                 <a id="sub3" class="sub-menu" onclick="mainCate('sub3')" tabindex="-1"
-                  href="#">{{$staticContent['LED_Power']}} <i class="zmdi zmdi-chevron-right"></i></a>
+                  href="#">{{isset($staticContent['LED_Power'])?
+                  $staticContent['LED_Power'] :'LED Power' }} <i class="zmdi zmdi-chevron-right"></i></a>
                 <ul class="dropdown-menu drp-subthree">
                   {{-- @foreach ($navcategories3 as $subCate)
                   <li><a tabindex="-1" class="text-c" onmouseover="bigImg('{{$subCate->image}}',3)"
@@ -556,19 +564,24 @@
                       src="{{asset('frontend-asset/image/Group 2312@2x.png')}}" alt="">
                   </div> --}}
                   <li><a tabindex="-1" class="text-c"
-                      href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC+Cv_Mode'),1 , 3])}}">{{$staticContent['CC_Cv_Mode']}}</a>
+                      href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC+Cv_Mode'),1 , 3])}}">{{isset($staticContent['CC_Cv_Mode'])?
+                      $staticContent['CC_Cv_Mode'] :'CC Cv Mode' }}</a>
                   </li>
                   <li><a tabindex="-1" class="text-c"
-                      href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC_Mode'),2 ,3])}}">{{$staticContent['CC_Mode']}}</a>
+                      href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC_Mode'),2 ,3])}}">{{isset($staticContent['CC_Mode'])?
+                      $staticContent['CC_Mode'] :'CC Mode' }}</a>
                   </li>
                   <li><a tabindex="-1" class="text-c"
-                      href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CV_Mode'),3 ,3])}}">{{$staticContent['CV_Mode']}}</a>
+                      href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CV_Mode'),3 ,3])}}">{{isset($staticContent['CV_Mode'])?
+                      $staticContent['CV_Mode'] :'CV Mode' }}</a>
                   </li>
                   <div class="image-dropdown d-flex justify-content-center "
                     style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('{{asset('frontend-asset/image/Dropdown.jpg')}}') no-repeat;">
+                    @if(isset($navcategories3))
                     <img class="imageNav3 img-hove-on-dropdown lazyload"
                       data-src="{{config('app.url')}}/medias/categories/{{$navcategories3[0]->image}}" loading="lazy"
                       alt="{{$navcategories3[0]->image}}">
+                    @endif
                   </div>
                 </ul>
               </div>
@@ -577,32 +590,36 @@
 
           <li class="nav-item dropdown ">
             <a id="nav-uderline" class="nav-link " href="" id="dropdown02" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">{{$staticContent['Tools']}} <i class="zmdi zmdi-chevron-down"></i></a>
+              aria-expanded="false"> {{isset($staticContent['Tools'])?
+              $staticContent['Tools'] :'Tools' }}<i class="zmdi zmdi-chevron-down"></i></a>
             <div class="dropdown-menu s-menu" role="menu" aria-labelledby="dropdown02">
               {{--
           <li class="dropdown-item"> --}}<a class="dropdown-item"
-              href="{{route('productFinder')}}">{{$staticContent['Product_Selector']}}</a>{{-- </li> --}}
-          {{-- <li class="dropdown-item"> --}}<a class="dropdown-item"
-              href="{{route('configurableproduct')}}">{{$staticContent['configurable_power_selector']}}</a>{{-- </li>
+              href="{{route('productFinder')}}">{{isset($staticContent['Product_Selector'])?
+              $staticContent['Product_Selector'] :'Product Selector' }}</a>{{-- </li> --}}
+          {{-- <li class="dropdown-item"> --}}<a class="dropdown-item" href="{{route('configurableproduct')}}">
+              {{isset($staticContent['configurable_power_selector'])?
+              $staticContent['configurable_power_selector'] :'configurable power selector' }}</a>{{-- </li>
           --}}
-          {{-- <li class="dropdown-item"> --}}<a class="dropdown-item"
-              href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a>{{-- </li> --}}
+          {{-- <li class="dropdown-item"> --}}<a class="dropdown-item" href="{{route('productCoparison')}}">
+              {{isset($staticContent['product_comparison'])?
+              $staticContent['product_comparison'] :'product comparison' }}</a>{{-- </li> --}}
       </div>
       </li>
 
 
       <li class="nav-item dropdown ">
         <a id="nav-uderline" class="nav-link " href="" id="dropdown03" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false">{{$staticContent['Applications']}} <i class="zmdi zmdi-chevron-down"></i></a>
+          aria-expanded="false"> {{isset($staticContent['Applications'])?
+          $staticContent['Applications'] :'Applications' }}<i class="zmdi zmdi-chevron-down"></i></a>
         <div class="dropdown-menu s-menu" role="menu" aria-labelledby="dropdown03">
+          @if(isset($navapplication))
           @foreach ($navapplication as $app)
-          {{-- <a class="dropdown-item "
-            href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}">
-            --}}
-            <a class="dropdown-item"
-              href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}">
-              {{$app->name}}</a>
-            @endforeach
+          <a class="dropdown-item"
+            href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}">
+            {{$app->name}}</a>
+          @endforeach
+          @endif
         </div>
       </li>
       {{-- Memu About Us --}}
@@ -619,10 +636,14 @@
 
       <li class="nav-item dropdown ">
         <a id="nav-uderline" class="nav-link" href="" id="dropdown05" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false">{{$staticContent['Updates']}} <i class="zmdi zmdi-chevron-down"></i></a>
+          aria-expanded="false">{{isset($staticContent['Updates'])?
+          $staticContent['Updates'] :'Updates' }}<i class="zmdi zmdi-chevron-down"></i></a>
         <div class="dropdown-menu megamenu s-menu" aria-labelledby="dropdown05">
-          <a class="dropdown-item" href="{{route('index','news')}}"> {{$staticContent['Product_News']}} </a>
-          <a class="dropdown-item" href="{{route('index','events')}}">{{$staticContent['Events']}}</a>
+          <a class="dropdown-item" href="{{route('index','news')}}">
+            {{isset($staticContent['Product_News'])?
+            $staticContent['Product_News'] :'Product News' }} </a>
+          <a class="dropdown-item" href="{{route('index','events')}}">{{isset($staticContent['Events'])?
+            $staticContent['Events'] :'Events' }}</a>
           {{--
       <li><a href="{{route('index','technical-articles')}}">TECHNICAL ARTICLE</a></li>
       <li><a href="{{route('index','product-notice')}}">PRODUCT NOTICE</a></li> --}}
@@ -630,23 +651,32 @@
   </li>
   <li class="nav-item dropdown  ">
     <a id="nav-uderline" class="nav-link " href="" id="dropdown06" data-toggle="dropdown" aria-haspopup="true"
-      aria-expanded="false">{{$staticContent['nav_dowloads']}}
+      aria-expanded="false">{{isset($staticContent['nav_dowloads'])?
+      $staticContent['nav_dowloads'] :'dowloads' }}
       <i class="zmdi zmdi-chevron-down"></i></a>
     <div class="dropdown-menu megamenu sp-dropdown02 s-menu" aria-labelledby="dropdown06">
-      <a class="dropdown-item" href="{{route('index','catalogs')}}">{{$staticContent['catalogs']}}</a>
-      <a class="dropdown-item" href="{{route('index','product-documents')}}">{{$staticContent['Product_Documents']}}</a>
+      <a class="dropdown-item" href="{{route('index','catalogs')}}">{{isset($staticContent['catalogs'])?
+        $staticContent['catalogs'] :'catalogs' }}</a>
+      <a class="dropdown-item"
+        href="{{route('index','product-documents')}}">{{isset($staticContent['Product_Documents'])?
+        $staticContent['Product_Documents'] :'Product_Documents' }}</a>
       {{-- <a class="dropdown-item" href="{{route('index','login')}}">PARTNERS</a> --}}
     </div>
   </li>
   <li class="nav-item dropdown ">
     <a id="nav-uderline" class="nav-link" href="" id="dropdown07" data-toggle="dropdown" aria-haspopup="true"
-      aria-expanded="false">{{$staticContent['Supports']}}
+      aria-expanded="false">{{isset($staticContent['Supports'])?
+      $staticContent['Supports'] :'Supports' }}
       <i class="zmdi zmdi-chevron-down"></i></a>
     <div class="dropdown-menu megamenu s-menu" aria-labelledby="dropdown07">
-      <a class="dropdown-item" href="{{route('contactSupport')}}">{{$staticContent['contact_us']}}</a>
-      <a class="dropdown-item" href="{{route('contactSalesOffices')}}">{{$staticContent['sales_offices']}}</a>
-      <a class="dropdown-item" href="{{route('contactFindDistributor')}}">{{$staticContent['find_a_distributor']}}</a>
-      <a class="dropdown-item" href="{{route('index','faqs')}}">{{$staticContent['FAQs']}}</a>
+      <a class="dropdown-item" href="{{route('contactSupport')}}">{{isset($staticContent['contact_us'])?
+        $staticContent['contact_us'] :'contact_us' }}</a>
+      <a class="dropdown-item" href="{{route('contactSalesOffices')}}">{{isset($staticContent['sales_offices'])?
+        $staticContent['sales_offices'] :'sales_offices' }}</a>
+      <a class="dropdown-item" href="{{route('contactFindDistributor')}}">{{isset($staticContent['find_a_distributor'])?
+        $staticContent['find_a_distributor'] :'find_a_distributor' }}</a>
+      <a class="dropdown-item" href="{{route('index','faqs')}}">{{isset($staticContent['FAQs'])?
+        $staticContent['FAQs'] :'FAQs' }}</a>
     </div>
   </li>
   </ul>
@@ -657,7 +687,9 @@
   <div class="container d-flex justify-content-between align-items-stretch">
     <div id="listAllcomparesesion" class="d-flex align-items-stretch all-list-to-comparison">
     </div>
-    <a href="{{route('productCoparison')}}" class="btn btn-subscribe to-comparison">{{$staticContent['View_compare']}}
+    <a href="{{route('productCoparison')}}" class="btn btn-subscribe to-comparison">
+      {{isset($staticContent['View_compare'])?
+      $staticContent['View_compare'] :'View_compare' }}
       (<span id="numberselect"></span>/3)</a>
   </div>
 </div>
@@ -684,6 +716,7 @@
         </div>
         <select name="" id="select-mobile-lang" onchange="changeLangLocationmobile();"
           class="select-language text-uppercase">
+          @if(isset($language))
           @foreach ($language as $item)
           <?php 
                         $current = null;
@@ -707,6 +740,7 @@
 
           </option>
           @endforeach
+          @endif
         </select>
       </div>
 
@@ -719,7 +753,8 @@
         </div>
         <form id="formseachall_mobile">
           <label for="searchinput-mobile" class="searchinput_mobile">
-            <input type="text" id="searchinput-mobile" placeholder="{{$staticContent['Search_by_keyword']}}">
+            <input type="text" id="searchinput-mobile" placeholder="{{isset($staticContent['Search_by_keyword'])?
+            $staticContent['Search_by_keyword'] :'Search_by_keyword' }}">
           </label>
         </form>
         <div class="icon-clear">
@@ -740,22 +775,23 @@
       {{-- <div id="sidenavClose" class="" onclick="closeNav()">
         X
       </div> --}}
-      <a tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav1')">{{$staticContent['Products']}}<i
-          class="zmdi zmdi-chevron-right"></i></a>
-      <a class="" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav2')">{{$staticContent['Tools']}}<i
-          class="zmdi zmdi-chevron-right"></i></a>
+      <a tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav1')">{{isset($staticContent['Products'])?
+        $staticContent['Products'] :'Products' }}<i class="zmdi zmdi-chevron-right"></i></a>
+      <a class="" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav2')">{{isset($staticContent['Tools'])?
+        $staticContent['Tools'] :'Tools' }}<i class="zmdi zmdi-chevron-right"></i></a>
       <a class="" tabindex="-1" href="#"
-        onclick="toggle_visibility('btn-sidenav3')">{{$staticContent['Applications']}}<i
-          class="zmdi zmdi-chevron-right"></i></a>
+        onclick="toggle_visibility('btn-sidenav3')">{{isset($staticContent['Applications'])?
+        $staticContent['Applications'] :'Applications' }}<i class="zmdi zmdi-chevron-right"></i></a>
       {{-- <a class="" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav4')">{{$staticContent['About']}}<i
           class="zmdi zmdi-chevron-right"></i></a> --}}
-      <a class="" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav5')">{{$staticContent['Updates']}}<i
-          class="zmdi zmdi-chevron-right"></i></a>
+      <a class="" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav5')">{{isset($staticContent['Updates'])?
+        $staticContent['Updates'] :'Updates' }}<i class="zmdi zmdi-chevron-right"></i></a>
       <a class="" tabindex="-1" href="#"
-        onclick="toggle_visibility('btn-sidenav6')">{{$staticContent['nav_dowloads']}}<i
-          class="zmdi zmdi-chevron-right"></i></a>
-      <a class="" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav7')">{{$staticContent['Supports']}} <i
-          class="zmdi zmdi-chevron-right"></i></a>
+        onclick="toggle_visibility('btn-sidenav6')">{{isset($staticContent['nav_dowloads'])?
+        $staticContent['nav_dowloads'] :'dowloads' }}<i class="zmdi zmdi-chevron-right"></i></a>
+      <a class="" tabindex="-1" href="#"
+        onclick="toggle_visibility('btn-sidenav7')">{{isset($staticContent['Supports'])?
+        $staticContent['Supports'] :'Supports' }} <i class="zmdi zmdi-chevron-right"></i></a>
       <div class="d-flex">
         <img src="{{asset('frontend-asset/image/person-login-dark.svg')}}" alt="" class="mr-2">
         @if(session('partner_id') == null)
@@ -767,7 +803,9 @@
           {{session('partner_firstname')}} /
         </a>
 
-        <a href="{{route('index','logoutfrontend')}}" class="pad-logout fs-front"> &nbsp; {{$staticContent['Logout']}}
+        <a href="{{route('index','logoutfrontend')}}" class="pad-logout fs-front"> &nbsp;
+          {{isset($staticContent['Logout'])?
+          $staticContent['Logout'] :'Logout' }}
         </a>
 
         @endif
@@ -776,7 +814,8 @@
       <div class="d-flex">
         <img src="{{asset('frontend-asset/image/sub-new-dark.svg')}}" alt="" class="mr-2"><a class="a-link-hover"
           tabindex="-1" onclick="subscribe()" data-toggle="modal" data-target="#subscribe-modal">
-          {{$staticContent['Subscribe']}}</a>
+          {{isset($staticContent['Subscribe'])?
+          $staticContent['Subscribe'] :'Subscribe' }}</a>
       </div>
       <div class="d-flex">
         {{-- <i class="icon-facon mr-1 icon-find-dis-blue f-size-enquiry-mobile"></i> --}}
@@ -800,74 +839,91 @@
     {{-- PRODUCTS --}}
     <div id="btn-sidenav1" class="btn-sidenav pad-ar-24px">
       <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav1')"><i
-          class="zmdi zmdi-chevron-left mr-1"></i>{{$staticContent['Products']}}</a>
+          class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Products']) ? $staticContent['Products'] :
+        'Products' }}</a>
 
-      <a class="text-normal pl-3" href="#"
-        onclick="toggle_visibility('btn-sidenav-sub1')">{{$staticContent['Industrial_Power']}}<i
+      <a class="text-normal pl-3" href="#" onclick="toggle_visibility('btn-sidenav-sub1')">{{
+        isset($staticContent['Industrial_Power'])? $staticContent['Industrial_Power'] : 'Industrial Power' }}<i
           class="zmdi zmdi-chevron-right"></i></a>
       <a class="text-normal pl-3" href="#"
-        onclick="toggle_visibility('btn-sidenav-sub2')">{{$staticContent['Medical_Power']}}<i
-          class="zmdi zmdi-chevron-right"></i></a>
+        onclick="toggle_visibility('btn-sidenav-sub2')">{{isset($staticContent['Medical_Power']) ?
+        $staticContent['Medical_Power'] :'' }}<i class="zmdi zmdi-chevron-right"></i></a>
       <a class="text-normal pl-3" href="#"
-        onclick="toggle_visibility('btn-sidenav-sub3')">{{$staticContent['LED_Power']}}<i
-          class="zmdi zmdi-chevron-right"></i></a>
+        onclick="toggle_visibility('btn-sidenav-sub3')">{{isset($staticContent['LED_Power'])?
+        $staticContent['LED_Power'] : ' LED Power' }}<i class="zmdi zmdi-chevron-right"></i></a>
     </div>
     <div id="btn-sidenav-sub1" class="btn-sidenav  pad-ar-24px">
       <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub1')"><i
-          class="zmdi zmdi-chevron-left mr-1"></i>{{$staticContent['Industrial_Power']}}</a>
+          class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Industrial_Power'])?
+        $staticContent['Industrial_Power'] : 'Industrial Power'}}</a>
+      @if(isset($navcategories2))
       @foreach ($navcategories2 as $subCate)
       <a class="text-normal pl-3 "
         href="{{route('allproductsByType' ,[ preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id,2])}}">{{$subCate->name}}</a>
       @endforeach
+      @endif
     </div>
+
     <div id="btn-sidenav-sub2" class="btn-sidenav  pad-ar-24px">
       <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub2')"><i
-          class="zmdi zmdi-chevron-left mr-1"></i>{{$staticContent['Medical_Power']}}</a>
+          class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Medical_Power'])?
+        $staticContent['Medical_Power'] :'Medical Power' }}</a>
+      @if(isset($navcategories1))
       @foreach ($navcategories1 as $subCate)
       <a class="text-normal pl-3 "
         href="{{route('allproductsByType' ,[ preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id,1])}}">{{$subCate->name}}</a>
       @endforeach
+      @endif
     </div>
     <div id="btn-sidenav-sub3" class="btn-sidenav  pad-ar-24px">
       <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub3')"><i
-          class="zmdi zmdi-chevron-left mr-1"></i>{{$staticContent['LED_Power']}}</a>
+          class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['LED_Power']) ? $staticContent['LED_Power']
+        :'LED Power' }}</a>
       {{-- @foreach ($navcategories3 as $subCate)
       <a class="text-normal pl-3 "
         href="{{route('allproductsByType' ,[ preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id,3])}}">{{$subCate->name}}</a>
       @endforeach --}}
       <a class="text-normal pl-3"
-        href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC+Cv_Mode'),1 , 3])}}">{{$staticContent['CC_Cv_Mode']}}</a>
+        href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC+Cv_Mode'),1 , 3])}}">{{isset($staticContent['CC_Cv_Mode'])
+        ? $staticContent['CC_Cv_Mode'] : 'CC Cv Mode' }}</a>
 
       <a class="text-normal pl-3"
-        href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC_Mode'),2 ,3])}}">{{$staticContent['CC_Mode']}}</a>
+        href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC_Mode'),2 ,3])}}">{{isset($staticContent['CC_Mode'])?
+        $staticContent['CC_Mode'] :'CC Mode' }}</a>
 
       <a class="text-normal pl-3"
-        href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CV_Mode'),3 ,3])}}">{{$staticContent['CV_Mode']}}</a>
+        href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CV_Mode'),3 ,3])}}">{{isset($staticContent['CV_Mode'])?
+        $staticContent['CV_Mode']: 'CV Mode'}}</a>
 
 
     </div>
     {{-- TOOLS --}}
     <div id="btn-sidenav2" class="btn-sidenav pad-ar-24px">
       <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav2')"><i
-          class="zmdi zmdi-chevron-left mr-1"></i>{{$staticContent['Tools']}}</a>
-      <a class="text-normal pl-3" href="{{route('productFinder')}}">{{$staticContent['Product_Selector']}}</a>
+          class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Tools'])? $staticContent['Tools'] :
+        'Tools'}}</a>
+      <a class="text-normal pl-3" href="{{route('productFinder')}}">{{isset($staticContent['Product_Selector'])?
+        $staticContent['Product_Selector'] :'Product Selector' }}</a>
       <a class="text-normal pl-3"
-        href="{{route('configurableproduct')}}">{{$staticContent['configurable_power_selector']}}</a>
-      <a class="text-normal pl-3" href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a>
+        href="{{route('configurableproduct')}}">{{isset($staticContent['configurable_power_selector'])?
+        $staticContent['configurable_power_selector'] :'configurable power selector' }}</a>
+      <a class="text-normal pl-3" href="{{route('productCoparison')}}">
+        {{isset($staticContent['product_comparison'])?
+        $staticContent['product_comparison'] :'Product Comparison' }}</a>
     </div>
     {{-- APPLICATION --}}
     <div id="btn-sidenav3" class="btn-sidenav pad-ar-24px">
       <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav3')"><i
-          class="zmdi zmdi-chevron-left mr-1"></i>{{$staticContent['Tools']}}</a>
-      @foreach ($navapplication as $app)
-      {{-- <a class="text-normal pl-3"
-        href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}">
-        --}}
-        <a class="text-normal pl-3"
-          href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}">
-          {{$app->name}}</a>
-        @endforeach
+          class="zmdi zmdi-chevron-left mr-1"></i> {{isset($staticContent['Tools'])?
+        $staticContent['Tools'] :'Tools' }}</a>
 
+      @if(isset($navapplication))
+      @foreach ($navapplication as $app)
+      <a class="text-normal pl-3"
+        href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}">
+        {{$app->name}}</a>
+      @endforeach
+      @endif
     </div>
     {{-- ABOUT --}}
     {{-- <div id="btn-sidenav4" class="btn-sidenav pad-ar-24px">
@@ -881,27 +937,39 @@
     {{-- UPDATES --}}
     <div id="btn-sidenav5" class="btn-sidenav pad-ar-24px">
       <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav5')"><i
-          class="zmdi zmdi-chevron-left mr-1"></i>{{$staticContent['Updates']}}</a>
-      <a class="text-normal pl-3" href="{{route('index','news')}}"> {{$staticContent['Product_News']}}</a>
-      <a class="text-normal pl-3" href="{{route('index','events')}}">{{$staticContent['Events']}}</a>
+          class="zmdi zmdi-chevron-left mr-1"></i> {{isset($staticContent['Updates'])?
+        $staticContent['Updates'] :'updates' }}</a>
+      <a class="text-normal pl-3" href="{{route('index','news')}}">
+        {{isset($staticContent['Product_News'])?
+        $staticContent['Product_News'] :'Product News' }}</a>
+      <a class="text-normal pl-3" href="{{route('index','events')}}">{{isset($staticContent['Events'])?
+        $staticContent['Events'] :'Events' }}</a>
     </div>
     {{-- DOWNLOADS --}}
     <div id="btn-sidenav6" class="btn-sidenav pad-ar-24px">
       <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav6')"><i
-          class="zmdi zmdi-chevron-left mr-1"></i>{{$staticContent['nav_dowloads']}}</a>
-      <a class="text-normal pl-3" href="{{route('index','catalogs')}}">{{$staticContent['catalogs']}} </a>
+          class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['nav_dowloads'])?
+        $staticContent['nav_dowloads'] :'dowloads' }}</a>
+      <a class="text-normal pl-3" href="{{route('index','catalogs')}}">{{isset($staticContent['catalogs'])?
+        $staticContent['catalogs'] :'catalogs' }} </a>
       <a class="text-normal pl-3"
-        href="{{route('index','product-documents')}}">{{$staticContent['Product_Documents']}}</a>
+        href="{{route('index','product-documents')}}">{{isset($staticContent['Product_Documents'])?
+        $staticContent['Product_Documents'] :'Product Documents' }}</a>
     </div>
     {{-- SUPPORT --}}
     <div id="btn-sidenav7" class="btn-sidenav pad-ar-24px">
       <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav7')"><i
-          class="zmdi zmdi-chevron-left mr-1"></i>{{$staticContent['Supports']}}</a>
-      <a class="text-normal pl-3" href="{{route('contactSupport')}}">{{$staticContent['contact_us']}}</a>
-      <a class="text-normal pl-3" href="{{route('contactSalesOffices')}}">{{$staticContent['sales_offices']}}</a>
+          class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Supports'])?
+        $staticContent['Supports'] :'Supports' }}</a>
+      <a class="text-normal pl-3" href="{{route('contactSupport')}}">{{isset($staticContent['contact_us'])?
+        $staticContent['contact_us'] :'contact_us' }}</a>
+      <a class="text-normal pl-3" href="{{route('contactSalesOffices')}}">{{isset($staticContent['sales_offices'])?
+        $staticContent['sales_offices'] :'sales_offices' }}</a>
       <a class="text-normal pl-3"
-        href="{{route('contactFindDistributor')}}">{{$staticContent['find_a_distributor']}}</a>
-      <a class="text-normal pl-3" href="{{route('index','faqs')}}">{{$staticContent['FAQs']}}</a>
+        href="{{route('contactFindDistributor')}}">{{isset($staticContent['find_a_distributor'])?
+        $staticContent['find_a_distributor'] :'find_a_distributor' }}</a>
+      <a class="text-normal pl-3" href="{{route('index','faqs')}}">{{isset($staticContent['FAQs'])?
+        $staticContent['FAQs'] :'FAQs' }}</a>
     </div>
     {{-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><img
         src="{{asset('frontend-asset/image/close-white.svg')}}" alt=""></a> --}}
@@ -912,12 +980,15 @@
   <div class="nav-comparison-mobile " id="nav-comparison-mobile" style="display: none;">
     <div class="container d-flex justify-content-between align-items-stretch">
       <div class="my-auto">
-        <h5>(<span id="numberselect-mobile"></span>/3) {{$staticContent['Item(s)_selected']}}</h5>
+        <h5>(<span id="numberselect-mobile"></span>/3) {{isset($staticContent['Item(s)_selected'])?
+          $staticContent['Item(s)_selected'] :'Item(s)_selected' }}</h5>
         <a class="text-two text-color-gray" id="editList"
-          onclick="showListCoparison()">{{$staticContent['Edit_List']}}</a>
+          onclick="showListCoparison()">{{isset($staticContent['Edit_List'])?
+          $staticContent['Edit_List'] :'Edit_List' }}</a>
       </div>
       <a href="{{route('productCoparison')}}"
-        class="btn btn-subscribe to-comparison">{{$staticContent['View_compare']}}</a>
+        class="btn btn-subscribe to-comparison">{{isset($staticContent['View_compare'])?
+        $staticContent['View_compare'] :'View_compare' }}</a>
     </div>
     <div class="container" id="listAllcomparesesion-mobile">
       {{--
@@ -1013,14 +1084,15 @@
               required>
           </div>
           <div class="input-label w-100 my-4">
-            <h6 class="mb-0"><label class="text-dark">{{$staticContent['Company']}}<span class="red">*</span></label>
+            <h6 class="mb-0"><label class="text-dark">{{isset($staticContent['Company'])?
+                $staticContent['Company'] :'Company' }}<span class="red">*</span></label>
             </h6>
-            <input type="text" class="form-control" name="company_gui" pattern="[A-Za-zก-๏\s().]+"
-              placeholder="{{$staticContent['Company']}}" required>
+            <input type="text" class="form-control" name="company_gui" pattern="[A-Za-zก-๏\s().]+" placeholder="{{isset($staticContent['Company'])?
+              $staticContent['Company'] :'Company' }}" required>
           </div>
           <div class="input-label w-100 my-4">
-            <h6 class="mb-0"><label class="text-dark">{{$staticContent['Email_Address']}}<span
-                  class="red">*</span></label></h6>
+            <h6 class="mb-0"><label class="text-dark">{{isset($staticContent['Email_Address'])?
+                $staticContent['Email_Address'] :'Email Address' }}<span class="red">*</span></label></h6>
             <input type="email" class="form-control" name="email_gui" placeholder="Email Address" required>
             {{-- <label for="email">Email Address</label> --}}
           </div>
@@ -1028,20 +1100,26 @@
           <input type="hidden" name="procodeGui" id="procodeGui">
           <input type="hidden" name="procateGui" id="procateGui">
           <div class="input-label w-100 my-4">
-            <h6 class="mb-0"><label class="text-dark">{{$staticContent['Phone_Number']}}<span
-                  class="red">*</span></label></h6>
+            <h6 class="mb-0"><label class="text-dark">{{isset($staticContent['Phone_Number'])?
+                $staticContent['Phone_Number'] :'Phone Number' }}<span class="red">*</span></label></h6>
 
             <input type="tel" class="form-control tel-not-req" name="tel" pattern="^[0-9]*$" maxlength="13"
-              title="Incorrect Format Number only" placeholder="{{$staticContent['Phone_Number']}}" required>
+              title="Incorrect Format Number only" placeholder="{{isset($staticContent['Phone_Number'])?
+              $staticContent['Phone_Number'] :'Phone Number' }}" required>
           </div>
           <div class="select input-label w-100 my-4">
-            <h6 class="mb-0"><label class="text-dark">{{$staticContent['Country']}}<span class="red">*</span></label>
+            <h6 class="mb-0"><label class="text-dark">{{isset($staticContent['Country'])?
+                $staticContent['Country'] :'Country' }}<span class="red">*</span></label>
             </h6>
             <select name="country" class="form-control" required>
-              <option value="">{{$staticContent['Select']}} {{$staticContent['Country']}}</option>
+              <option value="">{{isset($staticContent['Select'])?
+                $staticContent['Select'] :'Select' }} {{isset($staticContent['Country'])?
+                $staticContent['Country'] :'Country' }}</option>
+              @if(isset($countryemails))
               @foreach ($countryemails as $email)
               <option value="{{$email->country}}">{{$email->country}}</option>
               @endforeach
+              @endif
             </select>
           </div>
           <div class="box-input-checkbox">
@@ -1050,9 +1128,10 @@
             <label class="cbx" for="acceptPolicyGui"><span>
                 <svg width="12px" height="10px" viewbox="0 0 12 10">
                   <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                </svg></span><span style="padding-left:9px;"> {{$staticContent['By_submitting_this_form']}} <a
-                  target="_blank" href="{{route('privacyPolicy')}}"
-                  class=" text-underline">{{$staticContent['Privacy_Policy']}}</a><text class="red">*</text></span>
+                </svg></span><span style="padding-left:9px;"> {{isset($staticContent['By_submitting_this_form'])?
+                $staticContent['By_submitting_this_form'] :'By_submitting_this_form' }} <a target="_blank"
+                  href="{{route('privacyPolicy')}}" class=" text-underline">{{isset($staticContent['Privacy_Policy'])?
+                  $staticContent['Privacy_Policy'] :'Privacy_Policy' }}</a><text class="red">*</text></span>
             </label>
           </div>
           <div class="box-input-checkbox">
@@ -1060,7 +1139,8 @@
             <label class="cbx" for="cxguiup"><span>
                 <svg width="12px" height="10px" viewbox="0 0 12 10">
                   <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-                </svg></span><span>{{$staticContent['Sign_up_for_newsletter']}}</span></label>
+                </svg></span><span>{{isset($staticContent['Sign_up_for_newsletter'])?
+                $staticContent['Sign_up_for_newsletter'] :'Sign_up_for_newsletter' }}</span></label>
           </div>
           <form action="?" method="POST">
             <div class="mt-4" id="recap_vertifygetGui"></div>

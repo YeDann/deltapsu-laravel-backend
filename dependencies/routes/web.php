@@ -127,7 +127,7 @@ Route::prefix('/backend')->group(function () {
     
 Auth::routes();
 
-Route::get('deshboard', 'HomeController@index')->name('deshboard');
+Route::get('deshboard', 'HomeController@index')->name('');
 
 Route::resource('doc_download', 'Doc_DownloadController');
 

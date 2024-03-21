@@ -25,7 +25,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/backend/deshboard';
+    protected $redirectTo = '/backend/language';
 
     /**
      * Create a new controller instance.

@@ -42,37 +42,53 @@
                         <div class=" ">
 
                             <?php 
-                            $current1 = null;
-                            foreach($navcategories as $item1) { 
-                                if ($item1->main_cateid == 2) {
-                                    $current1 = $item1;
-                                    break;
+                            $current1;
+                            if(isset($navcategories)){
+                                foreach($navcategories as $item1) { 
+                                    if ($item1->main_cateid == 2) {
+                                        $current1 = $item1;
+                                        break;
+                                    }
                                 }
-                            }
+                            // }
+                            $name_curent1 = isset($current1) ? $current1->name :null;
+                            $sub_pro_id_curent1 = isset($current1) ? $current1->sub_pro_id :null;
+                            $main_cateid_curent1 = isset($current1) ? $current1->main_cateid :null;
+                         
                           ?>
+                            @if(isset($current1))
                             <a
-                                href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $current1->name),$current1->sub_pro_id ,$current1->main_cateid ])}}">
+                                href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $name_curent1),$sub_pro_id_curent1 ,$main_cateid_curent1 ])}}">
                                 <p class="text-pro-link">
                                     {{isset($staticContent['Industrial_Power'])?$staticContent['Industrial_Power']:"Industrial
                                     Power"}}</p>
                             </a>
+                            @endif
 
                         </div>
                         <div class=" ">
                             <?php 
-                            $current2 = null;
-                            foreach($navcategories as $item2) { 
-                                if ($item2->main_cateid == 1) {
-                                    $current2 = $item2;
-                                    break;
-                                }
+                            $current2;
+                            if(isset($navcategories)){
+                                foreach($navcategories as $item2) { 
+                                        if ($item2->main_cateid == 1) {
+                                            $current2 = $item2;
+                                            break;
+                                        }
+                               }
                             }
+                            $name_curent2 = isset($current2) ? $current2->name :null;
+                            $sub_pro_id_curent2 = isset($current2) ? $current2->sub_pro_id :null;
+                            $main_cateid_curent2 = isset($current2) ? $current2->main_cateid :null;
+                            
                           ?>
+                            @if(isset($current2))
                             <a
-                                href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $current2->name),$current2->sub_pro_id ,$current2->main_cateid ])}}">
+                                href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $name_curent2),$sub_pro_id_curent2 ,$main_cateid_curent2 ])}}">
                                 <p class="text-pro-link">{{isset($staticContent['Medical_Power'])?
                                     $staticContent['Medical_Power']:"Medical Power"}}</p>
                             </a>
+                            @endif
                         </div>
                         <div class=" ">
 
@@ -89,6 +105,7 @@
                             <h6>{{isset($staticContent['Applications'])?$staticContent['Applications']:"Applications"}}
                             </h6>
                         </div>
+                        @if(isset($navapplication))
                         @foreach ($navapplication as $app)
                         <div class=" ">
                             <a
@@ -97,6 +114,7 @@
                             </a>
                         </div>
                         @endforeach
+                        @endif
 
 
                     </div>{{-- appli --}}
@@ -321,30 +339,36 @@
                             data-target="#foot-nav-link-list-sub1">{{$staticContent['Industrial_Power']}}<i
                                 class="zmdi zmdi-chevron-down"></i></a>
                         <div class="collapse pl-4" id="foot-nav-link-list-sub1" aria-expanded="false">
+                            @if(isset($navcategories2))
                             @foreach ($navcategories2 as $subCate)
                             <a class="text-normal "
                                 href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                             </a>
                             @endforeach
+                            @endif
 
                         </div>
                         <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub2" data-toggle="collapse"
                             data-target="#foot-nav-link-list-sub2">{{$staticContent['Medical_Power']}}<i
                                 class="zmdi zmdi-chevron-down"></i></a>
                         <div class="collapse pl-4" id="foot-nav-link-list-sub2" aria-expanded="false">
+                            @if(isset($navcategories1))
                             @foreach ($navcategories1 as $subCate)
                             <a class="text-normal "
                                 href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}</a>
                             @endforeach
+                            @endif
                         </div>
                         <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub3" data-toggle="collapse"
                             data-target="#foot-nav-link-list-sub3">{{$staticContent['LED_Power']}} <i
                                 class="zmdi zmdi-chevron-down"></i></a>
                         <div class="collapse pl-4" id="foot-nav-link-list-sub3" aria-expanded="false">
+                            @if(isset($navcategories3))
                             @foreach ($navcategories3 as $subCate)
                             <a class="text-normal "
                                 href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC+Cv_Mode'),1 , 3])}}">{{$subCate->name}}</a>
                             @endforeach
+                            @endif
 
                         </div>
                     </div>
