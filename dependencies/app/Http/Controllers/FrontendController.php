@@ -4515,6 +4515,8 @@ class FrontendController extends Controller
                 $zip->addFile($path, $filename);
                 $zip->close();
                 return response()->download($zip_file)->deleteFileAfterSend(true);
+            }else if($pathinfo['extension'] == 'zip'){
+                  return response()->download($path);
             }else{
 
                 $arrContextOptions=array(
@@ -4590,6 +4592,8 @@ class FrontendController extends Controller
               $zip->addFile($path, $filename);
               $zip->close();
               return response()->download($zip_file)->deleteFileAfterSend(true);
+          }else if($pathinfo['extension'] == 'zip'){
+            return response()->download($path);
           }else{
             $arrContextOptions=array(
                 "ssl"=>array(
