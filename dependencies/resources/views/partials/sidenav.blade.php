@@ -412,11 +412,11 @@
                         <span class="nav-main-link-name ">Events</span>
                     </a>
                 </li>
-                <li class="nav-main-item">
+                {{-- <li class="nav-main-item">
                     <a class="nav-main-link" href="{{route('technical.index')}}">
                         <span class="nav-main-link-name ">Technical Articles</span>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </li>
         @endif
