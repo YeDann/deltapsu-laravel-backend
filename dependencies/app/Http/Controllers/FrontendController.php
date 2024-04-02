@@ -4133,6 +4133,9 @@ class FrontendController extends Controller
 
             return redirect()->route('contactSupport');
        }
+       public function LinktoEnquiry($type ,$type_name ,$pro_code){
+            return redirect()->route('LinktoEnquiry',[ 'type_id'=> $type ,'type_name' => $type_name ,'pro_code'=>$pro_code ] );
+       }
        public function loaddocumentPro(Request $request){
            $lang = App::getLocale();
            $arrsearch = $request->data;

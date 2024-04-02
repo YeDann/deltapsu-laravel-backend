@@ -105,6 +105,7 @@ Route::post('/SaveSuccesStories','FrontendController@SaveSuccesStories')->name('
 Route::post('/uploadmulImagestory','FrontendController@uploadmulImagestory')->name('uploadmulImagestory');
 Route::post('/SubmitContact','FrontendController@SubmitContact')->name('SubmitContact');
 Route::get('/inquiry/{type_id?}/{type_name?}/{pro_code?}','FrontendController@LinktoEnquiry')->name('LinktoEnquiry');
+Route::get('/enquiry/{type_id?}/{type_name?}/{pro_code?}','FrontendController@LinktoEnquiryRedirect')->name('LinktoEnquiryRedirect');
 Route::post('/downloadGui','FrontendController@downloadGui')->name('downloadGui');
 Route::post('searhstate','FrontendController@searhstate')->name('searhstate');
 Route::post('searhProductByType','FrontendController@searhProductByType')->name('searhProductByType');
