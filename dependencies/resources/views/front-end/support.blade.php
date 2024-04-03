@@ -249,9 +249,10 @@
                         </select>
                     </div>
                     <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
-                        <label class="text-title-detail-dark">{{$staticContent['Model']}}<span
-                                class="red">*</span></label>
-                        <select id="model_id" name="model_name" class="form-control" disabled required>
+                        <label class="text-title-detail-dark">{{$staticContent['Model']}}
+                            {{-- <span class="red">*</span> --}}
+                        </label>
+                        <select id="model_id" name="model_name" class="form-control" disabled>
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Model']}}</option>
                         </select>
                     </div>
