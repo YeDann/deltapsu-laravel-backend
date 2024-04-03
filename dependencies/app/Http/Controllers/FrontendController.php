@@ -1939,10 +1939,24 @@ class FrontendController extends Controller
         $name = $this->validateInput($namePram,'text',true);
         $lang = App::getLocale();
         $myArray = explode('-', $name);
-        $id =  $myArray[0] ? $myArray[0] : null;
-        $str1 =  $myArray[1] ? $myArray[1] : null ;
-        $str2 =  $myArray[2] ? $myArray[2] : null ;
-        $str3 =  $myArray[3] ? $myArray[3] : null ;
+        $id =  0;
+        $str1 = null;
+        $str2 = null;
+        $str3 = null;
+        if(sizeof($myArray) > 0){
+            $id =  $myArray[0] ;
+        }
+        if(sizeof($myArray) > 1){
+            $str1 =  $myArray[1] ;
+        }
+        if(sizeof($myArray) > 2){
+            $str2 =  $myArray[2] ;
+        }
+    
+        if(sizeof($myArray) > 3){
+            $str3 =  $myArray[3]  ;
+        }
+
         $string_name = $str1 ? $str1 : null  ;
         if($str1 && $str2){
             $string_name = $str1.'-'.$str2;
