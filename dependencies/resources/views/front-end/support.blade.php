@@ -397,6 +397,7 @@
             },
             success: function (data) {
                 var options = '';
+                options += '<option value="">Select Model</option>';
                 for (var i = 0; i < data['results'].length; i++) {
                     options += '<option value="' + data['results'][i].pro_code + '">' + data['results'][i].pro_code + '</option>';
                 }
