@@ -3913,7 +3913,8 @@ class FrontendController extends Controller
             'https://www.recaptcha.net/recaptcha/api/siteverify',
             ['form_params'=>
                 [
-                     'secret'=> '6LeFKfYUAAAAABtTFzPon_8pinsPsevCSFyePD8k',
+                    //  'secret'=> '6LeFKfYUAAAAABtTFzPon_8pinsPsevCSFyePD8k',
+                     'secret'=> config('app.recapcha_secret_key'),
                       //'secret'=> '6LdshPcUAAAAACaoDOvGo7ncKgVazbyKoDlPi43T',
                      // 'secret'=> '6LfGGV0pAAAAAMYsIjmPwbpfkta9cE_2YOguoR5T',
                     'response'=>$request->keyrecap
@@ -4120,8 +4121,8 @@ class FrontendController extends Controller
           }
          
            try {
-            // Mail::to('chai@degiotbangkok.com')->send(new ThankFeedback($request->except('_token')));
-            $emaillog = Mail::to($emailsend)->send(new Contact($request->except('_token'),$ticket_id));
+            $emaillog = Mail::to('chai@degitobangkok.com')->send(new Contact($request->except('_token'),$ticket_id));
+            // $emaillog = Mail::to($emailsend)->send(new Contact($request->except('_token'),$ticket_id));
             Log::channel('mail_log')->info('[Success] message : Send Mail to '.implode(",",$emailsend));
             return \Redirect::back()->with("message","Send Email Successfully");
            } catch (\Swift_RfcComplianceException  $ex) {
