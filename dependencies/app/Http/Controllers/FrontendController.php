@@ -3913,7 +3913,7 @@ class FrontendController extends Controller
         $validate = Validator::make($request->all(), [
             'subject' => ['required'],
             'type_id' => ['required'],
-            'model_name' => ['required'],
+            // 'model_name' => ['required'],
             'type_name' => ['required'],
             'name' => ['required'],
             'email' => ['required'],
