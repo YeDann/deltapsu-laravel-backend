@@ -192,7 +192,7 @@
                             <option value="Products and Service Support" {{ isset($contactlink) &&
                                 $contactlink=='Products-and-Service-Support' ?'selected':'' }}>Products and Service
                                 Support</option>
-                            <option value="Get Advice">Get Advice</option>
+                            <option value="General Comments">General Comments</option>
                             {{-- <option value="Problems and Bugs">Problems and Bugs</option> --}}
                         </select>
                     </div>
@@ -342,7 +342,7 @@
             var onloadCallback = function() {
                 grecaptcha.render('recap_vertify', {
                 // 'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-                'sitekey' : '{{config('app.recapcha_site_key')}}',
+                'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
                 //'sitekey' : '6LfGGV0pAAAAAKeEC0S7wzsPbAM1fvB3Tp2wtSYJ',
                 'callback' : verifyCallback,
                 'theme' : 'light'
@@ -397,7 +397,7 @@
             },
             success: function (data) {
                 var options = '';
-                options += '<option value="" >{{$staticContent['Select']}} {{$staticContent['Model']}}</option>';
+                options += '<option >Select Model</option>';
                 for (var i = 0; i < data['results'].length; i++) {
                     options += '<option value="' + data['results'][i].pro_code + '">' + data['results'][i].pro_code + '</option>';
                 }
