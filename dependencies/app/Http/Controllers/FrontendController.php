@@ -5056,20 +5056,20 @@ class FrontendController extends Controller
                                    if(file_exists($path)){
                                     return response()->download($path);
                                     }else{
-                                        return abort(404);
+                                        return redirect()->route('index','partners');
                                     }
                             }else if($margeting){
                                 if(file_exists($path)){
                                     return response()->download($path);
                                     }else{
-                                        return abort(404);
+                                        return redirect()->route('index','partners');
                                 }
                             
                             }else if($margeting_public){
                                 if(file_exists($path)){
                                     return response()->download($path);
                                     }else{
-                                        return abort(404);
+                                        return redirect()->route('index','partners');
                                 }
                             }
                             else{
@@ -5130,14 +5130,14 @@ class FrontendController extends Controller
                                     ob_end_clean();
                                     return response()->file($path);
                                     }else{
-                                        return abort(404);
+                                        return redirect()->route('index','partners');
                                     }
                             }else if($margeting){
                                 if(file_exists($path)){
                                     ob_end_clean();
                                     return response()->file($path);
                                     }else{
-                                        return abort(404);
+                                        return redirect()->route('index','partners');
                                 }
                             
                             }else if($margeting_public){
@@ -5145,11 +5145,11 @@ class FrontendController extends Controller
                                     ob_end_clean();
                                     return response()->file($path);
                                     }else{
-                                        return abort(404);
+                                        return redirect()->route('index','partners');
                                 }
                             }
                             else{
-                                return abort(401);
+                                return redirect()->route('index','partners');
                             }
             }else{
                 return redirect()->route('loginDocPartner',$doc );
