@@ -73,8 +73,8 @@
 
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-block-update-optional"
               onclick="editContent({{$item->id}} ,'{{$item->optional_model}}','{{$item->remark}}')">Edit</button>
-            {{-- <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});" data-toggle="modal"
-              data-target="#modal-block-vcenter">Delete</button> --}}
+            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});" data-toggle="modal"
+              data-target="#modal-block-delete-file">Delete</button>
 
           </td>
           </tr>
@@ -131,6 +131,40 @@
 <!-- END Vertically Centered Block Modal -->
 
 
+<!-- Vertically Centered Block Modal -->
+<div class="modal" id="modal-block-delete-file" tabindex="-1" role="dialog" aria-labelledby="modal-block-delete-file"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="block block-themed block-transparent mb-0">
+        <div class="block-header bg-danger">
+          <h3 class="block-title">!! Warning </h3>
+          <div class="block-options">
+            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+              <i class="fa fa-fw fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <form action="{{route('deleteOptionalModel')}}" method="POST">
+          {{csrf_field()}}
+
+          <div class="block-content">
+            <input type="hidden" name="itemId" id="itemIdDelete">
+            <input type="hidden" name="pro_id" value="{{$pro_id}}">
+            <p>Data will be lost?</p>
+          </div>
+          <div class="block-content block-content-full text-right bg-light">
+            <button type="button" class="btn  btn-light" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">OK</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END Vertically Centered Block Modal -->
+
+
 
 
 
@@ -143,6 +177,10 @@
      $('#remark').val(remark);
      
       
+    }
+    function ondelelete(id){
+         $('#itemIdDelete').val(id);
+
     }
 
 </script>

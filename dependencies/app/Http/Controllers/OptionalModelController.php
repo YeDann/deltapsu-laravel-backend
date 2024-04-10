@@ -49,6 +49,13 @@ class OptionalModelController extends Controller
         );
         return redirect()->route('optional_models',$pro_id)->with('flash_message', 'Update Data successfully');
     }
+    public function deleteOptionalModel(Request $request){
+        $id = $request->itemId;
+        $proId = $request->pro_id;
+        DB::table('product_optional_model')->where('id',$id)->delete();
+        return redirect()->route('optional_models',$proId)->with('flash_message', 'Delte Data successfully');
+
+    }
 
  
 

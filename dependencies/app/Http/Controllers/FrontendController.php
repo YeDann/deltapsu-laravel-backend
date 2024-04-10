@@ -121,6 +121,7 @@ class FrontendController extends Controller
     }
     public function index($page ='home')
     {
+    
         $lang = App::getLocale();
         session(['lang_down' =>  $lang]);
         if($page == 'home'){
@@ -450,7 +451,8 @@ class FrontendController extends Controller
             return  view('front-end.event')->with('events2' ,$events2)->with('events' ,$events)->with('metatag' ,$metatag);
         }
         if($page == 'technical-articles'){
-            return  abort(404);
+            // return  abort(404);
+            return redirect()->route('index','home');
             $lang = App::getLocale();
             $news_type = DB::table('tech_type as tc')
             ->join('tech_type_translation as tct','tc.id','=','tct.tech_id')
@@ -748,8 +750,8 @@ class FrontendController extends Controller
             return redirect()->route('contactSupport'); 
         } 
      
-  
-        abort(404);
+        return redirect()->route('index','home'); 
+        // abort(404);
          
     }
     private function getDataNew($query ,$type){
@@ -1016,7 +1018,7 @@ class FrontendController extends Controller
        if(isset($series)){
         return  redirect()->route('producsList',[$series->catename,$series->cateid,$series->se_name,$series->se_id]);
        }else{
-           abort(404);
+        return redirect()->route('index','home');
        }
        
     }
@@ -1259,7 +1261,7 @@ class FrontendController extends Controller
         if($findoldCate){
             return  redirect()->route('allproductsByType',[$cate,$findoldCate->sub_pro_id,$findoldCate->main_cateid]);
         }else{
-           abort(404);
+            return redirect()->route('productFinder');
         }
     }
   
@@ -1283,17 +1285,13 @@ class FrontendController extends Controller
             $optional_model = $this->validateInput($_GET['optional_model'] ,'text',true);
                 $optional_model_code  = str_replace("@", "/", $optional_model);
                 $catename_new  = str_replace("@", "/", $catename);
-                $check_optional = DB::table('products as p')
-                ->where('p.pro_code',$optional_model_code)
-                ->where('p.enable_pro',1)
-                ->first();
+                $check_optional = self::checkHaveModel($optional_model_code);
               if($check_optional){
                 return redirect()->route('productsDetailsByType',[$catename_new,$optional_model_code] );
               }
 
         }
-        // return dd($optional_model);
-      
+   
         $findoldCate = DB::table('sub_pro_categories as c')
         ->where('c.url_item',$name)
         ->first();
@@ -1305,7 +1303,7 @@ class FrontendController extends Controller
             if($findoldSeries){
                 return  redirect()->route('producsList',[$name,$findoldCate->sub_pro_id,$findoldSeries->slug,$findoldSeries->se_id]);
             }else{
-                abort(404);
+                return redirect()->route('productFinder');
             }
         }else if(isset($findoldCate) && !isset($procode)){
             return  redirect()->route('producsList',[$name,$findoldCate->sub_pro_id]);
@@ -1320,17 +1318,8 @@ class FrontendController extends Controller
         $lang = App::getLocale();
         session(['lang_down' =>  $lang]);
         $proCode  = str_replace("@", "/", $pro_code);
-        // return dd($proCode);
-        $check = DB::table('products as p')
-        ->where('p.pro_code',$proCode)
-        ->where('p.enable_pro',1)
-        ->first();
-
-        $check_2 = DB::table('product_optional_model as po')
-        ->join('products as p', 'p.pro_id', '=', 'po.product_id')
-        ->where('po.optional_model',$proCode)
-        ->select('p.pro_code','po.optional_model')
-        ->first();
+        $check = self::checkHaveModel($proCode);
+        $check_2 = self::checkHaveModelOptional($proCode);
 
         if(isset($check->pro_id)){
             $prolang =  self::checkLang($lang ,$check->pro_id);
@@ -1343,7 +1332,7 @@ class FrontendController extends Controller
         }
         else{
  
-            abort(404);
+            return redirect()->route('productFinder');
         }
     
         $pro = DB::table('products as p')
@@ -1359,23 +1348,16 @@ class FrontendController extends Controller
         ->orderBy('p.created_at', 'desc')
         ->first();
 
-        // $contenterorIfnot = DB::table('product_has_property as ph')
-        // ->where('ph.product_id',$pro->pro_id)
-        // ->whereIn('ph.type_id',[4,3,8])
-        // ->orderBy('ph.type_id' ,'asc')
-        // ->select('ph.*')
-        // ->get();
+        // return dd( $pro);
 
         if(!self::checkContentPro($pro->pro_id)){
-            abort(404); 
+            return redirect()->route('productFinder');
         }
 
         $external_link = DB::table('external_link as e')
          ->select('e.*')
          ->where('e.products',$pro->pro_id)
          ->get();  
-
-        //   return dd($pro);
 
         $vieo_img = DB::table('product_image as pm')
         ->where('pm.pro_id' ,$pro->pro_id)
@@ -1406,8 +1388,6 @@ class FrontendController extends Controller
         ->orderBy('pdc.title','asc')
         ->get();
 
-        // return dd($documents);
-   
         $product_has_property = DB::table('product_has_property as ph')
         ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
         ->join('product_field as pf','pf.id' ,'=','ph.type_id')
@@ -1420,8 +1400,6 @@ class FrontendController extends Controller
         ->select('pht.value_text','ph.*','pf.section_id' ,'pft.field_name as fieldCate','pf.unit_name')
         ->get();
 
-        // return dd($product_has_property);
-
         $series_has_application = DB::table('series_has_application as shp')
         ->join('application as app', 'app.id', '=', 'shp.app_id')
         ->join('application_translation as appt' ,'appt.app_id' ,'=' ,'app.id')
@@ -1430,8 +1408,6 @@ class FrontendController extends Controller
         ->select('shp.app_id','app.*' ,'appt.name' )
         ->get();
 
-
-     
 
         $data = [];
                 $arraysub = [];
@@ -1466,8 +1442,7 @@ class FrontendController extends Controller
                     "dimensionW"=>$pro->dimensionW,
                     "dimensionD"=>$pro->dimensionD,
                 ];
-                //  return dd( $data);
-          
+
                 $product_related = DB::table('product_related as pr')
                 ->join('products as p', 'p.pro_id', '=', 'pr.related_id')
                 ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -1538,7 +1513,7 @@ class FrontendController extends Controller
                  
                     $j++;
                 }
-                // return dd($data_other);
+
                 $section = DB::table('section as st')
                 ->join('section_translation as stt','st.id','=','stt.section_id')
                 ->where('stt.local',$lang)
@@ -1546,11 +1521,6 @@ class FrontendController extends Controller
                 ->select('st.id', 'stt.sortname','stt.name')
                 ->get(); 
 
-         
-         
-        //  return dd($external_link ,'external_link');
-              
-        
         return  view('front-end.productdetails')
         ->with('optional_model' , $optional_model)
         ->with('tags_pro' , $tags_pro)
@@ -1953,7 +1923,7 @@ class FrontendController extends Controller
         if(isset($string_name) && isset($id) ){
             return redirect()->route('appDetail',[ 'name' => preg_replace('/\s+/', '-',strtolower($string_name)) , 'id' => $id]);
         }else{
-            abort(404);
+            return redirect()->route('index','home');
         }
     }
 
@@ -2043,7 +2013,7 @@ class FrontendController extends Controller
         ->get();
        
         if(count($contents) == 0){
-            abort(404);
+            return redirect()->route('index','news');
         }
         $otherNews = [];
 
@@ -2086,7 +2056,7 @@ class FrontendController extends Controller
         ->get();
 
         if(count($contents) == 0){
-            abort(404);
+            return redirect()->route('index','home');
         }
 
         // return dd($contents);
@@ -2118,7 +2088,7 @@ class FrontendController extends Controller
     }
     public function updateTechnicalDetail($namePar){
         $lang = App::getLocale();
-        return  abort(404);
+        return redirect()->route('index','home');
         $name = $this->validateInput($namePar ,'text',true);
         $contents = DB::table('article_has_categories as anc')
         ->join('contents as c' ,'c.id' ,'=','anc.content_id')
@@ -3139,6 +3109,9 @@ class FrontendController extends Controller
        }
        public function downloadoldLeaflets($doc){
         return redirect()->route('index','home'); 
+       }
+       public function downloadoldCatalogs($doc){
+        return redirect()->route('index','catalogs'); 
        }
        public function checkOldfileUrl($doc){
         $path =  base_path('../upload/product_image/').$doc ; 
@@ -4384,7 +4357,7 @@ class FrontendController extends Controller
            if(isset($user)){
                   return view('front-end.resetPassword')->with('metatag',$metatag);
            }else{
-            abort(404);
+            return redirect()->route('index','login');
            }
        }
 
@@ -4482,16 +4455,13 @@ class FrontendController extends Controller
         $chmodel = $this->validateInput($modelPar,'text',true);
        
         $strmodel =  str_replace("@", "/", trim($chmodel));
-        $check_2 = DB::table('product_optional_model as po')
-        ->join('products as p', 'p.pro_id', '=', 'po.product_id')
-        ->where('po.optional_model',$strmodel)
-        ->select('p.pro_code','po.optional_model')
-        ->first();
+        $check_2 = self::checkHaveModelOptional($strmodel);
 
         if(isset($check_2)){
             $strmodel = $check_2->pro_code;
         }
-  
+
+        $_model =  self::checkHaveModel($strmodel);
         $documents = self::getDoc($typefile,$strmodel);
           $file = null;
           if(isset($documents[0]->file)){
@@ -4535,8 +4505,37 @@ class FrontendController extends Controller
             }
 
             }else{
-                abort(404);
+                if(isset($_model)){
+                    return redirect()->route('productsDetailsByType',['cateid' => $_model->categories_id , 'pro_code'=>  str_replace("/", "@", trim($_model->pro_code))] );
+                }else{
+                    return redirect()->route('index','home');
+                }
+                // return redirect()->route('index','home');
             }
+       }
+       private function checkHaveModel($strmodel){
+            $stringModel =  str_replace("-", "", $strmodel);
+            $queryStringModel = preg_replace('/[^A-Za-z0-9\-]/','',$stringModel);
+            $queryModel = DB::table('products as p')
+            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+            ->select('p.*','phc.categories_id')
+            ->where('p.enable_pro',1);
+            
+            $queryModel->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $queryStringModel . '%');
+            $_model = $queryModel->first();
+
+          return $_model;
+       }
+       private function checkHaveModelOptional($strmodel){
+            $stringModel =  str_replace("-", "", $strmodel);
+            $queryStringModel = preg_replace('/[^A-Za-z0-9\-]/','',$stringModel);
+            $queryModelOP = DB::table('product_optional_model as po')
+            ->join('products as p', 'p.pro_id', '=', 'po.product_id')
+            ->select('p.pro_code','po.optional_model');
+            $queryModelOP->where(\DB::raw("REPLACE(REPLACE(REPLACE(po.optional_model, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $queryStringModel . '%');
+            $_modelOptional = $queryModelOP->first();
+
+          return $_modelOptional;
        }
        public function downloadFIleManual($lang,$typefilePar,$modelPar){
 
@@ -4544,17 +4543,11 @@ class FrontendController extends Controller
         $chmodel = $this->validateInput($modelPar,'text',true);
         $strmodel =  str_replace("@", "/", trim($chmodel));
         $stringM =  str_replace("-", "", $strmodel);
-
-        $check_2 = DB::table('product_optional_model as po')
-        ->join('products as p', 'p.pro_id', '=', 'po.product_id')
-        ->where('po.optional_model',$stringM)
-        ->select('p.pro_code','po.optional_model')
-        ->first();
-
+        $check_2 = self::checkHaveModelOptional($stringM);
         if(isset($check_2)){
             $stringM = $check_2->pro_code;
         }
-  
+        $_model =  self::checkHaveModel($stringM);
         $queryString = preg_replace('/[^A-Za-z0-9\-]/','',$stringM);
         $query = DB::table('product_has_documents as phd')
         ->join('products as p','p.pro_id','=','phd.product_id')
@@ -4609,7 +4602,13 @@ class FrontendController extends Controller
               ]);
           }
           }else{
-              abort(404);
+               if(isset($_model)){
+                    return redirect()->route('productsDetailsByType',['cateid' => $_model->categories_id , 'pro_code'=>  str_replace("/", "@", trim($_model->pro_code))] );
+                }else{
+                    return redirect()->route('index','home');
+                }
+            //   return redirect()->route('index','home');
+              
           }
        }
 
@@ -4631,7 +4630,7 @@ class FrontendController extends Controller
         if(file_exists($path)){
             return response()->file($path);
         }else{
-            return abort(404);
+            return  redirect()->route('index','home');
         }
        
       }
@@ -4998,7 +4997,7 @@ class FrontendController extends Controller
             return redirect()->route('loginDocPartner',$doc );  
         }
         else{
-            return abort(404);
+            return redirect()->route('index','home');
         }
 
       }
@@ -5157,6 +5156,11 @@ class FrontendController extends Controller
             }
      
         }
+
+        public function productCate($cate){
+            return redirect()->route('productFinder' );
+        }
+
      
     
 }

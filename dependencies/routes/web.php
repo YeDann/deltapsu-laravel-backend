@@ -26,13 +26,14 @@
 
 Route::get('/products/download/{cate_name?}/{modelname?}','FrontendController@downloadFIle')->name('downloadFIle');
 Route::get('/products/download/{lang?}/{cate_name?}/{modelname?}','FrontendController@downloadFIleManual')->name('downloadFIleManual');
+
 Route::group([
      'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ,'HtmlMinifier']
         ], function() {
-
 Route::get('/{page?}','FrontendController@index')->name('index');
 Route::get('/download/{doc?}','FrontendController@oldDoc')->name('downloadDocData');
+Route::get('/download/resources-catalogs/{doc?}','FrontendController@downloadoldCatalogs')->name('downloadoldCatalogs');
 Route::get('/download/resources-leaflets/{doc?}','FrontendController@downloadoldLeaflets')->name('downloadoldLeaflets');
 Route::get('/file_doc_2/marketing_resources/{doc?}','FrontendController@checkpermission')->name('checkpermission');
 Route::post('/partnerLoginDoc_success','FrontendController@partnerLoginDoc_success')->name('partnerLoginDoc_success');
@@ -41,6 +42,7 @@ Route::get('/loginDocPartner/{doc?}','FrontendController@loginDocPartner')->name
 Route::get('/main/download_guide/{doc?}','FrontendController@downloadGuide')->name('download_guide');
 Route::get('/tools/configurable-product-selection','FrontendController@configurableProduct')->name('configurableproduct');
 Route::get('/configurable-power/details','FrontendController@configurableProductDetail')->name('configurableProductDetail');
+Route::get('/products/{cate?}','FrontendController@productCate')->name('productCate');
 Route::get('/products/series/{cate?}','FrontendController@oldlinkSeries')->name('oldlinkSeries');
 Route::get('/products/{cateid?}/{pro_code?}','FrontendController@productsDetailsByType')->name('productsDetailsByType');
 Route::get('/products_search/search','FrontendController@resultSearch')->name('resultSearch');
@@ -97,8 +99,6 @@ Route::get('/contact/sales-offices','FrontendController@contactSalesOffices')->n
 Route::get('/contact/find-a-distributor','FrontendController@contactFindDistributor')->name('contactFindDistributor');
 Route::get('/etc/privacy-policy','FrontendController@privacyPolicy')->name('privacyPolicy');
 Route::get('/etc/terms-of-use','FrontendController@termsOfUse')->name('termsOfUse');
-
-
 Route::post('/subscribe','FrontendController@subscribe')->name('subscribe');
 Route::post('/partnerLogin','FrontendController@partnerLogin')->name('partnerLogin');
 Route::post('/SaveSuccesStories','FrontendController@SaveSuccesStories')->name('SaveSuccesStories');
@@ -177,7 +177,7 @@ Route::post('deleteVideImagePro','ProductVideoImageController@deleteVideImagePro
 
 Route::get('optional_models/{id?}','OptionalModelController@index')->name('optional_models');
 Route::post('saveOptionalModel','OptionalModelController@saveOptionalModel')->name('saveOptionalModel');
-//Route::get('getAllProduct','GetDataController@getAllProduct')->name('getAllProducts');
+Route::post('deleteOptionalModel','OptionalModelController@deleteOptionalModel')->name('deleteOptionalModel');
 Route::get('getAllSubCategories','GetDataController@getAllSubCategories')->name('getAllSubCategories');
 //Route::get('getAllSeries','GetDataController@getAllSeries')->name('getAllSeries');
 Route::get('getProductFildData','GetDataController@getProductFildData')->name('getProductFildData');
