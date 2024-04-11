@@ -51,7 +51,7 @@
                             }
                           ?>
                             <a
-                                href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $current1->name),$current1->sub_pro_id ,$current1->main_cateid ])}}">
+                                href="{{route('allproductsByType' ,[slugifyHead($current1->name),$current1->sub_pro_id ,$current1->main_cateid ])}}">
                                 <p class="text-pro-link">
                                     {{isset($staticContent['Industrial_Power'])?$staticContent['Industrial_Power']:"Industrial
                                     Power"}}</p>
@@ -69,14 +69,14 @@
                             }
                           ?>
                             <a
-                                href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $current2->name),$current2->sub_pro_id ,$current2->main_cateid ])}}">
+                                href="{{route('allproductsByType' ,[slugifyHead($current2->name),$current2->sub_pro_id ,$current2->main_cateid ])}}">
                                 <p class="text-pro-link">{{isset($staticContent['Medical_Power'])?
                                     $staticContent['Medical_Power']:"Medical Power"}}</p>
                             </a>
                         </div>
                         <div class=" ">
 
-                            <a href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC+Cv_Mode'),1 , 3])}}">
+                            <a href="{{route('allproductsByType',[slugifyHead('CC-Cv-Mode'),1 , 3])}}">
                                 <p class="text-pro-link">
                                     {{isset($staticContent['LED_Power'])?$staticContent['LED_Power']:"LED Power"}}</p>
                             </a>
@@ -92,7 +92,7 @@
                         @foreach ($navapplication as $app)
                         <div class=" ">
                             <a
-                                href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}">
+                                href="{{route('appDetail' ,[ 'name' => slugifyHead($app->name) , 'id' => $app->applica_id])}}">
                                 <p class="text-pro-link">{{$app->name}}</p>
                             </a>
                         </div>
@@ -323,7 +323,7 @@
                         <div class="collapse pl-4" id="foot-nav-link-list-sub1" aria-expanded="false">
                             @foreach ($navcategories2 as $subCate)
                             <a class="text-normal "
-                                href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                                href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                             </a>
                             @endforeach
 
@@ -334,7 +334,7 @@
                         <div class="collapse pl-4" id="foot-nav-link-list-sub2" aria-expanded="false">
                             @foreach ($navcategories1 as $subCate)
                             <a class="text-normal "
-                                href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}</a>
+                                href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}</a>
                             @endforeach
                         </div>
                         <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub3" data-toggle="collapse"
@@ -343,7 +343,7 @@
                         <div class="collapse pl-4" id="foot-nav-link-list-sub3" aria-expanded="false">
                             @foreach ($navcategories3 as $subCate)
                             <a class="text-normal "
-                                href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC+Cv_Mode'),1 , 3])}}">{{$subCate->name}}</a>
+                                href="{{route('allproductsByType',[slugifyHead('CC-Cv-Mode'),1 , 3])}}">{{$subCate->name}}</a>
                             @endforeach
 
                         </div>
@@ -372,7 +372,7 @@
                         data-parent="#footer-nav-mobile">
                         @foreach ($navapplication as $app)
                         <a class=" text-normal"
-                            href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}">{{$app->name}}</a>
+                            href="{{route('appDetail' ,[ 'name' => slugifyHead($app->name) , 'id' => $app->applica_id])}}">{{$app->name}}</a>
                         @endforeach
 
                     </div>

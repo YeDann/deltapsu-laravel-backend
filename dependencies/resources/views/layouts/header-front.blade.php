@@ -321,7 +321,35 @@
     color: #000;
   }
 </style>
+<?php 
+function slugifyHead($text)
+            {
+            // replace non letter or digits by -
+            $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
 
+            // trim
+            $text = trim($text, '-');
+
+            // transliterate
+            if (function_exists('iconv'))
+            {
+                $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+            }
+
+            // lowercase
+            $text = strtolower($text);
+
+            // remove unwanted characters
+            $text = preg_replace('~[^-\w]+~', '', $text);
+            if (empty($text))
+            {
+                return 'n-a';
+            }
+
+            return $text;
+            }
+
+?>
 <div class="invisible-nav-minimize">
 
   <div class="nav-firts ">
@@ -480,22 +508,22 @@
                   @foreach ($navcategories2 as $subCate)
                   @if($subCate->main_cateid == 1)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}',2)"
-                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @elseif($subCate->main_cateid == 2)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type2}}',2)"
-                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @elseif($subCate->main_cateid == 3)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}',2)"
-                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @else
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}',2)"
-                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @endif
@@ -518,22 +546,22 @@
                   @foreach ($navcategories1 as $subCate)
                   @if($subCate->main_cateid == 1)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}',1)"
-                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @elseif($subCate->main_cateid == 2)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type2}}',1)"
-                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @elseif($subCate->main_cateid == 3)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}',1)"
-                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @else
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}',1)"
-                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead( $subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @endif
@@ -552,27 +580,16 @@
                   href="#">{{isset($staticContent['LED_Power'])?
                   $staticContent['LED_Power'] :'LED Power' }} <i class="zmdi zmdi-chevron-right"></i></a>
                 <ul class="dropdown-menu drp-subthree">
-                  {{-- @foreach ($navcategories3 as $subCate)
-                  <li><a tabindex="-1" class="text-c" onmouseover="bigImg('{{$subCate->image}}',3)"
-                      href="{{route('allproductsByType',[preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id,3])}}">{{$subCate->name}}
-                    </a>
-                  </li>
-                  @endforeach --}}
-                  {{-- <div class="image-dropdown d-flex justify-content-center "
-                    style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('{{asset('frontend-asset/image/Dropdown.jpg')}}') no-repeat;">
-                    <img class="imageNav3 img-hove-on-dropdown"
-                      src="{{asset('frontend-asset/image/Group 2312@2x.png')}}" alt="">
-                  </div> --}}
                   <li><a tabindex="-1" class="text-c"
-                      href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC+Cv_Mode'),1 , 3])}}">{{isset($staticContent['CC_Cv_Mode'])?
+                      href="{{route('allproductsByType',[slugifyHead('CC-Cv-Mode'),1 , 3])}}">{{isset($staticContent['CC_Cv_Mode'])?
                       $staticContent['CC_Cv_Mode'] :'CC Cv Mode' }}</a>
                   </li>
                   <li><a tabindex="-1" class="text-c"
-                      href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC_Mode'),2 ,3])}}">{{isset($staticContent['CC_Mode'])?
+                      href="{{route('allproductsByType',[slugifyHead('CC-Mode'),2 ,3])}}">{{isset($staticContent['CC_Mode'])?
                       $staticContent['CC_Mode'] :'CC Mode' }}</a>
                   </li>
                   <li><a tabindex="-1" class="text-c"
-                      href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CV_Mode'),3 ,3])}}">{{isset($staticContent['CV_Mode'])?
+                      href="{{route('allproductsByType',[slugifyHead('CV_Mode'),3 ,3])}}">{{isset($staticContent['CV_Mode'])?
                       $staticContent['CV_Mode'] :'CV Mode' }}</a>
                   </li>
                   <div class="image-dropdown d-flex justify-content-center "
@@ -616,7 +633,7 @@
           @if(isset($navapplication))
           @foreach ($navapplication as $app)
           <a class="dropdown-item"
-            href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}">
+            href="{{route('appDetail' ,[ 'name' => slugifyHead($app->name) , 'id' => $app->applica_id])}}">
             {{$app->name}}</a>
           @endforeach
           @endif
@@ -859,7 +876,7 @@
       @if(isset($navcategories2))
       @foreach ($navcategories2 as $subCate)
       <a class="text-normal pl-3 "
-        href="{{route('allproductsByType' ,[ preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id,2])}}">{{$subCate->name}}</a>
+        href="{{route('allproductsByType' ,[ slugifyHead($subCate->name),$subCate->sub_pro_id,2])}}">{{$subCate->name}}</a>
       @endforeach
       @endif
     </div>
@@ -871,7 +888,7 @@
       @if(isset($navcategories1))
       @foreach ($navcategories1 as $subCate)
       <a class="text-normal pl-3 "
-        href="{{route('allproductsByType' ,[ preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id,1])}}">{{$subCate->name}}</a>
+        href="{{route('allproductsByType' ,[ slugifyHead($subCate->name),$subCate->sub_pro_id,1])}}">{{$subCate->name}}</a>
       @endforeach
       @endif
     </div>
@@ -884,15 +901,15 @@
         href="{{route('allproductsByType' ,[ preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id,3])}}">{{$subCate->name}}</a>
       @endforeach --}}
       <a class="text-normal pl-3"
-        href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC+Cv_Mode'),1 , 3])}}">{{isset($staticContent['CC_Cv_Mode'])
+        href="{{route('allproductsByType',[slugifyHead('CC-Cv-Mode'),1 , 3])}}">{{isset($staticContent['CC_Cv_Mode'])
         ? $staticContent['CC_Cv_Mode'] : 'CC Cv Mode' }}</a>
 
       <a class="text-normal pl-3"
-        href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CC_Mode'),2 ,3])}}">{{isset($staticContent['CC_Mode'])?
+        href="{{route('allproductsByType',[slugifyHead('CC-Mode'),2 ,3])}}">{{isset($staticContent['CC_Mode'])?
         $staticContent['CC_Mode'] :'CC Mode' }}</a>
 
       <a class="text-normal pl-3"
-        href="{{route('allproductsByType',[preg_replace('/\s+/', '_', 'CV_Mode'),3 ,3])}}">{{isset($staticContent['CV_Mode'])?
+        href="{{route('allproductsByType',[slugifyHead('CV-Mode'),3 ,3])}}">{{isset($staticContent['CV_Mode'])?
         $staticContent['CV_Mode']: 'CV Mode'}}</a>
 
 
@@ -920,7 +937,7 @@
       @if(isset($navapplication))
       @foreach ($navapplication as $app)
       <a class="text-normal pl-3"
-        href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}">
+        href="{{route('appDetail' ,[ 'name' => slugifyHead($app->name) , 'id' => $app->applica_id])}}">
         {{$app->name}}</a>
       @endforeach
       @endif
