@@ -246,13 +246,120 @@
 </style>
 @endsection
 @section('meta')
-<title>{{isset($product[0]['pro_code'])? $product[0]['pro_code'] :''}}</title>
-<meta name="description"
-    content="{{$product[0]['serie_name']}} {{$staticContent['Series']}} , {{$product[0]['cate_name']}}">
-<meta name="keywords" content="{{isset($contents[0]->title) ? $contents[0]->title :''}}">
-<meta property="og:title" content="{{isset($product[0]['pro_code'])? $product[0]['pro_code'] :''}}" />
-<meta property="og:description"
-    content="{{$product[0]['serie_name']}} {{$staticContent['Series']}} , {{$product[0]['cate_name']}}" />
+<?php 
+ $datacheck1 = [
+  $product[0]['content'][1]->data_1,
+  $product[0]['content'][1]->data_2,
+  $product[0]['content'][1]->data_3,
+  $product[0]['content'][1]->data_4,
+  $product[0]['content'][1]->data_5,
+  $product[0]['content'][1]->data_6,
+  $product[0]['content'][1]->data_7,
+  $product[0]['content'][1]->data_8,
+  $product[0]['content'][1]->data_9,
+  $product[0]['content'][1]->data_10,
+  $product[0]['content'][1]->data_11,
+  $product[0]['content'][1]->data_12,
+   ];
+  $datacheck2 = [
+   $product[0]['content'][2]->data_1,
+   $product[0]['content'][2]->data_2,
+   $product[0]['content'][2]->data_3,
+   $product[0]['content'][2]->data_4,
+   $product[0]['content'][2]->data_5,
+   $product[0]['content'][2]->data_6,
+   $product[0]['content'][2]->data_7,
+   $product[0]['content'][2]->data_8,
+   $product[0]['content'][2]->data_9,
+   $product[0]['content'][2]->data_10,
+   $product[0]['content'][2]->data_11,
+   $product[0]['content'][2]->data_12,
+  ];                                      
+  $datacheck3 = [
+     $product[0]['content'][0]->data_1,
+     $product[0]['content'][0]->data_2,
+     $product[0]['content'][0]->data_3,
+     $product[0]['content'][0]->data_4,
+     $product[0]['content'][0]->data_5,
+     $product[0]['content'][0]->data_6,
+     $product[0]['content'][0]->data_7,
+     $product[0]['content'][0]->data_8,
+     $product[0]['content'][0]->data_9,
+     $product[0]['content'][0]->data_10,
+     $product[0]['content'][0]->data_11,
+     $product[0]['content'][0]->data_12,
+    ];
+    function setTextpro($pro){
+      $strmodel =  str_replace("/", "@", $pro);
+      return  $strmodel;
+    }
+    function showdata($pro , $pro2 ,$unit){
+        $data = '';
+        $prod_1 = 0;
+        $prod_2 = 0;
+            $chekc = false;
+            if(isset($pro) && !is_null($pro) ){
+            $prod_1 = $pro;
+            $chekc = true;
+            }
+            if(isset($pro2) && !is_null($pro2) ){
+            $prod_2 = $pro2;
+            $chekc = true;
+            }
+        if($chekc == true){
+            $data =  $prod_1.'-'.$prod_2.$unit;
+        }
+        
+        return  $data;
+    } 
+    function retextdata($arr ,$unit){
+      $arr_data = [];
+      foreach ($arr as $dch){
+        if($dch != null && $dch != '' && $dch != 'null'){
+            array_push($arr_data,$dch.$unit);
+        }                                   
+       }
+      return $arr_data;
+    }
+        $output_v = '';
+        $output_p = '';
+        $output_c = '';
+        $model_code = '';
+        $series = '';
+        $cate_name = '';
+        if(isset($optional_model)){
+            $model_code = $optional_model;
+        }else{
+            $model_code = $product[0]['pro_code'] ?  $product[0]['pro_code'] :'' ;
+        }
+        $cate_name = $product[0]['cate_name'] ?  $product[0]['cate_name'] :'' ;
+        $series = $product[0]['serie_name'] ?  $product[0]['serie_name'] .' Series' :'' ;
+
+        if($product[0]['content'][1]->status_input == 3){
+            $output_v = showdata($product[0]['content'][1]->data_1 ,$product[0]['content'][1]->data_2 ,$product[0]['content'][1]->unit_name);
+        }else{
+            $output_v = join(",",retextdata($datacheck1 , $product[0]['content'][1]->unit_name));
+        }
+        if($product[0]['content'][2]->status_input == 3){
+            $output_p = showdata($product[0]['content'][2]->data_1 ,$product[0]['content'][2]->data_2 ,$product[0]['content'][2]->unit_name);
+        }else{
+            $output_p = join(",",retextdata($datacheck2 , $product[0]['content'][2]->unit_name));
+        }
+        if($product[0]['content'][0]->status_input == 3){
+            $output_c = showdata($product[0]['content'][0]->data_1 ,$product[0]['content'][0]->data_2 ,$product[0]['content'][0]->unit_name);
+        }else{
+            $output_c = join(",",retextdata($datacheck3 , $product[0]['content'][0]->unit_name));
+        }
+
+       $meta_title = 'Delta '.$model_code.' '.$output_v.' '.$output_p.' '.$output_c.' '.$cate_name.' '.$series;
+       $m_desc = $model_code.' '.$cate_name.' Offers output '.$output_v.' '.$output_p.' '.$output_c.' Features';
+       $features  = trim(iconv_substr(strip_tags(str_replace("/uploads_delta",config('app.url')."/uploads_delta",$product[0]['content_1'])),0,122,'UTF-8')); 
+       $meta_description =  $product[0]['meta_description'] ? $product[0]['meta_description'] : $m_desc.' '.$features ;
+?>
+<title>{{$meta_title}}</title>
+<meta name="description" content="{{$meta_description}}">
+<meta property="og:title" content="{{$meta_title}}" />
+<meta property="og:description" content="{{$meta_description}}" />
 <meta property="og:image" content="{{config('app.url')}}/upload/thumbs/{{$product[0]['picture']}}" />
 <link rel="canonical" href="{{url()->current()}}" />
 <?php 
@@ -265,13 +372,7 @@
 ?>
 <link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
-<?php 
-    function setTextpro($pro){
-                $strmodel =  str_replace("/", "@", $pro);
-                return  $strmodel;
-            }
 
-?>
 @section('container')
 <div class="padding-top-content">
 </div>
@@ -432,19 +533,7 @@
                         </div>
                     </div>
                 </div>
-                <?php 
-                  function retextdata($arr ,$unit){
-                                        $arr_data = [];
-                                     foreach ($arr as $dch){
-                                        if($dch != null && $dch != '' && $dch != 'null'){
-                                            array_push($arr_data,$dch.$unit);
-                                        }
-                                       
-                                     }
-                         return $arr_data;
-                  }
 
-                ?>
                 <div class="col-8">
                     <h4 class="my-1"> {{$product[0]['cate_name']}}</h4>
                     <h4 class="my-1">{{$product[0]['serie_name']}} {{$staticContent['Series']}}</h4>
@@ -474,75 +563,6 @@
                             {{-- <p class="text-one">
                                 {{$product[0]['content'][1]->data_1}}{{$product[0]['content'][1]->unit_name}} </p> --}}
 
-                            <?php 
-                               $datacheck1 = [
-                                $product[0]['content'][1]->data_1,
-                                $product[0]['content'][1]->data_2,
-                                $product[0]['content'][1]->data_3,
-                                $product[0]['content'][1]->data_4,
-                                $product[0]['content'][1]->data_5,
-                                $product[0]['content'][1]->data_6,
-                                $product[0]['content'][1]->data_7,
-                                $product[0]['content'][1]->data_8,
-                                $product[0]['content'][1]->data_9,
-                                $product[0]['content'][1]->data_10,
-                                $product[0]['content'][1]->data_11,
-                                $product[0]['content'][1]->data_12,
-                                       ];
-                        
-                                $datacheck2 = [
-                                 $product[0]['content'][2]->data_1,
-                                 $product[0]['content'][2]->data_2,
-                                 $product[0]['content'][2]->data_3,
-                                 $product[0]['content'][2]->data_4,
-                                 $product[0]['content'][2]->data_5,
-                                 $product[0]['content'][2]->data_6,
-                                 $product[0]['content'][2]->data_7,
-                                 $product[0]['content'][2]->data_8,
-                                 $product[0]['content'][2]->data_9,
-                                 $product[0]['content'][2]->data_10,
-                                 $product[0]['content'][2]->data_11,
-                                 $product[0]['content'][2]->data_12,
-                                        ];
-
-                                $datacheck3 = [
-                                 $product[0]['content'][0]->data_1,
-                                 $product[0]['content'][0]->data_2,
-                                 $product[0]['content'][0]->data_3,
-                                 $product[0]['content'][0]->data_4,
-                                 $product[0]['content'][0]->data_5,
-                                 $product[0]['content'][0]->data_6,
-                                 $product[0]['content'][0]->data_7,
-                                 $product[0]['content'][0]->data_8,
-                                 $product[0]['content'][0]->data_9,
-                                 $product[0]['content'][0]->data_10,
-                                 $product[0]['content'][0]->data_11,
-                                 $product[0]['content'][0]->data_12,
-                                        ];
-                                        
-                             ?>
-                            <?php 
-                              function showdata($pro , $pro2 ,$unit){
-                                  $data = '';
-                                  $prod_1 = 0;
-                                  $prod_2 = 0;
-                                      $chekc = false;
-                                      if(isset($pro) && !is_null($pro) ){
-                                        $prod_1 = $pro;
-                                        $chekc = true;
-                                      }
-                                      if(isset($pro2) && !is_null($pro2) ){
-                                        $prod_2 = $pro2;
-                                        $chekc = true;
-                                      }
-                                    if($chekc == true){
-                                        $data =  $prod_1.'-'.$prod_2.$unit;
-                                    }
-                                   
-                                    return  $data;
-                               } 
-                      
-                            ?>
                             <p class="text-one">
 
                                 @if($product[0]['content'][1]->status_input == 3)
@@ -1437,53 +1457,6 @@
                                      $name_sta = 'EOL';
                                  }
                                  ?>
-                                <?php 
-                                       $datacheck1 = [
-                                        $pro['content'][1]->data_1,
-                                        $pro['content'][1]->data_2,
-                                        $pro['content'][1]->data_3,
-                                        $pro['content'][1]->data_4,
-                                        $pro['content'][1]->data_5,
-                                        $pro['content'][1]->data_6,
-                                        $pro['content'][1]->data_7,
-                                        $pro['content'][1]->data_8,
-                                        $pro['content'][1]->data_9,
-                                        $pro['content'][1]->data_10,
-                                        $pro['content'][1]->data_11,
-                                        $pro['content'][1]->data_12,
-                                               ];
-                                
-                                        $datacheck2 = [
-                                         $pro['content'][2]->data_1,
-                                         $pro['content'][2]->data_2,
-                                         $pro['content'][2]->data_3,
-                                         $pro['content'][2]->data_4,
-                                         $pro['content'][2]->data_5,
-                                         $pro['content'][2]->data_6,
-                                         $pro['content'][2]->data_7,
-                                         $pro['content'][2]->data_8,
-                                         $pro['content'][2]->data_9,
-                                         $pro['content'][2]->data_10,
-                                         $pro['content'][2]->data_11,
-                                         $pro['content'][2]->data_12,
-                                                ];
-        
-                                        $datacheck3 = [
-                                         $pro['content'][0]->data_1,
-                                         $pro['content'][0]->data_2,
-                                         $pro['content'][0]->data_3,
-                                         $pro['content'][0]->data_4,
-                                         $pro['content'][0]->data_5,
-                                         $pro['content'][0]->data_6,
-                                         $pro['content'][0]->data_7,
-                                         $pro['content'][0]->data_8,
-                                         $pro['content'][0]->data_9,
-                                         $pro['content'][0]->data_10,
-                                         $pro['content'][0]->data_11,
-                                         $pro['content'][0]->data_12,
-                                                ];
-                                                
-                                     ?>
                                 <div class="new-tag" style="background-color:{{$color}}">{{$name_sta}}</div>
                                 <div class="card-body ft-products-item">
                                     <a

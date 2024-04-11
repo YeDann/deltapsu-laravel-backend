@@ -115,7 +115,7 @@ class ProductsController extends Controller
         $optional_models = $request->optional_models;
         $relatePros  = $request->relatePro;
         $pro_categories  = $request->pro_categories;
-      
+        $meta_description = $request->metaDescription;
 
         $validate = Validator::make($request->all(), [
             'productCode' => 'required',
@@ -223,6 +223,7 @@ class ProductsController extends Controller
                             "product_id" => $id,
                             "content_1" => $overview,
                             "content_2" => $content,
+                            "meta_description" => $meta_description,
                             "showstatus"=>$status,
                             "local" => $lang,
                         ]
@@ -497,6 +498,9 @@ public function update(Request $request){
     $pro_categories = $request->pro_categories;
     $productfieldNumbers = array_unique($inputfiledNum);
     $oldFile = $request->oldFile;
+    $meta_description = $request->metaDescription;
+    // return dd($meta_description);
+
     $validate = Validator::make($request->all(), [
         'productCode' => 'required',
     ]);
@@ -639,6 +643,7 @@ public function update(Request $request){
                     [
                         "content_1" => $overview[$lang],
                         "content_2" => $content[$lang],
+                        "meta_description" => $meta_description[$lang],
                         "showstatus"=>$status[$lang],
 
                     ]

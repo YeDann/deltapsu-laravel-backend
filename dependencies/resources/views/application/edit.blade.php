@@ -4,6 +4,22 @@
     .res-image {
         max-width: 38%;
     }
+
+    #item-wrap {
+        margin: 8px 8px 8px 8px;
+        background: #eee;
+        padding: 5px 10px 30px 5px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        position: relative;
+    }
+
+    .text-count {
+        right: 7px;
+        bottom: 4px;
+        position: absolute;
+        font-size: 14px;
+    }
 </style>
 @endsection
 @section('content')
@@ -96,6 +112,34 @@
                                         <label for="">Typical application</label>
                                         <textarea rows="4" name="overview[{{$item->name}}]"
                                             class=" form-control">{{ isset($current->overview)?$current->overview :''}} </textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">H1</label>
+                                        <span>Recommended 20-70 characters</span>
+                                        <div id="item-wrap">
+                                            <input id="input-h1-{{$item->name}}"
+                                                onkeyup="countCharacter('h1-{{$item->name}}')" type="text"
+                                                class="form-control" name="h1_title[{{$item->name}}]" maxlength="70"
+                                                value="{{isset($current->h1)?$current->h1 :''}}">
+                                            <div class="text-count">Count Character :
+                                                <span id="count-h1-{{$item->name}}">
+                                                    0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Meta - Description</label>
+                                        <span>Recommended 70-155 Character</span>
+                                        <div id="item-wrap">
+                                            <textarea rows="4" id="input-metaDescription-{{$item->name}}"
+                                                onkeyup="countCharacter('metaDescription-{{$item->name}}')"
+                                                name="metaDescription[{{$item->name}}]"
+                                                class="form-control">{{isset($current->meta_description)?$current->meta_description :''}}</textarea>
+                                            <div class="text-count">Count Character :
+                                                <span id="count-metaDescription-{{$item->name}}">
+                                                    0</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -363,6 +407,11 @@
         }
 
         });
+
+        function countCharacter(id){
+           var str = $('#input-'+id).val();
+          $('#count-'+id).text(str.length);
+      }
 
 </script>
 @endsection

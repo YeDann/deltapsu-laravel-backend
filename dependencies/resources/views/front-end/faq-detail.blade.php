@@ -15,10 +15,10 @@
 </style>
 @endsection
 @section('meta')
-<title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
+<title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta property="description"
     content="{!! trim(iconv_substr(strip_tags(isset($contents[0]->meta_description)? $contents[0]->meta_description:''),0,155,'UTF-8')) !!}" />
-<meta property="og:title" content="{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}" />
+<meta property="og:title" content="{{isset($metatag[0]->title)? $metatag[0]->title :''}}" />
 <meta property="og:description"
     content="{!! trim(iconv_substr(strip_tags(isset($contents[0]->meta_description)? $contents[0]->meta_description:''),0,155,'UTF-8')) !!}" />
 

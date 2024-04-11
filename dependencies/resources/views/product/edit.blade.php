@@ -85,6 +85,22 @@
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
     }
+
+    #item-wrap {
+        margin: 8px 8px 8px 8px;
+        background: #eee;
+        padding: 5px 10px 30px 5px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        position: relative;
+    }
+
+    .text-count {
+        right: 7px;
+        bottom: 4px;
+        position: absolute;
+        font-size: 14px;
+    }
 </style>
 @endsection
 @section('content')
@@ -325,6 +341,20 @@
                                             class="jsnotenew">{{$item->content_2}}</textarea>
                                     </div>
                                     <div class="form-group">
+                                        <label for="">Meta - Description</label>
+                                        <span>Recommended 70-155 Character</span>
+                                        <div id="item-wrap">
+                                            <textarea rows="4" id="input-metaDescription-{{$item->local}}"
+                                                onkeyup="countCharacter('metaDescription-{{$item->local}}')"
+                                                name="metaDescription[{{$item->local}}]"
+                                                class="form-control">{{$item->meta_description}}</textarea>
+                                            <div class="text-count">Count Character :
+                                                <span id="count-metaDescription-{{$item->local}}">
+                                                    0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="d-block">Show/hide language</label>
                                         <div
                                             class="custom-control custom-radio custom-control-inline custom-control-primary">
@@ -356,6 +386,20 @@
                                         <label for="">Content</label>
                                         <textarea name="content[{{$item->local}}]"
                                             class="jsnotenew">{{$item->content_2}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Meta - Description</label>
+                                        <span>Recommended 70-155 Character</span>
+                                        <div id="item-wrap">
+                                            <textarea rows="4" id="input-metaDescription-{{$item->local}}"
+                                                onkeyup="countCharacter('metaDescription-{{$item->local}}')"
+                                                name="metaDescription[{{$item->local}}]"
+                                                class="form-control">{{$item->meta_description}}</textarea>
+                                            <div class="text-count">Count Character :
+                                                <span id="count-metaDescription-{{$item->local}}">
+                                                    0</span>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="d-block">show/hide language</label>
@@ -390,6 +434,7 @@
                                         <label for="">Content</label>
                                         <textarea name="content[{{$alang->name}}]" class="jsnotenew"></textarea>
                                     </div>
+
                                     <div class="form-group">
                                         <label class="d-block">Show Status</label>
                                         <div
@@ -993,6 +1038,10 @@
         }
 
     });
+    function countCharacter(id){
+           var str = $('#input-'+id).val();
+          $('#count-'+id).text(str.length);
+      }
 
 </script>
 

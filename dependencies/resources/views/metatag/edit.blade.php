@@ -60,8 +60,90 @@
                                 value="{{$metatags[0]->page}}" disabled>
                         </div>
 
+                        <div class="block block-rounded block-bordered">
+                            <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
+                                @foreach ($language as $item)
+                                @if($loop->iteration == 1)
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#btabs-alt-static-{{$item->name}}"
+                                        style="text-transform: capitalize;">{{$item->name}}</a>
+                                </li>
+                                @else
+                                <li class="nav-item">
+                                    <a class="nav-link " href="#btabs-alt-static-{{$item->name}}"
+                                        style="text-transform: capitalize;">{{$item->name}}</a>
+                                </li>
+                                @endif
+                                @endforeach
+                            </ul>
+                            <div class="block-content tab-content">
 
-                        <div class="form-group">
+                                @foreach ($language as $item)
+                                <?php 
+                                $current = null;
+                                foreach($metatags as $item2) { 
+                                    if ($item->name == $item2->local) {
+                                        $current = $item2;
+                                        break;
+                                    }
+                                }
+                              ?>
+                                <input type="hidden" name="lang_loop[]" value="{{$item->name}}">
+
+                                <div class="tab-pane {{$loop->iteration == 1 ?'active':''}}"
+                                    id="btabs-alt-static-{{$item->name}}" role="tabpanel">
+
+                                    <div class="form-group">
+                                        <label for="">H1</label>
+                                        <span>Recommended 20-70 characters</span>
+                                        <div id="item-wrap">
+                                            <input id="input-h1-{{$item->name}}"
+                                                onkeyup="countCharacter('h1-{{$item->name}}')" type="text"
+                                                class="form-control" name="h1_title[{{$item->name}}]" maxlength="70"
+                                                value="{{isset($current->h1)?$current->h1 :''}}">
+                                            <div class="text-count">Count Character :
+                                                <span id="count-h1-{{$item->name}}">
+                                                    {{strlen($current->h1)}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Meta - Title </label>
+                                        <span>Recommended 30-60 Character</span>
+                                        <div id="item-wrap">
+                                            <input id="input-metaTitle-{{$item->name}}"
+                                                onkeyup="countCharacter('metaTitle-{{$item->name}}')"
+                                                type="meta_title[{{$item->name}}]" class="form-control"
+                                                name="meta_title[{{$item->name}}]"
+                                                value="{{isset($current->title) ? $current->title :''}}">
+                                            <div class="text-count">Count Character :
+                                                <span id="count-metaTitle-{{$item->name}}">
+                                                    {{strlen($current->meta_title)}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="">Meta - Description</label>
+                                        <span>Recommended 70-155 Character</span>
+                                        <div id="item-wrap">
+                                            <textarea rows="4" id="input-metaDescription-{{$item->name}}"
+                                                onkeyup="countCharacter('metaDescription-{{$item->name}}')"
+                                                name="metaDescription[{{$item->name}}]"
+                                                class="form-control">{{isset($current->description)?$current->description :''}}</textarea>
+                                            <div class="text-count">Count Character :
+                                                <span id="count-metaDescription-{{$item->name}}">
+                                                    0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @endforeach
+                            </div>
+                        </div>
+
+
+                        {{-- <div class="form-group">
                             <label for="">Meta - Title</label>
                             <div id="item-wrap">
                                 <input id="input-metaTitle-en" onkeyup="countCharacter('metaTitle-en')" type="text"
@@ -85,10 +167,6 @@
                                         {{strlen($metatags[0]->meta_description)}}</span>
                                 </div>
                             </div>
-                        </div>
-                        {{-- <div class="form-group">
-                            <label for="">Meta - Keywords</label>
-                            <textarea name="metaKeyword" class="form-control">{{$metatags[0]->meta_key}}</textarea>
                         </div> --}}
 
                         <div class="form-group text-center">

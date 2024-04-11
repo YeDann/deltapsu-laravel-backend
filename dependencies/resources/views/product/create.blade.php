@@ -85,6 +85,22 @@
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
     }
+
+    #item-wrap {
+        margin: 8px 8px 8px 8px;
+        background: #eee;
+        padding: 5px 10px 30px 5px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        position: relative;
+    }
+
+    .text-count {
+        right: 7px;
+        bottom: 4px;
+        position: absolute;
+        font-size: 14px;
+    }
 </style>
 @endsection
 @section('content')
@@ -264,6 +280,19 @@
                                 <div class="form-group">
                                     <label for="">Content</label>
                                     <textarea name="content" class="jsnotenew"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Meta - Description</label>
+                                    <span>Recommended 70-155 Character</span>
+                                    <div id="item-wrap">
+                                        <textarea rows="4" id="input-metaDescription-en"
+                                            onkeyup="countCharacter('metaDescription-en')" name="metaDescription"
+                                            class="form-control"></textarea>
+                                        <div class="text-count">Count Character :
+                                            <span id="count-metaDescription-en">
+                                                0</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="d-block">show/hide language</label>
@@ -628,6 +657,9 @@
         });
 
     }
-
+    function countCharacter(id){
+           var str = $('#input-'+id).val();
+          $('#count-'+id).text(str.length);
+      }
 </script>
 @endsection

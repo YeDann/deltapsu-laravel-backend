@@ -277,8 +277,8 @@
 </style>
 @endsection
 @section('meta')
-<title>{{isset($metatag[0]->meta_title)? $metatag[0]->meta_title :''}}</title>
-<meta name="description" content="{{isset($metatag[0]->meta_description)? $metatag[0]->meta_description :''}}">
+<title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
+<meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 <?php 
   $lang_seo = App::getLocale();
   if($lang_seo == 'cn'){

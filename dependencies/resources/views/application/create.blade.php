@@ -1,6 +1,22 @@
 @extends('layouts.admin')
 @section('style')
+<style>
+    #item-wrap {
+        margin: 8px 8px 8px 8px;
+        background: #eee;
+        padding: 5px 10px 30px 5px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        position: relative;
+    }
 
+    .text-count {
+        right: 7px;
+        bottom: 4px;
+        position: absolute;
+        font-size: 14px;
+    }
+</style>
 @endsection
 @section('content')
 <!-- Nav -->
@@ -56,6 +72,31 @@
                             <div class="form-group">
                                 <label for="">Typical Application</label>
                                 <textarea name="overview" rows="4" class=" form-control"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="">H1</label>
+                                <span>Recommended 20-70 characters</span>
+                                <div id="item-wrap">
+                                    <input id="input-h1-en" onkeyup="countCharacter('h1-en')" type="text"
+                                        class="form-control" name="h1_title" maxlength="70" value="">
+                                    <div class="text-count">Count Character :
+                                        <span id="count-h1-en">
+                                            0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Meta - Description</label>
+                                <span>Recommended 70-155 Character</span>
+                                <div id="item-wrap">
+                                    <textarea rows="4" id="input-metaDescription-en"
+                                        onkeyup="countCharacter('metaDescription-en')" maxlength="155"
+                                        name="metaDescription" class="form-control"></textarea>
+                                    <div class="text-count">Count Character :
+                                        <span id="count-metaDescription-en">
+                                            0</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -300,7 +341,10 @@
         }
 
         });
-
+        function countCharacter(id){
+           var str = $('#input-'+id).val();
+          $('#count-'+id).text(str.length);
+      }
     
 </script>
 @endsection

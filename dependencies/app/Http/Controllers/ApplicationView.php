@@ -115,6 +115,8 @@ class ApplicationView extends Controller
         $fileimage = $request->fileimage;
         $arrfilename = $request->filename;
         $lang_loop = $request->lang_loop;
+        $meta_description  =$request->metaDescription;
+        $h1_title = $request->h1_title;
         $validate = Validator::make($request->all(), [
             'name' => 'required',
         ]);
@@ -148,6 +150,8 @@ class ApplicationView extends Controller
                     "overview" => $overview,
                     "content" => $content,
                     "content_2" => $content_2,
+                    "h1" => $h1_title,
+                    'meta_description' => $meta_description,
                     "overview_text" => $overview_text,
                     "local" => $lang
                 ]
@@ -221,7 +225,8 @@ class ApplicationView extends Controller
         $arrfilename = $request->filename;
         $oldfile  =$request->oldfile;
         $arrayfilesave = self::updateoldImage($fileimage ,$oldfile ,$arrfilename);
-
+        $meta_description  =$request->metaDescription;
+        $h1_title = $request->h1_title;
         // return dd($arrayfilesave);
         $lang_loop = $request->lang_loop;
         
@@ -259,6 +264,8 @@ class ApplicationView extends Controller
                     "name" => $name[$lang],
                     "overview" => $overview[$lang],
                     "content" => $content[$lang],
+                    'meta_description' => $meta_description[$lang],
+                    'h1' => $h1_title[$lang],
                     "content_2"=> isset($content_2[$lang])? $content_2[$lang] :$content_2['en'],
                     "overview_text" => $overview_text[$lang],
                     
@@ -271,6 +278,8 @@ class ApplicationView extends Controller
                         "name" => $name[$lang],
                         "overview" => $overview[$lang],
                         "content" => $content[$lang],
+                        'meta_description' => $meta_description[$lang],
+                        'h1' => $h1_title[$lang],
                         "content_2"=> isset($content_2[$lang])? $content_2[$lang] :$content_2['en'],
                         "overview_text" => $overview_text[$lang],
                         "lang"=>$lang
