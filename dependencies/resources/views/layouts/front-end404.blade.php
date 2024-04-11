@@ -274,7 +274,7 @@ $langch = str_replace('_', '-', app()->getLocale());
 <body>
   @include('layouts.header-front')
   @yield('container')
-  @include('layouts.footer')
+  {{-- @include('layouts.footer') --}}
 
   <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
