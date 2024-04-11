@@ -643,7 +643,7 @@ class ProductCategoriesController extends Controller
         ->with('mainCategories', $mainCategories)
         ->with('applications', $applications)
         ->with('subCategories', $subCategories)
-        ->with('menu', 'subCategories')
+        ->with('menu', 'series')
         ->with('name', 'product');
      }
     //  private function saveOneImage($file){
@@ -874,7 +874,7 @@ class ProductCategoriesController extends Controller
         ->with('applications', $applications)
         ->with('subCategories', $subCategories)
         ->with('mainCategories', $mainCategories)
-        ->with('menu', 'subCategories')
+        ->with('menu', 'series')
         ->with('name', 'product');
      }
 
