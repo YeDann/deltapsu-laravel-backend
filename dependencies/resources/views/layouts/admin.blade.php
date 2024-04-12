@@ -1,4 +1,5 @@
-{{-- <!DOCTYPE html>
+{{--
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
@@ -16,7 +17,6 @@
         .btn-hero-success {
             background-color: #00a680 !important;
         }
-
     </style>
 
     @yield('css')
@@ -61,7 +61,7 @@
     <link rel="shortcut icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
     <link rel="icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
     <title>DeltaPSU | Backend</title>
-  
+
 
     <link rel="stylesheet" href="{{asset('backend-asset/js/plugins/datatables/dataTables.bootstrap4.css')}}">
     <link rel="stylesheet"
@@ -75,7 +75,8 @@
     <link rel="stylesheet" id="css-main" href="{{asset('backend-asset/css/dashmix.min.css')}}">
     <link rel="stylesheet" href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}">
     <link rel="stylesheet" href="{{asset('/frontend-asset/css/font.css')}}" media="screen" />
-    {{-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> --}}
+    {{--
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> --}}
     <link rel="stylesheet" href="{{asset('/backend-asset/addons/css/datatables.min.css')}}">
     <link rel="stylesheet" href="{{asset('/backend-asset/addons/css/datatables-select.min.css')}}">
     @yield('style')
@@ -140,7 +141,6 @@
             visibility: hidden;
             display: block;
         }
-
     </style>
 </head>
 
@@ -162,22 +162,24 @@
             @yield('content')
             <!-- END Page Content -->
             {{-- <div class="loader">
-                        <img src="{{asset('backend-asset/image/4V0b.gif')}}" alt="Loading..." />
-    </div> --}}
-    </main>
-    {{-- <footer id="page-footer" class="bg-body-light">
-                        <div class="content py-0">
-                            <div class="row font-size-sm">
-                                <div class="col-sm-6 order-sm-2 mb-1 mb-sm-0 text-center text-sm-right">
-                                    Crafted with <i class="fa fa-heart text-danger"></i> by <a class="font-w600" href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
-                                </div>
-                                <div class="col-sm-6 order-sm-1 text-center text-sm-left">
-                                    <a class="font-w600" href="https://1.envato.market/r6y" target="_blank">Dashmix 1.5</a> &copy; <span data-toggle="year-copy">2018</span>
-                                </div>
-                            </div>
-                        </div>
-                    </footer> --}}
-    <!-- END Main Container -->
+                <img src="{{asset('backend-asset/image/4V0b.gif')}}" alt="Loading..." />
+            </div> --}}
+        </main>
+        {{-- <footer id="page-footer" class="bg-body-light">
+            <div class="content py-0">
+                <div class="row font-size-sm">
+                    <div class="col-sm-6 order-sm-2 mb-1 mb-sm-0 text-center text-sm-right">
+                        Crafted with <i class="fa fa-heart text-danger"></i> by <a class="font-w600"
+                            href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
+                    </div>
+                    <div class="col-sm-6 order-sm-1 text-center text-sm-left">
+                        <a class="font-w600" href="https://1.envato.market/r6y" target="_blank">Dashmix 1.5</a> &copy;
+                        <span data-toggle="year-copy">2018</span>
+                    </div>
+                </div>
+            </div>
+        </footer> --}}
+        <!-- END Main Container -->
 
     </div>
     <script src="{{asset('backend-asset/js/sweetalert.min.js')}}"></script>
@@ -196,14 +198,17 @@
     <script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
     <script src="{{asset('backend-asset/js/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
     <script src="{{asset('backend-asset/js/plugins/dropzone/dropzone.min.js')}}"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/@dsvllc/summernote-image-attributes@1.0.0/summernote-image-attributes.min.js">
+    </script>
     <script>
         jQuery(function () {
             Dashmix.helpers(['datepicker', 'colorpicker', 'select2', 'summernote']);
         });
 
     </script>
-        <script src="{{asset('/admin-assets/addons/js/datatables.min.js')}}"></script>
-        <script src="{{asset('/admin-assets/addons/js/datatables-select.min.js')}}"></script>
+    <script src="{{asset('/admin-assets/addons/js/datatables.min.js')}}"></script>
+    <script src="{{asset('/admin-assets/addons/js/datatables-select.min.js')}}"></script>
 
 
     @yield('js')
@@ -220,12 +225,12 @@
 
     </script>
     {{-- <script>
-             window.addEventListener("load", function () {
+        window.addEventListener("load", function () {
     const loader = document.querySelector(".loader");
     loader.className += " hidden"; // class "loader hidden"
 });
-            </script>
-           --}}
+    </script>
+    --}}
     <script>
         $(document).ready(function () {
             $('.jsnotenew').summernote({
@@ -235,7 +240,37 @@
                         that = $(this);
                         sendFile(files[0], that);
                     }
-                }
+                },
+                popover: {
+                    image: [
+                        ['custom', ['imageAttributes']],
+                        ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                        ['remove', ['removeMedia']]
+                    ],
+                    },
+                    lang: 'en-US', // Change to your chosen language
+                    // imageAttribute configurations to enable/disable image popover tabs/fields
+                imageAttributesIcon: '<i class="note-icon-pencil"/>',
+                imageAttributesRemoveEmpty: true,
+                imageAttributesDisableImage: false,
+                imageAttributesDisableImageSource: true,
+                imageAttributesDisableImageTitle: true,
+                imageAttributesDisableImageAltText: false,
+                imageAttributesDisableImageDimensions: true,
+                imageAttributesDisableAttributes: true,
+                imageAttributesDisableAttributesClass: false,
+                imageAttributesDisableAttributesStyle: false,
+                imageAttributesDisableAttributesRole: false,
+                imageAttributesDisableLink: true,
+                imageAttributesDisableLinkUrl: true,
+                imageAttributesDisableLinkTarget: false,
+                imageAttributesDisableLinkClass: true,
+                imageAttributesDisableLinkStyle: true,
+                imageAttributesDisableLinkRel: true,
+                imageAttributesDisableLinkRole: true,
+                imageAttributesDisableUpload: true,
+                imageAttributesImageFolder: ''
             });
 
             function sendFile(file, that) {
