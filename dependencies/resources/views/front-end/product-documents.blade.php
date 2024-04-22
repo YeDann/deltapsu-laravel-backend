@@ -329,8 +329,6 @@
 <script>
     var series =  <?= json_encode($series);?>;
         var products =  <?= json_encode($products);?>;
-        var documents_cate =  <?= json_encode($documents_cate);?>;
-        var documents =  <?= json_encode($documents);?>;
         var tags_data =  <?= json_encode($Protags);?>;
         var proImage = '' ;
         var create_pro = '00/00/0000';
@@ -541,9 +539,25 @@
                    create_pro = data['created_at'];
                 }
             });
+
+            $.ajax({
+            url: "{{(route('searchDocByModelId'))}}",
+            data: {
+            'model_id': model_id,
+           },
+           type: 'post',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                loadDocument(data.doc,data.cate_doc ,model_id);
+            }
+        });
         
+        }
+        function loadDocument(_documents ,_documents_cate ,model_id){
             var html2 = "";
-            $.each(documents_cate, function(index,cate_doc){
+            $.each(_documents_cate, function(index,cate_doc){
              if( cate_doc['id'] == 2){
                 html2 += ' <div class="box-for-collap">'
                 html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
@@ -554,7 +568,7 @@
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image'+cate_doc['id']+'" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-            $.each(documents, function(index,doc){  
+            $.each(_documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                 if(doc['cate_id'] == cate_doc['id']){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
@@ -585,12 +599,12 @@
                 html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image1">';
-                html2 += '<h5 class="invisible-up-922">'+searchName(1,documents_cate) +'</h5>';
-                html2 += '<h4 class="visible-up-922">'+searchName(1,documents_cate) +'</h4>';    
+                html2 += '<h5 class="invisible-up-922">'+searchName(1,_documents_cate) +'</h5>';
+                html2 += '<h4 class="visible-up-922">'+searchName(1,_documents_cate) +'</h4>';    
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image1" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-               $.each(documents, function(index,doc){  
+               $.each(_documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                 if(doc['cate_id'] == 1 || doc['cate_id'] == 46 || doc['cate_id'] == 38){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
@@ -611,7 +625,7 @@
                 }
                 });  
 
-                $.each(documents, function(index,doc){  
+                $.each(_documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                 if(doc['cate_id'] == 3 ){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
@@ -645,7 +659,7 @@
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image_other" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-             $.each(documents, function(index,doc){  
+             $.each(_documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                  if(doc['main_cate_id'] != 2 && doc['main_cate_id'] != 3 ){
                     if(doc['cate_id'] == 5 ){
@@ -663,7 +677,7 @@
                 }
                 });  
 
-                $.each(documents, function(index,doc){  
+                $.each(_documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                  if(doc['main_cate_id'] != 2 && doc['main_cate_id'] != 3 ){
                     if(doc['cate_id'] != 1 && doc['cate_id'] != 2 && doc['cate_id'] != 3 && doc['cate_id'] != 5 && doc['cate_id'] != 46 && doc['cate_id'] != 38 ){
@@ -693,7 +707,7 @@
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image_cer" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-            $.each(documents, function(index,doc){  
+            $.each(_documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                  if(doc['main_cate_id'] == 2 ){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
@@ -721,7 +735,7 @@
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image_gui" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-            $.each(documents, function(index,doc){  
+            $.each(_documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                  if(doc['main_cate_id'] == 3 ){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between">';
@@ -760,8 +774,8 @@
                 html2 += '</div>';
                 html2 += ' </div>';
                 html2 += ' </div>';
-           
-            $('#pro_docType').html(html2);
+        
+                $('#pro_docType').html(html2);
         }
 
         function productKey(key){

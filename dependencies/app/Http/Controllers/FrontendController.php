@@ -514,6 +514,10 @@ class FrontendController extends Controller
             ->where('sct.local',  $lang)
             ->orderBy('sct.name', 'asc')
             ->get();
+            $getLastPro = DB::table('products as p')
+            ->orderBy('p.pro_code', 'asc')
+            ->select('p.*')
+            ->first();
             
             $products = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -538,6 +542,7 @@ class FrontendController extends Controller
            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
            ->where('spt.local' ,$lang)
            ->where('st.local' ,$lang)
+           ->where('p.pro_id' ,$getLastPro->pro_id)
            ->where('p.enable_pro' ,1)
            ->select('p.*','spt.name as catename','phc.categories_id','sp.url_item' ,'st.title as seName','ptag.*')
            ->get();
@@ -552,35 +557,13 @@ class FrontendController extends Controller
                 ->orderBy('st.title', 'asc')
                 ->get();
               
-                $documents = DB::table('product_has_documents as phd')
-                ->join('products as p','p.pro_id','=','phd.product_id')
-                ->join('product_ducuments as pd','phd.document_id','=','pd.doc_id')
-                ->join('product_ducument_translations as pdt','pdt.doc_fk_id','=','pd.doc_id')
-                ->join('products_documents_categories as pdc','pdc.id','=','pd.cate_id')
-                ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
-                ->where('pdt.local',$lang)
-                ->where('pdct.local',$lang)
-                ->where('pdt.file','!=','')
-                ->where('pdt.file','!=',null)
-                ->whereNotIn('pdc.id', [4])
-                ->select('p.pro_code','pd.doc_id','phd.product_id','pdct.lable' ,'pdc.slug' ,'pdt.name','pdc.title as catename','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id')
-                ->orderBy('pdc.title','asc')
-                ->get();
-                $documents_cate = DB::table('products_documents_categories as pdc')
-                ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
-                ->where('pdct.local','=', $lang)
-                ->whereNotIn('pdc.id', [4])
-                ->select('pdc.*','pdct.lable')
-                ->orderBy('pdc.title','asc')
-                ->get();
-                $metatag = DB::table('meta_tag_page as mtp')->where('id',9)->get();
+            $metatag = DB::table('meta_tag_page as mtp')->where('id',9)->get();
+
             return  view('front-end.product-documents')
             ->with('Protags' ,$Protags)
             ->with('metatag' ,$metatag)
             ->with('subCategories' ,$subCategories)
             ->with('series' ,$series)
-            ->with('documents' ,$documents)
-            ->with('documents_cate' ,$documents_cate)
             ->with('products' ,$products);
         }
         if($page =='catalogs'){
@@ -644,6 +627,11 @@ class FrontendController extends Controller
             ->where('sc.status',1)
             ->orderBy('sct.name', 'asc')
             ->get();
+
+            $getLastPro = DB::table('products as p')
+            ->orderBy('p.pro_code', 'asc')
+            ->select('p.*')
+            ->first();
             
             $products = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -670,8 +658,6 @@ class FrontendController extends Controller
                 ->get();
 
                 $language = DB::table('language as lang')->whereIn('lang.name',['en','cn','jp'])->get();
-              
-                //$othersL = DB::table('other_lang_document')->get();
                 $showlang = [];
                 $showlangOb = [];
                 foreach($language as $langal){
@@ -682,46 +668,13 @@ class FrontendController extends Controller
                     array_push($showlang , $langal->name);
                     array_push($showlangOb ,$data);
                 }
-                // foreach($othersL as $lan){
-                //     $data2 = [
-                //         "langName"=>$lan->name,
-                //         "langFull"=>$lan->full_name
-                //     ];
-                //     array_push($showlang , $lan->name);
-                //     array_push($showlangOb ,$data2);
-                // }
-                // return dd($showlangOb);
-              
-                $documents = DB::table('product_has_documents as phd')
-                ->join('products as p','p.pro_id','=','phd.product_id')
-                ->join('product_ducuments as pd','phd.document_id','=','pd.doc_id')
-                ->join('product_ducument_translations as pdt','pdt.doc_fk_id','=','pd.doc_id')
-                ->join('products_documents_categories as pdc','pdc.id','=','pd.cate_id')
-                ->whereNotIn('pdc.id', [6 ,7,4])
-                ->where('pdt.file','!=','')
-                ->where('pdt.file','!=',null)
-                ->whereIn('pdt.local', $showlang)
-                ->select('p.pro_code','pd.doc_id','pdc.slug' ,'phd.product_id','pdt.name','pdc.title as catename','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id','pdt.local')
-                ->get();
-             
-                // return dd($documents);
                 
-                $documents_cate = DB::table('products_documents_categories as pdc')
-                ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
-                ->where('pdct.local','=', $lang)
-                ->whereNotIn('pdc.id', [6 ,7,4])
-                ->select('pdc.*','pdct.lable')
-                ->orderBy('pdc.title','asc')
-                ->get();
-                // return dd( $documents_cate);
                 $metatag = DB::table('meta_tag_page as mtp')->where('id',22)->get();
             return view('front-end.manuals')
             ->with('showlangOb' ,$showlangOb)
             ->with('metatag' ,$metatag)
             ->with('subCategories' ,$subCategories)
             ->with('series' ,$series)
-            ->with('documents' ,$documents)
-            ->with('documents_cate' ,$documents_cate)
             ->with('products' ,$products);
         }
         if($page == 'subscribes'){
@@ -2525,33 +2478,17 @@ class FrontendController extends Controller
             ->distinct()
             ->orderBy('st.title', 'asc')
             ->get();
-          
-            $documents = DB::table('product_has_documents as phd')
-            ->join('products as p','p.pro_id','=','phd.product_id')
-            ->join('product_ducuments as pd','phd.document_id','=','pd.doc_id')
-            ->join('product_ducument_translations as pdt','pdt.doc_fk_id','=','pd.doc_id')
-            ->join('products_documents_categories as pdc','pdc.id','=','pd.cate_id')
-            ->where('pdt.local',$lang)
-            ->where('pdt.file','!=' ,'')
-            ->where('pdt.file','!=' ,null)
-            ->select('p.pro_code','pd.doc_id','phd.product_id','pdt.name','pdc.title as catename','pdc.slug','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id')
-            ->orderBy('pdc.title','asc')
-            ->get();
-            
-            $documents_cate = DB::table('products_documents_categories as pdc')
-            ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
-            ->where('pdct.local','=', $lang)
-            ->select('pdc.*','pdct.lable')
-            ->orderBy('pdc.title','asc')
-            ->get();
 
+            $getLastPro = DB::table('products as p')
+            ->orderBy('p.pro_code', 'asc')
+            ->select('p.*')
+            ->first();
+        
             $metatag = DB::table('meta_tag_page as mtp')->where('id',9)->get();
         return  view('front-end.login-pro-document')
         ->with('metatag' ,$metatag)
         ->with('subCategories' ,$subCategories)
         ->with('series' ,$series)
-        ->with('documents' ,$documents)
-        ->with('documents_cate' ,$documents_cate)
         ->with('products' ,$products);
     }
     
@@ -5161,6 +5098,115 @@ class FrontendController extends Controller
             return redirect()->route('productFinder' );
         }
 
+        
+
      
-    
+        public function searchDocByModelId(Request $request){
+        $model_id = $request->model_id;
+        $lang = App::getLocale();
+        $documents = DB::table('product_has_documents as phd')
+                ->join('products as p','p.pro_id','=','phd.product_id')
+                ->join('product_ducuments as pd','phd.document_id','=','pd.doc_id')
+                ->join('product_ducument_translations as pdt','pdt.doc_fk_id','=','pd.doc_id')
+                ->join('products_documents_categories as pdc','pdc.id','=','pd.cate_id')
+                ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
+                ->where('pdt.local',$lang)
+                ->where('pdct.local',$lang)
+                ->where('pdt.file','!=','')
+                ->where('pdt.file','!=',null)
+                ->whereNotIn('pdc.id', [4])
+                ->where('p.pro_id' ,$model_id)
+                ->select('p.pro_code','pd.doc_id','phd.product_id','pdct.lable' ,'pdc.slug' ,'pdt.name','pdc.title as catename','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id')
+                ->orderBy('pdc.title','asc')
+                ->get();
+
+                $documents_cate = DB::table('products_documents_categories as pdc')
+                ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
+                ->where('pdct.local','=', $lang)
+                ->whereNotIn('pdc.id', [4])
+                ->select('pdc.*','pdct.lable')
+                ->orderBy('pdc.title','asc')
+                ->get();
+
+                return response()->json([
+                    'doc' =>$documents,
+                    'cate_doc' =>$documents_cate
+                ], 200);
+
+       }
+
+       public function searchDocManualByModelId(Request $request){
+ 
+        $model_id = $request->model_id;
+        $lang = App::getLocale();
+        $language = DB::table('language as lang')->whereIn('lang.name',['en','cn','jp'])->get();
+                $showlang = [];
+                $showlangOb = [];
+                foreach($language as $langal){
+                    $data = [
+                        "langName"=>$langal->name,
+                        "langFull"=>$langal->abbreviation
+                    ];
+                    array_push($showlang , $langal->name);
+                    array_push($showlangOb ,$data);
+                }
+      
+
+                $documents = DB::table('product_has_documents as phd')
+                ->join('products as p','p.pro_id','=','phd.product_id')
+                ->join('product_ducuments as pd','phd.document_id','=','pd.doc_id')
+                ->join('product_ducument_translations as pdt','pdt.doc_fk_id','=','pd.doc_id')
+                ->join('products_documents_categories as pdc','pdc.id','=','pd.cate_id')
+                ->whereNotIn('pdc.id', [6 ,7,4])
+                ->where('pdt.file','!=','')
+                ->where('pdt.file','!=',null)
+                ->whereIn('pdt.local', $showlang)
+                ->where('p.pro_id' ,$model_id)
+                ->select('p.pro_code','pd.doc_id','pdc.slug' ,'phd.product_id','pdt.name','pdc.title as catename','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id','pdt.local')
+                ->get();
+
+                $documents_cate = DB::table('products_documents_categories as pdc')
+                ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
+                ->where('pdct.local','=', $lang)
+                ->whereNotIn('pdc.id', [6 ,7,4])
+                ->select('pdc.*','pdct.lable')
+                ->orderBy('pdc.title','asc')
+                ->get();
+
+                return response()->json([
+                    'doc' =>$documents,
+                    'cate_doc' =>$documents_cate
+                ], 200);
+
+       }
+
+       public function searchLoginDocByModelId(Request $request){
+        $model_id = $request->model_id;
+        $lang = App::getLocale();
+        $documents = DB::table('product_has_documents as phd')
+            ->join('products as p','p.pro_id','=','phd.product_id')
+            ->join('product_ducuments as pd','phd.document_id','=','pd.doc_id')
+            ->join('product_ducument_translations as pdt','pdt.doc_fk_id','=','pd.doc_id')
+            ->join('products_documents_categories as pdc','pdc.id','=','pd.cate_id')
+            ->where('pdt.local',$lang)
+            ->where('pdt.file','!=' ,'')
+            ->where('pdt.file','!=' ,null)
+            ->where('p.pro_id',$model_id)
+            ->select('p.pro_code','pd.doc_id','phd.product_id','pdt.name','pdc.title as catename','pdc.slug','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id')
+            ->orderBy('pdc.title','asc')
+            ->get();
+            
+            $documents_cate = DB::table('products_documents_categories as pdc')
+            ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
+            ->where('pdct.local','=', $lang)
+            ->select('pdc.*','pdct.lable')
+            ->orderBy('pdc.title','asc')
+            ->get();
+
+                return response()->json([
+                    'doc' =>$documents,
+                    'cate_doc' =>$documents_cate
+                ], 200);
+
+       }
 }

@@ -252,9 +252,6 @@
 <script>
     var series =  <?= json_encode($series);?>;
         var products =  <?= json_encode($products);?>;
-        var documents_cate =  <?= json_encode($documents_cate);?>;
-        var documents =  <?= json_encode($documents);?>;
-        
         var domainUrl = '{{config('app.url')}}';
         $(document).ready(function () {
             selectType();
@@ -355,8 +352,24 @@
                  create_pro = data['created_at'];
                 }
             });
+            $.ajax({
+            url: "{{(route('searchLoginDocByModelId'))}}",
+            data: {
+            'model_id': model_id,
+           },
+           type: 'post',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                loadDocument(data.doc,data.cate_doc ,model_id);
+            }
+        });
+
+        }
+        function  loadDocument(_documents ,_documents_cate,model_id){
             var html2 = "";
-            $.each(documents_cate, function(index,cate_doc){
+            $.each(_documents_cate, function(index,cate_doc){
 
               if( cate_doc['id'] == 2 || cate_doc['id'] == 4){
                 html2 += ' <div class="box-for-collap">'
@@ -368,7 +381,7 @@
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image'+cate_doc['id']+'" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-              $.each(documents, function(index,doc){  
+              $.each(_documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                 if(doc['cate_id'] == cate_doc['id']){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
@@ -406,7 +419,7 @@
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image1" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-               $.each(documents, function(index,doc){  
+               $.each(_documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                 if(doc['cate_id'] == 1 || doc['cate_id'] == 46 || doc['cate_id'] == 38){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
@@ -439,7 +452,7 @@
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image_other" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-                    $.each(documents, function(index,doc){  
+                    $.each(_documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                  if(doc['main_cate_id'] != 2 && doc['main_cate_id'] != 3){
                     if(doc['cate_id'] == 5 ){
@@ -456,7 +469,7 @@
                  }
                 }
                 }); 
-            $.each(documents, function(index,doc){  
+            $.each(_documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                  if(doc['main_cate_id'] != 2 && doc['main_cate_id'] != 3){
                     if(doc['cate_id'] != 1 && doc['cate_id'] != 2 && doc['cate_id'] != 4 && doc['cate_id'] != 5 && doc['cate_id'] != 46 && doc['cate_id'] != 38 ){
@@ -490,7 +503,7 @@
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image_cer" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-            $.each(documents, function(index,doc){  
+            $.each(_documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                  if(doc['main_cate_id'] == 2 ){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
@@ -518,7 +531,7 @@
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image_gui" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-            $.each(documents, function(index,doc){  
+            $.each(_documents, function(index,doc){  
                 if(doc['product_id'] == model_id){ 
                  if(doc['main_cate_id'] == 3 ){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between">';
@@ -536,6 +549,7 @@
                 html2 += ' </div>';
                 html2 += ' </div>';
             $('#pro_docType').html(html2);
+
         }
 
         function productKey(key){
