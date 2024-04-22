@@ -425,6 +425,7 @@
                                         <th style="width: 300px;">Old Image</th>
                                         <th style="width: 300px;">Preview</th>
                                         <th>Upload File</th>
+                                        <th>Alt</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -448,6 +449,12 @@
                                                     value="no image" accept="image/*">
                                                 <label id="label2" class="custom-file-label" for="thumbnail">Choose
                                                     file</label>
+                                            </div>
+                                        </td>
+                                        <td class="">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="alt_img"
+                                                    placeholder="Enter ..." value="{{$products[0]->alt_img}}">
                                             </div>
                                         </td>
                                     </tr>

@@ -190,10 +190,11 @@
                             <label for="example-select">Image <span class="req-fed">*</span></label>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" data-toggle="custom-file-input"
-                                    id="thumbnail" name="thumbnail" value="no image" accept="image/*">
+                                    id="thumbnail" name="thumbnail" accept="image/*">
                                 <label id="label2" class="custom-file-label" for="thumbnail">Choose
                                     file</label>
                             </div>
+
                             <input type="hidden" name="oldImage" id="oldImage">
                             <input type="hidden" name="pro_image_id" id="image_id">
                             <input type="hidden" name="type" value="1">
@@ -204,6 +205,11 @@
                             <div id="old_img">
                             </div>
 
+                        </div>
+                        <div class="form-group">
+                            <label for="example-select">Alt Text <span class="req-fed">*</span></label>
+                            <input type="text" id="alt_img" class="form-control" name="alt_img" placeholder="Enter ..."
+                                value="" required>
                         </div>
                     </div>
                     <div class="block-content block-content-full text-right bg-light">
@@ -254,7 +260,9 @@
             $('#image_id').val(res.data['id']);
             $('#oldImage').val(res.data['content']);
             $('#old_img').html( '<div>Old Image</div><br>'+'<img class="w-50" src="{{config('app.url')}}/uploads_delta/'+res.data['content']+'" >');
-            }else{
+            $('#alt_img').val(res.data['alt_img']);
+   
+           }else{
             $('#modal-block-create_video').modal('show');
             $('#video_id').val(res.data['id']);
         

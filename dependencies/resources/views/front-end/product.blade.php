@@ -681,7 +681,7 @@
         filtercontentMobile();
         filtercontent();
         loadPopUpfilter();
-        console.log(catename ,'catedata');
+        console.log(products ,'products');
         console.log(cateid ,'cateid');
 
         var size  = $(window).width();
@@ -858,6 +858,7 @@
           productObj['dimensionL'] = value['dimensionL'];
           productObj['dimensionW'] = value['dimensionW'];
           productObj['dimensionD'] = value['dimensionD'];
+          productObj['alt_img'] = value['alt_img'];
           productObj['content'] = [];
           productObj['contentFilter'] = [];
             $.each(product_has_property, function(index2,value2){
@@ -884,6 +885,7 @@
           productObj['dimensionL'] = value['dimensionL'];
           productObj['dimensionW'] = value['dimensionW'];
           productObj['dimensionD'] = value['dimensionD'];
+          productObj['alt_img'] = value['alt_img'];
           productObj['content'] = [];
           productObj['contentFilter'] = [];
             $.each(product_has_property, function(index2,value2){
@@ -1319,7 +1321,7 @@
         }
         html += '<div class="card-body ft-products-item hover01"><figure><img src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'" class="product-cat mb-2" style="width:70%;"></figure>';
         html += '<div class="">';
-        html += '<h4 class="text-title-ft">'+pro['pro_code']+'</h4>';
+        html += '<h4 class="text-title-ft">'+checkNull(pro['pro_code'])+'</h4>';
         html += '</a>';
         html += '<div class="d-flex flex-wrap" >';
         html += '<div class="mr-3">';
@@ -1565,7 +1567,7 @@
         html1 += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="text-over-cardlist"> '+ statuspro(pro['status_product'])+'';
         html1 += '</div>';
             }
-        html1 += '<figure><img class="img-card-list" src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'"></figure>';
+        html1 += '<figure><img class="img-card-list" alt="'+checkNullImg(pro['alt_img']) +'" src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'"></figure>';
         html1 += '</div>';
         html1 += '<div class="cardlist-text">';
         html1 += '<h5 class="text-title-ft-listv">'+pro['pro_code']+'</h5>';
@@ -1777,7 +1779,13 @@
          }
          return color;
     }
-
+    function checkNullImg(data){
+        if(data){
+          return data;
+        }else{
+          return '';
+        }
+    }
     function onlycontent(arr){
         var arrcontent = [];
         var arr_id = [4,3,8,31];
@@ -2151,7 +2159,7 @@
             onclickshow(2);
         }
     }
-   
+
 
     function containsObject(obj, list) {
      var  index = list.findIndex(
@@ -2211,6 +2219,7 @@
             productObj['dimensionL'] = value['dimensionL'];
             productObj['dimensionW'] = value['dimensionW'];
             productObj['dimensionD'] = value['dimensionD'];
+            productObj['alt_img'] = value['alt_img'];
             productObj['content'] = [];
             productObj['contentFilter'] = [];
             $.each(product_has_property, function(index2,value2){
@@ -3183,6 +3192,7 @@
           productObj['dimensionL'] = value['dimensionL'];
           productObj['dimensionW'] = value['dimensionW'];
           productObj['dimensionD'] = value['dimensionD'];
+          productObj['alt_img'] = value['alt_img'];
           productObj['content'] = [];
           productObj['contentFilter'] = [];
             $.each(product_has_property, function(index2,value2){
@@ -3237,6 +3247,7 @@
           productObj['dimensionL'] = value['dimensionL'];
           productObj['dimensionW'] = value['dimensionW'];
           productObj['dimensionD'] = value['dimensionD'];
+          productObj['alt_img'] = value['alt_img'];
           productObj['content'] = [];
           productObj['contentFilter'] = [];
             $.each(product_has_property, function(index2,value2){

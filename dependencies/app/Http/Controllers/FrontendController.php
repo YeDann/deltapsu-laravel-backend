@@ -1016,13 +1016,13 @@ class FrontendController extends Controller
         ->first();
 
        if(isset($series)){
-        return  redirect()->route('producsList',[$series->catename,$series->cateid,$series->se_name,$series->se_id]);
+        return  redirect()->route('productList',[$series->catename,$series->cateid,$series->se_name,$series->se_id]);
        }else{
         return redirect()->route('index','home');
        }
        
     }
-    public function producsList($cate_parname,$cate_par_id,$se_par_name = null,$se_par_id = null){
+    public function productList($cate_parname,$cate_par_id,$se_par_name = null,$se_par_id = null){
     $lang = App::getLocale();
 
     $catename = $this->validateInput($cate_parname ,'text',true);
@@ -1301,12 +1301,12 @@ class FrontendController extends Controller
             ->where('s.slug',$slgSeries)
             ->first();
             if($findoldSeries){
-                return  redirect()->route('producsList',[$name,$findoldCate->sub_pro_id,$findoldSeries->slug,$findoldSeries->se_id]);
+                return  redirect()->route('productList',[$name,$findoldCate->sub_pro_id,$findoldSeries->slug,$findoldSeries->se_id]);
             }else{
                 return redirect()->route('productFinder');
             }
         }else if(isset($findoldCate) && !isset($procode)){
-            return  redirect()->route('producsList',[$name,$findoldCate->sub_pro_id]);
+            return  redirect()->route('productList',[$name,$findoldCate->sub_pro_id]);
         }
 
         if($name == 'configurable-product-selection'){
@@ -1437,6 +1437,7 @@ class FrontendController extends Controller
                     "serie_name"=>$pro->serieName,
                     "cate_name"=>$pro->catename,
                     "cate_id"=>$pro->pro_categories_id,
+                    "alt_img" =>$pro->alt_img,
                     "content" =>$arraysub,
                     "dimensionL"=>$pro->dimensionL,
                     "dimensionW"=>$pro->dimensionW,
@@ -1505,6 +1506,7 @@ class FrontendController extends Controller
                         "unit_dimension"=>$pro->unit_dimension,
                         "status_product"=>$pro->status_product,
                         "content" =>$arraysub,
+                        "alt_img" =>$pro->alt_img,
                         "dimensionL"=>$pro->dimensionL,
                         "dimensionW"=>$pro->dimensionW,
                         "dimensionD"=>$pro->dimensionD,
