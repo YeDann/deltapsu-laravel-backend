@@ -25,7 +25,7 @@ class SubscribeController extends Controller
         ->select('s.*')
         ->orderBy('s.created_at','desc')
         ->get();
-        self::cleanData();
+        // self::cleanData();
         return view('subscribes.index')
         ->with('name','subscribe')
         ->with('menu','')
