@@ -344,16 +344,31 @@ $langch = str_replace('_', '-', app()->getLocale());
     document.body.appendChild(script);
   }
   </script>
+
   <script type="text/javascript">
     var verifyCallbackData = function(response) {
-    $('#keyrecapgui').val(response);
-  };
+      $('#keyrecapgui').val(response);
+    };
+    var verifyCallbackDataSub = function(response) {
+      $('#key_input_subscribe').val(response);
+    };
+    var verifyCallback = function(response) {
+        $('#keyrecap').val(response);
+     };
   var onloadCallback = function() {
     grecaptcha.render('recap_vertifygetGui', {
-    //  'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-       'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
-     //'sitekey' : '6LfGGV0pAAAAAKeEC0S7wzsPbAM1fvB3Tp2wtSYJ',
+      'sitekey' : '{{config('app.recapcha_site_key')}}',
       'callback' : verifyCallbackData,
+      'theme' : 'light'
+    });
+    grecaptcha.render('recap_vertify_subscribe', {
+      'sitekey' : '{{config('app.recapcha_site_key')}}',
+      'callback' : verifyCallbackDataSub,
+      'theme' : 'light'
+    });
+    grecaptcha.render('recap_vertify', {
+       'sitekey' : '{{config('app.recapcha_site_key')}}',
+      'callback' : verifyCallback,
       'theme' : 'light'
     });
   };
@@ -452,6 +467,7 @@ if (!Array.prototype.findIndex) {
               document.getElementById("inp3").focus();
               $('#cxacceptPrivacy_data').val(0);
               $("#cxacceptPrivacy_data").prop("checked",false);
+             
           }
             $(document).ready(function() {
                 $(".megamenu").on("click", function(e) {

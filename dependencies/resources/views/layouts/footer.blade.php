@@ -516,6 +516,7 @@
                             placeholder="Name">
                         {{-- <label for="email">Name</label> --}}
                     </div>
+
                     <h6> {{isset($staticContent['Marketing_Permissions'])?$staticContent['Marketing_Permissions']:"Marketing
                         Permissions"}}<span class="red">*</span></h6>
                     <p class="text-one">{{isset($staticContent['DeltaPSU_will_use_the
@@ -534,9 +535,12 @@
                                 class="col-10 w-100">{{isset($staticContent['I_have_read_and_accept'])?$staticContent['I_have_read_and_accept']:"I
                                 have read and accept the Privacy Policy."}} </span></label>
                     </div>
+
                     <p class="text-one mb-4">
                         {{isset($staticContent['To_unsubscribe'])?$staticContent['To_unsubscribe']:"To unsubscribe,
                         click the link in our newsletter. We will treat your data with respect."}}</p>
+                    <div class="mt-3 mb-3" id="recap_vertify_subscribe"></div>
+                    <input type="hidden" id="key_input_subscribe" name="keyrecap">
                     <button type="submit"
                         class="btn btn-subscribe">{{isset($staticContent['Subscribe'])?$staticContent['Subscribe']:"Subscribe"}}</button>
             </div>

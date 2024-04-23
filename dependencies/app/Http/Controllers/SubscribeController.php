@@ -25,10 +25,27 @@ class SubscribeController extends Controller
         ->select('s.*')
         ->orderBy('s.created_at','desc')
         ->get();
+        self::cleanData();
         return view('subscribes.index')
         ->with('name','subscribe')
         ->with('menu','')
         ->with('subscribes',$subscribes);
+    }
+    private function cleanData(){
+        $subscribes = DB::table('subscribes as s')
+        ->select('s.*')
+        ->get();
+
+        foreach ($subscribes as $sub) {
+            
+            if (!filter_var($sub->email, FILTER_VALIDATE_EMAIL)) {
+                $emailErr = "Invalid email format";
+                DB::table('subscribes')->where('id',$sub->id)->delete();
+            }
+
+        }
+
+
     }
     public function exportSubscribes(){
 

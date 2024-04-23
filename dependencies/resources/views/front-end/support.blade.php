@@ -336,24 +336,7 @@
 
 
 <script type="text/javascript">
-    var verifyCallback = function(response) {
-                $('#keyrecap').val(response);
-            };
-            var onloadCallback = function() {
-                grecaptcha.render('recap_vertify', {
-                // 'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-                'sitekey' : '{{config('app.recapcha_site_key')}}',
-                //'sitekey' : '6LfGGV0pAAAAAKeEC0S7wzsPbAM1fvB3Tp2wtSYJ',
-                'callback' : verifyCallback,
-                'theme' : 'light'
-                });
-        };
-
-        $( document ).ready(function() {
-            onloadCallback();
-       });
-     
-      function onacceptionPolicy(){
+    function onacceptionPolicy(){
         $('#acceptcookiebot').click();
       }
   

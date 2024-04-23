@@ -3529,37 +3529,51 @@ class FrontendController extends Controller
        public function subscribe(Request $request){
             $mailch = $this->validateInput($request->email,'text',true);
             $accept = $this->validateInput($request->accept,'number',true , 0);
- 
             $strmlo = strtolower($mailch);
-            // Get an array of all available lists:
-            $mailchimdata =  Mailchimp::getLists();
-            $checkmailC = Mailchimp::check($mailchimdata[0]['id'], trim($strmlo));
-            $checkmailsta  =  Mailchimp::status($mailchimdata[0]['id'],trim($strmlo));
-            $alreadysub =  DB::table('subscribes')->where('email',trim($strmlo))->get();
-            // Afghanistan  Afganistan
-            // return dd($request->country);
             $name = $this->validateInput($request->name,'text',true);
             $country = $this->validateInput($request->country,'text',true);
-           
+            $client = new Client();
+            $response = $client->post(
+                'https://www.recaptcha.net/recaptcha/api/siteverify',
+                ['form_params'=>
+                    [
+                        'secret'=> config('app.recapcha_secret_key'),
+                        'response'=>$request->keyrecap
+                    ]
+                ]
+            );
+        
+            $body = json_decode((string)$response->getBody());
+            // return dd($body);
+            if($body->success){
+                $mailchimdata =  Mailchimp::getLists();
+                $checkmailC = Mailchimp::check($mailchimdata[0]['id'], trim($strmlo));
+                $checkmailsta  =  Mailchimp::status($mailchimdata[0]['id'],trim($strmlo));
+                $alreadysub =  DB::table('subscribes')->where('email',trim($strmlo))->get();
+                if($checkmailC){
+                  return redirect()->back()->with('subscribes_already', 'already subscribes');
+                }else{
+                    if(count($alreadysub) == 0){
+                        DB::table('subscribes')->insert(
+                            [
+                                "country_name" => $request->country,
+                                "email" => trim($strmlo),
+                                "name" => $name,
+                                "accept" => $accept,
+                                "created_at" => \Carbon\Carbon::now(),
+                            ]
+                        );
+                    }
+                    Mailchimp::subscribe($mailchimdata[0]['id'], trim($strmlo),['NAME' => $name, 'COUNTRY' => $country] ,$confirm = true );
+                    return redirect()->back()->with('subscribes_new', 'successfully');
+                }
+
+            }else{
+                return redirect()->back()->with('subscribes_already', 'Please Verify I"m not a robot');
+            }
 
             
-         if($checkmailC){
-            return redirect()->back()->with('subscribes_already', 'already subscribes');
-         }else{
-            if(count($alreadysub) == 0){
-                DB::table('subscribes')->insert(
-                    [
-                        "country_name" => $request->country,
-                        "email" => trim($strmlo),
-                        "name" => $name,
-                        "accept" => $accept,
-                        "created_at" => \Carbon\Carbon::now(),
-                    ]
-                );
-            }
-            Mailchimp::subscribe($mailchimdata[0]['id'], trim($strmlo),['NAME' => $name, 'COUNTRY' => $country] ,$confirm = true );
-            return redirect()->back()->with('subscribes_new', 'successfully');
-        }
+       
 
          
         
