@@ -27,7 +27,8 @@ class ProductVideoImageController extends Controller
         $vieo_img = DB::table('product_image as pm')
         ->where('pm.pro_id' ,$id)
         ->select('pm.*')
-        ->orderBy('pm.order_seq' ,'asc')
+        // ->orderBy('pm.order_seq' ,'asc')
+        ->orderBy('pm.created_at' ,'asc')
         ->get();
 
         return view('product.video_image_pro')
