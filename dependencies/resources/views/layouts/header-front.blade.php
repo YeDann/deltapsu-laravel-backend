@@ -471,7 +471,7 @@
               <i class="zmdi zmdi-chevron-down"></i>
             </a>
             <div class="dropdown-menu s-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
-              <div class="dropdown-submenu">
+              {{-- <div class="dropdown-submenu">
                 <a id="sub4" class="sub-menu dropdown-item " onclick="mainCate('sub4')" tabindex="-1"
                   href="#">{{isset($staticContent['Battery_Charging'])?
                   $staticContent['Battery_Charging'] :'Battery Charging' }} <i class="zmdi zmdi-chevron-right"></i></a>
@@ -513,7 +513,7 @@
                       alt="Industrial_Power_Supplies.png">
                   </div>
                 </ul>
-              </div>
+              </div> --}}
               <div class="dropdown-submenu">
                 <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1"
                   href="#">{{isset($staticContent['Industrial_Power'])?
