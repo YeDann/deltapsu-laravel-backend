@@ -62,15 +62,10 @@
 </style>
 @endsection
 @section('meta')
-<?php 
-  $e_title = trim(iconv_substr(strip_tags(isset($contents[0]->title)? $contents[0]->title:''),0,32,'UTF-8')) ;
-  $s_event = isset($staticContent['Events&Calendar']) ? $staticContent['Events&Calendar'] :'';
-  $meta_title = $e_title.' | '.$s_event.' | '.'DeltaPSU';
-?>
-<title>{{$meta_title}}</title>
+<title>{{isset($contents[0]->meta_title)? $contents[0]->meta_title :''}}</title>
 <meta name="description"
     content="{!! trim(iconv_substr(strip_tags(isset($contents[0]->meta_description)? $contents[0]->meta_description:''),0,90,'UTF-8')) !!}">
-<meta property="og:title" content="{{$meta_title}}" />
+<meta property="og:title" content="{{isset($contents[0]->meta_title)? $contents[0]->meta_title :''}}" />
 <meta property="og:description"
     content="{!! trim(iconv_substr(strip_tags(isset($contents[0]->meta_description)? $contents[0]->meta_description:''),0,90,'UTF-8')) !!}" />
 <meta property="og:image"
