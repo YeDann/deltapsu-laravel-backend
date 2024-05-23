@@ -136,8 +136,7 @@
             </div>
             <div class="content">
                 @if(isset($contents[0]->content))
-                {{-- {!!$contents[0]->content!!} --}}
-                {!! str_replace("/uploads_delta",config('app.url')."/uploads_delta",$contents[0]->content) !!}
+                {!!$contents[0]->content !!}
                 @endif
             </div>
             <div class="">
