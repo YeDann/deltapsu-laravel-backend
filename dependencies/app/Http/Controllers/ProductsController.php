@@ -141,7 +141,7 @@ class ProductsController extends Controller
                     'dimensionW'=>$request->dimensionw,
                     'dimensionD'=>$request->dimensionD,
                     'unit_weight'=>$request->unitWeight,
-                    'alt_img' => $request->alt_img,
+                    // 'alt_img' => $request->alt_img,
                     "created_at" => \Carbon\Carbon::now(),
                     "updated_at" => \Carbon\Carbon::now(),
                 ]
@@ -160,7 +160,7 @@ class ProductsController extends Controller
                         'dimensionW'=>$request->dimensionw,
                         'dimensionD'=>$request->dimensionD,
                         'unit_weight'=>$request->unitWeight,
-                        'alt_img' => $request->alt_img,
+                        // 'alt_img' => $request->alt_img,
                         "created_at" => \Carbon\Carbon::now(),
                         "updated_at" => \Carbon\Carbon::now(),
                     ]
@@ -532,7 +532,7 @@ public function update(Request $request){
                 'dimensionW'=>$request->dimensionw,
                 'dimensionD'=>$request->dimensionD,
                 'unit_weight'=>$request->unitWeight,
-                'alt_img' => $request->alt_img,
+                // 'alt_img' => $request->alt_img,
                 "updated_at" => \Carbon\Carbon::now(),
             ]
         );
@@ -550,7 +550,7 @@ public function update(Request $request){
                     'dimensionW'=>$request->dimensionw,
                     'dimensionD'=>$request->dimensionD,
                     'unit_weight'=>$request->unitWeight,
-                    'alt_img' => $request->alt_img,
+                    // 'alt_img' => $request->alt_img,
                     "updated_at" => \Carbon\Carbon::now(),
                 ]
             );
