@@ -198,12 +198,11 @@
 </style>
 @endsection
 @section('meta')
-<title>{{isset($application->name)? $application->name :''}} | DeltaPSU</title>
-<meta property="description"
-    content="{!! trim(iconv_substr(strip_tags(isset($application->content)? $application->content:''),0,155,'UTF-8')) !!}" />
-<meta property="og:title" content="{{isset($application->name)? $application->name :''}}  | DeltaPSU " />
+<title>{{isset($application->meta_title)? $application->meta_title :''}}</title>
+<meta property="description" content="{{isset($application->meta_description)? $application->meta_description :''}}" />
+<meta property="og:title" content="{{isset($application->meta_title)? $application->meta_title :''}}" />
 <meta property="og:description"
-    content="{!! trim(iconv_substr(strip_tags(isset($application->content)? $application->content:''),0,155,'UTF-8')) !!}" />
+    content="{{isset($application->meta_description)? $application->meta_description :''}}" />
 <meta property="og:image"
     content="{{config('app.url')}}/medias/categories/{{isset($application->banner)  ? $application->banner : '' }}" />
 <link rel="canonical" href="{{url()->current()}}" />
