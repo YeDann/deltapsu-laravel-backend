@@ -325,6 +325,7 @@
                                         </th>
                                         <th style="width: 300px;">Preview</th>
                                         <th>Upload File</th>
+                                        {{-- <th>Alt</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -345,6 +346,12 @@
                                                     file</label>
                                             </div>
                                         </td>
+                                        {{-- <td class="">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="alt_img"
+                                                    placeholder="Enter ...">
+                                            </div>
+                                        </td> --}}
                                     </tr>
                                 </tbody>
                             </table>

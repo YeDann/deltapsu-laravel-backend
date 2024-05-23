@@ -224,7 +224,7 @@
             @foreach($subCategories as $sub)
             <div class="product-selector-list border-2px d-flex align-items-center">
                 <div class="m-auto">
-                    <a href="{{ route('producsList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
+                    <a href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
                         @if($sub->image != null)
                         <img data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy"
                             class="lazyload" alt="{{$sub->image}}">
@@ -254,7 +254,7 @@
                     style="    box-shadow: 0px 4px 5px 2px rgba(0, 0, 0, 0.09);">
                     <div class="m-auto">
                         <a
-                            href="{{ route('producsList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
+                            href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
                             @if($sub->image != null)
                             <img data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy"
                                 class="lazyload" alt="{{$sub->image}}">
@@ -394,7 +394,7 @@ function retextdata($arr ,$unit){
                                 <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                     @else
                                     <a style="color:inherit;" class=""
-                                        href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         @endif
                                         @if(isset($serie->image))
                                         <img data-src="{{config('app.url')}}/medias/categories/{{$serie->image}}"
@@ -412,7 +412,7 @@ function retextdata($arr ,$unit){
                                 <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                     @else
                                     <a style="color:inherit;" class="m-auto"
-                                        href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         @endif
                                         <h3 class="text-dark  m-0">{{$serie->title}}</h3>
                                     </a>
@@ -421,7 +421,7 @@ function retextdata($arr ,$unit){
                             <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                 @else
                                 <a style="color:inherit;" class="m-auto"
-                                    href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                    href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                     @endif
                                     <div class="series-text-detail">
                                         {!! $serie->overview_content !!}
@@ -470,7 +470,7 @@ function retextdata($arr ,$unit){
                                 <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                     @else
                                     <a style="color:inherit;" class=""
-                                        href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         @endif
                                         @if(isset($serie->image))
                                         <img data-src="{{config('app.url')}}/medias/categories/{{$serie->image}}"
@@ -488,7 +488,7 @@ function retextdata($arr ,$unit){
                                 <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                     @else
                                     <a style="color:inherit;" class="m-auto"
-                                        href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         @endif
                                         <h3 class="text-dark  m-0">{{$serie->title}}</h3>
                                     </a>
@@ -497,7 +497,7 @@ function retextdata($arr ,$unit){
                             <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                 @else
                                 <a style="color:inherit;" class="m-auto"
-                                    href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                    href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                     @endif
                                     <div class="series-text-detail">
                                         {!! $serie->overview_content !!}

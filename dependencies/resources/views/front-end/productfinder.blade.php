@@ -202,7 +202,7 @@
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="border-r">
                         <a class=""
-                            href="{{ route('producsList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
+                            href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
                             @if($sub->image != null)
                             <img class="w-100 mt-2" src="{{config('app.url')}}/medias/categories/{{$sub->image}}"
                                 alt="">
@@ -226,7 +226,7 @@
         <h3 class="text-title-delta">{{$staticContent['Product_Selector']}}</h3>
         <div class="box-product-finder-grid">
             @foreach($subCategories as $sub)
-            <a href="{{ route('producsList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])}}"
+            <a href="{{ route('productList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])}}"
                 class="box-product-finder-item d-flex">
                 <div class="m-auto">
                     @if($sub->image != null)

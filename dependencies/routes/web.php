@@ -48,7 +48,7 @@ Route::get('/products/{cateid?}/{pro_code?}','FrontendController@productsDetails
 Route::get('/products_search/search','FrontendController@resultSearch')->name('resultSearch');
 Route::get('/product/index/{cate_name?}/{cate_id?}/{mainId?}','FrontendController@allproductsByType')->name('allproductsByType');
 Route::get('/product/all-product-categories','FrontendController@allproduct')->name('allproduct');
-Route::get('/product/{cate_name?}/{cate_id?}/{se_name?}/{se_id?}','FrontendController@producsList')->name('producsList');
+Route::get('/product/{cate_name?}/{cate_id?}/{se_name?}/{se_id?}','FrontendController@productList')->name('productList');
 Route::get('/productBySeries/{name?}/{series?}','FrontendController@productBySeries')->name('productBySeries');
 Route::get('/products/download/{cate_name?}/{modelname?}','FrontendController@downloadFIle')->name('downloadFIle');
 Route::post('/loaddocumentPro','FrontendController@loaddocumentPro')->name('loaddocumentPro');
@@ -122,6 +122,12 @@ Route::post('tag_product','FrontendController@tag_product')->name('tag_product')
 Route::post('getProById','FrontendController@getProById')->name('getProById');
 Route::post('/loadparallercon','FrontendController@loadparallercon')->name('loadparallercon');
 Route::get('/upload/product_image/{doc?}','FrontendController@checkOldfileUrl')->name('checkOldfileUrl');
+
+Route::post('/searchDocByModelId','FrontendController@searchDocByModelId')->name('searchDocByModelId');
+Route::post('/searchDocManualByModelId','FrontendController@searchDocManualByModelId')->name('searchDocManualByModelId');
+Route::post('/searchLoginDocByModelId','FrontendController@searchLoginDocByModelId')->name('searchLoginDocByModelId');
+
+
 });
 
 Route::prefix('/backend')->group(function () {
@@ -478,8 +484,6 @@ Route::post('importSubscriber','ImportController@importSubscriber')->name('impor
  
 //Route::post('importSuccessStory','ImportController@importSuccessStory')->name('importSuccessStory');
 Route::get('getExportProductProperty','ImportController@getExportProductProperty')->name('getExportProductProperty');
-
-
 Route::get('subscribers/index','SubscribeController@index')->name('subscribers_index');
 Route::get('exportSubscribes','SubscribeController@exportSubscribes')->name('exportSubscribes');
 Route::get('ExportPartner','PartnerController@ExportPartner')->name('ExportPartner');

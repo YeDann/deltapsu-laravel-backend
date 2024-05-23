@@ -85,6 +85,7 @@ class ProductVideoImageController extends Controller
                 'pro_id' => $request->pro_id,
                 'content' => $imageNameSpace,
                 'type' => $request->type,
+                'alt_img' => $request->alt_img,
                 "created_at" => \Carbon\Carbon::now(),
                 "updated_at" => \Carbon\Carbon::now(),
             ]);
@@ -93,6 +94,7 @@ class ProductVideoImageController extends Controller
             DB::table('product_image')->where('id' ,$pro_image_id)->update([
                 'content' => $imageNameSpace,
                 'type' => $request->type,
+                'alt_img' => $request->alt_img,
                 "updated_at" => \Carbon\Carbon::now(),
             ]);
             return redirect()->route('videos_images',$pro_id)->with('flash_message', 'Update Data successfully');
@@ -111,11 +113,14 @@ class ProductVideoImageController extends Controller
         $id  = $request->itemId;
         $pro_id   = $request->pro_id;
         $proimage = DB::table('product_image')->where('id' ,$id)->first();
-       
+    //    return dd($proimage);
         if($proimage->type == 1){
             $file_pointer = base_path('/../uploads_delta/').$proimage->content;
-            if (file_exists($file_pointer) && isset($proimage->content) ) {
+            if ($proimage->content != '' && file_exists($file_pointer) && isset($proimage->content)  ) {
                 unlink($file_pointer);
+                DB::table('product_image')->where('id' ,$id)->delete();
+                return redirect()->route('videos_images',$pro_id)->with('flash_message', 'Delete Data successfully');
+            }else{
                 DB::table('product_image')->where('id' ,$id)->delete();
                 return redirect()->route('videos_images',$pro_id)->with('flash_message', 'Delete Data successfully');
             }

@@ -137,7 +137,7 @@
 <div class="show-more-769">
     <div class="box-banner">
         <div id="slide-banner" class="owl-carousel owl-theme">
-            @foreach ($banners as $banner)
+            @foreach ($banners as $index => $banner)
             <div class="item banner-item">
                 <a href="{{$banner->btn_link}}">
                     <div loading="lazy" data-src="{{config('app.url')}}/medias/banners/{{$banner->image_destop}}"
@@ -146,6 +146,7 @@
                             @if($banner->title2 != null || $banner->content != null)
                             <div class="container">
                                 <div class="bg-w-banner">
+                                    @if($index == 0)
                                     <h1 class="text-title-banner" style="color:{{ $banner->title_color}}">
                                         <?php
                                     $str = $banner->title2;
@@ -157,6 +158,19 @@
                                     }
                                     ?>
                                     </h1>
+                                    @else
+                                    <h2 class="text-title-banner" style="color:{{ $banner->title_color}}">
+                                        <?php
+                                    $str = $banner->title2;
+                                    $st = explode("\n", $str);
+                                    for ($k = 0; $k < count($st); $k++) {
+                                        echo $st[$k] = '<div>'
+                                                . $st[$k]
+                                                . '</div>';
+                                    }
+                                    ?>
+                                    </h2>
+                                    @endif
                                     <div class="text-p-banner my-2" style="color:{{ $banner->content_color}}">
                                         {!!$banner->content!!}
                                     </div>
@@ -180,7 +194,8 @@
     </div>
     <div class="box-banner">
         <div id="slide-banner-mobile" class="owl-carousel owl-theme ">
-            @foreach ($banners as $banner)
+            @foreach ($banners as $index => $banner)
+
             <div class="item banner-item ">
                 <a href="{{$banner->btn_link}}">
                     <div loading="lazy" data-src="{{config('app.url')}}/medias/banners/{{$banner->image}}"
@@ -191,14 +206,14 @@
                                 <div class="">
                                     <h2 class="text-title-banner" style="color:{{ $banner->title_color}}">
                                         <?php
-                                $str = $banner->title;
-                                $st = explode("\n", $str);
-                                for ($k = 0; $k < count($st); $k++) {
-                                    echo $st[$k] = '<div>'
-                                            . $st[$k]
-                                            . '</div>';
-                                }
-                                ?>
+                                        $str = $banner->title;
+                                        $st = explode("\n", $str);
+                                        for ($k = 0; $k < count($st); $k++) {
+                                            echo $st[$k] = '<div>'
+                                                    . $st[$k]
+                                                    . '</div>';
+                                        }
+                                      ?>
                                     </h2>
                                     @if($banner->btn_status == 1)
                                     <button
@@ -217,6 +232,7 @@
     </div>
 </div>
 <!-- selecter -->
+
 <div class="visible-tablets-up">
     <div class="box-product-selector container ">
         <h2 class="text-title-delta-home"> {{$staticContent['Product_Selector']}}</h2>
@@ -224,7 +240,7 @@
             @foreach($subCategories as $sub)
             <div class="product-selector-list border-2px d-flex align-items-center">
                 <div class="m-auto">
-                    <a href="{{ route('producsList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
+                    <a href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
                         @if($sub->image != null)
                         <img data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy"
                             class="lazyload" alt="{{$sub->image}}">
@@ -254,7 +270,7 @@
                     style="    box-shadow: 0px 4px 5px 2px rgba(0, 0, 0, 0.09);">
                     <div class="m-auto">
                         <a
-                            href="{{ route('producsList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
+                            href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
                             @if($sub->image != null)
                             <img data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy"
                                 class="lazyload" alt="{{$sub->image}}">
@@ -394,7 +410,7 @@ function retextdata($arr ,$unit){
                                 <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                     @else
                                     <a style="color:inherit;" class=""
-                                        href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         @endif
                                         @if(isset($serie->image))
                                         <img data-src="{{config('app.url')}}/medias/categories/{{$serie->image}}"
@@ -412,7 +428,7 @@ function retextdata($arr ,$unit){
                                 <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                     @else
                                     <a style="color:inherit;" class="m-auto"
-                                        href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         @endif
                                         <h3 class="text-dark  m-0">{{$serie->title}}</h3>
                                     </a>
@@ -421,7 +437,7 @@ function retextdata($arr ,$unit){
                             <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                 @else
                                 <a style="color:inherit;" class="m-auto"
-                                    href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                    href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                     @endif
                                     <div class="series-text-detail">
                                         {!! $serie->overview_content !!}
@@ -470,7 +486,7 @@ function retextdata($arr ,$unit){
                                 <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                     @else
                                     <a style="color:inherit;" class=""
-                                        href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         @endif
                                         @if(isset($serie->image))
                                         <img data-src="{{config('app.url')}}/medias/categories/{{$serie->image}}"
@@ -488,7 +504,7 @@ function retextdata($arr ,$unit){
                                 <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                     @else
                                     <a style="color:inherit;" class="m-auto"
-                                        href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         @endif
                                         <h3 class="text-dark  m-0">{{$serie->title}}</h3>
                                     </a>
@@ -497,7 +513,7 @@ function retextdata($arr ,$unit){
                             <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                 @else
                                 <a style="color:inherit;" class="m-auto"
-                                    href="{{ route('producsList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                    href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                     @endif
                                     <div class="series-text-detail">
                                         {!! $serie->overview_content !!}

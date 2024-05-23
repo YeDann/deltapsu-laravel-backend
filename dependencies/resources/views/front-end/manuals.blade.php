@@ -267,8 +267,6 @@
 <script>
     var series =  <?= json_encode($series);?>;
         var products =  <?= json_encode($products);?>;
-        var documents_cate =  <?= json_encode($documents_cate);?>;
-        var documents =  <?= json_encode($documents);?>;
         var showlang =  <?= json_encode($showlangOb);?>;
         let proImage = '' ;
         let create_pro = '00/00/0000';
@@ -387,7 +385,24 @@
                     create_pro = data['created_at'];
                 }
             });
+
+            $.ajax({
+            url: "{{(route('searchDocManualByModelId'))}}",
+            data: {
+            'model_id': model_id,
+           },
+           type: 'post',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                loadDocument(data.doc,data.cate_doc ,model_id ,lang);
+            }
+        });
         
+         
+        }
+        function loadDocument(_documents, _documents_cate,model_id , lang){
             var html2 = "";
        
                 html2 += ' <div class="box-for-collap">'
@@ -399,41 +414,41 @@
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image1" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-                  
-            $.each(documents, function(index,doc){  
+                    
+            $.each(_documents, function(index,doc){  
                 if(doc['local'] == lang){
                     if(doc['file'] != null && doc['file'] != '' ){
-                  if(doc['product_id'] == model_id){ 
-                   if(doc['cate_id'] == 1 || doc['cate_id'] == 46 || doc['cate_id'] == 38 ){
-               
-                     html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
-                     html2 += '<div class="detail-downlode">';
-                     html2 += '<p class="text-dark text-bold">'+doc['catename']+'</p>';
-                     if(doc['created_at'] != null){
-                       html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} '+setformatdate(doc['created_at']) +'</p>';
-                     }else{
-                      html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} - </p>';
-                     }
-                     html2 += '</div>';
-                     html2 += '<a href="{{route('downloadFIleManual')}}/'+lang+'/' +doc['slug']+'/'+productKey(procode)+'" target="_blank">';
-                     html2 += '<button class="btn-downlode ">{{$staticContent['Downloads']}}</button>';
-                     html2 += ' </a>' ;
-                     html2 += ' </div>' ;
+                    if(doc['product_id'] == model_id){ 
+                    if(doc['cate_id'] == 1 || doc['cate_id'] == 46 || doc['cate_id'] == 38 ){
+                
+                        html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
+                        html2 += '<div class="detail-downlode">';
+                        html2 += '<p class="text-dark text-bold">'+doc['catename']+'</p>';
+                        if(doc['created_at'] != null){
+                        html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} '+setformatdate(doc['created_at']) +'</p>';
+                        }else{
+                        html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} - </p>';
+                        }
+                        html2 += '</div>';
+                        html2 += '<a href="{{route('downloadFIleManual')}}/'+lang+'/' +doc['slug']+'/'+productKey(procode)+'" target="_blank">';
+                        html2 += '<button class="btn-downlode ">{{$staticContent['Downloads']}}</button>';
+                        html2 += ' </a>' ;
+                        html2 += ' </div>' ;
                     }
-                  }
+                    }
                 }
-               }
+                }
                 });  
 
                 
                 html2 += '</div>';
                 html2 += ' </div>';
                 html2 += ' </div>';
-         
 
 
-            $.each(documents_cate, function(index,cate_doc){
-             if(cate_doc['id'] == 2){
+
+            $.each(_documents_cate, function(index,cate_doc){
+                if(cate_doc['id'] == 2){
                 html2 += ' <div class="box-for-collap">'
                 html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
@@ -443,39 +458,39 @@
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image'+cate_doc['id']+'" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-                  
-            $.each(documents, function(index,doc){  
+                    
+            $.each(_documents, function(index,doc){  
                 if(doc['local'] == lang){
                     if(doc['file'] != null && doc['file'] != '' ){
-                  if(doc['product_id'] == model_id){ 
-             
-                   if(doc['cate_id'] == cate_doc['id']){
-                     html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
-                     html2 += '<div class="detail-downlode">';
-                     html2 += '<p class="text-dark text-bold">'+doc['catename']+'</p>';
-                     if(doc['created_at'] != null){
-                       html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} '+setformatdate(doc['created_at']) +'</p>';
-                     }else{
-                      html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} - </p>';
-                     }
-                     html2 += '</div>';
-                     html2 += '<a href="{{route('downloadFIleManual')}}/'+lang+'/' +doc['slug']+'/'+productKey(procode)+'" target="_blank">';
-                     html2 += '<button class="btn-downlode ">{{$staticContent['Downloads']}}</button>';
-                     html2 += ' </a>' ;
-                     html2 += ' </div>' ;
+                    if(doc['product_id'] == model_id){ 
+                
+                    if(doc['cate_id'] == cate_doc['id']){
+                        html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
+                        html2 += '<div class="detail-downlode">';
+                        html2 += '<p class="text-dark text-bold">'+doc['catename']+'</p>';
+                        if(doc['created_at'] != null){
+                        html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} '+setformatdate(doc['created_at']) +'</p>';
+                        }else{
+                        html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} - </p>';
+                        }
+                        html2 += '</div>';
+                        html2 += '<a href="{{route('downloadFIleManual')}}/'+lang+'/' +doc['slug']+'/'+productKey(procode)+'" target="_blank">';
+                        html2 += '<button class="btn-downlode ">{{$staticContent['Downloads']}}</button>';
+                        html2 += ' </a>' ;
+                        html2 += ' </div>' ;
                     }
-                  }
+                    }
                 }
-               }
+                }
                 });  
 
                 
                 html2 += '</div>';
                 html2 += ' </div>';
                 html2 += ' </div>';
-              }
+                }
             });
-    
+
             $('#pro_docType').html(html2);
         }
 
@@ -513,10 +528,27 @@
             $('#modelme1').val('');
             }
        
-            // console.log(showlang);
-            $.each(showlang, function(indexlang,lan){
+      
+           $.ajax({
+            url: "{{(route('searchDocManualByModelId'))}}",
+            data: {
+            'model_id': model_id,
+           },
+           type: 'post',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data) {
+                loadShowLangTab(data.doc , model_id);
+
+            }
+        });
+    }
+    function loadShowLangTab(_documents ,model_id){
+
+        $.each(showlang, function(indexlang,lan){
                 var arrlang = [];
-                        $.each(documents, function(index,doc){  
+                        $.each(_documents, function(index,doc){  
                             if(doc['cate_id'] == 1 || doc['cate_id'] == 2){
                             if(doc['local'] == lan.langName){
                                 if(doc['product_id'] == model_id){ 
@@ -535,6 +567,7 @@
                     $('#tabdata'+lan.langName).removeClass('d-none');
                 }
            });
+
     }
     
     

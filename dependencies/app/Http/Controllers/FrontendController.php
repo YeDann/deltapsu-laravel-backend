@@ -71,6 +71,15 @@ class FrontendController extends Controller
     ->where('sct.local',  $lang)
     ->orderBy('chmp.order_seq', 'asc')
     ->get());
+
+    view()->share('navcategories4',  DB::table('categories_has_main_pro as chmp')
+    ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
+    ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
+    ->select('sc.*', 'sct.*' ,'chmp.*')
+    ->where('sct.local',  $lang)
+    ->where('chmp.main_cateid', 4)
+    ->orderBy('chmp.order_seq', 'asc')
+    ->get());
    
     view()->share('navapplication', DB::table('application as ap')
     ->join('application_translation as apt','ap.id','=','apt.app_id')
@@ -369,38 +378,42 @@ class FrontendController extends Controller
             ->where('ntt.local',$lang)
             ->orderBy('nt.order_seq','asc')
             ->get();
-            $type_id =  isset($_GET['type'])? $_GET['type'] : 'all' ;
-
-            // return dd($type_id);
-         
-            $new_query = DB::table('product_news_has_categories as pnc')
-            ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
-            ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
-            ->join('news_type as nt' ,'nt.id' ,'=','pnc.categories_id')
-            ->join('news_type_translation as ntt' ,'ntt.fk_nt_id' ,'=','nt.id')
-            ->where('ct.local', $lang)
-            ->where('ntt.local', $lang)
-            ->where('c.content_type', '=', 'news')
-            ->where('c.status',  1);
-
-             if($type_id != 'all'){
-                $news = $new_query->where('nt.id',$type_id)
+            $type_id = 0;
+            if(isset($_GET['type-id']) && $_GET['type-id'] != 0 ){
+                $type_id = $this->validateInput($_GET['type-id'],'number',true);
+                $news = DB::table('product_news_has_categories as pnc')
+                ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
+                ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
+                ->join('news_type as nt' ,'nt.id' ,'=','pnc.categories_id')
+                ->join('news_type_translation as ntt' ,'ntt.fk_nt_id' ,'=','nt.id')
+                ->where('ct.local', $lang)
+                ->where('ntt.local', $lang)
+                ->where('c.content_type', '=', 'news')
+                ->where('nt.id', $type_id)
+                ->where('c.status',  1)
                 ->select('c.*' ,'ct.*','ntt.title as cateName','nt.color_type','pnc.categories_id as typeId')
                 ->orderBy('c.date_publish', 'desc')
                 ->distinct()
                 ->paginate(15);
-             }else {
-               $news = $new_query->select('c.*' ,'ct.*','ntt.title as cateName','nt.color_type','pnc.categories_id as typeId')
+            }else{
+
+                $news = DB::table('product_news_has_categories as pnc')
+                ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
+                ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
+                ->join('news_type as nt' ,'nt.id' ,'=','pnc.categories_id')
+                ->join('news_type_translation as ntt' ,'ntt.fk_nt_id' ,'=','nt.id')
+                ->where('ct.local', $lang)
+                ->where('ntt.local', $lang)
+                ->where('c.content_type', '=', 'news')
+                ->where('c.status',  1)
+                ->select('c.*' ,'ct.*','ntt.title as cateName','nt.color_type','pnc.categories_id as typeId')
                 ->orderBy('c.date_publish', 'desc')
                 ->distinct()
                 ->paginate(15);
-             }
 
-            //  return dd($news);
-
-             
-          
+            }
          
+          
             
             $status = false;
             $currentdate = date('Y-m-d');
@@ -555,6 +568,10 @@ class FrontendController extends Controller
             ->where('sct.local',  $lang)
             ->orderBy('sct.name', 'asc')
             ->get();
+            $getLastPro = DB::table('products as p')
+            ->orderBy('p.pro_code', 'asc')
+            ->select('p.*')
+            ->first();
             
             $products = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -579,6 +596,7 @@ class FrontendController extends Controller
            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
            ->where('spt.local' ,$lang)
            ->where('st.local' ,$lang)
+           ->where('p.pro_id' ,$getLastPro->pro_id)
            ->where('p.enable_pro' ,1)
            ->select('p.*','spt.name as catename','phc.categories_id','sp.url_item' ,'st.title as seName','ptag.*')
            ->get();
@@ -624,8 +642,6 @@ class FrontendController extends Controller
             ->with('metatag' ,$metatag)
             ->with('subCategories' ,$subCategories)
             ->with('series' ,$series)
-            ->with('documents' ,$documents)
-            ->with('documents_cate' ,$documents_cate)
             ->with('products' ,$products);
         }
         if($page =='catalogs'){
@@ -697,6 +713,11 @@ class FrontendController extends Controller
             ->where('sc.status',1)
             ->orderBy('sct.name', 'asc')
             ->get();
+
+            $getLastPro = DB::table('products as p')
+            ->orderBy('p.pro_code', 'asc')
+            ->select('p.*')
+            ->first();
             
             $products = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -723,8 +744,6 @@ class FrontendController extends Controller
                 ->get();
 
                 $language = DB::table('language as lang')->whereIn('lang.name',['en','cn','jp'])->get();
-              
-                //$othersL = DB::table('other_lang_document')->get();
                 $showlang = [];
                 $showlangOb = [];
                 foreach($language as $langal){
@@ -735,29 +754,6 @@ class FrontendController extends Controller
                     array_push($showlang , $langal->name);
                     array_push($showlangOb ,$data);
                 }
-                // foreach($othersL as $lan){
-                //     $data2 = [
-                //         "langName"=>$lan->name,
-                //         "langFull"=>$lan->full_name
-                //     ];
-                //     array_push($showlang , $lan->name);
-                //     array_push($showlangOb ,$data2);
-                // }
-                // return dd($showlangOb);
-              
-                $documents = DB::table('product_has_documents as phd')
-                ->join('products as p','p.pro_id','=','phd.product_id')
-                ->join('product_ducuments as pd','phd.document_id','=','pd.doc_id')
-                ->join('product_ducument_translations as pdt','pdt.doc_fk_id','=','pd.doc_id')
-                ->join('products_documents_categories as pdc','pdc.id','=','pd.cate_id')
-                ->whereNotIn('pdc.id', [6 ,7,4])
-                ->where('pdt.file','!=','')
-                ->where('pdt.file','!=',null)
-                ->whereIn('pdt.local', $showlang)
-                ->select('p.pro_code','pd.doc_id','pdc.slug' ,'phd.product_id','pdt.name','pdc.title as catename','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id','pdt.local')
-                ->get();
-             
-                // return dd($documents);
                 
                 $documents_cate = DB::table('products_documents_categories as pdc')
                 ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
@@ -777,8 +773,6 @@ class FrontendController extends Controller
             ->with('metatag' ,$metatag)
             ->with('subCategories' ,$subCategories)
             ->with('series' ,$series)
-            ->with('documents' ,$documents)
-            ->with('documents_cate' ,$documents_cate)
             ->with('products' ,$products);
         }
         if($page == 'subscribes'){
@@ -1089,13 +1083,13 @@ class FrontendController extends Controller
         ->first();
 
        if(isset($series)){
-        return  redirect()->route('producsList',[$series->catename,$series->cateid,$series->se_name,$series->se_id]);
+        return  redirect()->route('productList',[$series->catename,$series->cateid,$series->se_name,$series->se_id]);
        }else{
         return redirect()->route('index','home');
        }
        
     }
-    public function producsList($cate_parname,$cate_par_id,$se_par_name = null,$se_par_id = null){
+    public function productList($cate_parname,$cate_par_id,$se_par_name = null,$se_par_id = null){
     $lang = App::getLocale();
 
     $catename = $this->validateInput($cate_parname ,'text',true);
@@ -1378,12 +1372,12 @@ class FrontendController extends Controller
             ->where('s.slug',$slgSeries)
             ->first();
             if($findoldSeries){
-                return  redirect()->route('producsList',[$name,$findoldCate->sub_pro_id,$findoldSeries->slug,$findoldSeries->se_id]);
+                return  redirect()->route('productList',[$name,$findoldCate->sub_pro_id,$findoldSeries->slug,$findoldSeries->se_id]);
             }else{
                 return redirect()->route('productFinder');
             }
         }else if(isset($findoldCate) && !isset($procode)){
-            return  redirect()->route('producsList',[$name,$findoldCate->sub_pro_id]);
+            return  redirect()->route('productList',[$name,$findoldCate->sub_pro_id]);
         }
 
         if($name == 'configurable-product-selection'){
@@ -1516,6 +1510,7 @@ class FrontendController extends Controller
                     "serie_name"=>$pro->serieName,
                     "cate_name"=>$pro->catename,
                     "cate_id"=>$pro->pro_categories_id,
+                    "alt_img" =>$pro->alt_img,
                     "content" =>$arraysub,
                     "dimensionL"=>$pro->dimensionL,
                     "dimensionW"=>$pro->dimensionW,
@@ -1584,6 +1579,7 @@ class FrontendController extends Controller
                         "unit_dimension"=>$pro->unit_dimension,
                         "status_product"=>$pro->status_product,
                         "content" =>$arraysub,
+                        "alt_img" =>$pro->alt_img,
                         "dimensionL"=>$pro->dimensionL,
                         "dimensionW"=>$pro->dimensionW,
                         "dimensionD"=>$pro->dimensionD,
@@ -2688,8 +2684,6 @@ class FrontendController extends Controller
         ->with('metatag' ,$metatag)
         ->with('subCategories' ,$subCategories)
         ->with('series' ,$series)
-        ->with('documents' ,$documents)
-        ->with('documents_cate' ,$documents_cate)
         ->with('products' ,$products);
     }
     
@@ -3730,37 +3724,51 @@ class FrontendController extends Controller
        public function subscribe(Request $request){
             $mailch = $this->validateInput($request->email,'text',true);
             $accept = $this->validateInput($request->accept,'number',true , 0);
- 
             $strmlo = strtolower($mailch);
-            // Get an array of all available lists:
-            $mailchimdata =  Mailchimp::getLists();
-            $checkmailC = Mailchimp::check($mailchimdata[0]['id'], trim($strmlo));
-            $checkmailsta  =  Mailchimp::status($mailchimdata[0]['id'],trim($strmlo));
-            $alreadysub =  DB::table('subscribes')->where('email',trim($strmlo))->get();
-            // Afghanistan  Afganistan
-            // return dd($request->country);
             $name = $this->validateInput($request->name,'text',true);
             $country = $this->validateInput($request->country,'text',true);
-           
+            $client = new Client();
+            $response = $client->post(
+                'https://www.recaptcha.net/recaptcha/api/siteverify',
+                ['form_params'=>
+                    [
+                        'secret'=> config('app.recapcha_secret_key'),
+                        'response'=>$request->keyrecap
+                    ]
+                ]
+            );
+        
+            $body = json_decode((string)$response->getBody());
+            // return dd($body);
+            if($body->success){
+                $mailchimdata =  Mailchimp::getLists();
+                $checkmailC = Mailchimp::check($mailchimdata[0]['id'], trim($strmlo));
+                $checkmailsta  =  Mailchimp::status($mailchimdata[0]['id'],trim($strmlo));
+                $alreadysub =  DB::table('subscribes')->where('email',trim($strmlo))->get();
+                if($checkmailC){
+                  return redirect()->back()->with('subscribes_already', 'already subscribes');
+                }else{
+                    if(count($alreadysub) == 0){
+                        DB::table('subscribes')->insert(
+                            [
+                                "country_name" => $request->country,
+                                "email" => trim($strmlo),
+                                "name" => $name,
+                                "accept" => $accept,
+                                "created_at" => \Carbon\Carbon::now(),
+                            ]
+                        );
+                    }
+                    Mailchimp::subscribe($mailchimdata[0]['id'], trim($strmlo),['NAME' => $name, 'COUNTRY' => $country] ,$confirm = true );
+                    return redirect()->back()->with('subscribes_new', 'successfully');
+                }
+
+            }else{
+                return redirect()->back()->with('subscribes_already', 'Please Verify I"m not a robot');
+            }
 
             
-         if($checkmailC){
-            return redirect()->back()->with('subscribes_already', 'already subscribes');
-         }else{
-            if(count($alreadysub) == 0){
-                DB::table('subscribes')->insert(
-                    [
-                        "country_name" => $request->country,
-                        "email" => trim($strmlo),
-                        "name" => $name,
-                        "accept" => $accept,
-                        "created_at" => \Carbon\Carbon::now(),
-                    ]
-                );
-            }
-            Mailchimp::subscribe($mailchimdata[0]['id'], trim($strmlo),['NAME' => $name, 'COUNTRY' => $country] ,$confirm = true );
-            return redirect()->back()->with('subscribes_new', 'successfully');
-        }
+       
 
          
         
@@ -5307,6 +5315,115 @@ class FrontendController extends Controller
             return redirect()->route('productFinder' );
         }
 
+        
+
      
-    
+        public function searchDocByModelId(Request $request){
+        $model_id = $request->model_id;
+        $lang = App::getLocale();
+        $documents = DB::table('product_has_documents as phd')
+                ->join('products as p','p.pro_id','=','phd.product_id')
+                ->join('product_ducuments as pd','phd.document_id','=','pd.doc_id')
+                ->join('product_ducument_translations as pdt','pdt.doc_fk_id','=','pd.doc_id')
+                ->join('products_documents_categories as pdc','pdc.id','=','pd.cate_id')
+                ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
+                ->where('pdt.local',$lang)
+                ->where('pdct.local',$lang)
+                ->where('pdt.file','!=','')
+                ->where('pdt.file','!=',null)
+                ->whereNotIn('pdc.id', [4])
+                ->where('p.pro_id' ,$model_id)
+                ->select('p.pro_code','pd.doc_id','phd.product_id','pdct.lable' ,'pdc.slug' ,'pdt.name','pdc.title as catename','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id')
+                ->orderBy('pdc.title','asc')
+                ->get();
+
+                $documents_cate = DB::table('products_documents_categories as pdc')
+                ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
+                ->where('pdct.local','=', $lang)
+                ->whereNotIn('pdc.id', [4])
+                ->select('pdc.*','pdct.lable')
+                ->orderBy('pdc.title','asc')
+                ->get();
+
+                return response()->json([
+                    'doc' =>$documents,
+                    'cate_doc' =>$documents_cate
+                ], 200);
+
+       }
+
+       public function searchDocManualByModelId(Request $request){
+ 
+        $model_id = $request->model_id;
+        $lang = App::getLocale();
+        $language = DB::table('language as lang')->whereIn('lang.name',['en','cn','jp'])->get();
+                $showlang = [];
+                $showlangOb = [];
+                foreach($language as $langal){
+                    $data = [
+                        "langName"=>$langal->name,
+                        "langFull"=>$langal->abbreviation
+                    ];
+                    array_push($showlang , $langal->name);
+                    array_push($showlangOb ,$data);
+                }
+      
+
+                $documents = DB::table('product_has_documents as phd')
+                ->join('products as p','p.pro_id','=','phd.product_id')
+                ->join('product_ducuments as pd','phd.document_id','=','pd.doc_id')
+                ->join('product_ducument_translations as pdt','pdt.doc_fk_id','=','pd.doc_id')
+                ->join('products_documents_categories as pdc','pdc.id','=','pd.cate_id')
+                ->whereNotIn('pdc.id', [6 ,7,4])
+                ->where('pdt.file','!=','')
+                ->where('pdt.file','!=',null)
+                ->whereIn('pdt.local', $showlang)
+                ->where('p.pro_id' ,$model_id)
+                ->select('p.pro_code','pd.doc_id','pdc.slug' ,'phd.product_id','pdt.name','pdc.title as catename','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id','pdt.local')
+                ->get();
+
+                $documents_cate = DB::table('products_documents_categories as pdc')
+                ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
+                ->where('pdct.local','=', $lang)
+                ->whereNotIn('pdc.id', [6 ,7,4])
+                ->select('pdc.*','pdct.lable')
+                ->orderBy('pdc.title','asc')
+                ->get();
+
+                return response()->json([
+                    'doc' =>$documents,
+                    'cate_doc' =>$documents_cate
+                ], 200);
+
+       }
+
+       public function searchLoginDocByModelId(Request $request){
+        $model_id = $request->model_id;
+        $lang = App::getLocale();
+        $documents = DB::table('product_has_documents as phd')
+            ->join('products as p','p.pro_id','=','phd.product_id')
+            ->join('product_ducuments as pd','phd.document_id','=','pd.doc_id')
+            ->join('product_ducument_translations as pdt','pdt.doc_fk_id','=','pd.doc_id')
+            ->join('products_documents_categories as pdc','pdc.id','=','pd.cate_id')
+            ->where('pdt.local',$lang)
+            ->where('pdt.file','!=' ,'')
+            ->where('pdt.file','!=' ,null)
+            ->where('p.pro_id',$model_id)
+            ->select('p.pro_code','pd.doc_id','phd.product_id','pdt.name','pdc.title as catename','pdc.slug','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id')
+            ->orderBy('pdc.title','asc')
+            ->get();
+            
+            $documents_cate = DB::table('products_documents_categories as pdc')
+            ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
+            ->where('pdct.local','=', $lang)
+            ->select('pdc.*','pdct.lable')
+            ->orderBy('pdc.title','asc')
+            ->get();
+
+                return response()->json([
+                    'doc' =>$documents,
+                    'cate_doc' =>$documents_cate
+                ], 200);
+
+       }
 }
