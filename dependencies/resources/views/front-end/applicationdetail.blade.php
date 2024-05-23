@@ -198,9 +198,10 @@
 </style>
 @endsection
 @section('meta')
-<title>{{isset($application->meta_title)? $application->meta_title :''}}</title>
+<title>{{isset($application->meta_title)? $application->meta_title : $application->name .' | DeltaPSU'}}</title>
 <meta property="description" content="{{isset($application->meta_description)? $application->meta_description :''}}" />
-<meta property="og:title" content="{{isset($application->meta_title)? $application->meta_title :''}}" />
+<meta property="og:title"
+    content="{{isset($application->meta_title)? $application->meta_title : $application->name .' | DeltaPSU'}}" />
 <meta property="og:description"
     content="{{isset($application->meta_description)? $application->meta_description :''}}" />
 <meta property="og:image"
