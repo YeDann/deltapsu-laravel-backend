@@ -116,6 +116,7 @@ class ApplicationView extends Controller
         $arrfilename = $request->filename;
         $lang_loop = $request->lang_loop;
         $meta_description  =$request->metaDescription;
+        $meta_metaTitle  = $request->metaTitle;
         $h1_title = $request->h1_title;
         $validate = Validator::make($request->all(), [
             'name' => 'required',
@@ -152,6 +153,7 @@ class ApplicationView extends Controller
                     "content_2" => $content_2,
                     "h1" => $h1_title,
                     'meta_description' => $meta_description,
+                    'meta_title' =>$meta_metaTitle,
                     "overview_text" => $overview_text,
                     "local" => $lang
                 ]
@@ -226,6 +228,7 @@ class ApplicationView extends Controller
         $oldfile  =$request->oldfile;
         $arrayfilesave = self::updateoldImage($fileimage ,$oldfile ,$arrfilename);
         $meta_description  =$request->metaDescription;
+        $meta_metaTitle  = $request->metaTitle;
         $h1_title = $request->h1_title;
         // return dd($arrayfilesave);
         $lang_loop = $request->lang_loop;
@@ -279,6 +282,7 @@ class ApplicationView extends Controller
                         "overview" => $overview[$lang],
                         "content" => $content[$lang],
                         'meta_description' => $meta_description[$lang],
+                        'meta_title' =>$meta_metaTitle[$lang],
                         'h1' => $h1_title[$lang],
                         "content_2"=> isset($content_2[$lang])? $content_2[$lang] :$content_2['en'],
                         "overview_text" => $overview_text[$lang],

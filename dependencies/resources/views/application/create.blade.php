@@ -86,6 +86,18 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="">Meta - title</label>
+                                <span>Recommended 30-60 characters</span>
+                                <div id="item-wrap">
+                                    <input id="input-metaTitle-en" onkeyup="countCharacter('metaTitle-en')" type="text"
+                                        class="form-control" name="metaTitle" maxlength="70" value="">
+                                    <div class="text-count">Count Character :
+                                        <span id="count-metaTitle-en">
+                                            0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="">Meta - Description</label>
                                 <span>Recommended 70-155 Character</span>
                                 <div id="item-wrap">
