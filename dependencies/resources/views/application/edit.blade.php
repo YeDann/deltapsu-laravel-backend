@@ -134,7 +134,7 @@
                                             <input id="input-metaTitle-{{$item->name}}"
                                                 onkeyup="countCharacter('metaTitle-{{$item->name}}')" type="text"
                                                 class="form-control" name="metaTitle[{{$item->name}}]" maxlength="70"
-                                                value="{{isset($current->h1)?$current->h1 :''}}">
+                                                value="{{isset($current->meta_title)?$current->meta_title :''}}">
                                             <div class="text-count">Count Character :
                                                 <span id="count-metaTitle-{{$item->name}}">
                                                     0</span>
@@ -148,7 +148,7 @@
                                             <textarea rows="4" id="input-metaDescription-{{$item->name}}"
                                                 onkeyup="countCharacter('metaDescription-{{$item->name}}')"
                                                 name="metaDescription[{{$item->name}}]"
-                                                class="form-control">{{isset($current->meta_title)?$current->meta_title :''}}</textarea>
+                                                class="form-control">{{isset($current->meta_description)?$current->meta_description :''}}</textarea>
                                             <div class="text-count">Count Character :
                                                 <span id="count-metaDescription-{{$item->name}}">
                                                     0</span>
