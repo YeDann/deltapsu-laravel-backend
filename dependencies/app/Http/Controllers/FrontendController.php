@@ -332,6 +332,7 @@ class FrontendController extends Controller
                 $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',1)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
 
@@ -439,6 +440,7 @@ class FrontendController extends Controller
             $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',6)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
                 
@@ -454,6 +456,7 @@ class FrontendController extends Controller
             $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',26)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
             if($sectionId == null){
@@ -497,6 +500,7 @@ class FrontendController extends Controller
             $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',7)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
             return  view('front-end.event')->with('events2' ,$events2)->with('events' ,$events)->with('metatag' ,$metatag);
@@ -551,6 +555,7 @@ class FrontendController extends Controller
             $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',14)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
             
@@ -636,6 +641,7 @@ class FrontendController extends Controller
                 $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',9)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
             return  view('front-end.product-documents')
@@ -664,6 +670,7 @@ class FrontendController extends Controller
             $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',8)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
             return view('front-end.catalog')
@@ -680,6 +687,7 @@ class FrontendController extends Controller
                 $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',29)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
                 return view('front-end.partners')->with('metatag',$metatag); 
@@ -767,6 +775,7 @@ class FrontendController extends Controller
                 $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',22)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
             return view('front-end.manuals')
@@ -780,6 +789,7 @@ class FrontendController extends Controller
             $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',28)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
            return view('front-end.subscribe')->with('metatag' ,$metatag);
@@ -910,6 +920,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',5)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.configurableproduct')
@@ -983,6 +994,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',2)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.allproducts')
@@ -1058,6 +1070,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',2)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.allproducts')
@@ -1246,6 +1259,7 @@ class FrontendController extends Controller
            $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',3)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         //    return dd($products);
@@ -1700,6 +1714,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',13)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.productcoparison')
@@ -1984,6 +1999,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',4)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.productfinder')
@@ -2242,6 +2258,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',10)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         $setType  =  DB::table('email_notification as et')
@@ -2282,6 +2299,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',11)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
     
@@ -2309,6 +2327,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',12)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.find-distributor')
@@ -2327,6 +2346,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',24)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.terms-of-use')
@@ -2345,6 +2365,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',25)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.privacy-policy')
@@ -2382,6 +2403,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',16)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
 
@@ -2404,6 +2426,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',17)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.marketing-resources')
@@ -2435,6 +2458,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',15)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.marketing-resources-downloads')
@@ -2458,6 +2482,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',19)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.sale-kit')->with('metatag' ,$metatag)->with('product_docs' ,$product_docs);
@@ -2478,6 +2503,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',20)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.product-cross-reference')->with('product_docs' ,$product_docs)->with('metatag', $metatag);
@@ -2535,6 +2561,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',21)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
 
@@ -2556,6 +2583,7 @@ class FrontendController extends Controller
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',18)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.success-stories')
@@ -2679,6 +2707,7 @@ class FrontendController extends Controller
             $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',9)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.login-pro-document')
@@ -4501,6 +4530,7 @@ class FrontendController extends Controller
           $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',27)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
            $sectionpin = session('pin');
@@ -5096,6 +5126,7 @@ class FrontendController extends Controller
        $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',26)
+                ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
         return  view('front-end.login-doc-partner')
