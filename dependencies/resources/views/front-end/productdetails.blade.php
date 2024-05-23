@@ -698,7 +698,7 @@
                             <div class="icon-app-detail-new">
                                 @foreach ($series_has_application as $item)
 
-                                <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->id.'-'.$item->name)])}}"
+                                <a href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($item->name)) , 'id' => $item->id])}}"
                                     data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
                                     class="icon btn-icon-app itemhorver{{$item->id}}"
                                     style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
@@ -962,7 +962,7 @@
                             <div class="icon-app-detail">
                                 @foreach ($series_has_application as $item)
 
-                                <a href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$item->id.'-'.$item->name)])}}"
+                                <a href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($item->name)) , 'id' => $item->id])}}"
                                     data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
                                     class="icon btn-icon-app itemhorver{{$item->id}}"
                                     style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>

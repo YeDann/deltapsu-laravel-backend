@@ -92,7 +92,7 @@
                         @foreach ($navapplication as $app)
                         <div class=" ">
                             <a
-                                href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}">
+                                href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($item->name)) , 'id' => $item->applica_id])}}">
                                 <p class="text-pro-link">{{$app->name}}</p>
                             </a>
                         </div>
@@ -372,7 +372,7 @@
                         data-parent="#footer-nav-mobile">
                         @foreach ($navapplication as $app)
                         <a class=" text-normal"
-                            href="{{route('applicationDetail' ,[ 'name' => preg_replace('/\s+/', '-',$app->applica_id.'-'.$app->name)])}}">{{$app->name}}</a>
+                            href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($item->name)) , 'id' => $item->applica_id])}}">{{$app->name}}</a>
                         @endforeach
 
                     </div>
