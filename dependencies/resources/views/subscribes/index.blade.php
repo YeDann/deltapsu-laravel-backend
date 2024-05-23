@@ -35,18 +35,18 @@
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
             <h3 class="block-title">
-        
+
             </h3>
             <div class="block-options">
                 {{-- <a href="{{route('getpageSubscriber')}}" class="btn btn-primary">Import Data</a> --}}
                 <a href="{{route('getpageSubscriber')}}" class="btn btn-primary">Import data country mail</a>
                 <a href="{{route('exportSubscribes')}}" class="btn btn-primary">Export Data</a>
-                    
-               
+
+
             </div>
         </div>
         <div class="block-content block-content-full">
-            <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
+            <table class="table table-bordered table-striped table-vcenter">
                 <thead>
                     <tr>
                         <th class="text-center" style="width: 5%;">No.</th>
@@ -65,20 +65,21 @@
                     <td class="d-none d-sm-table-cell">{{$item->email}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->country_name}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->name}}</td>
-                  
-            
+
+
                     <td class="font-w600 text-center">
-                            @if($item->accept == 1)
-                            <span class="badge badge-success text-uppercase">Accepted</span>
-                            @else
-                            <span class="badge badge-secondary text-uppercase">Not accept</span>
-                            @endif
+                        @if($item->accept == 1)
+                        <span class="badge badge-success text-uppercase">Accepted</span>
+                        @else
+                        <span class="badge badge-secondary text-uppercase">Not accept</span>
+                        @endif
                     </td>
                     <td class="font-w600 text-center">{{$item->created_at}}</td>
                     {{-- <td class="text-center">
                         <div class="">
 
-                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});"
+                                data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
                         </div>
                     </td> --}}
                     </tr>
@@ -86,12 +87,14 @@
                     @endif
                 </tbody>
             </table>
+            {{ $subscribes->links() }}
         </div>
     </div>
 </div>
-{{-- 
- <!-- Vertically Centered Block Modal -->
- <div class="modal" id="modal-block-vcenter" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter" aria-hidden="true">
+{{--
+<!-- Vertically Centered Block Modal -->
+<div class="modal" id="modal-block-vcenter" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="block block-themed block-transparent mb-0">
@@ -103,17 +106,17 @@
                         </button>
                     </div>
                 </div>
-                <form action="{{route('destroySubscribes')}}" method="POST" >
+                <form action="{{route('destroySubscribes')}}" method="POST">
                     {{csrf_field()}}
-                  
-                <div class="block-content">
-                    <input type="hidden" name="itemId" id="itemId">
-                    <p>Data will be lost?</p>
-                </div>
-                <div class="block-content block-content-full text-right bg-light">
-                    <button type="button" class="btn  btn-light" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">OK</button>
-                </div>
+
+                    <div class="block-content">
+                        <input type="hidden" name="itemId" id="itemId">
+                        <p>Data will be lost?</p>
+                    </div>
+                    <div class="block-content block-content-full text-right bg-light">
+                        <button type="button" class="btn  btn-light" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">OK</button>
+                    </div>
                 </form>
             </div>
         </div>

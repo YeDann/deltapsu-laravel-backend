@@ -1,10 +1,6 @@
 @extends('layouts.admin')
 @section('style')
 
-<link rel="stylesheet" href="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.css')}}">
-<link rel="stylesheet" href="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.css')}}">
-<link rel="stylesheet"
-    href="{{asset('backend-asset/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}">
 
 <style>
     #test-label {
@@ -238,19 +234,8 @@
 <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
-<script src="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.min.js')}}"></script>
-<script src="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.js')}}"></script>
 <script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
 <script>
-    $('#eventExcerpt').summernote({
-        tabsize: 2,
-        height: 200
-    });
-    jQuery(function () {
-        Dashmix.helpers(['datepicker', 'summernote']);
-    });
-   
-
     var previewImage = function (input, block) {
         var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/

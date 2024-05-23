@@ -553,7 +553,7 @@
      function selectNewProductByType(){
         var typename = $( "#proType option:selected" ).text();
         var type_id = $('#proType').val();
-        window.open('{{route('producsList')}}/'+typename+'/'+type_id);
+        window.open('{{route('productList')}}/'+typename+'/'+type_id);
      }
 
     function setAllFrist(pro1 ,pro2 , pro3){

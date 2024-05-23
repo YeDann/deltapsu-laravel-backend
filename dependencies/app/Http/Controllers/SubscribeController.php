@@ -24,8 +24,8 @@ class SubscribeController extends Controller
         $subscribes = DB::table('subscribes as s')
         ->select('s.*')
         ->orderBy('s.created_at','desc')
-        ->get();
-        // self::cleanData();
+        ->paginate(15);
+        
         return view('subscribes.index')
         ->with('name','subscribe')
         ->with('menu','')

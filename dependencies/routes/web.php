@@ -48,7 +48,7 @@ Route::get('/products/{cateid?}/{pro_code?}','FrontendController@productsDetails
 Route::get('/products_search/search','FrontendController@resultSearch')->name('resultSearch');
 Route::get('/product/index/{cate_name?}/{cate_id?}/{mainId?}','FrontendController@allproductsByType')->name('allproductsByType');
 Route::get('/product/all-product-categories','FrontendController@allproduct')->name('allproduct');
-Route::get('/product/{cate_name?}/{cate_id?}/{se_name?}/{se_id?}','FrontendController@producsList')->name('producsList');
+Route::get('/product/{cate_name?}/{cate_id?}/{se_name?}/{se_id?}','FrontendController@productList')->name('productList');
 Route::get('/productBySeries/{name?}/{series?}','FrontendController@productBySeries')->name('productBySeries');
 Route::get('/products/download/{cate_name?}/{modelname?}','FrontendController@downloadFIle')->name('downloadFIle');
 Route::post('/loaddocumentPro','FrontendController@loaddocumentPro')->name('loaddocumentPro');
