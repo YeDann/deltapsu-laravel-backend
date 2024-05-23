@@ -1872,9 +1872,9 @@ class FrontendController extends Controller
         $lang = App::getLocale();
         $myArray = explode('-', $name);
         $id =  $myArray[0] ? $myArray[0] : null;
-        $str1 =  $myArray[1] ? $myArray[1] : null ;
-        $str2 =  $myArray[2] ? $myArray[2] : null ;
-        $str3 =  $myArray[3] ? $myArray[3] : null ;
+        $str1 =  isset($myArray[1]) ? $myArray[1] : null ;
+        $str2 =  isset($myArray[2]) ? $myArray[2] : null ;
+        $str3 =  isset($myArray[3]) ? $myArray[3] : null ;
         $string_name = $str1 ? $str1 : null  ;
         if($str1 && $str2){
             $string_name = $str1.'-'.$str2;
