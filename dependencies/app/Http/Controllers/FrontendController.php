@@ -372,20 +372,42 @@ class FrontendController extends Controller
             ->where('ntt.local',$lang)
             ->orderBy('nt.order_seq','asc')
             ->get();
+            $type_id = 0;
+            if(isset($_GET['type-id']) && $_GET['type-id'] != 0 ){
+                $type_id = $this->validateInput($_GET['type-id'],'number',true);
+                $news = DB::table('product_news_has_categories as pnc')
+                ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
+                ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
+                ->join('news_type as nt' ,'nt.id' ,'=','pnc.categories_id')
+                ->join('news_type_translation as ntt' ,'ntt.fk_nt_id' ,'=','nt.id')
+                ->where('ct.local', $lang)
+                ->where('ntt.local', $lang)
+                ->where('c.content_type', '=', 'news')
+                ->where('nt.id', $type_id)
+                ->where('c.status',  1)
+                ->select('c.*' ,'ct.*','ntt.title as cateName','nt.color_type','pnc.categories_id as typeId')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->paginate(15);
+            }else{
+
+                $news = DB::table('product_news_has_categories as pnc')
+                ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
+                ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
+                ->join('news_type as nt' ,'nt.id' ,'=','pnc.categories_id')
+                ->join('news_type_translation as ntt' ,'ntt.fk_nt_id' ,'=','nt.id')
+                ->where('ct.local', $lang)
+                ->where('ntt.local', $lang)
+                ->where('c.content_type', '=', 'news')
+                ->where('c.status',  1)
+                ->select('c.*' ,'ct.*','ntt.title as cateName','nt.color_type','pnc.categories_id as typeId')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->paginate(15);
+
+            }
          
-            $news = DB::table('product_news_has_categories as pnc')
-            ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
-            ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
-            ->join('news_type as nt' ,'nt.id' ,'=','pnc.categories_id')
-            ->join('news_type_translation as ntt' ,'ntt.fk_nt_id' ,'=','nt.id')
-            ->where('ct.local', $lang)
-            ->where('ntt.local', $lang)
-            ->where('c.content_type', '=', 'news')
-            ->where('c.status',  1)
-            ->select('c.*' ,'ct.*','ntt.title as cateName','nt.color_type','pnc.categories_id as typeId')
-            ->orderBy('c.date_publish', 'desc')
-            ->distinct()
-            ->get();
+          
             
             $status = false;
             $currentdate = date('Y-m-d');
@@ -407,12 +429,13 @@ class FrontendController extends Controller
                 
             }
             // return dd($status,$days,$news[0]);
-
+        
             $metatag = DB::table('meta_tag_page as mtp')->where('id',6)->get();
             return  view('front-end.new')
             ->with('metatag' ,$metatag)
             ->with('news_type' ,$news_type)
             ->with('status_eol' ,$status)
+            ->with('type_id' ,$type_id)
             ->with('news' ,$news);
         }
         if($page == 'login'){
