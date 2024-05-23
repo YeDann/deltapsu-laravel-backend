@@ -128,6 +128,20 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label for="">Meta - title</label>
+                                        <span>Recommended 30-60 characters</span>
+                                        <div id="item-wrap">
+                                            <input id="input-metaTitle-{{$item->name}}"
+                                                onkeyup="countCharacter('metaTitle-{{$item->name}}')" type="text"
+                                                class="form-control" name="metaTitle[{{$item->name}}]" maxlength="70"
+                                                value="{{isset($current->h1)?$current->h1 :''}}">
+                                            <div class="text-count">Count Character :
+                                                <span id="count-metaTitle-{{$item->name}}">
+                                                    0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="">Meta - Description</label>
                                         <span>Recommended 70-155 Character</span>
                                         <div id="item-wrap">
