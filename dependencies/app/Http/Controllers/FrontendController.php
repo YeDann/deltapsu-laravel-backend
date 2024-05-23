@@ -2035,7 +2035,8 @@ class FrontendController extends Controller
         ->join('application_translation as apt','ap.id','=','apt.app_id')
         ->where('apt.local','=',$lang)
         ->where('ap.id' , $id)
-        ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,'apt.content','apt.content_2' ,'apt.overview' ,'apt.overview_text')
+        ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,
+        'apt.content','apt.content_2' ,'apt.overview' ,'apt.overview_text' ,'apt.meta_title', 'apt.meta_description')
         ->orderBy('ap.order_seq' ,'asc')
         ->first();
 
