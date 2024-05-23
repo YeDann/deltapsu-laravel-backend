@@ -79,6 +79,7 @@
 @section('meta')
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
+
 <link rel="canonical" href="{{url()->current()}}" />
 <?php 
   $lang_seo = App::getLocale();
@@ -119,64 +120,6 @@
         </div>
     </div>
 </div>
-<?php
-function getDateformat($date){
-       
-       $eng_month_arr = array(
-           "0" => "",
-           "1" => "Jan",
-           "2" => "Feb",
-           "3" => "Mar",
-           "4" => "Apr",
-           "5" => "May",
-           "6" => "Jun",
-           "7" => "Jul",
-           "8" => "Aug",
-           "9" => "Sep",
-           "10" => "Oct",
-           "11" => "Nov",
-           "12" => "Dec"
-       );
-       $publicDate = date_create($date);
-       $pDate = explode("-", $publicDate->format('Y-n-d'));
-       $datearray = [
-           'm' =>  $eng_month_arr[$pDate[1]],
-           'd'=>  $pDate[2],
-           'y' => $pDate[0]
-
-       ];
-       return  $datearray;
-
-     
-}
-function slugify($text)
-            {
-            // replace non letter or digits by -
-            $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
-
-            // trim
-            $text = trim($text, '-');
-
-            // transliterate
-            // if (function_exists('iconv'))
-            // {
-            //     $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-            // }
-
-            // lowercase
-            $text = strtolower($text);
-
-            // remove unwanted characters
-            $text = preg_replace('~[^-\w]+~', '', $text);
-
-            if (empty($text))
-            {
-                return 'n-a';
-            }
-
-            return $text;
-            }
-?>
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
 <?php
 function getDateformat($date){

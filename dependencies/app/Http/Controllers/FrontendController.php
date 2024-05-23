@@ -441,6 +441,7 @@ class FrontendController extends Controller
                 ->where('mtp.id',6)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
+                
             return  view('front-end.new')
             ->with('metatag' ,$metatag)
             ->with('news_type' ,$news_type)
