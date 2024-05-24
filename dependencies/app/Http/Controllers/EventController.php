@@ -173,7 +173,7 @@ class EventController extends Controller
                                 "title" => $title,
                                 "content" => $content,
                                 "description"=>$request->description,
-                                "meta_title" => $metaTitle,
+                                "meta_title" => isset($metaTitle) ? $metaTitle :null ,
                                 "location" =>$request->location,
                                 "meta_description" => $metaDescription,
                                 // "meta_keywords" => $metaKeyword,
@@ -286,7 +286,7 @@ class EventController extends Controller
                     "content" => $content[$lang],
                     "description"=>$description[$lang],
                     "location"=>$location[$lang],
-                    "meta_title" => $meta_title[$lang],
+                    "meta_title" => isset($meta_title[$lang]) ? $meta_title[$lang] :null ,
                     "meta_description" => $meta_des[$lang],
                     // "meta_keywords" => $meta_key[$lang]
                 ]

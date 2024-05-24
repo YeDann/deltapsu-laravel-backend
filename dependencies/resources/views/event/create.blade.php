@@ -141,7 +141,7 @@
                         <hr>
 
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="">Meta - Title</label>
                             <span>Recommended 30-60 Character</span>
                             <div id="item-wrap">
@@ -152,7 +152,7 @@
                                         0</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="form-group">
                             <label for="">Meta - Description</label>
                             <span>Recommended 70-155 Character</span>

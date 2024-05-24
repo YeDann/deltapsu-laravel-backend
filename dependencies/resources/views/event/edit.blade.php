@@ -121,7 +121,7 @@
                                     <textarea name="meta_des[{{$item->name}}]"
                                         class="form-control ">{{isset($current->meta_description) ? $current->meta_description :''}}</textarea>
                                 </div> --}}
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label for="">Meta - Title</label>
                                     <span>Recommended 30-60 Character</span>
                                     <div id="item-wrap">
@@ -135,7 +135,7 @@
                                                 {{strlen($current->meta_title)}}</span>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="form-group">
                                     <label for="">Meta - Description</label>
                                     <span>Recommended 70-155 Character</span>
