@@ -57,6 +57,7 @@ return [
     'asset_url' => env('ASSET_URL', null),
     'recapcha_site_key' => env('RECAPTCHA_SITE_KEY', null),
     'recapcha_secret_key' => env('RECAPTCHA_SECRET_KEY', null),
+    'environment'  => env('APP_ENV', null),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
