@@ -17,19 +17,19 @@ class MetaTagController extends Controller
         ->select('mtp.*')
         ->get();
 
-        // $language = DB::table('language')->get();
-        // foreach($metatags as $meta){
-        //   foreach($language as $lang){
-        //     DB::table('meta_tag_page_translations')->insert(
-        //        [
-        //         "meta_id" =>$meta->id,
-        //         "title" =>$meta->meta_title,
-        //         "description" => $meta->meta_description,
-        //         "local"=>$lang->name,
-        //        ]
-        //       );                     
-        //    }
-        // }
+        $language = DB::table('language')->get();
+        foreach($metatags as $meta){
+          foreach($language as $lang){
+            DB::table('meta_tag_page_translations')->insert(
+               [
+                "meta_id" =>$meta->id,
+                "title" =>$meta->meta_title,
+                "description" => $meta->meta_description,
+                "local"=>$lang->name,
+               ]
+              );                     
+           }
+        }
 
         return view('metatag.index')
         ->with('metatags',$metatags)
