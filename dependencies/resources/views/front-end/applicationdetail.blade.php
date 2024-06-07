@@ -443,6 +443,10 @@
 
             ?>
         </div>
+
+        <div class="text-editor">
+            <?php echo $application->content_2 ?>
+        </div>
         <div class="d-flex">
             <div id="slide-application-mobile" class="owl-carousel owl-theme mx-auto my-4">
                 @foreach ($image as $item)

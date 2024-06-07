@@ -118,6 +118,17 @@
     .border-line-bt-text-editor {
         border: 1px solid #E3EFF8;
     }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
 </style>
 @endsection
 @section('meta')
@@ -166,9 +177,11 @@
         </div>
     </div>
 </div>
-<div class="banner-type-product-all item"
+<div role="img" aria-label="Delta, a leading industrial SMPS manufacturer" class="banner-type-product-all item"
     style="background-image: url('{{asset('frontend-asset/image/Group 1834@2x.png')}}');">
+    <span class="sr-only"> Delta, a leading industrial SMPS manufacturer</span>
 </div>
+
 <div class="box-support-detail mb-5">
     <div class="container mt-3">
 
