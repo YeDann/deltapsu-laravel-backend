@@ -195,6 +195,17 @@
         /* If you want to ignore images inside tables, you can leave this empty */
         max-width: none;
     }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
 </style>
 @endsection
 @section('meta')
@@ -249,15 +260,27 @@
     </div>
 </div>
 <div class="visible-up-922">
-    <div class="banner-type-product-all-new item "
-        style="background:linear-gradient(90deg, rgba(68,68,68,0.45702030812324934) 0%, rgba(255,255,255,0) 50%),url('{{config('app.url')}}/medias/categories/{{$application->banner}}') center no-repeat; background-size: cover;">
-        {{-- style="background-color: #818181;background-image: url('');" --}}
-        <div class="container">
-            <div class="box-banner-pro-type-all-new ">
-                <div class="text-middle ">
-                    <h1 class="text-title-white">{{$application->name}}</h1>
-                    <div class="text-white">
-                        <?php
+    @if($application->id == 7)
+    <div role="img" aria-label="Delta provides AC-DC power supplies for medical applications"
+        class="banner-type-product-all-new item " style="background:linear-gradient(90deg, rgba(68,68,68,0.45702030812324934) 0%, rgba(255,255,255,0)
+        50%),url('{{config('app.url')}}/medias/categories/{{$application->banner}}') center no-repeat; background-size:
+        cover;">
+        <span class="sr-only">Delta provides AC-DC power supplies for medical applications</span>
+        @else
+        <div {{$application->id}} class="banner-type-product-all-new item "
+            style="background:linear-gradient(90deg, rgba(68,68,68,0.45702030812324934) 0%, rgba(255,255,255,0)
+            50%),url('{{config('app.url')}}/medias/categories/{{$application->banner}}') center no-repeat;
+            background-size:
+            cover;">
+            @endif
+
+            {{-- style="background-color: #818181;background-image: url('');" --}}
+            <div class="container">
+                <div class="box-banner-pro-type-all-new ">
+                    <div class="text-middle ">
+                        <h1 class="text-title-white">{{$application->name}}</h1>
+                        <div class="text-white">
+                            <?php
                         $str = $application->overview_text;
                         $st = explode("\n", $str);
                         for ($k = 0; $k < count($st); $k++) {
@@ -266,30 +289,53 @@
                                     . '</div>';
                         }
                         ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="box-application-detail pt-5 ">
-        <div class="container">
-            <div class="row">
-                <div class="col-6 image-slide">
-                    <div id="slide-application" class="owl-carousel owl-theme">
-                        @foreach ($image as $item)
-                        <div class="item {{($loop->iteration == 1)?" active":""}}"
-                            style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="col-6 app-text-detail">
-                    {{-- <h3 class="text-color-delta">{{$staticContent['Application_Description']}}</h3> --}}
-                    <?php echo $application->content ?>
+        <div class="box-application-detail pt-5 ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 image-slide">
+                        <div id="slide-application" class="owl-carousel owl-theme">
+                            @if($application->id == 7)
+                            @foreach ($image as $item)
+                            @if($loop->iteration == 1)
+                            <div role="img" aria-label="Find IEC 60601-1 power supply for medical equipment "
+                                class="item {{($loop->iteration == 1)?" active":""}}"
+                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                <span class="sr-only">Find IEC 60601-1 power supply for medical equipment </span>
+                            </div>
+                            @elseif($loop->iteration == 2)
+                            <div role="img" aria-label="Delta offers medically approved power supply solutions"
+                                class="item {{($loop->iteration == 1)?" active":""}}"
+                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                <span class="sr-only">Delta offers medically approved power supply solutions</span>
+                            </div>
+                            @else
+                            <div class="item {{($loop->iteration == 1)?" active":""}}"
+                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                            </div>
+                            @endif
 
-                    <h3 class="text-color-delta mt-3">{{$staticContent['Typical_Applications']}}</h3>
-                    <div class="row type-applications">
-                        <?php
+                            @endforeach
+                            @else
+                            @foreach ($image as $item)
+                            <div class="item {{($loop->iteration == 1)?" active":""}}"
+                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                            </div>
+                            @endforeach
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-6 app-text-detail">
+                        {{-- <h3 class="text-color-delta">{{$staticContent['Application_Description']}}</h3> --}}
+                        <?php echo $application->content ?>
+
+                        <h3 class="text-color-delta mt-3">{{$staticContent['Typical_Applications']}}</h3>
+                        <div class="row type-applications">
+                            <?php
                         $str = $application->overview;
                         $st = explode("\n", $str);
 
@@ -318,85 +364,86 @@
 
                         ?>
 
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="content">
-                        <?php echo $application->content_2 ?>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <div class="box-relate-product ">
-        <div class="container">
-            <h2 class="text-title-delta">{{$staticContent['Related_Product_Series']}}</h2>
-            <div id="related-product" class="owl-carousel owl-theme ft-products-body owl-loaded owl-drag mr-b-12px">
-                @foreach ($relatedApp as $serie)
-                <div class="item-related d-flex">
-                    <a style="color:inherit;" class=""
-                        href="{{ route('productBySeries',[$serie->title,$serie->se_id])}}">
-                        <div class="m-auto">
-                            {{-- <img src="{{asset('frontend-asset/image/CliQ VA@2x.png')}}" alt=""> --}}
-                            @if(isset($serie->image))
-                            <img src="{{config('app.url')}}/medias/categories/{{$serie->image}}" alt="">
-                            @else
-                            <img src="{{asset('frontend-asset/image/blank.png')}}" alt="">
-                            @endif
-                            <p class="text-title-twenty-dark">{{$serie->title}}</p>
-
-                            {{-- <p class="text-hover">{!!
-                                iconv_substr(strip_tags($serie->overview_content),0,90,'UTF-8') !!} ...</p> --}}
                         </div>
-                    </a>
+                    </div>
                 </div>
-                @endforeach
+                <div class="row">
+                    <div class="col-12">
+                        <div class="content">
+                            <?php echo $application->content_2 ?>
+                        </div>
+                    </div>
+                </div>
 
             </div>
-
-            <p style="color:#9098a9;" class="text-center">{{$staticContent['This_is_general_information']}}</p>
-            <div class="in-div-center mt-4 mb-5">
-                <a href="{{route('contactSupport')}}" class="btn btn-border-delta">{{$staticContent['contact_us']}}</a>
-            </div>
-
         </div>
-    </div>
-    <div class="box-other-applications pb-5 ">
-        <div class="container">
-            <h2 class="text-title-delta">{{$staticContent['Other_Application']}}</h2>
-            <div class="row">
-                @foreach ($otherapp as $app)
-                <div class="col-lg-3">
-                    <a href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}"
-                        class="other-applications-list media">
+        <div class="box-relate-product ">
+            <div class="container">
+                <h2 class="text-title-delta">{{$staticContent['Related_Product_Series']}}</h2>
+                <div id="related-product" class="owl-carousel owl-theme ft-products-body owl-loaded owl-drag mr-b-12px">
+                    @foreach ($relatedApp as $serie)
+                    <div class="item-related d-flex">
+                        <a style="color:inherit;" class=""
+                            href="{{ route('productBySeries',[$serie->title,$serie->se_id])}}">
+                            <div class="m-auto">
+                                {{-- <img src="{{asset('frontend-asset/image/CliQ VA@2x.png')}}" alt=""> --}}
+                                @if(isset($serie->image))
+                                <img src="{{config('app.url')}}/medias/categories/{{$serie->image}}" alt="">
+                                @else
+                                <img src="{{asset('frontend-asset/image/blank.png')}}" alt="">
+                                @endif
+                                <p class="text-title-twenty-dark">{{$serie->title}}</p>
 
-                        <div class="app-middle-box align-self-center">
-                            <img class="mr-3" src="{{config('app.url')}}/medias/categories/{{$app->color_icon}}">
-                            <div class="h-text-app">
-                                <h6 class="text-title-dark">{{$app->name}} </h6>
+                                {{-- <p class="text-hover">{!!
+                                    iconv_substr(strip_tags($serie->overview_content),0,90,'UTF-8') !!} ...</p> --}}
                             </div>
-                        </div>
+                        </a>
+                    </div>
+                    @endforeach
 
-
-                    </a>
                 </div>
 
-                @endforeach
+                <p style="color:#9098a9;" class="text-center">{{$staticContent['This_is_general_information']}}</p>
+                <div class="in-div-center mt-4 mb-5">
+                    <a href="{{route('contactSupport')}}"
+                        class="btn btn-border-delta">{{$staticContent['contact_us']}}</a>
+                </div>
+
+            </div>
+        </div>
+        <div class="box-other-applications pb-5 ">
+            <div class="container">
+                <h2 class="text-title-delta">{{$staticContent['Other_Application']}}</h2>
+                <div class="row">
+                    @foreach ($otherapp as $app)
+                    <div class="col-lg-3">
+                        <a href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}"
+                            class="other-applications-list media">
+
+                            <div class="app-middle-box align-self-center">
+                                <img class="mr-3" src="{{config('app.url')}}/medias/categories/{{$app->color_icon}}">
+                                <div class="h-text-app">
+                                    <h6 class="text-title-dark">{{$app->name}} </h6>
+                                </div>
+                            </div>
+
+
+                        </a>
+                    </div>
+
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="invisible-up-922 mb-4">
-    <div class="banner-type-product-all"
-        style="background-image: url('{{config('app.url')}}/medias/categories/{{$application->banner}}'); height:250px !important;">
-    </div>
-    <div class="container">
-        <h3 class="text-center text-color-delta mt-4">{{$application->name}}</h3>
-        <p class="text-center ">
-            <?php
+    <div class="invisible-up-922 mb-4">
+        <div class="banner-type-product-all"
+            style="background-image: url('{{config('app.url')}}/medias/categories/{{$application->banner}}'); height:250px !important;">
+        </div>
+        <div class="container">
+            <h3 class="text-center text-color-delta mt-4">{{$application->name}}</h3>
+            <p class="text-center ">
+                <?php
             $str = $application->overview_text;
             $st = explode("\n", $str);
             for ($k = 0; $k < count($st); $k++) {
@@ -405,16 +452,16 @@
                         . '</div>';
             }
             ?>
-        </p>
+            </p>
 
 
-        {{-- <h4 class="text-color-delta">{{$staticContent['Application_Description']}}</h4> --}}
-        <div class="text-editor">
-            <?php echo $application->content ?>
-        </div>
-        <h4 class="text-color-delta mt-4">{{$staticContent['Typical_Applications']}}</h4>
-        <div class="row type-applications">
-            <?php
+            {{-- <h4 class="text-color-delta">{{$staticContent['Application_Description']}}</h4> --}}
+            <div class="text-editor">
+                <?php echo $application->content ?>
+            </div>
+            <h4 class="text-color-delta mt-4">{{$staticContent['Typical_Applications']}}</h4>
+            <div class="row type-applications">
+                <?php
             $str = $application->overview;
             $st = explode("\n", $str);
 
@@ -442,75 +489,79 @@
                 echo '</ul>';
 
             ?>
-        </div>
-
-        <div class="text-editor">
-            <?php echo $application->content_2 ?>
-        </div>
-        <div class="d-flex">
-            <div id="slide-application-mobile" class="owl-carousel owl-theme mx-auto my-4">
-                @foreach ($image as $item)
-                <div class="item {{($loop->iteration == 1)?" active":""}}"
-                    style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
-                </div>
-                @endforeach
             </div>
-        </div>
-        <h3 class="text-title-delta">{{$staticContent['Related_Product_Series']}}</h3>
-        <div>
 
-        </div>
-        <div id="related-product-mobile" class="owl-carousel owl-theme ft-products-body owl-loaded owl-drag mr-b-12px">
-            @foreach ($relatedApp as $serie)
-            <div class="item-related d-flex">
-                <a style="color:inherit;" class="" href="{{ route('productBySeries',[$serie->title,$serie->se_id])}}">
-                    <div class="m-auto">
-                        @if(isset($serie->image))
-                        <img src="{{config('app.url')}}/medias/categories/{{$serie->image}}" alt="">
-                        @else
-                        <img src="{{asset('frontend-asset/image/blank.png')}}" alt="">
-                        @endif
-                        <p class="text-title-twenty-dark">{{$serie->title}}</p>
-                        {{-- <p class="text-hover">{!! iconv_substr(strip_tags($serie->overview_content),0,90,'UTF-8')
-                            !!} ...</p> --}}
+            <div class="text-editor">
+                <?php echo $application->content_2 ?>
+            </div>
+            <div class="d-flex">
+                <div id="slide-application-mobile" class="owl-carousel owl-theme mx-auto my-4">
+                    @foreach ($image as $item)
+                    <div class="item {{($loop->iteration == 1)?" active":""}}"
+                        style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
                     </div>
-                    <div class="d-"></div>
-                </a>
+                    @endforeach
+                </div>
             </div>
-            @endforeach
-        </div>
-        <p style="color:#9098a9;" class="text-center mt-4">{{$staticContent['This_is_general_information']}}</p>
-        <div class="in-div-center my-3">
-            <a href="{{route('contactSupport')}}" class="btn btn-border-delta mb-3">{{$staticContent['contact_us']}}</a>
-        </div>
-        <h3 class="text-title-delta">{{$staticContent['Other_Application']}}</h3>
-        <div class="container">
-            <div class="row">
-                @foreach ($otherapp as $app)
+            <h3 class="text-title-delta">{{$staticContent['Related_Product_Series']}}</h3>
+            <div>
 
-                <div class="col-md-6">
-                    <a href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}"
-                        class="other-applications-grid-mobile-list">
-                        <img class="center my-2" src="{{config('app.url')}}/medias/categories/{{$app->color_icon}}">
-                        <h6 class="text-title-dark text-center">{{$app->name}}</h6>
+            </div>
+            <div id="related-product-mobile"
+                class="owl-carousel owl-theme ft-products-body owl-loaded owl-drag mr-b-12px">
+                @foreach ($relatedApp as $serie)
+                <div class="item-related d-flex">
+                    <a style="color:inherit;" class=""
+                        href="{{ route('productBySeries',[$serie->title,$serie->se_id])}}">
+                        <div class="m-auto">
+                            @if(isset($serie->image))
+                            <img src="{{config('app.url')}}/medias/categories/{{$serie->image}}" alt="">
+                            @else
+                            <img src="{{asset('frontend-asset/image/blank.png')}}" alt="">
+                            @endif
+                            <p class="text-title-twenty-dark">{{$serie->title}}</p>
+                            {{-- <p class="text-hover">{!!
+                                iconv_substr(strip_tags($serie->overview_content),0,90,'UTF-8')
+                                !!} ...</p> --}}
+                        </div>
+                        <div class="d-"></div>
                     </a>
                 </div>
-
                 @endforeach
             </div>
+            <p style="color:#9098a9;" class="text-center mt-4">{{$staticContent['This_is_general_information']}}</p>
+            <div class="in-div-center my-3">
+                <a href="{{route('contactSupport')}}"
+                    class="btn btn-border-delta mb-3">{{$staticContent['contact_us']}}</a>
+            </div>
+            <h3 class="text-title-delta">{{$staticContent['Other_Application']}}</h3>
+            <div class="container">
+                <div class="row">
+                    @foreach ($otherapp as $app)
+
+                    <div class="col-md-6">
+                        <a href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($app->name)) , 'id' => $app->applica_id])}}"
+                            class="other-applications-grid-mobile-list">
+                            <img class="center my-2" src="{{config('app.url')}}/medias/categories/{{$app->color_icon}}">
+                            <h6 class="text-title-dark text-center">{{$app->name}}</h6>
+                        </a>
+                    </div>
+
+                    @endforeach
+                </div>
+            </div>
+
         </div>
 
     </div>
 
-</div>
+
+    @endsection
 
 
-@endsection
-
-
-@section('js')
-<script>
-    $(document).ready(function() {
+    @section('js')
+    <script>
+        $(document).ready(function() {
         $("#slide-application").owlCarousel({
             loop: true,
             navigation: true, // Show next and prev buttons
@@ -581,5 +632,5 @@
         });
     });
     
-</script>
-@endsection
+    </script>
+    @endsection
