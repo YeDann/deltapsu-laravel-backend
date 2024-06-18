@@ -444,11 +444,11 @@
 										</label>
 										<select class="form-control" id="logic" onchange="getToSummary()">
 											<option selected="selected" value="0">
-												{{$staticContent['Nomal_Logic_&_Normal_Fan_Direction']}}
+												{{$staticContent['Normal_Logic_&_Normal_Fan_Direction']}}
 											</option>
 											<option value="1">
 												{{$staticContent['Reversed_Logic_&_Normal_Fan_Direction']}}</option>
-											<option value="2">{{$staticContent['Nomal_Logic_&_Reversed_Fan_Direction']}}
+											<option value="2">{{$staticContent['Normal_Logic_&_Reversed_Fan_Direction']}}
 											</option>
 											<option value="3">
 												{{$staticContent['Reversed_Logic_&_Reversed_Fan_Direction']}}</option>
@@ -1209,7 +1209,15 @@ function selectCountry(){
 	$("#cx-sale-en").click(function(){
 
 	});
+
 	var model_name = <?=$model?>;
+	function getLastNumber(str) {
+    	var matches = str.match(/\d+$/); 
+    	return matches ? parseInt(matches[0], 10) : 0;
+	}
+	model_name.sort((a,b) => getLastNumber(a.product_code) - getLastNumber(b.product_code))
+
+
 	var model_alldata = <?=$model_alldata?>;
 	var connectors_images = <?=$connectors_images?>;
 	var paralls_cons = [];
@@ -1419,7 +1427,7 @@ function selectCountry(){
 				$("#terminal").append(new Option("C for C22", "3"));
 
 				$('#logic').empty();
-				$("#logic").append(new Option("Nomal Logic & Normal Fan Direction", "0"));
+				$("#logic").append(new Option("Normal Logic & Normal Fan Direction", "0"));
 				$("#logic").append(new Option("Reversed Logic & Normal Fan Direction", "1"));
 				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description_MEG-3K0A9']}}');
 		}else if(model_alldata[index]['max_power'] == 700){
@@ -1429,7 +1437,7 @@ function selectCountry(){
 				$("#terminal").append(new Option("C for C14", "3"));
 
 				$('#logic').empty();
-				$("#logic").append(new Option("Nomal Logic & Normal Fan Direction", "0"));
+				$("#logic").append(new Option("Normal Logic & Normal Fan Direction", "0"));
 				$("#logic").append(new Option("Reversed Logic & Normal Fan Direction", "1"));
 				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description']}}');
 		   
@@ -1441,7 +1449,7 @@ function selectCountry(){
 				$("#terminal").append(new Option("C for C14", "3"));
 
 				$('#logic').empty();
-				$("#logic").append(new Option("Nomal Logic & Normal Fan Direction", "0"));
+				$("#logic").append(new Option("Normal Logic & Normal Fan Direction", "0"));
 				$("#logic").append(new Option("Reversed Logic & Normal Fan Direction", "1"));
 				$("#logic").append(new Option("Normal Logic & Reversed Fan Direction ", "2"));
 				$("#logic").append(new Option("Reversed Logic & Reversed Fan Direction", "3"));
