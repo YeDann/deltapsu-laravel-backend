@@ -197,6 +197,7 @@
     <div class="box-product-finder mb-5">
         <div class="container">
             <h1 class="text-title-delta">{{$staticContent['Product_Selector']}}</h1>
+            <h4 class="d-flex justify-content-center mb-4 text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
             <div class="row">
                 @foreach($subCategories as $sub)
                 <div class="col-lg-4 col-md-6 mb-4">

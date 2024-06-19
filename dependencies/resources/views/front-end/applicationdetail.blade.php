@@ -261,7 +261,7 @@
 </div>
 <div class="visible-up-922">
     @if($application->id == 7)
-    <div role="img" aria-label="Delta provides AC-DC power supplies for medical applications"
+    <div role="img" alt="Delta provides AC-DC power supplies for medical applications"
         class="banner-type-product-all-new item " style="background:linear-gradient(90deg, rgba(68,68,68,0.45702030812324934) 0%, rgba(255,255,255,0)
         50%),url('{{config('app.url')}}/medias/categories/{{$application->banner}}') center no-repeat; background-size:
         cover;">
@@ -273,12 +273,14 @@
             background-size:
             cover;">
             @endif
-
             {{-- style="background-color: #818181;background-image: url('');" --}}
             <div class="container">
                 <div class="box-banner-pro-type-all-new ">
                     <div class="text-middle ">
                         <h1 class="text-title-white">{{$application->name}}</h1>
+                        <div style="width: 440px" >
+                            <p class="text-title-white">{{isset($metatag[0]->h1) ? $metatag[0]->h1 : ''}}</p>
+                        </div>
                         <div class="text-white">
                             <?php
                         $str = $application->overview_text;
@@ -302,13 +304,13 @@
                             @if($application->id == 7)
                             @foreach ($image as $item)
                             @if($loop->iteration == 1)
-                            <div role="img" aria-label="Find IEC 60601-1 power supply for medical equipment "
+                            <div role="img" alt="Find IEC 60601-1 power supply for medical equipment"
                                 class="item {{($loop->iteration == 1)?" active":""}}"
                                 style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
                                 <span class="sr-only">Find IEC 60601-1 power supply for medical equipment </span>
                             </div>
                             @elseif($loop->iteration == 2)
-                            <div role="img" aria-label="Delta offers medically approved power supply solutions"
+                            <div role="img" alt="Delta offers medically approved power supply solutions"
                                 class="item {{($loop->iteration == 1)?" active":""}}"
                                 style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
                                 <span class="sr-only">Delta offers medically approved power supply solutions</span>

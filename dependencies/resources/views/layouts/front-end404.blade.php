@@ -25,12 +25,12 @@ $langch = str_replace('_', '-', app()->getLocale());
   <link rel="shortcut icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
   <link rel="icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
   <!-- CSRF Token -->
-
+  <meta name="robots" content="index, follow">
   <meta name="csrf-token" content="{{ csrf_token() }}">
   @yield('meta')
   <!-- Bootstrap CSS -->
 
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all-master.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello3.css')}}" />
   <link rel="stylesheet" type="text/css"
     href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" />
@@ -49,7 +49,7 @@ $langch = str_replace('_', '-', app()->getLocale());
       border: 1px solid #444444;
       background-position: right 50%;
       background-repeat: no-repeat;
-      background-image: url('{{asset(' frontend-asset/image/arrow-down.svg')}}');
+      background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
       padding: .375rem 1.5rem;
 
     }
@@ -227,9 +227,11 @@ $langch = str_replace('_', '-', app()->getLocale());
   </script>
 
   <!-- Cookie Consent by https://www.cookiewow.com -->
+  @if(config('app.environment') == 'production')
   <script type="text/javascript" src="https://cookiecdn.com/cwc.js"></script>
   <script id="cookieWow" type="text/javascript" src="https://cookiecdn.com/configs/pQrmuDVDXDn7zcMpZAhB6Mum"
     data-cwcid="pQrmuDVDXDn7zcMpZAhB6Mum"></script>
+  @endif
 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
@@ -268,13 +270,44 @@ $langch = str_replace('_', '-', app()->getLocale());
 
     cwcCookieWrapper()
   </script>
+  <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Delta Electronics (Thailand) Public Company Limited",
+    "alternateName": "Delta",
+    "url": "https://www.deltapsu.com/en",
+    "logo": "https://www.deltapsu.com/frontend-asset/image/DeltaPSU-Logo.svg",
+    "description": "World’s leading provider of power products and solutions.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+6627092800",
+      "contactType": "sales",
+      "areaServed": "TH",
+      "availableLanguage": "Thai"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "909 Soi 9, Moo 4, Bangpoo Industrial Estate (E.P.Z.), Pattana 1 Rd., T. Prakasa,",
+      "addressLocality": "Mueang Samut Prakan District",
+      "addressRegion": "Samut Prakarn",
+      "postalCode": "10280",
+      "addressCountry": "TH"
+    },
+    "sameAs": [
+      "https://www.facebook.com/DeltaPSU/",
+      "https://www.linkedin.com/company/deltapsu/"
+    ]
+  }
+  </script>
+
 
 </head>
 
 <body>
   @include('layouts.header-front')
   @yield('container')
-  {{-- @include('layouts.footer') --}}
+  @include('layouts.footer')
 
   <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
   <script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
@@ -313,16 +346,31 @@ $langch = str_replace('_', '-', app()->getLocale());
     document.body.appendChild(script);
   }
   </script>
+
   <script type="text/javascript">
     var verifyCallbackData = function(response) {
-    $('#keyrecapgui').val(response);
-  };
+      $('#keyrecapgui').val(response);
+    };
+    var verifyCallbackDataSub = function(response) {
+      $('#key_input_subscribe').val(response);
+    };
+    var verifyCallback = function(response) {
+        $('#keyrecap').val(response);
+     };
   var onloadCallback = function() {
     grecaptcha.render('recap_vertifygetGui', {
-    //  'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-       'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
-     //'sitekey' : '6LfGGV0pAAAAAKeEC0S7wzsPbAM1fvB3Tp2wtSYJ',
+      'sitekey' : '{{config('app.recapcha_site_key')}}',
       'callback' : verifyCallbackData,
+      'theme' : 'light'
+    });
+    grecaptcha.render('recap_vertify_subscribe', {
+      'sitekey' : '{{config('app.recapcha_site_key')}}',
+      'callback' : verifyCallbackDataSub,
+      'theme' : 'light'
+    });
+    grecaptcha.render('recap_vertify', {
+       'sitekey' : '{{config('app.recapcha_site_key')}}',
+      'callback' : verifyCallback,
       'theme' : 'light'
     });
   };
@@ -421,6 +469,7 @@ if (!Array.prototype.findIndex) {
               document.getElementById("inp3").focus();
               $('#cxacceptPrivacy_data').val(0);
               $("#cxacceptPrivacy_data").prop("checked",false);
+             
           }
             $(document).ready(function() {
                 $(".megamenu").on("click", function(e) {

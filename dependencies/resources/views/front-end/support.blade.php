@@ -177,7 +177,7 @@
         </div>
     </div>
 </div>
-<div role="img" aria-label="Delta, a leading industrial SMPS manufacturer" class="banner-type-product-all item"
+<div role="img" alt="Delta, a leading industrial SMPS manufacturer" class="banner-type-product-all item"
     style="background-image: url('{{asset('frontend-asset/image/Group 1834@2x.png')}}');">
     <span class="sr-only"> Delta, a leading industrial SMPS manufacturer</span>
 </div>
@@ -186,6 +186,7 @@
     <div class="container mt-3">
 
         <h1 class="text-title-delta visible-tablets-up">{{$staticContent['what_type_of_support']}}</h1>
+        <h4 class="d-flex justify-content-center text-center" style="margin-bottom: 2.5rem; margin-top: -0.5rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
         <h3 class="text-title-delta visible-mobile">{{$staticContent['what_type_of_support']}}</h3>
         <p>{{$staticContent['support_from_up_text']}}</p>
 

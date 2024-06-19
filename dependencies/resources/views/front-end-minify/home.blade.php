@@ -188,7 +188,11 @@
             @endforeach
         </div>
     </div>
+    <div class="d-flex justify-content-center mt-4">
+        <h4 class="text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
+    </div>
 </div>
+
 <div class="show-768-only">
     <div class="padding-top-content">
     </div>
@@ -228,7 +232,6 @@
             </div>
             @endforeach
         </div>
-
     </div>
 </div>
 <!-- selecter -->

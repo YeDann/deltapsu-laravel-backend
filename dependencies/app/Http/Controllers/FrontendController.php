@@ -336,6 +336,8 @@ class FrontendController extends Controller
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
 
+                //return dd($metatag);
+
                 $series = DB::table('least_series_product as ls')
                 ->join('series as s' ,'s.se_id' ,'=' ,'ls.series_id')
                 ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
@@ -815,9 +817,9 @@ class FrontendController extends Controller
             }
             return redirect()->route('contactSupport'); 
         } 
-     
-        return redirect()->route('index','home'); 
-        // abort(404);
+        // return dd('ddd');
+        // return redirect()->route('index','home'); 
+        abort(404);
          
     }
     private function getDataNew($query ,$type){
@@ -2002,7 +2004,8 @@ class FrontendController extends Controller
                 ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
-        return  view('front-end.productfinder')
+                //return dd ($metatag)
+         return  view('front-end.productfinder')
         ->with('subCategories',$subCategories)->with('metatag',$metatag);
     }
     public function applicationDetail($namePram){
