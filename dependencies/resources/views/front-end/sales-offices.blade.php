@@ -61,6 +61,7 @@
     <div class="container">
         <h1 class="text-title-delta visible-tablets-up">{{$staticContent['sales_offices']}}</h1>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['sales_offices']}}</h3>
+        <h4 class="d-flex justify-content-center mb-4 text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
         <div id="sales-offices" class="sales-offices-type">
             @foreach ($continents as $item)
             <div class="box-for-collap">

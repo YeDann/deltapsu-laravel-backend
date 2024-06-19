@@ -189,6 +189,7 @@
     <div id="contentLodpdf" class="box-comparison mb-5">
         <div class="container">
             <h1 class="text-title-delta">{{$staticContent['product_comparison']}}</h1>
+            <h4 class="d-flex justify-content-center mb-4 text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
             <p class="text-center text-sixteen-dark">{{$staticContent['Type']}}</p>
             <div class="d-flex mb-3">
                 <div class="mx-auto">
@@ -340,6 +341,7 @@
     </div>
     <div class="container">
         <h3 class="text-title-delta">{{$staticContent['product_comparison']}}</h3>
+        <h4 class="d-flex justify-content-center mb-4 text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
         <h5 class="text-center">{{$staticContent['Type']}}</h5>
         <div class="d-flex justify-content-center mb-2">
             <select id="proType_mobile" class="form-control w-100 pr-4" onchange="chageProductTypeMobile();">

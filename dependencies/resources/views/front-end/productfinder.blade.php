@@ -225,6 +225,7 @@
     <div class="padding-top-content-breadcrumb"></div>
     <div class="box-product-finder container mb-5">
         <h3 class="text-title-delta">{{$staticContent['Product_Selector']}}</h3>
+        <h4 class="d-flex justify-content-center mb-4 text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>  
         <div class="box-product-finder-grid">
             @foreach($subCategories as $sub)
             <a href="{{ route('productList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])}}"

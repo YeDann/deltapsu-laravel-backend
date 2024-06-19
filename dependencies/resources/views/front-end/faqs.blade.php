@@ -87,6 +87,7 @@
     <div class="container">
         <h2 class="text-title-delta visible-tablets-up">{{$staticContent['FAQs']}}</h2>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['FAQs']}}</h3>
+        <h4 class="d-flex justify-content-center mb-4 text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
         <div class="in-div-center">
             <div class="mb-5">
                 <select id="catefaqId" class="form-control" onchange="selectCategories();">
