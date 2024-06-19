@@ -41,7 +41,6 @@ class ApplicationView extends Controller
            }else{
             $language = DB::table('language')->where('name',$userdata->lang)->get();
            }  
-
         return view('application.index')
         ->with('name','application')
         ->with('menu','')

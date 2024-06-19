@@ -2039,9 +2039,11 @@ class FrontendController extends Controller
         ->where('apt.local','=',$lang)
         ->where('ap.id' , $id)
         ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,
-        'apt.content','apt.content_2' ,'apt.overview' ,'apt.overview_text' ,'apt.meta_title', 'apt.meta_description')
+        'apt.content','apt.content_2' ,'apt.overview' ,'apt.overview_text' ,'apt.meta_title', 'apt.meta_description' ,'h1')
         ->orderBy('ap.order_seq' ,'asc')
         ->first();
+
+     
 
         $image = DB::table('more_image_app as mp')
         ->where('mp.app_id' ,$id)

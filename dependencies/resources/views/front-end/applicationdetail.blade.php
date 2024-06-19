@@ -279,7 +279,7 @@
                     <div class="text-middle ">
                         <h1 class="text-title-white">{{$application->name}}</h1>
                         <div style="width: 440px" >
-                            <p class="text-title-white">{{isset($metatag[0]->h1) ? $metatag[0]->h1 : ''}}</p>
+                            <p class="text-title-white">{{isset($application->h1) ? $application->h1 : ''}}</p>
                         </div>
                         <div class="text-white">
                             <?php
