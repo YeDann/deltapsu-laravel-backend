@@ -305,7 +305,7 @@
 	<div class="container">
 		<h1 class="text-title-delta visible-up-922">{{$staticContent['configurable_power_selector']}}</h1>''
 		<h3 class="text-title-delta invisible-up-922">{{$staticContent['configurable_power_selector']}}</h3>
-		<h4 class="d-flex justify-content-center mb-2 text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
+		<h4 class="d-flex justify-content-center mb-2 text-center" style="margin-top: -2rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
 		<div id="configurable">
 			<h3><b class="font-size-24 ">01</b><br>{{$staticContent['Select_Model']}}</h3>
 			<section>

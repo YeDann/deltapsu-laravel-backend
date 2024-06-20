@@ -116,7 +116,7 @@ function getDateformat($date){
     <div class="container">
         <h2 class="text-title-delta visible-tablets-up"> {{$staticContent['Marketing_Resources_Downloads']}}</h2> 
         <h3 class="text-title-delta visible-mobile">{{$staticContent['Marketing_Resources_Downloads']}}</h3> 
-        <h4 class="d-flex justify-content-center mb-4 text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
+        <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem;">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
         <select id="select-catalogs" onchange="selectdocumentType();" class="select-minimize invisible-up-922">
             @foreach ($margetCate as $cate)
             <option value="{{$cate->cate_id}}">{{$cate->name}}</option>

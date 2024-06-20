@@ -197,7 +197,7 @@
     <div class="box-product-finder mb-5">
         <div class="container">
             <h1 class="text-title-delta">{{$staticContent['Product_Selector']}}</h1>
-            <h4 class="d-flex justify-content-center mb-4 text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
+            <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
             <div class="row">
                 @foreach($subCategories as $sub)
                 <div class="col-lg-4 col-md-6 mb-4">
@@ -225,7 +225,7 @@
     <div class="padding-top-content-breadcrumb"></div>
     <div class="box-product-finder container mb-5">
         <h3 class="text-title-delta">{{$staticContent['Product_Selector']}}</h3>
-        <h4 class="d-flex justify-content-center mb-4 text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>  
+        <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>  
         <div class="box-product-finder-grid">
             @foreach($subCategories as $sub)
             <a href="{{ route('productList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])}}"

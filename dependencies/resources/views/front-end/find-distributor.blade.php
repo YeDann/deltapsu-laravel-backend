@@ -85,7 +85,7 @@
     <div class="container">
         <h2 class="text-title-delta visible-tablets-up">{{$staticContent['find_a_distributor']}}</h2>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['find_a_distributor']}}</h3>
-        <h4 class="d-flex justify-content-center mb-4 text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
+        <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
         <div id="find-distributor" class="find-distributor-type">
 
             @foreach ($continents as $item)

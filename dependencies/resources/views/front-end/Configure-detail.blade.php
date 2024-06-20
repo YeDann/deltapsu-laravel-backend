@@ -49,7 +49,7 @@
     <div class="container">
         <h1 class="text-title-delta visible-up-922">{{$staticContent['Configurable_Power']}}</h1>
         <h3 class="text-title-delta invisible-up-922">{{$staticContent['Configurable_Power']}}</h3>
-        <h4 class="d-flex justify-content-center mb-4 text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
+        <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
         <div class="text-editor mb-4">
             {!!$subCategories[0]->content1 !!}
         </div>
