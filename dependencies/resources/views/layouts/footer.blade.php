@@ -41,38 +41,35 @@
                         </div>
                         <div class=" ">
 
-                            <?php 
-                            $current1 = null;
-                            foreach($navcategories as $item1) { 
-                                if ($item1->main_cateid == 2) {
-                                    $current1 = $item1;
-                                    break;
-                                }
-                            }
-                          ?>
-                            <a
-                                href="{{route('allproductsByType' ,[slugifyHead($current1->name),$current1->sub_pro_id ,$current1->main_cateid ])}}">
-                                <p class="text-pro-link">
-                                    {{isset($staticContent['Industrial_Power'])?$staticContent['Industrial_Power']:"Industrial
-                                    Power"}}</p>
-                            </a>
+                             @if(isset($navcategories))
+                             @foreach($navcategories as $item1) { 
+                             @if($item1->main_cateid == 2)
+                          
+                             <a
+                             href="{{route('allproductsByType' ,[slugifyHead($item1->name),$item1->sub_pro_id ,$item1->main_cateid ])}}">
+                             <p class="text-pro-link">
+                                 {{isset($staticContent['Industrial_Power'])?$staticContent['Industrial_Power']:"Industrial
+                                 Power"}}</p>
+                              </a>
 
+                             @endif
+                             @endforeach
+                             @endif
+                          
                         </div>
+                        
                         <div class=" ">
-                            <?php 
-                            $current2 = null;
-                            foreach($navcategories as $item2) { 
-                                if ($item2->main_cateid == 1) {
-                                    $current2 = $item2;
-                                    break;
-                                }
-                            }
-                          ?>
+                            @if(isset($navcategories))
+                            @foreach ($navcategories as $item2)
+                            @if($item2->main_cateid == 1)
                             <a
-                                href="{{route('allproductsByType' ,[slugifyHead($current2->name),$current2->sub_pro_id ,$current2->main_cateid ])}}">
+                                href="{{route('allproductsByType' ,[slugifyHead($item2->name),$item2->sub_pro_id ,$item2->main_cateid ])}}">
                                 <p class="text-pro-link">{{isset($staticContent['Medical_Power'])?
                                     $staticContent['Medical_Power']:"Medical Power"}}</p>
                             </a>
+                            @endif
+                            @endforeach
+                            @endif
                         </div>
                         <div class=" ">
 
@@ -89,6 +86,7 @@
                             <h6>{{isset($staticContent['Applications'])?$staticContent['Applications']:"Applications"}}
                             </h6>
                         </div>
+                        @if(isset($navapplication))
                         @foreach ($navapplication as $app)
                         <div class=" ">
                             <a
@@ -97,6 +95,7 @@
                             </a>
                         </div>
                         @endforeach
+                        @endif
 
 
                     </div>{{-- appli --}}
@@ -370,10 +369,12 @@
                             class="zmdi zmdi-chevron-down"></i></a>
                     <div class="collapse pl-4" id="foot-nav-link-list3" {{-- aria-expanded="false" --}}
                         data-parent="#footer-nav-mobile">
+                        @if(isset($navapplication))
                         @foreach ($navapplication as $app)
                         <a class=" text-normal"
                             href="{{route('appDetail' ,[ 'name' => slugifyHead($app->name) , 'id' => $app->applica_id])}}">{{$app->name}}</a>
                         @endforeach
+                        @endif
 
                     </div>
                 </div>

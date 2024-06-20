@@ -29,6 +29,7 @@ use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
 use App\Mail\ExceptionOccured;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Cache;
 class FrontendController extends Controller
 {
  
@@ -37,13 +38,45 @@ class FrontendController extends Controller
     $lang = App::getLocale();
     session(['lang_down' =>  App::getLocale()]);
     view()->share('language', DB::table("language")->where('status',1)->orderBy('order_seq','asc')->get());
-    view()->share('navcategories',  DB::table('categories_has_main_pro as chmp')
-    ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
-    ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
-    ->select('sc.*', 'sct.*' ,'chmp.*')
-    ->where('sct.local',  $lang)
-    ->orderBy('chmp.order_seq', 'asc')
-    ->get());
+    // view()->share('navcategories',  DB::table('categories_has_main_pro as chmp')
+    // ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
+    // ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
+    // ->select('sc.*', 'sct.*' ,'chmp.*')
+    // ->where('sct.local',  $lang)
+    // ->orderBy('chmp.order_seq', 'asc')
+    // ->get());
+
+    $cacheKey = 'navcategories_' . $lang; // Assuming $lang is dynamically set
+    $cacheDuration = 60; // Cache duration in minutes
+
+    // Check if the data is already cached
+    $navCategories = Cache::remember($cacheKey, $cacheDuration, function() use ($lang) {
+        return DB::table('categories_has_main_pro as chmp')
+            ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
+            ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
+            ->select('sc.*', 'sct.*' ,'chmp.*')
+            ->where('sct.local', $lang)
+            ->orderBy('chmp.order_seq', 'asc')
+            ->get();
+    });
+
+
+    $cacheKeyApp = 'navapplication_' . $lang; // Assuming $lang is dynamically set
+
+    // Check if the data is already cached
+    $navapplication = Cache::remember($cacheKeyApp, $cacheDuration, function() use ($lang) {
+        return DB::table('application as ap')
+        ->join('application_translation as apt','ap.id','=','apt.app_id')
+        ->where('apt.local','=',$lang)
+        ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,'apt.content' ,'apt.overview')
+        ->orderBy('ap.order_seq' ,'asc')
+        ->get();
+    });
+
+    view()->share('navapplication',$navapplication);
+    view()->share('navcategories', $navCategories);
+
+
 
     view()->share('navcategories1',  DB::table('categories_has_main_pro as chmp')
     ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
@@ -81,12 +114,7 @@ class FrontendController extends Controller
     ->orderBy('chmp.order_seq', 'asc')
     ->get());
    
-    view()->share('navapplication', DB::table('application as ap')
-    ->join('application_translation as apt','ap.id','=','apt.app_id')
-    ->where('apt.local','=',$lang)
-    ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,'apt.content' ,'apt.overview')
-    ->orderBy('ap.order_seq' ,'asc')
-    ->get());
+  
 
     view()->share('navaboutus', DB::table('about_us as au')
     ->join('about_us_translations as aut', 'au.id', '=', 'aut.abt_id')
