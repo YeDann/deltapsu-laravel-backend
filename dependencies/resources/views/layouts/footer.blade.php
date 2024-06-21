@@ -42,7 +42,7 @@
                         <div class=" ">
 
                              @if(isset($navcategories))
-                             @foreach($navcategories as $item1) { 
+                             @foreach($navcategories as $item1)
                              @if($item1->main_cateid == 2)
                           
                              <a
