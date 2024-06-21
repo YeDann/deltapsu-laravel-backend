@@ -1976,12 +1976,16 @@ class FrontendController extends Controller
         ->select('s.image','sp.*','st.title' ,'st.overview_content')
         ->orderBy('sp.order_sq' ,'asc')
         ->get();
-
-        return  view('front-end.applicationdetail')
-        ->with('image' ,$image)
-        ->with('otherapp' ,$otherapp)
-        ->with('relatedApp' ,$relatedApp)
-        ->with('application' ,$application);
+        // return dd($application);
+        if($application != null){
+            return  view('front-end.applicationdetail')
+            ->with('image' ,$image)
+            ->with('otherapp' ,$otherapp)
+            ->with('relatedApp' ,$relatedApp)
+            ->with('application' ,$application);
+        } else {
+            return response()->view('errors.404', [], 404);
+        }
     }
 
     public function aboutUs($pageparam){
