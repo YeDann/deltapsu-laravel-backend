@@ -1218,8 +1218,13 @@ function selectCountry(){
 	}
 	model_name.sort((a,b) => getLastNumber(a.product_code) - getLastNumber(b.product_code))
 
-
 	var model_alldata = <?=$model_alldata?>;
+	function getLastNumber(str) {
+    	var matches = str.match(/\d+$/); 
+    	return matches ? parseInt(matches[0], 10) : 0;
+	}
+	model_alldata.sort((a,b) => getLastNumber(a.product_code) - getLastNumber(b.product_code))
+
 	var connectors_images = <?=$connectors_images?>;
 	var paralls_cons = [];
 	var ss_v = [2,2.4,3,3.3,5,5.5,6,8,10,12,14,15,18,20,24,28,30,32,36,42,48,54,60];
