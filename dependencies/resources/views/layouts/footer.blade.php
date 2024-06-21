@@ -41,35 +41,39 @@
                         </div>
                         <div class=" ">
 
-                             @if(isset($navcategories))
-                             @foreach($navcategories as $item1)
-                             @if($item1->main_cateid == 2)
-                          
-                             <a
-                             href="{{route('allproductsByType' ,[slugifyHead($item1->name),$item1->sub_pro_id ,$item1->main_cateid ])}}">
-                             <p class="text-pro-link">
-                                 {{isset($staticContent['Industrial_Power'])?$staticContent['Industrial_Power']:"Industrial
-                                 Power"}}</p>
-                              </a>
+                            <?php 
+                            $current1 = null;
+                            foreach($navcategories as $item1) { 
+                                if ($item1->main_cateid == 2) {
+                                    $current1 = $item1;
+                                    break;
+                                }
+                            }
+                          ?>
+                            <a
+                                href="{{route('allproductsByType' ,[slugifyHead($current1->name),$current1->sub_pro_id ,$current1->main_cateid ])}}">
+                                <p class="text-pro-link">
+                                    {{isset($staticContent['Industrial_Power'])?$staticContent['Industrial_Power']:"Industrial
+                                    Power"}}</p>
+                            </a>
 
-                             @endif
-                             @endforeach
-                             @endif
-                          
                         </div>
                         
                         <div class=" ">
-                            @if(isset($navcategories))
-                            @foreach ($navcategories as $item2)
-                            @if($item2->main_cateid == 1)
+                            <?php 
+                            $current2 = null;
+                            foreach($navcategories as $item2) { 
+                                if ($item2->main_cateid == 1) {
+                                    $current2 = $item2;
+                                    break;
+                                }
+                            }
+                          ?>
                             <a
-                                href="{{route('allproductsByType' ,[slugifyHead($item2->name),$item2->sub_pro_id ,$item2->main_cateid ])}}">
+                                href="{{route('allproductsByType' ,[slugifyHead($current2->name),$current2->sub_pro_id ,$current2->main_cateid ])}}">
                                 <p class="text-pro-link">{{isset($staticContent['Medical_Power'])?
                                     $staticContent['Medical_Power']:"Medical Power"}}</p>
                             </a>
-                            @endif
-                            @endforeach
-                            @endif
                         </div>
                         <div class=" ">
 
