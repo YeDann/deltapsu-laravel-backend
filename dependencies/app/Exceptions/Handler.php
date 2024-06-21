@@ -213,7 +213,7 @@ class Handler extends ExceptionHandler
                 'navcategories2'=> $navCategories2,
                 'navcategories1'=> $navCategories1,
                 'navapplication'=> $navApplication,
-                'navapplication'=> $navApplication,
+                'navcategories'=> $navCategories,
                 'language'=> $language,
                 ],
                  404);
