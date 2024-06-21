@@ -34,127 +34,9 @@ class FrontendController extends Controller
 {
  
     public function __construct() { 
-        // session()->forget('lang_down');
     $lang = App::getLocale();
     session(['lang_down' =>  App::getLocale()]);
-    view()->share('language', DB::table("language")->where('status',1)->orderBy('order_seq','asc')->get());
-    // view()->share('navcategories',  DB::table('categories_has_main_pro as chmp')
-    // ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
-    // ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
-    // ->select('sc.*', 'sct.*' ,'chmp.*')
-    // ->where('sct.local',  $lang)
-    // ->orderBy('chmp.order_seq', 'asc')
-    // ->get());
-
-    $cacheKey = 'navcategories_' . $lang; // Assuming $lang is dynamically set
-    $cacheDuration = 60; // Cache duration in minutes
-
-    // Check if the data is already cached
-    $navCategories = Cache::remember($cacheKey, $cacheDuration, function() use ($lang) {
-        return DB::table('categories_has_main_pro as chmp')
-            ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
-            ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
-            ->select('sc.*', 'sct.*' ,'chmp.*')
-            ->where('sct.local', $lang)
-            ->orderBy('chmp.order_seq', 'asc')
-            ->get();
-    });
-
-
-    $cacheKeyApp = 'navapplication_' . $lang; // Assuming $lang is dynamically set
-
-    // Check if the data is already cached
-    $navapplication = Cache::remember($cacheKeyApp, $cacheDuration, function() use ($lang) {
-        return DB::table('application as ap')
-        ->join('application_translation as apt','ap.id','=','apt.app_id')
-        ->where('apt.local','=',$lang)
-        ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,'apt.content' ,'apt.overview')
-        ->orderBy('ap.order_seq' ,'asc')
-        ->get();
-    });
-
-    view()->share('navapplication',$navapplication);
-    view()->share('navcategories', $navCategories);
-
-
-
-    view()->share('navcategories1',  DB::table('categories_has_main_pro as chmp')
-    ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
-    ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
-    ->select('sc.*', 'sct.*' ,'chmp.*')
-    ->where('sct.local',  $lang)
-    ->where('chmp.main_cateid', 1)
-    ->orderBy('chmp.order_seq', 'asc')
-    ->get());
-    
-    view()->share('navcategories2',  DB::table('categories_has_main_pro as chmp')
-    ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
-    ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
-    ->select('sc.*', 'sct.*' ,'chmp.*')
-    ->where('sct.local',  $lang)
-    ->where('chmp.main_cateid', 2)
-    ->orderBy('chmp.order_seq', 'asc')
-    ->get());
-    
-    view()->share('navcategories3',  DB::table('categories_has_main_pro as chmp')
-    ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
-    ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
-    ->select('sc.*', 'sct.*' ,'chmp.*')
-    ->where('chmp.main_cateid', 3)
-    ->where('sct.local',  $lang)
-    ->orderBy('chmp.order_seq', 'asc')
-    ->get());
-
-    view()->share('navcategories4',  DB::table('categories_has_main_pro as chmp')
-    ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
-    ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
-    ->select('sc.*', 'sct.*' ,'chmp.*')
-    ->where('sct.local',  $lang)
-    ->where('chmp.main_cateid', 4)
-    ->orderBy('chmp.order_seq', 'asc')
-    ->get());
-   
-  
-
-    view()->share('navaboutus', DB::table('about_us as au')
-    ->join('about_us_translations as aut', 'au.id', '=', 'aut.abt_id')
-    ->where('aut.local', '=',$lang)
-    ->select('au.*' ,'aut.*')
-    ->get());
-
-    view()->share('countryemails', DB::table('email_notification as et')
-        ->select('et.*')
-        ->where('et.type', 1)
-        ->orderBy('et.country', 'asc')
-        ->get());
-
-        view()->share('mail_chimp_country', DB::table('mail_chimp_country as mc')
-        ->select('mc.*')
-        ->orderBy('mc.name', 'asc')
-        ->get());
-
-
-     $static_word = DB::table('static_keyword as w')
-        ->join('static_keyword_translations as skt','skt.key_word','=','w.key_word')
-        ->select('w.*','skt.*')
-        ->where('skt.local',$lang)
-        ->get();
-    if(count($static_word) == 0){
-        $static_word = DB::table('static_keyword as w')
-        ->join('static_keyword_translations as skt','skt.key_word','=','w.key_word')
-        ->select('w.*','skt.*')
-        ->where('skt.local','en')
-        ->get();
-    }
-       
-     foreach($static_word as $word){
-        $wordarry[$word->key_word] = $word->word;
-     }
-     
-     view()->share('staticContent', $wordarry);
-    //  return dd($wordarry);
     session(['product_comp' => []]);
-    //    view()->share('pro_com_arr', session('product_comparearr'));
     }
     public function index($page ='home')
     {
@@ -536,7 +418,6 @@ class FrontendController extends Controller
             return  view('front-end.event')->with('events2' ,$events2)->with('events' ,$events)->with('metatag' ,$metatag);
         }
         if($page == 'technical-articles'){
-            // return  abort(404);
             return redirect()->route('index','home');
             $lang = App::getLocale();
             $news_type = DB::table('tech_type as tc')
@@ -846,8 +727,8 @@ class FrontendController extends Controller
             return redirect()->route('contactSupport'); 
         } 
         // return dd('ddd');
-        // return redirect()->route('index','home'); 
-        abort(404);
+         //return redirect()->route('index','home'); 
+        //  return response()->view('errors.404', [], 404);
          
     }
     private function getDataNew($query ,$type){
