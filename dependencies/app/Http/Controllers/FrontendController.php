@@ -1175,22 +1175,28 @@ class FrontendController extends Controller
                 ->get();
         //    return dd($products);
 
-        return  view('front-end.product')
-        ->with('metatag',$metatag)
-        ->with('defaultfilters',$defaultfilters)
-        ->with('certi_products',$certi_products)
-        ->with('documents_cate',$documents_cate)
-        ->with('section',$section)
-        ->with('products',$pro_new)
-        ->with('filter_pro',$filter_pro)
-        ->with('pd_field',$pd_field)
-        ->with('product_has_property',$product_has_property)
-        ->with('subCategories',$subCategories)
-        ->with('catename',$catename)
-        ->with('cateid',$cateid)
-        ->with('se_name',$se_name)
-        ->with('series',$series)
-        ->with('se_id',$se_id);
+        if(!empty($products)){
+            return  view('front-end.product')
+            ->with('metatag',$metatag)
+            ->with('defaultfilters',$defaultfilters)
+            ->with('certi_products',$certi_products)
+            ->with('documents_cate',$documents_cate)
+            ->with('section',$section)
+            ->with('products',$pro_new)
+            ->with('filter_pro',$filter_pro)
+            ->with('pd_field',$pd_field)
+            ->with('product_has_property',$product_has_property)
+            ->with('subCategories',$subCategories)
+            ->with('catename',$catename)
+            ->with('cateid',$cateid)
+            ->with('se_name',$se_name)
+            ->with('series',$series)
+            ->with('se_id',$se_id);
+        } else {
+            return response()->view('errors.404', [], 404);
+        }
+
+
     }
 
     function removeDuplicates($array, $propertyName) {
