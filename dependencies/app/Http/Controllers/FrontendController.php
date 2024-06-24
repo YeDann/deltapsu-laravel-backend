@@ -27,6 +27,7 @@ use LaravelLocalization;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
 use App\Mail\ExceptionOccured;
+use Hamcrest\Type\IsNumeric;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Cache;
@@ -1017,10 +1018,15 @@ class FrontendController extends Controller
     public function productList($cate_parname,$cate_par_id,$se_par_name = null,$se_par_id = null){
     $lang = App::getLocale();
 
+    if(!is_numeric($cate_par_id)) {
+        return response()->view('errors.404', [], 404);
+    }
+
     $catename = $this->validateInput($cate_parname ,'text',true);
     $cateid = $this->validateInput($cate_par_id ,'number',true);
     $se_name = $this->validateInput($se_par_name ,'text',true);
     $se_id = $this->validateInput($se_par_id ,'number',true);
+
 
     $subCategories = DB::table('sub_pro_categories as sc')
         ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
@@ -1173,7 +1179,7 @@ class FrontendController extends Controller
                 ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
-        //    return dd($products);
+            // return dd($products);
 
         if(!empty($products)){
             return  view('front-end.product')
