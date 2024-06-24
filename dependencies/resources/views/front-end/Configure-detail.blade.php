@@ -9,9 +9,9 @@
 </style>
 @endsection
 @section('meta')
-<title>Configurable Power Detail | DeltaPSU</title>
+<title>Configurable Power Supply | DeltaPSU</title>
 <meta name="description"
-    content="{!!  trim(iconv_substr(strip_tags(isset($subCategories[0]->content1 )? $subCategories[0]->content1:''),0,155,'UTF-8')) !!}">
+    content="Delta’s MEG-A Series provides flexible and configurable power supplies for various industrial and medical applications.">
 <link rel="canonical" href="{{url()->current()}}" />
 <?php 
   $lang_seo = App::getLocale();
