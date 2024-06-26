@@ -1271,7 +1271,8 @@ class FrontendController extends Controller
             return  redirect()->route('allproductsByType',[$cate,$findoldCate->sub_pro_id,$findoldCate->main_cateid], 301);
         }else{
             // return redirect()->route('productFinder');
-            return redirect()->route('productFinder', [], 301);
+            // return redirect()->route('productFinder', [], 301);
+            return response()->view('errors.404', [], 404);
         }
     }
   
@@ -1341,8 +1342,10 @@ class FrontendController extends Controller
             return redirect()->route('productsDetailsByType',[$catename,$pro_code_n ,"optional_model" => $optional_model_n]);
         }
         else{
- 
-            return redirect()->route('productFinder');
+            
+            // return redirect()->route('productFinder');
+            return response()->view('errors.404', [], 404);
+
         }
     
         $pro = DB::table('products as p')
@@ -2045,7 +2048,8 @@ class FrontendController extends Controller
         ->get();
        
         if(count($contents) == 0){
-            return redirect()->route('index','news');
+            return response()->view('errors.404', [], 404);
+            // return redirect()->route('index','news');
         }
         $otherNews = [];
 
@@ -2068,10 +2072,13 @@ class FrontendController extends Controller
         }
     
 
-        //  return dd($contents);
-        return  view('front-end.news-detail')
-        ->with('otherNews' ,$otherNews)
-        ->with('contents' ,$contents);
+          //return dd($contents);
+          return  view('front-end.news-detail')
+          ->with('otherNews' ,$otherNews)
+          ->with('contents' ,$contents);
+
+
+
     }
     public function updateEventDetail($namePar){
         $lang = App::getLocale();
@@ -2088,7 +2095,8 @@ class FrontendController extends Controller
         ->get();
 
         if(count($contents) == 0){
-            return redirect()->route('index','home');
+            return response()->view('errors.404', [], 404);
+            // return redirect()->route('index','home');
         }
 
         // return dd($contents);
