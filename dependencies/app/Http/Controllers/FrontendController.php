@@ -1268,9 +1268,10 @@ class FrontendController extends Controller
         ->first();
         // return dd($findoldCate);
         if($findoldCate){
-            return  redirect()->route('allproductsByType',[$cate,$findoldCate->sub_pro_id,$findoldCate->main_cateid]);
+            return  redirect()->route('allproductsByType',[$cate,$findoldCate->sub_pro_id,$findoldCate->main_cateid], 301);
         }else{
-            return redirect()->route('productFinder');
+            // return redirect()->route('productFinder');
+            return redirect()->route('productFinder', [], 301);
         }
     }
   
