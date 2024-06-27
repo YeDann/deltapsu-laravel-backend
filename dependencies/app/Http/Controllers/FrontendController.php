@@ -1401,7 +1401,7 @@ class FrontendController extends Controller
         ->select('p.pro_code','pd.doc_id','p.pro_id as product_id','pdt.name','pdc.title as catename','pdc.slug','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id')
         ->orderBy('pdc.title','asc')
         ->get();
-
+  
         $product_has_property = DB::table('product_has_property as ph')
         ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
         ->join('product_field as pf','pf.id' ,'=','ph.type_id')
@@ -1413,6 +1413,8 @@ class FrontendController extends Controller
         ->orderBy('ph.type_id' ,'asc')
         ->select('pht.value_text','ph.*','pf.section_id' ,'pft.field_name as fieldCate','pf.unit_name')
         ->get();
+
+        //  return dd($product_has_property);
 
         $series_has_application = DB::table('series_has_application as shp')
         ->join('application as app', 'app.id', '=', 'shp.app_id')
@@ -1536,7 +1538,7 @@ class FrontendController extends Controller
                 ->where('stt.local',$lang)
                 // ->where('st.status', 1)
                 ->select('st.id', 'stt.sortname','stt.name')
-                ->get(); 
+                ->get();
 
         return  view('front-end.productdetails')
         ->with('optional_model' , $optional_model)

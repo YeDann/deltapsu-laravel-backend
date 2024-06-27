@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App;
 use DB;
 use Illuminate\Http\Request;
 use Validator;
@@ -257,6 +258,178 @@ class ImportController extends Controller
       })->export('csv');
       }
     }
+
+    function getExportProductSpecification(){
+      $fileName = 'product_specifications.xlsx';
+
+      $lang = App::getLocale();
+
+      $products = DB::table('products as p')
+      ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+      ->where('pt.local' ,'en')
+      ->select('p.*', 'pt.*')
+      ->orderBy('pt.showstatus' ,'desc')
+      ->orderBy('p.created_at', 'desc')
+      ->get();
+
+      $section = DB::table('section as st')
+                ->join('section_translation as stt','st.id','=','stt.section_id')
+                ->where('stt.local',$lang)
+                // ->where('st.status', 1)
+                ->select('st.id', 'stt.sortname','stt.name')
+                ->get();
+
+      $sectionData = ["Product"];
+      $productData = [];
+      for($i = 0; $i < count($products); $i++) {
+        // echo $i ,"." , $products[$i]->pro_code, "</br>";
+        array_push($productData, $products[$i]->pro_code);
+        $product_has_property = DB::table('product_has_property as ph')
+        ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
+        ->join('product_field as pf','pf.id' ,'=','ph.type_id')
+        ->join('product_field_translation as pft','ph.type_id' ,'=','pft.product_field_id')
+        ->where('pht.local' ,'en')
+        ->where('pft.local' ,$lang)
+        ->where('ph.product_id',$products[$i]->pro_id)
+        ->where('ph.type_id','!=',115)
+        ->orderBy('ph.type_id' ,'asc')
+        ->select('pht.value_text','ph.*','pf.section_id' ,'pft.field_name as fieldCate','pf.unit_name')
+        ->get();
+        for($sec = 0 ; $sec < count($section); $sec++){
+          foreach ($product_has_property as $prh) {
+            if($prh->section_id == $section[$sec]->id) {
+              $strig = '-';
+              $numberText = '';
+              $numberarr = [];
+              $check = false;
+              if($prh->type_value == 'number'){
+                if($prh->status_input == 3){
+                  if(!is_null($prh->data_1)){
+                    $numberText = $prh->data_1.'-'.$prh->data_2.$prh->unit_name;
+                    $check = true;
+                    // echo $numberText. "\n";
+                  }else {
+                    $numberText = '-';
+                  }
+                } else {
+                  $arr_data = [];
+                  $datacheck = [
+                    $prh->data_1,
+                    $prh->data_2,
+                    $prh->data_3,
+                    $prh->data_4,
+                    $prh->data_5,
+                    $prh->data_6,
+                    $prh->data_7,
+                    $prh->data_8,
+                    $prh->data_10,
+                    $prh->data_11,
+                    $prh->data_12,
+                  ];
+                  foreach ($datacheck as $dch) {
+                    if (!is_null($dch)) {
+                      array_push($arr_data, $dch . $prh->unit_name);
+                      // return dd($arr_data);
+                    }
+                  }
+                  if (isset($arr_data) && count($arr_data) > 0) {
+                    $check = true;
+                    $numberarr = $arr_data;
+                  }
+                }
+              } else {
+                if($prh->value_text != null && $prh->value_text != 'null'){
+                    $check = true;
+                    $strig = $prh->value_text;
+                }
+               }
+
+              //  echo $prh->fieldCate . "\n";
+              if($i == 0){
+                array_push($sectionData, $prh->fieldCate);
+              }
+               if($prh->type_value == 'number'){
+                if($prh->status_input == 3){
+                  array_push($productData, $numberText);
+                  // echo $numberText. "\n";
+                } else {
+                  array_push($productData, join(",",$numberarr));
+                  // echo join(",",$numberarr);
+                }
+              } else {
+                array_push($productData, $strig);
+                // echo $strig."\n";
+              }
+            }
+          }
+        }
+        array_push($productData, ".");
+      }
+      // return dd($sectionData, $productData);
+      Excel::create('Product_Specification', function ($excel) use ($sectionData, $productData) {
+        $excel->sheet('Product_Specification', function ($sheet) use ($sectionData, $productData) {
+          // จำนวนคอลัมน์ต่อแถว
+        $columnsPerRow = 134;
+
+        // สร้างฟังก์ชันเพื่อตรวจสอบและแยกแถวถ้าพบจุด
+        function splitRowsOnDot($data, $columnsPerRow) {
+            $result = [];
+            $currentRow = [];
+
+            foreach ($data as $item) {
+                if ($item === '.') {
+                    // ถ้ามีจุดให้เพิ่มแถวใหม่
+                    if (!empty($currentRow)) {
+                        $result[] = $currentRow;
+                        $currentRow = [];
+                    }
+                } else {
+                    // เพิ่ม item ในแถวปัจจุบัน
+                    $currentRow[] = $item;
+
+                    // ถ้าคอลัมน์ครบตามที่กำหนดให้เพิ่มแถวใหม่
+                    if (count($currentRow) == $columnsPerRow) {
+                        $result[] = $currentRow;
+                        $currentRow = [];
+                    }
+                }
+            }
+
+            // เพิ่มแถวสุดท้ายถ้ามีข้อมูลเหลือ
+            if (!empty($currentRow)) {
+                $result[] = $currentRow;
+            }
+
+            return $result;
+        }
+
+        // สร้างแถวแรกด้วย sectionData
+        $sectionDataRows = splitRowsOnDot($sectionData, $columnsPerRow);
+        $i = 1; // แถวเริ่มต้นสำหรับ sectionData
+
+        foreach ($sectionDataRows as $row) {
+            $sheet->row($i, $row);
+            $i++;
+        }
+
+        // สร้างแถวสำหรับ productData
+        $productDataRows = splitRowsOnDot($productData, $columnsPerRow);
+
+        foreach ($productDataRows as $row) {
+            $sheet->row($i, $row);
+            $i++;
+        }
+        });
+      })->export('csv');
+
+      // foreach($sectionData as $data){
+      //   echo $data;
+      // }
+      // foreach($productData as $product){
+      //   echo $product;
+      // }
+    }
+
     function getProductDocument($cates ,$pro_id){
       $appUrl = config('app.url');
       $arr_doc = [];
@@ -665,6 +838,45 @@ public function importSubscriber(Request $request){
   
 }
 
+private function checkHaveModel($strmodel){
+  $stringModel =  str_replace("-", "", $strmodel);
+  $queryStringModel = preg_replace('/[^A-Za-z0-9\-]/','',$stringModel);
+  $queryModel = DB::table('products as p')
+  ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+  ->select('p.*','phc.categories_id')
+  ->where('p.enable_pro',1);
+  
+  $queryModel->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $queryStringModel . '%');
+  $_model = $queryModel->first();
+
+return $_model;
+}
+private function checkHaveModelOptional($strmodel){
+  $stringModel =  str_replace("-", "", $strmodel);
+  $queryStringModel = preg_replace('/[^A-Za-z0-9\-]/','',$stringModel);
+  $queryModelOP = DB::table('product_optional_model as po')
+  ->join('products as p', 'p.pro_id', '=', 'po.product_id')
+  ->select('p.pro_code','po.optional_model');
+  $queryModelOP->where(\DB::raw("REPLACE(REPLACE(REPLACE(po.optional_model, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $queryStringModel . '%');
+  $_modelOptional = $queryModelOP->first();
+
+return $_modelOptional;
+}
+
+public function checkLang($lang ,$id){
+  $returnlang = 'en';
+     $hidelangPro = DB::table('products_translation as pt')
+     ->where('pt.product_id',$id)
+     ->where('pt.local' ,$lang)
+     ->where('pt.showstatus',1)
+     ->first();
+
+     if(isset($hidelangPro)){
+          return $lang;
+     }else{
+         return $returnlang;
+     }
+}
 
 
 

@@ -479,6 +479,8 @@ Route::post('importProdoctCate','ImportController@importProdoctCate')->name('imp
 Route::post('importStatusProduct','ImportController@importStatusProduct')->name('importStatusProduct');
 Route::get('getpageSubscriber','ImportController@getpageSubscriber')->name('getpageSubscriber');
 Route::post('importSubscriber','ImportController@importSubscriber')->name('importSubscriber');
+Route::get('getExportProductSpecification','ImportController@getExportProductSpecification')->name('getExportProductSpecification');
+
 
 //Route::get('getExportOldProduct','ImportController@getExportOldProduct')->name('getExportOldProduct');
  
@@ -511,6 +513,7 @@ Route::get('exportfeedbackFrom/{type?}','EmailController@exportfeedbackFrom')->n
 Route::post('uploadtoTexteditor','StaticContentController@uploadtoTexteditor')->name('uploadtoTexteditor');
 
 Route::post('CheckApiMail','GetDataController@CheckApiMail')->name('CheckApiMail');
+
 
 
 });
