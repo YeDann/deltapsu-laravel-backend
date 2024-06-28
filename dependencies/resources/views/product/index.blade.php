@@ -55,7 +55,7 @@
                     {{-- <a href="{{route('getExcelProTag')}}" class="btn btn-outline-primary">Import Product Tags</a>
                     --}}
 
-                    <a id="exportBtn" href="{{ route('getExportProductSpecification') }}" data-url="{{ route('getExportProductSpecification') }}" class="btn btn-outline-primary">Export Products Specification</a>
+                    {{--  <a id="exportBtn" href="{{ route('getExportProductSpecification') }}" data-url="{{ route('getExportProductSpecification') }}" class="btn btn-outline-primary">Export Products Specification</a>  --}}
                     <a href="{{route('getExportProduct')}}" class="btn btn-outline-primary">Export Products</a>
                     <!-- <a href="{{route('getExportProductProperty')}}" class="btn btn-outline-primary">Export Products pros</a> -->
                 </div>
