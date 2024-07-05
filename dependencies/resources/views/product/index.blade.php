@@ -55,7 +55,6 @@
                     {{-- <a href="{{route('getExcelProTag')}}" class="btn btn-outline-primary">Import Product Tags</a>
                     --}}
 
-                    {{--  <a id="exportBtn" href="{{ route('getExportProductSpecification') }}" data-url="{{ route('getExportProductSpecification') }}" class="btn btn-outline-primary">Export Products Specification</a>  --}}
                     <a href="{{route('getExportProduct')}}" class="btn btn-outline-primary">Export Products</a>
                     <!-- <a href="{{route('getExportProductProperty')}}" class="btn btn-outline-primary">Export Products pros</a> -->
                 </div>
@@ -137,41 +136,11 @@
 
 @endsection
 @section('js')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
     function ondelelete(id){
          $('#itemId').val(id);
 
     }
-
-    $(document).ready(function() {
-        $('#exportBtn').click(function(event) {
-            // ป้องกันให้ลิงก์ทำงานตามปกติ
-    
-            // แสดงปุ่ม loading
-            $(this).html('<i class="fa fa-spinner fa-spin"></i> Loading...');
-    
-            // ทำการเรียกใช้งาน Controller โดยใช้ AJAX
-            $.ajax({
-                url: $(this).attr('href'),
-                type: 'GET',
-                success: function(response) {
-                    // หากคำขอสำเร็จ
-                    // ทำสิ่งที่ต้องการหลังจากนั้น เช่น redirect หรือทำการดาวน์โหลด
-    
-                    // ให้ปุ่มกลับเป็นปุ่มเดิม
-                    $('#exportBtn').html('Export Products Specification');
-                },
-                error: function(xhr) {
-                    // หากเกิดข้อผิดพลาด
-                    alert('Error! Please try again.');
-    
-                    // เปลี่ยนปุ่มกลับเป็นปุ่มเดิม
-                    $('#exportBtn').html('Export Products Specification');
-                }
-            });
-        });
-    });
 
 </script>
 @endsection
