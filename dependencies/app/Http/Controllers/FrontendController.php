@@ -4469,6 +4469,7 @@ class FrontendController extends Controller
        }
        public function changePassword($pin){
         //    return dd($pin);
+        $lang = App::getLocale();
           $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',27)
