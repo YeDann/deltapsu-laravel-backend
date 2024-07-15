@@ -2589,7 +2589,6 @@
                        }
                       
                     });
-              
                 $.each(property, function(index_per,ppt){
                     if(checkDataStep(ppt['type_id'])){
 
@@ -2641,7 +2640,6 @@
                         if(index_fi == -1){
                             fildnumber.push(objectFiled);
                         }
-
                         if(containsObject(object, data_1)){
                             data_1.push(object);
                             html3 += '<div onchange="fillerNumber('+"'"+ppt['type_id']+"'"+','+ppt['data_1']+','+ppt['data_2']+','+ppt['data_3'] 
@@ -2785,20 +2783,19 @@
     function checkNull(dataarr,unit,status){
         var string = '';
         var arrstri = [];
-        var filsort_data = dataarr;
-        var data_fi =  filsort_data.sort( 
-                   function(a, b){
-                       return a > b && a && b ? 1 : -1;
-                    });
-                
+      
        if(status == 1 || status == 2 ){
+        var data_fi =  dataarr.sort( 
+            function(a, b){
+                return a > b && a && b ? 1 : -1;
+             });
         $.each(data_fi, function(index,data){
             if(data != null && data != ''){
               arrstri.push(data+unit);
             }
         });
         string = arrstri.join(', ');
-       }else if(status == 3   ){
+       }else if(status == 3){
 
         string = dataarr[0]+'-'+dataarr[1]+unit;
        }
@@ -3195,6 +3192,7 @@
           productObj['alt_img'] = value['alt_img'];
           productObj['content'] = [];
           productObj['contentFilter'] = [];
+          console.log('Hello', product_has_property)
             $.each(product_has_property, function(index2,value2){
             if(value['pro_id'] == value2['product_id']){
                 productObj['content'].push(value2);
