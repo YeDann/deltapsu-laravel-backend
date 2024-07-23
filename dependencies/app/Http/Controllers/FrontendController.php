@@ -1331,6 +1331,7 @@ class FrontendController extends Controller
         $proCode  = str_replace("@", "/", $pro_code);
         $check = self::checkHaveModel($proCode);
         $check_2 = self::checkHaveModelOptional($proCode);
+        // return dd($pro_code, $check, $check_2);
 
         if(isset($check->pro_id)){
             $prolang =  self::checkLang($lang ,$check->pro_id);
@@ -1339,7 +1340,11 @@ class FrontendController extends Controller
         else if($check_2){
             $pro_code_n  = str_replace("/", "@",$check_2->pro_code);
             $optional_model_n  = str_replace("/", "@",trim($proCode));
-            return redirect()->route('productsDetailsByType',[$catename,$pro_code_n ,"optional_model" => $optional_model_n]);
+            if(isset($check->pro_id)){
+                return redirect()->route('productsDetailsByType',[$catename,$pro_code_n ,"optional_model" => $optional_model_n]);
+            }else {
+                return response()->view('errors.404', [], 404);
+            }
         }
         else{
             
@@ -1539,7 +1544,6 @@ class FrontendController extends Controller
                 // ->where('st.status', 1)
                 ->select('st.id', 'stt.sortname','stt.name')
                 ->get();
-
         return  view('front-end.productdetails')
         ->with('optional_model' , $optional_model)
         ->with('tags_pro' , $tags_pro)
@@ -1960,6 +1964,7 @@ class FrontendController extends Controller
     public function appDetailById($app_name, $app_id){
         $name = $this->validateInput($app_name,'text',true);
         $id =  $app_id;
+        // return dd($name, $id);
         $lang = App::getLocale();
         $application = DB::table('application as ap')
         ->join('application_translation as apt','ap.id','=','apt.app_id')
@@ -1994,8 +1999,8 @@ class FrontendController extends Controller
         ->select('s.image','sp.*','st.title' ,'st.overview_content')
         ->orderBy('sp.order_sq' ,'asc')
         ->get();
-        // return dd($application);
-        if($application != null){
+        // return dd($application->name, $name, $application);
+        if($application != null && $application->slug_app == $name){
             return  view('front-end.applicationdetail')
             ->with('image' ,$image)
             ->with('otherapp' ,$otherapp)
@@ -4638,6 +4643,7 @@ class FrontendController extends Controller
             }
        }
        private function checkHaveModel($strmodel){
+        
             $stringModel =  str_replace("-", "", $strmodel);
             $queryStringModel = preg_replace('/[^A-Za-z0-9\-]/','',$stringModel);
             $queryModel = DB::table('products as p')
@@ -4645,9 +4651,9 @@ class FrontendController extends Controller
             ->select('p.*','phc.categories_id')
             ->where('p.enable_pro',1);
             
-            $queryModel->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $queryStringModel . '%');
+            $queryModel->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), '=', $queryStringModel);
             $_model = $queryModel->first();
-
+            // return dd($strmodel, "hello world", $_model);
           return $_model;
        }
        private function checkHaveModelOptional($strmodel){
