@@ -266,6 +266,21 @@
         50%),url('{{config('app.url')}}/medias/categories/{{$application->banner}}') center no-repeat; background-size:
         cover;">
         <span class="sr-only">Delta provides AC-DC power supplies for medical applications</span>
+        @elseif($application->id == 8)
+            <div role="img" alt="Delta industrial switching power supplies"
+            class="banner-type-product-all-new item " style="background:linear-gradient(90deg, rgba(68,68,68,0.45702030812324934) 0%, rgba(255,255,255,0)
+            50%),url('{{config('app.url')}}/medias/categories/{{$application->banner}}') center no-repeat; background-size:
+            cover;">
+        @elseif($application->id == 1)
+            <div role="img" alt="Delta’s switching power supply for building automation"
+            class="banner-type-product-all-new item " style="background:linear-gradient(90deg, rgba(68,68,68,0.45702030812324934) 0%, rgba(255,255,255,0)
+            50%),url('{{config('app.url')}}/medias/categories/{{$application->banner}}') center no-repeat; background-size:
+            cover;">
+        @elseif($application->id == 9)
+            <div role="img" alt="Delta’s outdoor LED driver for street lighting"
+            class="banner-type-product-all-new item " style="background:linear-gradient(90deg, rgba(68,68,68,0.45702030812324934) 0%, rgba(255,255,255,0)
+            50%),url('{{config('app.url')}}/medias/categories/{{$application->banner}}') center no-repeat; background-size:
+            cover;">
         @else
         <div {{$application->id}} class="banner-type-product-all-new item "
             style="background:linear-gradient(90deg, rgba(68,68,68,0.45702030812324934) 0%, rgba(255,255,255,0)
@@ -302,32 +317,95 @@
                     <div class="col-6 image-slide">
                         <div id="slide-application" class="owl-carousel owl-theme">
                             @if($application->id == 7)
-                            @foreach ($image as $item)
-                            @if($loop->iteration == 1)
-                            <div role="img" alt="Find IEC 60601-1 power supply for medical equipment"
-                                class="item {{($loop->iteration == 1)?" active":""}}"
-                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
-                                <span class="sr-only">Find IEC 60601-1 power supply for medical equipment </span>
-                            </div>
-                            @elseif($loop->iteration == 2)
-                            <div role="img" alt="Delta offers medically approved power supply solutions"
-                                class="item {{($loop->iteration == 1)?" active":""}}"
-                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
-                                <span class="sr-only">Delta offers medically approved power supply solutions</span>
-                            </div>
-                            @else
-                            <div class="item {{($loop->iteration == 1)?" active":""}}"
-                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
-                            </div>
-                            @endif
+                                @foreach ($image as $item)
+                                    @if($loop->iteration == 1)
+                                        <div role="img" alt="Find IEC 60601-1 power supply for medical equipment"
+                                            class="item {{($loop->iteration == 1)?" active":""}}"
+                                            style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                            <span class="sr-only">Find IEC 60601-1 power supply for medical equipment </span>
+                                        </div>
+                                    @elseif($loop->iteration == 2)
+                                        <div role="img" alt="Delta offers medically approved power supply solutions"
+                                            class="item {{($loop->iteration == 1)?" active":""}}"
+                                            style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                            <span class="sr-only">Delta offers medically approved power supply solutions</span>
+                                        </div>
+                                    @else
+                                        <div class="item {{($loop->iteration == 1)?" active":""}}"
+                                            style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                        </div>
+                                    @endif
+                                @endforeach
+                            
+                            @elseif($application->id == 8)
+                                @foreach ($image as $item)
+                                        @if($loop->iteration == 1)
+                                            <div role="img" alt="Delta provides power supplies for industrial automation"
+                                                class="item {{($loop->iteration == 1)?" active":""}}"
+                                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                                <span class="sr-only">Delta provides power supplies for industrial automation</span>
+                                            </div>
+                                        @elseif($loop->iteration == 2)
+                                            <div role="img" alt="Delta power supplies for industrial automation"
+                                                class="item {{($loop->iteration == 1)?" active":""}}"
+                                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                                <span class="sr-only">Delta power supplies for industrial automation</span>
+                                            </div>
+                                        @else
+                                            <div class="item {{($loop->iteration == 1)?" active":""}}"
+                                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                            </div>
+                                        @endif
 
-                            @endforeach
+                                @endforeach
+                            @elseif($application->id == 1)
+                                @foreach ($image as $item)
+                                        @if($loop->iteration == 1)
+                                            <div role="img" alt="Delta power supplies for security systems"
+                                                class="item {{($loop->iteration == 1)?" active":""}}"
+                                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                                <span class="sr-only">Delta power supplies for security systems</span>
+                                            </div>
+                                        @elseif($loop->iteration == 2)
+                                            <div role="img" alt="Delta installs power supplies for security systems"
+                                                class="item {{($loop->iteration == 1)?" active":""}}"
+                                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                                <span class="sr-only">Delta installs power supplies for security systems</span>
+                                            </div>
+                                        @else
+                                            <div alt="Delta’s building automation systems power supplies" class="item {{($loop->iteration == 1)?" active":""}}"
+                                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                            </div>
+                                        @endif
+
+                                @endforeach
+                            @elseif($application->id == 9)
+                                @foreach ($image as $item)
+                                        @if($loop->iteration == 1)
+                                            <div role="img" alt="Delta’s dimmable constant current LED driver for various light uses"
+                                                class="item {{($loop->iteration == 1)?" active":""}}"
+                                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                                <span class="sr-only">Delta’s dimmable constant current LED driver for various light uses</span>
+                                            </div>
+                                        @elseif($loop->iteration == 2)
+                                            <div role="img" alt="Find a reliable D4i LED driver for IoT smart lighting"
+                                                class="item {{($loop->iteration == 1)?" active":""}}"
+                                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                                <span class="sr-only">Find a reliable D4i LED driver for IoT smart lighting</span>
+                                            </div>
+                                        @else
+                                            <div alt="Programmable LED driver for sports arena lighting" class="item {{($loop->iteration == 1)?" active":""}}"
+                                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                            </div>
+                                        @endif
+
+                                @endforeach
                             @else
-                            @foreach ($image as $item)
-                            <div class="item {{($loop->iteration == 1)?" active":""}}"
-                                style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
-                            </div>
-                            @endforeach
+                                @foreach ($image as $item)
+                                <div class="item {{($loop->iteration == 1)?" active":""}}"
+                                    style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                </div>
+                                @endforeach
                             @endif
                         </div>
                     </div>
