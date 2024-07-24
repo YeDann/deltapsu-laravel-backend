@@ -681,8 +681,6 @@
         filtercontentMobile();
         filtercontent();
         loadPopUpfilter();
-        console.log(products ,'products');
-        console.log(cateid ,'cateid');
 
         var size  = $(window).width();
         if(size <= 768){
@@ -705,7 +703,6 @@
     function loadAddContent(){
         var arr = [];
         var arrproid = [];
-     
        $.each(filter_pro, function(index,element){
              if(element['field_id'] != 'series01' && element['field_id'] != 'status02' && element['field_id'] != 'safety03' && element['field_id'] != 'certifi04'  ){
                 arr.push(element['field_id']);
@@ -909,6 +906,9 @@
           });
       productFilter = productarray;
     
+    
+   
+   
    
        return productarray;
     }
@@ -945,6 +945,7 @@
             );
  
         if(checktypegroup){
+        
             $.each(productFilter, function(index,value){
             productFilter[index]['contentFilter'].filter(function(data) {
             arr_type_an_val.forEach(function(element) {
@@ -989,7 +990,7 @@
                             && data11 == datacom11
                             && data12 == datacom12){
                             var  index = arr_filterall.findIndex( function(x){
-                                return  x.pro_id === value.pro_id;
+                                return  x.pro_code === value.pro_code;
                             })
                          
                             if(index == -1){
@@ -1002,6 +1003,7 @@
           });
          
         }else{
+
             $.each(productFilter, function(index,value){
                 var arrcheck = [];
                 productFilter[index]['contentFilter'].filter(function(data) {
@@ -1049,12 +1051,12 @@
                             }
                           
                     });
-                    // console.log(arr_type_an_val.length);
+                
                 });
                 var con = checkmethod(arr_type_an_val);
                 if(arrcheck.length >= con){
                     var  index = arr_filterall.findIndex( function(x){
-                    return  x.pro_id === value.pro_id;
+                    return  x.pro_code === value.pro_code;
                     })
                     if(index == -1){
                         arr_filterall.push(value);  
@@ -1127,7 +1129,7 @@
                             if(data.value_text.trim() == element['value_text'].trim()){
                                 var  index = filterIn.findIndex(
                                     function(x){
-                                        return x.pro_id === value.pro_id;
+                                        return x.pro_code === value.pro_code;
                                     })
                                 if(index == -1){
                                     filterIn.push(value);  
@@ -1159,7 +1161,7 @@
            if(checkarr.length >= con){
             var  index = filterIn.findIndex(
                      function(x){
-                    return x.pro_id === value.pro_id;
+                    return x.pro_code === value.pro_code;
                      })
                     if(index == -1){
                      filterIn.push(value);  
@@ -1202,7 +1204,7 @@
                         if(data.pro_id == element.product_id){
                             var  index = proreFilter.findIndex(
                                 function(x){
-                                    return x.pro_id === data.pro_id;
+                                    return x.pro_code === data.pro_code;
                                 })
                             if(index == -1){
                                 proreFilter.push(data);
@@ -1212,6 +1214,7 @@
                 });
             return  proreFilter;
         }else{
+
             return  arrFilterInput;
         }
     }
@@ -1248,7 +1251,7 @@
                 if(data2.pro_id == element2){
                     var  index = arr_pro_doc.findIndex(
                         function(x){
-                        return x.pro_id === data2.pro_id;
+                        return x.pro_code === data2.pro_code;
                         })
                         if(index == -1){
                         arr_pro_doc.push(data2);  
@@ -1266,7 +1269,7 @@
                 if(data.status_product == element){
                     var  index = filter.findIndex(
                         function(x){
-                            return x.pro_id === data.pro_id;
+                            return x.pro_code === data.pro_code;
                         })
                         if(index == -1){
                             filter.push(data);  
@@ -1555,7 +1558,7 @@
     function listviewCard(productarray) {
        
         var html1 = '';
-        console.log(productarray ,"productarray")
+        //console.log(productarray ,"productarray to card")
     
         $.each(productarray, function(index_pro,pro){
         html1 += '<tr class="box-cardlist row_table" style="display: none;">';
@@ -2440,7 +2443,6 @@
             'value12':value12,
             
         }
-        // console.log(obj);
        var  index = arr_type_an_val.findIndex(
            function(x){
             //    return  x.value1 === value1;
@@ -2456,7 +2458,8 @@
                &&  x.value9 === value9
                &&  x.value10 === value10
                &&  x.value11 === value11
-               &&  x.value12 === value12;
+               &&  x.value12 === value12
+                && x.value1 === value1 ;
            })
              if(index == -1){
                 arr_type_an_val.push(obj);  
@@ -2494,7 +2497,6 @@
     }
     function findresultfeildbypro(array_fil_type){
         var fieldFilter = [];
-      
         $.each(array_fil_type, function(index,value){
             pro_perti.filter(function(poper) {
                 if(value['pro_id'] == poper['product_id'] ){
@@ -3192,7 +3194,6 @@
           productObj['alt_img'] = value['alt_img'];
           productObj['content'] = [];
           productObj['contentFilter'] = [];
-          console.log('Hello', product_has_property)
             $.each(product_has_property, function(index2,value2){
             if(value['pro_id'] == value2['product_id']){
                 productObj['content'].push(value2);
@@ -3394,17 +3395,33 @@
         var pro_arr = [];
         $.each(productFilter, function(index,value){   
             value['contentFilter'].filter(function(data) {
+    
               if(data['type_id'] == type){
-                  if(data['data_1'] >= arrRage[0] &&  data['data_1'] <= arrRage[1]){
-                    var index = pro_arr.findIndex(
-                        function(x){
-                            return x.pro_id === value['pro_id'];
+                   if(data['data_1'] && data['data_2'] == null){
+                    if(data['data_1'] >= arrRage[0] &&  data['data_1'] <= arrRage[1]){
+                        var index = pro_arr.findIndex(
+                            function(x){
+                                return x.pro_code === value['pro_code'];
+                            }
+                            )
+                        if(index == -1){
+                            pro_arr.push(value);  
                         }
-                        )
-                    if(index == -1){
-                        pro_arr.push(value);  
-                    }
-                  } 
+                      } 
+                   }else if(data['data_1'] != null && data['data_2'] != null){
+                    if(data['data_1'] >= arrRage[0] &&  data['data_2'] <= arrRage[1]){
+                        var index = pro_arr.findIndex(
+                            function(x){
+                                return x.pro_code === value['pro_code'];
+                            }
+                            )
+                        if(index == -1){
+                            pro_arr.push(value);  
+                        }
+                      } 
+                   }
+
+                
                }
             });
         });

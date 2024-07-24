@@ -1017,7 +1017,6 @@ class FrontendController extends Controller
     }
     public function productList($cate_parname,$cate_par_id,$se_par_name = null,$se_par_id = null){
     $lang = App::getLocale();
-
     if(!is_numeric($cate_par_id)) {
         return response()->view('errors.404', [], 404);
     }
@@ -1047,7 +1046,6 @@ class FrontendController extends Controller
     ->select('p.*', 'pt.*')
     ->orderBy('p.pro_code', 'asc')
     ->get();
-
     $products = [];
     $productCodeArr = [];
     foreach($searchPro as $pro){
@@ -1179,7 +1177,6 @@ class FrontendController extends Controller
                 ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
-            // return dd($products);
 
         if(!empty($products)){
             return  view('front-end.product')
