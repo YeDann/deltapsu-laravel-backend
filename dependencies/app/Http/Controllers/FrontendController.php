@@ -1331,6 +1331,7 @@ class FrontendController extends Controller
         $proCode  = str_replace("@", "/", $pro_code);
         $check = self::checkHaveModel($proCode);
         $check_2 = self::checkHaveModelOptional($proCode);
+        // return dd($check_2);
 
         if(isset($check->pro_id)){
             $prolang =  self::checkLang($lang ,$check->pro_id);
@@ -1543,8 +1544,9 @@ class FrontendController extends Controller
                 // ->where('st.status', 1)
                 ->select('st.id', 'stt.sortname','stt.name')
                 ->get();
+        // return dd($pro_code);
         if($findoldCate->url_item != $name){
-            return redirect()->to('/products/' . $findoldCate->url_item . '/' . $pro_code, 301);
+            return redirect()->to('/products/' . $findoldCate->url_item . '/' . $procode, 301);
         }
         return  view('front-end.productdetails')
         ->with('optional_model' , $optional_model)
@@ -4664,7 +4666,8 @@ class FrontendController extends Controller
             $queryModelOP = DB::table('product_optional_model as po')
             ->join('products as p', 'p.pro_id', '=', 'po.product_id')
             ->select('p.pro_code','po.optional_model');
-            $queryModelOP->where(\DB::raw("REPLACE(REPLACE(REPLACE(po.optional_model, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $queryStringModel . '%');
+            // $queryModelOP->where(\DB::raw("REPLACE(REPLACE(REPLACE(po.optional_model, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $queryStringModel . '%');
+            $queryModelOP->where(\DB::raw("REPLACE(REPLACE(REPLACE(po.optional_model, '-', ''), '/', ''),' ','')"), '=', $queryStringModel);
             $_modelOptional = $queryModelOP->first();
 
           return $_modelOptional;
