@@ -1301,11 +1301,12 @@ class FrontendController extends Controller
         }
    
         $findoldCate = DB::table('sub_pro_categories as c')
-        ->where('c.url_item',$name)
+        // ->where('c.url_item',$name)
+        ->where('c.url_item', 'LIKE', '%' . $name . '%')
         ->first();
-        if ($findoldCate == null) {
-            return response()->view('errors.404', [], 404);
-        }
+        // if ($findoldCate == null) {
+        //     return response()->view('errors.404', [], 404);
+        // }
         if(isset($slgSeries) && isset($findoldCate)){
             $findoldSeries = DB::table('series as s')
             ->where('s.slug',$slgSeries)
@@ -1542,6 +1543,9 @@ class FrontendController extends Controller
                 // ->where('st.status', 1)
                 ->select('st.id', 'stt.sortname','stt.name')
                 ->get();
+        if($findoldCate->url_item != $name){
+            return redirect()->to('/products/' . $findoldCate->url_item . '/' . $pro_code, 301);
+        }
         return  view('front-end.productdetails')
         ->with('optional_model' , $optional_model)
         ->with('tags_pro' , $tags_pro)
