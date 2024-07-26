@@ -1330,7 +1330,6 @@ class FrontendController extends Controller
         $proCode  = str_replace("@", "/", $pro_code);
         $check = self::checkHaveModel($proCode);
         $check_2 = self::checkHaveModelOptional($proCode);
-        // return dd($pro_code, $check, $check_2);
 
         if(isset($check->pro_id)){
             $prolang =  self::checkLang($lang ,$check->pro_id);
@@ -1339,7 +1338,7 @@ class FrontendController extends Controller
         else if($check_2){
             $pro_code_n  = str_replace("/", "@",$check_2->pro_code);
             $optional_model_n  = str_replace("/", "@",trim($proCode));
-            if(isset($check->pro_id)){
+            if(isset($check->pro_code) || isset($check_2->pro_code)){
                 return redirect()->route('productsDetailsByType',[$catename,$pro_code_n ,"optional_model" => $optional_model_n]);
             }else {
                 return response()->view('errors.404', [], 404);
