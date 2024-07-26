@@ -1303,7 +1303,9 @@ class FrontendController extends Controller
         $findoldCate = DB::table('sub_pro_categories as c')
         ->where('c.url_item',$name)
         ->first();
-
+        if ($findoldCate == null) {
+            return response()->view('errors.404', [], 404);
+        }
         if(isset($slgSeries) && isset($findoldCate)){
             $findoldSeries = DB::table('series as s')
             ->where('s.slug',$slgSeries)
