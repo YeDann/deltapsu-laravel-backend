@@ -1376,13 +1376,11 @@ class FrontendController extends Controller
             if(isset($check->pro_code) || isset($check_2->pro_code)){
                 return redirect()->route('productsDetailsByType',[$catename,$pro_code_n ,"optional_model" => $optional_model_n]);
             }else {
-                return dd('eadf');
                 return response()->view('errors.404', [], 404);
             }
         }
         else{
             // return redirect()->route('productFinder');
-            return dd('eadf2');
             return response()->view('errors.404', [], 404);
 
         }
