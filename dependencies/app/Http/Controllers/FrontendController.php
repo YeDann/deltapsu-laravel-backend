@@ -1263,7 +1263,7 @@ class FrontendController extends Controller
         ->join('categories_has_main_pro as ch', 'ch.cate_id', '=', 's.sub_pro_id')
         ->where('s.url_item',$cate)
         ->first();
-        // return dd($findoldCate);
+        return dd($findoldCate);
         if($findoldCate){
             return  redirect()->route('allproductsByType',[$cate,$findoldCate->sub_pro_id,$findoldCate->main_cateid], 301);
         }else{
@@ -1299,14 +1299,47 @@ class FrontendController extends Controller
               }
 
         }
-   
-        $findoldCate = DB::table('sub_pro_categories as c')
+        
+        $findoldCate_temp = DB::table('sub_pro_categories as c')
         // ->where('c.url_item',$name)
-        ->where('c.url_item', 'LIKE', '%' . $name . '%')
-        ->first();
-        // if ($findoldCate == null) {
-        //     return response()->view('errors.404', [], 404);
-        // }
+        // ->where('c.url_item', 'LIKE', '%' . $name . '%')
+        ->get();
+        // return dd ($findoldCate_temp);
+
+        // $findoldCateFirst = $findoldCate_temp->filter(function ($item) use ($catename) {
+        //     $urlItem = $item->url_item;
+        //     $similarity = self::similarity($catename, $urlItem);
+        //     return dd($item , $similarity, $catename, $urlItem);
+        //     return $similarity >= 50; // กำหนดความคล้ายคลึงอย่างน้อย 50%
+        // });
+        $maxSimilarity = 0;
+        $findoldCateFirst = null;
+        foreach ($findoldCate_temp as $item) {
+            $urlItem = $item->url_item;
+            $similarity = self::similarity($catename, $urlItem);
+            
+            // แสดงข้อมูลสำหรับดีบัก
+            // dd($item, $similarity, $catename, $urlItem);
+            
+            // ถ้าความคล้ายคลึงสูงสุดใหม่ ให้เก็บข้อมูลนี้ไว้
+            if ($similarity > 50) {
+                if ($similarity > $maxSimilarity) {
+                    $maxSimilarity = $similarity;
+                    $findoldCateFirst = $item;
+                }
+            }
+        }
+        
+        // ตรวจสอบผลลัพธ์
+        // return dd ($findoldCateFirst, $maxSimilarity);
+        
+       
+        $findoldCate = $findoldCateFirst;
+        // return dd($name, $findoldCate_temp, $findoldCate);
+        // return dd($findoldCate);
+        if ($findoldCate == null) {
+            return response()->view('errors.404', [], 404);
+        }
         if(isset($slgSeries) && isset($findoldCate)){
             $findoldSeries = DB::table('series as s')
             ->where('s.slug',$slgSeries)
@@ -1343,12 +1376,13 @@ class FrontendController extends Controller
             if(isset($check->pro_code) || isset($check_2->pro_code)){
                 return redirect()->route('productsDetailsByType',[$catename,$pro_code_n ,"optional_model" => $optional_model_n]);
             }else {
+                return dd('eadf');
                 return response()->view('errors.404', [], 404);
             }
         }
         else{
-            
             // return redirect()->route('productFinder');
+            return dd('eadf2');
             return response()->view('errors.404', [], 404);
 
         }
@@ -1545,21 +1579,25 @@ class FrontendController extends Controller
                 ->select('st.id', 'stt.sortname','stt.name')
                 ->get();
         // return dd($pro_code);
-        if($findoldCate->url_item != $name){
+        if($findoldCate->url_item != $name ){
+                    // return dd($pro_code, $findoldCate->url_item);
             return redirect()->to('/products/' . $findoldCate->url_item . '/' . $procode, 301);
+        }else {
+            // return dd('eslse', $data);
+            return view('front-end.productdetails')
+            ->with('optional_model' , $optional_model)
+            ->with('tags_pro' , $tags_pro)
+            ->with('optional_pro',$optional_pro)
+            ->with('vieo_img' , $vieo_img)
+            ->with('documents' , $documents)
+            ->with('series_has_application' , $series_has_application)
+            ->with('Otherpros' , $data_other)
+            ->with('section' , $section)
+            ->with('product_has_property' , $product_has_property)
+            ->with('external_link' , $external_link)
+            ->with('product' , $data);
         }
-        return  view('front-end.productdetails')
-        ->with('optional_model' , $optional_model)
-        ->with('tags_pro' , $tags_pro)
-        ->with('optional_pro',$optional_pro)
-        ->with('vieo_img' , $vieo_img)
-        ->with('documents' , $documents)
-        ->with('series_has_application' , $series_has_application)
-        ->with('Otherpros' , $data_other)
-        ->with('section' , $section)
-        ->with('product_has_property' , $product_has_property)
-        ->with('external_link' , $external_link)
-        ->with('product' , $data);
+        
     }
     public function resultSearch(){
         return  view('front-end.resultsearch');
@@ -4654,7 +4692,7 @@ class FrontendController extends Controller
             ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
             ->select('p.*','phc.categories_id')
             ->where('p.enable_pro',1);
-            
+            // $queryModel->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $queryStringModel . '%');
             $queryModel->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), '=', $queryStringModel);
             $_model = $queryModel->first();
             // return dd($strmodel, "hello world", $_model);
@@ -5076,6 +5114,11 @@ class FrontendController extends Controller
          return $String;
     }
 
+    function similarity($str1, $str2){
+        similar_text($str1, $str2, $percent);
+        return $percent;
+    }
+
     public function loginDocPartner($doc){
        $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
@@ -5412,4 +5455,5 @@ class FrontendController extends Controller
                 ], 200);
 
        }
+
 }
