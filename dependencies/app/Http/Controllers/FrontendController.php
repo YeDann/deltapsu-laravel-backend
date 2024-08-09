@@ -1038,7 +1038,8 @@ class FrontendController extends Controller
         } else {
             $catename_new .= '-power-supply';
         }
-        return redirect()->route('productList', [$catename_new, $se_par_name, $se_par_id]);
+        $catename_new = strtolower($catename_new);
+        return redirect()->route('productList', [$catename_new,$cate_par_id, $se_par_name, $se_par_id]);
     }
 
     $lang = App::getLocale();
@@ -1288,7 +1289,7 @@ class FrontendController extends Controller
         ->join('categories_has_main_pro as ch', 'ch.cate_id', '=', 's.sub_pro_id')
         ->where('s.url_item',$cate)
         ->first();
-        return dd($findoldCate);
+        // return dd($findoldCate);
         if($findoldCate){
             return  redirect()->route('allproductsByType',[$cate,$findoldCate->sub_pro_id,$findoldCate->main_cateid], 301);
         }else{
@@ -1302,8 +1303,20 @@ class FrontendController extends Controller
    
 
     public function productsDetailsByType($catename,$procode = null){
-        $pro_code = $this->validateInput($procode ,'text',true);
         $name = $this->validateInput($catename,'text',true);
+        if (strpos($catename, '-power-supply') === false) {
+            $catename_new = $catename;
+
+            if (strpos($catename, '-power') !== false) {
+                $catename_new .= '-supply';
+            } else {
+                $catename_new .= '-power-supply';
+            }
+            $name = $catename_new;
+        }
+        $pro_code = $this->validateInput($procode ,'text',true);
+
+        // return dd($name);
         $slgSeries = null;
         $optional_model = null;
         if(isset($_GET['serie'])){
@@ -1326,17 +1339,8 @@ class FrontendController extends Controller
         }
         
         $findoldCate_temp = DB::table('sub_pro_categories as c')
-        // ->where('c.url_item',$name)
-        // ->where('c.url_item', 'LIKE', '%' . $name . '%')
         ->get();
         // return dd ($findoldCate_temp);
-
-        // $findoldCateFirst = $findoldCate_temp->filter(function ($item) use ($catename) {
-        //     $urlItem = $item->url_item;
-        //     $similarity = self::similarity($catename, $urlItem);
-        //     return dd($item , $similarity, $catename, $urlItem);
-        //     return $similarity >= 50; // กำหนดความคล้ายคลึงอย่างน้อย 50%
-        // });
         $maxSimilarity = 0;
         $findoldCateFirst = null;
         foreach ($findoldCate_temp as $item) {
@@ -1347,7 +1351,7 @@ class FrontendController extends Controller
             // dd($item, $similarity, $catename, $urlItem);
             
             // ถ้าความคล้ายคลึงสูงสุดใหม่ ให้เก็บข้อมูลนี้ไว้
-            if ($similarity > 50) {
+            if ($similarity > 0) {
                 if ($similarity > $maxSimilarity) {
                     $maxSimilarity = $similarity;
                     $findoldCateFirst = $item;
@@ -1363,7 +1367,9 @@ class FrontendController extends Controller
         // return dd($name, $findoldCate_temp, $findoldCate);
         // return dd($findoldCate);
         if ($findoldCate == null) {
-            return response()->view('errors.404', [], 404);
+            return redirect()->route('productsDetailsByType',[$name, $procode] );
+
+            // return response()->view('errors.404', [], 404);
         }
         if(isset($slgSeries) && isset($findoldCate)){
             $findoldSeries = DB::table('series as s')
@@ -1375,6 +1381,7 @@ class FrontendController extends Controller
                 return redirect()->route('productFinder');
             }
         }else if(isset($findoldCate) && !isset($procode)){
+            return dd('hello');
             return  redirect()->route('productList',[$findoldCate->url_item,$findoldCate->sub_pro_id]);
         }
 
@@ -1389,7 +1396,7 @@ class FrontendController extends Controller
         $proCode  = str_replace("@", "/", $pro_code);
         $check = self::checkHaveModel($proCode);
         $check_2 = self::checkHaveModelOptional($proCode);
-        // return dd($check_2);
+        // return dd($check_2, $check);
 
         if(isset($check->pro_id)){
             $prolang =  self::checkLang($lang ,$check->pro_id);
@@ -1399,14 +1406,15 @@ class FrontendController extends Controller
             $pro_code_n  = str_replace("/", "@",$check_2->pro_code);
             $optional_model_n  = str_replace("/", "@",trim($proCode));
             if(isset($check->pro_code) || isset($check_2->pro_code)){
-                return redirect()->route('productsDetailsByType',[$catename,$pro_code_n ,"optional_model" => $optional_model_n]);
+                return redirect()->route('productsDetailsByType',[$name,$pro_code_n ,"optional_model" => $optional_model_n]);
             }else {
                 return response()->view('errors.404', [], 404);
             }
         }
         else{
-            // return redirect()->route('productFinder');
-            return response()->view('errors.404', [], 404);
+            // return dd($findoldCate->url_item,$findoldCate->sub_pro_id);
+            return  redirect()->route('productList',[$findoldCate->url_item,$findoldCate->sub_pro_id]);
+            // return response()->view('errors.404', [], 404);
 
         }
     
