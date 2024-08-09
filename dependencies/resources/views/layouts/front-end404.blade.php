@@ -223,6 +223,8 @@ $langch = str_replace('_', '-', app()->getLocale());
     gtag('consent', 'default', {
       'ad_storage': 'denied',
       'analytics_storage': 'denied',
+      'ad_user_data':'denied',
+      'ad_personalization':'denied'
     })
   </script>
 
@@ -264,6 +266,12 @@ $langch = str_replace('_', '-', app()->getLocale());
       if (window.cwcIsUserAccept('marketing')) {
         gtag('consent', 'update', {
           'ad_storage': 'granted'
+        })
+        gtag('consent', 'update', {
+          'ad_user_data': 'granted'
+        })
+        gtag('consent', 'update', {
+          'ad_personalization': 'granted'
         })
       }
     }
