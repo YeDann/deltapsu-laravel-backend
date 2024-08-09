@@ -228,7 +228,7 @@
         <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>  
         <div class="box-product-finder-grid">
             @foreach($subCategories as $sub)
-            <a href="{{ route('productList',[preg_replace('/\s+/', '_', $sub->name),$sub->sub_pro_id])}}"
+            <a href="{{ route('productList',[preg_replace('/\s+/', '_', $sub->url_item),$sub->sub_pro_id])}}"
                 class="box-product-finder-item d-flex">
                 <div class="m-auto">
                     @if($sub->image != null)

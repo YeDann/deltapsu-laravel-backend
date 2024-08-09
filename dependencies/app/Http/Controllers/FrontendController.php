@@ -844,6 +844,19 @@ class FrontendController extends Controller
     }
 
     public function allproductsByType($cate_parname ,$cate_par_id = 0,$main_pId){
+
+        if (strpos($cate_parname, '-power-supply') === false) {
+            $catename_new = $cate_parname;
+
+            if (strpos($cate_parname, '-power') !== false) {
+                $catename_new .= '-supply';
+            } else {
+                $catename_new .= '-power-supply';
+            }
+            return redirect()->route('allproductsByType', [$catename_new, $cate_par_id, $main_pId]);
+        }
+
+
         $catename = $this->validateInput($cate_parname ,'text',true);
         $cateid = $this->validateInput($cate_par_id ,'number',true);
         $mainId = $this->validateInput($main_pId ,'number',true);
@@ -1016,6 +1029,18 @@ class FrontendController extends Controller
        
     }
     public function productList($cate_parname,$cate_par_id,$se_par_name = null,$se_par_id = null){
+
+    if (strpos($cate_parname, '-power-supply') === false) {
+        $catename_new = $cate_parname;
+        
+        if (strpos($cate_parname, '-power') !== false) {
+            $catename_new .= '-supply';
+        } else {
+            $catename_new .= '-power-supply';
+        }
+        return redirect()->route('productList', [$catename_new, $se_par_name, $se_par_id]);
+    }
+
     $lang = App::getLocale();
     if(!is_numeric($cate_par_id)) {
         return response()->view('errors.404', [], 404);
@@ -1345,12 +1370,12 @@ class FrontendController extends Controller
             ->where('s.slug',$slgSeries)
             ->first();
             if($findoldSeries){
-                return  redirect()->route('productList',[$name,$findoldCate->sub_pro_id,$findoldSeries->slug,$findoldSeries->se_id]);
+                return  redirect()->route('productList',[$findoldCate->url_item,$findoldCate->sub_pro_id,$findoldSeries->slug,$findoldSeries->se_id]);
             }else{
                 return redirect()->route('productFinder');
             }
         }else if(isset($findoldCate) && !isset($procode)){
-            return  redirect()->route('productList',[$name,$findoldCate->sub_pro_id]);
+            return  redirect()->route('productList',[$findoldCate->url_item,$findoldCate->sub_pro_id]);
         }
 
         if($name == 'configurable-product-selection'){
@@ -1395,10 +1420,10 @@ class FrontendController extends Controller
         // ->where('st.local' ,$lang)
         ->where('spt.local' ,$lang)
         ->where('p.pro_id',$check->pro_id)
-        ->select('p.*', 'pt.*' ,'st.title as serieName' ,'spt.name as catename','spt.sub_pro_id as pro_categories_id','sp.unit_dimension','sp.unit_dimension_1' )
+        ->select('p.*', 'pt.*' ,'st.title as serieName' ,'spt.name as catename','sp.url_item as url_item','spt.sub_pro_id as pro_categories_id','sp.unit_dimension','sp.unit_dimension_1' )
         ->orderBy('p.created_at', 'desc')
         ->first();
-
+        
         // return dd( $pro);
 
         if(!self::checkContentPro($pro->pro_id)){
@@ -1490,6 +1515,7 @@ class FrontendController extends Controller
                     "serie_id"=>$pro->series_id,
                     "serie_name"=>$pro->serieName,
                     "cate_name"=>$pro->catename,
+                    "url_item"=>$pro->url_item,
                     "cate_id"=>$pro->pro_categories_id,
                     "alt_img" =>$pro->alt_img,
                     "content" =>$arraysub,

@@ -49,14 +49,14 @@
                                     break;
                                 }
                             }
+                       
                           ?>
                             <a
-                                href="{{route('allproductsByType' ,[slugifyHead($current1->name),$current1->sub_pro_id ,$current1->main_cateid ])}}">
+                                href="{{route('allproductsByType' ,[slugifyHead($current1->url_item),$current1->sub_pro_id ,$current1->main_cateid ])}}">
                                 <p class="text-pro-link">
                                     {{isset($staticContent['Industrial_Power'])?$staticContent['Industrial_Power']:"Industrial
                                     Power"}}</p>
                             </a>
-
                         </div>
                         
                         <div class=" ">
@@ -70,7 +70,7 @@
                             }
                           ?>
                             <a
-                                href="{{route('allproductsByType' ,[slugifyHead($current2->name),$current2->sub_pro_id ,$current2->main_cateid ])}}">
+                                href="{{route('allproductsByType' ,[slugifyHead($current2->url_item),$current2->sub_pro_id ,$current2->main_cateid ])}}">
                                 <p class="text-pro-link">{{isset($staticContent['Medical_Power'])?
                                     $staticContent['Medical_Power']:"Medical Power"}}</p>
                             </a>
@@ -326,7 +326,7 @@
                         <div class="collapse pl-4" id="foot-nav-link-list-sub1" aria-expanded="false">
                             @foreach ($navcategories2 as $subCate)
                             <a class="text-normal "
-                                href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                             </a>
                             @endforeach
 
@@ -337,7 +337,7 @@
                         <div class="collapse pl-4" id="foot-nav-link-list-sub2" aria-expanded="false">
                             @foreach ($navcategories1 as $subCate)
                             <a class="text-normal "
-                                href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}</a>
+                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}</a>
                             @endforeach
                         </div>
                         <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub3" data-toggle="collapse"

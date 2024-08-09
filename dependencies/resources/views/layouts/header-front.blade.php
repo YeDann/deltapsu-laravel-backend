@@ -508,27 +508,27 @@ function slugifyHead($text)
                   @foreach ($navcategories4 as $subCate)
                   @if($subCate->main_cateid == 1)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}',4)"
-                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '-', $subCate->name),$subCate->sub_pro_id ,4])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id ,4])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @elseif($subCate->main_cateid == 2)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type2}}',4)"
-                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '-', $subCate->name),$subCate->sub_pro_id ,4])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id ,4])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @elseif($subCate->main_cateid == 3)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}',4)"
-                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '-', $subCate->name),$subCate->sub_pro_id ,4])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id ,4])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @elseif($subCate->main_cateid == 4)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}',4)"
-                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '-', $subCate->name),$subCate->sub_pro_id ,4])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id ,4])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @else
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}',4)"
-                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id ,4])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[preg_replace('/\s+/', '_', $subCate->url_item),$subCate->sub_pro_id ,4])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @endif
@@ -551,22 +551,22 @@ function slugifyHead($text)
                   @foreach ($navcategories2 as $subCate)
                   @if($subCate->main_cateid == 1)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}',2)"
-                      href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @elseif($subCate->main_cateid == 2)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type2}}',2)"
-                      href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @elseif($subCate->main_cateid == 3)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}',2)"
-                      href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @else
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}',2)"
-                      href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @endif
@@ -589,22 +589,22 @@ function slugifyHead($text)
                   @foreach ($navcategories1 as $subCate)
                   @if($subCate->main_cateid == 1)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}',1)"
-                      href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @elseif($subCate->main_cateid == 2)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type2}}',1)"
-                      href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @elseif($subCate->main_cateid == 3)
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}',1)"
-                      href="{{route('allproductsByType' ,[slugifyHead($subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @else
                   <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}',1)"
-                      href="{{route('allproductsByType' ,[slugifyHead( $subCate->name),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
+                      href="{{route('allproductsByType' ,[slugifyHead( $subCate->url_item),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}
                     </a>
                   </li>
                   @endif
@@ -919,7 +919,7 @@ function slugifyHead($text)
       @if(isset($navcategories2))
       @foreach ($navcategories2 as $subCate)
       <a class="text-normal pl-3 "
-        href="{{route('allproductsByType' ,[ slugifyHead($subCate->name),$subCate->sub_pro_id,2])}}">{{$subCate->name}}</a>
+        href="{{route('allproductsByType' ,[ slugifyHead($subCate->url_item),$subCate->sub_pro_id,2])}}">{{$subCate->name}}</a>
       @endforeach
       @endif
     </div>
@@ -931,7 +931,7 @@ function slugifyHead($text)
       @if(isset($navcategories1))
       @foreach ($navcategories1 as $subCate)
       <a class="text-normal pl-3 "
-        href="{{route('allproductsByType' ,[ slugifyHead($subCate->name),$subCate->sub_pro_id,1])}}">{{$subCate->name}}</a>
+        href="{{route('allproductsByType' ,[ slugifyHead($subCate->url_item),$subCate->sub_pro_id,1])}}">{{$subCate->name}}</a>
       @endforeach
       @endif
     </div>
@@ -941,7 +941,7 @@ function slugifyHead($text)
         :'LED Power' }}</a>
       {{-- @foreach ($navcategories3 as $subCate)
       <a class="text-normal pl-3 "
-        href="{{route('allproductsByType' ,[ preg_replace('/\s+/', '_', $subCate->name),$subCate->sub_pro_id,3])}}">{{$subCate->name}}</a>
+        href="{{route('allproductsByType' ,[ preg_replace('/\s+/', '_', $subCate->url_item),$subCate->sub_pro_id,3])}}">{{$subCate->name}}</a>
       @endforeach --}}
       <a class="text-normal pl-3"
         href="{{route('allproductsByType',[slugifyHead('CC-Cv-Mode'),1 , 3])}}">{{isset($staticContent['CC_Cv_Mode'])
