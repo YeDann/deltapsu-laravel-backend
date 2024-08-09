@@ -65,7 +65,7 @@
                     <a class="btn btn-enquiry mr-12px"
                         href="{{route('LinktoEnquiry',[$subCategories[0]->sub_pro_id , $subCategories[0]->name,'MEG-1K2A4' ])}}">{{$staticContent['Enquiry']}}</a>
                     <a class="btn btn-subscribe ml-12px"
-                        href="{{ route('productList',[preg_replace('/\s+/', '-', 'Configurable Power'),7])}}">{{$staticContent['Product_lists']}}</a>
+                        href="{{ route('configurableproduct')}}">{{$staticContent['Product_lists']}}</a>
                 </div>
             </div>
             <div class="col-xl-8 col-md-12">
