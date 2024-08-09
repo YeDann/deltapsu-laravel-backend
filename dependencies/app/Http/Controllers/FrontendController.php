@@ -1381,7 +1381,7 @@ class FrontendController extends Controller
                 return redirect()->route('productFinder');
             }
         }else if(isset($findoldCate) && !isset($procode)){
-            return dd('hello');
+            // return dd('hello');
             return  redirect()->route('productList',[$findoldCate->url_item,$findoldCate->sub_pro_id]);
         }
 
