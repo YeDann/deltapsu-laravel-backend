@@ -845,15 +845,13 @@ class FrontendController extends Controller
 
     public function allproductsByType($cate_parname ,$cate_par_id = 0,$main_pId){
 
-        if (strpos($cate_parname, '-power-supply') === false) {
-            $catename_new = $cate_parname;
-
-            if (strpos($cate_parname, '-power') !== false) {
-                $catename_new .= '-supply';
-            } else {
-                $catename_new .= '-power-supply';
-            }
-            return redirect()->route('allproductsByType', [$catename_new, $cate_par_id, $main_pId]);
+        $cate = DB::table('sub_pro_categories as sc')
+        ->select('sc.url_item')
+        ->where('sc.sub_pro_id', $cate_par_id)
+        ->first();
+    
+        if ($cate && $cate->url_item !== $cate_parname) {
+            return redirect()->route('allproductsByType', [$cate->url_item, $cate_par_id, $main_pId]);
         }
 
 
@@ -1045,6 +1043,15 @@ class FrontendController extends Controller
     $lang = App::getLocale();
     if(!is_numeric($cate_par_id)) {
         return response()->view('errors.404', [], 404);
+    }
+
+    $cate = DB::table('sub_pro_categories as sc')
+    ->select('sc.url_item')
+    ->where('sc.sub_pro_id', $cate_par_id)
+    ->first();
+
+    if ($cate && $cate->url_item !== $cate_parname) {
+        return redirect()->route('productList', [$cate->url_item, $cate_par_id, $se_par_id]);
     }
 
     $catename = $this->validateInput($cate_parname ,'text',true);
