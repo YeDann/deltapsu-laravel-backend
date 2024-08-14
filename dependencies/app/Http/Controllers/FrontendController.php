@@ -1038,7 +1038,7 @@ class FrontendController extends Controller
     ->where('sc.sub_pro_id', $cate_par_id)
     ->first();
 
-    if ($cate && $cate->url_item !== $cate_parname && $main_pId != 3){
+    if ($cate && $cate->url_item !== $cate_parname){
         return redirect()->route('productList', [$cate->url_item, $cate_par_id, $se_par_id]);
     }
 
