@@ -1299,16 +1299,7 @@ class FrontendController extends Controller
 
     public function productsDetailsByType($catename,$procode = null){
         $name = $this->validateInput($catename,'text',true);
-        if (strpos($catename, '-power-supply') === false) {
-            $catename_new = $catename;
 
-            if (strpos($catename, '-power') !== false) {
-                $catename_new .= '-supply';
-            } else {
-                $catename_new .= '-power-supply';
-            }
-            $name = $catename_new;
-        }
         $pro_code = $this->validateInput($procode ,'text',true);
 
         // return dd($name);
