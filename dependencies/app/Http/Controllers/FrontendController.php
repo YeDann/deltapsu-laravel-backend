@@ -1028,18 +1028,6 @@ class FrontendController extends Controller
     }
     public function productList($cate_parname,$cate_par_id,$se_par_name = null,$se_par_id = null){
 
-    if (strpos($cate_parname, '-power-supply') === false) {
-        $catename_new = $cate_parname;
-        
-        if (strpos($cate_parname, '-power') !== false) {
-            $catename_new .= '-supply';
-        } else {
-            $catename_new .= '-power-supply';
-        }
-        $catename_new = strtolower($catename_new);
-        return redirect()->route('productList', [$catename_new,$cate_par_id, $se_par_name, $se_par_id]);
-    }
-
     $lang = App::getLocale();
     if(!is_numeric($cate_par_id)) {
         return response()->view('errors.404', [], 404);
