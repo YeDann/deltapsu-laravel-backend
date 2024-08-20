@@ -365,8 +365,8 @@
         </div>
         <div class="row">
             <div class="col-lg-12 text-center">
-                <button type="button" onclick="onclickSaveDraft()" class="btn btn-boxen mt-4">{{$staticContent['Save
-                    Draft']}}</button>
+                <button type="button" onclick="onclickSaveDraft()"
+                    class="btn btn-boxen mt-4">{{$staticContent['SaveDraft']}}</button>
             </div>
         </div>
     </div>
