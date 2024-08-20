@@ -2576,6 +2576,7 @@ class FrontendController extends Controller
     }
     public function successStories(){
         $sectionId = session('partner_id');
+        $lang = App::getLocale();
         self::checkExpiryLogin();
         if($sectionId == null){
             return redirect()->route('index','login');
