@@ -360,13 +360,15 @@
                 <p>By submitting this form, You understand and agree to our <a target="_blank" class="text-a-link"
                         href="{{route('privacyPolicy')}}">Privacy Policy</a>.</p>
                 <button type="button" onclick="onclickSubmitform()"
-                    class="btn-subscribe mt-4">{{$staticContent['Submit']}}</button>
+                    class="btn-subscribe mt-4">{{isset($staticContent['Submit']) ? $staticContent['Submit'] : "Submit"
+                    }}</button>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12 text-center">
                 <button type="button" onclick="onclickSaveDraft()"
-                    class="btn btn-boxen mt-4">{{$staticContent['SaveDraft']}}</button>
+                    class="btn btn-boxen mt-4">{{isset($staticContent['SaveDraft']) ? $staticContent['SaveDraft'] :
+                    "SaveDraft" }}</button>
             </div>
         </div>
     </div>
