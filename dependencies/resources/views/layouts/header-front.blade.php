@@ -676,7 +676,7 @@ function slugifyHead($text)
           @if(isset($navapplication))
           @foreach ($navapplication as $app)
           <a class="dropdown-item"
-            href="{{route('appDetail' ,[ 'name' => slugifyHead($app->name) , 'id' => $app->applica_id])}}">
+            href="{{route('appDetail' ,[ 'name' => $app->slug_app , 'id' => $app->applica_id])}}">
             {{$app->name}}</a>
           @endforeach
           @endif
@@ -979,8 +979,7 @@ function slugifyHead($text)
 
       @if(isset($navapplication))
       @foreach ($navapplication as $app)
-      <a class="text-normal pl-3"
-        href="{{route('appDetail' ,[ 'name' => slugifyHead($app->name) , 'id' => $app->applica_id])}}">
+      <a class="text-normal pl-3" href="{{route('appDetail' ,[ 'name' => $app->slug_app , 'id' => $app->applica_id])}}">
         {{$app->name}}</a>
       @endforeach
       @endif

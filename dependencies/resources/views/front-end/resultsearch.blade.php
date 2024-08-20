@@ -902,7 +902,7 @@
                             <div class="container">
                                 <div class="grid-container">
                                     @foreach ($applications as $item)
-                                    <a href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($item->name)) , 'id' => $item->applica_id])}}"
+                                    <a href="{{route('appDetail' ,[ 'name' => $item->slug_app , 'id' => $item->applica_id])}}"
                                         class="" style="">
                                         <div class="grid-item ">
                                             <div class="grid-sub-pic"

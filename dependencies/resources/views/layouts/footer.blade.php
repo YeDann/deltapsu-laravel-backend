@@ -58,7 +58,7 @@
                                     Power"}}</p>
                             </a>
                         </div>
-                        
+
                         <div class=" ">
                             <?php 
                             $current2 = null;
@@ -93,8 +93,7 @@
                         @if(isset($navapplication))
                         @foreach ($navapplication as $app)
                         <div class=" ">
-                            <a
-                                href="{{route('appDetail' ,[ 'name' => slugifyHead($app->name) , 'id' => $app->applica_id])}}">
+                            <a href="{{route('appDetail' ,[ 'name' =>  $app->slug_app , 'id' => $app->applica_id])}}">
                                 <p class="text-pro-link">{{$app->name}}</p>
                             </a>
                         </div>
@@ -376,7 +375,7 @@
                         @if(isset($navapplication))
                         @foreach ($navapplication as $app)
                         <a class=" text-normal"
-                            href="{{route('appDetail' ,[ 'name' => slugifyHead($app->name) , 'id' => $app->applica_id])}}">{{$app->name}}</a>
+                            href="{{route('appDetail' ,[ 'name' => $app->slug_app , 'id' => $app->applica_id])}}">{{$app->name}}</a>
                         @endforeach
                         @endif
 

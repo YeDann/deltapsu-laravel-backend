@@ -189,7 +189,7 @@
         </div>
     </div>
     <div class="d-flex justify-content-center" style="margin-top: 2rem">
-        <h4 class="text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
+        <h4 class="text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
     </div>
 </div>
 
@@ -234,7 +234,7 @@
         </div>
     </div>
     <div class="d-flex justify-content-center mt-4">
-        <h4 class="text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
+        <h4 class="text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
     </div>
 </div>
 <!-- selecter -->
@@ -302,8 +302,8 @@
             <h2 class="text-title-delta-home ">{{$staticContent['Applications']}}</h2>
             <div class="grid-container">
                 @foreach ($applications as $item)
-                <a href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($item->name)) , 'id' => $item->applica_id])}}"
-                    class="" style="">
+                <a href="{{route('appDetail' ,[ 'name' => $item->slug_app , 'id' => $item->applica_id])}}" class=""
+                    style="">
                     <div class="grid-item ">
                         <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy"
                             class="grid-sub-pic">
@@ -348,7 +348,7 @@
             <h2 class="text-title-delta-home">{{$staticContent['Applications']}}</h2>
             <div class="grid-container">
                 @foreach ($applications as $item)
-                <a href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($item->name)) , 'id' => $item->applica_id])}}"
+                <a href="{{route('appDetail' ,[ 'name' => $item->slug_app, 'id' => $item->applica_id])}}"
                     class="blogBox-mb moreBox-mb" style="display: none;">
                     <div class="grid-item ">
                         <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy"
@@ -455,7 +455,7 @@ function retextdata($arr ,$unit){
                         <div class="icon-app-detail">
                             @foreach ($series_has_application as $item)
                             @if($item->se_id == $serie->se_id)
-                            <a href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($item->name)) , 'id' => $item->id])}}"
+                            <a href="{{route('appDetail' ,[ 'name' =>$item->slug_app, 'id' => $item->id])}}"
                                 data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
                                 class="icon btn-icon-app itemhorver{{$item->id}}"
                                 style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
@@ -531,7 +531,7 @@ function retextdata($arr ,$unit){
                         <div class="icon-app-detail">
                             @foreach ($series_has_application as $item)
                             @if($item->se_id == $serie->se_id)
-                            <a href="{{route('appDetail' ,[ 'name' => preg_replace('/\s+/', '-',strtolower($item->name)) , 'id' => $item->id])}}"
+                            <a href="{{route('appDetail' ,[ 'name' => $item->slug_app , 'id' => $item->id])}}"
                                 data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
                                 class="icon btn-icon-app itemhorver{{$item->id}}"
                                 style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>

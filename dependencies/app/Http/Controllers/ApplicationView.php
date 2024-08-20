@@ -117,6 +117,10 @@ class ApplicationView extends Controller
         $meta_description  =$request->metaDescription;
         $meta_metaTitle  = $request->metaTitle;
         $h1_title = $request->h1_title;
+        $re1 = str_replace("/","_",$name);
+        $key = str_replace(" ","-",$re1);
+        $key2 = $this->clean($key);
+        $slug  =  $key2;
         $validate = Validator::make($request->all(), [
             'name' => 'required',
         ]);
@@ -136,6 +140,7 @@ class ApplicationView extends Controller
                     "color_icon" => $arrayfilesave['color_icon'],
                     "banner" => $arrayfilesave['banner'],
                     "status" => $request->status,
+                    "slug_app" => $slug,
                     "blue_outline_icon" => $arrayfilesave['blue_outline_icon'],
                     "created_at" => \Carbon\Carbon::now(),
                     "updated_at" => \Carbon\Carbon::now(),
@@ -231,6 +236,8 @@ class ApplicationView extends Controller
         $h1_title = $request->h1_title;
         // return dd($arrayfilesave);
         $lang_loop = $request->lang_loop;
+
+       
         
         $validate = Validator::make($request->all(), [
             'name' => 'required',
@@ -243,6 +250,12 @@ class ApplicationView extends Controller
             $content_2 = $request->content_2;
             $overview = $request->overview;
             $overview_text = $request->overview_text;
+
+            $re1 = str_replace("/","_",isset($name['en']) ? $name['en'] :'app_'.$appId );
+            $key = str_replace(" ","-",$re1);
+            $key2 = $this->clean($key);
+            $slug  =  $key2;
+            // return dd( $slug);
             
          DB::table('application')->where('id' ,$appId)->update(
                 [
@@ -250,6 +263,7 @@ class ApplicationView extends Controller
                     "thumbnail" => $arrayfilesave['thumbnail'],
                     "color_icon" => $arrayfilesave['color_icon'],
                     "banner" => $arrayfilesave['banner'],
+                    "slug_app" => $slug,
                     "status" => $request->status,
                     "blue_outline_icon" => $arrayfilesave['blue_outline_icon'],
                     "updated_at" => \Carbon\Carbon::now(),

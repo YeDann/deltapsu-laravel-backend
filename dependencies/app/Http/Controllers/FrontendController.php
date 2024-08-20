@@ -2015,7 +2015,7 @@ class FrontendController extends Controller
             $string_name =  $str1.'-'.$str2.'-'.$str3;
         }
         if(isset($string_name) && isset($id) ){
-            return redirect()->route('appDetail',[ 'name' => preg_replace('/\s+/', '-',strtolower($string_name)) , 'id' => $id]);
+            return redirect()->route('appDetail',[ 'name' => $string_name , 'id' => $id]);
         }else{
             return redirect()->route('index','home');
         }
@@ -2060,7 +2060,7 @@ class FrontendController extends Controller
         ->orderBy('sp.order_sq' ,'asc')
         ->get();
         // return dd($application->name, $name, $application);
-        if($application != null && $application->slug_app == $name){
+        if($application != null || $application->slug_app == $name){
             return  view('front-end.applicationdetail')
             ->with('image' ,$image)
             ->with('otherapp' ,$otherapp)
