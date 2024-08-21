@@ -2059,8 +2059,8 @@ class FrontendController extends Controller
         ->select('s.image','sp.*','st.title' ,'st.overview_content')
         ->orderBy('sp.order_sq' ,'asc')
         ->get();
-        // return dd($application->name, $name, $application);
-        if($application != null || $application->slug_app == $name){
+        similar_text($application->slug_app, $name, $percent);
+        if($application != null && $percent > 80){
             return  view('front-end.applicationdetail')
             ->with('image' ,$image)
             ->with('otherapp' ,$otherapp)
