@@ -2067,8 +2067,8 @@ class FrontendController extends Controller
             ->with('relatedApp' ,$relatedApp)
             ->with('application' ,$application);
         } else {
-            // return response()->view('errors.404', [], 404);
-            return redirect()->route('index','home');
+            return response()->view('errors.404', [], 404);
+            // return redirect()->route('index','home');
         }
     }
 
