@@ -187,6 +187,11 @@
                                     name="status_certificate[]" value="3">
                                 <label class="custom-control-label" for="status_residen">Lighting & Signage</label>
                             </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="checkbox" class="custom-control-input" id="status_wireless"
+                                    name="status_certificate[]" value="4">
+                                <label class="custom-control-label" for="status_wireless">Wireless Charging</label>
+                            </div>
                         </div>
 
                         <div class="form-group">

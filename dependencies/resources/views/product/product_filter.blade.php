@@ -36,44 +36,45 @@
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
             <div class="block-title">
-                    <form action="{{route('storeFilter')}}" method="POST" enctype="multipart/form-data">
-                        {{csrf_field()}}
-                <div class="row"> 
-                        <div class="col-lg-5"> 
-                        <input type="hidden" name="pro_categories" value="{{$pro_cate}}">
-                                <select class="form-control js-select2"  name="filername" >
-                                       <option value="null">Select Filter </option>
-                                        @foreach($section as $se)
-                                     <option value="" disabled>{{$se->name}}</option>
-                                        @foreach($pd_fields as $fields)
-                                        @if($se->sectionId == $fields->section_id)
-                                        <option value="{{$fields->pd_field_id}}|{{$fields->field_name}}" > &nbsp;&nbsp;{{$fields->field_name}}</option>
-                                        @endif
-                                        @endforeach
-                                        @endforeach
-                                        <option value=""disabled>Other</option>
-                                        <option value="series01|Series" > &nbsp;&nbsp;Series</option>
-                                        <option value="status02|Status" > &nbsp;&nbsp;Status</option>
-                                        <option value="safety03|Safety" > &nbsp;&nbsp;Safety</option>
-                                        <option value="certifi04|Certificate" > &nbsp;&nbsp;Certificate</option>
-                                   </select>
+                <form action="{{route('storeFilter')}}" method="POST" enctype="multipart/form-data">
+                    {{csrf_field()}}
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <input type="hidden" name="pro_categories" value="{{$pro_cate}}">
+                            <select class="form-control js-select2" name="filername">
+                                <option value="null">Select Filter </option>
+                                @foreach($section as $se)
+                                <option value="" disabled>{{$se->name}}</option>
+                                @foreach($pd_fields as $fields)
+                                @if($se->sectionId == $fields->section_id)
+                                <option value="{{$fields->pd_field_id}}|{{$fields->field_name}}">
+                                    &nbsp;&nbsp;{{$fields->field_name}}</option>
+                                @endif
+                                @endforeach
+                                @endforeach
+                                <option value="" disabled>Other</option>
+                                <option value="series01|Series"> &nbsp;&nbsp;Series</option>
+                                <option value="status02|Status"> &nbsp;&nbsp;Status</option>
+                                <option value="safety03|Certificate"> &nbsp;&nbsp;Certificate</option>
+                                <option value="certifi04|Segment"> &nbsp;&nbsp;Segment</option>
+                            </select>
                         </div>
-                        <div class="col-lg-2"> 
+                        <div class="col-lg-2">
                             <button type="submit" class="btn btn-success">ADD</button>
                         </div>
-                </div>
+                    </div>
                 </form>
-                
+
             </div>
             <div class="block-options">
                 <div class="block-options-item ">
-                  
+
                 </div>
-                
+
             </div>
         </div>
         <div class="block-content block-content-full">
-                <p class="warrning-text">*Can draggable order Item </p>
+            <p class="warrning-text">*Can draggable order Item </p>
             <table class="table table-bordered table-striped table-vcenter">
                 <thead>
                     <tr>
@@ -85,12 +86,13 @@
                 <tbody>
                     @if(isset($filter_pro) and !empty($filter_pro))
                     @foreach ($filter_pro as $item)
-                   <tr class="odd order-list" data-id="{{$item->id}}">
-                    <td class="text-center">{{$loop->iteration}}</td>
-                    <td class="d-none d-sm-table-cell">{{$item->name}}</td>
-                    <td class="text-center">
-                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
-                    </td>
+                    <tr class="odd order-list" data-id="{{$item->id}}">
+                        <td class="text-center">{{$loop->iteration}}</td>
+                        <td class="d-none d-sm-table-cell">{{$item->name}}</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});"
+                                data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                        </td>
                     </tr>
                     @endforeach
                     @endif
@@ -98,32 +100,33 @@
             </table>
         </div>
         {{-- <ul id="sortable">
-                <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</li>
-                <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</li>
-                <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</li>
-                <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</li>
-                <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</li>
-                <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
-                <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
-              </ul> --}}
+            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</li>
+            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</li>
+            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</li>
+            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</li>
+            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</li>
+            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
+            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
+        </ul> --}}
     </div>
 </div>
- <!-- Vertically Centered Block Modal -->
- <div class="modal" id="modal-block-vcenter" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="block block-themed block-transparent mb-0">
-                    <div class="block-header bg-danger">
-                        <h3 class="block-title">!! Warning </h3>
-                        <div class="block-options">
-                            <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
-                                <i class="fa fa-fw fa-times"></i>
-                            </button>
-                        </div>
+<!-- Vertically Centered Block Modal -->
+<div class="modal" id="modal-block-vcenter" tabindex="-1" role="dialog" aria-labelledby="modal-block-vcenter"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent mb-0">
+                <div class="block-header bg-danger">
+                    <h3 class="block-title">!! Warning </h3>
+                    <div class="block-options">
+                        <button type="button" class="btn-block-option" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-fw fa-times"></i>
+                        </button>
                     </div>
-                    <form action="{{route('deletefilter')}}" method="POST" >
-                        {{csrf_field()}}
-                        <input type="hidden" name="pro_categories" value="{{$pro_cate}}">
+                </div>
+                <form action="{{route('deletefilter')}}" method="POST">
+                    {{csrf_field()}}
+                    <input type="hidden" name="pro_categories" value="{{$pro_cate}}">
                     <div class="block-content">
                         <input type="hidden" name="itemId" id="itemId">
                         <p>Data will be lost?</p>
@@ -132,20 +135,20 @@
                         <button type="button" class="btn  btn-light" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-success">OK</button>
                     </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- END Vertically Centered Block Modal -->
+</div>
+<!-- END Vertically Centered Block Modal -->
 
-    <div id="order-input" style="display: none;"></div>
-    <div id="order-index" style="display: none;"></div>
+<div id="order-input" style="display: none;"></div>
+<div id="order-index" style="display: none;"></div>
 @endsection
 @section('js')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-        $( function() {
+    $( function() {
           $( "#sortable" ).sortable();
           $( "#sortable" ).disableSelection();
         } );
@@ -175,13 +178,10 @@
             }
         });
 
-    </script>
+</script>
 
 
 <script>
-
-
-
     function ondelelete(id){
          $('#itemId').val(id);
 

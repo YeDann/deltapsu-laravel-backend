@@ -297,6 +297,7 @@ class ProductCategoriesController extends Controller
                             "contenttype1" => $request->contentAddType1,
                             "contenttype2" => $request->contentAddType2,
                             "contenttype3" => $request->contentAddType3,
+                            "contenttype4" => $request->contentAddType4,
                             "file" => $filename,
                             "local" => $lang,                 
                         ]
@@ -428,6 +429,8 @@ class ProductCategoriesController extends Controller
         $contentAddType1 = $request->contentAddType1;
         $contentAddType2 = $request->contentAddType2;
         $contentAddType3 = $request->contentAddType3;
+        $contentAddType4 = $request->contentAddType4;
+
         $oldfile_warranty_file  = $request->oldfile_warranty_file;
         $url_item  = $request->url_item;
         
@@ -506,6 +509,7 @@ class ProductCategoriesController extends Controller
                             "contenttype1" => $contentAddType1[$lang],
                             "contenttype2" => $contentAddType2[$lang],
                             "contenttype3" => $contentAddType3[$lang],
+                            "contenttype4" => $contentAddType4[$lang],
                             "file" => $arrayfileName[$lang],
                             "content1" => isset($content1[$lang]) ?  $content1[$lang] :null,
                             "content2" => isset($content2[$lang]) ? $content2[$lang] : null ,
@@ -525,6 +529,7 @@ class ProductCategoriesController extends Controller
                             "contenttype1" => $contentAddType1[$lang],
                             "contenttype2" => $contentAddType2[$lang],
                             "contenttype3" => $contentAddType3[$lang],
+                            "contenttype4" => $contentAddType4[$lang],
                             "file" => $arrayfileName[$lang],
                             "content1" => isset($content1[$lang]) ?  $content1[$lang] :null,
                             "content2" => isset($content2[$lang]) ? $content2[$lang] : null ,

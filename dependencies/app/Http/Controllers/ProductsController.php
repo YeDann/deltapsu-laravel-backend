@@ -502,6 +502,8 @@ public function update(Request $request){
     $oldFile = $request->oldFile;
     $meta_description = $request->metaDescription;
     // return dd($meta_description);
+     $enable_pro = isset($request->enable_pro) && $request->enable_pro == 1  ? 1 : 0;
+     $manaul_status = isset($request->manaul_status) && $request->manaul_status == 1  ? 1 : 0;
 
     $validate = Validator::make($request->all(), [
         'productCode' => 'required',
@@ -524,10 +526,10 @@ public function update(Request $request){
             [
                 'picture' => preg_replace('/\s+/', '', $thumbnailName),
                 'pro_code'=>$request->productCode,
-                'enable_pro'=>$request->enable_pro,
+                'enable_pro'=>$enable_pro,
                 'series_id'=>$request->Series,
                 'status_product'=>$request->status_pro,
-                'manaul_page'=>$request->manaul_status,
+                'manaul_page'=>$manaul_status,
                 'dimensionL'=>$request->dimensionL,
                 'dimensionW'=>$request->dimensionw,
                 'dimensionD'=>$request->dimensionD,
@@ -543,9 +545,9 @@ public function update(Request $request){
                 [
                     'pro_code'=>$request->productCode,
                     'series_id'=>$request->Series,
-                    'enable_pro'=>$request->enable_pro,
+                    'enable_pro'=>$enable_pro,
                     'status_product'=>$request->status_pro,
-                    'manaul_page'=>$request->manaul_status,
+                    'manaul_page'=>$manaul_status,
                     'dimensionL'=>$request->dimensionL,
                     'dimensionW'=>$request->dimensionw,
                     'dimensionD'=>$request->dimensionD,

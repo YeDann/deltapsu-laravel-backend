@@ -499,10 +499,11 @@ function slugifyHead($text)
               <i class="zmdi zmdi-chevron-down"></i>
             </a>
             <div class="dropdown-menu s-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
-              {{-- <div class="dropdown-submenu">
+              <div class="dropdown-submenu">
                 <a id="sub4" class="sub-menu dropdown-item " onclick="mainCate('sub4')" tabindex="-1"
                   href="#">{{isset($staticContent['Battery_Charging'])?
-                  $staticContent['Battery_Charging'] :'Battery Charging' }} <i class="zmdi zmdi-chevron-right"></i></a>
+                  $staticContent['Battery_Charging'] :'Industrial Battery Charging' }} <i
+                    class="zmdi zmdi-chevron-right"></i></a>
                 <ul class="dropdown-menu drp-subthree">
                   @if(isset($navcategories4))
                   @foreach ($navcategories4 as $subCate)
@@ -522,7 +523,7 @@ function slugifyHead($text)
                     </a>
                   </li>
                   @elseif($subCate->main_cateid == 4)
-                  <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}',4)"
+                  <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}',4)"
                       href="{{route('allproductsByType' ,[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id ,4])}}">{{$subCate->name}}
                     </a>
                   </li>
@@ -536,16 +537,16 @@ function slugifyHead($text)
                   @endif
                   <div class="image-dropdown d-flex justify-content-center "
                     style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('{{asset('frontend-asset/image/Dropdown.jpg')}}')no-repeat;">
-                    <img class="imageNav2 img-hove-on-dropdown lazyload" loading="lazy"
+                    <img class="imageNav4 img-hove-on-dropdown lazyload" loading="lazy"
                       data-src="{{asset('frontend-asset/image/Industrial_Power_Supplies.png')}}"
                       alt="Industrial_Power_Supplies.png">
                   </div>
                 </ul>
-              </div> --}}
+              </div>
               <div class="dropdown-submenu">
                 <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1"
                   href="#">{{isset($staticContent['Industrial_Power'])?
-                  $staticContent['Industrial_Power'] :'Industrial_Power' }} <i class="zmdi zmdi-chevron-right"></i></a>
+                  $staticContent['Industrial_Power'] :'Industrial Power' }} <i class="zmdi zmdi-chevron-right"></i></a>
                 <ul class="dropdown-menu drp-subthree">
                   @if(isset($navcategories2))
                   @foreach ($navcategories2 as $subCate)
