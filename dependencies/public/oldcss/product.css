@@ -1119,13 +1119,7 @@ e.search-filter-action {
 .product-type-boxitem-sub-banner-text a {
     text-decoration: none;
 }
-.product-type-boxitem-sub-banner-text p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-}
+
 .text-link{
     font-size: 12px;
     font-weight: bold;
