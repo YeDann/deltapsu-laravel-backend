@@ -66,8 +66,8 @@
                                 title="Delete" onclick="deleteNews({{$item->main_id}})">
                                 Delete <i class="fa fa-trash"></i>
                             </button> --}}
-                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->main_id}});"
-                                data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                            {{-- <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->main_id}});"
+                                data-toggle="modal" data-target="#modal-block-vcenter">Delete</button> --}}
                         </div>
                     </td>
                     </tr>
