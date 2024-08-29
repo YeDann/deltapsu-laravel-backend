@@ -1078,11 +1078,28 @@ class ProductCategoriesController extends Controller
         ->where('sct.local', 'en')
         ->orderBy('chmp.order_seq', 'asc')
         ->get();
+      $mainCate = DB::table('main_pro_categories as mp')
+        ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
+        ->where('mpt.local', '=', 'en')
+        ->select('mp.*', 'mpt.*')
+        ->orderBy('mp.created_at', 'desc')
+        ->get();
+
+        $mainShow = DB::table('main_pro_categories as mp')
+        ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
+        ->where('mpt.local', '=', 'en')
+        ->select('mp.*', 'mpt.*')
+        ->where('mp.main_id', $id)
+        ->first();
+
+       
 
         return view('pro_categories.order_pro_categories')
         ->with('name', 'product')
         ->with('cate_id', $id)
         ->with('subCategories',$subCategories)
+        ->with('mainCate',$mainCate)
+        ->with('mainShow',$mainShow)
         ->with('menu', 'subCategories');
      }
 

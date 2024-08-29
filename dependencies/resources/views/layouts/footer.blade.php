@@ -42,6 +42,25 @@
                         <div class=" ">
 
                             <?php 
+                            $current3 = null;
+                            foreach($navcategories as $item1) { 
+                                if ($item1->main_cateid == 4) {
+                                    $current3 = $item1;
+                                    break;
+                                }
+                            }
+                       
+                          ?>
+                            <a
+                                href="{{route('allproductsByType' ,[slugifyHead($current3->url_item),$current3->sub_pro_id ,$current3->main_cateid ])}}">
+                                <p class="text-pro-link">
+                                    {{isset($staticContent['Battery_Charging'])?
+                                    $staticContent['Battery_Charging'] :'Industrial Battery Charging' }}</p>
+                            </a>
+                        </div>
+                        <div class=" ">
+
+                            <?php 
                             $current1 = null;
                             foreach($navcategories as $item1) { 
                                 if ($item1->main_cateid == 2) {
@@ -319,6 +338,18 @@
                             class="zmdi zmdi-chevron-down"></i></a>
                     <div class="collapse pl-4" id="foot-nav-link-list1" data-parent="#footer-nav-mobile" {{--
                         aria-expanded="false" --}}>
+                        <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub4" data-toggle="collapse"
+                            data-target="#foot-nav-link-list-sub4">{{isset($staticContent['Battery_Charging'])?
+                            $staticContent['Battery_Charging'] :'Industrial Battery Charging' }}<i
+                                class="zmdi zmdi-chevron-down"></i></a>
+                        <div class="collapse pl-4" id="foot-nav-link-list-sub4" aria-expanded="false">
+                            @foreach ($navcategories4 as $subCate)
+                            <a class="text-normal "
+                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,4])}}">{{$subCate->name}}
+                            </a>
+                            @endforeach
+
+                        </div>
                         <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub1" data-toggle="collapse"
                             data-target="#foot-nav-link-list-sub1">{{$staticContent['Industrial_Power']}}<i
                                 class="zmdi zmdi-chevron-down"></i></a>
