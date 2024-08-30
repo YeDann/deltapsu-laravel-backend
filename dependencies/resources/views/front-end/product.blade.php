@@ -1815,7 +1815,7 @@
          {id:1,name:'{{$staticContent['Industrial_filter']}}'},
          {id:2,name:'{{$staticContent['Medical_filter']}}'},
          {id:3,name:'{{$staticContent['Lighting_Signage_filter']}}'},
-         {id:4,name:'{{$staticContent['wireless_charging']}}'}
+         {id:4,name:'{{$staticContent['Wireless_charging']}}'}
         ];
         var data_1 = [];
         var data_text = [];
@@ -1982,7 +1982,7 @@
        var doc_safety = [{id:2,name:'ABS'}, {id:3,name:'ATEX'},{id:4,name:'BSMI'}];
        property_load = pro_perti;
         var status = [ {id:2,name:'NEW'}, {id:3,name:'UPDATED'},{id:4,name:'EOL'}];
-        var certificates = [ {id:1,name:'{{$staticContent['Industrial_filter']}}'}, {id:2,name:'{{$staticContent['Medical_filter']}}'},{id:3,name:'{{$staticContent['Lighting_Signage_filter']}}'} ,{id:4,name:'{{$staticContent['wireless_charging']}}'} ];
+        var certificates = [ {id:1,name:'{{$staticContent['Industrial_filter']}}'}, {id:2,name:'{{$staticContent['Medical_filter']}}'},{id:3,name:'{{$staticContent['Lighting_Signage_filter']}}'} ,{id:4,name:'{{$staticContent['Wireless_charging']}}'} ];
         var data_1 = [];
         var data_text = [];
         var html3 = '';
