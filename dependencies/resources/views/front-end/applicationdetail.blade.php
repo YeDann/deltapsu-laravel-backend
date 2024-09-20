@@ -280,7 +280,6 @@
                     class="banner-type-product-all-new item " style="background:linear-gradient(90deg, rgba(68,68,68,0.45702030812324934) 0%, rgba(255,255,255,0)
             50%),url('{{config('app.url')}}/medias/categories/{{$application->banner}}') center no-repeat; background-size:
             cover;">
-                    @else
                     @elseif($application->id == 10)
                     <div role="img" alt="Delta power supplies for household appliances"
                         class="banner-type-product-all-new item " style="background:linear-gradient(90deg, rgba(68,68,68,0.45702030812324934) 0%, rgba(255,255,255,0)
