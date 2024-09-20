@@ -1103,6 +1103,34 @@ class ProductCategoriesController extends Controller
         ->with('menu', 'subCategories');
      }
 
+     public function order_pro_categories(){
+        $subCategories = DB::table('sub_pro_categories as sp')
+            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
+            ->where('spt.local', '=', 'en')
+            ->where('sp.status', '=', 1)
+            ->select('sp.*', 'spt.*')
+            ->orderBy('sp.order_seq', 'asc')
+            ->get();
+       
+        return view('pro_categories.order_categories')
+        ->with('name', 'product')
+        ->with('subCategories',$subCategories)
+        ->with('menu', 'subCategories');
+     }
+
+     public function update_order_cate(Request $request){
+        $HomeIds = array_filter(explode(",", $request->home_id));
+        $HomeOrders = array_filter(explode(",", $request->home_order));
+        foreach ($HomeIds as $HomeId => $value){
+             DB::table('sub_pro_categories')->where('sub_pro_id', '=', $value)->update(['order_seq'=>$HomeOrders[$HomeId]]);
+        }
+        return response()->json([
+            'order' => $request->home_order
+        ],200);
+    }
+    
+
+
      public function update_order_procate(Request $request){
         $HomeIds = array_filter(explode(",", $request->home_id));
         $HomeOrders = array_filter(explode(",", $request->home_order));
@@ -1113,6 +1141,7 @@ class ProductCategoriesController extends Controller
             'order' => $request->home_order
         ],200);
     }
+
     public function removefileDocSelectionGuide($id,$lang){
 
         DB::table('sub_pro_categories_translation')
