@@ -360,8 +360,8 @@
                                             style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
                                         </div>
                                         @endif
-
                                         @endforeach
+
                                         @elseif($application->id == 1)
                                         @foreach ($image as $item)
                                         @if($loop->iteration == 1)
@@ -383,8 +383,8 @@
                                             style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
                                         </div>
                                         @endif
-
                                         @endforeach
+
                                         @elseif($application->id == 9)
                                         @foreach ($image as $item)
                                         @if($loop->iteration == 1)
@@ -408,8 +408,34 @@
                                             style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
                                         </div>
                                         @endif
-
                                         @endforeach
+                                        @elseif($application->id == 10)
+                                        @foreach ($image as $item)
+                                        @if($loop->iteration == 1)
+                                        <div role="img" alt="Delta power supplies for household appliances"
+                                            class="item {{($loop->iteration == 1)?" active":""}}"
+                                            style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                            <span class="sr-only">Delta power supplies for household appliances</span>
+                                        </div>
+                                        @elseif($loop->iteration == 2)
+                                        <div role="img" alt="Coffee machine with a power supply by Delta"
+                                            class="item {{($loop->iteration == 1)?" active":""}}"
+                                            style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                            <span class="sr-only">Coffee machine with a power supply by Delta</span>
+                                        </div>
+                                        @elseif($loop->iteration == 3)
+                                        <div role="img" alt="Modern office vending machine"
+                                            class="item {{($loop->iteration == 1)?" active":""}}"
+                                            style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                            <span class="sr-only">Modern office vending machine</span>
+                                        </div>
+                                        @else
+                                        <div class="item {{($loop->iteration == 1)?" active":""}}"
+                                            style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
+                                        </div>
+                                        @endif
+                                        @endforeach
+
                                         @else
                                         @foreach ($image as $item)
                                         <div class="item {{($loop->iteration == 1)?" active":""}}"
