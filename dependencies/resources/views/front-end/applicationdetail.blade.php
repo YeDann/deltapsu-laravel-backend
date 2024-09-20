@@ -433,6 +433,7 @@
                                                 style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
                                                 <span class="sr-only">Modern office vending machine</span>
                                             </div>
+                                            @else
                                             <div class="item {{($loop->iteration == 1)?" active":""}}"
                                                 style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->image_name}}');'">
                                             </div>
