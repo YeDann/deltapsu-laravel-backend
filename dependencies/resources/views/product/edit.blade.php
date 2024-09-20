@@ -212,7 +212,8 @@
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
                                 <input type="checkbox" class="custom-control-input" id="status_wireless"
                                     name="status_certificate[]" value="4" {{ $check4 ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="status_wireless">Wireless Charging</label>
+                                <label class="custom-control-label" for="status_wireless">Industrial Battery
+                                    Charging</label>
                             </div>
                         </div>
 
