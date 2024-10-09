@@ -117,10 +117,7 @@ class ApplicationView extends Controller
         $meta_description  =$request->metaDescription;
         $meta_metaTitle  = $request->metaTitle;
         $h1_title = $request->h1_title;
-        $re1 = str_replace("/","_",$name);
-        $key = str_replace(" ","-",$re1);
-        $key2 = $this->clean($key);
-        $slug  =  $key2;
+      
         $validate = Validator::make($request->all(), [
             'name' => 'required',
         ]);
@@ -133,6 +130,10 @@ class ApplicationView extends Controller
             $content_2 = $request->content_2;
             $overview = $request->overview;
             $overview_text = $request->overview_text;
+            $re1 = str_replace("/","_",$name);
+            $key = str_replace(" ","-",$re1);
+            $key2 = $this->clean($key);
+            $slug  =  $key2;
             $appId = DB::table('application')->insertGetID(
                 [
                     "icon" =>  $arrayfilesave['icon'],
