@@ -24,8 +24,8 @@ class VerifyLang
                     ->where('language.status', '=', 1)
                     ->first();
                 if (!$check_lang) {
-                    App::setLocale('cn');
-                    return redirect('/cn/404');
+                    App::setLocale('en');
+                    return redirect('/en/404');
                 }
         }
         return $next($request);
