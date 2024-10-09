@@ -77,6 +77,7 @@ class Kernel extends HttpKernel
         'localeViewPath' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
         'cors' => \App\Http\Middleware\Cors::class, 
         'HtmlMinifier' => \App\Http\Middleware\HtmlMinifier::class,
+        'verifyLang' => \App\Http\Middleware\VerifyLang::class,
     ];
 
     /**
