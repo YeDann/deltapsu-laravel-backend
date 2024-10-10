@@ -137,7 +137,7 @@
                                     ?>
                                     </div>
                                     <a
-                                        href="{{route('productsDetailsByType',[ preg_replace('/\s+/', '-', $pro->catename),$pro->pro_code ])}}">
+                                        href="{{route('productsDetailsByType',[ preg_replace('/\s+/', '-', $pro->url_item),$pro->pro_code ])}}">
                                         <div class="link-see-product">{{$staticContent['See_Products']}} <i
                                                 class="zmdi zmdi-chevron-right" aria-hidden="true"></i>
                                         </div>
