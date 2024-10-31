@@ -30,7 +30,7 @@ $langch = str_replace('_', '-', app()->getLocale());
   @yield('meta')
   <!-- Bootstrap CSS -->
 
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all-master.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello3.css')}}" />
   <link rel="stylesheet" type="text/css"
     href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" />
