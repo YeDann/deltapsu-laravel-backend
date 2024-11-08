@@ -39,15 +39,15 @@
                         <div class="text-footer-main ">
                             <h6>{{isset($staticContent['Products'])?$staticContent['Products']:"Products"}}</h6>
                         </div>
-                        <?php 
+                        <?php
                         $current1 = null;
-                        foreach($navcategories as $item1) { 
+                        foreach($navcategories as $item1) {
                             if ($item1->main_cateid == 2) {
                                 $current1 = $item1;
                                 break;
                             }
                         }
-                   
+
                       ?>
                         <a
                             href="{{route('allproductsByType' ,[slugifyHead($current1->url_item),$current1->sub_pro_id ,$current1->main_cateid ])}}">
@@ -56,9 +56,9 @@
                                 Power"}}</p>
                         </a>
 
-                        <?php 
+                        <?php
                         $current2 = null;
-                        foreach($navcategories as $item2) { 
+                        foreach($navcategories as $item2) {
                             if ($item2->main_cateid == 1) {
                                 $current2 = $item2;
                                 break;
@@ -75,22 +75,7 @@
                             <p class="text-pro-link">
                                 {{isset($staticContent['LED_Power'])?$staticContent['LED_Power']:"LED Power"}}</p>
                         </a>
-                        <?php 
-                        $current3 = null;
-                        foreach($navcategories as $item1) { 
-                            if ($item1->main_cateid == 4) {
-                                $current3 = $item1;
-                                break;
-                            }
-                        }
-                   
-                      ?>
-                        <a
-                            href="{{route('allproductsByType' ,[slugifyHead($current3->url_item),$current3->sub_pro_id ,$current3->main_cateid ])}}">
-                            <p class="text-pro-link">
-                                {{isset($staticContent['Battery_Charging'])?
-                                $staticContent['Battery_Charging'] :'Industrial Battery Charging' }}</p>
-                        </a>
+
 
                     </div>{{-- product --}}
                     <div class="col-xl-2 col-lg-2">
