@@ -33,20 +33,20 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Cache;
 class FrontendController extends Controller
 {
- 
-    public function __construct() { 
+
+    public function __construct() {
     $lang = App::getLocale();
     session(['lang_down' =>  App::getLocale()]);
     session(['product_comp' => []]);
     }
     public function index($page ='home')
     {
-    
+
         $lang = App::getLocale();
         session(['lang_down' =>  $lang]);
         if($page == 'home'){
 
-           
+
             $banners = DB::table('banner_slide as bs')
             ->join('banner_slide_translations as bst','bs.id','=','bst.ban_id')
             ->where('bst.local','=', $lang)
@@ -60,7 +60,7 @@ class FrontendController extends Controller
                 ->select('bs.*','bst.*')
                 ->orderBy('bs.order_seq' ,'asc')
                 ->get();
-              
+
             }
             $subCategories = DB::table('sub_pro_categories as sp')
             ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
@@ -116,7 +116,7 @@ class FrontendController extends Controller
             // $data = [];
             //      $i = 0;
             //     foreach($products as $item){
-                 
+
             //       $prolang = self::checkLang($lang,$item->pro_id);
             //         $pro = DB::table('products as p')
             //         ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -165,7 +165,7 @@ class FrontendController extends Controller
             //             }
             //             $i++;
             //         }
-                   
+
             //     }
                 $now = date('Y-m-d');
                 $events_q = DB::table('contents as c')
@@ -192,10 +192,10 @@ class FrontendController extends Controller
                     ->limit(2)
                     ->get();
                     $events =  self::getDataNew($events_q2,'events');
-                 
+
                 }
                 // return dd($events);
-               
+
                 $news_q = DB::table('product_news_has_categories as pnc')
                 ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
                 ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
@@ -260,7 +260,7 @@ class FrontendController extends Controller
                 ->select('s.*' ,'ls.*','st.title','st.overview_content','sp.url_item','sp.sub_pro_id as cate_id','spt.name as cateName')
                 ->orderBy('ls.order_seq' ,'asc')
                 ->get();
-                
+
                 $series_has_application = DB::table('series_has_application as shp')
                 ->join('application as app', 'app.id', '=', 'shp.app_id')
                 ->join('application_translation as appt' ,'appt.app_id' ,'=' ,'app.id')
@@ -326,27 +326,27 @@ class FrontendController extends Controller
                 ->paginate(15);
 
             }
-         
-          
-            
+
+
+
             $status = false;
             $currentdate = date('Y-m-d');
             if(count($news) > 0){
                 if($news[0]->typeId == 12){
                     $date1 = $currentdate;
                     $date2 = $news[0]->date_publish;
-    
+
                     $diff = abs(strtotime($date2) - strtotime($date1));
-    
+
                     $years = floor($diff / (365*60*60*24));
                     $months = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
                     $days = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
-                    
+
                     if($days > 0 && $days <= 30){
                         $status = true;
                     }
                 }
-                
+
             }
             // return dd(count($news));
 
@@ -356,7 +356,7 @@ class FrontendController extends Controller
                 ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
-                
+
             return  view('front-end.new')
             ->with('metatag' ,$metatag)
             ->with('news_type' ,$news_type)
@@ -377,7 +377,7 @@ class FrontendController extends Controller
             }else{
                 return redirect()->route('index','partners');
             }
-          
+
         }
         // if($page == 'application'){
         //     $lang = App::getLocale();
@@ -426,7 +426,7 @@ class FrontendController extends Controller
             ->where('tct.local',$lang)
             ->select('tc.id','tct.name')
             ->get();
-         
+
 
             $news = DB::table('article_has_categories as anc')
             ->join('contents as c' ,'c.id' ,'=','anc.content_id')
@@ -470,13 +470,13 @@ class FrontendController extends Controller
                 ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
-            
+
             return  view('front-end.faqs')
             ->with('metatag' ,$metatag)
             ->with('faqs' ,$faqs)
             ->with('faq_categories' ,$faq_categories);
         }
-        
+
         if($page =='product-documents'){
             $lang = App::getLocale();
             $subCategories = DB::table('sub_pro_categories as sc')
@@ -490,7 +490,7 @@ class FrontendController extends Controller
             ->orderBy('p.pro_code', 'asc')
             ->select('p.*')
             ->first();
-            
+
             $products = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
             ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
@@ -528,7 +528,7 @@ class FrontendController extends Controller
                 ->distinct()
                 ->orderBy('st.title', 'asc')
                 ->get();
-              
+
                 $documents = DB::table('product_has_documents as phd')
                 ->join('products as p','p.pro_id','=','phd.product_id')
                 ->join('product_ducuments as pd','phd.document_id','=','pd.doc_id')
@@ -573,7 +573,7 @@ class FrontendController extends Controller
                 ->where('permar.permission_id', '=', 3)
                 ->select('mc.*' ,'mct.*')
                 ->get();
-    
+
              $margeting = DB::table('marketing_resource as mr')
                 ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
                 ->where('mrt.local', '=', $lang)
@@ -590,7 +590,7 @@ class FrontendController extends Controller
             ->with('margetCate',$margetCate)
             ->with('margeting',$margeting);
         }
-        if($page =='partners'){ 
+        if($page =='partners'){
             $sectionId = session('partner_id');
             self::checkExpiryLogin();
             if($sectionId == null){
@@ -602,29 +602,29 @@ class FrontendController extends Controller
                 ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
-                return view('front-end.partners')->with('metatag',$metatag); 
+                return view('front-end.partners')->with('metatag',$metatag);
             }
-        
+
         }
         if($page == "sales-offices"){
-            return redirect()->route('contactSalesOffices');         
+            return redirect()->route('contactSalesOffices');
         }
         if($page == 'distributors'){
-            return redirect()->route('contactFindDistributor');      
+            return redirect()->route('contactFindDistributor');
         }
         if($page == 'products'){
-            return redirect()->route('productFinder'); 
+            return redirect()->route('productFinder');
         }
         if($page == 'end-of-life-products'){
-            return redirect()->route('index' ,'news'); 
+            return redirect()->route('index' ,'news');
         }
         if($page == 'documents'){
-            return redirect()->route('index' ,'product-documents'); 
+            return redirect()->route('index' ,'product-documents');
         }
         if($page == 'marketing-resources'){
-            return redirect()->route('index' ,'catalogs'); 
+            return redirect()->route('index' ,'catalogs');
         }
-     
+
         if($page == 'manuals'){
             $lang = App::getLocale();
             $subCategories = DB::table('sub_pro_categories as sc')
@@ -639,7 +639,7 @@ class FrontendController extends Controller
             ->orderBy('p.pro_code', 'asc')
             ->select('p.*')
             ->first();
-            
+
             $products = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
             ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
@@ -675,7 +675,7 @@ class FrontendController extends Controller
                     array_push($showlang , $langal->name);
                     array_push($showlangOb ,$data);
                 }
-                
+
                 $documents_cate = DB::table('products_documents_categories as pdc')
                 ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
                 ->where('pdct.local','=', $lang)
@@ -719,22 +719,22 @@ class FrontendController extends Controller
                 $name = $this->validateInput($_GET['for'],'text',true);
             }
             if($name == 'Sale-Enquiries'){
-                return redirect()->route('contactSupport')->with('contactlink','Sale-Enquiries');  
+                return redirect()->route('contactSupport')->with('contactlink','Sale-Enquiries');
             }else if($name == 'Products-and-Service-Support'){
-                return redirect()->route('contactSupport')->with('contactlink','Products-and-Service-Support');  
+                return redirect()->route('contactSupport')->with('contactlink','Products-and-Service-Support');
             }else{
-                return redirect()->route('contactSupport');  
+                return redirect()->route('contactSupport');
             }
-            return redirect()->route('contactSupport'); 
-        } 
+            return redirect()->route('contactSupport');
+        }
         // return dd('ddd');
-         //return redirect()->route('index','home'); 
+         //return redirect()->route('index','home');
           return response()->view('errors.404', [], 404);
-         
+
     }
     private function getDataNew($query ,$type){
         $content = [];
-    
+
         foreach($query as $item){
             $data_date = '';
             if($type == 'events'){
@@ -751,12 +751,12 @@ class FrontendController extends Controller
 
             }
                 $content[] = array(
-                    "id"=>$item->id, 
-                    "slug"=>$item->slug, 
-                    "title"=>$item->title, 
-                    "content"=> $item->content, 
-                    "location"=> $item->location, 
-                    "thumb"=>$item->thumb, 
+                    "id"=>$item->id,
+                    "slug"=>$item->slug,
+                    "title"=>$item->title,
+                    "content"=> $item->content,
+                    "location"=> $item->location,
+                    "thumb"=>$item->thumb,
                     "date"=>$data_date,
                     "color_type"=>$color_type,
                     "cateName"=>$cateName,
@@ -766,7 +766,7 @@ class FrontendController extends Controller
     }
 
     private function getDateformat($date){
-                                       
+
         $eng_month_arr = array(
             "0" => "",
             "1" => "Jan",
@@ -802,7 +802,7 @@ class FrontendController extends Controller
         }
     }
     // public  function redirectFeedback(){
-     
+
     // }
 
 
@@ -828,7 +828,7 @@ class FrontendController extends Controller
         $connectors_images = DB::table('connector_image as cm')
         ->select('cm.*')
         ->get();
-    
+
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id',5)
@@ -840,7 +840,7 @@ class FrontendController extends Controller
         ->with('model',$model)
         ->with('connectors_images',$connectors_images)
         ->with('model_alldata',$model_alldata);
-        
+
     }
 
     public function allproductsByType($cate_parname ,$cate_par_id = 0,$main_pId){
@@ -849,7 +849,7 @@ class FrontendController extends Controller
         ->select('sc.url_item')
         ->where('sc.sub_pro_id', $cate_par_id)
         ->first();
-    
+
         if ($cate && $cate->url_item !== $cate_parname && $main_pId != 3){
             return redirect()->route('allproductsByType', [$cate->url_item, $cate_par_id, $main_pId]);
         }
@@ -860,7 +860,7 @@ class FrontendController extends Controller
         $mainId = $this->validateInput($main_pId ,'number',true);
 
         $lang = App::getLocale();
-      
+
         $status1_last = DB::table('least_products as lp')
         ->join('least_products_translation as lpt', 'lp.id', '=', 'lpt.last_id')
         ->Leftjoin('products as p', 'p.pro_id', '=', 'lp.product_id')
@@ -884,6 +884,7 @@ class FrontendController extends Controller
         $mainCategories = DB::table('main_pro_categories as mp')
         ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
         ->where('mpt.local', '=',$lang)
+        ->where('mp.active',1)
         ->select('mp.*', 'mpt.*')
         ->orderBy('mp.order_seq','asc')
         ->get();
@@ -937,7 +938,7 @@ class FrontendController extends Controller
     public function allproduct(){
 
         $lang = App::getLocale();
-      
+
         $status1_last = DB::table('least_products as lp')
         ->join('least_products_translation as lpt', 'lp.id', '=', 'lpt.last_id')
         ->Leftjoin('products as p', 'p.pro_id', '=', 'lp.product_id')
@@ -1025,7 +1026,7 @@ class FrontendController extends Controller
        }else{
         return redirect()->route('index','home');
        }
-       
+
     }
     public function productList($cate_parname,$cate_par_id,$se_par_name = null,$se_par_id = null){
 
@@ -1056,9 +1057,9 @@ class FrontendController extends Controller
         ->where('sc.sub_pro_id',$cateid)
         ->orderBy('sc.created_at', 'desc')
         ->get();
-  
-    $arrproid = [];    
-    
+
+    $arrproid = [];
+
     $searchPro = DB::table('product_has_categories as phc')
     ->join('products as p', 'p.pro_id', '=', 'phc.product_id')
     ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -1079,7 +1080,7 @@ class FrontendController extends Controller
         ->get();
         // return dd(count($product_has_prm));
         //Check Eror input content product
-    
+
         if(count($product_has_prm) >= 4){
             array_push($arrproid, $pro->pro_id);
             $prolang =  self::checkLang($lang,$pro->pro_id);
@@ -1091,8 +1092,8 @@ class FrontendController extends Controller
             ->select('p.*', 'pt.*')
             ->orderBy('p.created_at', 'desc')
             ->first();
-           
-          
+
+
              array_push($products, $datapro);
              array_push($productCodeArr,trim($datapro->pro_code));
              $optional_product = DB::table('product_optional_model as po')
@@ -1104,15 +1105,15 @@ class FrontendController extends Controller
                     ->select('p.*','pt.*','po.optional_model','po.optional_model as pro_code' )
                     ->orderBy('p.created_at', 'desc')
                     ->get();
-                
-                
+
+
                     foreach($optional_product as $optional){
                         if (!in_array(trim($optional->optional_model), $productCodeArr)) {
                           array_push($products,$optional);
                         }
                     }
         }
-    
+
     }
     $pro_new = self::removeDuplicates($products ,'pro_code');
 
@@ -1261,7 +1262,7 @@ class FrontendController extends Controller
             'data' => $product_property,
             'proid' => $proid,
         ],200);
-       
+
     }
     public function loadProduct(Request $request){
         $lang = App::getLocale();
@@ -1294,9 +1295,9 @@ class FrontendController extends Controller
             return response()->view('errors.404', [], 404);
         }
     }
-  
-      
-   
+
+
+
 
     public function productsDetailsByType($catename,$procode = null){
         $name = $this->validateInput($catename,'text',true);
@@ -1313,7 +1314,7 @@ class FrontendController extends Controller
                 $slgSeries = $this->validateInput($_GET['serie'] ,'text',true);
             }
         }
-      
+
         if(isset($_GET['optional_model'])){
             $optional_model = $this->validateInput($_GET['optional_model'] ,'text',true);
                 $optional_model_code  = str_replace("@", "/", $optional_model);
@@ -1324,7 +1325,7 @@ class FrontendController extends Controller
               }
 
         }
-        
+
         $findoldCate_temp = DB::table('sub_pro_categories as c')
         ->get();
         // return dd ($findoldCate_temp);
@@ -1333,10 +1334,10 @@ class FrontendController extends Controller
         foreach ($findoldCate_temp as $item) {
             $urlItem = $item->url_item;
             $similarity = self::similarity($catename, $urlItem);
-            
+
             // แสดงข้อมูลสำหรับดีบัก
             // dd($item, $similarity, $catename, $urlItem);
-            
+
             // ถ้าความคล้ายคลึงสูงสุดใหม่ ให้เก็บข้อมูลนี้ไว้
             if ($similarity > 0) {
                 if ($similarity > $maxSimilarity) {
@@ -1345,11 +1346,11 @@ class FrontendController extends Controller
                 }
             }
         }
-        
+
         // ตรวจสอบผลลัพธ์
         // return dd ($findoldCateFirst, $maxSimilarity);
-        
-       
+
+
         $findoldCate = $findoldCateFirst;
         // return dd($name, $findoldCate_temp, $findoldCate);
         // return dd($findoldCate);
@@ -1387,7 +1388,7 @@ class FrontendController extends Controller
 
         if(isset($check->pro_id)){
             $prolang =  self::checkLang($lang ,$check->pro_id);
-        
+
         }
         else if($check_2){
             $pro_code_n  = str_replace("/", "@",$check_2->pro_code);
@@ -1404,7 +1405,7 @@ class FrontendController extends Controller
             // return response()->view('errors.404', [], 404);
 
         }
-    
+
         $pro = DB::table('products as p')
         ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
         ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
@@ -1418,7 +1419,7 @@ class FrontendController extends Controller
         ->select('p.*', 'pt.*' ,'st.title as serieName' ,'spt.name as catename','sp.url_item as url_item','spt.sub_pro_id as pro_categories_id','sp.unit_dimension','sp.unit_dimension_1' )
         ->orderBy('p.created_at', 'desc')
         ->first();
-        
+
         // return dd( $pro);
 
         if(!self::checkContentPro($pro->pro_id)){
@@ -1428,7 +1429,7 @@ class FrontendController extends Controller
         $external_link = DB::table('external_link as e')
          ->select('e.*')
          ->where('e.products',$pro->pro_id)
-         ->get();  
+         ->get();
 
         $vieo_img = DB::table('product_image as pm')
         ->where('pm.pro_id' ,$pro->pro_id)
@@ -1458,7 +1459,7 @@ class FrontendController extends Controller
         ->select('p.pro_code','pd.doc_id','p.pro_id as product_id','pdt.name','pdc.title as catename','pdc.slug','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id')
         ->orderBy('pdc.title','asc')
         ->get();
-  
+
         $product_has_property = DB::table('product_has_property as ph')
         ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
         ->join('product_field as pf','pf.id' ,'=','ph.type_id')
@@ -1532,7 +1533,7 @@ class FrontendController extends Controller
                 ->select('p.*', 'pt.*' ,'spt.name as catename' ,'spt.sub_pro_id as pro_categories_id' ,'sp.unit_dimension')
                 ->get();
 
-         
+
                 $date = now();
                 $datefor = date('Y-m-d H:i:s',strtotime($date) - ((24*3600*365)*2));
           if(count($product_related) == 0){
@@ -1552,8 +1553,8 @@ class FrontendController extends Controller
             ->inRandomOrder()
             ->get();
           }
-        
-          
+
+
             $data_other = [];
             $data_check_poOther = [];
                  $j = 0;
@@ -1587,7 +1588,7 @@ class FrontendController extends Controller
                         "dimensionD"=>$pro->dimensionD,
                     ];
                    }
-                 
+
                     $j++;
                 }
 
@@ -1616,7 +1617,7 @@ class FrontendController extends Controller
             ->with('external_link' , $external_link)
             ->with('product' , $data);
         }
-        
+
     }
     public function resultSearch(){
         return  view('front-end.resultsearch');
@@ -1638,11 +1639,11 @@ class FrontendController extends Controller
         ->orderBy('p.created_at', 'desc')
         ->get();
         $cateid  = null;
- 
+
         if(isset($data) && count($data) > 0){
           $cateid = $data[0]->pro_categories_id;
         }
-  
+
         $Categories = DB::table('sub_pro_categories as sp')
             ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
             ->where('spt.local', '=', $lang)
@@ -1676,8 +1677,8 @@ class FrontendController extends Controller
                         array_push($products,$optional_model);
                     }
 
-        
-            } 
+
+            }
         }
         $pro_new = self::removeDuplicates($products ,'pro_code');
         $pd_field = DB::table('product_field as pf')
@@ -1750,10 +1751,10 @@ class FrontendController extends Controller
                         array_push($products,$optional_model);
                     }
 
-        
-            } 
+
+            }
         }
-        
+
         $pro_new = self::removeDuplicates($products ,'pro_code');
         return response()->json([
             'data' => $pro_new
@@ -1771,7 +1772,7 @@ class FrontendController extends Controller
         $arr_pro = $this->validateInput($request->arr_pro,'array',true);
         //$typeid = $request->typeid;
         $typeid = $this->validateInput($request->typeid,'number',true);
-    
+
         $lang = App::getLocale();
         $products = DB::table('products as p')
         ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -1831,7 +1832,7 @@ class FrontendController extends Controller
             ->orderBy('p.created_at', 'desc')
             ->get();
 
-        
+
        if(empty($sess_arr)){
            array_push($sess_arr,$data_id);
            session(['product_comp' =>  $sess_arr]);
@@ -1878,7 +1879,7 @@ class FrontendController extends Controller
                             'message' =>  'The selected model has been added to the Comparison list.',
                         ],200);
                     }else{
-                       
+
                         $data  = DB::table('products as p')
                         ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
                         ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
@@ -1900,9 +1901,9 @@ class FrontendController extends Controller
                             'message' =>  'Only 3 models can be added to the Comparison list.',
                         ],200);
                     }
-                
+
                 }elseif(in_array($data_id, $sess_arr)){
-                   
+
                         $data  = DB::table('products as p')
                         ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
                         ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
@@ -1945,11 +1946,11 @@ class FrontendController extends Controller
                         'message' =>  'Please select the model in the same category',
                      ],200);
                   }
-                
-         }
-          
 
-       
+         }
+
+
+
     }
     public function RemovedataInSection(Request $request)
     {
@@ -1962,7 +1963,7 @@ class FrontendController extends Controller
          unset($sess_arr[$key]);
         }
         session(['product_comp' =>  $sess_arr]);
-     
+
         $data  = DB::table('products as p')
         ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
         ->leftjoin('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
@@ -2036,12 +2037,12 @@ class FrontendController extends Controller
         ->orderBy('ap.order_seq' ,'asc')
         ->first();
 
-     
+
 
         $image = DB::table('more_image_app as mp')
         ->where('mp.app_id' ,$id)
         ->select('mp.*')
-        ->get(); 
+        ->get();
 
         $otherapp = DB::table('application as ap')
         ->join('application_translation as apt','ap.id','=','apt.app_id')
@@ -2050,7 +2051,7 @@ class FrontendController extends Controller
         ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,'apt.content' ,'apt.content_2' ,'apt.overview')
         ->orderBy('ap.order_seq' ,'asc')
         ->get();
-        
+
         $relatedApp = DB::table('series_has_application as sp')
         ->join('series as s' ,'s.se_id' ,'=' ,'sp.se_id')
         ->join('series_translations as st' ,'st.series_id' ,'=' ,'sp.se_id')
@@ -2095,13 +2096,13 @@ class FrontendController extends Controller
 
             return  view('front-end.about-us')->with('aboutus' ,$aboutus);
         }
-       
+
     }
 
     public function updateNewsDetail($namePar){
-     
+
         $lang = App::getLocale();
-      
+
         $name = $this->validateInput($namePar ,'text',true);
         $contents = DB::table('product_news_has_categories as pnc')
         ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
@@ -2115,7 +2116,7 @@ class FrontendController extends Controller
         ->select('c.*' ,'ct.*' ,'pnc.categories_id','ntt.title as cateName','nt.color_type')
         ->orderBy('c.created_at', 'desc')
         ->get();
-       
+
         if(count($contents) == 0){
             return response()->view('errors.404', [], 404);
             // return redirect()->route('index','news');
@@ -2139,7 +2140,7 @@ class FrontendController extends Controller
             ->inRandomOrder()
             ->get();
         }
-    
+
 
           //return dd($contents);
           return  view('front-end.news-detail')
@@ -2151,7 +2152,7 @@ class FrontendController extends Controller
     }
     public function updateEventDetail($namePar){
         $lang = App::getLocale();
-        
+
         $name = $this->validateInput($namePar ,'text',true);
         $contents = DB::table('contents as c')
         ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
@@ -2237,7 +2238,7 @@ class FrontendController extends Controller
         return  view('front-end.product-notice-detail');
     }
     public function contactSupport(){
-        
+
         $lang = App::getLocale();
         $subCategories = DB::table('sub_pro_categories as sc')
         ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
@@ -2253,7 +2254,7 @@ class FrontendController extends Controller
             ->where('sct.local','=',$lang)
             ->first();
 
-        
+
         $series =  DB::table('series_has_pro_categories as sc')
             ->join('series as s' ,'sc.se_id' ,'=' ,'s.se_id')
             ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
@@ -2311,7 +2312,7 @@ class FrontendController extends Controller
                 ->where('mtpt.local',  $lang)
                 ->select('mtp.*' ,'mtpt.*')
                 ->get();
-    
+
         return  view('front-end.sales-offices')
         ->with('metatag',$metatag)
         ->with('offices',$offices)
@@ -2362,7 +2363,7 @@ class FrontendController extends Controller
         ->with('metatag',$metatag)
         ->with('static_content',$static_content);
     }
-  
+
     public function privacyPolicy(){
         $lang = App::getLocale();
         $static_content = DB::table('static_content as st')
@@ -2399,7 +2400,7 @@ class FrontendController extends Controller
         if($sectionId == null){
             return redirect()->route('index','login');
         }
-      
+
         $lang = App::getLocale();
         $relate_pro_launch_schedule = DB::table('relate_pro_launch_schedule as rpls')
         ->join('relate_pro_launch_schedule_translation as rplst' ,'rplst.fk_relate_pl' ,'=' ,'rpls.re_id')
@@ -2637,11 +2638,11 @@ class FrontendController extends Controller
         ->where('s.id',$id)
         ->orderBy('s.created_at', 'desc')
         ->get();
-       
+
         $models = $AllsuccessStory[0]->modelname;
         $arrModel = explode(",", $models);
         // return dd($arrModel);
-   
+
         $image_story =  DB::table('success_storys_image as ssi')
         ->select('ssi.*')
         ->where('ssi.fk_story_id' ,$AllsuccessStory[0]->id)
@@ -2672,7 +2673,7 @@ class FrontendController extends Controller
         ->where('sct.local',  $lang)
         ->orderBy('sct.name', 'asc')
         ->get();
-        
+
         $products = DB::table('products as p')
         ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
         ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
@@ -2695,7 +2696,7 @@ class FrontendController extends Controller
             ->distinct()
             ->orderBy('st.title', 'asc')
             ->get();
-          
+
             $documents = DB::table('product_has_documents as phd')
             ->join('products as p','p.pro_id','=','phd.product_id')
             ->join('product_ducuments as pd','phd.document_id','=','pd.doc_id')
@@ -2707,7 +2708,7 @@ class FrontendController extends Controller
             ->select('p.pro_code','pd.doc_id','phd.product_id','pdt.name','pdc.title as catename','pdc.slug','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id')
             ->orderBy('pdc.title','asc')
             ->get();
-            
+
             $documents_cate = DB::table('products_documents_categories as pdc')
             ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
             ->where('pdct.local','=', $lang)
@@ -2726,30 +2727,30 @@ class FrontendController extends Controller
         ->with('series' ,$series)
         ->with('products' ,$products);
     }
-    
+
        public function loadPdffile(Request $request)
-       {  
-   
+       {
+
        $contentCompare = $request->datacon;
        $string = $this->validateInput($request->arr_con ,'text',true);
        $type_name = $this->validateInput($request->type_name ,'text',true);
         $myArray = explode(',', $string);
         $rsp =  self::GetCoparisonHeader($myArray ,$type_name);
-     
+
             $rowall = $rsp['CSV'];
 
             Excel::create('comparison_product', function ($excel) use ($rowall) {
               $excel->sheet('comparison_product', function ($sheet) use ($rowall) {
                 $sheet->fromArray($rowall, null, 'A1', false, false);
-            
+
               });
           })->export('csv');
-             
+
        }
 
        public function loadPdffilePDF(Request $request)
-       {  
-       
+       {
+
        $contentCompare = $request->datacon;
        $string = $this->validateInput($request->arr_con ,'text',true);
        $type_name = $this->validateInput($request->type_name ,'text',true);
@@ -2795,7 +2796,7 @@ class FrontendController extends Controller
         ->where('p.pro_id' ,$myArray[2])
         ->select('p.*', 'pt.*','spt.name as catename','st.title as seName')
         ->get();
-       
+
 
             $data['tyepname']  = $type_name;
             $data['product1']  = $pro1;
@@ -2804,7 +2805,7 @@ class FrontendController extends Controller
             $data['contentCompare']  = $contentCompare;
 
             $pdf = PDF::loadView('front-end.pdf_com', $data);
-          return $pdf->download('compareProduct.pdf');         
+          return $pdf->download('compareProduct.pdf');
        }
        private function checkContentPro($proid){
         $contentEror_ifnothave = DB::table('product_has_property as ph')
@@ -2829,7 +2830,7 @@ class FrontendController extends Controller
           $checkSpece =  preg_match('/\s/',$keypro);
           $checkdash =  preg_match('/-/',$keypro);
     //    return dd($checkdesh);
-    
+
            $lang = App::getLocale();
            $checkArr = [];
            $query = DB::table('products as p')
@@ -2841,9 +2842,9 @@ class FrontendController extends Controller
            ->where('st.local' ,$lang)
            ->where('p.enable_pro' ,1);
 
-      
+
             if($checkSpece){
-            $keyarr = explode(" ",$keypro);   
+            $keyarr = explode(" ",$keypro);
             if(isset($keyarr[0])){
             $query->where('p.pro_code', 'LIKE', '%'.$keyarr[0].'%');
             }
@@ -2851,17 +2852,17 @@ class FrontendController extends Controller
              $query->where('p.pro_code', 'LIKE', '%'.$keyarr[1].'%');
             }
             }else if($checkdash){
-            $keyarr2 = explode("-",$keypro);   
+            $keyarr2 = explode("-",$keypro);
             if(isset($keyarr2[0])){
              $query->where('p.pro_code', 'LIKE', '%'.$keyarr2[0].'%');
             }
             if(isset($keyarr2[1])){
              $query->where('p.pro_code', 'LIKE', '%'.$keyarr2[1].'%');
-             }  
+             }
              }else{
               $query->where('p.pro_code', 'LIKE', '%'.$keypro.'%');
              }
-        
+
 
 
           //$query->Orwhere('st.title', 'LIKE', '%'.$keypro.'%')
@@ -2888,7 +2889,7 @@ class FrontendController extends Controller
               ->select('pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
               ->get();
 
-          
+
 
               $tags = DB::table('product_tags as ptag')
               ->where('ptag.product_id' ,$pro->pro_id)
@@ -2917,7 +2918,7 @@ class FrontendController extends Controller
                         "dimensionW"=>$pro->dimensionW,
                         "dimensionD"=>$pro->dimensionD,
                     ];
-               
+
               }
               $i++;
           }
@@ -2982,7 +2983,7 @@ class FrontendController extends Controller
                        "dimensionW"=>$pro->dimensionW,
                        "dimensionD"=>$pro->dimensionD,
                    ];
-              
+
              }
              $i++;
          }
@@ -3029,7 +3030,7 @@ class FrontendController extends Controller
               ->where('op.product_id' ,$pro2->pro_id)
               ->select('op.*')
               ->get();
-            
+
               if (!in_array($pro2->pro_id, $checkArr) && self::checkContentPro($pro2->pro_id)){
                 array_push($checkArr, $pro2->pro_id);
 
@@ -3052,8 +3053,8 @@ class FrontendController extends Controller
             }
               $i++;
           }
-      
-          $pro_collec_2 = array_merge($pro_collec, $data1); 
+
+          $pro_collec_2 = array_merge($pro_collec, $data1);
 
 
           $ProOptionalModel  = DB::table('product_optional_model as op')
@@ -3095,7 +3096,7 @@ class FrontendController extends Controller
               ->where('op.product_id' ,$pro3->pro_id)
               ->select('op.*')
               ->get();
-            
+
               if (!in_array($pro3->pro_id, $checkArr) && self::checkContentPro($pro3->pro_id)){
                 array_push($checkArr, $pro3->pro_id);
 
@@ -3119,7 +3120,7 @@ class FrontendController extends Controller
               $i++;
           }
           $pro_results  = [];
-          $pro_results = array_merge($pro_collec_2, $data1); 
+          $pro_results = array_merge($pro_collec_2, $data1);
 
           $news = DB::table('product_news_has_categories as pnc')
           ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
@@ -3186,7 +3187,7 @@ class FrontendController extends Controller
                     array_push($officesChk,$offi->id);
                     array_push($offices,$offi);
                 }
-              
+
             }
 
             $continents_office = DB::table('continents as c')
@@ -3228,7 +3229,7 @@ class FrontendController extends Controller
 
             }
 
-    
+
 
             $applications =  DB::table('application as ap')
             ->join('application_translation as apt','ap.id','=','apt.app_id')
@@ -3253,11 +3254,11 @@ class FrontendController extends Controller
             ->where('mrt.name', 'LIKE', '%'.$keysearch.'%')
             ->select('mr.*' ,'mrt.*')
             ->get();
-               
 
-          
 
-      
+
+
+
            return  view('front-end.resultsearch')
            ->with('applications',$applications)
            ->with('margetCate',$margetCate)
@@ -3277,22 +3278,22 @@ class FrontendController extends Controller
         return redirect()->route('index','home');
        }
        public function downloadGuide($doc){
-        return redirect()->route('index','home'); 
+        return redirect()->route('index','home');
        }
        public function downloadoldLeaflets($doc){
-        return redirect()->route('index','home'); 
+        return redirect()->route('index','home');
        }
        public function downloadoldCatalogs($doc){
-        return redirect()->route('index','catalogs'); 
+        return redirect()->route('index','catalogs');
        }
        public function checkOldfileUrl($doc){
-        $path =  base_path('../upload/product_image/').$doc ; 
+        $path =  base_path('../upload/product_image/').$doc ;
         if (file_exists($path)) {
             return response()->file($path);
         } else {
-            return redirect()->route('index','home'); 
+            return redirect()->route('index','home');
         }
-       
+
        }
 
 
@@ -3313,7 +3314,7 @@ class FrontendController extends Controller
            ->where('ptag.tag', 'LIKE', '%'.$keypro.'%')
            ->select('p.*','spt.name as catename','phc.categories_id' ,'sp.url_item' ,'st.title as seName','ptag.*')
            ->get();
-        
+
 
            $data = [];
            $i = 0;
@@ -3427,7 +3428,7 @@ class FrontendController extends Controller
                     array_push($officesChk,$offi->id);
                     array_push($offices,$offi);
                 }
-              
+
             }
 
             $continents_office = DB::table('continents as c')
@@ -3492,7 +3493,7 @@ class FrontendController extends Controller
             ->where('mrt.name', 'LIKE', '%'.$keysearch.'%')
             ->select('mr.*' ,'mrt.*')
             ->get();
-          
+
            return  view('front-end.resultsearch')
            ->with('applications',$applications)
            ->with('margetCate',$margetCate)
@@ -3526,7 +3527,7 @@ class FrontendController extends Controller
            ->where('op.optional_model', 'LIKE', '%'.$keypro.'%')
            ->select('p.*','spt.name as catename','phc.categories_id' ,'sp.url_item' ,'st.title as seName','op.*')
            ->get();
-        
+
 
            $data = [];
            $i = 0;
@@ -3640,7 +3641,7 @@ class FrontendController extends Controller
                     array_push($officesChk,$offi->id);
                     array_push($offices,$offi);
                 }
-              
+
             }
 
             $continents_office = DB::table('continents as c')
@@ -3705,7 +3706,7 @@ class FrontendController extends Controller
             ->where('mrt.name', 'LIKE', '%'.$keysearch.'%')
             ->select('mr.*' ,'mrt.*')
             ->get();
-          
+
            return  view('front-end.resultsearch')
            ->with('applications',$applications)
            ->with('margetCate',$margetCate)
@@ -3777,7 +3778,7 @@ class FrontendController extends Controller
                     ]
                 ]
             );
-        
+
             $body = json_decode((string)$response->getBody());
             // return dd($body);
             if($body->success){
@@ -3807,17 +3808,17 @@ class FrontendController extends Controller
                 return redirect()->back()->with('subscribes_already', 'Please Verify I"m not a robot');
             }
 
-            
-       
 
-         
-        
+
+
+
+
        }
-    
+
        private  function subCheckBox($request){
         $email = $request->email;
          //GUI download
- 
+
         if($email == '' ||  $email == null ){
             $email = $request->email_gui;
         }
@@ -3826,11 +3827,11 @@ class FrontendController extends Controller
             $mailch = $this->validateInput($email,'text',true);
             $strmlo = strtolower($mailch);
             $mailchimdata =  Mailchimp::getLists();
-    
+
             $checkmailC = Mailchimp::check($mailchimdata[0]['id'], trim($strmlo));
             $checkmailsta  =  Mailchimp::status($mailchimdata[0]['id'],trim($strmlo));
             $alreadysub =  DB::table('subscribes')->where('email',trim($strmlo))->get();
-    
+
             if(!$checkmailC){
                 if(count($alreadysub) == 0){
                     DB::table('subscribes')->insert(
@@ -3849,7 +3850,7 @@ class FrontendController extends Controller
         }catch (\Exception $e){
             Log::channel('mail_log')->info('[EROR] message :Mailchimp::subscribe '.$e);
         }
-        
+
 
 
 
@@ -3861,7 +3862,7 @@ class FrontendController extends Controller
             $str = $this->validateInput($request->email,'text',true);
             $username =  strtolower($str);
             $partner = DB::table('partner')->where('email',$username)->where('status',1)->get();
-        
+
             if(count($partner) != 0){
                 $checkPas = false;
                 $inputpassword = $this->validateInput($request->password,'password',true);
@@ -3884,20 +3885,20 @@ class FrontendController extends Controller
                     session(['partner_role' => $member_role]);
                     session(['partner_email' => $member_email]);
                     session(['expiry_partner' => $expiry]);
-                
+
                     return redirect()->route('index','partners')->with('flash_message', 'Login is Success');
-    
+
                 }else{
                     return back()->with('flash_message_eror', 'Password Not Correct');
-                }  
+                }
             }else{
                 return back()->with('flash_message_eror', 'No user account found in the system.');
             }
             return back()->with('flash_message_eror', 'Eror');
-          
+
        }
        public function uploadmulImagestory(Request $request){
-               
+
         // $storyId = $request->story_id;
         $storyId = $this->validateInput($request->story_id,'number',true);
         if(session('partner_id') != null){
@@ -3914,7 +3915,7 @@ class FrontendController extends Controller
            }
 
            if ($request->hasFile('file')) {
-               $image = $request->file('file'); 
+               $image = $request->file('file');
                $imgName = uniqid().".".$image->getClientOriginalExtension();
                $image->move(base_path('/../uploads_delta/partner/marketing_resources'),$imgName);
                DB::table('success_storys_image')->insert(
@@ -3922,7 +3923,7 @@ class FrontendController extends Controller
                        'fk_story_id' => $id,
                        'image' => $imgName,
                  ]);
-   
+
                  return response()->json([
                    'status' => 'success',
                    'story_id' => $id
@@ -3943,8 +3944,8 @@ class FrontendController extends Controller
         return response()->json([
             'status' => 'success',
          ], 200);
-      
-       
+
+
        }
        public function SaveSuccesStories(Request $request){
              $story_id_main = $this->validateInput($request->story_id_main,'number',true);
@@ -3981,7 +3982,7 @@ class FrontendController extends Controller
                     ]
                 );
              }
-        
+
 
             return redirect()->route('successStories')->with('flash_message', 'Insert Data successfully');
        }
@@ -4020,7 +4021,7 @@ class FrontendController extends Controller
         $file_pointer = base_path('/../uploads_delta/partner/marketing_resources/').$data[0]->image;
         if (file_exists($file_pointer) && isset($data[0]->image) ) {
             unlink($file_pointer);
-  
+
             return response()->json([
                 'status' => 1,
              ], 200);
@@ -4049,7 +4050,7 @@ class FrontendController extends Controller
            return response()->json([
             'status' => 1,
          ], 200);
-      
+
        }
        public function SubmitContact(Request $request){
 
@@ -4063,7 +4064,7 @@ class FrontendController extends Controller
                  ]
             ]
         );
-    
+
         $body = json_decode((string)$response->getBody());
 
         $validate = Validator::make($request->all(), [
@@ -4081,9 +4082,9 @@ class FrontendController extends Controller
             return \Redirect::back()->with("message_eror_notValid","Can not send");
         }
         $ticket_id = null;
-        
+
         if($body->success){
-    
+
            $subject = $this->validateInput($request->subject,'text',true);
            $name = $this->validateInput($request->name,'text',true);
            $tel = $this->validateInput($request->tel,'text',true);
@@ -4097,25 +4098,25 @@ class FrontendController extends Controller
            $message = $this->validateInput($request->message,'text',true);
            $checkData = $this->validateInput($request->checkData,'number',true);
            $agree_policy = $this->validateInput($request->prichk,'text',true);
-        
-           
+
+
            $accept_sigh = 0;
            if($checkData == 1){
             $accept_sigh = 1;
             self::subCheckBox($request);
            }
-  
+
            if($subject == "0"){
             $subject = 'Sales Inquiry';
            }
         //    return dd($request->config_id, $request->enquireStatus);
-      
+
           $path = null;
           $filepdf = null;
 
            //Enquiry Pdf
           if($request->config_id != null && $request->enquireStatus == 0){
-       
+
               $data = DB::table('configuration_history')->where('id',$request->config_id)->get();
               if(isset($data) && count($data) > 0 ){
                 DB::table('configuration_history')->where('id',$data[0]->id)->update(
@@ -4131,11 +4132,11 @@ class FrontendController extends Controller
                         "updated_at" => \Carbon\Carbon::now(),
                     ]
                     );
-                $path =  base_path('../config_history/').$data[0]->file; 
+                $path =  base_path('../config_history/').$data[0]->file;
                 $filepdf = $data[0]->file;
                 Mail::to($email)->send(new SendPDFFromFeedBack($request->except('_token'),$path ,$data[0]->factory_model));
-              } 
-           //Send Pdf to me 
+              }
+           //Send Pdf to me
           }else if($request->config_id != null && $request->enquireStatus == 3){
             $data = DB::table('configuration_history')->where('id',$request->config_id)->get();
             if(isset($data) && count($data) > 0 ){
@@ -4152,9 +4153,9 @@ class FrontendController extends Controller
                     "updated_at" => \Carbon\Carbon::now(),
                 ]
                 );
-              $path =  base_path('../config_history/').$data[0]->file; 
+              $path =  base_path('../config_history/').$data[0]->file;
               $filepdf = $data[0]->file;
-        
+
               Mail::to($email)->send(new SendPDF($request->except('_token') ,$path,$data[0]->factory_model));
             }
           }
@@ -4164,7 +4165,7 @@ class FrontendController extends Controller
           }
 
           if($request->enquireStatus != 3){
-         
+
              $lastdata = DB::table('contacts')->where('subject',$subject)->latest('id')->first();
             $last = DB::table('contacts')->latest('id')->first();
             $run_num  = 1;
@@ -4177,8 +4178,8 @@ class FrontendController extends Controller
             $m = date('m');
             $numdate = $yy.$m.$d;
             $ticket_id = $numdate.sprintf("%04d", $run_num);
-         
-           
+
+
 
 
             DB::table('contacts')->insert(
@@ -4227,7 +4228,7 @@ class FrontendController extends Controller
                  }
              }
           }
-       
+
           $emailSg2 =  DB::table('email_notification as et')
           ->select('et.*')
           ->where('et.subject',$subject)
@@ -4244,7 +4245,7 @@ class FrontendController extends Controller
                  }
              }
           }
-     
+
           $emailSg3 =  DB::table('email_notification as et')
           ->select('et.*')
           ->where('et.product_type',$type_id)
@@ -4261,9 +4262,9 @@ class FrontendController extends Controller
                  }
              }
           }
-         
+
            try {
-           
+
             $emaillog = Mail::to($emailsend)->send(new Contact($request->except('_token'),$ticket_id));
             Log::channel('mail_log')->info('[Success] message : Send Mail to '.implode(",",$emailsend));
             return \Redirect::back()->with("message","Send Email Successfully");
@@ -4275,7 +4276,7 @@ class FrontendController extends Controller
          }else{
             return \Redirect::back()->with("message_eror_notvertify","Can not send");
          }
-        
+
        }
        public function  LinktoEnquiry($type ,$type_name ,$pro_code){
 
@@ -4319,7 +4320,7 @@ class FrontendController extends Controller
        }
        public function downloadGui(Request $request){
         $lang = App::getLocale();
-      
+
         $name = $this->validateInput($request->name_gui,'text',true);
         $company = $this->validateInput($request->company_gui,'text',true);
         $checkname  =  preg_match('/\\s[^a-zA-Zก-ฮ]/', $name);
@@ -4336,11 +4337,11 @@ class FrontendController extends Controller
                    ]
               ]
           );
-      
+
           $body = json_decode((string)$response->getBody());
-          if($body->success){  
-         
-        
+          if($body->success){
+
+
             $email = $this->validateInput($request->email_gui,'text',true);
             $tel = $this->validateInput($request->tel,'text',true);
             $ac_data = 0;
@@ -4354,9 +4355,9 @@ class FrontendController extends Controller
             $typeName = $this->validateInput($request->procateGui,'text',true);
 
 
-          
 
-    
+
+
 
             $subCategories = DB::table('sub_pro_categories as sp')
             ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
@@ -4367,11 +4368,11 @@ class FrontendController extends Controller
             ->orderBy('sp.order_seq', 'asc')
             ->first();
 
-       
 
-          
-            
-            $path =  base_path('../upload/product_files/').$filename; 
+
+
+
+            $path =  base_path('../upload/product_files/').$filename;
             $emailsend = [];
 
 
@@ -4389,7 +4390,7 @@ class FrontendController extends Controller
                     "created_at" => \Carbon\Carbon::now(),
                 ]
             );
-        
+
             if($acept == 1){
                 self::subCheckBox($request);
             }
@@ -4429,7 +4430,7 @@ class FrontendController extends Controller
                         }
                     }
             }
-      
+
 
              $email = Mail::to($emailsend)->send(new DowloadGui($request->except('_token')));
             if (Mail::failures()) {
@@ -4471,7 +4472,7 @@ class FrontendController extends Controller
             ->get();
             $dataSearch = $state;
         }
-     
+
         return response()->json([
             'results' =>$dataSearch,
          ], 200);
@@ -4503,8 +4504,8 @@ class FrontendController extends Controller
                         array_push($products,$optional_model);
                     }
 
-        
-            } 
+
+            }
         }
         $pro_new = self::removeDuplicates($products ,'pro_code');
         return response()->json([
@@ -4515,7 +4516,7 @@ class FrontendController extends Controller
        public function checkpartnerAccount(Request $request){
            $email = $request->email;
            $email  = strtolower($request->email);
-        
+
            $members = DB::table('partner')->where('email',trim($email))->first();
         //    return dd( $members);
         if($members != ""){
@@ -4576,9 +4577,9 @@ class FrontendController extends Controller
                 return response()->json([
                     'status' => 0,
                     'message' => 'Eror , Not found user in System'
-                        ], 200);            
+                        ], 200);
             }
-        
+
         }else{
             return response()->json([
                 'status' => 3,
@@ -4586,7 +4587,7 @@ class FrontendController extends Controller
                     ], 200);
         }
 
-       
+
        }
 
        public function loadnewPerti(Request $request){
@@ -4645,7 +4646,7 @@ class FrontendController extends Controller
 
         $typefile = $this->validateInput($typefilePar,'text',true);
         $chmodel = $this->validateInput($modelPar,'text',true);
-       
+
         $strmodel =  str_replace("@", "/", trim($chmodel));
         $check_2 = self::checkHaveModelOptional($strmodel);
 
@@ -4659,9 +4660,9 @@ class FrontendController extends Controller
           if(isset($documents[0]->file)){
             $file = $documents[0]->file;
           }
-          $path =  base_path('../upload/product_files/').$file; 
+          $path =  base_path('../upload/product_files/').$file;
           $publicfile = config('app.url').'/upload/product_files/'.$file;
-    
+
             if (file_exists($path) && isset($file) && $file != null && $file != '') {
                  $mime = mime_content_type($path);
                  $pathinfo = pathinfo($path);
@@ -4687,13 +4688,13 @@ class FrontendController extends Controller
                         "verify_peer"=>false,
                         "verify_peer_name"=>false,
                     ),
-                );  
-                
+                );
+
                 return response()->make(file_get_contents($publicfile ,false, stream_context_create($arrContextOptions) ), 200, [
                     'Content-Type' => $mime,
                     'Content-Disposition' => 'inline; filename="'.$filename.'"'
                 ]);
-            
+
             }
 
             }else{
@@ -4706,7 +4707,7 @@ class FrontendController extends Controller
             }
        }
        private function checkHaveModel($strmodel){
-        
+
             $stringModel =  str_replace("-", "", $strmodel);
             $queryStringModel = preg_replace('/[^A-Za-z0-9\-]/','',$stringModel);
             $queryModel = DB::table('products as p')
@@ -4757,12 +4758,12 @@ class FrontendController extends Controller
         ->select('p.pro_code','pd.doc_id','phd.product_id','pdct.lable' ,'pdt.name','pdc.title as catename','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id');
         $query->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $queryString . '%');
         $documents = $query->get();
-       
+
         $file = null;
         if(isset($documents[0]->file)){
           $file = $documents[0]->file;
         }
-        $path =  base_path('../upload/product_files/').$file ; 
+        $path =  base_path('../upload/product_files/').$file ;
         $publicfile = config('app.url').'/upload/product_files/'.$file;
           if (file_exists($path) && isset($file)  && $file != null && $file != '') {
                $mime = mime_content_type($path);
@@ -4788,8 +4789,8 @@ class FrontendController extends Controller
                     "verify_peer"=>false,
                     "verify_peer_name"=>false,
                 ),
-            );  
-            
+            );
+
               return response()->make(file_get_contents($publicfile ,false, stream_context_create($arrContextOptions) ), 200, [
                   'Content-Type' => $mime,
                   'Content-Disposition' => 'inline; filename="'.$filename.'"'
@@ -4802,38 +4803,38 @@ class FrontendController extends Controller
                     return redirect()->route('index','home');
                 }
             //   return redirect()->route('index','home');
-              
+
           }
        }
 
       public function setlocaltion(Request $request){
-     
+
         $lang = $this->validateInput($request->lang,'text',true);
         session(['lang_down' =>  $lang]);
         return response()->json([
-            'data' =>$lang 
+            'data' =>$lang
                 ], 200);
       }
 
       public function imagelink($image){
-        $path =  base_path('../frontend-asset/image/').$image ; 
+        $path =  base_path('../frontend-asset/image/').$image ;
         return response()->file($path);
       }
       public function marketingLink($image){
-        $path =  base_path('../uploads_delta/partner/marketing_resources/').$image; 
+        $path =  base_path('../uploads_delta/partner/marketing_resources/').$image;
         if(file_exists($path)){
             return response()->file($path);
         }else{
             return  redirect()->route('index','home');
         }
-       
+
       }
 
       public function tag_product(Request $request){
         $pro_id =  $request->proid;
          $tags =  DB::table('product_tags')->where('product_id',$pro_id)->get();
         return response()->json([
-          'data' =>$tags 
+          'data' =>$tags
               ], 200);
     }
     public function faq_detail($name){
@@ -4852,7 +4853,7 @@ class FrontendController extends Controller
     public function getProById(Request $request){
         $proid = $request->proId;
         $proid = $this->validateInput($proid,'number',true);
-  
+
         $products = DB::table('products as p')
         ->where('p.pro_id' ,$proid)
         ->select('p.*')
@@ -4871,28 +4872,28 @@ class FrontendController extends Controller
         if(isset($products->unit_weight)){
             $number = substr($products->unit_weight , 0, -2);
             $float = (float)$number;
-            $sum = ($float*2.2046244202);       
+            $sum = ($float*2.2046244202);
             $dataUnitw  =  $products->unit_weight.' ('.number_format($sum,2).' lb)';
         }
-        
+
             $data = [
                 'unitwight' => $dataUnitw,
                 'dimension' => $dimemsion,
                 'status' => true,
-            ];  
+            ];
         }else{
             $data = [
                 'unitwight' => '-',
                 'dimension' => '-',
                 'status' => false,
-            ]; 
+            ];
         }
 
         return response()->json([
-            'data' =>$data 
+            'data' =>$data
                 ], 200);
     }
-  
+
     function loadparallercon(Request $request){
         $model_id = $request->model_id;
         $Parallels =  DB::table('parallel_connections as pc')
@@ -4901,7 +4902,7 @@ class FrontendController extends Controller
         ->get();
 
         return response()->json([
-            'data' =>$Parallels 
+            'data' =>$Parallels
                 ], 200);
     }
 
@@ -4924,7 +4925,7 @@ class FrontendController extends Controller
         ->where('p.pro_id' ,$arrInpro[0])
         ->select('p.*', 'pt.*','spt.name as catename','st.title as seName')
         ->first();
-          
+
 
         }
         if($arrInpro[1] &&  $arrInpro[1] != 0){
@@ -4941,7 +4942,7 @@ class FrontendController extends Controller
             ->where('p.pro_id' ,$arrInpro[1])
             ->select('p.*', 'pt.*','spt.name as catename','st.title as seName')
             ->first();
-         
+
         }
         if($arrInpro[2] &&  $arrInpro[2] != 0){
             $langpro3 =  self::checkLang($lang ,$arrInpro[2]);
@@ -4957,13 +4958,13 @@ class FrontendController extends Controller
             ->where('p.pro_id' ,$arrInpro[2])
             ->select('p.*', 'pt.*','spt.name as catename','st.title as seName')
             ->first();
-          
-        } 
 
-        
+        }
+
+
             $typearr = ['Product Type',self::Checkdata($type_name)];
             $ModelName = ['Model Name',$pro1? self::Checkdata($pro1->pro_code):'' ,$pro2?self::Checkdata($pro2->pro_code):'',$pro3?self::Checkdata($pro3->pro_code):'' ];
-         
+
             $Collect1 = array(
                 $typearr,
                 $ModelName,
@@ -4994,7 +4995,7 @@ class FrontendController extends Controller
                 ->where('stt.local','=', $lang)
                 ->select('st.id','stt.name')
                 ->get();
-          
+
            foreach($section as $sec){
               $arrsec = [$sec->name];
               array_push($Collect1, $arrsec);
@@ -5003,7 +5004,7 @@ class FrontendController extends Controller
                     if(
                     self::searchValue($item->id,$arrInpro[0],$item->type,$item->unit_name,$propertys) != '' ||
                     self::searchValue($item->id,$arrInpro[1],$item->type,$item->unit_name,$propertys) != '' ||
-                    self::searchValue($item->id,$arrInpro[2],$item->type,$item->unit_name,$propertys) != '' 
+                    self::searchValue($item->id,$arrInpro[2],$item->type,$item->unit_name,$propertys) != ''
                     ){
                     $text1 =  self::searchValue($item->id,$arrInpro[0],$item->type,$item->unit_name,$propertys);
                     $text2 =  self::searchValue($item->id,$arrInpro[1],$item->type,$item->unit_name,$propertys);
@@ -5021,11 +5022,11 @@ class FrontendController extends Controller
                       array_push($Collect1, $getUnitWeight);
                 }
         }
-      
+
 
             $data = [
                 'CSV' => $Collect1,
-            ];  
+            ];
             // return dd($data);
         return $data;
     }
@@ -5054,7 +5055,7 @@ class FrontendController extends Controller
                 $data_result = self::checkNullData($datarr,$unit,$item->status_input);
               }
             }
-         
+
         }else if($type == 'text') {
             foreach($propertys as $item){
              if($item->type_id == $fil_id && $item->product_id == $proid){
@@ -5066,9 +5067,9 @@ class FrontendController extends Controller
             }
         }
         }
-        
+
         return $data_result;
-       
+
     }
 
     function checkNullData($dataarr,$unit,$status){
@@ -5079,14 +5080,14 @@ class FrontendController extends Controller
           if($item){
             array_push($arrstri, $item.$unit);
           }
-   
+
         }
         $stringText = join(",",$arrstri);
        }else if($status == 3){
         if($dataarr[0] && $dataarr[1]){
             $stringText = $dataarr[0].'-'.$dataarr[1].$unit;
         }
-       
+
        }
          return  $stringText;
     }
@@ -5098,7 +5099,7 @@ class FrontendController extends Controller
           $str = $data;
         }
          return $str;
-                            
+
     }
 
     function getDimansion($product){
@@ -5106,11 +5107,11 @@ class FrontendController extends Controller
           $str = '';
 
         if($product){
-        if(isset($product->dimensionL) 
-         && is_numeric($product->dimensionL) 
-         && is_numeric($product->dimensionD)  
-         && is_numeric($product->dimensionW) 
-         && isset($product->dimensionW) 
+        if(isset($product->dimensionL)
+         && is_numeric($product->dimensionL)
+         && is_numeric($product->dimensionD)
+         && is_numeric($product->dimensionW)
+         && isset($product->dimensionW)
          && isset($product->dimensionD)
          ){
           $str =  $product->dimensionL.' X '.$product->dimensionW.' X '. $product->dimensionD.' mm'. "\n".' '.number_format($product->dimensionL* 0.0393701 ,2).'" X '.number_format($product->dimensionW* 0.0393701 ,2).'" X '.number_format($product->dimensionD* 0.0393701 ,2).'"';
@@ -5119,7 +5120,7 @@ class FrontendController extends Controller
          }
         }
          return $str;
-                            
+
     }
     function getUnitWeight($product){
                $sum  = 0;
@@ -5128,7 +5129,7 @@ class FrontendController extends Controller
           if(isset($product->unit_weight)){
                 $number = substr($product->unit_weight , 0, -2);
                 $float = (float)$number;
-                $sum = ($float*2.2046244202);                  
+                $sum = ($float*2.2046244202);
           }
           $String =  $product->unit_weight.' ('.number_format($sum,2).' lb)';
         }
@@ -5151,12 +5152,12 @@ class FrontendController extends Controller
         ->with('doc' ,$doc)
         ->with('metatag' ,$metatag);
     }
- 
+
 
     public function checkpermission($doc){
-        $path =  base_path('../uploads_delta/partner/marketing_resources/').$doc; 
+        $path =  base_path('../uploads_delta/partner/marketing_resources/').$doc;
         $lang = App::getLocale();
-     
+
         $partner_id = session('partner_id');
         $partner = DB::table('partner')->where('id',$partner_id)->where('status',1)->first();
 
@@ -5167,8 +5168,8 @@ class FrontendController extends Controller
             ->where('st.file' ,$doc)
             ->select('st.*')
             ->first();
-      
-    
+
+
         if(isset($partner) && $partner->role == 2 || isset($partner) && $partner->role == 1 ){
          $margeting = DB::table('marketing_resource as mr')
                 ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
@@ -5190,7 +5191,7 @@ class FrontendController extends Controller
                 ->whereIn('permar.permission_id', [3])
                 ->select('mr.*' ,'mrt.*')
                 ->first();
-    
+
         if(isset($margeting_public)){
            return response()->download($path);
         }
@@ -5198,7 +5199,7 @@ class FrontendController extends Controller
             return redirect()->route('loginDocPartner',$doc );
         }
         else if(isset($margeting)){
-            return redirect()->route('loginDocPartner',$doc );  
+            return redirect()->route('loginDocPartner',$doc );
         }
         else{
             return redirect()->route('index','home');
@@ -5212,7 +5213,7 @@ class FrontendController extends Controller
         $doc = $this->validateInput($request->doc,'text',true);
             $username =  strtolower($str);
             $partner = DB::table('partner')->where('email',$username)->where('status',1)->get();
-        
+
             if(count($partner) != 0){
                 $checkPas = false;
                 $inputpassword = $this->validateInput($request->password,'password',true);
@@ -5221,7 +5222,7 @@ class FrontendController extends Controller
                }
                 //return dd($checkPas);
                 if($checkPas) {
-                    $path =  base_path('../uploads_delta/partner/marketing_resources/').$doc; 
+                    $path =  base_path('../uploads_delta/partner/marketing_resources/').$doc;
                     $lang = App::getLocale();
                     $sales_kits = null;
                     if($partner[0]->role == 2){
@@ -5232,7 +5233,7 @@ class FrontendController extends Controller
                         ->select('st.*')
                         ->first();
                     }
-               
+
                     $margeting = null;
                  if($partner[0]->role == 2 || $partner[0]->role == 1 ){
                     $margeting = DB::table('marketing_resource as mr')
@@ -5255,7 +5256,7 @@ class FrontendController extends Controller
                             ->whereIn('permar.permission_id', [3])
                             ->select('mr.*' ,'mrt.*')
                             ->first();
-                          
+
                             if($sales_kits){
                                    if(file_exists($path)){
                                     return response()->download($path);
@@ -5268,7 +5269,7 @@ class FrontendController extends Controller
                                     }else{
                                         return redirect()->route('index','partners');
                                 }
-                            
+
                             }else if($margeting_public){
                                 if(file_exists($path)){
                                     return response()->download($path);
@@ -5279,10 +5280,10 @@ class FrontendController extends Controller
                             else{
                                 return back()->with('flash_message_eror', 'Permission Not Correct');
                             }
-    
+
                 }else{
                     return back()->with('flash_message_eror', 'Password Not Correct');
-                }  
+                }
             }else{
                 return back()->with('flash_message_eror', 'No user account found in the system.');
             }
@@ -5294,7 +5295,7 @@ class FrontendController extends Controller
             if(isset($section_id)){
                 $partner = DB::table('partner')->where('id',$section_id)->where('status',1)->get();
 
-                $path =  base_path('../uploads_delta/partner/marketing_resources/').$doc; 
+                $path =  base_path('../uploads_delta/partner/marketing_resources/').$doc;
                     $lang = App::getLocale();
                     $sales_kits = null;
                     if($partner[0]->role == 2){
@@ -5305,7 +5306,7 @@ class FrontendController extends Controller
                         ->select('st.*')
                         ->first();
                     }
-               
+
                     $margeting = null;
                  if($partner[0]->role == 2 || $partner[0]->role == 1 ){
                     $margeting = DB::table('marketing_resource as mr')
@@ -5328,7 +5329,7 @@ class FrontendController extends Controller
                             ->whereIn('permar.permission_id', [3])
                             ->select('mr.*' ,'mrt.*')
                             ->first();
-                          
+
                             if($sales_kits){
                                    if(file_exists($path)){
                                     ob_end_clean();
@@ -5343,7 +5344,7 @@ class FrontendController extends Controller
                                     }else{
                                         return redirect()->route('index','partners');
                                 }
-                            
+
                             }else if($margeting_public){
                                 if(file_exists($path)){
                                     ob_end_clean();
@@ -5358,16 +5359,16 @@ class FrontendController extends Controller
             }else{
                 return redirect()->route('loginDocPartner',$doc );
             }
-     
+
         }
 
         public function productCate($cate){
             return redirect()->route('productFinder' );
         }
 
-        
 
-     
+
+
         public function searchDocByModelId(Request $request){
         $model_id = $request->model_id;
         $lang = App::getLocale();
@@ -5403,7 +5404,7 @@ class FrontendController extends Controller
        }
 
        public function searchDocManualByModelId(Request $request){
- 
+
         $model_id = $request->model_id;
         $lang = App::getLocale();
         $language = DB::table('language as lang')->whereIn('lang.name',['en','cn','jp'])->get();
@@ -5417,7 +5418,7 @@ class FrontendController extends Controller
                     array_push($showlang , $langal->name);
                     array_push($showlangOb ,$data);
                 }
-      
+
 
                 $documents = DB::table('product_has_documents as phd')
                 ->join('products as p','p.pro_id','=','phd.product_id')
@@ -5462,7 +5463,7 @@ class FrontendController extends Controller
             ->select('p.pro_code','pd.doc_id','phd.product_id','pdt.name','pdc.title as catename','pdc.slug','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id')
             ->orderBy('pdc.title','asc')
             ->get();
-            
+
             $documents_cate = DB::table('products_documents_categories as pdc')
             ->join('pro_ducuments_cate_translations as pdct','pdct.doc_cate_id','=','pdc.id')
             ->where('pdct.local','=', $lang)
