@@ -29,7 +29,7 @@ Route::get('/products/download/{lang?}/{cate_name?}/{modelname?}','FrontendContr
 
 Route::group([
      'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ,'HtmlMinifier','verifyLang']
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ,'HtmlMinifier']
         ], function() {
 Route::get('/{page?}','FrontendController@index')->name('index');
 Route::get('/download/{doc?}','FrontendController@oldDoc')->name('downloadDocData');
