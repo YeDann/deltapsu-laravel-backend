@@ -75,7 +75,25 @@
                             <p class="text-pro-link">
                                 {{isset($staticContent['LED_Power'])?$staticContent['LED_Power']:"LED Power"}}</p>
                         </a>
+                        <?php
+                        $current3 = null;
+                        foreach($navcategories as $item1) {
+                            if ($item1->main_cateid == 4) {
+                                $current3 = $item1;
+                                break;
+                            }
+                        }
 
+                      ?>
+
+                        @if(isset($current3))
+                        <a
+                            href="{{route('allproductsByType' ,[slugifyHead($current3->url_item),$current3->sub_pro_id ,$current3->main_cateid ])}}">
+                            <p class="text-pro-link">
+                                {{isset($staticContent['Battery_Charging'])?
+                                $staticContent['Battery_Charging'] :'Industrial Battery Charging' }}</p>
+                        </a>
+                        @endif
 
                     </div>{{-- product --}}
                     <div class="col-xl-2 col-lg-2">
