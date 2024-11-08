@@ -2071,6 +2071,7 @@ hr {
 
 .fix-text-width-product-selector {
   max-width: 119px;
+  word-break: break-all;
 }
 
 @media only screen and (min-width:0px) and (max-width:320px) {

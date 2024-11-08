@@ -30,7 +30,7 @@ $langch = str_replace('_', '-', app()->getLocale());
   @yield('meta')
   <!-- Bootstrap CSS -->
 
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all-master.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello3.css')}}" />
   <link rel="stylesheet" type="text/css"
     href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" />
@@ -49,7 +49,7 @@ $langch = str_replace('_', '-', app()->getLocale());
       border: 1px solid #444444;
       background-position: right 50%;
       background-repeat: no-repeat;
-      background-image: url('{{asset(' frontend-asset/image/arrow-down.svg')}}');
+      background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
       padding: .375rem 1.5rem;
 
     }
