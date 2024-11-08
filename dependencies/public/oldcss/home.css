@@ -1232,7 +1232,7 @@ a .title-new {
     width: 50%;
     bottom: 0;
   }
- 
+
 }
 
 .btn-subscribe {
@@ -1639,7 +1639,7 @@ a .title-new {
 
 /* .box-events .card .news-content .post-header {
     margin: 0;
-    
+
 } */
 
 .box-events .card .news-content p {
@@ -2072,7 +2072,6 @@ hr {
 
 .fix-text-width-product-selector {
   max-width: 119px;
-  word-break: break-all;
 }
 
 @media only screen and (min-width:0px) and (max-width:320px) {
@@ -2234,12 +2233,12 @@ hr {
 }
 
 @media only screen and (min-width:1024px) and (max-width:1223px) {
- 
+
   .box-events .card .post-image img {
      width: 100%;
   }
 
- 
+
   .grid-eventnews {
     grid-gap: 24px;
     grid-template-columns: 1fr 1fr;
@@ -2286,7 +2285,7 @@ hr {
   .box-events .card {
     height: 305px;
    }
-   
+
 }
 @media  (max-width:1090px){
     .bg-sixslot #port {
@@ -2435,7 +2434,7 @@ hr {
       max-width: 100%;
       width: 100%;
   }
-  
+
 }
 @media only screen and (min-width: 1023px)and (max-width:1199px) {
   #slider,

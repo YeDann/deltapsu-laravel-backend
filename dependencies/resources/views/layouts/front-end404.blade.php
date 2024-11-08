@@ -18,205 +18,205 @@ $langch = str_replace('_', '-', app()->getLocale());
 <html html_lang="{{ str_replace('_', '-', app()->getLocale()) }}" Lang="{{$lanngCookie}}">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport"
-    content="width=device-width,initial-scale=1, minimum-scale=1.0,maximum-scale=1,user-scalable=no">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
-  <link rel="shortcut icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
-  <link rel="icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
-  <!-- CSRF Token -->
-  <meta name="robots" content="index, follow">
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-  @yield('meta')
-  <!-- Bootstrap CSS -->
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1, minimum-scale=1.0,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" />
+    <link rel="shortcut icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
+    <link rel="icon" href="{{asset('/frontend-asset/image/icon/delta_favicon.ico')}}" type="image/x-icon">
+    <!-- CSRF Token -->
+    <meta name="robots" content="index, follow">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @yield('meta')
+    <!-- Bootstrap CSS -->
 
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all-master.css')}}">
-  <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello3.css')}}" />
-  <link rel="stylesheet" type="text/css"
-    href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello3.css')}}" />
+    <link rel="stylesheet" type="text/css"
+        href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" />
 
-  <link rel="stylesheet" type="text/css"
-    href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}">
+    <link rel="stylesheet" type="text/css"
+        href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}">
 
-  @yield('css')
-  <style>
-    /* select */
-    .form-control {
-      font-size: 14px;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      border-radius: 0;
-      border: 1px solid #444444;
-      background-position: right 50%;
-      background-repeat: no-repeat;
-      background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
-      padding: .375rem 1.5rem;
+    @yield('css')
+    <style>
+        /* select */
+        .form-control {
+            font-size: 14px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            border-radius: 0;
+            border: 1px solid #444444;
+            background-position: right 50%;
+            background-repeat: no-repeat;
+            background-image: url('{{asset(' frontend-asset/image/arrow-down.svg')}}');
+            padding: .375rem 1.5rem;
 
-    }
+        }
 
-    .form-control:disabled,
-    .form-control[readonly] {
-      background-color: #F2F2F2;
-      border: 1px solid #C1C1C1 !important;
-      opacity: 1;
-      color: #C1C1C1;
-      background-image: none;
-    }
+        .form-control:disabled,
+        .form-control[readonly] {
+            background-color: #F2F2F2;
+            border: 1px solid #C1C1C1 !important;
+            opacity: 1;
+            color: #C1C1C1;
+            background-image: none;
+        }
 
-    .form-control:focus {
-      color: #495057;
-      background-color: #fff;
-      border-color: #80bdff;
-      outline: none;
-      box-shadow: none;
-    }
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #80bdff;
+            outline: none;
+            box-shadow: none;
+        }
 
-    input[type=text],
-    input[type=email] {
-      background-image: none;
+        input[type=text],
+        input[type=email] {
+            background-image: none;
 
-    }
+        }
 
-    .input-label {
-      position: relative;
-    }
+        .input-label {
+            position: relative;
+        }
 
-    input[required]+label {
-      color: #707070;
-      font-family: Arial;
-      font-size: 14px;
-      position: absolute;
-      bottom: 0;
-      left: 12px;
-      /* the negative of the input width */
-    }
+        input[required]+label {
+            color: #707070;
+            font-family: Arial;
+            font-size: 14px;
+            position: absolute;
+            bottom: 0;
+            left: 12px;
+            /* the negative of the input width */
+        }
 
-    .form-control:focus {
-      color: #495057;
-      background-color: #fff;
-      border-color: #80bdff;
-      outline: none;
-      box-shadow: none;
-    }
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #80bdff;
+            outline: none;
+            box-shadow: none;
+        }
 
 
-    .color-yellow {
-      background-color: #252A2C;
-      color: #fff;
-      text-align: center;
-      position: relative;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 99;
-    }
+        .color-yellow {
+            background-color: #252A2C;
+            color: #fff;
+            text-align: center;
+            position: relative;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 99;
+        }
 
-    html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
-      padding: 20px 9px;
-    }
+        html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
+            padding: 20px 9px;
+        }
 
-    html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
-      padding: 20px 9px;
-    }
+        html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
+            padding: 20px 9px;
+        }
 
-    a#CybotCookiebotDialogPoweredbyCybot,
-    div#CybotCookiebotDialogPoweredByText {
-      display: none !important;
-    }
+        a#CybotCookiebotDialogPoweredbyCybot,
+        div#CybotCookiebotDialogPoweredByText {
+            display: none !important;
+        }
 
-    #CookiebotWidget .CookiebotWidget-body .CookiebotWidget-main-logo {
-      display: none !important;
-    }
+        #CookiebotWidget .CookiebotWidget-body .CookiebotWidget-main-logo {
+            display: none !important;
+        }
 
-    #CybotCookiebotDialogHeader {
-      width: 0px !important;
-    }
+        #CybotCookiebotDialogHeader {
+            width: 0px !important;
+        }
 
-    #CybotCookiebotDialog.CybotEdge {
-      padding: 12px !important;
-    }
+        #CybotCookiebotDialog.CybotEdge {
+            padding: 12px !important;
+        }
 
-    #CybotCookiebotDialog.CybotEdge .CybotCookiebotDialogBodyBottomWrapper {
-      margin-top: 0 !important;
-    }
+        #CybotCookiebotDialog.CybotEdge .CybotCookiebotDialogBodyBottomWrapper {
+            margin-top: 0 !important;
+        }
 
-    /* #CybotCookiebotDialog.CybotEdge.CybotMultilevel .CybotCookiebotDialogBodyBottomWrapper {
+        /* #CybotCookiebotDialog.CybotEdge.CybotMultilevel .CybotCookiebotDialogBodyBottomWrapper {
     border-top: none !important;
     } */
 
-    @media screen and (min-width: 1280px) {
-      #CybotCookiebotDialog.CybotEdge.CybotMultilevel .CybotCookiebotDialogBodyBottomWrapper {
-        border-top: 1px solid #fff !important;
+        @media screen and (min-width: 1280px) {
+            #CybotCookiebotDialog.CybotEdge.CybotMultilevel .CybotCookiebotDialogBodyBottomWrapper {
+                border-top: 1px solid #fff !important;
 
-      }
-    }
+            }
+        }
 
-    #CookiebotWidget .CookiebotWidget-body .CookiebotWidget-consents-list li.CookiebotWidget-approved svg {
-      fill: #0087DC !important;
-    }
+        #CookiebotWidget .CookiebotWidget-body .CookiebotWidget-consents-list li.CookiebotWidget-approved svg {
+            fill: #0087DC !important;
+        }
 
-    #CookiebotWidget .CookiebotWidget-consent-details button {
-      color: #0087DC !important;
-    }
+        #CookiebotWidget .CookiebotWidget-consent-details button {
+            color: #0087DC !important;
+        }
 
-    #CookiebotWidget #CookiebotWidget-buttons #CookiebotWidget-btn-change {
-      background-color: #0087DC !important;
-      border-color: #0087DC !important;
-    }
+        #CookiebotWidget #CookiebotWidget-buttons #CookiebotWidget-btn-change {
+            background-color: #0087DC !important;
+            border-color: #0087DC !important;
+        }
 
-    #CookiebotWidget #CookiebotWidget-buttons #CookiebotWidget-btn-withdraw {
-      border-color: #0087DC !important;
-    }
+        #CookiebotWidget #CookiebotWidget-buttons #CookiebotWidget-btn-withdraw {
+            border-color: #0087DC !important;
+        }
 
-    @media only screen and (max-width: 1366px) {
-      html[html_lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
-        padding: 20px 4px !important;
-      }
+        @media only screen and (max-width: 1366px) {
+            html[html_lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
+                padding: 20px 4px !important;
+            }
 
-      html[html_lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
-        padding: 20px 4px !important;
-        font-size: 14px !important;
-      }
-    }
+            html[html_lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
+                padding: 20px 4px !important;
+                font-size: 14px !important;
+            }
+        }
 
-    .cwc-cookie-banner-ui-sdk .cwc-banner-container {
-      background-color: rgb(0, 0, 0, 0.8) !important;
-    }
-
-
+        .cwc-cookie-banner-ui-sdk .cwc-banner-container {
+            background-color: rgb(0, 0, 0, 0.8) !important;
+        }
 
 
 
-    html[html_lang="ru"] .cwc-cookie-banner-ui-sdk,
-    .cwc-cookie-banner-ui-sdk button,
-    .cwc-cookie-banner-ui-sdk span,
-    .cwc-cookie-banner-ui-sdk a {
-      font-family: 'Inter', 'DeltaSans', sans-serif !important;
-    }
 
-    html[html_lang="cn"] .cwc-cookie-banner-ui-sdk,
-    .cwc-cookie-banner-ui-sdk button,
-    .cwc-cookie-banner-ui-sdk span,
-    .cwc-cookie-banner-ui-sdk a {
-      font-family: 'Microsoft Yahei', 'DeltaSans', sans-serif !important;
-    }
 
-    html[html_lang="tw"] .cwc-cookie-banner-ui-sdk,
-    .cwc-cookie-banner-ui-sdk button,
-    .cwc-cookie-banner-ui-sdk span,
-    .cwc-cookie-banner-ui-sdk a {
-      font-family: 'Noto Sans TC', 'DeltaSans', sans-serif !important;
-    }
+        html[html_lang="ru"] .cwc-cookie-banner-ui-sdk,
+        .cwc-cookie-banner-ui-sdk button,
+        .cwc-cookie-banner-ui-sdk span,
+        .cwc-cookie-banner-ui-sdk a {
+            font-family: 'Inter', 'DeltaSans', sans-serif !important;
+        }
 
-    .cwc-cookie-banner-ui-sdk,
-    .cwc-cookie-banner-ui-sdk button,
-    .cwc-cookie-banner-ui-sdk span,
-    .cwc-cookie-banner-ui-sdk a {
-      font-family: 'DeltaSans' !important;
-    }
-  </style>
-  <script>
-    window.dataLayer = window.dataLayer || [];
+        html[html_lang="cn"] .cwc-cookie-banner-ui-sdk,
+        .cwc-cookie-banner-ui-sdk button,
+        .cwc-cookie-banner-ui-sdk span,
+        .cwc-cookie-banner-ui-sdk a {
+            font-family: 'Microsoft Yahei', 'DeltaSans', sans-serif !important;
+        }
+
+        html[html_lang="tw"] .cwc-cookie-banner-ui-sdk,
+        .cwc-cookie-banner-ui-sdk button,
+        .cwc-cookie-banner-ui-sdk span,
+        .cwc-cookie-banner-ui-sdk a {
+            font-family: 'Noto Sans TC', 'DeltaSans', sans-serif !important;
+        }
+
+        .cwc-cookie-banner-ui-sdk,
+        .cwc-cookie-banner-ui-sdk button,
+        .cwc-cookie-banner-ui-sdk span,
+        .cwc-cookie-banner-ui-sdk a {
+            font-family: 'DeltaSans' !important;
+        }
+    </style>
+    <script>
+        window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments)};
     // console.log('test')
 
@@ -226,35 +226,35 @@ $langch = str_replace('_', '-', app()->getLocale());
       'ad_user_data':'denied',
       'ad_personalization':'denied'
     })
-  </script>
+    </script>
 
-  <!-- Cookie Consent by https://www.cookiewow.com -->
-  @if(config('app.environment') == 'production')
-  <script type="text/javascript" src="https://cookiecdn.com/cwc.js"></script>
-  <script id="cookieWow" type="text/javascript" src="https://cookiecdn.com/configs/pQrmuDVDXDn7zcMpZAhB6Mum"
-    data-cwcid="pQrmuDVDXDn7zcMpZAhB6Mum"></script>
-  @endif
+    <!-- Cookie Consent by https://www.cookiewow.com -->
+    @if(config('app.environment') == 'production')
+    <script type="text/javascript" src="https://cookiecdn.com/cwc.js"></script>
+    <script id="cookieWow" type="text/javascript" src="https://cookiecdn.com/configs/pQrmuDVDXDn7zcMpZAhB6Mum"
+        data-cwcid="pQrmuDVDXDn7zcMpZAhB6Mum"></script>
+    @endif
 
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 
-  <!-- Google Tag Manager -->
-  <script async defer>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    <!-- Google Tag Manager -->
+    <script async defer>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            
+
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            
+
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            
+
             })(window,document,'script','dataLayer','GTM-PBXMMSN');
-  </script>
-  <!-- End Google Tag Manager -->
+    </script>
+    <!-- End Google Tag Manager -->
 
 
-  <script type="text/javascript">
-    function cwcCookieWrapper() {
+    <script type="text/javascript">
+        function cwcCookieWrapper() {
       if (window?.cwcIsUserAccept === undefined) return
       // console.log(window.cwcIsUserAccept('analytics'),'window.cwcIsUserAccep');
       if (window.cwcIsUserAccept('analytics')) {
@@ -277,9 +277,9 @@ $langch = str_replace('_', '-', app()->getLocale());
     }
 
     cwcCookieWrapper()
-  </script>
-  <script type="application/ld+json">
-    {
+    </script>
+    <script type="application/ld+json">
+        {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Delta Electronics (Thailand) Public Company Limited",
@@ -307,37 +307,37 @@ $langch = str_replace('_', '-', app()->getLocale());
       "https://www.linkedin.com/company/deltapsu/"
     ]
   }
-  </script>
+    </script>
 
 
 </head>
 
 <body>
-  @include('layouts.header-front')
-  @yield('container')
-  @include('layouts.footer')
+    @include('layouts.header-front')
+    @yield('container')
+    @include('layouts.footer')
 
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/popper.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap-select.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/map.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/product.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
-  <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
-  <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
-  </script>
-  <script>
-    if ('loading' in HTMLImageElement.prototype) {
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/popper.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap-select.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/map.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/product.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
+    </script>
+    <script>
+        if ('loading' in HTMLImageElement.prototype) {
     const images = document.querySelectorAll('img[loading="lazy"]');
     images.forEach(img => {
       img.src = img.dataset.src;
     });
-  
+
     const imageDiv = document.querySelectorAll('div[loading="lazy"]');
      imageDiv.forEach(imgD => {
        imgD.style.backgroundImage = "url('"+imgD.dataset.src+"')";
@@ -353,10 +353,10 @@ $langch = str_replace('_', '-', app()->getLocale());
       'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js';
     document.body.appendChild(script);
   }
-  </script>
+    </script>
 
-  <script type="text/javascript">
-    var verifyCallbackData = function(response) {
+    <script type="text/javascript">
+        var verifyCallbackData = function(response) {
       $('#keyrecapgui').val(response);
     };
     var verifyCallbackDataSub = function(response) {
@@ -382,10 +382,10 @@ $langch = str_replace('_', '-', app()->getLocale());
       'theme' : 'light'
     });
   };
-  
+
 
   function validateFormGUI(form){
-               
+
                 if(!form.acceptPolicyGui.checked){
                     $("#Support_policy_required").modal();
                     return false;
@@ -396,18 +396,18 @@ $langch = str_replace('_', '-', app()->getLocale());
                     return true;
                 }
       }
-  </script>
+    </script>
 
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBXMMSN" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBXMMSN" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
 
-  <!-- End Google Tag Manager (noscript) -->
+    <!-- End Google Tag Manager (noscript) -->
 
-  @yield('js')
+    @yield('js')
 
-  <script>
-    // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
+    <script>
+        // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
   Object.defineProperty(Array.prototype, 'findIndex', {
     value: function(predicate) {
@@ -451,9 +451,9 @@ if (!Array.prototype.findIndex) {
     }
   });
 }
-  </script>
-  <script>
-    var w = document.documentElement.clientWidth;
+    </script>
+    <script>
+        var w = document.documentElement.clientWidth;
         var h = document.documentElement.clientHeight;
 
        $(window).scroll(function() {
@@ -471,41 +471,41 @@ if (!Array.prototype.findIndex) {
          }, 1000);
          return false;
        });
-  </script>
-  <script>
-    function subscribe() {
+    </script>
+    <script>
+        function subscribe() {
               document.getElementById("inp3").focus();
               $('#cxacceptPrivacy_data').val(0);
               $("#cxacceptPrivacy_data").prop("checked",false);
-             
+
           }
             $(document).ready(function() {
                 $(".megamenu").on("click", function(e) {
                     e.stopPropagation();
-                });   
+                });
             });
 
              $(document).ready(function() {
                 $('.sp-dropdown a.sub-menu').on("click", function(e) {
-              
+
                   $('ul.drp-subthree').css( "display","none" )
                   $(this).next('ul').toggle();
                   e.stopPropagation();
                   e.preventDefault();
 
-                });  
+                });
             });
-  </script>
+    </script>
 
-  <script>
-    /* navbar */
+    <script>
+        /* navbar */
               $('#nav-two').addClass('scrolled');
             $(document).ready(function() {
               $('#nav-two li a').on("click", function() {
                 $('#nav-two').removeClass('bg-nav');
                 $('#nav-two').addClass('scrolled');
                 $('#nav-underline').show('underline');
-              }); 
+              });
             });
 
             $(document).ready(function() {
@@ -513,7 +513,7 @@ if (!Array.prototype.findIndex) {
                   e.preventDefault();
                   $('ul.navbar-nav > li > a').removeClass('active');
                   $(this).addClass('active');
-              });       
+              });
             });
             $('#search-box').hide();
             $('#search-box-mobile').hide();
@@ -524,13 +524,13 @@ if (!Array.prototype.findIndex) {
                 $('#breadcrumb').removeClass('scrolled');
                 $('#bar-search-results-nav').removeClass('scrolled');
                 document.getElementById("searchinput").focus();
-                
+
               });
               $('#breadcrumb').removeClass('scrolled');
               $("#btn-search-mobile").click(function(){
                 // $("#search-box-mobile").css("");
                 $("#search-box-mobile").toggle();
-         
+
                 closeNav();
 
                 document.getElementById("fgrgr-mobile").focus();
@@ -542,21 +542,21 @@ if (!Array.prototype.findIndex) {
               });
             });
 
-    
-            
-  </script>
-  <script>
-    $('.btn-sidenav').css('visibility','hidden');
-     
+
+
+    </script>
+    <script>
+        $('.btn-sidenav').css('visibility','hidden');
+
          function toggle_visibility(id) {
             var e = document.getElementById(id);
-      
+
             if(e.style.visibility == 'visible'){
 
                 //  e.style.display = 'none';
                 $('#in-sidenav').css('visibility','visible');
                 e.style.visibility = 'hidden';
-           
+
            } else{
                 e.style.visibility = 'visible';
                 $('#in-sidenav').css('visibility','hidden');
@@ -589,7 +589,7 @@ if (!Array.prototype.findIndex) {
           //     }else{
           //       closeNav();
           //     }
-                
+
           //   });
           //   $('#filterMobile-btn').click(function() {
           //       document.getElementById("filterMobileClose").style.display ="block";
@@ -619,7 +619,7 @@ if (!Array.prototype.findIndex) {
            }
 
           }
-            
+
           function OpenFiiter(){
                 document.getElementById("filterMobileClose").style.display = 'block';
                 document.getElementById("filterMobile").style.width = "100%";
@@ -628,31 +628,31 @@ if (!Array.prototype.findIndex) {
 
           function closeNav() {
             $('#in-sidenav').css('visibility','hidden');
-           
+
             $('.menu-buger').removeClass('active');
             document.getElementById("Sidenav").classList.remove("show");
             document.getElementById('bg-backslidenav').style.display="none";
-          
-            
-          } 
+
+
+          }
           function closeNavFilter(){
             document.getElementById("filterMobile").style.width ="0";
             document.getElementById("filterMobileLdist").style.width = "0";
             document.getElementById("filterMobileClose").style.display ="none";
           }
-  </script>
-  <script>
-    $('select[name*="state"]').prop('disabled', true);
+    </script>
+    <script>
+        $('select[name*="state"]').prop('disabled', true);
         $('select[name*="country"]').on('change', function() {
           $('select[name*="state"]').prop('disabled', false);
         });
-  </script>
-  <script>
-    $("#nav-comparison").hide();
+    </script>
+    <script>
+        $("#nav-comparison").hide();
         $("#nav-comparison-mobile").hide();
-        
+
         function showNavCoparison(id ,cateid){
-       
+
           $.ajax({
            url: "{{route('checkProductSection')}}",
            data: {
@@ -688,7 +688,7 @@ if (!Array.prototype.findIndex) {
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            },
            success: function (res) {
-           
+
             $('#numberselect').text(res['data'].length);
             $('#numberselect-mobile').text(res['data'].length);
             loadcompareProduct(res['data']);
@@ -698,7 +698,7 @@ if (!Array.prototype.findIndex) {
            });
 
         }
-        
+
         function loadcompareProduct(data){
           var html = '';
           var text = '';
@@ -728,13 +728,13 @@ if (!Array.prototype.findIndex) {
 
           $('#listAllcomparesesion').html(html);
           $('#listAllcomparesesion-mobile').html(text);
-          
+
         }
 
               /* function deleteCoparison(i){
         $('#list-to-comparison-'+i).addClass('d-none');
         $('#list-to-comparison-none-'+i).removeClass('d-none');
-        
+
       } */
         function bigImg(image ,id){
           // console.log(image);
@@ -742,7 +742,7 @@ if (!Array.prototype.findIndex) {
             $('.imageNav'+id).attr('src' ,'{{config('app.url')}}/medias/categories/'+image);
            }else {
             $('.imageNav'+id).attr('src' ,'{{asset('frontend-asset/image/blank.png')}}');
-         
+
            }
         }
         function mainCate(id){
@@ -752,8 +752,8 @@ if (!Array.prototype.findIndex) {
           }else if(id == 'sub2'){
             $('.imageNav1').attr('src' ,"{{asset('frontend-asset/image/Medical-Power-Supplies.png')}}");
           }
-        
-        
+
+
           $('.sub-menu').removeClass('active')
           $('#'+id).addClass('active');
         }
@@ -775,13 +775,13 @@ if (!Array.prototype.findIndex) {
         function setlocaltion(lang ,link){
           // console.log(lang);
           // if(lang == 'jp'){
-          //   window.cwcCookieBanner.setLang('ja') 
+          //   window.cwcCookieBanner.setLang('ja')
           // }else if(lang == 'cn'){
-          //   window.cwcCookieBanner.setLang('zh') 
+          //   window.cwcCookieBanner.setLang('zh')
           // }else if(lang == 'tw'){
-          //   window.cwcCookieBanner.setLang('zh') 
+          //   window.cwcCookieBanner.setLang('zh')
           // }else{
-          //   window.cwcCookieBanner.setLang('en') 
+          //   window.cwcCookieBanner.setLang('en')
           // }
           $.ajax({
            url: "{{route('setlocaltion')}}",
@@ -800,9 +800,9 @@ if (!Array.prototype.findIndex) {
 
         }
 
-  </script>
-  <script>
-    $( "#formseachall" ).submit(function( event ) {
+    </script>
+    <script>
+        $( "#formseachall" ).submit(function( event ) {
               var key = $('#searchinput').val();
               var newkey = key.replace(/[/]/g,'@');
             //  console.log();
@@ -817,9 +817,9 @@ if (!Array.prototype.findIndex) {
          });
 
 
-  </script>
-  <script>
-    $(document).ready(function() {
+    </script>
+    <script>
+        $(document).ready(function() {
             //  checkCookie();
           });
           function resetTime(){
@@ -877,26 +877,26 @@ if (!Array.prototype.findIndex) {
           $('#accept_Cookie').removeClass('active');
           }
        }
-     } 
+     }
 
 
           function removeCookie(){
              localStorage.setItem('isshow', 1);
-           
+
           }
-  </script>
-  <script>
-    $("div.sp-dropdown" ).on("mouseleave", function() {
+    </script>
+    <script>
+        $("div.sp-dropdown" ).on("mouseleave", function() {
              $('#nav-uderline').removeClass('active');
               $('.sp-dropdown').removeClass('show');
               $('.sub-menu').removeClass('active');
               $('#sub1').removeClass('show');
               $('.drp-subthree').css('display','none');
         })
-     
-  </script>
-  <script>
-    function downloadGUI(file , procode ,proCate){
+
+    </script>
+    <script>
+        function downloadGUI(file , procode ,proCate){
           $('#procodeGui').val(procode);
           $('#procateGui').val(proCate);
           $('#fileguidownload').val(file);
@@ -942,14 +942,14 @@ if (!Array.prototype.findIndex) {
         @if(Session::has('vertifynotrobot_gui'))
         $(document).ready(function() {
              $("#downloadgui-vertifynot-robot").modal();
-             
+
           });
         @endif
 
-  </script>
-  <script>
-    navigator.sayswho= (function(){
-            var ua= navigator.userAgent, tem, 
+    </script>
+    <script>
+        navigator.sayswho= (function(){
+            var ua= navigator.userAgent, tem,
             M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
             if(/trident/i.test(M[1])){
                 tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
@@ -964,14 +964,14 @@ if (!Array.prototype.findIndex) {
             return M.join(' ');
         })();
             var browVersion = navigator.sayswho.split(" ");
-              
+
            var browVer = parseInt(browVersion[1])
                 //  console.log(browVersion[0]);
                if(browVersion[0] != 'Chrome' && browVersion[0] != 'Firefox' && browVersion[0] != 'Safari'){
                 document.getElementById("alert-browser-check").style.display ="block";
                }
 
-  </script>
+    </script>
 
 
 
