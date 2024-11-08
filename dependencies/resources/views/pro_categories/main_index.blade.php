@@ -40,9 +40,9 @@
                 <div class="block-options-item">
 
                 </div>
-                {{-- <div class="block-options-item">
+                <div class="block-options-item">
                     <a href="{{route('mainprotype.create')}}" class="btn btn-success">Create</a>
-                </div> --}}
+                </div>
             </div>
         </div>
         <div class="block-content block-content-full">
