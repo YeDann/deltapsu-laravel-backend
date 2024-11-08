@@ -297,6 +297,7 @@ class ProductCategoriesController extends Controller
                             "contenttype1" => $request->contentAddType1,
                             "contenttype2" => $request->contentAddType2,
                             "contenttype3" => $request->contentAddType3,
+                            "contenttype4" => $request->contentAddType4,
                             "file" => $filename,
                             "local" => $lang,                 
                         ]
@@ -428,6 +429,8 @@ class ProductCategoriesController extends Controller
         $contentAddType1 = $request->contentAddType1;
         $contentAddType2 = $request->contentAddType2;
         $contentAddType3 = $request->contentAddType3;
+        $contentAddType4 = $request->contentAddType4;
+
         $oldfile_warranty_file  = $request->oldfile_warranty_file;
         $url_item  = $request->url_item;
         
@@ -506,6 +509,7 @@ class ProductCategoriesController extends Controller
                             "contenttype1" => $contentAddType1[$lang],
                             "contenttype2" => $contentAddType2[$lang],
                             "contenttype3" => $contentAddType3[$lang],
+                            "contenttype4" => $contentAddType4[$lang],
                             "file" => $arrayfileName[$lang],
                             "content1" => isset($content1[$lang]) ?  $content1[$lang] :null,
                             "content2" => isset($content2[$lang]) ? $content2[$lang] : null ,
@@ -525,6 +529,7 @@ class ProductCategoriesController extends Controller
                             "contenttype1" => $contentAddType1[$lang],
                             "contenttype2" => $contentAddType2[$lang],
                             "contenttype3" => $contentAddType3[$lang],
+                            "contenttype4" => $contentAddType4[$lang],
                             "file" => $arrayfileName[$lang],
                             "content1" => isset($content1[$lang]) ?  $content1[$lang] :null,
                             "content2" => isset($content2[$lang]) ? $content2[$lang] : null ,
@@ -1073,13 +1078,58 @@ class ProductCategoriesController extends Controller
         ->where('sct.local', 'en')
         ->orderBy('chmp.order_seq', 'asc')
         ->get();
+      $mainCate = DB::table('main_pro_categories as mp')
+        ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
+        ->where('mpt.local', '=', 'en')
+        ->select('mp.*', 'mpt.*')
+        ->orderBy('mp.created_at', 'desc')
+        ->get();
+
+        $mainShow = DB::table('main_pro_categories as mp')
+        ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
+        ->where('mpt.local', '=', 'en')
+        ->select('mp.*', 'mpt.*')
+        ->where('mp.main_id', $id)
+        ->first();
+
+       
 
         return view('pro_categories.order_pro_categories')
         ->with('name', 'product')
         ->with('cate_id', $id)
         ->with('subCategories',$subCategories)
+        ->with('mainCate',$mainCate)
+        ->with('mainShow',$mainShow)
         ->with('menu', 'subCategories');
      }
+
+     public function order_pro_categories(){
+        $subCategories = DB::table('sub_pro_categories as sp')
+            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
+            ->where('spt.local', '=', 'en')
+            ->where('sp.status', '=', 1)
+            ->select('sp.*', 'spt.*')
+            ->orderBy('sp.order_seq', 'asc')
+            ->get();
+       
+        return view('pro_categories.order_categories')
+        ->with('name', 'product')
+        ->with('subCategories',$subCategories)
+        ->with('menu', 'subCategories');
+     }
+
+     public function update_order_cate(Request $request){
+        $HomeIds = array_filter(explode(",", $request->home_id));
+        $HomeOrders = array_filter(explode(",", $request->home_order));
+        foreach ($HomeIds as $HomeId => $value){
+             DB::table('sub_pro_categories')->where('sub_pro_id', '=', $value)->update(['order_seq'=>$HomeOrders[$HomeId]]);
+        }
+        return response()->json([
+            'order' => $request->home_order
+        ],200);
+    }
+    
+
 
      public function update_order_procate(Request $request){
         $HomeIds = array_filter(explode(",", $request->home_id));
@@ -1091,6 +1141,7 @@ class ProductCategoriesController extends Controller
             'order' => $request->home_order
         ],200);
     }
+
     public function removefileDocSelectionGuide($id,$lang){
 
         DB::table('sub_pro_categories_translation')

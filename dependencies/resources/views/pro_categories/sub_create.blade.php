@@ -56,6 +56,10 @@
                             <label for="example-select">Overview (LED Driver)</label>
                             <textarea rows="4" class="form-control" name="contentAddType3"> </textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="example-select">Overview ( Industrial Battery Charging)</label>
+                            <textarea rows="4" class="form-control" name="contentAddType4"> </textarea>
+                        </div>
 
                         <div class="form-group">
                             <label for="example-select">Selection Guide <span class="req-fed">* Max File Size 20

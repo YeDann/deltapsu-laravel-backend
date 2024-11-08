@@ -177,6 +177,7 @@
                                         $check1 = false;
                                         $check2 = false;
                                         $check3  = false;
+                                        $check4  = false;
                                           foreach($cerpros as $item) { 
                                                if($item->certificate_id == 1){
                                                 $check1 = true;
@@ -186,6 +187,9 @@
                                                }
                                                if($item->certificate_id == 3){
                                                 $check3 = true;
+                                               }
+                                               if($item->certificate_id == 4){
+                                                $check4 = true;
                                                }
                                           }
                                         ?>
@@ -204,6 +208,12 @@
                                 <input type="checkbox" class="custom-control-input" id="status_residen"
                                     name="status_certificate[]" value="3" {{ $check3 ? 'checked' : '' }}>
                                 <label class="custom-control-label" for="status_residen">Lighting & Signage</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="checkbox" class="custom-control-input" id="status_wireless"
+                                    name="status_certificate[]" value="4" {{ $check4 ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="status_wireless">Industrial Battery
+                                    Charging</label>
                             </div>
                         </div>
 

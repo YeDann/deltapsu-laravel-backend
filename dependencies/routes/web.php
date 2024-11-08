@@ -275,6 +275,9 @@ Route::post('deleteMain','ProductCategoriesController@destroy')->name('destroypr
 
 
 Route::get('order_pro_categoriesBymain/{id?}','ProductCategoriesController@order_pro_categoriesBymain')->name('order_pro_categoriesBymain');
+Route::get('order_categories','ProductCategoriesController@order_pro_categories')->name('order_categories');
+Route::post('update_order_cate','ProductCategoriesController@update_order_cate')->name('update_order_cate');
+
 Route::post('update_order_procate','ProductCategoriesController@update_order_procate')->name('update_order_procate');
 Route::get('subCategories','ProductCategoriesController@subCatories')->name('subCategories');
 Route::get('createSubCategories','ProductCategoriesController@createSubCategories')->name('createSubCategories');

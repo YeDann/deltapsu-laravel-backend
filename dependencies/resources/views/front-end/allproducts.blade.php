@@ -252,6 +252,14 @@
                                     <img src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" class=""
                                         alt="">
                                     @endif
+                                    @elseif($mainCate->main_id == 4)
+                                    @if(isset($subCate->image_type4))
+                                    <img src="{{config('app.url')}}/medias/categories/{{$subCate->image_type4}}"
+                                        class="" alt="">
+                                    @else
+                                    <img src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" class=""
+                                        alt="">
+                                    @endif
                                     @endif
                                 </div>
                                 <div class="carousel__item-name">{{$subCate->name}}</div>
@@ -285,13 +293,15 @@
                                         @endif
                                         <h2 class="text-dark">{{$subCate->name}}</h2>
                                         @if(isset($subCate->contenttype1) || isset($subCate->contenttype2) ||
-                                        isset($subCate->contenttype3))
+                                        isset($subCate->contenttype3) || isset($subCate->contenttype4) )
                                         @if($subCate->main_cateid == 1)
                                         <p class="text-dark">{!!$subCate->contenttype1!!}</p>
                                         @elseif($subCate->main_cateid == 2)
                                         <p class="text-dark">{!!$subCate->contenttype2!!}</p>
                                         @elseif($subCate->main_cateid == 3)
                                         <p class="text-dark">{!!$subCate->contenttype3!!}</p>
+                                        @elseif($subCate->main_cateid == 4)
+                                        <p class="text-dark">{!!$subCate->contenttype4!!}</p>
                                         @endif
                                         @else
                                         <p class="text-dark">{!!$subCate->content!!}</p>
@@ -347,6 +357,15 @@
                                         @if(isset($subCate->image_type3))
                                         <img class="img-fluid max-h"
                                             src="{{config('app.url')}}/medias/categories/{{$subCate->image_type3}}"
+                                            alt="">
+                                        @else
+                                        <img class="img-fluid max-h"
+                                            src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
+                                        @endif
+                                        @elseif($mainCate->main_id == 4)
+                                        @if(isset($subCate->image_type4))
+                                        <img class="img-fluid max-h"
+                                            src="{{config('app.url')}}/medias/categories/{{$subCate->image_type4}}"
                                             alt="">
                                         @else
                                         <img class="img-fluid max-h"

@@ -38,20 +38,7 @@
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
             <h3 class="block-title">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{$mainShow->name}}
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        @foreach($mainCate as $cate)
-                        <a class="dropdown-item"
-                            href="{{route('order_pro_categoriesBymain' ,$cate->main_id)}}">{{$cate->name}}</a>
-                        @endforeach
 
-
-                    </div>
-                </div>
             </h3>
             <div class="block-options">
                 <div class="block-options-item">
@@ -76,7 +63,7 @@
                 <tbody>
                     @if(isset($subCategories) and !empty($subCategories))
                     @foreach ($subCategories as $item)
-                    <tr class="odd order-list" data-id="{{$item->pk_id}}">
+                    <tr class="odd order-list" data-id="{{$item->sub_pro_id}}">
                         <td class="text-center">{{$loop->iteration}}</td>
                         <td class="d-none d-sm-table-cell">{{$item->name}}</td>
                     </tr>
@@ -112,7 +99,7 @@
                     'home_order': $("#order-index").html()
                 };
                 $.ajax({
-                    url: "{{route('update_order_procate')}}",
+                    url: "{{route('update_order_cate')}}",
                     type: 'post',
                     data: formData,
                     headers: {

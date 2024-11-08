@@ -95,6 +95,11 @@
                                             name="contentAddType3[{{$item2->name}}]">{{isset($current->contenttype3) ? $current->contenttype3 :''}} </textarea>
                                     </div>
                                     <div class="form-group">
+                                        <label for="example-select">Overview (Industrial Battery Charging)</label>
+                                        <textarea rows="4" class="form-control"
+                                            name="contentAddType4[{{$item2->name}}]">{{isset($current->contenttype4) ? $current->contenttype4 :''}} </textarea>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="example-select"> Old File</label>
                                         <a
                                             href="{{config('app.url')}}/medias/categories/{{isset($current->file) ? $current->file :''}}">{{isset($current->file)
