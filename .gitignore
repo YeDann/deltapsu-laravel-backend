@@ -30,3 +30,6 @@ dependencies/storage/logs/laravel.log
 /editor_file
 /config_history
 # End of https://www.gitignore.io/api/laravel
+
+# local env files
+.env
