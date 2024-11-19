@@ -2100,6 +2100,14 @@ class FrontendController extends Controller
     }
 
     public function updateNewsDetail($namePar){
+        // Get the current URL
+        $currentUrl = url()->current(); 
+        $lowercaseUrl = strtolower($currentUrl);
+
+        // If the URL is not in lowercase, redirect to the lowercase version
+        if ($currentUrl !== $lowercaseUrl) {
+            return redirect()->to($lowercaseUrl, 301);
+        }
 
         $lang = App::getLocale();
 
