@@ -2101,7 +2101,7 @@ class FrontendController extends Controller
 
     public function updateNewsDetail($namePar){
         // Get the current URL
-        $currentUrl = url()->current(); 
+        $currentUrl = url()->current();
         $lowercaseUrl = strtolower($currentUrl);
 
         // If the URL is not in lowercase, redirect to the lowercase version
@@ -4645,7 +4645,7 @@ class FrontendController extends Controller
         ->where('pdt.file','!=' ,null)
         ->where('pdc.slug',$typefile)
         ->select('p.pro_code','pd.doc_id','phd.product_id','pdct.lable' ,'pdt.name','pdc.title as catename','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id');
-        $query->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $queryString . '%');
+        $query->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), '=', $queryString);
         $documents = $query->get();
 
         return $documents;
@@ -4764,7 +4764,7 @@ class FrontendController extends Controller
         ->where('pdct.local','en')
         ->where('pdc.slug',$typefile)
         ->select('p.pro_code','pd.doc_id','phd.product_id','pdct.lable' ,'pdt.name','pdc.title as catename','pd.created_at' ,'pdc.main_cate_id','pdt.file' ,'pd.cate_id');
-        $query->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $queryString . '%');
+        $query->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"),'=', $queryString);
         $documents = $query->get();
 
         $file = null;
