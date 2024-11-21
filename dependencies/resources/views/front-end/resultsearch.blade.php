@@ -829,8 +829,7 @@
                                                 </div>
                                                 <a href="https://www.google.com/maps/?q={{$offic->lat}},{{$offic->lon}}&sensor=true"
                                                     target="_blank">
-                                                    <button class="btn-subscribe"> {{$staticContent['Get
-                                                        Direction']}}</button>
+                                                    <button class="btn-subscribe"> {{isset($staticContent['GetDirection']) ? $staticContent['GetDirection'] : 'Get Direction'}}</button>
                                                 </a>
                                             </div>
                                             @endif
@@ -874,8 +873,7 @@
                                                 </div>
                                                 <a href="https://www.google.com/maps/?q={{$dis->lat}},{{$dis->lon}}&sensor=true"
                                                     target="_blank">
-                                                    <button class="btn-subscribe"> {{$staticContent['Get
-                                                        Direction']}}</button>
+                                                    <button class="btn-subscribe"> {{isset($staticContent['GetDirection']) ? $staticContent['GetDirection'] : 'Get Direction'}}</button>
                                                 </a>
                                                 @if($dis->status_cer == 1)
                                                 <a href="{{config('app.url')}}/medias/distributor/{{$dis->file_cer}}"
