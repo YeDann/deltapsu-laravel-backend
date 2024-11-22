@@ -13,14 +13,14 @@ class ContentSecurityPolicy
 
         $cspDirectives = [
             "default-src 'self';",
-            "script-src 'self' 'unsafe-inline' https://hcaptcha.com https://cookiecdn.com https://code.jquery.com https://www.googletagmanager.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.google.com; ",
+            "script-src 'self' 'unsafe-inline' https://hcaptcha.com https://cookiecdn.com https://code.jquery.com https://www.googletagmanager.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.google.com https://www.gstatic.com;",
             "img-src 'self' data:;",
             "object-src 'none';",
             "style-src 'self' 'unsafe-inline';",
             "font-src 'self';",
             "media-src 'none';",
-            "frame-src 'none';",
-            "connect-src 'self' https://104.42.107.127 https://www.google.com https://www.googletagmanager.com https://www.gstatic.com;",
+            "frame-src 'self' https://www.youtube.com;",
+            "connect-src 'self' https://104.42.107.127 https://www.google.com https://www.googletagmanager.com https://www.gstatic.com https://www.google-analytics.com;",
         ];
 
         $response->headers->set('Content-Security-Policy', implode('; ', $cspDirectives));
