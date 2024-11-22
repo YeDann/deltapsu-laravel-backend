@@ -20,8 +20,7 @@ class ContentSecurityPolicy
             "font-src 'self';",
             "media-src 'none';",
             "frame-src 'none';",
-            "connect-src 'self' https://104.42.107.127 https://www.google.com https://www.googletagmanager.com;",
-            "script-src-elem 'self' https://www.google.com;",
+            "connect-src 'self' https://104.42.107.127 https://www.google.com https://www.googletagmanager.com https://www.gstatic.com;",
         ];
 
         $response->headers->set('Content-Security-Policy', implode('; ', $cspDirectives));
