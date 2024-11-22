@@ -10,11 +10,10 @@ class ContentSecurityPolicy
     public function handle(Request $request, Closure $next)
     {
         $response = $next($request);
-        $nonce = base64_encode(random_bytes(16));
 
         $cspDirectives = [
             "default-src 'self';",
-            "script-src 'self' https://hcaptcha.com https://cookiecdn.com https://code.jquery.com https://www.googletagmanager.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;",
+            "script-src 'self' 'unsafe-inline' https://hcaptcha.com https://cookiecdn.com https://code.jquery.com https://www.googletagmanager.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;",
             "img-src 'self' data:;",
             "object-src 'none';",
             "style-src 'self' 'unsafe-inline';",
@@ -27,8 +26,6 @@ class ContentSecurityPolicy
         $response->headers->set('Content-Security-Policy', implode('; ', $cspDirectives));
         $response->headers->set('X-Content-Security-Policy', implode('; ', $cspDirectives));
         $response->headers->set('X-WebKit-CSP', implode('; ', $cspDirectives));
-
-        view()->share('cspNonce', $nonce);
 
         return $response;
     }
