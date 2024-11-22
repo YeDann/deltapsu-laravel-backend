@@ -20,15 +20,16 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\ModifyRedirects::class,
+        \App\Http\Middleware\ContentSecurityPolicy::class,
         //\RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
     //     \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
     //     \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
        //  \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
-    //     \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class, 
+    //     \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class,
     //     \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class,
      //  \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class, // Note: This middleware invokes "RemoveComments::class" before it runs.
     //     \RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
-    
+
     ];
 
     /**
@@ -75,7 +76,7 @@ class Kernel extends HttpKernel
         'localizationRedirect' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
         'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
         'localeViewPath' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
-        'cors' => \App\Http\Middleware\Cors::class, 
+        'cors' => \App\Http\Middleware\Cors::class,
         'HtmlMinifier' => \App\Http\Middleware\HtmlMinifier::class,
         'verifyLang' => \App\Http\Middleware\VerifyLang::class,
     ];

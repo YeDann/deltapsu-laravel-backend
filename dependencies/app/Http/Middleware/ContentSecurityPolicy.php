@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+
+class ContentSecurityPolicy
+{
+    public function handle(Request $request, Closure $next)
+    {
+        $response = $next($request);
+        $nonce = base64_encode(random_bytes(16));
+
+        $cspDirectives = [
+            "default-src 'self';",
+            "script-src 'self' https://hcaptcha.com https://cookiecdn.com https://code.jquery.com https://www.googletagmanager.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;"
+            "img-src 'self' data:;",
+            "object-src 'none';",
+            "style-src 'self' 'unsafe-inline';",
+            "font-src 'self';",
+            "media-src 'none';",
+            "frame-src 'none';",
+            "connect-src 'self' https://104.42.107.127 https://www.google.com https://www.googletagmanager.com;",
+        ];
+
+        $response->headers->set('Content-Security-Policy', implode('; ', $cspDirectives));
+        $response->headers->set('X-Content-Security-Policy', implode('; ', $cspDirectives));
+        $response->headers->set('X-WebKit-CSP', implode('; ', $cspDirectives));
+
+        view()->share('cspNonce', $nonce);
+
+        return $response;
+    }
+}
