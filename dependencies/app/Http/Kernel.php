@@ -20,7 +20,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\ModifyRedirects::class,
-        \App\Http\Middleware\ContentSecurityPolicy::class,
+        // \App\Http\Middleware\ContentSecurityPolicy::class,
         //\RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
     //     \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
     //     \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
