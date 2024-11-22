@@ -14,7 +14,7 @@ class ContentSecurityPolicy
 
         $cspDirectives = [
             "default-src 'self';",
-            "script-src 'self' https://hcaptcha.com https://cookiecdn.com https://code.jquery.com https://www.googletagmanager.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;"
+            "script-src 'self' https://hcaptcha.com https://cookiecdn.com https://code.jquery.com https://www.googletagmanager.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;",
             "img-src 'self' data:;",
             "object-src 'none';",
             "style-src 'self' 'unsafe-inline';",
