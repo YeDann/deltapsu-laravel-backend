@@ -2841,42 +2841,70 @@ class FrontendController extends Controller
 
            $lang = App::getLocale();
            $checkArr = [];
+        //    $query = DB::table('products as p')
+        //    ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+        //    ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+        //    ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+        //    ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+        //    ->where('spt.local' ,$lang)
+        //    ->where('st.local' ,$lang)
+        //    ->where('p.enable_pro' ,1);
+
+
+        //     if($checkSpece){
+        //     $keyarr = explode(" ",$keypro);
+        //     if(isset($keyarr[0])){
+        //     $query->where('p.pro_code', 'LIKE', '%'.$keyarr[0].'%');
+        //     }
+        //     if(isset($keyarr[1])){
+        //      $query->where('p.pro_code', 'LIKE', '%'.$keyarr[1].'%');
+        //     }
+        //     }else if($checkdash){
+        //     $keyarr2 = explode("-",$keypro);
+        //     if(isset($keyarr2[0])){
+        //      $query->where('p.pro_code', 'LIKE', '%'.$keyarr2[0].'%');
+        //     }
+        //     if(isset($keyarr2[1])){
+        //      $query->where('p.pro_code', 'LIKE', '%'.$keyarr2[1].'%');
+        //      }
+        //      }else{
+        //       $query->where('p.pro_code', 'LIKE', '%'.$keypro.'%');
+        //      }
+
+
+
+        //   //$query->Orwhere('st.title', 'LIKE', '%'.$keypro.'%')
+        //    $query->select('p.*','spt.name as catename' ,'sp.url_item' ,'phc.categories_id' ,'st.title as seName');
+
+        //    $products = $query->get();
+
            $query = DB::table('products as p')
-           ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-           ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-           ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-           ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-           ->where('spt.local' ,$lang)
-           ->where('st.local' ,$lang)
-           ->where('p.enable_pro' ,1);
+            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+            ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+            ->join('sub_pro_categories_translation as spt', function ($join) use ($lang) {
+                $join->on('spt.sub_pro_id', '=', 'phc.categories_id')
+                    ->where('spt.local', '=', $lang);
+            })
+            ->join('series_translations as st', function ($join) use ($lang) {
+                $join->on('st.series_id', '=', 'p.series_id')
+                    ->where('st.local', '=', $lang);
+            })
+            ->where('p.enable_pro', 1);
 
+        // Optimize the splitting logic
+            $keyParts = preg_split('/[\s-]+/', $keypro);
+            $query->where(function ($q) use ($keyParts) {
 
-            if($checkSpece){
-            $keyarr = explode(" ",$keypro);
-            if(isset($keyarr[0])){
-            $query->where('p.pro_code', 'LIKE', '%'.$keyarr[0].'%');
-            }
-            if(isset($keyarr[1])){
-             $query->where('p.pro_code', 'LIKE', '%'.$keyarr[1].'%');
-            }
-            }else if($checkdash){
-            $keyarr2 = explode("-",$keypro);
-            if(isset($keyarr2[0])){
-             $query->where('p.pro_code', 'LIKE', '%'.$keyarr2[0].'%');
-            }
-            if(isset($keyarr2[1])){
-             $query->where('p.pro_code', 'LIKE', '%'.$keyarr2[1].'%');
-             }
-             }else{
-              $query->where('p.pro_code', 'LIKE', '%'.$keypro.'%');
-             }
+                foreach ($keyParts as $part) {
 
+                    $q->orWhere('p.pro_code', 'LIKE', '%' . $part . '%');
+                }
+            });
 
-
-          //$query->Orwhere('st.title', 'LIKE', '%'.$keypro.'%')
-           $query->select('p.*','spt.name as catename' ,'sp.url_item' ,'phc.categories_id' ,'st.title as seName');
-
-           $products = $query->get();
+        // Select fields
+        $query->select('p.*', 'spt.name as catename', 'sp.url_item', 'phc.categories_id', 'st.title as seName');
+        // Execute query
+        $products = $query->get();
 
 
            $data = [];
