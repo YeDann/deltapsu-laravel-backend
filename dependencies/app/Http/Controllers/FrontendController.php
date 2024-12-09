@@ -2869,7 +2869,7 @@ class FrontendController extends Controller
              }else{
               $query->where('p.pro_code', 'LIKE', '%'.$keypro.'%');
              }
-
+             $query->select('p.*', 'spt.name as catename', 'sp.url_item', 'phc.categories_id', 'st.title as seName');
            $products = $query->get();
 
         //    $query = DB::table('products as p')
