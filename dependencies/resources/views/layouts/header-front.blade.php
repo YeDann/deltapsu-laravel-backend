@@ -10,7 +10,7 @@
         background-position: right 50%;
         background-repeat: no-repeat;
         background-size: 12px;
-        background-image: url('{{asset(' frontend-asset/image/arrow.svg')}}');
+        background-image: url('{{asset('frontend-asset/image/arrow.svg')}}');
         width: 50px;
         background-color: #fff;
 

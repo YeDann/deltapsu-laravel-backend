@@ -11,7 +11,7 @@
         border: 1px solid #444444;
         background-position: right 50%;
         background-repeat: no-repeat;
-        background-image: url('{{asset(' frontend-asset/image/arrow-down.svg')}}');
+        background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
         padding-right: 24px;
     }
 
@@ -240,7 +240,7 @@
         -moz-appearance: none;
         background-position: right 50%;
         background-repeat: no-repeat;
-        background-image: url('{{asset(' frontend-asset/image/arrow-down.svg')}}');
+        background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
         top: 6px;
 
     }
