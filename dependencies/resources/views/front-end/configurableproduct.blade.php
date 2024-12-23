@@ -251,6 +251,12 @@
 		background-color: #e7e9ed !important;
 	}
 
+    .is-invalid {
+        border-color: #dc3545;
+        background-color: #f8d7da;
+    }
+
+
 	/* #PDFconfigurable{
 		display: none;
 	} */
@@ -260,7 +266,7 @@
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 <link rel="canonical" href="{{url()->current()}}" />
-<?php 
+<?php
   $lang_seo = App::getLocale();
   if($lang_seo == 'cn'){
     $lang_seo = 'zh-Hans-CN';
@@ -305,7 +311,7 @@
 	<div class="container">
 		<h1 class="text-title-delta visible-up-922">{{$staticContent['configurable_power_selector']}}</h1>
 		<h3 class="text-title-delta invisible-up-922">{{$staticContent['configurable_power_selector']}}</h3>
-		<h4 class="d-flex justify-content-center mb-2 text-center" style="margin-top: -2rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
+		<h4 class="d-flex justify-content-center mb-2 text-center" style="margin-top: -2rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
 		<div id="configurable">
 			<h3><b class="font-size-24 ">01</b><br>{{$staticContent['Select_Model']}}</h3>
 			<section>
@@ -1083,7 +1089,7 @@
 	$(document).ready(function() {
         msieversion();
        });
-      function msieversion() 
+      function msieversion()
             {
                 var ua = window.navigator.userAgent;
                 var msie = ua.indexOf("MSIE");
@@ -1092,19 +1098,19 @@
                 {
                   var script = document.createElement('script');
                     script.type = 'text/javascript';
-                    script.src = '{{asset('/frontend-asset/js/html2canvasie.js')}}';    
+                    script.src = '{{asset('/frontend-asset/js/html2canvasie.js')}}';
 
                     document.getElementsByTagName('head')[0].appendChild(script);
-              
+
                 }
                 else  // If another browser, return 0
                 {
                   var script = document.createElement('script');
                     script.type = 'text/javascript';
-                    script.src = '{{asset('/frontend-asset/js/html2canvas.js')}}';    
+                    script.src = '{{asset('/frontend-asset/js/html2canvas.js')}}';
 
                     document.getElementsByTagName('head')[0].appendChild(script);
-                  
+
                 }
 
                 return false;
@@ -1153,7 +1159,7 @@
              $("#sendConfigpdf").modal();
           });
         @endif
-	
+
 function checkdata(){
 	if($('#checkdataSub').val() == 0){
 		$('#checkdataSub').val(1);
@@ -1174,7 +1180,7 @@ function selectCountry(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (data) {
-              
+
                 var options = '';
 
                 for (var i = 0; i < data['results'].length; i++) {
@@ -1213,14 +1219,14 @@ function selectCountry(){
 
 	var model_name = <?=$model?>;
 	function getLastNumber(str) {
-    	var matches = str.match(/\d+$/); 
+    	var matches = str.match(/\d+$/);
     	return matches ? parseInt(matches[0], 10) : 0;
 	}
 	model_name.sort((a,b) => getLastNumber(a.product_code) - getLastNumber(b.product_code))
 
 	var model_alldata = <?=$model_alldata?>;
 	function getLastNumber(str) {
-    	var matches = str.match(/\d+$/); 
+    	var matches = str.match(/\d+$/);
     	return matches ? parseInt(matches[0], 10) : 0;
 	}
 	model_alldata.sort((a,b) => getLastNumber(a.product_code) - getLastNumber(b.product_code))
@@ -1254,8 +1260,8 @@ function selectCountry(){
 			if(currentIndex === 0){
 				$('.wizard > .actions').attr('style', 'border: 2px solid transparent;');
 				$('a[href$="previous"]').attr('style', 'display:none');
+                $('a[href$="next"]').attr('style', 'display:block');
 				$('a[href$="next"]').text('{{$staticContent['Select_Output(s)']}}');
-			
 			}
 			if(currentIndex === 1){
 				$('.wizard > .actions').attr('style', 'border: 2px solid transparent;');
@@ -1265,7 +1271,10 @@ function selectCountry(){
 				$('a[href$="previous"]').removeClass("btn-enquiry");
 				$('a[href$="previous"]').addClass("btn-previous-border");
 				loadparallel(model_alldata[index_pr]['translate_id'] ,model_alldata[index_pr]['max_slot']);
-        }
+
+                //Call validation function
+                validateDualInputs();
+            }
 			if(currentIndex === 2){
 				setActive();
 				$('.wizard > .actions').attr('style', 'border: 2px solid transparent;');
@@ -1277,7 +1286,7 @@ function selectCountry(){
 				$('a[href$="previous"]').addClass("btn-previous-border");
 				// $('.wizard > .content').height($('section.current').height()+60);
 			}
-				
+
 			if(currentIndex === 3){
 				setCode();
 				$('.wizard > .actions').attr('style', 'border: 2px solid #E3EFF8;');
@@ -1286,11 +1295,11 @@ function selectCountry(){
 				$('a[href$="previous"]').text('{{$staticContent['Enquiry']}}');
 				$('a[href$="previous"]').removeClass("btn-previous-border");
 				$('a[href$="previous"]').addClass("resetenqu");
-				$('a[href$="previous"]').attr('id','submitenquiry'); 
-				$('a[href$="previous"]').html('<button class="btn-enquiry" id="SbtRequest1" onclick="linktosupport();">{{$staticContent['Enquiry']}}</button>'); 
+				$('a[href$="previous"]').attr('id','submitenquiry');
+				$('a[href$="previous"]').html('<button class="btn-enquiry" id="SbtRequest1" onclick="linktosupport();">{{$staticContent['Enquiry']}}</button>');
 				$('a[href$="previous"]').attr("href" ,'#');
-			
-		      
+
+
 				var val = $('input[name=parallel]:checked').val();
 				$('#configurable-p-3 tbody tr').addClass('d-none');
 				$('#configurable-p-3 #parallel'+ val).removeClass('d-none');
@@ -1299,19 +1308,19 @@ function selectCountry(){
 				$('#parallel'+ val +' input[name=parallel-2]').prop( "checked", true );
 				// $('.wizard > .content').height($('section.current').height()+90);
 				$('#savedataauto').click();
-				
-				
+
+
 			}
-	
+
 		},
-		
+
 		/* enableFinishButton: false, */
 		labels: {
 			next: "{{$staticContent['Select_Output(s)']}}",
 			finish: "{{$staticContent['Send']}} PDF"
 		}
 	});
-	
+
 	$('a[href$="finish"]').attr('data-toggle', 'modal');
 	$('a[href$="finish"]').addClass("enquiry-bg");
 	$('a[href$="finish"]').attr('data-target', '#sentToPDF');
@@ -1319,7 +1328,7 @@ function selectCountry(){
 	$('a[href$="previous"]').attr('style', 'display:none');
 	$('a[href$="previous"]').addClass("btn-previous-border");
 	$('a[href$="next"]').addClass("arrow-next");
-	
+
 	var current = $('.wizard > .content').height();
 	function linktosupport(){
 		$('#stateSelectbth').val(1);
@@ -1328,7 +1337,7 @@ function selectCountry(){
 		}else{
 			$('#loaderSavefile').css("display",'block');
 		}
-	
+
 	}
 	function checkvalueConfOnly(){
 		var value = $('#con_id').val();
@@ -1360,13 +1369,13 @@ function selectCountry(){
 		   }else {
 			  if($('#keyrecap').val() != '' && $('#keyrecap').val() != null){
 				document.configform.submit();
-			  }    
+			  }
             }
 	}
 
 	function selectionGenerate(){
 		$.each(model_name , function(index,value){
-			
+
 			$('#model').append('<option value="'+index+'">'+value['product_code']+'</option>');
 		});
 		$('#model').children("option:first-child").attr('selected','selected');
@@ -1379,8 +1388,8 @@ function selectCountry(){
 		$('.text-info').html(model_alldata[index]['description']);
 		$('#img-fistdata').html('<img class="img-model " src="{{config('app.url')}}/media/model/'+model_alldata[index]['thumb_img']+'">');
 		$('.img-summary-add').html('<img class="img-fluid" src="{{config('app.url')}}/media/model/'+model_alldata[index]['thumb_img']+'" >');
-	
-		
+
+
 		$('#certificate').html('<img class="" src="{{config('app.url') }}/media/model/'+model_alldata[index]['certificate_img']+'">');
 		var l = parseFloat(model_alldata[index]['dimensions']);
 		var w = parseFloat(model_alldata[index]['dimen_w']);
@@ -1391,7 +1400,7 @@ function selectCountry(){
 		$('.c_delta_mm').html(l + ' x ' + w + ' x ' + d + ' mm');
 		$('.c_delta_weight').html(weight+'kg ('+(weight*2.205).toFixed(2)+'lb)');
 		$('#port').empty();
-		
+
 		for(var i = 0 ; i < model_alldata[index]['max_slot']; i++){
 			$('#port').append('<div class="fix-height col-2  bg-gray" id="port1">Blank</div>');
 		}
@@ -1418,7 +1427,7 @@ function selectCountry(){
 
 		 }else{
 			do_a = do_a_gobal;
-			ts_a = ts_a_gobal;	 
+			ts_a = ts_a_gobal;
 			$('#bus').empty();
 			$("#bus").append(new Option("Default PMBus", "0"));
 			$("#bus").append(new Option("RS232 adapter", "1"));
@@ -1446,7 +1455,7 @@ function selectCountry(){
 				$("#logic").append(new Option("Normal Logic & Normal Fan Direction", "0"));
 				$("#logic").append(new Option("Reversed Logic & Normal Fan Direction", "1"));
 				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description']}}');
-		   
+
 		}else{
 
 				$('#terminal').empty();
@@ -1468,7 +1477,7 @@ function selectCountry(){
 		//addMoreOutput();
 		$('.slot').empty();
 		addSlotOutput();
-	
+
 	}
 
 	function getSelectConnector(proId ,model){
@@ -1487,7 +1496,7 @@ function selectCountry(){
 						}
 		});
 	}
-	
+
 	}
 	function loadparallel(id, max_slot){
 		$.ajax({
@@ -1509,14 +1518,62 @@ function selectCountry(){
 
 	}
 
+    function validateDualInputs() {
+        //Check valued input
+        function checkValidity() {
+            //Define variables
+            let isValid = true;
+
+            $('.child-slot').each(function () {
+                const selectedRadio = $(this).find('input[type="radio"]:checked');
+
+                // Check if dual output is selected
+                if (selectedRadio.attr('id') && selectedRadio.attr('id').includes('dual')) {
+                    // Check voltage
+                    $(this).find('.voltage select').each(function () {
+                        if ($(this).val() === '-1') {
+                            isValid = false;
+                        }
+                    });
+
+                    // Check current
+                    $(this).find('.current select').each(function () {
+                        if ($(this).val() === '-1') {
+                            isValid = false;
+                        }
+                    });
+
+                }
+            });
+
+            // Disable or enable the button based on validation
+            const nextButton = $('a[href$="next"]');
+            if (isValid) {
+                nextButton.css('display', 'block');
+            } else {
+                if (nextButton.text() === '{{$staticContent["Select_Parallel"]}}') {
+                    nextButton.css('display', 'none');
+                }
+            }
+        }
+
+        // Call validation on page load
+        checkValidity();
+
+        // Run validation on any change in inputs or selects
+        $(document).on('change', '.child-slot input[type="radio"], .child-slot select', function () {
+            checkValidity();
+        });
+    }
+
 	function addSlotOutput(){
 		if(checkSlotMax()){
 			var index = $('#model').children("option:selected").val();
 			alert('You have reached maximum slot of '+model_alldata[index]['product_code']+' ('+model_alldata[index]['max_slot']+' slots)');
 			return;
 		}
-	
-	
+
+
 		var index = indexBetween();
 		var text = '';
 		text +='<div class="child-slot row add-space-mobile" id="child-'+index+'">';
@@ -1541,7 +1598,7 @@ function selectCountry(){
 		}else{
 			var count = 0;
 			var after_index = 0;
-			
+
 			$.each($('.slot .child-slot'),function(index2,el){
 				count += parseInt($(el).children('input[name=slot]').val())
 				if(count < index){
@@ -1557,15 +1614,16 @@ function selectCountry(){
 		$('.slot #child-'+index+' #single'+index+'').attr('checked', 'checked');
 		// $('#numoutput').text(index);
 		checkSlotMax();
-	
+
 	}
 
 	function getSelecter(_this){
 		var type = $(_this).val();
 		var index = $(_this).parent().parent().parent().children('input[name=index]').val();
 		var text = '';
+
 		for(var i = 0 ; i < type ; i++){
-			
+
 			text += '<div class="w-100 select-box my-1 d-flex flex-wrap" id="select-box'+i+'">';
 			text += '<div class="voltage col-4 column-select">';
 			text += '<select class="form-control" onchange="getSelectCurrent(this,'+type+'); getToSum('+i+');" id="volt'+i+'">';
@@ -1610,8 +1668,8 @@ function selectCountry(){
 		setHeight();
 		setModelPreview();
 		setModelPreviewToSum();
-	
-	
+
+
 	}
 	function getToSummary02(i){
 		// alert("55555555555");
@@ -1633,8 +1691,8 @@ function selectCountry(){
 		var text = '';
 		var array_v = (type == 1) ? ss_v : do_v;
 		var array_a = (type == 1) ? ss_a : do_a;
-		
-		
+
+
 		text += '<select class="form-control" onchange="currentChange(this,'+type+')" >';
 		text += '<option value="'+array_a[value]+'">';
 		text += parseFloat(array_a[value]).toFixed(2)+'A';
@@ -1674,19 +1732,19 @@ function selectCountry(){
 		var current = $(_this).children('option:selected').val();
 		var array_v = (type == 1) ? ss_v : do_v;
 		parent.children('.input').children('input').val(parseFloat(array_v[value]*current).toFixed(0));
-		
+
 		setValueSlot($(_this).parent().parent().parent());
 		setModelPreview();
 		setModelPreviewToSum();
 		checkSumwatt();
 		checkSlotMax();
-		
+
 	}
 
 	function setValueSlot(_this){
 		var parent = $(_this);
 		var amp = parent.children().children('.input').children('input').val();
-		
+
 		var _index = parseInt(parent.children('input[name=index]').val());
 		var maxvalue  = 800;
 		var indexmo_ = $('#model').children("option:selected").val();
@@ -1714,7 +1772,7 @@ function selectCountry(){
 							this_index = ($(value).children('input[name=slot]').val() != 1) ? this_val+' - '+(this_val+2) : this_val;
 							$(value).children('.col-3').children('p').html('Slot '+this_index);
 							$(value).children('.select-box').children('.col-3:last-child').children('.btn-undo-icon').attr('onclick','resetData('+this_val+')');
-							
+
 							$(value).children('.col-9').children('.form-check:first-child').children('input').attr('name','slot-type-'+this_val);
 							$(value).children('.col-9').children('.form-check:first-child').children('input').attr('id','single'+this_val);
 							$(value).children('.col-9').children('.form-check:first-child').children('label').attr('for','single'+this_val);
@@ -1763,7 +1821,7 @@ function selectCountry(){
 		var voltage_index = -1;
 		var class_col = 'col-2';
 		$('#list-slot').empty();
-	
+
 		for(var i = 1 ; i <= max_slot  ; i++){
 			_value = $('.slot #child-'+i);
 			text = '';
@@ -1773,8 +1831,8 @@ function selectCountry(){
 			if($(_value).children('.select-box').length > 0){
 				$.each($(_value).children('.select-box'),function(index,value){
 				if($(value).children('.input').children('input').val() > 0){
-					
-				
+
+
 						if(index > 1){
 							text += '<br>';
 							text += '----------';
@@ -1794,7 +1852,7 @@ function selectCountry(){
 							text += ' (' + String.fromCharCode(67+parseInt(voltage_index) + 1)+')'
 							else
 							text += ' (' + String.fromCharCode(64+parseInt(voltage_index) + 1)+''+  ($(_value).children('input[name=slot]').val() == 1 ? 1 : 2) +')';
-							
+
 							if($(_value).children('.select-box').length > 0 && $(_value).children('.select-box').length != (index+1) ){
 								text +=", ";
 							}
@@ -1804,9 +1862,9 @@ function selectCountry(){
 								text +="<br>";
 							}
 			}
-	
+
 			$('#list-slot').append(text);
-			
+
 		}
 	}
 	function setModelPreview(){
@@ -1845,7 +1903,7 @@ function selectCountry(){
 						}
 						array_v = ($(_value).children('.select-box').length == 1) ? ss_v : do_v;
 						voltage_index = $(value).children('.voltage').children('select').children('option:selected').val();
-						
+
 						text += array_v[voltage_index]+'V, ';
 						text += $(value).children('.current').children('select').children('option:selected').val()+'A, ';
 						text += $(value).children('.input').children('input').val()+'W';
@@ -1856,17 +1914,17 @@ function selectCountry(){
 			}else{
 				text += '<div class="fix-height blank  bg-gray order-'+(15-i)+'" id="port'+(i)+'">Blank</div>';
 			}
-		
-			
+
+
 			$('#port').html(text);
 			$('#port02').html(text);
 			$('input[name=output_total]').val(countSlot());
-			
+
 			$('#numoutput').text(countSlot());
-			
+
 			var sum_watt = sumWatt();
 			// console.log(sum_watt);
-		
+
 			if(sum_watt > 0){
 				$('input[name=power]').val(sumWatt().toFixed(1));
 				$("#sumpower").text(sumWatt()+"W");
@@ -1876,7 +1934,7 @@ function selectCountry(){
 				$("#sumpower").text("-");
 				$("#sumpower-pdf").text("-");
 			}
-			
+
 		}
 		$('#port').append('<div class="fix-col-box2 order-15"></div>');
 		$('#port02').append('<div class="fix-col-box2 order-15"></div>');
@@ -1927,20 +1985,20 @@ function selectCountry(){
 			_index = 1;
 			var child = $('.slot .child-slot');
 			$.each($('.slot .child-slot'),function(index,value){
-				//var sumindex = index + slot_add +1;	
-						
+				//var sumindex = index + slot_add +1;
+
 				if($(value).children('input[name=index]').val() == (index + slot_add + 1) && _index !=  (countSlot()+1)){
-									
+
 					_index += parseInt($(value).children('input[name=slot]').val());
 
 				}
 				slot_add += parseInt($(value).children('input[name=slot]').val()-1);
-				
-					
-				
-				
+
+
+
+
 				/* alert("val:"+$(value).children('input[name=index]').val()+"index:"+index+"_index:"+_index+"slot_add:"+slot_add +"sum:"+(index + slot_add + 1)+"count:"+(countSlot()+1)); */
-				
+
 			});
 		}
 		return _index;
@@ -1981,7 +2039,7 @@ function selectCountry(){
 		   }else{
 			    html +='<td colspan="1"></td>';
 		   }
-		
+
 	   }
 		html +=	'</tr>';
 		});
@@ -1989,26 +2047,26 @@ function selectCountry(){
 		html +=	'</table>';
 
 		$('#'+where_is).html(html);
-		
+
 	}
 	function checkSlotMax(addon){
-	   
+
 		if(addon == undefined || addon == 'undefined' ){
 			addon = 0;
 		}
-	
+
 		var index = $('#model').children("option:selected").val();
 		if(countSlot()+addon > model_alldata[index]['max_slot']){
 			return true;
 		}
-	
+
 		if(countSlot()+addon >= model_alldata[index]['max_slot']){
 			$('#addmore').addClass('d-none');
 		}else{
 			$('#addmore').removeClass('d-none');
 		}
-	
-		
+
+
 		return false;
 	}
 	function checkOutputMax(){
@@ -2036,7 +2094,7 @@ function selectCountry(){
 		$('input[name=parallel]').attr('disabled','disabled');
 		$('#parallel0 input[name=parallel]').removeAttr('disabled');
         //console.log(paralls_cons);
-		
+
 		$.each(paralls_cons,function(indexPar,valuePar){
 			var arrcheck = [];
 			for(var i = 1 ; i <  model_alldata[index]['max_slot'] ; i++){
@@ -2053,8 +2111,8 @@ function selectCountry(){
 						// arrcheck.push(i+1);
 					}
 		     	}
-				
-				 
+
+
 		    }
 			     var slot_using  = valuePar['slot_using'].split(',');
 			     var Canparallel = checkAllSlot(arrcheck,slot_using);
@@ -2063,8 +2121,8 @@ function selectCountry(){
 							$('#parallel'+valuePar['code']+' input[name=parallel]').removeAttr('disabled');
 							$('#parallel'+valuePar['code']+' .line').addClass('active');
 					}
-		
-		
+
+
 		});
 
 
@@ -2184,7 +2242,7 @@ function selectCountry(){
 		var factory_code = '';
 		factory_code += model_alldata[index]['product_code'];
 		factory_code += (terminal == 1 ? 'T' : terminal ==2 ? 'E' : 'C');
-		
+
 		var all_code = '';
 		all_code += $('input[name=parallel]:checked').val();
 		all_code += $('#logic').children('option:selected').val();
@@ -2224,12 +2282,12 @@ function selectCountry(){
 									$('.img-summary-add').html('<img class="img-fluid" src="{{config('app.url')}}/media/model/'+model['thumb_img']+'" >');
 								}
 						}
-	    
+
 		});
 	}
 	function getToSum(i){
 		/* $('#list-slot').text($("#volt"+i+" option:selected").text()); */
-	
+
 	}
 	function calnumber(num){
 		var string =  num/1000;
@@ -2242,7 +2300,7 @@ function selectCountry(){
 	   }
 	   return data;
 	}
-	
+
 	function addToiframe(){
 
 	// var headdd = document.body.innerHTML;
@@ -2276,7 +2334,7 @@ function selectCountry(){
 		html2canvas(tar,{
 															// allowTaint: false,
 											    	useCORS: true,
-                onrendered: function(canvas) {  
+                onrendered: function(canvas) {
                 	 //Returns the image data URL, parameter: image format and clarity (0-1)
 		             	var pageData = canvas.toDataURL('image/png',1.0);
 						//Default vertical direction, size ponits, format a4[595.28,841.89]
@@ -2286,21 +2344,21 @@ function selectCountry(){
 						//  pdf.save(filename);
 						 var blob = pdf.output('blob');
 						 var model =  $('#model').children("option:selected").text();
-					
+
 						$('#model_name').val(model);
 						var formData = new FormData();
                          formData.append('pdf',blob);
 						 formData.append('modelcode', model);
 						 formData.append('factory', $('.factory').text());
 						 formData.append('customer',$('#customer').text());
-						
+
 						 savedatadataPdf(formData);
 
-                  
+
                 }
               });
-			
-         
+
+
 	}
 
 	function savedatadataPdf(data){
