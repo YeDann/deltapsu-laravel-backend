@@ -251,11 +251,6 @@
 		background-color: #e7e9ed !important;
 	}
 
-    .is-invalid {
-        border-color: #dc3545;
-        background-color: #f8d7da;
-    }
-
 
 	/* #PDFconfigurable{
 		display: none;
@@ -1553,6 +1548,7 @@ function selectCountry(){
             } else {
                 if (nextButton.text() === '{{$staticContent["Select_Parallel"]}}') {
                     nextButton.css('display', 'none');
+
                 }
             }
         }
