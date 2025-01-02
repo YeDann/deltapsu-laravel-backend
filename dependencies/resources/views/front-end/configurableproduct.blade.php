@@ -1537,6 +1537,23 @@ function selectCountry(){
                             isValid = false;
                         }
                     });
+                }
+
+                // Check if single output is selected
+                if (selectedRadio.attr('id') && selectedRadio.attr('id').includes('single')) {
+                    // Check voltage
+                    $(this).find('.voltage select').each(function () {
+                        if ($(this).val() === '-1') {
+                            isValid = false;
+                        }
+                    });
+
+                    // Check current
+                    $(this).find('.current select').each(function () {
+                        if ($(this).val() === '-1') {
+                            isValid = false;
+                        }
+                    });
 
                 }
             });
@@ -1949,6 +1966,7 @@ function selectCountry(){
 		setHeight();
 		setModelPreview();
 		setModelPreviewToSum();
+        validateDualInputs();
 	}
 
 	function setHeight(){
