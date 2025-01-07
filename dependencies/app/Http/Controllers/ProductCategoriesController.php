@@ -62,13 +62,13 @@ class ProductCategoriesController extends Controller
     {
         $name = $request->name;
         $langs = $request->lang_loop;
-         
+
         $validate = Validator::make($request->all(), [
             'name' => 'required',
         ]);
         // return dd($validate->fails());
         if ($validate->fails()) {
-        
+
             return redirect()->back()->withErrors($validate->errors());
         } else {
 
@@ -90,9 +90,9 @@ class ProductCategoriesController extends Controller
 
                 }
                 return redirect()->route('mainprotype.index')->with('flash_message', 'Insert Data successfully');
-            
+
         }
-        
+
 
     }
 
@@ -165,7 +165,7 @@ class ProductCategoriesController extends Controller
 
 
     public function subCatories(){
-          
+
 
         $subCategories = DB::table('sub_pro_categories as sp')
         ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
@@ -173,12 +173,12 @@ class ProductCategoriesController extends Controller
         ->select('sp.*', 'spt.*')
         ->orderBy('sp.created_at', 'desc')
         ->get();
-        
+
             return view('pro_categories.sub_index')
                 ->with('name', 'product')
                 ->with('menu', 'subCategories')
                 ->with('subCategories', $subCategories);
-         
+
     }
     public function createSubCategories(){
 
@@ -203,7 +203,7 @@ class ProductCategoriesController extends Controller
                 if($emptyornot){
                 $fileName[$lang] = preg_replace('/\s+/', '', uniqid().$loopfile[$lang]->getClientOriginalName());
                 $loopfile[$lang]->move(base_path('/../medias/categories'),$fileName[$lang]);
-               
+
                 $arrayfileName[$lang] = $fileName[$lang];
                 }else{
                  $fileName[$lang] = '';
@@ -214,7 +214,7 @@ class ProductCategoriesController extends Controller
     }
 
 
-    
+
     public function storeSubCategories(Request $request){
 
         $name = $request->name;
@@ -227,6 +227,12 @@ class ProductCategoriesController extends Controller
         $typeImage  = $request->typeImage;
         $arrayfileName = self::savearrayfile($thumbnailOpt ,$typeImage);
         // return dd($arrayfileName['type2']);
+
+        $re1 = str_replace("/","_",$name);
+        $key = str_replace(" ","-",$re1);
+        $key2 = $this->clean($key);
+        $url_string =  $key2;
+
         $warranty_file = "";
         if($request->hasFile('warranty_file')){
             $filewarr = $request->file('warranty_file');
@@ -252,7 +258,7 @@ class ProductCategoriesController extends Controller
                         'image_type1' =>$arrayfileName['type1'],
                         'image_type2' =>$arrayfileName['type2'],
                         'image_type3' =>$arrayfileName['type3'],
-                        'url_item' => strtolower($string),
+                        'url_item' => $url_string,
                         "unit_dimension" => $request->unit_dimension,
                         'warranty_file'=>$warranty_file,
                         "created_at" => \Carbon\Carbon::now(),
@@ -265,12 +271,13 @@ class ProductCategoriesController extends Controller
                 $id = DB::table('sub_pro_categories')->insertGetID(
                     [
                         "unit_dimension" => $request->unit_dimension,
+                        'url_item' => $url_string,
                         "created_at" => \Carbon\Carbon::now(),
                         "updated_at" => \Carbon\Carbon::now(),
                         'warranty_file'=>$warranty_file,
                     ]
                 );
-              
+
 
             }
             foreach($main_id as $main){
@@ -281,7 +288,7 @@ class ProductCategoriesController extends Controller
                     ]
                 );
             }
-          
+
             $filename = '';
             if ($request->hasFile('fileGU')) {
                 $file = $request->file('fileGU');
@@ -299,12 +306,12 @@ class ProductCategoriesController extends Controller
                             "contenttype3" => $request->contentAddType3,
                             "contenttype4" => $request->contentAddType4,
                             "file" => $filename,
-                            "local" => $lang,                 
+                            "local" => $lang,
                         ]
                     );
                 }
-     
-              
+
+
                 return redirect()->route('subCategories')->with('flash_message', 'Insert Data successfully');
         }
     }
@@ -328,7 +335,7 @@ class ProductCategoriesController extends Controller
         ->select('mp.*', 'mpt.*')
         ->orderBy('mp.created_at', 'desc')
         ->get();
-        
+
         foreach($mainInCate as $data){
             array_push($arrayIncate, $data->main_id);
         }
@@ -345,9 +352,9 @@ class ProductCategoriesController extends Controller
         ->orderBy('mp.created_at', 'desc')
         ->get();
 
-       
 
-  
+
+
         return view('pro_categories.sub_edit')
         ->with('name', 'product')
         ->with('subid', $id)
@@ -368,7 +375,7 @@ class ProductCategoriesController extends Controller
     return $string;
   }
     private function UpdateOldfile($loopfile ,$loop ,$oldfile){
-        
+
         $arrayfileName = [];
            foreach($loop as $lang){
                $emptyornot = isset($loopfile[$lang]);
@@ -433,7 +440,12 @@ class ProductCategoriesController extends Controller
 
         $oldfile_warranty_file  = $request->oldfile_warranty_file;
         $url_item  = $request->url_item;
-        
+
+        $re1 = str_replace("/","_",$url_item);
+        $key = str_replace(" ","-",$re1);
+        $key2 = $this->clean($key);
+        $url_string =  $key2;
+
         $arrayfileName = self::UpdateOldfile($thumbnailOpt, $typeImage ,$oldfileytype);
         // return dd($arrayfileName);
         $validate = Validator::make($request->all(), [
@@ -461,14 +473,14 @@ class ProductCategoriesController extends Controller
                         'image_type2' =>$arrayfileName['type2'],
                         'image_type3' =>$arrayfileName['type3'],
                         "unit_dimension" => $request->unit_dimension,
-                        'url_item' => $url_item,
+                        'url_item' => $url_string,
                         'warranty_file'=>$warranty_file,
                         "updated_at" => \Carbon\Carbon::now(),
                     ]
                 );
             }else{
                 DB::table('sub_pro_categories')->where('sub_pro_id' ,$subid)->update(
-                    [    
+                    [
                         'image_type1' =>$arrayfileName['type1'],
                         'image_type2' =>$arrayfileName['type2'],
                         'image_type3' =>$arrayfileName['type3'],
@@ -480,7 +492,7 @@ class ProductCategoriesController extends Controller
                 );
             }
 
-         
+
             if(isset($main_id)){
                 DB::table('categories_has_main_pro')->where('cate_id', '=', $subid)->delete();
                 foreach($main_id as $main){
@@ -493,7 +505,7 @@ class ProductCategoriesController extends Controller
                     );
                 }
             }
-          
+
             $arrayfileName = self::UpdateOldfile($fileGU ,$langs ,$oldfile);
               $arraySucess = [];
                 foreach($langs as $lang){
@@ -522,7 +534,7 @@ class ProductCategoriesController extends Controller
                    }else{
                     DB::table('sub_pro_categories_translation')->insert(
                         [
-                            
+
                             "sub_pro_id" => $subid,
                             "name" => $name[$lang],
                             "content" => $content[$lang],
@@ -542,10 +554,10 @@ class ProductCategoriesController extends Controller
                     );
 
                    }
- 
+
                 }
-                
- 
+
+
             return redirect()->route('subCategories')->with('flash_message', 'Update Data successfully');
         }
     }
@@ -570,7 +582,7 @@ class ProductCategoriesController extends Controller
             DB::table('sub_pro_categories_translation')->where('sub_pro_id', '=', $itemId)->delete();
             $arrayfilename = array($subCategories->image);
             self::removeImage($arrayfilename);
-            
+
             return redirect()->route('subCategories')->with('flash_message', 'Delete Data successfully');
     }
 
@@ -655,7 +667,7 @@ class ProductCategoriesController extends Controller
 
     //  }
      public function storeSeries(Request $request){
-      
+
           $langs = $request->lang_loop;
           $productCategories = $request->productCategories;
           $aplication = $request->aplication;
@@ -677,7 +689,7 @@ class ProductCategoriesController extends Controller
                 $thumbnailImage = $request->file('thumbnail');
                 $thumbnailName = uniqid() . "." . $thumbnailImage->getClientOriginalExtension();
                 $thumbnailImage->move(base_path('/../medias/categories'), preg_replace('/\s+/', '', $thumbnailName));
-          
+
             $id = DB::table('series')->insertGetID(
                 [
                     'image' =>$thumbnailName,
@@ -702,7 +714,7 @@ class ProductCategoriesController extends Controller
                 );
 
             }
-            
+
                 foreach($langs as $lang){
                    DB::table('series_translations')->insert(
                         [
@@ -725,7 +737,7 @@ class ProductCategoriesController extends Controller
                     );
                  }
               }
-              
+
               }else if(isset($productCategories)){
                 foreach($productCategories as $cate ){
                     DB::table('series_has_pro_categories')->insert(
@@ -738,7 +750,7 @@ class ProductCategoriesController extends Controller
                  }
 
               }
-       
+
                if(isset($aplication)){
                $i = 1;
                foreach($aplication as $app ){
@@ -752,19 +764,19 @@ class ProductCategoriesController extends Controller
                 $i++;
             }
           }
-            
+
                 if($pro_cate_id == 0){
                     return redirect()->route('series_all')->with('flash_message', 'Insert Data successfully');
                 }else{
                     return redirect()->route('series_index' , $pro_cate_id)->with('flash_message', 'Insert Data successfully');
                 }
-             
+
         }
 
 
      }
      public function editSeries($id ,$cateId){
-        
+
         $language = DB::table('language')->get();
 
         $series =  DB::table('series as s')
@@ -774,7 +786,7 @@ class ProductCategoriesController extends Controller
         ->get();
 
         // return dd($series);
- 
+
         $arraynotapp = [];
 
         $series_has_application = DB::table('series_has_application as shp')
@@ -784,18 +796,18 @@ class ProductCategoriesController extends Controller
         ->where('shp.se_id' ,$id)
         ->select('shp.app_id','appt.name' )
         ->get();
-      
+
         foreach($series_has_application as $data){
             array_push($arraynotapp,$data->app_id);
         }
-    
+
         $applications =  DB::table('application as app')
         ->join('application_translation as appt' ,'appt.app_id' ,'=' ,'app.id')
         ->where('appt.local' ,'en')
         ->whereNotIn('app.id' , $arraynotapp)
         ->select('app.*','app.id as appId' ,'appt.*')
         ->get();
-      
+
 
         $arraynotcate = [];
         $maincate = [];
@@ -827,7 +839,7 @@ class ProductCategoriesController extends Controller
                 array_push($maincate,$main->main_cate);
             }
         }
-      
+
 
         $subCategories = DB::table('sub_pro_categories as sc')
         ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
@@ -837,7 +849,7 @@ class ProductCategoriesController extends Controller
         ->orderBy('sc.created_at', 'desc')
         ->get();
 
-       
+
       if(isset($maincate)){
         $mainCategories = DB::table('main_pro_categories as mp')
         ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
@@ -854,7 +866,7 @@ class ProductCategoriesController extends Controller
         ->orderBy('mp.created_at', 'desc')
         ->get();
       }
-     
+
         $mainCateInSection = DB::table('main_pro_categories as mp')
         ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
         ->where('mpt.local', '=', 'en')
@@ -862,7 +874,7 @@ class ProductCategoriesController extends Controller
         ->whereIn('mp.main_id' , $maincate)
         ->orderBy('mp.created_at', 'desc')
         ->get();
-      
+
         $modeSeries = DB::table('mode_series as ms')
         ->select('ms.*')
         ->get();
@@ -911,7 +923,7 @@ class ProductCategoriesController extends Controller
                     if (file_exists($file_pointer) && $oldfile != null) {
                         unlink($file_pointer);
                     }
-                 
+
                     DB::table('series')->where('se_id',$seriesId)->update(
                         [
                             'image' =>$thumbnailName,
@@ -978,7 +990,7 @@ class ProductCategoriesController extends Controller
                     );
                  }
               }
-              
+
               }else if(isset($productCategories)){
                 foreach($productCategories as $cate ){
                     DB::table('series_has_pro_categories')->insert(
@@ -993,7 +1005,7 @@ class ProductCategoriesController extends Controller
 
 
              DB::table('series_has_application')->where('se_id', '=', $seriesId)->delete();
-           
+
              if(isset($aplication)){
                 $i = 1;
                 foreach($aplication as $app ){
@@ -1012,7 +1024,7 @@ class ProductCategoriesController extends Controller
             }else{
                 return redirect()->route('series_index' , $pro_cate_id)->with('flash_message', 'Update Data successfully');
             }
-      
+
        }
    }
    public function destroySeries(Request $request){
@@ -1034,13 +1046,13 @@ class ProductCategoriesController extends Controller
                 unlink($file_pointer);
             }
        }
-  
+
        if($pro_cate_id != 0){
         return redirect()->route('series_index',$pro_cate_id)->with('flash_message', 'Delete Data successfully');
        }else{
         return redirect()->route('series_all')->with('flash_message', 'Delete Data successfully');
        }
-     
+
    }
     public function orderSeries($id)
     {
@@ -1092,7 +1104,7 @@ class ProductCategoriesController extends Controller
         ->where('mp.main_id', $id)
         ->first();
 
-       
+
 
         return view('pro_categories.order_pro_categories')
         ->with('name', 'product')
@@ -1111,7 +1123,7 @@ class ProductCategoriesController extends Controller
             ->select('sp.*', 'spt.*')
             ->orderBy('sp.order_seq', 'asc')
             ->get();
-       
+
         return view('pro_categories.order_categories')
         ->with('name', 'product')
         ->with('subCategories',$subCategories)
@@ -1128,7 +1140,7 @@ class ProductCategoriesController extends Controller
             'order' => $request->home_order
         ],200);
     }
-    
+
 
 
      public function update_order_procate(Request $request){
@@ -1153,7 +1165,7 @@ class ProductCategoriesController extends Controller
             ]
         );
         return redirect()->route('editSubCategories',$id)->with('flash_message', 'Delete File successfully');
-        
+
 
     }
 
@@ -1167,9 +1179,9 @@ class ProductCategoriesController extends Controller
             ]
         );
         return redirect()->route('editSubCategories',$id)->with('flash_message', 'Delete File successfully');
-        
+
 
     }
- 
+
 
 }
