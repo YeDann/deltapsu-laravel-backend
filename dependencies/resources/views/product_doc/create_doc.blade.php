@@ -140,7 +140,6 @@
                     options += '<option value="' + data.data[i].pro_id + '">' + data.data[i]
                         .pro_code + '</option>';
                 }
-                $("select#ModelIdNotSelectIncate").html(options);
                 $("select#ModelIdNotSelectIncate").html(options)
                 .prop('disabled', false);
             }
