@@ -49,7 +49,7 @@ $langch = str_replace('_', '-', app()->getLocale());
             border: 1px solid #444444;
             background-position: right 50%;
             background-repeat: no-repeat;
-            background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
+            background-image: url('{{asset(' frontend-asset/image/arrow-down.svg')}}');
             padding: .375rem 1.5rem;
 
         }
@@ -752,7 +752,7 @@ if (!Array.prototype.findIndex) {
           }else if(id == 'sub2'){
             $('.imageNav1').attr('src' ,"{{asset('frontend-asset/image/Medical-Power-Supplies.png')}}");
           }else if(id == 'sub4'){
-            $('.imageNav4').attr('src' ,"{{asset('frontend-asset/image/Industrial_Power_Supplies.png')}}");
+            $('.imageNav4').attr('src' ,"{{asset('frontend-asset/image/battery_charging.webp')}}");
           }
 
 
