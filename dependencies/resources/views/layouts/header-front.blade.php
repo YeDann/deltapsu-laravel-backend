@@ -10,7 +10,7 @@
         background-position: right 50%;
         background-repeat: no-repeat;
         background-size: 12px;
-        background-image: url('{{asset('frontend-asset/image/arrow.svg')}}');
+        background-image: url('{{asset(' frontend-asset/image/arrow.svg')}}');
         width: 50px;
         background-color: #fff;
 
@@ -648,8 +648,8 @@ function slugifyHead($text)
                                     <div class="image-dropdown d-flex justify-content-center "
                                         style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('{{asset('frontend-asset/image/Dropdown.jpg')}}')no-repeat;">
                                         <img class="imageNav4 img-hove-on-dropdown lazyload" loading="lazy"
-                                            data-src="{{asset('frontend-asset/image/Industrial_Power_Supplies.png')}}"
-                                            alt="Industrial_Power_Supplies.png">
+                                            data-src="{{asset('frontend-asset/image/battery_charging.webp')}}"
+                                            alt="Battery Charging Image">
                                     </div>
                                 </ul>
                             </div>
