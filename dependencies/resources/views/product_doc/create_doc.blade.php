@@ -78,7 +78,7 @@
                         <div class="form-group">
                             <label for="example-select"><span class="req-fed">*</span> Multiple Select Products</label>
                             <select class="js-select2 form-control" id="ModelIdNotSelectIncate" name="product[]"
-                                style="width: 100%;" data-placeholder="waiting.." multiple disabled>
+                                style="width: 100%;" data-placeholder="Choose many.." multiple disabled>
                                 <option></option>
                                 <!-- Required for data-placeholder attribute to work with Select2 plugin -->
                                 {{-- @foreach ($products as $item)
@@ -142,8 +142,7 @@
                 }
                 $("select#ModelIdNotSelectIncate").html(options);
                 $("select#ModelIdNotSelectIncate").html(options)
-                .prop('disabled', false)
-                .attr('data-placeholder', 'Choose many..');
+                .prop('disabled', false);
             }
 
         });
