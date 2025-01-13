@@ -19,7 +19,7 @@ class DucumentController extends Controller
      */
     public function index()
     {
-    
+
         $userdata = auth()->user();
         if($userdata->lang == 'All'){
             $pro_has_doc = DB::table('product_ducuments as pd')
@@ -30,8 +30,8 @@ class DucumentController extends Controller
             ->orderBy('pd.created_at', 'asc')
             ->get();
 
-           
-        
+
+
         }else{
             $pro_has_doc = DB::table('product_ducuments as pd')
             ->join('product_ducument_translations as pdct', 'pd.doc_id', '=', 'pdct.doc_fk_id')
@@ -71,8 +71,8 @@ class DucumentController extends Controller
         ->get();
 
 
-    
- 
+
+
         return view('product_doc.index')
             ->with('name', 'product_doc')
             ->with('menu', 'muti_doc')
@@ -82,7 +82,7 @@ class DucumentController extends Controller
             ->with('pro_has_doc', $pro_has_doc);
     }
     public function docFilerBy($value){
-      
+
         $userdata = auth()->user();
         if($userdata->lang == 'All'){
             $pro_has_doc = DB::table('product_ducuments as pd')
@@ -93,7 +93,7 @@ class DucumentController extends Controller
             ->where('pro_cate.id', '=',$value)
             ->orderBy('pd.created_at', 'desc')
             ->get();
-            
+
         }else{
             $pro_has_doc = DB::table('product_ducuments as pd')
             ->join('product_ducument_translations as pdct', 'pd.doc_id', '=', 'pdct.doc_fk_id')
@@ -113,7 +113,7 @@ class DucumentController extends Controller
            ->select('p.pro_code')
            ->where('phd.document_id',$doc->doc_id)
            ->get();
-      
+
            $data[$i] = [
                "doc_id"=>$doc->doc_id,
                "doc_type"=>$doc->title,
@@ -125,14 +125,14 @@ class DucumentController extends Controller
            ];
            $i++;
        }
-    
+
        $categories = DB::table('products_documents_categories')
         ->join('pro_ducuments_cate_translations as pdct', 'products_documents_categories.id', '=', 'pdct.doc_cate_id')
         ->where('pdct.local', '=', 'en')
         ->select('products_documents_categories.*', 'pdct.*')
         ->orderBy('products_documents_categories.created_at', 'desc')
         ->get();
- 
+
         return view('product_doc.index')
             ->with('name', 'product_doc')
             ->with('menu', 'muti_doc')
@@ -146,7 +146,7 @@ class DucumentController extends Controller
         $secial_langs = DB::table('other_lang_document as old')
         ->select('old.*')
         ->get();
-        
+
         return view('product_doc.special_lang')
         ->with('secial_langs',$secial_langs)
         ->with('name', 'product_doc')
@@ -201,7 +201,7 @@ class DucumentController extends Controller
         //             "updated_at" => \Carbon\Carbon::now(),
         //         ]
         //     );
-         
+
         //     foreach($language as $lang){
         //        DB::table('pro_ducuments_cate_translations')->insert(
         //             [
@@ -231,7 +231,7 @@ class DucumentController extends Controller
         //             ]
         //         );
         //         $stringname =  str_replace("/upload/product_files/","",$doc->file);
-    
+
         //         foreach($language as $lang){
         //              DB::table('product_ducument_translations')->insert(
         //                  [
@@ -241,7 +241,7 @@ class DucumentController extends Controller
         //                      "local"=>$lang->name
         //                  ]
         //              );
-        //          }   
+        //          }
         //     }
         // }
 
@@ -259,7 +259,7 @@ class DucumentController extends Controller
         //         ->select('p.*')
         //         ->get();
         //       if(isset($docId[0]->doc_id) && isset($proData[0]->pro_id)){
-        //         $genId = (time()+$i);  
+        //         $genId = (time()+$i);
         //         DB::table('product_has_documents')->insert(
         //                 [
         //                     "id" => $genId,
@@ -297,7 +297,7 @@ class DucumentController extends Controller
         //              ->where('p.old_id',$doc->product_id)
         //              ->where('d.cate_id',1)
         //              ->get();
-               
+
         //           if(isset($data[0])){
         //             DB::table('product_ducument_translations')->insert(
         //                 [
@@ -325,7 +325,7 @@ class DucumentController extends Controller
         //     ->where('p.pro_id',$datasheet->product_id)
         //     ->select('p.*')
         //     ->get();
-            
+
         //     $updateContent =  DB::table('products_documents as pd')
         //     ->join('documents as d','d.id','=','pd.document_id')
         //     ->join('document_types as dt','dt.id','=','d.type_id')
@@ -345,12 +345,12 @@ class DucumentController extends Controller
         //          );
         //       }
         //   }
-             
-           
+
+
 
         // return dd($updateContent[0]  , $docINdatabase[0]);
-        
-        
+
+
 
         return dd('get data');
 
@@ -371,7 +371,7 @@ class DucumentController extends Controller
             ->where('pdct.local', '=',$userdata->lang)
             ->select('products_documents_categories.*', 'pdct.*')
             ->orderBy('products_documents_categories.created_at', 'desc')
-            ->get();   
+            ->get();
         }
 
     return view('product_doc.categories_index')
@@ -394,14 +394,14 @@ class DucumentController extends Controller
         }else{
             $language = DB::table('language')->where('name',$userdata->lang)->get();
         }
-        
+
         $categorie = DB::table('products_documents_categories')
         ->join('pro_ducuments_cate_translations as pdct', 'products_documents_categories.id', '=', 'pdct.doc_cate_id')
         ->where('products_documents_categories.id' ,$id)
         ->select('products_documents_categories.*', 'pdct.*')
         ->orderBy('products_documents_categories.created_at', 'desc')
         ->get();
-      
+
         return view('product_doc.categories_edit')
         ->with('name', 'product_doc')
         ->with('menu', 'categories_doc')
@@ -410,7 +410,7 @@ class DucumentController extends Controller
     }
 
     public function storedocCategories(Request $request){
-  
+
         // return dd($arrayfilesave);
         $lang_loop = $request->lang_loop;
         $title = $request->title;
@@ -446,7 +446,7 @@ class DucumentController extends Controller
 
     }
      public function updateDocCategories(Request $request){
-         
+
         $id = $request->docCateId;
         // return dd($id);
         $lang_loop = $request->lang_loop;
@@ -460,7 +460,7 @@ class DucumentController extends Controller
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
         } else {
-          
+
           DB::table('products_documents_categories')->where('id',$id)->update(
                 [
                     'title'=>$title,
@@ -488,12 +488,12 @@ class DucumentController extends Controller
                     ]
                 );
               }
-            
+
             }
-           
+
             return redirect()->route('index_categories')->with('flash_message', 'Update Data successfully');
         }
-         
+
      }
 
      public function deletedocCategories(Request $request){
@@ -507,7 +507,7 @@ class DucumentController extends Controller
      public function createDocMutidoc(){
 
         $language = DB::table('language')->get();
-        
+
         $categories = DB::table('products_documents_categories')
         ->join('pro_ducuments_cate_translations as pdct', 'products_documents_categories.id', '=', 'pdct.doc_cate_id')
         ->where('pdct.local', '=', 'en')
@@ -517,7 +517,7 @@ class DucumentController extends Controller
 
 
         $other_lang = DB::table('other_lang_document')->get();
-      
+
         return view('product_doc.create_doc')
         ->with('name', 'product_doc')
         ->with('menu', 'muti_doc')
@@ -534,7 +534,7 @@ class DucumentController extends Controller
                if($emptyornot){
                $fileName[$lang] = preg_replace('/\s+/', '', self::fileformat($loopfile[$lang]));
                $loopfile[$lang]->move(base_path('/../upload/product_files'),$fileName[$lang]);
-              
+
                $arrayfileName[$lang] = $fileName[$lang];
                }else{
                 $fileName[$lang] = '';
@@ -552,10 +552,14 @@ class DucumentController extends Controller
         $products = $request->product;
         $validate = Validator::make($request->all(), [
             'name' => 'required',
+            'product'=> 'required',
         ]);
-        // return dd($products);
+       //return dd($products);
+        if(empty($products)){
+            return redirect()->back()->with('error_message', 'Please Select Products');
+        }
         foreach($products as $product){
-    
+
              $exitProInCate  =  DB::table('product_has_documents as phd')
              ->join('product_ducuments as pd','pd.doc_id','=','phd.document_id')
              ->where('pd.cate_id',$doc_cate_id)
@@ -567,7 +571,7 @@ class DucumentController extends Controller
                 return redirect()->route('createDocMutidoc')->with('error_message', 'Already file type in this product');
              }
           }
-    
+
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
         } else {
@@ -592,7 +596,7 @@ class DucumentController extends Controller
                 if(!empty($products)){
                 $i = 0;
                 foreach($products as $product){
-                  $genId = $this->unique_code_bysetf(11);  
+                  $genId = $this->unique_code_bysetf(11);
                   DB::table('product_has_documents')->insert(
                         [
                             "id" => $genId,
@@ -623,7 +627,7 @@ class DucumentController extends Controller
            foreach($loop as $lang){
                $emptyornot = isset($loopfile[$lang]);
                if($emptyornot){
-               
+
                         $fileName[$lang] = preg_replace('/\s+/', '', self::fileformat($loopfile[$lang]));
                         $loopfile[$lang]->move(base_path('/../upload/product_files'),$fileName[$lang]);
                         $arrayfileName[$lang] = $fileName[$lang];
@@ -649,7 +653,7 @@ class DucumentController extends Controller
         }else{
             $language = DB::table('language')->where('name',$userdata->lang)->get();
         }
-    
+
     $categories = DB::table('products_documents_categories')
     ->join('pro_ducuments_cate_translations as pdct', 'products_documents_categories.id', '=', 'pdct.doc_cate_id')
     ->where('pdct.local', '=', 'en')
@@ -667,7 +671,7 @@ class DucumentController extends Controller
     foreach($doc_has_pros as $doc){
         array_push($arrayinHas ,$doc->product_id);
     }
-  
+
     $products = DB::table('products as p')
     ->join('products_translation as pt', 'pt.product_id', '=', 'p.pro_id')
     ->select('p.*', 'pt.*')
@@ -707,7 +711,7 @@ class DucumentController extends Controller
     $oldfile = $request->oldfile;
     // return dd($langs);
     $products = $request->product;
-  
+
     $validate = Validator::make($request->all(), [
         'name' => 'required',
     ]);
@@ -726,13 +730,13 @@ class DucumentController extends Controller
             foreach($langs as $lang){
                 $data = DB::table('product_ducument_translations')->where('local',$lang)->where('doc_fk_id',$id)->select('*')->get();
                   $data_con  = count($data);
-               
+
                 if($data_con == 1){
                     DB::table('product_ducument_translations')->where('local',$lang)->where('doc_fk_id',$id)->update(
                         [
                             "name" => $name[$lang],
                             "file" => $arrayfileName[$lang],
-    
+
                         ]
                     );
                 }else{
@@ -748,13 +752,13 @@ class DucumentController extends Controller
                     }
 
                 }
-                
+
             }
             if(!empty($products) && isset($products)){
              DB::table('product_has_documents')->where('document_id',$id)->delete();
                 $i = 0;
                 foreach($products as $product){
-                $genId = $this->unique_code_bysetf(11);  
+                $genId = $this->unique_code_bysetf(11);
                     DB::table('product_has_documents')->insert(
                         [
                             "id" => $genId,
@@ -765,10 +769,10 @@ class DucumentController extends Controller
                     $i++;
                 }
             }
-       
+
             return redirect()->route('docFilerBy',$doc_cate_id )->with('flash_message', 'Insert Data successfully');
     }
-  
+
 }
     public function deleteproDoc(Request $request){
         $id = $request->itemId;
@@ -787,13 +791,13 @@ class DucumentController extends Controller
          if(isset($cateid)){
             return redirect()->route('docFilerBy',$cateid)->with('flash_message', 'Delete Data successfully');
          }else{
-            return redirect()->route('docFilerBy' ,1)->with('flash_message', 'Delete Data successfully'); 
+            return redirect()->route('docFilerBy' ,1)->with('flash_message', 'Delete Data successfully');
          }
-       
+
     }
 
     public function getDocument($id){
-     
+
         $doc_has_pros = DB::table('product_has_documents as phd')
         ->join('products as p', 'p.pro_id', '=', 'phd.product_id')
         ->join('product_ducuments as pd', 'pd.doc_id', '=', 'phd.document_id')
@@ -805,7 +809,7 @@ class DucumentController extends Controller
         ->orderBy('pd.created_at','desc')
         ->get();
 
-    
+
          $arrayNotin = [];
 
          foreach($doc_has_pros  as $doc){
@@ -829,11 +833,11 @@ class DucumentController extends Controller
         ->select('products_documents_categories.*', 'pdct.*')
         ->orderBy('products_documents_categories.created_at', 'desc')
         ->get();
-    
+
 
         $other_lang = DB::table('other_lang_document')->get();
-    
-      
+
+
         return  view('product.document_pro')
         ->with('language' ,$language)
         ->with('categories' ,$categories)
@@ -842,12 +846,12 @@ class DucumentController extends Controller
         ->with('productId' ,$id)
         ->with('doc_has_pros' ,$doc_has_pros)
         ->with('menu', "products")
-        ->with('name', "product");;
+        ->with('name', "product");
     }
     public function storeProDocuments(Request $request){
       $productid = $request->productId;
       $docId  =  $request->documents;
-      $genId = $this->unique_code_bysetf(11);  
+      $genId = $this->unique_code_bysetf(11);
         DB::table('product_has_documents')->insert(
                 [
                     "id" => $genId,
@@ -860,7 +864,7 @@ class DucumentController extends Controller
 
     }
     public function removefileDoc($lang, $id){
-     
+
         DB::table('product_ducument_translations')->where('local' ,$lang)->where('doc_fk_id' ,$id)->update(
         [
             "file" => null,
@@ -873,7 +877,7 @@ class DucumentController extends Controller
         $productid = $request->productId;
         $itemId  = $request->itemId;
         DB::table('product_has_documents')->where('id' ,$itemId)->delete();
-     
+
         return redirect()->route('getDocument',$productid)->with('flash_message', 'Delete Data successfully');
     }
     public function createProdocuments(Request $request){
@@ -912,7 +916,7 @@ class DucumentController extends Controller
                     ]
                 );
             }
-            $genId = $this->unique_code_bysetf(11);  
+            $genId = $this->unique_code_bysetf(11);
             DB::table('product_has_documents')->insert(
                 [
                     "id" => $genId,
@@ -921,8 +925,8 @@ class DucumentController extends Controller
                 ]
             );
             return redirect()->route('getDocument',$product_id)->with('flash_message', 'Insert Data successfully ,Can See this file in Multidoc');
-        }   
-        
+        }
+
     }
     public function searhModelProductByCatedoc(Request $request){
         $cate_id = $request->cateid;
@@ -938,10 +942,10 @@ class DucumentController extends Controller
           if(!in_array($doc->product_id ,$proINdoc)){
             array_push($proINdoc,$doc->product_id);
           }
-         
+
         }
 
-        
+
         $products = DB::table('products as p')
         ->join('products_translation as pt', 'pt.product_id', '=', 'p.pro_id')
         ->select('p.*', 'pt.*')
@@ -949,15 +953,15 @@ class DucumentController extends Controller
         ->where('pt.local' ,'en')
         ->orderBy('p.created_at', 'desc')
         ->get();
-    
+
         return response()->json([
             'data' => $products,
                 ], 200);
-     
+
     }
 
-    
-  
+
+
 
 }
 
