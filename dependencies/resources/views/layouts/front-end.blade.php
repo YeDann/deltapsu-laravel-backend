@@ -752,7 +752,7 @@ if (!Array.prototype.findIndex) {
           }else if(id == 'sub2'){
             $('.imageNav1').attr('src' ,"{{asset('frontend-asset/image/Medical-Power-Supplies.png')}}");
           }else if(id == 'sub4'){
-            $('.imageNav4').attr('src' ,"{{asset('frontend-asset/image/battery_charging.webp')}}");
+            $('.imageNav4').attr('src' ,"{{asset('frontend-asset/image/battery_charging_new.webp')}}");
           }
 
 

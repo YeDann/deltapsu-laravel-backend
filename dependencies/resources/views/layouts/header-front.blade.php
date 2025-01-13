@@ -648,7 +648,7 @@ function slugifyHead($text)
                                     <div class="image-dropdown d-flex justify-content-center "
                                         style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('{{asset('frontend-asset/image/Dropdown.jpg')}}')no-repeat;">
                                         <img class="imageNav4 img-hove-on-dropdown lazyload" loading="lazy"
-                                            data-src="{{asset('frontend-asset/image/battery_charging.webp')}}"
+                                            data-src="{{asset('frontend-asset/image/battery_charging_new.webp')}}"
                                             alt="Battery Charging Image">
                                     </div>
                                 </ul>
