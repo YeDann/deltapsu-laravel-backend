@@ -948,7 +948,7 @@ class DucumentController extends Controller
 
         $products = DB::table('products as p')
         ->join('products_translation as pt', 'pt.product_id', '=', 'p.pro_id')
-        ->select('p.*', 'pt.*')
+        ->select('p.pro_id','p.pro_code')
         ->whereNotIn('p.pro_id',$proINdoc)
         ->where('pt.local' ,'en')
         ->orderBy('p.created_at', 'desc')
