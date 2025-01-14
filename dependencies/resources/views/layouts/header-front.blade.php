@@ -928,6 +928,11 @@ function slugifyHead($text)
             <a class="text-normal pl-3" href="#"
                 onclick="toggle_visibility('btn-sidenav-sub3')">{{isset($staticContent['LED_Power'])?
                 $staticContent['LED_Power'] : ' LED Power' }}<i class="zmdi zmdi-chevron-right"></i></a>
+
+            <a class="text-normal pl-3" href="#"
+                onclick="toggle_visibility('btn-sidenav-sub4')">{{isset($staticContent['Battery_Charging'])?
+                $staticContent['Battery_Charging'] :'Industrial Battery Charging' }}<i
+                    class="zmdi zmdi-chevron-right"></i></a>
         </div>
         <div id="btn-sidenav-sub1" class="btn-sidenav  pad-ar-24px">
             <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub1')"><i
@@ -974,6 +979,17 @@ function slugifyHead($text)
                 $staticContent['CV_Mode']: 'CV Mode'}}</a>
 
 
+        </div>
+        <div id="btn-sidenav-sub4" class="btn-sidenav  pad-ar-24px">
+            <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub4')"><i
+                    class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Battery_Charging'])?
+                $staticContent['Battery_Charging'] :'Industrial Battery Charging' }}</a>
+            @if(isset($navcategories4))
+            @foreach ($navcategories4 as $subCate)
+            <a class="text-normal pl-3 "
+                href="{{route('allproductsByType' ,[ slugifyHead($subCate->url_item),$subCate->sub_pro_id,4])}}">{{$subCate->name}}</a>
+            @endforeach
+            @endif
         </div>
         {{-- TOOLS --}}
         <div id="btn-sidenav2" class="btn-sidenav pad-ar-24px">
