@@ -29,7 +29,7 @@ Route::get('/products/download/{lang?}/{cate_name?}/{modelname?}','FrontendContr
 
 Route::group([
      'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ,'HtmlMinifier']
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ,'HtmlMinifier' ,'verifyLang']
         ], function() {
 Route::get('/{page?}','FrontendController@index')->name('index');
 Route::get('/download/{doc?}','FrontendController@oldDoc')->name('downloadDocData');
@@ -131,7 +131,7 @@ Route::post('/searchLoginDocByModelId','FrontendController@searchLoginDocByModel
 });
 
 Route::prefix('/backend')->group(function () {
-    
+
 Auth::routes();
 
 Route::get('deshboard', 'HomeController@index')->name('deshboard');
@@ -234,7 +234,7 @@ Route::post('importProductOptionalModel','ImportTagsController@importProductOpti
 
 
 
-//Configurable Product 
+//Configurable Product
 Route::get('configurableProduct','ConfigurableProduct@index')->name('configurableProduct');
 Route::get('createConfigProduct','ConfigurableProduct@createConfigProduct')->name('createConfigProduct');
 Route::get('editConfigProduct/{id?}','ConfigurableProduct@editConfigProduct')->name('editConfigProduct');
@@ -486,7 +486,7 @@ Route::get('getExportProductSpecification','ImportController@getExportProductSpe
 
 
 //Route::get('getExportOldProduct','ImportController@getExportOldProduct')->name('getExportOldProduct');
- 
+
 //Route::post('importSuccessStory','ImportController@importSuccessStory')->name('importSuccessStory');
 Route::get('getExportProductProperty','ImportController@getExportProductProperty')->name('getExportProductProperty');
 Route::get('subscribers/index','SubscribeController@index')->name('subscribers_index');
