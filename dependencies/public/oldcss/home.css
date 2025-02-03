@@ -472,6 +472,7 @@ a:hover {
 .grid-item {
   display: flex;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .grid-sub-pic{

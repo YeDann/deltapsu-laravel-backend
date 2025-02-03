@@ -107,13 +107,26 @@
         z-index: 999;
     }
 
-    .text-app-arrow {
-        font-size: 14px;
-        color: #0087dc;
-        display: flex;
-        position: absolute;
-        bottom: 20px;
+    @media only screen and (min-width:921px) {
+        .text-app-arrow {
+            font-size: 14px;
+            color: #0087dc;
+            display: flex;
+            position: absolute;
+            bottom: 20px;
+        }
     }
+
+    @media only screen and (max-width:920px) {
+        .text-app-arrow {
+            font-size: 14px;
+            color: #0087dc;
+            display: flex;
+            position: absolute;
+            bottom: 10px;
+        }
+    }
+
 
     .text-app-arrow i {
         font-size: 24px !important;
@@ -388,7 +401,8 @@
                                    }
                                 ?>
                             </ul>
-
+                            <div class="text-app-arrow">Read more <i class="zmdi zmdi-chevron-right"></i>
+                            </div>
                         </div>
                     </div>
                 </a>
