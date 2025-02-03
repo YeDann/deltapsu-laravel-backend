@@ -16,6 +16,7 @@ $langch = str_replace('_', '-', app()->getLocale());
 ?>
 
 <html html_lang="{{ str_replace('_', '-', app()->getLocale()) }}" Lang="{{$lanngCookie}}">
+<?php $imgDown = asset('frontend-asset/image/arrow-down.svg') ?>
 
 <head>
     <meta charset="utf-8">
@@ -49,7 +50,7 @@ $langch = str_replace('_', '-', app()->getLocale());
             border: 1px solid #444444;
             background-position: right 50%;
             background-repeat: no-repeat;
-            background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
+            background-image: url('{{$imgDown}}');
             padding: .375rem 1.5rem;
 
         }

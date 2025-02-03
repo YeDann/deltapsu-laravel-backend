@@ -39,8 +39,10 @@ $langch = str_replace('_', '-', app()->getLocale());
         href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}">
 
     @yield('css')
+    <?php $imgDown = asset('frontend-asset/image/arrow-down.svg') ?>
     <style>
         /* select */
+
         .form-control {
             font-size: 14px;
             -webkit-appearance: none;
@@ -49,7 +51,7 @@ $langch = str_replace('_', '-', app()->getLocale());
             border: 1px solid #444444;
             background-position: right 50%;
             background-repeat: no-repeat;
-            background-image: url('{{asset(' frontend-asset/image/arrow-down.svg')}}');
+            background-image: url('{{$imgDown}}');
             padding: .375rem 1.5rem;
 
         }

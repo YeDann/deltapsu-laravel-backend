@@ -94,6 +94,7 @@
     }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<?php $imgDown = asset('frontend-asset/image/arrow-down.svg') ?>
 <style>
     .select2-container .select2-selection--single {
         height: 40px;
@@ -111,7 +112,7 @@
         -moz-appearance: none;
         background-position: right 50%;
         background-repeat: no-repeat;
-        background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
+        background-image: url('{{$imgDown}}');
         top: 6px;
 
     }
@@ -125,7 +126,7 @@
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 <link rel="canonical" href="{{url()->current()}}" />
-<?php 
+<?php
   $lang_seo = App::getLocale();
   if($lang_seo == 'cn'){
     $lang_seo = 'zh-Hans-CN';
@@ -255,7 +256,7 @@
         var domainUrl = '{{config('app.url')}}';
         $(document).ready(function () {
             selectType();
-          
+
         });
         function selectType(){
             var id = $('#type_id').val();
@@ -271,19 +272,19 @@
             });
             $('#serie_id').html(html);
             onSelectSeries();
-        } 
+        }
         function keySearch(){
         var key = $('#key_model_input').val();
         var term = key; // search term (regex pattern)
-        var search = new RegExp(term , 'i'); // prepare a regex object     
+        var search = new RegExp(term , 'i'); // prepare a regex object
           products.filter(function(data){
             if(key == data.pro_code){
-                $('#model_id_key').val(data.product_id); 
+                $('#model_id_key').val(data.product_id);
             }
            });
            loadContent(2);
 
-        }   
+        }
 
         function onSelectSeries(){
             var id = $('#serie_id').val();
@@ -293,18 +294,18 @@
                     if(index == 0){
                     html += '<option value="'+pro['pro_id'] +'" selected>'+pro['pro_code']+'</option>';
                     }else{
-                    html += '<option value="'+pro['pro_id'] +'">'+pro['pro_code']+'</option>';   
+                    html += '<option value="'+pro['pro_id'] +'">'+pro['pro_code']+'</option>';
                     }
                 }
             });
             $('#model_id').html(html);
             loadContent(1);
-        }   
+        }
         function onSelectProduct(){
             loadContent(1);
         }
         function loadContent(method){
-          
+
         var model_id;
         if(method == 1){
         model_id = $('#model_id').val();
@@ -335,7 +336,7 @@
 
             });
             $('#content_pro').html(html);
-         
+
         }
         function getContentByModel(method){
             var model_id;
@@ -377,12 +378,12 @@
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image'+cate_doc['id']+'">';
                 html2 += '<h5 class="invisible-up-922">'+cate_doc['title']+'</h5>';
-                html2 += '<h4 class="visible-up-922">'+cate_doc['title'] +'</h4>';    
+                html2 += '<h4 class="visible-up-922">'+cate_doc['title'] +'</h4>';
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image'+cate_doc['id']+'" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-              $.each(_documents, function(index,doc){  
-                if(doc['product_id'] == model_id){ 
+              $.each(_documents, function(index,doc){
+                if(doc['product_id'] == model_id){
                 if(doc['cate_id'] == cate_doc['id']){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
                 html2 += '<div class="detail-downlode">';
@@ -392,7 +393,7 @@
                 }else{
                     html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} - </p>';
                 }
-             
+
                 html2 += '</div>';
                 html2 += '<a href="{{route('downloadFIle')}}/'+cate_doc['slug']+'/'+productKey(procode)+'" target="_blank">';
                 html2 += '<button class="btn-downlode ">{{$staticContent['Downloads']}}</button>';
@@ -400,7 +401,7 @@
                 html2 += ' </div>' ;
                 }
                 }
-                });  
+                });
 
                 html2 += '</div>';
                 html2 += ' </div>';
@@ -415,12 +416,12 @@
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image1">';
                 html2 += '<h5 class="invisible-up-922">Manual</h5>';
-                html2 += '<h4 class="visible-up-922">Manual</h4>';    
+                html2 += '<h4 class="visible-up-922">Manual</h4>';
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image1" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-               $.each(_documents, function(index,doc){  
-                if(doc['product_id'] == model_id){ 
+               $.each(_documents, function(index,doc){
+                if(doc['product_id'] == model_id){
                 if(doc['cate_id'] == 1 || doc['cate_id'] == 46 || doc['cate_id'] == 38){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
                 html2 += '<div class="detail-downlode">';
@@ -430,7 +431,7 @@
                 }else{
                     html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} - </p>';
                 }
-             
+
                 html2 += '</div>';
                 html2 += '<a href="{{route('downloadFIle')}}/'+doc['slug']+'/'+productKey(procode)+'" target="_blank">';
                 html2 += '<button class="btn-downlode ">{{$staticContent['Downloads']}}</button>';
@@ -438,7 +439,7 @@
                 html2 += ' </div>' ;
                 }
                 }
-                });  
+                });
                 html2 += '</div>';
                 html2 += ' </div>';
                 html2 += ' </div>';
@@ -448,12 +449,12 @@
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image_other">';
                 html2 += '<h5 class="invisible-up-922">Mechanical Drawing & 3D Drawings</h5>';
-                html2 += '<h4 class="visible-up-922">Mechanical Drawing & 3D Drawings</h4>';    
+                html2 += '<h4 class="visible-up-922">Mechanical Drawing & 3D Drawings</h4>';
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image_other" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-                    $.each(_documents, function(index,doc){  
-                if(doc['product_id'] == model_id){ 
+                    $.each(_documents, function(index,doc){
+                if(doc['product_id'] == model_id){
                  if(doc['main_cate_id'] != 2 && doc['main_cate_id'] != 3){
                     if(doc['cate_id'] == 5 ){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
@@ -468,9 +469,9 @@
                     }
                  }
                 }
-                }); 
-            $.each(_documents, function(index,doc){  
-                if(doc['product_id'] == model_id){ 
+                });
+            $.each(_documents, function(index,doc){
+                if(doc['product_id'] == model_id){
                  if(doc['main_cate_id'] != 2 && doc['main_cate_id'] != 3){
                     if(doc['cate_id'] != 1 && doc['cate_id'] != 2 && doc['cate_id'] != 4 && doc['cate_id'] != 5 && doc['cate_id'] != 46 && doc['cate_id'] != 38 ){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
@@ -485,26 +486,26 @@
                     }
                  }
                 }
-                }); 
+                });
 
-              
+
 
 
                 html2 += '</div>';
                 html2 += ' </div>';
                 html2 += ' </div>';
-                
+
                 html2 += ' <div class="box-for-collap">'
                 html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image_cer">';
                 html2 += '<h5 class="invisible-up-922">{{$staticContent['Certificates']}}</h5>';
-                html2 += '<h4 class="visible-up-922">{{$staticContent['Certificates']}}</h4>';    
+                html2 += '<h4 class="visible-up-922">{{$staticContent['Certificates']}}</h4>';
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image_cer" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-            $.each(_documents, function(index,doc){  
-                if(doc['product_id'] == model_id){ 
+            $.each(_documents, function(index,doc){
+                if(doc['product_id'] == model_id){
                  if(doc['main_cate_id'] == 2 ){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
                 html2 += '<div class="detail-downlode">';
@@ -517,7 +518,7 @@
                 html2 += ' </div>' ;
                  }
                 }
-                });  
+                });
                 html2 += '</div>';
                 html2 += ' </div>';
                 html2 += ' </div>';
@@ -527,24 +528,24 @@
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image_gui">';
                 html2 += '<h5 class="invisible-up-922">{{$staticContent['GUI_Software']}}</h5>';
-                html2 += '<h4 class="visible-up-922">{{$staticContent['GUI_Software']}}</h4>';    
+                html2 += '<h4 class="visible-up-922">{{$staticContent['GUI_Software']}}</h4>';
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image_gui" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-            $.each(_documents, function(index,doc){  
-                if(doc['product_id'] == model_id){ 
+            $.each(_documents, function(index,doc){
+                if(doc['product_id'] == model_id){
                  if(doc['main_cate_id'] == 3 ){
                 html2 += ' <div class="data-sheet-downloade d-flex justify-content-between">';
                 html2 += '<div class="detail-downlode">';
                 html2 += '<p class="text-dark text-bold">'+doc['catename']+'</p>';
                 html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} '+setformatdate(doc['created_at']) +'</p>';
                 html2 += '</div>';
-             
+
                 html2 += '<button class="btn-downlode" data-toggle="modal" data-target="#downloadgui-modal" onclick="downloadGUI('+"'"+ doc['file']+"'"+','+"'"+procode+"'"+','+"'"+catename+"'" +')">{{$staticContent['Downloads']}}</button>';
                 html2 += ' </div>' ;
                  }
                 }
-                });  
+                });
                 html2 += '</div>';
                 html2 += ' </div>';
                 html2 += ' </div>';
@@ -566,14 +567,14 @@
         function setformatdate(val){
             var data = val.substring(0, 10)
             var d = new Date(data);
-           
+
             const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
             ];
          return  d.getDate()+'-'+ monthNames[d.getMonth()]+'-' +d.getFullYear();
        }
-    
-    
+
+
 </script>
 
 @endsection
