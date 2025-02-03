@@ -94,6 +94,7 @@
     }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<?php $imgDown = asset('frontend-asset/image/arrow-down.svg') ?>
 <style>
     .select2-container .select2-selection--single {
         height: 40px;
@@ -111,7 +112,7 @@
         -moz-appearance: none;
         background-position: right 50%;
         background-repeat: no-repeat;
-        background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
+        background-image: url('{{$imgDown}}');
         top: 6px;
     }
 
@@ -139,7 +140,7 @@
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 <link rel="canonical" href="{{url()->current()}}" />
-<?php 
+<?php
   $lang_seo = App::getLocale();
   if($lang_seo == 'cn'){
     $lang_seo = 'zh-Hans-CN';
@@ -288,20 +289,20 @@
             });
             $('#serie_id').html(html);
             onSelectSeries();
-        } 
+        }
         function keySearch(){
         var key = $('#key_model_input').val();
         // console.log(key);
         var term = key; // search term (regex pattern)
-        var search = new RegExp(term , 'i'); // prepare a regex object     
+        var search = new RegExp(term , 'i'); // prepare a regex object
           products.filter(function(data){
             if(key == data.pro_code){
-                $('#model_id_key').val(data.product_id); 
+                $('#model_id_key').val(data.product_id);
             }
            });
            loadContent(2);
 
-        }   
+        }
         function changeTablang(lang){
             $('.tab-box-lang').removeClass('active');
             $('.tab'+lang).addClass('active');
@@ -309,9 +310,9 @@
             model2 = $('#model_id_key').val()
             if(model1 != null && model1 !=''){
                 getContentByModel(1 ,lang);
-                
+
             }else if(model2 != null && model2 !=''){
-               
+
                 getContentByModel(2 ,lang);
             }
         }
@@ -324,18 +325,18 @@
                     if(index == 0){
                     html += '<option value="'+pro['pro_id'] +'" selected>'+pro['pro_code']+'</option>';
                     }else{
-                    html += '<option value="'+pro['pro_id'] +'">'+pro['pro_code']+'</option>';   
+                    html += '<option value="'+pro['pro_id'] +'">'+pro['pro_code']+'</option>';
                     }
                 }
             });
             $('#model_id').html(html);
             loadContent(1);
-        }   
+        }
         function onSelectProduct(){
             loadContent(1);
         }
         function loadContent(method){
-          
+
         var model_id;
         if(method == 1){
         model_id = $('#model_id').val();
@@ -363,17 +364,17 @@
 
             });
             $('#content_pro').html(html);
-         
+
         }
         function getContentByModel(method ,lang){
-       
+
             var model_id;
             if(method == 1){
             model_id = $('#model_id').val();
             $('#modelme1').val(model_id);
-          
-         
-           
+
+
+
             }else{
             model_id = $('#model_id_key').val()
             $('#modelme1').val('');
@@ -399,28 +400,28 @@
                 loadDocument(data.doc,data.cate_doc ,model_id ,lang);
             }
         });
-        
-         
+
+
         }
         function loadDocument(_documents, _documents_cate,model_id , lang){
             var html2 = "";
-       
+
                 html2 += ' <div class="box-for-collap">'
                 html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image1">';
                 html2 += '<h5 class="invisible-up-922">Manual</h5>';
-                html2 += '<h4 class="visible-up-922">Manual</h4>';    
+                html2 += '<h4 class="visible-up-922">Manual</h4>';
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image1" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-                    
-            $.each(_documents, function(index,doc){  
+
+            $.each(_documents, function(index,doc){
                 if(doc['local'] == lang){
                     if(doc['file'] != null && doc['file'] != '' ){
-                    if(doc['product_id'] == model_id){ 
+                    if(doc['product_id'] == model_id){
                     if(doc['cate_id'] == 1 || doc['cate_id'] == 46 || doc['cate_id'] == 38 ){
-                
+
                         html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
                         html2 += '<div class="detail-downlode">';
                         html2 += '<p class="text-dark text-bold">'+doc['catename']+'</p>';
@@ -438,9 +439,9 @@
                     }
                 }
                 }
-                });  
+                });
 
-                
+
                 html2 += '</div>';
                 html2 += ' </div>';
                 html2 += ' </div>';
@@ -454,16 +455,16 @@
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image'+cate_doc['id']+'">';
                 html2 += '<h5 class="invisible-up-922">'+cate_doc['title']+'</h5>';
-                html2 += '<h4 class="visible-up-922">'+cate_doc['title'] +'</h4>';    
+                html2 += '<h4 class="visible-up-922">'+cate_doc['title'] +'</h4>';
                 html2 += '</div>';
                 html2 += ' <div id="collapse-image'+cate_doc['id']+'" class="product-docment-list-sub collapse" data-parent="#product-document-type">';
                 html2 += '<div class="force-overflow">';
-                    
-            $.each(_documents, function(index,doc){  
+
+            $.each(_documents, function(index,doc){
                 if(doc['local'] == lang){
                     if(doc['file'] != null && doc['file'] != '' ){
-                    if(doc['product_id'] == model_id){ 
-                
+                    if(doc['product_id'] == model_id){
+
                     if(doc['cate_id'] == cate_doc['id']){
                         html2 += ' <div class="data-sheet-downloade d-flex justify-content-between ">';
                         html2 += '<div class="detail-downlode">';
@@ -482,9 +483,9 @@
                     }
                 }
                 }
-                });  
+                });
 
-                
+
                 html2 += '</div>';
                 html2 += ' </div>';
                 html2 += ' </div>';
@@ -503,7 +504,7 @@
         function setformatdate(val){
             var data = val.substring(0, 10)
             var d = new Date(data);
-           
+
             const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
             ];
@@ -521,14 +522,14 @@
             if(method == 1){
             model_id = $('#model_id').val();
             $('#modelme1').val(model_id);
-         
-           
+
+
             }else{
             model_id = $('#model_id_key').val()
             $('#modelme1').val('');
             }
-       
-      
+
+
            $.ajax({
             url: "{{(route('searchDocManualByModelId'))}}",
             data: {
@@ -548,14 +549,14 @@
 
         $.each(showlang, function(indexlang,lan){
                 var arrlang = [];
-                        $.each(_documents, function(index,doc){  
+                        $.each(_documents, function(index,doc){
                             if(doc['cate_id'] == 1 || doc['cate_id'] == 2){
                             if(doc['local'] == lan.langName){
-                                if(doc['product_id'] == model_id){ 
+                                if(doc['product_id'] == model_id){
                                     if(doc['file'] != null && doc['file'] != '' ){
                                         arrlang.push(lan.langName);
                                     }
-                               
+
                                 }
                             }
                             }
@@ -569,8 +570,8 @@
            });
 
     }
-    
-    
+
+
 </script>
 
 @endsection

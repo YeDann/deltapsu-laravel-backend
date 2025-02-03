@@ -76,7 +76,8 @@
                     <div class="col-lg-8 pt-2">
 
                         <div class="form-group">
-                            <label for="example-select"><span class="req-fed">*</span> Multiple Select Products</label>
+                            <label for="ModelIdNotSelectIncate"><span class="req-fed">*</span> Multiple Select
+                                Products</label>
                             <select class="js-select2 form-control" id="ModelIdNotSelectIncate" name="product[]"
                                 style="width: 100%;" data-placeholder="Choose many.." multiple disabled>
                                 <option></option>

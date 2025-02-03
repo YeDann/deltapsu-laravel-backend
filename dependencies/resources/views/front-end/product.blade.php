@@ -1,6 +1,6 @@
 @extends('layouts.front-end')
 @section('css')
-
+<?php $imgDown = asset('frontend-asset/image/arrow-down.svg') ?>
 <style>
     /* select */
     .form-control {
@@ -11,7 +11,7 @@
         border: 1px solid #444444;
         background-position: right 50%;
         background-repeat: no-repeat;
-        background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
+        background-image: url('{{$imgDown}}');
         padding-right: 24px;
     }
 
@@ -240,7 +240,7 @@
         -moz-appearance: none;
         background-position: right 50%;
         background-repeat: no-repeat;
-        background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
+        background-image: url('{{$imgDown}}');
         top: 6px;
 
     }
@@ -279,7 +279,7 @@
 @section('meta')
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
-<?php 
+<?php
   $lang_seo = App::getLocale();
   if($lang_seo == 'cn'){
     $lang_seo = 'zh-Hans-CN';
@@ -613,7 +613,7 @@
             singleItem: true,
             items: 1,
         });
-      
+
     });
 </script>
 <script type="text/javascript">
@@ -650,7 +650,7 @@
         }
 
     }
-       
+
     var products = <?= json_encode($products);?>;
     var product_has_property = <?= json_encode($product_has_property);?>;
     var filter_pro = <?= json_encode($filter_pro);?>;
@@ -662,7 +662,7 @@
     var unit_dimension_1 =  <?= json_encode($subCategories[0]->unit_dimension_1);?>;
     var documents_cate =  <?= json_encode($documents_cate);?>;
     var certi_products =  <?= json_encode($certi_products);?>;
-    var defaultfilters =  <?= json_encode($defaultfilters);?>; 
+    var defaultfilters =  <?= json_encode($defaultfilters);?>;
     var catename = <?= json_encode($catename);?>;
     var cateid = <?= json_encode($cateid);?>;
     var pro_perti = [];
@@ -675,7 +675,7 @@
     var stateType = '';
     var arr_type_an_val = [];
     var arr_value1 = [];
-   
+
     $(document).ready(function () {
         loadAddContent();
         filtercontentMobile();
@@ -698,7 +698,7 @@
         $.each(filter_pro, function(index_con,fil_con){
           checkboxaddremove(fil_con['field_id']);
        });
-     
+
     });
     function loadAddContent(){
         var arr = [];
@@ -709,7 +709,7 @@
              }
          });
          $.each(products, function(index,pro){
-            arrproid.push(pro['pro_id']);  
+            arrproid.push(pro['pro_id']);
          });
         $.ajax({
            url: "{{route('loadPropoperty')}}",
@@ -727,13 +727,13 @@
            },
            async: false,
            });
-      
+
     }
     function loadPopUpfilter(){
         var html1 = '';
         var html2 = '';
         var arr_same = [];
-   
+
         $.each(filter_pro, function(index_con,fil_con){
             if(arr_same.indexOf(fil_con['section_id']) == -1 ){
                 arr_same.push(fil_con['section_id']);
@@ -745,45 +745,45 @@
                     html2  += '<h6 class="title-cx" style="margin-top: 10px;">'+searchsecname(fil_con['section_id'])+'</h6>'
                     html2  +=' <hr>';
                     html2  +='<div id="settingFilter'+fil_con['section_id']+ '"></div>';
-                  
+
                 }
-               
+
             }
         // if(fil_con['field_id'] == 'series01' || fil_con['field_id'] == 'status02'  || fil_con['field_id'] == 'certifi04' || fil_con['field_id'] == 'safety03'  ){
-        //     html2  += ' <input type="checkbox"  id="checkpop'+fil_con['field_id']+'" value="'+fil_con['field_id']+'"';        
-        //     html2  += 'class="inp-cbx checkfilter'+fil_con['field_id']+'" style="display: none;">';       
-        //     html2  += '<label class="cbx" for="checkpop'+fil_con['field_id']+'"><span>';            
-        //     html2  += '<svg width="12px" height="10px" viewbox="0 0 12 10">';     
-        //     html2  += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';               
+        //     html2  += ' <input type="checkbox"  id="checkpop'+fil_con['field_id']+'" value="'+fil_con['field_id']+'"';
+        //     html2  += 'class="inp-cbx checkfilter'+fil_con['field_id']+'" style="display: none;">';
+        //     html2  += '<label class="cbx" for="checkpop'+fil_con['field_id']+'"><span>';
+        //     html2  += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+        //     html2  += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
         //     html2  += '</svg></span><span>'+fil_con['title']+'</span></label>';
-        // }      
-              
+        // }
+
         });
-        $('#popUp_filter1').html(html2);  
+        $('#popUp_filter1').html(html2);
         getappendhtml();
-      
+
     }
     function getappendhtml(){
-      
+
         $.each(filter_pro, function(index_con,fil_con){
             var html2 = '';
-            html2  += ' <input type="checkbox"  id="checkpop'+fil_con['field_id']+'" value="'+fil_con['field_id']+'"';        
-            html2  += 'class="inp-cbx checkfilter'+fil_con['field_id']+'" style="display: none;">';       
-            html2  += '<label class="cbx" for="checkpop'+fil_con['field_id']+'"><span>';            
-            html2  += '<svg width="12px" height="10px" viewbox="0 0 12 10">';     
-            html2  += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';               
-            html2  += '</svg></span><span>'+fil_con['title']+'</span></label>'; 
-            $('#settingFilter'+fil_con['section_id']).append(html2); 
+            html2  += ' <input type="checkbox"  id="checkpop'+fil_con['field_id']+'" value="'+fil_con['field_id']+'"';
+            html2  += 'class="inp-cbx checkfilter'+fil_con['field_id']+'" style="display: none;">';
+            html2  += '<label class="cbx" for="checkpop'+fil_con['field_id']+'"><span>';
+            html2  += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+            html2  += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+            html2  += '</svg></span><span>'+fil_con['title']+'</span></label>';
+            $('#settingFilter'+fil_con['section_id']).append(html2);
 
         if(fil_con['field_id'] == 'series01' || fil_con['field_id'] == 'status02'  || fil_con['field_id'] == 'certifi04' || fil_con['field_id'] == 'safety03'  ){
            var html1 = '';
-            html1  += ' <input type="checkbox"  id="checkpop'+fil_con['field_id']+'" value="'+fil_con['field_id']+'"';        
-            html1  += 'class="inp-cbx checkfilter'+fil_con['field_id']+'" style="display: none;">';       
-            html1  += '<label class="cbx" for="checkpop'+fil_con['field_id']+'"><span>';            
-            html1  += '<svg width="12px" height="10px" viewbox="0 0 12 10">';     
-            html1  += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';               
-            html1  += '</svg></span><span>'+fil_con['title']+'</span></label>'; 
-            $('#settingFilter0').append(html1); 
+            html1  += ' <input type="checkbox"  id="checkpop'+fil_con['field_id']+'" value="'+fil_con['field_id']+'"';
+            html1  += 'class="inp-cbx checkfilter'+fil_con['field_id']+'" style="display: none;">';
+            html1  += '<label class="cbx" for="checkpop'+fil_con['field_id']+'"><span>';
+            html1  += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+            html1  += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+            html1  += '</svg></span><span>'+fil_con['title']+'</span></label>';
+            $('#settingFilter0').append(html1);
         }
 
         });
@@ -809,7 +809,7 @@
            $("#checkpop"+defilId).prop("checked" ,true);
            checkboxaddremove(defilId);
         });
-      
+
     }
     $('.reset').click(function () {
         $.each(filter_pro, function(index_con,fil_con){
@@ -819,7 +819,7 @@
                 checkboxaddremove(fil_con['field_id']);
             }
          });
-        
+
     });
     $('.btn-done').click(function () {
      $.each(filter_pro, function(index_con,fil_con){
@@ -828,7 +828,7 @@
 
     });
     function checkboxaddremove(i){
-      
+
         if ($('.checkfilter'+i).is(':checked')) {
                     var inputValue = $('.checkfilter' + i).attr("value");
                     $(".fliter_head"+inputValue).show();
@@ -898,18 +898,18 @@
               });
          productarray.push(productObj);
         }
-     
+
       });
       productarray.sort(
           function (a ,b){
               return (a.pro_code > b.pro_code) ? 1 : -1;
           });
       productFilter = productarray;
-    
-    
-   
-   
-   
+
+
+
+
+
        return productarray;
     }
     function mmtonich(value){
@@ -931,21 +931,21 @@
       }else if(meth == 2){
         onsearchProductMobile();
       }
-      
+
     }
     function fillerData(){
        productFilter = [];
        $('#current_method').val(0);
        filterAllSeries();
       var arr_filterall = [];
-        checktypegroup = arr_type_an_val.every( 
+        checktypegroup = arr_type_an_val.every(
                  function(val, i, arr){
                     return  val.type === arr[0].type
                  }
             );
- 
+
         if(checktypegroup){
-        
+
             $.each(productFilter, function(index,value){
             productFilter[index]['contentFilter'].filter(function(data) {
             arr_type_an_val.forEach(function(element) {
@@ -977,7 +977,7 @@
                         // if(data.type_id == 4 && data.product_id == 103 ){
                         //     console.log(data1 == datacom1 ,data2 == datacom2 ,data3 == datacom3, data4 == datacom4 , data5 == datacom5);
                         // }
-                        if(data1 == datacom1 
+                        if(data1 == datacom1
                             && data2 == datacom2
                             && data3 == datacom3
                             && data4 == datacom4
@@ -986,22 +986,22 @@
                             && data7 == datacom7
                             && data8 == datacom8
                             && data9 == datacom9
-                            && data10 == datacom10 
+                            && data10 == datacom10
                             && data11 == datacom11
                             && data12 == datacom12){
                             var  index = arr_filterall.findIndex( function(x){
                                 return  x.pro_code === value.pro_code;
                             })
-                         
+
                             if(index == -1){
-                                arr_filterall.push(value);  
+                                arr_filterall.push(value);
                             }
                           }
                    }
             });
             });
           });
-         
+
         }else{
 
             $.each(productFilter, function(index,value){
@@ -1032,9 +1032,9 @@
                                 var datacom11 = element['value11'] || 0;
                                 var data12 = data.data_12 || 0;
                                 var datacom12 = element['value12'] || 0;
-                        
+
                             if(data.type_id == parseInt(element['type'])){
-                                if(data1 == datacom1 
+                                if(data1 == datacom1
                                     && data2 == datacom2
                                     && data3 == datacom3
                                     && data4 == datacom4
@@ -1043,15 +1043,15 @@
                                     && data7 == datacom7
                                     && data8 == datacom8
                                     && data9 == datacom9
-                                    && data10 == datacom10 
+                                    && data10 == datacom10
                                     && data11 == datacom11
                                     && data12 == datacom12){
                                     arrcheck.push(true);
                                 }
                             }
-                          
+
                     });
-                
+
                 });
                 var con = checkmethod(arr_type_an_val);
                 if(arrcheck.length >= con){
@@ -1059,20 +1059,20 @@
                     return  x.pro_code === value.pro_code;
                     })
                     if(index == -1){
-                        arr_filterall.push(value);  
+                        arr_filterall.push(value);
                     }
                 }
             });
-          
+
         }
-      
+
         var resultinputtext = [];
         if(arr_type_an_val.length > 0){
             resultinputtext  = loaddatafilterTypeText(arr_filterall);
         }else{
             resultinputtext  = loaddatafilterTypeText(productFilter);
         }
-       
+
         var resultCertificate = [];
         if(arr_safety.length > 0){
           resultCertificate = loadfilterCertificate(resultinputtext);
@@ -1091,9 +1091,9 @@
         }else{
             resultstatus  = resultSegment;
         }
-      
-  
-        
+
+
+
     var summaryResult = resultstatus;
     if(arr_status.length > 0 ||  arr_cer.length > 0 ||  arr_safety.length > 0 || arr_type_an_val.length > 0 || arr_inputtxt.length > 0 ){
         listItemFiler(summaryResult);
@@ -1103,13 +1103,13 @@
         listItemFiler(productFilter);
         findresultfeildbypro(productFilter);
      }
-       
+
       $('#key_destop').val("");
       $('#key_mobile').val("");
     }
     function loaddatafilterTypeText(arr_filterall){
        var filterIn = [];
-        checktypegroupText = arr_inputtxt.every( 
+        checktypegroupText = arr_inputtxt.every(
                  function(val, i, arr){
                     return  val.type === arr[0].type
                  }
@@ -1132,7 +1132,7 @@
                                         return x.pro_code === value.pro_code;
                                     })
                                 if(index == -1){
-                                    filterIn.push(value);  
+                                    filterIn.push(value);
                                 }
                             }
                     }
@@ -1164,12 +1164,12 @@
                     return x.pro_code === value.pro_code;
                      })
                     if(index == -1){
-                     filterIn.push(value);  
+                     filterIn.push(value);
                 }
            }
-         
+
         });
-      }   
+      }
     }else{
         filterIn = arr_filterall;
     }
@@ -1196,7 +1196,7 @@
                 //            return lookup[e.product_id];
                 //         });
                 //     }else{
-                       
+
                 //     }
                 profilter =  arr_seg;
                 profilter.forEach(function(element) {
@@ -1219,7 +1219,7 @@
         }
     }
     function loadfilterCertificate(arrFilter){
-       
+
         var arr_pro_doc = [];
         var profilter = [];
         var proarr = [];
@@ -1254,7 +1254,7 @@
                         return x.pro_code === data2.pro_code;
                         })
                         if(index == -1){
-                        arr_pro_doc.push(data2);  
+                        arr_pro_doc.push(data2);
                         }
                 }
             });
@@ -1272,23 +1272,23 @@
                             return x.pro_code === data.pro_code;
                         })
                         if(index == -1){
-                            filter.push(data);  
+                            filter.push(data);
                         }
                     }
             });
         });
       return filter;
     }
-    
 
-    function FristloadData(){   
+
+    function FristloadData(){
         var arraydata =  loadData(products,product_has_property);
         onclickListView(arraydata ,1 ,1);
         $(".moreBox").slice(0, 8).show();
         $(".moreBox_mobile").slice(0,8).show();
         $(".row_table").slice(0, 8).show();
     }
-   
+
     function onclickListViewloadData(){
         $('#current_list_item').val(0);
         var meth =  $('#current_method').val();
@@ -1299,14 +1299,14 @@
       }else if(meth == 2){
         onsearchProductMobile();
       }
-     
+
     }
     function viewKey(key){
             var newkey = key.replace(/[/]/g,'@');
            return newkey;
     }
     function onclickGridView(productarray) {
-        
+
         $('#current_list_item').val(1);
         var html = '';
         html += '<div class="GridView visible-upper-mobile" id="GridView">';
@@ -1335,7 +1335,7 @@
         //    html += '<div class="text-ft-sub text-one">'+content[1]['data_1']+content[1]['unit_name']+'</div>';
         // }else{
         //     html += '<div class="text-ft-sub text-one">-</div>';
-        // } 
+        // }
         var arrcon1 = [content[1]['data_1'],content[1]['data_2'],content[1]['data_3'],content[1]['data_4'],content[1]['data_5'],
             content[1]['data_6'],content[1]['data_7'],content[1]['data_8'],content[1]['data_9'],content[1]['data_10'],content[1]['data_11'],
             content[1]['data_12']
@@ -1354,20 +1354,20 @@
         html += '<div class="out-power">';
         html += '<h6 class="text-title-ft-sub"> {{$staticContent['Output_Power']}}</h6>';
         html += '<div class="text-ft-sub text-one">'+checkNullShow(arrcon2,content[2]['unit_name'],content[2]['status_input']).substr(0, 19)+'</div>';
-     
+
         html += '</div>';
         html += '</div>';
         html += '<div class="">';
         html += '<div class="out-current">';
         html += '<h6 class="text-title-ft-sub">{{$staticContent['Output_Current']}}</h6>';
-        html += '<div class="text-ft-sub text-one">'+checkNullShow(arrcon3,content[0]['unit_name'],content[0]['status_input']).substr(0, 19) +'</div>'; 
+        html += '<div class="text-ft-sub text-one">'+checkNullShow(arrcon3,content[0]['unit_name'],content[0]['status_input']).substr(0, 19) +'</div>';
         html += '</div>';
         html += '<div class="in-volt">';
         html += '<h6 class="text-title-ft-sub">{{$staticContent['Input_Voltage']}}</h6>';
         if(typeof content[3]['value_text'] != 'undefined' && content[3]['value_text'] != null && content[3]['value_text'] != 'null'){
         html += '<div class="text-ft-sub text-one">'+content[3]['value_text'].substr(0, 14)+'</div>';
         }else{
-            html += '<div class="text-ft-sub text-one">-</div>'; 
+            html += '<div class="text-ft-sub text-one">-</div>';
         }
         html += '</div>';
         html += '</div>';
@@ -1406,7 +1406,7 @@
         html += '<a href="#"  class="btn btn-boxen"> {{$staticContent['See_More']}}</a>';
         html += '</div>';
         html += '</div>';
-      
+
 
         html += '<div class="GridView visible-mobile-only" id="GridView">';
         html += '<div class="margin-top-card ">';
@@ -1439,27 +1439,27 @@
             content[0]['data_6'],content[0]['data_7'],content[0]['data_8'],content[0]['data_9'],content[0]['data_10'],content[0]['data_11'],
             content[0]['data_12']
             ]
-            
+
         html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon1,content[1]['unit_name'],content[1]['status_input']).substr(0, 19)+'</div>';
- 
+
         html += '</div>';
         html += '<div class="out-power mt-2">';
         html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Power']}}</p>';
-        html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon2,content[2]['unit_name'],content[2]['status_input']).substr(0, 19)+'</div>'; 
+        html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon2,content[2]['unit_name'],content[2]['status_input']).substr(0, 19)+'</div>';
         html += '</div>';
         html += '</div>';
         html += '<div class="">';
         html += '<div class="out-current mt-2">';
         html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Current']}}</p>';
         html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon3,content[0]['unit_name'],content[0]['status_input']).substr(0, 19)+'</div>';
-      
+
         html += '</div>';
         html += '<div class="in-volt mt-2">';
         html += '<p class="text-title-ft-sub text-two">{{$staticContent['Input_Voltage']}}</p>';
         if(content[3]['value_text'] != null && content[3]['value_text'] != 'null'){
         html += '<div class="text-ft-sub text-two">'+content[3]['value_text'].substr(0, 18)+'</div>';
         }else{
-        html += '<div class="text-ft-sub text-two">-</div>'; 
+        html += '<div class="text-ft-sub text-two">-</div>';
         }
         html += '</div>';
         html += '</div>';
@@ -1470,13 +1470,13 @@
         html += '<p class="text-ft-sub text-two">'+pro['dimensionL']+'x'+pro['dimensionW']+'x'+pro['dimensionD']+' mm</p>';
         html += '<p class="text-ft-sub text-two">'+mmtonich(pro['dimensionL'])+'”x'+mmtonich(pro['dimensionW'])+'”x'+mmtonich(pro['dimensionD'])+'”</p>';
         }else if(pro['dimensionL'] != null){
-        html += '<p class="text-ft-sub text-two">'+pro['dimensionL'].substr(0, 14)+'</p>';    
+        html += '<p class="text-ft-sub text-two">'+pro['dimensionL'].substr(0, 14)+'</p>';
         }else{
-        html += '<p class="text-ft-sub text-two">-</p>';  
+        html += '<p class="text-ft-sub text-two">-</p>';
         }
         html += '</div>';
         html += '</div>';
-        html += '</div>'; 
+        html += '</div>';
         html += '<div class="w-100">';
         html += '<div class="boxlist-icon-img pd-mobile">';
         html += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
@@ -1493,8 +1493,8 @@
         html += '<a href="#"  class="btn btn-boxen"> {{$staticContent['See_More']}} </a>';
         html += '</div>';
         html += '</div>';
-    
-       
+
+
 
         $('#contentProList').html(html);
         $(document).ready(function () {
@@ -1506,7 +1506,7 @@
 
 
     function onclickListView(productarray ,type ,id) {
-  
+
         var html1 = '';
         html1 += '<div class="ListView visible-upper-mobile" id="ListView">';
         html1 += '<div class="count-products">';
@@ -1556,10 +1556,10 @@
     }
 
     function listviewCard(productarray) {
-       
+
         var html1 = '';
         //console.log(productarray ,"productarray to card")
-    
+
         $.each(productarray, function(index_pro,pro){
         html1 += '<tr class="box-cardlist row_table" style="display: none;">';
         html1 += '<td>';
@@ -1602,7 +1602,7 @@
             ]
         // html1 += '<td>';
         // html1 += '<div class="card-btn-a">';
-    
+
         // html1 += '<div class="card-btn-a-detail">';
         // html1 += '<a class="link-d-sheet" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank">';
         // html1 += '<div class="text-name-data">Datasheet</div>';
@@ -1623,12 +1623,12 @@
         }else{
             html1 += ' <td class="text-middle-td">-</td>';
         }
-    
+
         if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 &&pro['dimensionW'] != '' && pro['dimensionD'] != ''){
         html1 += '<td class="text-middle-td">'+pro['dimensionL']+' x '+pro['dimensionW']+' x '+pro['dimensionD']+' mm ';
         html1 += '<br>'+mmtonich(pro['dimensionL'])+'” x '+mmtonich(pro['dimensionW'])+'” x '+mmtonich(pro['dimensionD'])+'”</td>';
         }else{
-        html1 += '<td class="text-middle-td">'+pro['dimensionL']+'</td>';  
+        html1 += '<td class="text-middle-td">'+pro['dimensionL']+'</td>';
         }
         html1 += '</tr>';
 
@@ -1643,7 +1643,7 @@
             return newkey;
     }
     function checkNullShow(dataarr,unit,status){
-     
+
         var string = '';
         var arrstri = [];
        if(status == 1 || status == 2){
@@ -1670,7 +1670,7 @@
                 if(data.length < 9 ){
                 strfor += data.replace("<br>", "");
                 strfor += ' ';
-              
+
              }else{
                 strfor += data.replace("<br>", "");
                 strfor += '<br>';
@@ -1685,8 +1685,8 @@
         $.each(arrStr, function(index,data){
               strfor += data;
               strfor += '<br>';
-             
-            
+
+
             });
             return strfor;
     }
@@ -1703,7 +1703,7 @@
                 orderTable(id,2);
                 arr_select.splice(index, 1);
               $('#sortdata'+id).addClass('pro_desc active');
-              
+
             }
     }
     function orderTable(id ,type){
@@ -1738,7 +1738,7 @@
                 arr_result = diminsionHL(arr_val);
             }
        }
- 
+
        var current_list =  $('#current_list_item').val();
       if(current_list == 0){
         onclickListView(arr_result ,type ,id);
@@ -1750,9 +1750,9 @@
         $(".row_table").slice(0, 8).show();
         $('.countproduct').text(arr_result.length);
 
-  
+
     }
-      
+
     function df(value ,unit){
         var data = '-';
         if(value != null){
@@ -1803,10 +1803,10 @@
             return a.type_id > b.type_id ? 1 : -1;
         });
     }
-   
+
 
     function  filtercontent(){
-     
+
        var property_load = [];
        property_load = pro_perti;
        var doc_safety = documents_cate;
@@ -1838,7 +1838,7 @@
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span>'+serie['title']+'</span></label>';
-                    html3 += '</div>' ; 
+                    html3 += '</div>' ;
                   });
              }
              if(fil_con['field_id'] == 'status02'){
@@ -1849,7 +1849,7 @@
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span class="">'+sta['name']+'</span></label>';
-                    html3 += '</div>' ; 
+                    html3 += '</div>' ;
                   });
              }
              if(fil_con['field_id'] == 'safety03'){
@@ -1860,7 +1860,7 @@
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span class="">'+safety['title']+'</span></label>';
-                    html3 += '</div>' ; 
+                    html3 += '</div>' ;
                   });
              }
              if(fil_con['field_id'] == 'certifi04'){
@@ -1871,11 +1871,11 @@
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span>'+certi['name']+'</span></label>';
-                    html3 += '</div>' ; 
+                    html3 += '</div>' ;
                   });
              }
              if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03'  ){
-               var property =  property_load.sort( 
+               var property =  property_load.sort(
                    function(a, b){
                        if(a.data_1 < b.data_1){
                            if(a.data_2 &&  b.data_2 &&  a.data_2 < b.data_2 ){
@@ -1886,16 +1886,16 @@
                         return 1;
                        }
                     });
-               
-               
+
+
                 $.each(property, function(index_per,ppt){
-                      
+
                   if(fil_con['field_id'] == ppt['type_id']){
                     var object  = {};
                     var text = null;
                     if(ppt['value_text'] != null && typeof ppt['value_text']  != 'undefined'){
                         text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
-                       
+
                     }
 
                     var dataarr = [
@@ -1940,7 +1940,7 @@
                             html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                             html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                             html3 += '</svg></span ><span class="'+ppt['product_id']+'">'+ checkNull(dataarr,ppt['unit_name'],ppt['status_input']) +'</span></label>';
-                            html3 += '</div>' ; 
+                            html3 += '</div>' ;
                         }
                     }else if(ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != '' && typeof ppt['value_text']  != 'undefined'){
                         if(containsObjectText(object, data_text)){
@@ -1951,20 +1951,20 @@
                             html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                             html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                             html3 += '</svg></span><span>'+ppt['value_text'] +'</span></label>';
-                            html3 += '</div>' ; 
+                            html3 += '</div>' ;
                         }
                     }
                 }
                 });
              }
-             
+
             html3 += '</div>';
             html3 += '<button onclick="resetformById('+"'"+fil_con['field_id']+"'"+');" class="btn-reset" type="button">{{$staticContent['Clear']}}</button>';
             html3 +=  '</form>';
             if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['type'] == 'number'  ){
             html3 +=  '<div class="slidebar-value-box mb-4 mt-4">';
             html3 +=  '<div   id="slidebar-value-box_des'+fil_con['field_id']+'"class="slider noUi-target noUi-ltr noUi-horizontal type'+fil_con['field_id']+'"  ></div>';
-            html3 +=  ' <div class="value-form-bar-box">'; 
+            html3 +=  ' <div class="value-form-bar-box">';
             html3 +=  '<span class="value-form-bar value-form-bar-min" id="slider-limit-value-min_des'+fil_con['field_id']+'"></span>';
             html3 +=  ' <span class="value-form-bar value-form-bar-max"id="slider-limit-value-max_des'+fil_con['field_id']+'"></span>';
             html3 +=  '</div>';
@@ -1975,7 +1975,7 @@
         $('#sort-filter-content').html(html3);
         createSliderDestop();
         popcheckSerries();
-       
+
     }
     function  filtercontentMobile(){
        var property_load = [];
@@ -2004,7 +2004,7 @@
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span>'+serie['title']+'</span></label>';
-                    html3 += '</div>' ; 
+                    html3 += '</div>' ;
                   });
              }
              if(fil_con['field_id'] == 'status02'){
@@ -2015,7 +2015,7 @@
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span class="">'+sta['name']+'</span></label>';
-                    html3 += '</div>' ; 
+                    html3 += '</div>' ;
                   });
              }
              if(fil_con['field_id'] == 'safety03'){
@@ -2026,10 +2026,10 @@
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span class="">'+safety['name']+'</span></label>';
-                    html3 += '</div>' ; 
+                    html3 += '</div>' ;
                   });
              }
-             
+
              if(fil_con['field_id'] == 'certifi04'){
                 $.each(certificates, function(index_cer,certi){
                     html3 += '<div class="box-input-checkbox">';
@@ -2038,7 +2038,7 @@
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span>'+certi['name']+'</span></label>';
-                    html3 += '</div>' ; 
+                    html3 += '</div>' ;
                   });
              }
              if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03'  ){
@@ -2052,7 +2052,7 @@
                         return 1;
                        }
                });
-               
+
                 $.each(property, function(index_per,ppt){
                   if(fil_con['field_id'] == ppt['type_id']){
                     var object  = {};
@@ -2082,7 +2082,7 @@
                        'status_input':ppt['status_input'],
                        'text':text,
                     }
-                    
+
                     if(ppt['type_value'] == 'number' && ppt['data_1'] != null){
                         objectFiled = {
                         'field_id':fil_con['field_id'],
@@ -2105,8 +2105,8 @@
                             html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                             html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                             html3 += '</svg></span ><span class="'+ppt['product_id']+'">'+ checkNull(dataarr,ppt['unit_name'],ppt['status_input']) +'</span></label>';
-                            html3 += '</div>' ; 
-                           
+                            html3 += '</div>' ;
+
                         }
                     }else if(ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != '' && typeof ppt['value_text']  != 'undefined'){
                         if(containsObjectText(object, data_text)){
@@ -2117,36 +2117,36 @@
                             html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                             html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                             html3 += '</svg></span><span>'+ppt['value_text']+'</span></label>';
-                            html3 += '</div>' ; 
+                            html3 += '</div>' ;
                         }
                     }
 
                     }
-                  
+
                 });
-               
+
              }
-             
+
             html3 += '</div>';
             html3 += '<button onclick="resetformById('+"'"+fil_con['field_id']+"'"+');" class="btn-reset" type="button">CLEAR</button>';
             html3 +=  '</form>';
             if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['type'] == 'number'  ){
             html3 +=  '<div class="slidebar-value-box mb-4 mt-4">';
             html3 +=  '<div  id="slidebar-value-box'+fil_con['field_id']+'"class="slider noUi-target noUi-ltr noUi-horizontal slider'+fil_con['field_id']+'"  ></div>';
-            html3 +=  ' <div  class="value-form-bar-box">'; 
+            html3 +=  ' <div  class="value-form-bar-box">';
             html3 +=  '<span class="value-form-bar value-form-bar-min" id="slider-limit-value-min'+fil_con['field_id']+'"></span>';
             html3 +=  ' <span class="value-form-bar value-form-bar-max"id="slider-limit-value-max'+fil_con['field_id']+'"></span>';
             html3 +=  '</div>';
             html3 +=  '</div>';
             }
             html3 +=  '</div></div>';
-        
+
             // createSlider('slidebar-value-box'+fil_con['field_id']);
         });
         $('#sort-filter-content_mobile').html(html3);
          createSlider();
-    
-       
+
+
     }
 
 
@@ -2171,12 +2171,12 @@
 
     function containsObject(obj, list) {
      var  index = list.findIndex(
-        //  x => x.data === obj['data'] && x.type === obj['type'] 
-        
+        //  x => x.data === obj['data'] && x.type === obj['type']
+
          function(x){
-           return x.data === obj['data'] && x.type === obj['type'] && x.status_input === obj['status_input']; 
+           return x.data === obj['data'] && x.type === obj['type'] && x.status_input === obj['status_input'];
          })
-   
+
          if(index == -1){
             return true;
          }else{
@@ -2187,7 +2187,7 @@
         // var  index = list.findIndex(x => x.text === obj['text'] && x.type === obj['type'] )
         var  index = list.findIndex(
          function(x){
-           return x.text === obj['text'] && x.type === obj['type']; 
+           return x.text === obj['text'] && x.type === obj['type'];
          })
 
          if(index == -1){
@@ -2196,8 +2196,8 @@
             return false;
          }
     }
-    
-  
+
+
     function series_filter(type,value){
        if(ser_arr.indexOf(value) == -1){
            ser_arr.push(value);
@@ -2210,7 +2210,7 @@
        fillerData();
     }
     function filterAllSeries(){
-     
+
         var eachpro = [];
         $.each(products, function(index,value){
          var productObj = {};
@@ -2239,19 +2239,19 @@
                 if(value['pro_id'] == value3['product_id']){
                     productObj['contentFilter'].push(value3);
                 }
-              
-           
+
+
               });
-            productFilter.push(productObj);     
-              
+            productFilter.push(productObj);
+
           }
-       
+
          });
-        
+
       });
-    
+
     //  findresultfeildbypro(productFilter);
-    
+
     }
 
 
@@ -2266,7 +2266,7 @@
             }
        }
     //    filerallStatus();
-       fillerData(); 
+       fillerData();
     }
     var arr_safety = [];
     function filtersafety(type ,value){
@@ -2315,7 +2315,7 @@
                         profilter =  values.filter(function(e) {
                            return lookup[e.product_id];
                         });
-                
+
             }else{
                 profilter =  values;
             }
@@ -2333,7 +2333,7 @@
                         return x.pro_id === data2.pro_id;
                         })
                         if(index == -1){
-                        arr_pro_doc.push(data2);  
+                        arr_pro_doc.push(data2);
                         }
                 }
             });
@@ -2355,7 +2355,7 @@
                             return x.pro_id === data.pro_id;
                         })
                         if(index == -1){
-                            arr_filter.push(data);  
+                            arr_filter.push(data);
                         }
                     }
             });
@@ -2421,7 +2421,7 @@
             });
         });
 
-      
+
 
         if(arr_cer.length == 0){
             arr_filter_ser = [];
@@ -2446,13 +2446,13 @@
             'value10':value10,
             'value11':value11,
             'value12':value12,
-            
+
         }
        var  index = arr_type_an_val.findIndex(
            function(x){
             //    return  x.value1 === value1;
-               return parseInt(x.type) ===  parseInt(type)  
-               && x.value1 === value1 
+               return parseInt(x.type) ===  parseInt(type)
+               && x.value1 === value1
                &&  x.value2 === value2
                &&  x.value3 === value3
                &&  x.value4 === value4
@@ -2467,16 +2467,16 @@
                 && x.value1 === value1 ;
            })
              if(index == -1){
-                arr_type_an_val.push(obj);  
+                arr_type_an_val.push(obj);
              }else{
                 if (index > -1) {
                     arr_type_an_val.splice(index, 1);
                  }
              }
-           
+
             fillerData();
 
-       
+
     }
     function checkmethod(arr){
         var arrcont = [];
@@ -2523,7 +2523,7 @@
 
     function checkloop(id ,loop){
         var  index = loop.indexOf(id);
-    
+
          if(index == -1){
              return true;
          }else{
@@ -2531,32 +2531,32 @@
          }
     }
     function checkdatainfild(type ,data){
-      
+
        var  index =  arr_type_an_val.findIndex(
         function(x){
-         return parseInt(x.type) === parseInt(type) 
-         && x.value1 === data 
+         return parseInt(x.type) === parseInt(type)
+         && x.value1 === data
 
         })
 
         if(index == -1){
             return false;
-        }else{         
+        }else{
            return true;
         }
     }
     function checkedfilter(type ,value1 , value2,value3, value4 ,value5 ,Filid){
         var  index =  arr_type_an_val.findIndex(
         function(x){
-         return parseInt(x.type) ===  parseInt(type) 
-         && x.value1 === value1 
+         return parseInt(x.type) ===  parseInt(type)
+         && x.value1 === value1
 
         })
-        
-      
+
+
         if(index == -1){
             return '';
-        }else{         
+        }else{
             $("#cx-"+type+Filid).prop("checked" ,true);
             $("#cx-mobile"+type+Filid).prop("checked" ,true);
         }
@@ -2573,7 +2573,7 @@
        })
         if(index == -1){
             return '';
-        }else{         
+        }else{
             $("#cx-text"+type+filid).prop("checked" ,true);
             $("#cx-mobiletext"+type+filid).prop("checked" ,true);
         }
@@ -2583,9 +2583,9 @@
                 var data_1 = [];
                 var data_text = [];
                  var checklooparr = [];
-               var property =  fieldFilter.sort( 
+               var property =  fieldFilter.sort(
                    function(a, b){
-            
+
                        if(a.data_1 < b.data_1){
                            if(a.data_2 &&  b.data_2 &&  a.data_2 < b.data_2 ){
                             return -1;
@@ -2594,12 +2594,12 @@
                        }else{
                         return 1;
                        }
-                      
+
                     });
                 $.each(property, function(index_per,ppt){
                     if(checkDataStep(ppt['type_id'])){
 
-                
+
                     var html3 = '';
                     var htmlmobile = '';
                     if(checkloop(ppt['type_id'] ,checklooparr)){
@@ -2612,7 +2612,7 @@
                     var text = null;
                     if(ppt['value_text'] != null && typeof ppt['value_text']  != 'undefined'){
                         text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
-                      
+
                     }
                     var dataarr = [
                                 ppt['data_1'],
@@ -2649,7 +2649,7 @@
                         }
                         if(containsObject(object, data_1)){
                             data_1.push(object);
-                            html3 += '<div onchange="fillerNumber('+"'"+ppt['type_id']+"'"+','+ppt['data_1']+','+ppt['data_2']+','+ppt['data_3'] 
+                            html3 += '<div onchange="fillerNumber('+"'"+ppt['type_id']+"'"+','+ppt['data_1']+','+ppt['data_2']+','+ppt['data_3']
                             +','+ppt['data_4'] +','+ppt['data_5'] +','+ppt['data_6'] +','+ppt['data_7'] +','+ppt['data_8'] +','+ppt['data_9']
                             +','+ppt['data_10'] +','+ppt['data_11'] +','+ppt['data_12']
                             +');" class="box-input-checkbox new-filter">';
@@ -2668,7 +2668,7 @@
                             htmlmobile += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                             htmlmobile += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                             htmlmobile += '</svg></span ><span>'+ checkNull(dataarr,ppt['unit_name'],ppt['status_input']) +'</span></label>';
-                            htmlmobile += '</div>' ; 
+                            htmlmobile += '</div>' ;
                             $('.dataserchfilter'+ppt['type_id']).append(html3);
                             $('.dataserchfiltermobile'+ppt['type_id']).append(htmlmobile);
 
@@ -2684,7 +2684,7 @@
                     //         html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     //         html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     //         html3 += '</svg></span><span>'+ppt['value_text'] +'</span></label>';
-                    //         html3 += '</div>' ; 
+                    //         html3 += '</div>' ;
 
                     //         htmlmobile += '<div onchange="fillerInputText('+"'"+ppt['type_id']+"'"+','+"'"+ppt['value_text']+"'"+');" class="box-input-checkbox">';
                     //         htmlmobile += '<input   class="inp-cbx" id="cx-mobiletext'+ppt['type_id']+index_per+'" type="checkbox" style="display: none;" />';
@@ -2692,7 +2692,7 @@
                     //         htmlmobile += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     //         htmlmobile += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     //         htmlmobile += '</svg></span><span>'+ppt['value_text'] +'</span></label>';
-                    //         htmlmobile += '</div>' ; 
+                    //         htmlmobile += '</div>' ;
 
 
                     //         $('.dataserchfilter'+ppt['type_id']).append(html3);
@@ -2703,11 +2703,11 @@
                 }
                     }
                 });
-               var property2 =  fieldFilter.sort( 
+               var property2 =  fieldFilter.sort(
                    function(a, b){
                        return a.value_text > b.value_text ? 1 : -1;
                     });
-                
+
 
                 $.each(property2, function(index_per,ppt){
                     if(checkDataStep(ppt['type_id'])){
@@ -2723,7 +2723,7 @@
                     var text = null;
                     if(ppt['value_text'] != null && typeof ppt['value_text']  != 'undefined'){
                         text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
-                      
+
                     }
                     object = {
                        'id':index_per,
@@ -2731,7 +2731,7 @@
                        'data':ppt['data_1'],
                        'text':text,
                     }
-               
+
                     if(ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != '' && typeof ppt['value_text']  != 'undefined'){
                         if(containsObjectText(object, data_text)){
                             data_text.push(object);
@@ -2741,7 +2741,7 @@
                             html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                             html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                             html3 += '</svg></span><span>'+ppt['value_text'] +'</span></label>';
-                            html3 += '</div>' ; 
+                            html3 += '</div>' ;
 
                             htmlmobile += '<div onchange="fillerInputText('+"'"+ppt['type_id']+"'"+','+"'"+ppt['value_text']+"'"+');" class="box-input-checkbox">';
                             htmlmobile += '<input   class="inp-cbx" id="cx-mobiletext'+ppt['type_id']+index_per+'" type="checkbox" style="display: none;" />';
@@ -2749,7 +2749,7 @@
                             htmlmobile += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                             htmlmobile += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                             htmlmobile += '</svg></span><span>'+ppt['value_text'] +'</span></label>';
-                            htmlmobile += '</div>' ; 
+                            htmlmobile += '</div>' ;
 
 
                             $('.dataserchfilter'+ppt['type_id']).append(html3);
@@ -2760,39 +2760,39 @@
                 }
                     }
                 });
-                
+
     }
 
 
     var arr_inputtxt = [];
- 
+
     function fillerInputText(type ,value){
         stateType = type;
         var obj = {
           'type':type,
           'value_text':value,
         }
-   
+
        var  index = arr_inputtxt.findIndex(function(x){
                 return x.value_text === value;
              })
-             if(index == -1){ 
-                arr_inputtxt.push(obj);  
+             if(index == -1){
+                arr_inputtxt.push(obj);
              }else{
                 if (index > -1) {
                 arr_inputtxt.splice(index, 1);
                  }
              }
-             
+
              fillerData();
             //  filAllTypeInputText();
     }
     function checkNull(dataarr,unit,status){
         var string = '';
         var arrstri = [];
-      
+
        if(status == 1 || status == 2 ){
-        var data_fi =  dataarr.sort( 
+        var data_fi =  dataarr.sort(
             function(a, b){
                 return a > b && a && b ? 1 : -1;
              });
@@ -2825,10 +2825,10 @@
                                  function(x){
                                     return x.pro_id === value.pro_id;
                                 })
-                             
+
                             if(index == -1){
-                               
-                             array_fil_type.push(value);  
+
+                             array_fil_type.push(value);
                             }
                           }
                    }
@@ -2839,7 +2839,7 @@
         array_fil_type = [];
         array_fil_type = productFilter;
       }
- 
+
       listItemFiler(array_fil_type);
     }
     function listItemFiler(arr){
@@ -2903,7 +2903,7 @@
         arr_result = sortOutputLH(arr_val ,3);
        }else if(type_se == 4){
         arr_result = sortOutputLH(arr_val ,8);
-    
+
        }else if(type_se == 5){
         arr_result = sortModelName(arr_val);
        }
@@ -2973,7 +2973,7 @@
         $(".moreBox_mobile").slice(0, 8).show();
         $(".row_table").slice(0, 8).show();
       }
-      
+
         $('.countproduct').text(arr_result.length);
         productFilter = arr_result;
 
@@ -2994,7 +2994,7 @@
                  return a.pro_code < b.pro_code ? 1 : -1;
              });
 
-   
+
         return arr;
     }
 
@@ -3013,7 +3013,7 @@
              function (a,b){
                  return parseInt(a.dimensionL) < parseInt(b.dimensionL) ? 1 : -1;
              });
-       
+
         return arr;
     }
 
@@ -3028,14 +3028,14 @@
     function sortOutputLH(array_value ,type){
         var arr_sort = [];
         var value_data = [];
-        $.each(array_value, function(index,value){   
+        $.each(array_value, function(index,value){
             value['contentFilter'].filter(function(data) {
               if(data['type_id'] == type){
                 var obj = {
                 "pro_id":value['pro_id'],
                  "data":data['data_1'],
                }
-                value_data.push(obj);    
+                value_data.push(obj);
                }
             });
         });
@@ -3043,12 +3043,12 @@
             function (a,b){
                  return a.data > b.data ? 1 : -1;
              });
-         $.each(value_data, function(index,value){ 
+         $.each(value_data, function(index,value){
            array_value.filter(function(data){
                if(value['pro_id'] == data['pro_id'] ){
-                  arr_sort.push(data);  
+                  arr_sort.push(data);
                }
-             
+
            });
          });
         return arr_sort;
@@ -3057,14 +3057,14 @@
     function sortOutputHL(array_value ,type){
         var arr_sort = [];
         var value_data = [];
-        $.each(array_value, function(index,value){   
+        $.each(array_value, function(index,value){
             value['contentFilter'].filter(function(data) {
               if(data['type_id'] == type){
                 var obj = {
                 "pro_id":value['pro_id'],
                  "data":data['data_1'],
                }
-                value_data.push(obj);    
+                value_data.push(obj);
                }
             });
         });
@@ -3072,12 +3072,12 @@
             function (a,b){
                  return a.data < b.data ? 1 : -1;
              });
-         $.each(value_data, function(index,value){ 
+         $.each(value_data, function(index,value){
            array_value.filter(function(data){
                if(value['pro_id'] == data['pro_id'] ){
-                  arr_sort.push(data);  
+                  arr_sort.push(data);
                }
-             
+
            });
          });
         return arr_sort;
@@ -3086,14 +3086,14 @@
     function sortInputHL(array_value ,type){
         var arr_sort = [];
         var value_data = [];
-        $.each(array_value, function(index,value){   
+        $.each(array_value, function(index,value){
             value['contentFilter'].filter(function(data) {
               if(data['type_id'] == type){
                 var obj = {
                 "pro_id":value['pro_id'],
                  "data":data['value_text'],
                }
-                value_data.push(obj);    
+                value_data.push(obj);
                }
             });
         });
@@ -3101,12 +3101,12 @@
             function (a,b){
                  return a.data < b.data ? 1 : -1;
              });
-         $.each(value_data, function(index,value){ 
+         $.each(value_data, function(index,value){
            array_value.filter(function(data){
                if(value['pro_id'] == data['pro_id'] ){
-                  arr_sort.push(data);  
+                  arr_sort.push(data);
                }
-             
+
            });
          });
         return arr_sort;
@@ -3115,14 +3115,14 @@
     function sortInputLH(array_value ,type){
         var arr_sort = [];
         var value_data = [];
-        $.each(array_value, function(index,value){   
+        $.each(array_value, function(index,value){
             value['contentFilter'].filter(function(data) {
               if(data['type_id'] == type){
                 var obj = {
                 "pro_id":value['pro_id'],
                  "data":data['value_text'],
                }
-                value_data.push(obj);    
+                value_data.push(obj);
                }
             });
         });
@@ -3130,12 +3130,12 @@
             function (a,b){
                  return a.data > b.data ? 1 : -1;
              });
-         $.each(value_data, function(index,value){ 
+         $.each(value_data, function(index,value){
            array_value.filter(function(data){
                if(value['pro_id'] == data['pro_id'] ){
-                  arr_sort.push(data);  
+                  arr_sort.push(data);
                }
-             
+
            });
          });
         return arr_sort;
@@ -3145,23 +3145,23 @@
         var value_data = [];
         pro_perti.filter(function(data) {
               if(data['type_id'] == id){
-                value_data.push(data['data_1']); 
+                value_data.push(data['data_1']);
                 if(data['data_2'] != null){
-                    value_data.push(data['data_2']); 
+                    value_data.push(data['data_2']);
                 }
                 if(data['data_3'] != null){
-                    value_data.push(data['data_3']); 
+                    value_data.push(data['data_3']);
                 }
                 if(data['data_4'] != null){
-                    value_data.push(data['data_4']); 
+                    value_data.push(data['data_4']);
                 }
                 if(data['data_5'] != null){
-                    value_data.push(data['data_5']); 
+                    value_data.push(data['data_5']);
                 }
-                    
+
                }
             });
-   
+
         var min = Math.min.apply(null, value_data);
         var max = Math.max.apply(null, value_data);
        return object ={
@@ -3216,20 +3216,20 @@
         // console.log(key);
         $('#key_mobile').val(key);
         var term = key; // search term (regex pattern)
-        var search = new RegExp(term , 'i'); // prepare a regex object     
+        var search = new RegExp(term , 'i'); // prepare a regex object
            productTextSearch.filter(function(data){
             if(search.test(data.pro_code)){
                 var index = re_arr.findIndex(function(x){
                   return  x.pro_id === data.pro_id;
                 })
                     if(index == -1){
-                        re_arr.push(data);  
+                        re_arr.push(data);
                     }
             }
            });
            onselectSortArr(re_arr);
            $('#current_method').val(1);
-       
+
      }
      function onsearchProductMobile(){
         var re_arr = [];
@@ -3270,14 +3270,14 @@
         var key = $('#key_mobile').val();
         $('#key_destop').val(key);
         var term = key; // search term (regex pattern)
-        var search = new RegExp(term , 'i'); // prepare a regex object     
+        var search = new RegExp(term , 'i'); // prepare a regex object
            productTextSearch.filter(function(data){
             if(search.test(data.pro_code)){
                 var index = re_arr.findIndex(function(x){
                     return x.pro_id === data.pro_id;
                 })
                     if(index == -1){
-                        re_arr.push(data);  
+                        re_arr.push(data);
                     }
             }
            });
@@ -3321,11 +3321,11 @@
         $(".moreBox_mobile").slice(0, 8).show();
         $(".row_table").slice(0, 8).show();
       }
-       
+
         $('.countproduct').text(arr_result.length);
         //   productFilter = arr_result;
     }
-   
+
 
 
     /* slidebar */
@@ -3356,7 +3356,7 @@
             (handle ? limitFieldMax : limitFieldMin).innerHTML = values[handle];
             });
 
-        
+
 
             }
         });
@@ -3370,7 +3370,7 @@
             var valuemindes ='slider-limit-value-min_des'+fil_con['field_id'];
             var valuemaxdes ='slider-limit-value-max_des'+fil_con['field_id'];
             var nonLinearSlider2 = document.getElementById(data_des);
-            
+
             noUiSlider.create(nonLinearSlider2, {
                 connect: true,
                 behaviour: 'tap',
@@ -3391,16 +3391,16 @@
            findDataRage(nonLinearSlider2.noUiSlider.get() ,fil_con['field_id'] );
         });
      }
-          
+
     });
 
     }
     function findDataRage(arrRage ,type){
-         
+
         var pro_arr = [];
-        $.each(productFilter, function(index,value){   
+        $.each(productFilter, function(index,value){
             value['contentFilter'].filter(function(data) {
-    
+
               if(data['type_id'] == type){
                    if(data['data_1'] && data['data_2'] == null){
                     if(data['data_1'] >= arrRage[0] &&  data['data_1'] <= arrRage[1]){
@@ -3410,9 +3410,9 @@
                             }
                             )
                         if(index == -1){
-                            pro_arr.push(value);  
+                            pro_arr.push(value);
                         }
-                      } 
+                      }
                    }else if(data['data_1'] != null && data['data_2'] != null){
                     if(data['data_1'] >= arrRage[0] &&  data['data_2'] <= arrRage[1]){
                         var index = pro_arr.findIndex(
@@ -3421,12 +3421,12 @@
                             }
                             )
                         if(index == -1){
-                            pro_arr.push(value);  
+                            pro_arr.push(value);
                         }
-                      } 
+                      }
                    }
 
-                
+
                }
             });
         });
@@ -3460,9 +3460,9 @@
         $(".moreBox_mobile").slice(0, 8).show();
         $(".row_table").slice(0, 8).show();
       }
-  
+
         $('.countproduct').text(arr_result.length);
-        
+
     }
 
 </script>
@@ -3470,9 +3470,9 @@
     function loadeMore(event,i){
     if ($(".moreBox:hidden").length != 0) {
       $("#loadMore").show();
-    }  
+    }
       event.preventDefault();
-     
+
       $(".moreBox:hidden").slice(0, 4).slideDown();
       if ($(".moreBox:hidden").length == 0) {
         $("#loadMore").fadeOut('hide');
@@ -3481,9 +3481,9 @@
   function loadeMoreMobile(event,i){
     if ($(".moreBox_mobile:hidden").length != 0) {
       $("#loadMore_mobile").show();
-    }  
+    }
       event.preventDefault();
-     
+
       $(".moreBox_mobile:hidden").slice(0, 4).slideDown();
       if ($(".moreBox_mobile:hidden").length == 0) {
         $("#loadMore_mobile").fadeOut('hide');
@@ -3492,9 +3492,9 @@
   function loadlistview(event ,i){
     if ($(".row_table:hidden").length != 0) {
       $("#loadlistview").show();
-    }  
+    }
       event.preventDefault();
-     
+
       $(".row_table:hidden").slice(0, 4).slideDown();
       if ($(".row_table:hidden").length == 0) {
         $("#loadlistview").fadeOut('hide');

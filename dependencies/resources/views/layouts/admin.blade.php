@@ -209,7 +209,29 @@
     </script>
     <script src="{{asset('/admin-assets/addons/js/datatables.min.js')}}"></script>
     <script src="{{asset('/admin-assets/addons/js/datatables-select.min.js')}}"></script>
+    <style>
+        .select2-container--default .select2-selection--multiple {
+            position: relative;
+            padding-right: 20px;
+        }
 
+        .select2-container--default .select2-selection--multiple:after {
+            content: '';
+            border-color: #888 transparent transparent transparent;
+            border-style: solid;
+            border-width: 5px 4px 0 4px;
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .select2-container--default.select2-container--open .select2-selection--multiple:after {
+            border-color: transparent transparent #888 transparent;
+            border-width: 0 4px 5px 4px;
+        }
+    </style>
 
     @yield('js')
 

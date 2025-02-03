@@ -1,5 +1,6 @@
 @extends('layouts.front-end')
 @section('css')
+<?php $imgDown = asset('frontend-asset/image/arrow-down.svg') ?>
 <style>
     .banner-type-product-all {
         height: 432px;
@@ -19,7 +20,7 @@
         border: 1px solid #444444;
         background-position: right 50%;
         background-repeat: no-repeat;
-        background-image: url('{{asset('frontend-asset/image/arrow-down.svg')}}');
+        background-image: url('{{$imgDown}}');
         font-size: 16px;
     }
 
@@ -135,7 +136,7 @@
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 <link rel="canonical" href="{{url()->current()}}" />
-<?php 
+<?php
   $lang_seo = App::getLocale();
   if($lang_seo == 'cn'){
     $lang_seo = 'zh-Hans-CN';
@@ -186,7 +187,8 @@
     <div class="container mt-3">
 
         <h1 class="text-title-delta visible-tablets-up">{{$staticContent['what_type_of_support']}}</h1>
-        <h4 class="d-flex justify-content-center text-center" style="margin-bottom: 2.5rem; margin-top: -0.5rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
+        <h4 class="d-flex justify-content-center text-center" style="margin-bottom: 2.5rem; margin-top: -0.5rem">
+            {{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['what_type_of_support']}}</h3>
         <p>{{$staticContent['support_from_up_text']}}</p>
 
@@ -353,9 +355,9 @@
     function onacceptionPolicy(){
         $('#acceptcookiebot').click();
       }
-  
+
       function validateForm(form){
-        
+
                 if(!form.prichk.checked){
                     $("#Support_policy_required").modal();
                     return false;
@@ -382,7 +384,7 @@
             var id = $('#type_id').val();
             var t_name = $('#type_id option:selected').text();
             $('#type_name').val(t_name);
-      
+
             $.ajax({
             url: "{{(route('searhProductByType'))}}",
             data: {
@@ -408,27 +410,27 @@
 
         });
             // $.each(products, function(index,pro){
-               
+
             //     if(pro['pro_categories_id'] == id){
             //         if(index == 0){
             //         html += '<option value="'+pro['pro_code'] +'" selected>'+pro['pro_code']+'</option>';
             //         }else{
-            //         html += '<option value="'+pro['pro_code'] +'">'+pro['pro_code']+'</option>';   
+            //         html += '<option value="'+pro['pro_code'] +'">'+pro['pro_code']+'</option>';
             //         }
             //     }
             // });
             // html += '<option value="0">Select Model</option>';
-          
+
             // $('#model_id').html(html);
             // $('#model_id').removeAttr("disabled");
-           
-        } 
 
-  
+        }
+
+
 
   $( document ).ready(function() {
     $('#config_id').val(enquireData);
-   
+
     if(enqurieType != null && enqurieType == 0 && enquireStatus == 0 ){
        $('#enquireStatus').val(enquireStatus);
        $("#subjectType option[value="+enqurieType+"]").prop('selected', true);
@@ -439,7 +441,7 @@
         $('#enquireStatus').val(enquireStatus);
         $("#type_id option[value="+modeltype+"]").prop('selected', true);
         selectType();
-    
+
     }
 });
    function selectCountry(){
@@ -465,15 +467,15 @@
                 $("select#stateId").html(options);
                 $("select#stateId").attr("required", "true");
                 $('#r_q_contry').text('*');
-               
-           
+
+
             }
         });
     }else{
       $('#box_state_con').css('display','none');
      }
- 
-  
+
+
    }
 
        @if(Session::has('message'))
@@ -490,7 +492,7 @@
               html += '</a>';
              $('#linkdownloadconfigPdf').html(html);
              $("#sendpfdtome").modal();
-             
+
           });
         @endif
 
