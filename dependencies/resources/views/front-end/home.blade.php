@@ -112,7 +112,7 @@
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 <link rel="canonical" href="{{ config('app.url') }}/{{App::getLocale()}}" />
-<?php 
+<?php
   $lang_seo = App::getLocale();
   if($lang_seo == 'cn'){
     $lang_seo = 'zh-Hans-CN';
@@ -122,7 +122,7 @@
 ?>
 <link rel="alternate" href="{{ config('app.url') }}/{{App::getLocale()}}" hreflang="{{$lang_seo}}" />
 @endsection
-<?php 
+<?php
     function setTextpro($pro){
                 $strmodel =  str_replace("/", "&", $pro);
                 return  $strmodel;
@@ -352,6 +352,7 @@
                                 ?>
                             </ul>
 
+
                         </div>
                     </div>
                 </a>
@@ -365,14 +366,14 @@
     </div>
 </div>
 <!-- feature -->
-<?php 
+<?php
 function retextdata($arr ,$unit){
                       $arr_data = [];
                    foreach ($arr as $dch){
                       if($dch != null && $dch != '' && $dch != 'null'){
                           array_push($arr_data,$dch.$unit);
                       }
-                     
+
                    }
        return $arr_data;
 }
@@ -901,7 +902,7 @@ function retextdata($arr ,$unit){
 <script>
     $(document).ready(function () {
         $('#nav-two').removeClass('scrolled');
-        
+
     });
 
     function seeMore() {

@@ -588,6 +588,7 @@ a:hover {
 
 .box-applications .grid-item {
   height: 250px;
+  position: relative;
 }
 
 .grid-sub-text img {
