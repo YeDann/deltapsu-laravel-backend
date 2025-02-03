@@ -1,10 +1,10 @@
 {
-    "name": "laravel/laravel",
+    "name": "DeltaPSU Production",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "DeltaPSU Production WebSite",
     "keywords": [
-        "framework",
-        "laravel"
+        "website",
+        "deltaPSU"
     ],
     "license": "MIT",
     "require": {

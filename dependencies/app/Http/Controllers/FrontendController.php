@@ -2027,7 +2027,10 @@ class FrontendController extends Controller
     public function appDetailById($app_name, $app_id){
         $name = $this->validateInput($app_name,'text',true);
         $id =  $app_id;
+
+
         // return dd($name, $id);
+
         $lang = App::getLocale();
         $application = DB::table('application as ap')
         ->join('application_translation as apt','ap.id','=','apt.app_id')
@@ -2038,7 +2041,9 @@ class FrontendController extends Controller
         ->orderBy('ap.order_seq' ,'asc')
         ->first();
 
-
+        if($application->slug_app != $name){
+            return redirect()->route('appDetail',[ 'name' => $application->slug_app , 'id' => $id]);
+        }
 
         $image = DB::table('more_image_app as mp')
         ->where('mp.app_id' ,$id)
