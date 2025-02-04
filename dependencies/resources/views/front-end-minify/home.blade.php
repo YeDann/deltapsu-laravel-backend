@@ -109,11 +109,17 @@
 
     @media only screen and (min-width:921px) {
         .text-app-arrow {
-            font-size: 14px;
+            font-size: 0.75em;
             color: #0087dc;
             display: flex;
             position: absolute;
             bottom: 20px;
+        }
+
+        .text-app-arrow i {
+            font-size: 14px !important;
+            margin-left: 8px;
+            margin-top: 2px;
         }
     }
 
@@ -125,12 +131,12 @@
             position: absolute;
             bottom: 10px;
         }
-    }
 
-
-    .text-app-arrow i {
-        font-size: 24px !important;
-        margin-left: 7px;
+        .text-app-arrow i {
+            font-size: 14px !important;
+            margin-left: 8px;
+            margin-top: 4px;
+        }
     }
 </style>
 @endsection
@@ -355,7 +361,10 @@
                                        }
                                     ?>
                             </ul>
-                            <div class="text-app-arrow">Read more <i class="zmdi zmdi-chevron-right"></i>
+                            <div class="text-app-arrow">
+                                {{ isset($staticContent['read_more_application'])
+                                ?$staticContent['read_more_application'] : 'Read More' }} <i
+                                    class="zmdi zmdi-chevron-right"></i>
                             </div>
 
                         </div>
@@ -401,7 +410,10 @@
                                    }
                                 ?>
                             </ul>
-                            <div class="text-app-arrow">Read more <i class="zmdi zmdi-chevron-right"></i>
+                            <div class="text-app-arrow">
+                                {{ isset($staticContent['read_more_application'])
+                                ?$staticContent['read_more_application'] : 'Read More' }} <i
+                                    class="zmdi zmdi-chevron-right"></i>
                             </div>
                         </div>
                     </div>
