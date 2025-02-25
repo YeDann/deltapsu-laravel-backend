@@ -1531,12 +1531,14 @@ class FrontendController extends Controller
                 ->where('spt.local' ,$lang)
                 ->where('pr.product_id',$pro->pro_id)
                 ->where('p.enable_pro' ,1)
-                ->select('p.*', 'pt.*' ,'spt.name as catename' ,'spt.sub_pro_id as pro_categories_id' ,'sp.unit_dimension')
+                ->select('p.*', 'pt.*' ,'spt.name as catename' ,'spt.sub_pro_id as pro_categories_id' ,'sp.unit_dimension','sp.unit_dimension_1')
                 ->get();
 
 
                 $date = now();
                 $datefor = date('Y-m-d H:i:s',strtotime($date) - ((24*3600*365)*2));
+
+
           if(count($product_related) == 0){
             $product_related = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -1549,12 +1551,11 @@ class FrontendController extends Controller
             ->where('phc.categories_id',$pro->pro_categories_id)
             ->where('p.enable_pro',1)
             ->where('p.created_at','>',$datefor)
-            ->select('p.*', 'pt.*' ,'spt.name as catename' ,'spt.sub_pro_id as pro_categories_id' ,'sp.unit_dimension')
+            ->select('p.*', 'pt.*' ,'spt.name as catename' ,'spt.sub_pro_id as pro_categories_id' ,'sp.unit_dimension','sp.unit_dimension_1')
             ->limit(4)
             ->inRandomOrder()
             ->get();
           }
-
 
             $data_other = [];
             $data_check_poOther = [];
@@ -1572,6 +1573,7 @@ class FrontendController extends Controller
                     ->orderBy('ph.type_id' ,'asc')
                     ->select('pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
                     ->get();
+
                 if(!in_array($pro->pro_id, $data_check_poOther) && self::checkContentPro($pro->pro_id)){
                     array_push($data_check_poOther,$pro->pro_id);
                     $data_other[$j] = [
@@ -1580,6 +1582,7 @@ class FrontendController extends Controller
                         "catename"=>$pro->catename,
                         "cate_id"=>$pro->pro_categories_id,
                         "picture"=>$pro->picture,
+                        "unit_dimension_1"=>$pro->unit_dimension_1,
                         "unit_dimension"=>$pro->unit_dimension,
                         "status_product"=>$pro->status_product,
                         "content" =>$arraysub,
@@ -1599,7 +1602,7 @@ class FrontendController extends Controller
                 // ->where('st.status', 1)
                 ->select('st.id', 'stt.sortname','stt.name')
                 ->get();
-        // return dd($pro_code);
+        // return dd($data_other);
         if($findoldCate->url_item != $name ){
                     // return dd($pro_code, $findoldCate->url_item);
             return redirect()->to('/products/' . $findoldCate->url_item . '/' . $procode, 301);
