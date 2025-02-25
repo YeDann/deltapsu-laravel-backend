@@ -1462,7 +1462,7 @@
                                 <div class="card-body ft-products-item">
                                     <a
                                         href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $proRelate['catename']) ,'pro_code' => setTextpro($proRelate['pro_code']) ])}}">
-                                        @if(isset($pro['picture']))
+                                        @if(isset($proRelate['picture']))
                                         <img src="{{config('app.url')}}/upload/thumbs/{{$proRelate['picture']}}"
                                             class="product-cat" alt="" style="width:70%;">
                                         @else
