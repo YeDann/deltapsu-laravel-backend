@@ -2901,8 +2901,8 @@ class FrontendController extends Controller
             )
             ->distinct();
 
-        // Paginate results (e.g., 20 per page)
-            $products = $query->paginate(20);
+        // Paginate results (e.g., 50 per page)
+         $products = $query->paginate(50);
 
         // Fetch additional product properties in bulk
             $productIds = $products->pluck('pro_id')->unique()->toArray();
