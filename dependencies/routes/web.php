@@ -66,7 +66,7 @@ Route::post('/loadcsv','FrontendController@loadPdffile')->name('loadPdffile');
 Route::post('savepdfConfig','FrontendController@savepdfConfig')->name('savepdfConfig');
 Route::get('/user/login','FrontendController@loginpartner')->name('loginpartner');
 Route::get('/faq/detail/{name?}','FrontendController@faq_detail')->name('faq_detail');
-Route::get('/file/marketing_resources/{filename?}','FrontendController@marketingLink')->name('marketingLink');
+Route::get('/file/marketing_resources/{filename?}','FrontendController@checkPermission')->name('marketingLink');
 
 Route::get('/partners/marketing-resources/configurable-history','FrontendController@confighistory')->name('confighistory');
 Route::get('/partners/marketing-resources/product-launch-schedule','FrontendController@productLaunchSchedule')->name('productLaunchSchedule');

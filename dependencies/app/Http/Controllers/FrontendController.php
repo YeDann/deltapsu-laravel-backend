@@ -4657,17 +4657,8 @@ class FrontendController extends Controller
         $path =  base_path('../frontend-asset/image/').$image ;
         return response()->file($path);
       }
-      public function marketingLink($image){
-        $path =  base_path('../uploads_delta/partner/marketing_resources/').$image;
-        if(file_exists($path)){
-            return response()->file($path);
-        }else{
-            return  redirect()->route('index','home');
-        }
 
-      }
-
-      public function tag_product(Request $request){
+    public function tag_product(Request $request){
         $pro_id =  $request->proid;
          $tags =  DB::table('product_tags')->where('product_id',$pro_id)->get();
         return response()->json([
@@ -5005,7 +4996,7 @@ class FrontendController extends Controller
             ->where('mrt.file', $doc);
         $endUserDoc = (clone $query)->where('permar.permission_id', 3)->select('mr.*')->first();
 
-        if ($endUserDoc) {
+        if (isset($endUserDoc)) {
             return response()->file($path);
         }else if(!isset($partnerId)){
             return redirect()->route('index', 'login');
