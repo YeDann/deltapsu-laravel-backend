@@ -2916,7 +2916,8 @@ class FrontendController extends Controller
                     ->where('st.local', $lang)
                     ->where('p.enable_pro', 1)
                     ->where(function ($q) use ($keypro, $keyParts) {
-                        $q->orWhere('st.title', 'LIKE', '%' . $keypro . '%')
+                        $q->orWhere('p.pro_code', '=',  $keypro)
+                        ->orWhere('st.title', 'LIKE', '%' . $keypro . '%')
                         ->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%')
                         ->orWhere('op.optional_model', 'LIKE', '%' . $keypro . '%');
                         foreach ($keyParts as $part) {
@@ -2945,9 +2946,9 @@ class FrontendController extends Controller
                     ->groupBy('p.pro_id')
                     ->orderByRaw("
                         CASE
-                            WHEN p.pro_code LIKE ? THEN 3
+                            WHEN p.pro_code LIKE ? THEN 1
                             WHEN p.pro_code LIKE ? THEN 2
-                            WHEN MAX(st.title) LIKE ? THEN 1
+                            WHEN MAX(st.title) LIKE ? THEN 3
                             WHEN MAX(ptag.tag) LIKE ? THEN 4
                             ELSE 5
                         END",
