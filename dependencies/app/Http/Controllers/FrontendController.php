@@ -2945,7 +2945,12 @@ class FrontendController extends Controller
                     )
                     ->groupBy(
                         'p.pro_id',
-                        'p.pro_code'
+                        'p.pro_code',
+                        'p.picture',
+                        'p.status_product',
+                        'p.dimensionL',
+                        'p.dimensionW',
+                        'p.dimensionD'
                     )
                     ->orderByRaw("
                         CASE
