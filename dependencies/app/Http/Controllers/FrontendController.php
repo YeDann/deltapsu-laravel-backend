@@ -4995,12 +4995,23 @@ class FrontendController extends Controller
       {
         $partnerId = session('partner_id');
         $lang = App::getLocale();
+        $endUserDoc = null;
+        $path = base_path('../uploads_delta/partner/marketing_resources/') . $doc;
+        $query = DB::table('marketing_resource as mr')
+            ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+            ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
+            ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
+            ->where('mrt.local', $lang)
+            ->where('mrt.file', $doc);
+        $endUserDoc = (clone $query)->where('permar.permission_id', 3)->select('mr.*')->first();
 
-        if (!$partnerId) {
+        if ($endUserDoc) {
+            return response()->file($path);
+        }else if(!isset($partnerId) && !isset($endUserDoc)){
             return redirect()->route('index', 'login');
         }
 
-        $path = base_path('../uploads_delta/partner/marketing_resources/') . $doc;
+
         $partner = DB::table('partner')->where('id', $partnerId)->where('status', 1)->first();
 
         if (!$partner) {
@@ -5010,7 +5021,7 @@ class FrontendController extends Controller
         $salesKit = null;
         $fpsDoc = null;
         $distributorDoc = null;
-        $endUserDoc = null;
+
 
         if ($partner->role == 2) {
             $salesKit = DB::table('partner_documents as s')
@@ -5021,12 +5032,7 @@ class FrontendController extends Controller
                 ->first();
         }
 
-        $query = DB::table('marketing_resource as mr')
-            ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
-            ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
-            ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
-            ->where('mrt.local', $lang)
-            ->where('mrt.file', $doc);
+
 
         if ($partner->role == 2) {
             $fpsDoc = (clone $query)->whereIn('permar.permission_id', [2])->select('mr.*', 'mrt.*')->first();
@@ -5036,7 +5042,6 @@ class FrontendController extends Controller
             $distributorDoc = (clone $query)->whereIn('permar.permission_id', [1])->select('mr.*', 'mrt.*')->first();
         }
 
-        $endUserDoc = (clone $query)->where('permar.permission_id', 3)->select('mr.*')->first();
 
         if ($fpsDoc || $distributorDoc || $endUserDoc) {
             return response()->file($path);
