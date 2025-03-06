@@ -2893,7 +2893,7 @@ class FrontendController extends Controller
             return $products;
         }
 
-        public function searchAll($keySearchQuery) {
+     public function searchAll($keySearchQuery) {
             $keysearch = $this->validateInput($keySearchQuery, 'text', true);
             $keypro = str_replace("@", "/", $keysearch);
             $lang = App::getLocale();
@@ -2943,7 +2943,10 @@ class FrontendController extends Controller
                         DB::raw('GROUP_CONCAT(DISTINCT ptag.tag) as tags'),
                         DB::raw('GROUP_CONCAT(DISTINCT op.optional_model) as optional_models')
                     )
-                    ->groupBy('p.pro_id')
+                    ->groupBy(
+                        'p.pro_id',
+                        'p.pro_code',
+                    )
                     ->orderByRaw("
                         CASE
                             WHEN p.pro_code LIKE ? THEN 1
@@ -3171,6 +3174,7 @@ class FrontendController extends Controller
             ->with('faqs',$faqs)
             ->with('keysearch',$keysearch);
        }
+
        public function oldDoc($name){
         return redirect()->route('index','home');
        }
