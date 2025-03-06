@@ -2893,16 +2893,72 @@ class FrontendController extends Controller
             return $products;
         }
 
-       public function searchAll($keySearchQuery) {
+        public function searchAll($keySearchQuery) {
             $keysearch = $this->validateInput($keySearchQuery, 'text', true);
             $keypro = str_replace("@", "/", $keysearch);
             $lang = App::getLocale();
-            $limit = 70;
+
             // Split search term into parts (handles both spaces and dashes)
             $keyParts = preg_split('/[\s-]+/', $keypro);
             $checkArr = [];
-            $products = self::searchProductOnly($keypro,$keyParts,$lang,$limit);
 
+            // Base product query with relationships
+            $query = DB::table('products as p')
+            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+            ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+            ->leftJoin('product_tags as ptag', 'ptag.product_id', '=', 'p.pro_id')
+            ->leftJoin('product_optional_model as op', 'op.product_id', '=', 'p.pro_id')
+            ->where('spt.local', $lang)
+            ->where('st.local', $lang)
+            ->where('p.enable_pro', 1)
+            ->where(function ($q) use ($keypro, $keyParts) {
+
+                $q->orWhere('st.title', 'LIKE', '%' . $keypro . '%')
+                ->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%')
+                ->orWhere('op.optional_model', 'LIKE', '%' . $keypro . '%');
+            // Then search by parts with higher priority for matches at start of string
+                foreach ($keyParts as $part) {
+                    $q->orWhere('p.pro_code', 'LIKE', $part . '%')
+                    ->orWhere('p.pro_code', 'LIKE', '%' . $part . '%')
+                    ->orWhere('st.title', 'LIKE', $part . '%')
+                    ->orWhere('ptag.tag', 'LIKE', $part . '%')
+                    ->orWhere('op.optional_model', 'LIKE', $part . '%');
+                }
+
+            })
+            ->orderByRaw("
+                CASE
+                    WHEN p.pro_code LIKE ? THEN 1
+                    WHEN p.pro_code LIKE ? THEN 2
+                    WHEN st.title LIKE ? THEN 3
+                    WHEN ptag.tag LIKE ? THEN 4
+                    ELSE 5
+                END",
+                [$keypro, $keyParts[0] . '%', $keyParts[0] . '%', $keyParts[0] . '%']
+            )
+            ->select(
+                'p.pro_id',
+                'p.pro_code',
+                'p.picture',
+                'p.status_product',
+                'p.dimensionL',
+                'p.dimensionW',
+                'p.dimensionD',
+                'sp.url_item',
+                'spt.name as catename',
+                'phc.categories_id',
+                'st.title as seName',
+                'ptag.tag',
+                'op.optional_model'
+            )
+            ->distinct();
+
+        // Paginate results (e.g., 50 per page)
+            $products = $query->paginate(50);
+
+        // Fetch additional product properties in bulk
             $productIds = $products->pluck('pro_id')->unique()->toArray();
             $properties = DB::table('product_has_property as ph')
                 ->join('product_has_property_translation as pht', 'ph.per_id', '=', 'pht.per_fk_id')
@@ -2917,19 +2973,22 @@ class FrontendController extends Controller
                 ->get()
                 ->groupBy('product_id');
 
+            $tags = DB::table('product_tags as ptag')
+                ->whereIn('ptag.product_id', $productIds)
+                ->where('ptag.tag', '!=', ' ')
+                ->select('ptag.*')
+                ->get()
+                ->groupBy('product_id');
+
             $optionalModels = DB::table('product_optional_model as op')
                 ->whereIn('op.product_id', $productIds)
                 ->select('op.*')
                 ->get()
                 ->groupBy('product_id');
 
-              $tags = DB::table('product_tags as ptag')
-                ->whereIn('ptag.product_id', $productIds)
-                ->where('ptag.tag', '!=', ' ')
-                ->select('ptag.*')
-                ->get()
-                ->groupBy('product_id');
-             $pro_results = $products->map(function ($pro) use ($properties, $tags, $optionalModels) {
+            // Build the result set
+
+            $pro_results = $products->map(function ($pro) use ($properties, $tags, $optionalModels) {
                 if (!self::checkContentPro($pro->pro_id)) {
                     return null;
                 }
@@ -2998,7 +3057,7 @@ class FrontendController extends Controller
                 ->where('f.status', 1)
                 ->where('ft.title', 'LIKE', '%'.$keysearch.'%')
                 ->select('f.*' ,'ft.*')
-                ->limit($limit)
+                ->limit(20)
                 ->get();
 
                 $offices = [];
@@ -3014,7 +3073,7 @@ class FrontendController extends Controller
                 ->where('f.type_id', '=',  1)
                 ->select('f.*' ,'oft.*')
                 ->distinct()
-                ->limit($limit)
+                ->limit(20)
                 ->get();
 
                 foreach($officesSer as $offi){
@@ -3030,7 +3089,7 @@ class FrontendController extends Controller
                 ->where('type_id' ,1)
                 ->where('ct.local', '=', $lang)
                 ->select('c.*' ,'ct.*')
-                ->limit($limit)
+                ->limit(20)
                 ->get();
 
                 $continents_dis = DB::table('continents as c')
@@ -3038,7 +3097,7 @@ class FrontendController extends Controller
                 ->where('type_id' ,2)
                 ->where('ct.local', '=', $lang)
                 ->select('c.*' ,'ct.*')
-                ->limit($limit)
+                ->limit(20)
                 ->get();
 
                 $distributor = [];
@@ -3055,7 +3114,7 @@ class FrontendController extends Controller
                 ->where('f.type_id', '=', 2)
                 ->select('f.*' ,'oft.*')
                 ->distinct()
-                ->limit($limit)
+                ->limit(20)
                 ->get();
 
 
@@ -3075,7 +3134,7 @@ class FrontendController extends Controller
                 ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,'apt.content' ,'apt.overview')
                 ->where('apt.name', 'LIKE', '%'.$keysearch.'%')
                 ->orderBy('ap.order_seq' ,'asc')
-                ->limit($limit)
+                ->limit(20)
                 ->get();
 
                 $margetCate = DB::table('permission_marketcate as permar')
@@ -3084,7 +3143,7 @@ class FrontendController extends Controller
                 ->where('mct.local', '=',  $lang)
                 ->where('permar.permission_id', '=', 3)
                 ->select('mc.*' ,'mct.*')
-                ->limit($limit)
+                ->limit(20)
                 ->get();
 
                 $margeting = DB::table('marketing_resource as mr')
@@ -3093,7 +3152,7 @@ class FrontendController extends Controller
                 ->whereIn('mr.cate_id',[1,2])
                 ->where('mrt.name', 'LIKE', '%'.$keysearch.'%')
                 ->select('mr.*' ,'mrt.*')
-                ->limit($limit)
+                ->limit(20)
                 ->get();
 
             return  view('front-end.resultsearch')
