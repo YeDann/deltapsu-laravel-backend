@@ -5007,7 +5007,7 @@ class FrontendController extends Controller
 
         if ($endUserDoc) {
             return response()->file($path);
-        }else if(!isset($partnerId) && !isset($endUserDoc)){
+        }else if(!isset($partnerId)){
             return redirect()->route('index', 'login');
         }
 
