@@ -246,7 +246,7 @@
 </style>
 @endsection
 @section('meta')
-<?php 
+<?php
  $datacheck1 = [
   $product[0]['content'][1]->data_1,
   $product[0]['content'][1]->data_2,
@@ -274,7 +274,7 @@
    $product[0]['content'][2]->data_10,
    $product[0]['content'][2]->data_11,
    $product[0]['content'][2]->data_12,
-  ];                                      
+  ];
   $datacheck3 = [
      $product[0]['content'][0]->data_1,
      $product[0]['content'][0]->data_2,
@@ -309,15 +309,15 @@
         if($chekc == true){
             $data =  $prod_1.'-'.$prod_2.$unit;
         }
-        
+
         return  $data;
-    } 
+    }
     function retextdata($arr ,$unit){
       $arr_data = [];
       foreach ($arr as $dch){
         if($dch != null && $dch != '' && $dch != 'null'){
             array_push($arr_data,$dch.$unit);
-        }                                   
+        }
        }
       return $arr_data;
     }
@@ -332,7 +332,7 @@
         }else{
             $model_code = $product[0]['pro_code'] ?  $product[0]['pro_code'] :'' ;
         }
-        
+
         $cate_name = $product[0]['cate_name'] ?  $product[0]['cate_name'] :'' ;
         $series = $product[0]['serie_name'] ?  $product[0]['serie_name'] .' Series' :'' ;
 
@@ -354,7 +354,7 @@
 
        $meta_title = 'Delta '.$model_code.' '.$output_v.' '.$output_p.' '.$output_c.' '.$cate_name.' '.$series;
        $m_desc = $model_code.' '.$cate_name.' Offers output '.$output_v.' '.$output_p.' '.$output_c.' Features';
-       $features  = trim(iconv_substr(strip_tags(str_replace("/uploads_delta",config('app.url')."/uploads_delta",$product[0]['content_1'])),0,122,'UTF-8')); 
+       $features  = trim(iconv_substr(strip_tags(str_replace("/uploads_delta",config('app.url')."/uploads_delta",$product[0]['content_1'])),0,122,'UTF-8'));
        $meta_description =  $product[0]['meta_description'] ? $product[0]['meta_description'] : $m_desc.' '.$features ;
 ?>
 <title>{{$meta_title}}</title>
@@ -363,7 +363,7 @@
 <meta property="og:description" content="{{$meta_description}}" />
 <meta property="og:image" content="{{config('app.url')}}/upload/thumbs/{{$product[0]['picture']}}" />
 <link rel="canonical" href="{{url()->current()}}" />
-<?php 
+<?php
   $lang_seo = App::getLocale();
   if($lang_seo == 'cn'){
     $lang_seo = 'zh-Hans-CN';
@@ -505,9 +505,9 @@
 
                             @foreach ($vieo_img as $item)
                             @if($item->type == 2)
-                            <?php 
-                             $data = $item->content;    
-                             $whatIWant = substr($data, strpos($data, "embed/") + 1);    
+                            <?php
+                             $data = $item->content;
+                             $whatIWant = substr($data, strpos($data, "embed/") + 1);
                                ?>
                             <div>
                                 <a onclick="clickYoutube('{{$item->content}}');">
@@ -635,14 +635,14 @@
                         </div>
                         <div class="col-sm-4 box-product-detail">
                             <h5 class="text-color-delta mb-2">{{$staticContent['Unit_Weight']}}</h5>
-                            <?php 
+                            <?php
                               $sum  = 0;
                             if(isset($product[0]['unit_weight'])){
-                              
+
                                 $number = substr($product[0]['unit_weight'] , 0, -2);
                                 $float = (float)$number;
-                                $sum = ($float*2.2046244202);       
-                                
+                                $sum = ($float*2.2046244202);
+
                             }
                             ?>
                             <p class="text-one">{!!$product[0]['unit_weight']!!} ({{number_format($sum,2)}} lb)</p>
@@ -830,9 +830,9 @@
 
                 @foreach ($vieo_img as $item)
                 @if($item->type == 2)
-                <?php 
-                $data = $item->content;    
-                $whatIWant = substr($data, strpos($data, "embed/") + 1);    
+                <?php
+                $data = $item->content;
+                $whatIWant = substr($data, strpos($data, "embed/") + 1);
                   ?>
                 <div>
                     <a onclick="clickYoutube('{{$item->content}}');">
@@ -1075,7 +1075,7 @@
             </div>
             <?php
             function getDateformat($date){
-                   
+
                    $eng_month_arr = array(
                        "0" => "",
                        "1" => "Jan",
@@ -1101,7 +1101,7 @@
                    ];
                    return  $datearray;
             }
-        
+
             ?>
 
             <div id="collapse-box-doc-documents" class="box-doc-list-sub collapse" data-parent="#box-doc-type">
@@ -1315,7 +1315,7 @@
                         <tbody>
                             @foreach ($product_has_property as $prh)
                             @if($prh->section_id == $sec->id)
-                            <?php 
+                            <?php
                            $strig = '-';
                            $numberText = '' ;
                            $numberarr = [];
@@ -1328,7 +1328,7 @@
                                  }else{
                                     $numberText = 'test';
                                  }
-                                 
+
                                }else{
                                    $arr_data = [];
                                       $datacheck = [
@@ -1353,10 +1353,10 @@
                                         $check = true;
                                         $numberarr = $arr_data;
                                      }
-                                    
-                                     
+
+
                                }
-                            
+
                            }else{
                             if($prh->value_text != null && $prh->value_text != 'null'){
                                 $check = true;
@@ -1439,14 +1439,14 @@
             <div class="product-random">
                 <div class="">
                     <div id="producttype" class="owl-carousel owl-theme  ft-products-body">
-                        @foreach ($Otherpros as $pro)
+                        @foreach ($Otherpros as $proRelate)
 
                         <div class="">
                             <div class="card">
-                                <?php 
+                                <?php
                                 $color = '';
                                 $name_sta = '';
-                               $stat = $pro['status_product'];
+                               $stat = $proRelate['status_product'];
                                  if($stat == 2){
                                      $color = '#76B900';
                                      $name_sta = 'NEW';
@@ -1461,34 +1461,79 @@
                                 <div class="new-tag" style="background-color:{{$color}}">{{$name_sta}}</div>
                                 <div class="card-body ft-products-item">
                                     <a
-                                        href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $pro['catename']) ,'pro_code' => setTextpro($pro['pro_code']) ])}}">
-                                        @if(isset($pro['picture']))
-                                        <img src="{{config('app.url')}}/upload/thumbs/{{$pro['picture']}}"
+                                        href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $proRelate['catename']) ,'pro_code' => setTextpro($proRelate['pro_code']) ])}}">
+                                        @if(isset($proRelate['picture']))
+                                        <img src="{{config('app.url')}}/upload/thumbs/{{$proRelate['picture']}}"
                                             class="product-cat" alt="" style="width:70%;">
                                         @else
                                         <img src="{{asset('frontend-asset/image/blank.png')}}" class="product-cat"
                                             alt="" style="width:70%;">
                                         @endif
 
-                                        <h5 class="text-title-ft">{{$pro['pro_code']}}</h5>
+                                        <h5 class="text-title-ft">{{$proRelate['pro_code']}}</h5>
                                     </a>
                                     <div class="row">
                                         <div class="col">
+                                            <?php
+                                             $datacheck1 = [
+                                                    $proRelate['content'][1]->data_1,
+                                                    $proRelate['content'][1]->data_2,
+                                                    $proRelate['content'][1]->data_3,
+                                                    $proRelate['content'][1]->data_4,
+                                                    $proRelate['content'][1]->data_5,
+                                                    $proRelate['content'][1]->data_6,
+                                                    $proRelate['content'][1]->data_7,
+                                                    $proRelate['content'][1]->data_8,
+                                                    $proRelate['content'][1]->data_9,
+                                                    $proRelate['content'][1]->data_10,
+                                                    $proRelate['content'][1]->data_11,
+                                                    $proRelate['content'][1]->data_12,
+                                                    ];
+                                                    $datacheck2 = [
+                                                        $proRelate['content'][2]->data_1,
+                                                        $proRelate['content'][2]->data_2,
+                                                        $proRelate['content'][2]->data_3,
+                                                        $proRelate['content'][2]->data_4,
+                                                        $proRelate['content'][2]->data_5,
+                                                        $proRelate['content'][2]->data_6,
+                                                        $proRelate['content'][2]->data_7,
+                                                        $proRelate['content'][2]->data_8,
+                                                        $proRelate['content'][2]->data_9,
+                                                        $proRelate['content'][2]->data_10,
+                                                        $proRelate['content'][2]->data_11,
+                                                        $proRelate['content'][2]->data_12,
+                                                    ];
+                                                $datacheck3 = [
+                                                    $proRelate['content'][0]->data_1,
+                                                    $proRelate['content'][0]->data_2,
+                                                    $proRelate['content'][0]->data_3,
+                                                    $proRelate['content'][0]->data_4,
+                                                    $proRelate['content'][0]->data_5,
+                                                    $proRelate['content'][0]->data_6,
+                                                    $proRelate['content'][0]->data_7,
+                                                    $proRelate['content'][0]->data_8,
+                                                    $proRelate['content'][0]->data_9,
+                                                    $proRelate['content'][0]->data_10,
+                                                    $proRelate['content'][0]->data_11,
+                                                    $proRelate['content'][0]->data_12,
+                                                    ];
+                                                ?>
                                             <div class="out-volt">
                                                 <h6 class="text-title-ft-sub">{{$staticContent['Output_Voltage']}}</h6>
                                                 <p class="text-ft-sub text-one">
                                                     {{-- {{$pro['content'][1]->data_1}}{{$pro['content'][1]->unit_name}}
                                                     --}}
-                                                    @if($pro['content'][1]->status_input == 3)
-                                                    @if($pro['content'][1]->data_1 != null && $pro['content'][1]->data_2
+                                                    @if($proRelate['content'][1]->status_input == 3)
+                                                    @if($proRelate['content'][1]->data_1 != null &&
+                                                    $proRelate['content'][1]->data_2
                                                     != null)
-                                                    {{$pro['content'][1]->data_1}}-{{$pro['content'][1]->data_2}}{{$pro['content'][1]->unit_name}}
+                                                    {{$proRelate['content'][1]->data_1}}-{{$proRelate['content'][1]->data_2}}{{$proRelate['content'][1]->unit_name}}
                                                     @else
                                                     -
                                                     @endif
                                                     @else
-                                                    @if($pro['content'][1]->data_1 != null)
-                                                    <?php echo join(",",retextdata($datacheck1 , $pro['content'][1]->unit_name));?>
+                                                    @if($proRelate['content'][1]->data_1 != null)
+                                                    <?php echo join(",",retextdata($datacheck1 , $proRelate['content'][1]->unit_name));?>
                                                     @else
                                                     -
                                                     @endif
@@ -1500,16 +1545,17 @@
                                                 <p class="text-ft-sub text-one">
                                                     {{-- {{$pro['content'][2]->data_1}}{{$pro['content'][2]->unit_name}}
                                                     --}}
-                                                    @if($pro['content'][2]->status_input == 3)
-                                                    @if($pro['content'][2]->data_1 != null && $pro['content'][2]->data_2
+                                                    @if($proRelate['content'][2]->status_input == 3)
+                                                    @if($proRelate['content'][2]->data_1 != null &&
+                                                    $proRelate['content'][2]->data_2
                                                     != null)
-                                                    {{$pro['content'][2]->data_1}}-{{$pro['content'][2]->data_2}}{{$pro['content'][2]->unit_name}}
+                                                    {{$proRelate['content'][2]->data_1}}-{{$proRelate['content'][2]->data_2}}{{$proRelate['content'][2]->unit_name}}
                                                     @else
                                                     -
                                                     @endif
                                                     @else
-                                                    @if($pro['content'][2]->data_1 != null)
-                                                    <?php echo join(",",retextdata($datacheck2 , $pro['content'][2]->unit_name));?>
+                                                    @if($proRelate['content'][2]->data_1 != null)
+                                                    <?php echo join(",",retextdata($datacheck2 , $proRelate['content'][2]->unit_name));?>
                                                     @else
                                                     -
                                                     @endif
@@ -1521,16 +1567,17 @@
                                             <div class="out-current">
                                                 <h6 class="text-title-ft-sub">{{$staticContent['Output_Current']}}</h6>
                                                 <p class="text-ft-sub text-one">
-                                                    @if($pro['content'][0]->status_input == 3)
-                                                    @if($pro['content'][0]->data_1 != null && $pro['content'][0]->data_2
+                                                    @if($proRelate['content'][0]->status_input == 3)
+                                                    @if($proRelate['content'][0]->data_1 != null &&
+                                                    $proRelate['content'][0]->data_2
                                                     != null)
-                                                    {{$pro['content'][0]->data_1}}-{{$pro['content'][0]->data_2}}{{$pro['content'][0]->unit_name}}
+                                                    {{$proRelate['content'][0]->data_1}}-{{$proRelate['content'][0]->data_2}}{{$proRelate['content'][0]->unit_name}}
                                                     @else
                                                     -
                                                     @endif
                                                     @else
-                                                    @if($pro['content'][0]->data_1 != null)
-                                                    <?php echo join(",",retextdata($datacheck3 , $pro['content'][0]->unit_name));?>
+                                                    @if($proRelate['content'][0]->data_1 != null)
+                                                    <?php echo join(",",retextdata($datacheck3 , $proRelate['content'][0]->unit_name));?>
                                                     @else
                                                     -
                                                     @endif
@@ -1540,28 +1587,30 @@
                                             <div class="in-volt h-rvolt">
                                                 <h6 class="text-title-ft-sub">{{$staticContent['Input_Voltage']}}</h6>
                                                 <p class="text-ft-sub text-one">{!!
-                                                    iconv_substr(strip_tags($pro['content'][3]->value_text),0,15,'UTF-8')
+                                                    iconv_substr(strip_tags($proRelate['content'][3]->value_text),0,15,'UTF-8')
                                                     !!}</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="dimension">
                                         <h6 class="text-title-ft-sub"> {{$staticContent['Dimensions']}}
-                                            ({{$product[0]['unit_dimension_1']}} x W x {{$pro['unit_dimension']}})</h6>
-                                        @if(isset($product[0]['dimensionL']) && is_numeric($pro['dimensionL']) &&
-                                        isset($pro['dimensionW']) && isset($pro['dimensionD']))
-                                        <h6 class="text-ft-sub">{{$pro['dimensionL']}} x {{$pro['dimensionW']}} x
-                                            {{$pro['dimensionD']}} mm</h6>
+                                            ({{$proRelate['unit_dimension_1']}} x W x {{$proRelate['unit_dimension']}})
+                                        </h6>
+                                        @if(isset($proRelate['dimensionL']) && is_numeric($proRelate['dimensionL']) &&
+                                        isset($proRelate['dimensionW']) && isset($proRelate['dimensionD']))
+                                        <h6 class="text-ft-sub">{{$proRelate['dimensionL']}} x
+                                            {{$proRelate['dimensionW']}} x
+                                            {{$proRelate['dimensionD']}} mm</h6>
                                         <h6 class="text-ft-sub">
-                                            {{number_format($pro['dimensionL']* 0.0393701 ,2)}}” x
-                                            {{number_format($pro['dimensionW']* 0.0393701 ,2)}}” x
-                                            {{number_format($pro['dimensionD']* 0.0393701 ,2)}}”</h6>
+                                            {{number_format($proRelate['dimensionL']* 0.0393701 ,2)}}” x
+                                            {{number_format($proRelate['dimensionW']* 0.0393701 ,2)}}” x
+                                            {{number_format($proRelate['dimensionD']* 0.0393701 ,2)}}”</h6>
                                         @else
                                         <h6 class="text-ft-sub">{!!
-                                            iconv_substr(strip_tags($pro['dimensionL']),0,20,'UTF-8') !!}</h6>
+                                            iconv_substr(strip_tags($proRelate['dimensionL']),0,20,'UTF-8') !!}</h6>
                                         @endif
                                         <div class="btn btn-ft mt-2"
-                                            onclick="showNavCoparison({{$pro['pro_id']}} ,{{$pro['cate_id']}})">
+                                            onclick="showNavCoparison({{$proRelate['pro_id']}} ,{{$proRelate['cate_id']}})">
                                             {{$staticContent['Add_to_Compare']}}</div>
                                     </div>
                                 </div>
@@ -1600,26 +1649,26 @@
     function selectproduct(){
        var id =  $('#select-tech').val();
        $('#nav-output-tab'+id).click();
-       
+
     }
     var offsetTop = $(".box-tech-specs").offset().top;
     $(window).scroll(function() {
         var scrollTop = $(window).scrollTop();
         if(scrollTop >= 600) {
             $(".add-compare-nav").slideDown(500);
-            
+
         }else{
             $(".add-compare-nav").fadeOut();
-            
+
         }
         if(scrollTop >= 1500){
-            $(".add-compare-nav-mobile").slideDown(500);  
+            $(".add-compare-nav-mobile").slideDown(500);
         }else{
-            $(".add-compare-nav-mobile").fadeOut(); 
+            $(".add-compare-nav-mobile").fadeOut();
         }
     });
 
-    
+
     /* firt image product */
     $('<img src="" alt="" >').appendTo('.product-show-box');
     $('.product-show-box img').attr("src", $('.product-show-list div:first-child a').find('img').attr("src"));
@@ -1640,7 +1689,7 @@
         setTimeout(function() {
            $('#add_delayshow').removeClass('d-none');
       }, 10);
-        
+
         $('#preview').slick({
             vertical:true,
             verticalSwiping:true,
@@ -1693,14 +1742,14 @@
               html += '</a>';
              $('#linkdownloadsuc').html(html);
              $("#downloadgui-modal-success").modal();
-             
+
           });
         @endif
 
         @if(Session::has('errorSendMail'))
         $(document).ready(function() {
              $("#downloadgui-modal-failures").modal();
-             
+
           });
         @endif
 </script>

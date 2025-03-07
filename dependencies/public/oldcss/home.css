@@ -472,6 +472,7 @@ a:hover {
 .grid-item {
   display: flex;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .grid-sub-pic{
@@ -589,6 +590,7 @@ a:hover {
 
 .box-applications .grid-item {
   height: 250px;
+  position: relative;
 }
 
 .grid-sub-text img {
@@ -2181,7 +2183,7 @@ hr {
   }
 
   .grid-sub-text {
-    padding: 30px;
+    padding: 20px;
     overflow: hidden;
   }
 

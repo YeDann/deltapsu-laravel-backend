@@ -1531,12 +1531,14 @@ class FrontendController extends Controller
                 ->where('spt.local' ,$lang)
                 ->where('pr.product_id',$pro->pro_id)
                 ->where('p.enable_pro' ,1)
-                ->select('p.*', 'pt.*' ,'spt.name as catename' ,'spt.sub_pro_id as pro_categories_id' ,'sp.unit_dimension')
+                ->select('p.*', 'pt.*' ,'spt.name as catename' ,'spt.sub_pro_id as pro_categories_id' ,'sp.unit_dimension','sp.unit_dimension_1')
                 ->get();
 
 
                 $date = now();
                 $datefor = date('Y-m-d H:i:s',strtotime($date) - ((24*3600*365)*2));
+
+
           if(count($product_related) == 0){
             $product_related = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -1549,12 +1551,11 @@ class FrontendController extends Controller
             ->where('phc.categories_id',$pro->pro_categories_id)
             ->where('p.enable_pro',1)
             ->where('p.created_at','>',$datefor)
-            ->select('p.*', 'pt.*' ,'spt.name as catename' ,'spt.sub_pro_id as pro_categories_id' ,'sp.unit_dimension')
+            ->select('p.*', 'pt.*' ,'spt.name as catename' ,'spt.sub_pro_id as pro_categories_id' ,'sp.unit_dimension','sp.unit_dimension_1')
             ->limit(4)
             ->inRandomOrder()
             ->get();
           }
-
 
             $data_other = [];
             $data_check_poOther = [];
@@ -1572,6 +1573,7 @@ class FrontendController extends Controller
                     ->orderBy('ph.type_id' ,'asc')
                     ->select('pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
                     ->get();
+
                 if(!in_array($pro->pro_id, $data_check_poOther) && self::checkContentPro($pro->pro_id)){
                     array_push($data_check_poOther,$pro->pro_id);
                     $data_other[$j] = [
@@ -1580,6 +1582,7 @@ class FrontendController extends Controller
                         "catename"=>$pro->catename,
                         "cate_id"=>$pro->pro_categories_id,
                         "picture"=>$pro->picture,
+                        "unit_dimension_1"=>$pro->unit_dimension_1,
                         "unit_dimension"=>$pro->unit_dimension,
                         "status_product"=>$pro->status_product,
                         "content" =>$arraysub,
@@ -1599,7 +1602,7 @@ class FrontendController extends Controller
                 // ->where('st.status', 1)
                 ->select('st.id', 'stt.sortname','stt.name')
                 ->get();
-        // return dd($pro_code);
+        // return dd($data_other);
         if($findoldCate->url_item != $name ){
                     // return dd($pro_code, $findoldCate->url_item);
             return redirect()->to('/products/' . $findoldCate->url_item . '/' . $procode, 301);
@@ -2836,481 +2839,347 @@ class FrontendController extends Controller
         }
 
        }
-       public function searchAll($keysearchParm)
-       {
-          $keysearch = $this->validateInput($keysearchParm,'text',true);
-          $keypro  = str_replace("@", "/", $keysearch);
-          $keyParts2 = preg_split('/[\s-]+/', $keypro);
-        //   return dd($keyParts2);
-          $checkSpece =  preg_match('/\s/',$keypro);
-          $checkdash =  preg_match('/-/',$keypro);
+       private function searchProductOnly($keypro, $keyParts, $lang, $limit)
+        {
+            // Base product query with relationships
+            $query = DB::table('products as p')
+                ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+                ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+                ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+                ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+                ->leftJoin('product_tags as ptag', 'ptag.product_id', '=', 'p.pro_id')
+                ->leftJoin('product_optional_model as op', 'op.product_id', '=', 'p.pro_id')
+                ->where('spt.local', $lang)
+                ->where('st.local', $lang)
+                ->where('p.enable_pro', 1)
+                ->where(function ($q) use ($keypro, $keyParts) {
+                    $q->orWhere('p.pro_code', '=', $keypro)
+                    ->orWhere('op.optional_model',"=",$keypro)
+                    ->orWhere('ptag.tag',"=",$keypro)
+                    ->orWhere('st.name',"=",$keypro);
+                    // Search by parts with priority on matches at start of the string
+                    foreach ($keyParts as $part) {
+                        $q->orWhere('p.pro_code', 'LIKE', $part . '%')
+                        ->orWhere('p.pro_code', 'LIKE', '%' . $part . '%')
+                        ->orWhere('st.name', 'LIKE', '%' . $part . '%');
+                    }
+                })
+                ->orderByRaw("
+                    CASE
+                        WHEN p.pro_code = ? THEN 1
+                        WHEN p.pro_code LIKE ? THEN 2
+                        ELSE 5
+                    END", [$keypro, $keyParts[0] . '%']) // Ensure proper parameter binding
+                ->select(
+                    'p.pro_id',
+                    'p.pro_code',
+                    'p.picture',
+                    'p.status_product',
+                    'p.dimensionL',
+                    'p.dimensionW',
+                    'p.dimensionD',
+                    'sp.url_item',
+                    'spt.name as catename',
+                    'phc.categories_id',
+                    'st.title as seName',
+                    'ptag.tag',
+                    'op.optional_model'
+                )
+                ->distinct();
 
-           $lang = App::getLocale();
-           $checkArr = [];
-           $query = DB::table('products as p')
-           ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-           ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-           ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-           ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-           ->where('spt.local' ,$lang)
-           ->where('st.local' ,$lang)
-           ->where('p.enable_pro' ,1);
+            // Paginate results (e.g., 50 per page)
+            $products = $query->paginate($limit);
 
+            return $products;
+        }
 
-            if($checkSpece){
-            $keyarr = explode(" ",$keypro);
-            if(isset($keyarr[0])){
-            $query->where('p.pro_code', 'LIKE', '%'.$keyarr[0].'%');
-            }
-            if(isset($keyarr[1])){
-             $query->where('p.pro_code', 'LIKE', '%'.$keyarr[1].'%');
-            }
-            }else if($checkdash){
-            $keyarr2 = explode("-",$keypro);
-            if(isset($keyarr2[0])){
-             $query->where('p.pro_code', 'LIKE', '%'.$keyarr2[0].'%');
-            }
-            if(isset($keyarr2[1])){
-             $query->where('p.pro_code', 'LIKE', '%'.$keyarr2[1].'%');
-             }
-             }else{
-              $query->where('p.pro_code', 'LIKE', '%'.$keypro.'%');
-             }
-             $query->select('p.*', 'spt.name as catename', 'sp.url_item', 'phc.categories_id', 'st.title as seName');
-           $products = $query->get();
+     public function searchAll($keySearchQuery) {
+            $keysearch = $this->validateInput($keySearchQuery, 'text', true);
+            $keypro = str_replace("@", "/", $keysearch);
+            $lang = App::getLocale();
+            $limit_product = 100;
+            $limit_other = 50;
 
-        //    $query = DB::table('products as p')
-        //     ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-        //     ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-        //     ->join('sub_pro_categories_translation as spt', function ($join) use ($lang) {
-        //         $join->on('spt.sub_pro_id', '=', 'phc.categories_id')
-        //             ->where('spt.local', '=', $lang);
-        //     })
-        //     ->join('series_translations as st', function ($join) use ($lang) {
-        //         $join->on('st.series_id', '=', 'p.series_id')
-        //             ->where('st.local', '=', $lang);
-        //     })
-        //     ->where('p.enable_pro', 1);
-
-        // // Optimize the splitting logic
-        //     $keyParts = preg_split('/[\s-]+/', $keypro);
-        //     $query->where(function ($q) use ($keyParts) {
-
-        //         foreach ($keyParts as $part) {
-
-        //             $q->orWhere('p.pro_code', 'LIKE', '%' . $part . '%');
-        //         }
-        //     });
-
-        // // Select fields
-        // $query->select('p.*', 'spt.name as catename', 'sp.url_item', 'phc.categories_id', 'st.title as seName');
-        // // Execute query
-        // $products = $query->get();
+            // Split search term into parts (handles both spaces and dashes)
+            $keyParts = preg_split('/[\s-]+/', $keypro);
+            $checkArr = [];
 
 
-           $data = [];
-           $i = 0;
-          foreach($products as $pro){
-              $arraysub = [];
-              $tags = [];
-              $optional_models = [];
-              $arraysub = DB::table('product_has_property as ph')
-              ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
-              ->join('product_field as pf','pf.id' ,'=','ph.type_id')
-              ->join('product_field_translation as pft','ph.type_id' ,'=','pft.product_field_id')
-              ->where('ph.product_id',$pro->pro_id)
-              ->where('pht.local' ,'en')
-              ->where('pft.local' ,$lang)
-              ->whereIn('ph.type_id',[4,3,8,31])
-              ->orderBy('ph.type_id' ,'asc')
-              ->select('pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
-              ->get();
+            $query = DB::table('products as p')
+                    ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+                    ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+                    ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+                    ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+                    ->leftJoin('product_tags as ptag', 'ptag.product_id', '=', 'p.pro_id')
+                    ->leftJoin('product_optional_model as op', 'op.product_id', '=', 'p.pro_id')
+                    ->where('spt.local', $lang)
+                    ->where('st.local', $lang)
+                    ->where('p.enable_pro', 1)
+                    ->where(function ($q) use ($keypro, $keyParts) {
+                        $q->orWhere('p.pro_code', '=',  $keypro)
+                        ->orWhere('st.title', 'LIKE', '%' . $keypro . '%')
+                        ->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%')
+                        ->orWhere('op.optional_model', 'LIKE', '%' . $keypro . '%');
+                        foreach ($keyParts as $part) {
+                            $q->orWhere('p.pro_code', 'LIKE', $part . '%')
+                            ->orWhere('p.pro_code', 'LIKE', '%' . $part . '%')
+                            ->orWhere('st.title', 'LIKE', $part . '%')
+                            ->orWhere('ptag.tag', 'LIKE', $part . '%')
+                            ->orWhere('op.optional_model', 'LIKE', $part . '%');
+                        }
+                    })
+                    ->select(
+                        'p.pro_id',
+                        'p.pro_code',
+                        'p.picture',
+                        'p.status_product',
+                        'p.dimensionL',
+                        'p.dimensionW',
+                        'p.dimensionD',
+                        DB::raw('MAX(sp.url_item) as url_item'),
+                        DB::raw('MAX(spt.name) as catename'),
+                        DB::raw('MAX(phc.categories_id) as categories_id'),
+                        DB::raw('MAX(st.title) as seName'),
+                        DB::raw('GROUP_CONCAT(DISTINCT ptag.tag) as tags'),
+                        DB::raw('GROUP_CONCAT(DISTINCT op.optional_model) as optional_models')
+                    )
+                    ->groupBy(
+                        'p.pro_id',
+                        'p.pro_code',
+                        'p.picture',
+                        'p.status_product',
+                        'p.dimensionL',
+                        'p.dimensionW',
+                        'p.dimensionD'
+                    )
+                    ->orderByRaw("
+                        CASE
+                            WHEN p.pro_code LIKE ? THEN 1
+                            WHEN p.pro_code LIKE ? THEN 2
+                            WHEN MAX(st.title) LIKE ? THEN 3
+                            WHEN MAX(ptag.tag) LIKE ? THEN 4
+                            ELSE 5
+                        END",
+                        [$keypro, $keyParts[0] . '%', $keyParts[0] . '%', $keyParts[0] . '%']
+                    )
+                    ->limit($limit_product);
 
+            $products =  $query->get();
+           // Fetch additional product properties in bulk
+            $productIds = $products->pluck('pro_id')->toArray();
+            $properties = DB::table('product_has_property as ph')
+                ->join('product_has_property_translation as pht', 'ph.per_id', '=', 'pht.per_fk_id')
+                ->join('product_field as pf', 'pf.id', '=', 'ph.type_id')
+                ->join('product_field_translation as pft', 'ph.type_id', '=', 'pft.product_field_id')
+                ->whereIn('ph.product_id', $productIds)
+                ->where('pht.local', 'en')
+                ->where('pft.local', $lang)
+                ->whereIn('ph.type_id', [4, 3, 8, 31])
+                ->orderBy('ph.type_id', 'asc')
+                ->select('pht.value_text', 'ph.*', 'pft.field_name as fieldCate', 'pf.unit_name')
+                ->get()
+                ->groupBy('product_id');
 
+            $tags = DB::table('product_tags as ptag')
+                ->whereIn('ptag.product_id', $productIds)
+                ->where('ptag.tag', '!=', ' ')
+                ->select('ptag.*')
+                ->get()
+                ->groupBy('product_id');
 
-              $tags = DB::table('product_tags as ptag')
-              ->where('ptag.product_id' ,$pro->pro_id)
-              ->where('ptag.tag','!=',' ')
-              ->select('ptag.*')
-              ->get();
-              $optional_models = DB::table('product_optional_model as op')
-              ->where('op.product_id' ,$pro->pro_id)
-              ->select('op.*')
-              ->get();
-             if (!in_array($pro->pro_id, $checkArr) && self::checkContentPro($pro->pro_id)){
-                  array_push($checkArr, $pro->pro_id);
-                    $data[$i] = [
-                        "pro_id"=>$pro->pro_id,
-                        "tag_m"=>'',
-                        "url_item"=>$pro->url_item,
-                        "pro_code"=>$pro->pro_code,
-                        "catename"=>$pro->catename,
-                        "cateid"=>$pro->categories_id,
-                        "picture"=>$pro->picture,
-                        "status_product"=>$pro->status_product,
-                        "content" =>$arraysub,
-                        "tags" =>$tags,
-                        "optional_models" => $optional_models,
-                        "dimensionL"=>$pro->dimensionL,
-                        "dimensionW"=>$pro->dimensionW,
-                        "dimensionD"=>$pro->dimensionD,
-                    ];
+            $optionalModels = DB::table('product_optional_model as op')
+                ->whereIn('op.product_id', $productIds)
+                ->select('op.*')
+                ->get()
+                ->groupBy('product_id');
 
-              }
-              $i++;
-          }
+            // Build the result set
 
-          $query2 = DB::table('products as p')
-          ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-          ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-          ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-          ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-          ->where('spt.local' ,$lang)
-          ->where('st.local' ,$lang)
-          ->where('p.enable_pro' ,1)
-          ->where('st.title', 'LIKE', '%'.$keypro.'%');
-          $query2->select('p.*','spt.name as catename' ,'sp.url_item' ,'phc.categories_id' ,'st.title as seName');
+            $pro_results = $products->map(function ($pro) use ($properties, $tags, $optionalModels) {
+                if (!self::checkContentPro($pro->pro_id)) {
+                    return null;
+                }
 
-          $products_se = $query2->get();
+                return [
+                    'pro_id' => $pro->pro_id,
+                    'tag_m' => $pro->tag ?? $pro->optional_model ?? '',
+                    'url_item' => $pro->url_item,
+                    'pro_code' => $pro->pro_code,
+                    'catename' => $pro->catename,
+                    'cateid' => $pro->categories_id,
+                    'picture' => $pro->picture,
+                    'status_product' => $pro->status_product,
+                    'content' => $properties[$pro->pro_id] ?? collect([]),
+                    'tags' => $tags[$pro->pro_id] ?? collect([]),
+                    'optional_models' => $optionalModels[$pro->pro_id] ?? collect([]),
+                    'dimensionL' => $pro->dimensionL,
+                    'dimensionW' => $pro->dimensionW,
+                    'dimensionD' => $pro->dimensionD,
+                ];
+            })->filter()->values();
 
-
-          $data_series = [];
-          $i = 0;
-         foreach($products_se as $pro){
-             $arraysub = [];
-             $tags = [];
-             $tags = [];
-             $optional_models = [];
-             $arraysub = DB::table('product_has_property as ph')
-             ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
-             ->join('product_field as pf','pf.id' ,'=','ph.type_id')
-             ->join('product_field_translation as pft','ph.type_id' ,'=','pft.product_field_id')
-             ->where('ph.product_id',$pro->pro_id)
-             ->where('pht.local' ,'en')
-             ->where('pft.local' ,$lang)
-             ->whereIn('ph.type_id',[4,3,8,31])
-             ->orderBy('ph.type_id' ,'asc')
-             ->select('pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
-             ->get();
-
-             $tags = DB::table('product_tags as ptag')
-             ->where('ptag.product_id' ,$pro->pro_id)
-             ->where('ptag.tag','!=',' ')
-             ->select('ptag.*')
-             ->get();
-             $optional_models = DB::table('product_optional_model as op')
-              ->where('op.product_id' ,$pro->pro_id)
-              ->select('op.*')
-              ->get();
-            if (!in_array($pro->pro_id, $checkArr) && self::checkContentPro($pro->pro_id)){
-                 array_push($checkArr, $pro->pro_id);
-                   $data_series[$i] = [
-                       "pro_id"=>$pro->pro_id,
-                       "tag_m"=>'',
-                       "url_item"=>$pro->url_item,
-                       "pro_code"=>$pro->pro_code,
-                       "catename"=>$pro->catename,
-                       "cateid"=>$pro->categories_id,
-                       "picture"=>$pro->picture,
-                       "status_product"=>$pro->status_product,
-                       "content" =>$arraysub,
-                       "tags" =>$tags,
-                       "optional_models" => $optional_models,
-                       "dimensionL"=>$pro->dimensionL,
-                       "dimensionW"=>$pro->dimensionW,
-                       "dimensionD"=>$pro->dimensionD,
-                   ];
-
-             }
-             $i++;
-         }
-
-         $pro_collec = array_merge($data, $data_series);
-
-          $Protags  = DB::table('product_tags as ptag')
-           ->join('products as p', 'p.pro_id', '=', 'ptag.product_id')
-           ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-           ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-           ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-           ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-           ->where('spt.local' ,$lang)
-           ->where('st.local' ,$lang)
-           ->where('p.enable_pro' ,1)
-           ->where('ptag.tag', 'LIKE', '%'.$keypro.'%')
-           ->select('p.*','spt.name as catename','phc.categories_id','sp.url_item' ,'st.title as seName','ptag.*')
-           ->get();
-        //    return dd($products);
-
-           $data1 = [];
-           $i = 0;
-          foreach($Protags as $pro2){
-              $arraysub2 = [];
-              $tags2 = [];
-              $optional_models2 = [];
-              $arraysub2 = DB::table('product_has_property as ph')
-              ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
-              ->join('product_field as pf','pf.id' ,'=','ph.type_id')
-              ->join('product_field_translation as pft','ph.type_id' ,'=','pft.product_field_id')
-              ->where('ph.product_id',$pro2->pro_id)
-              ->where('pht.local' ,'en')
-              ->where('pft.local' ,$lang)
-              ->whereIn('ph.type_id',[4,3,8,31])
-              ->orderBy('ph.type_id' ,'asc')
-              ->select('pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
-              ->get();
-              $tags2 = DB::table('product_tags as ptag')
-              ->where('ptag.product_id' ,$pro2->pro_id)
-              ->where('ptag.tag','!=',' ')
-              ->select('ptag.*')
-              ->get();
-              $optional_models2 = DB::table('product_optional_model as op')
-              ->where('op.product_id' ,$pro2->pro_id)
-              ->select('op.*')
-              ->get();
-
-              if (!in_array($pro2->pro_id, $checkArr) && self::checkContentPro($pro2->pro_id)){
-                array_push($checkArr, $pro2->pro_id);
-
-              $data1[$i] = [
-                  "pro_id"=>$pro2->pro_id,
-                  "tag_m"=>$pro2->tag,
-                  "pro_code"=>$pro2->pro_code,
-                  "url_item"=>$pro2->url_item,
-                  "catename"=>$pro2->catename,
-                  "cateid"=>$pro2->categories_id,
-                  "picture"=>$pro2->picture,
-                  "status_product"=>$pro2->status_product,
-                  "content" =>$arraysub2,
-                  "tags" =>$tags2,
-                  "optional_models" =>$optional_models2,
-                  "dimensionL"=>$pro2->dimensionL,
-                  "dimensionW"=>$pro2->dimensionW,
-                  "dimensionD"=>$pro2->dimensionD,
-              ];
-            }
-              $i++;
-          }
-
-          $pro_collec_2 = array_merge($pro_collec, $data1);
-
-
-          $ProOptionalModel  = DB::table('product_optional_model as op')
-           ->join('products as p', 'p.pro_id', '=', 'op.product_id')
-           ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-           ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-           ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-           ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-           ->where('spt.local' ,$lang)
-           ->where('st.local' ,$lang)
-           ->where('p.enable_pro' ,1)
-           ->where('op.optional_model', 'LIKE', '%'.$keypro.'%')
-           ->select('p.*','spt.name as catename','phc.categories_id','sp.url_item' ,'st.title as seName','op.*')
-           ->get();
-        //    return dd($products);
-
-           $data1 = [];
-           $i = 0;
-          foreach($ProOptionalModel as $pro3){
-              $arraysub3 = [];
-              $tags3 = [];
-              $optional_models3 = [];
-              $arraysub3 = DB::table('product_has_property as ph')
-              ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
-              ->join('product_field as pf','pf.id' ,'=','ph.type_id')
-              ->join('product_field_translation as pft','ph.type_id' ,'=','pft.product_field_id')
-              ->where('ph.product_id',$pro3->pro_id)
-              ->where('pht.local' ,'en')
-              ->where('pft.local' ,$lang)
-              ->whereIn('ph.type_id',[4,3,8,31])
-              ->orderBy('ph.type_id' ,'asc')
-              ->select('pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
-              ->get();
-              $tags3 = DB::table('product_tags as ptag')
-              ->where('ptag.product_id' ,$pro3->pro_id)
-              ->select('ptag.*')
-              ->get();
-              $optional_models3 = DB::table('product_optional_model as op')
-              ->where('op.product_id' ,$pro3->pro_id)
-              ->select('op.*')
-              ->get();
-
-              if (!in_array($pro3->pro_id, $checkArr) && self::checkContentPro($pro3->pro_id)){
-                array_push($checkArr, $pro3->pro_id);
-
-              $data1[$i] = [
-                  "pro_id"=>$pro3->pro_id,
-                  "tag_m"=>$pro3->optional_model,
-                  "pro_code"=>$pro3->pro_code,
-                  "url_item"=>$pro3->url_item,
-                  "catename"=>$pro3->catename,
-                  "cateid"=>$pro3->categories_id,
-                  "picture"=>$pro3->picture,
-                  "status_product"=>$pro3->status_product,
-                  "content" =>$arraysub3,
-                  "tags" =>$tags3,
-                  "optional_models" =>$optional_models3,
-                  "dimensionL"=>$pro3->dimensionL,
-                  "dimensionW"=>$pro3->dimensionW,
-                  "dimensionD"=>$pro3->dimensionD,
-              ];
-            }
-              $i++;
-          }
-          $pro_results  = [];
-          $pro_results = array_merge($pro_collec_2, $data1);
-
-          $news = DB::table('product_news_has_categories as pnc')
-          ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
-          ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
-          ->join('news_type as nt' ,'nt.id' ,'=','pnc.categories_id')
-          ->where('ct.local',  $lang)
-          ->where('c.content_type', '=', 'news')
-          ->where('c.status',  1)
-          ->where('ct.title', 'LIKE', '%'.$keysearch.'%')
-          ->select('c.*' ,'ct.*','nt.name as cateName','pnc.categories_id as typeId')
-          ->orderBy('c.date_publish', 'desc')
-          ->distinct()
-          ->get();
-            $events = DB::table('contents as c')
+            $news = DB::table('product_news_has_categories as pnc')
+            ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
             ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
-            ->where('ct.local', $lang)
-            ->where('c.content_type', '=', 'event')
-            ->where('c.status',  1)
-            ->where('ct.title', 'LIKE', '%'.$keysearch.'%')
-            ->select('c.*' ,'ct.*')
-            ->orderBy('c.date_publish', 'desc')
-            ->distinct()
-            ->get();
-
-            $articles = DB::table('article_has_categories as anc')
-            ->join('contents as c' ,'c.id' ,'=','anc.content_id')
-            ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
-            ->join('tech_type as ty' ,'ty.id' ,'=','anc.categories_id')
-            ->join('tech_type_translation as tyt' ,'ty.id' ,'=','tyt.tech_id')
+            ->join('news_type as nt' ,'nt.id' ,'=','pnc.categories_id')
             ->where('ct.local',  $lang)
-            ->where('tyt.local',  $lang)
-            ->where('ct.title', 'LIKE', '%'.$keysearch.'%')
+            ->where('c.content_type', '=', 'news')
             ->where('c.status',  1)
-            ->where('c.content_type', '=', 'blog')
-            ->select('c.*' ,'ct.*','tyt.name as cateName' ,'anc.categories_id as typeId')
+            ->where('ct.title', 'LIKE', '%'.$keysearch.'%')
+            ->select('c.*' ,'ct.*','nt.name as cateName','pnc.categories_id as typeId')
             ->orderBy('c.date_publish', 'desc')
             ->distinct()
+            ->limit($limit_other)
             ->get();
 
-            $faqs = DB::table('faq as f')
-            ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
-            ->where('ft.local', '=',  $lang)
-            ->where('f.status', 1)
-            ->where('ft.title', 'LIKE', '%'.$keysearch.'%')
-            ->select('f.*' ,'ft.*')
-            ->get();
-            $offices = [];
-            $officesChk = [];
-            $officesSer = DB::table('office as f')
-            ->join('office_translations as oft', 'f.id', '=', 'oft.fk_office_id')
-            ->join('continents as c', 'c.id', '=', 'f.continent_id')
-            ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
-            ->where('oft.local', '=',  $lang)
-            ->where('ct.local', '=',  $lang)
-            ->where('oft.title', 'LIKE', '%'.$keysearch.'%')
-            ->Orwhere('ct.name', 'LIKE', '%'.$keysearch.'%')
-            ->where('f.type_id', '=',  1)
-            ->select('f.*' ,'oft.*')
-            ->distinct()
-            ->get();
+                $events = DB::table('contents as c')
+                ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'event')
+                ->where('c.status',  1)
+                ->where('ct.title', 'LIKE', '%'.$keysearch.'%')
+                ->select('c.*' ,'ct.*')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
 
-            foreach($officesSer as $offi){
-                if(!in_array($offi->id,$officesChk)){
-                    array_push($officesChk,$offi->id);
-                    array_push($offices,$offi);
+                $articles = DB::table('article_has_categories as anc')
+                ->join('contents as c' ,'c.id' ,'=','anc.content_id')
+                ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
+                ->join('tech_type as ty' ,'ty.id' ,'=','anc.categories_id')
+                ->join('tech_type_translation as tyt' ,'ty.id' ,'=','tyt.tech_id')
+                ->where('ct.local',  $lang)
+                ->where('tyt.local',  $lang)
+                ->where('ct.title', 'LIKE', '%'.$keysearch.'%')
+                ->where('c.status',  1)
+                ->where('c.content_type', '=', 'blog')
+                ->select('c.*' ,'ct.*','tyt.name as cateName' ,'anc.categories_id as typeId')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
+                $faqs = DB::table('faq as f')
+                ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
+                ->where('ft.local', '=',  $lang)
+                ->where('f.status', 1)
+                ->where('ft.title', 'LIKE', '%'.$keysearch.'%')
+                ->select('f.*' ,'ft.*')
+                ->limit($limit_other)
+                ->get();
+
+                $offices = [];
+                $officesChk = [];
+                $officesSer = DB::table('office as f')
+                ->join('office_translations as oft', 'f.id', '=', 'oft.fk_office_id')
+                ->join('continents as c', 'c.id', '=', 'f.continent_id')
+                ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
+                ->where('oft.local', '=',  $lang)
+                ->where('ct.local', '=',  $lang)
+                ->where('oft.title', 'LIKE', '%'.$keysearch.'%')
+                ->Orwhere('ct.name', 'LIKE', '%'.$keysearch.'%')
+                ->where('f.type_id', '=',  1)
+                ->select('f.*' ,'oft.*')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
+                foreach($officesSer as $offi){
+                    if(!in_array($offi->id,$officesChk)){
+                        array_push($officesChk,$offi->id);
+                        array_push($offices,$offi);
+                    }
+
                 }
 
-            }
+                $continents_office = DB::table('continents as c')
+                ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
+                ->where('type_id' ,1)
+                ->where('ct.local', '=', $lang)
+                ->select('c.*' ,'ct.*')
+                ->limit($limit_other)
+                ->get();
 
-            $continents_office = DB::table('continents as c')
-            ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
-            ->where('type_id' ,1)
-            ->where('ct.local', '=', $lang)
-            ->select('c.*' ,'ct.*')
-            ->get();
+                $continents_dis = DB::table('continents as c')
+                ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
+                ->where('type_id' ,2)
+                ->where('ct.local', '=', $lang)
+                ->select('c.*' ,'ct.*')
+                ->limit($limit_other)
+                ->get();
 
-            $continents_dis = DB::table('continents as c')
-            ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
-            ->where('type_id' ,2)
-            ->where('ct.local', '=', $lang)
-            ->select('c.*' ,'ct.*')
-            ->get();
+                $distributor = [];
+                $distriChk = [];
 
-            $distributor = [];
-            $distriChk = [];
-
-            $distrsech = DB::table('office as f')
-            ->join('office_translations as oft', 'f.id', '=', 'oft.fk_office_id')
-            ->join('continents as c', 'c.id', '=', 'f.continent_id')
-            ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
-            ->where('oft.local', '=',  $lang)
-            ->where('ct.local', '=',  $lang)
-            ->where('oft.title', 'LIKE', '%'.$keysearch.'%')
-            ->Orwhere('ct.name', 'LIKE', '%'.$keysearch.'%')
-            ->where('f.type_id', '=', 2)
-            ->select('f.*' ,'oft.*')
-            ->distinct()
-            ->get();
+                $distrsech = DB::table('office as f')
+                ->join('office_translations as oft', 'f.id', '=', 'oft.fk_office_id')
+                ->join('continents as c', 'c.id', '=', 'f.continent_id')
+                ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
+                ->where('oft.local', '=',  $lang)
+                ->where('ct.local', '=',  $lang)
+                ->where('oft.title', 'LIKE', '%'.$keysearch.'%')
+                ->Orwhere('ct.name', 'LIKE', '%'.$keysearch.'%')
+                ->where('f.type_id', '=', 2)
+                ->select('f.*' ,'oft.*')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
 
 
-            foreach($distrsech as $des){
-                if(!in_array($des->id,$distriChk)){
-                    array_push($distriChk,$des->id);
-                    array_push($distributor,$des);
+                foreach($distrsech as $des){
+                    if(!in_array($des->id,$distriChk)){
+                        array_push($distriChk,$des->id);
+                        array_push($distributor,$des);
+                    }
+
                 }
 
-            }
 
 
+                $applications =  DB::table('application as ap')
+                ->join('application_translation as apt','ap.id','=','apt.app_id')
+                ->where('apt.local','=',$lang)
+                ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,'apt.content' ,'apt.overview')
+                ->where('apt.name', 'LIKE', '%'.$keysearch.'%')
+                ->orderBy('ap.order_seq' ,'asc')
+                ->limit($limit_other)
+                ->get();
 
-            $applications =  DB::table('application as ap')
-            ->join('application_translation as apt','ap.id','=','apt.app_id')
-            ->where('apt.local','=',$lang)
-            ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,'apt.content' ,'apt.overview')
-            ->where('apt.name', 'LIKE', '%'.$keysearch.'%')
-            ->orderBy('ap.order_seq' ,'asc')
-            ->get();
+                $margetCate = DB::table('permission_marketcate as permar')
+                ->join('marketing_resource_cate as mc', 'permar.market_cate_id', '=', 'mc.cate_id')
+                ->join('marketing_resource_cate_translations as mct', 'mc.cate_id', '=', 'mct.mk_fk_id')
+                ->where('mct.local', '=',  $lang)
+                ->where('permar.permission_id', '=', 3)
+                ->select('mc.*' ,'mct.*')
+                ->limit($limit_other)
+                ->get();
 
-            $margetCate = DB::table('permission_marketcate as permar')
-            ->join('marketing_resource_cate as mc', 'permar.market_cate_id', '=', 'mc.cate_id')
-            ->join('marketing_resource_cate_translations as mct', 'mc.cate_id', '=', 'mct.mk_fk_id')
-            ->where('mct.local', '=',  $lang)
-            ->where('permar.permission_id', '=', 3)
-            ->select('mc.*' ,'mct.*')
-            ->get();
+                $margeting = DB::table('marketing_resource as mr')
+                ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+                ->where('mrt.local', '=', $lang)
+                ->whereIn('mr.cate_id',[1,2])
+                ->where('mrt.name', 'LIKE', '%'.$keysearch.'%')
+                ->select('mr.*' ,'mrt.*')
+                ->limit($limit_other)
+                ->get();
 
-             $margeting = DB::table('marketing_resource as mr')
-            ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
-            ->where('mrt.local', '=', $lang)
-            ->whereIn('mr.cate_id',[1,2])
-            ->where('mrt.name', 'LIKE', '%'.$keysearch.'%')
-            ->select('mr.*' ,'mrt.*')
-            ->get();
-
-
-
-
-
-           return  view('front-end.resultsearch')
-           ->with('applications',$applications)
-           ->with('margetCate',$margetCate)
-           ->with('margeting',$margeting)
-           ->with('pro_results',$pro_results)
-           ->with('news',$news)
-           ->with('events',$events)
-           ->with('articles',$articles)
-           ->with('offices',$offices)
-           ->with('distributor',$distributor)
-           ->with('continents_office',$continents_office)
-           ->with('continents_dis',$continents_dis)
-           ->with('faqs',$faqs)
-           ->with('keysearch',$keysearch);
+            return  view('front-end.resultsearch')
+            ->with('applications',$applications)
+            ->with('margetCate',$margetCate)
+            ->with('margeting',$margeting)
+            ->with('pro_results',$pro_results)
+            ->with('news',$news)
+            ->with('events',$events)
+            ->with('articles',$articles)
+            ->with('offices',$offices)
+            ->with('distributor',$distributor)
+            ->with('continents_office',$continents_office)
+            ->with('continents_dis',$continents_dis)
+            ->with('faqs',$faqs)
+            ->with('keysearch',$keysearch);
        }
+
        public function oldDoc($name){
         return redirect()->route('index','home');
        }
@@ -3334,217 +3203,272 @@ class FrontendController extends Controller
        }
 
 
-       public function searchByTag($keysearchParm)
+       public function searchByTag($keySearchQuery)
        {
-           $keysearch = $this->validateInput($keysearchParm,'text',true);
-           $keypro  = str_replace("@", "/", $keysearch);
-           $lang = App::getLocale();
-           $products  = DB::table('product_tags as ptag')
-           ->join('products as p', 'p.pro_id', '=', 'ptag.product_id')
-           ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-           ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-           ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-           ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-           ->where('spt.local' ,$lang)
-           ->where('st.local' ,$lang)
-           ->where('p.enable_pro' ,1)
-           ->where('ptag.tag', 'LIKE', '%'.$keypro.'%')
-           ->select('p.*','spt.name as catename','phc.categories_id' ,'sp.url_item' ,'st.title as seName','ptag.*')
-           ->get();
+        $keysearch = $this->validateInput($keySearchQuery, 'text', true);
+            $keypro = str_replace("@", "/", $keysearch);
+            $lang = App::getLocale();
+            $limit_product = 100;
+            $limit_other = 50;
+
+            // Split search term into parts (handles both spaces and dashes)
+            $keyParts = preg_split('/[\s-]+/', $keypro);
+            $checkArr = [];
 
 
-           $data = [];
-           $i = 0;
-          foreach($products as $pro){
-              $arraysub = [];
-              $tags = [];
-              $optional_models = [];
-              $arraysub = DB::table('product_has_property as ph')
-              ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
-              ->join('product_field as pf','pf.id' ,'=','ph.type_id')
-              ->join('product_field_translation as pft','ph.type_id' ,'=','pft.product_field_id')
-              ->where('ph.product_id',$pro->pro_id)
-              ->where('pht.local' ,'en')
-              ->where('pft.local' ,$lang)
-              ->whereIn('ph.type_id',[4,3,8,31])
-              ->orderBy('ph.type_id' ,'asc')
-              ->select('pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
-              ->get();
-              $tags = DB::table('product_tags as ptag')
-              ->where('ptag.product_id' ,$pro->pro_id)
-              ->select('ptag.*')
-              ->get();
-              $optional_models = DB::table('product_optional_model as op')
-              ->where('op.product_id' ,$pro->pro_id)
-              ->select('op.*')
-              ->get();
+            $query = DB::table('products as p')
+                    ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+                    ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+                    ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+                    ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+                    ->leftJoin('product_tags as ptag', 'ptag.product_id', '=', 'p.pro_id')
+                    ->leftJoin('product_optional_model as op', 'op.product_id', '=', 'p.pro_id')
+                    ->where('spt.local', $lang)
+                    ->where('st.local', $lang)
+                    ->where('p.enable_pro', 1)
+                    ->where(function ($q) use ($keypro, $keyParts) {
+                        $q->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%');
 
-              $data[$i] = [
-                  "pro_id"=>$pro->pro_id,
-                  "tag_m"=>$pro->tag,
-                  "pro_code"=>$pro->pro_code,
-                  "url_item"=>$pro->url_item,
-                  "catename"=>$pro->catename,
-                  "cateid"=>$pro->categories_id,
-                  "picture"=>$pro->picture,
-                  "status_product"=>$pro->status_product,
-                  "content" =>$arraysub,
-                  "tags" =>$tags,
-                  "optional_models" =>$optional_models,
-                  "dimensionL"=>$pro->dimensionL,
-                  "dimensionW"=>$pro->dimensionW,
-                  "dimensionD"=>$pro->dimensionD,
-              ];
-              $i++;
-          }
-        //  return dd($data);
+                    })
+                    ->select(
+                        'p.pro_id',
+                        'p.pro_code',
+                        'p.picture',
+                        'p.status_product',
+                        'p.dimensionL',
+                        'p.dimensionW',
+                        'p.dimensionD',
+                        DB::raw('MAX(sp.url_item) as url_item'),
+                        DB::raw('MAX(spt.name) as catename'),
+                        DB::raw('MAX(phc.categories_id) as categories_id'),
+                        DB::raw('MAX(st.title) as seName'),
+                        DB::raw('GROUP_CONCAT(DISTINCT ptag.tag) as tags'),
+                        DB::raw('GROUP_CONCAT(DISTINCT op.optional_model) as optional_models')
+                    )
+                    ->groupBy('p.pro_id')
+                    ->orderByRaw("
+                        CASE
+                            WHEN MAX(ptag.tag) LIKE ? THEN 1
+                            ELSE 2
+                        END",
+                        [$keypro]
+                    )
+                    ->limit($limit_product);
 
-          $news = DB::table('product_news_has_categories as pnc')
-          ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
-          ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
-          ->join('news_type as nt' ,'nt.id' ,'=','pnc.categories_id')
-          ->where('ct.local',  $lang)
-          ->where('c.content_type', '=', 'news')
-          ->where('c.status',  1)
-          ->where('ct.title', 'LIKE', '%'.$keysearch.'%')
-          ->select('c.*' ,'ct.*','nt.name as cateName','pnc.categories_id as typeId')
-          ->orderBy('c.date_publish', 'desc')
-          ->distinct()
-          ->get();
-            $events = DB::table('contents as c')
+            $products =  $query->get();
+           // Fetch additional product properties in bulk
+            $productIds = $products->pluck('pro_id')->toArray();
+            $properties = DB::table('product_has_property as ph')
+                ->join('product_has_property_translation as pht', 'ph.per_id', '=', 'pht.per_fk_id')
+                ->join('product_field as pf', 'pf.id', '=', 'ph.type_id')
+                ->join('product_field_translation as pft', 'ph.type_id', '=', 'pft.product_field_id')
+                ->whereIn('ph.product_id', $productIds)
+                ->where('pht.local', 'en')
+                ->where('pft.local', $lang)
+                ->whereIn('ph.type_id', [4, 3, 8, 31])
+                ->orderBy('ph.type_id', 'asc')
+                ->select('pht.value_text', 'ph.*', 'pft.field_name as fieldCate', 'pf.unit_name')
+                ->get()
+                ->groupBy('product_id');
+
+            $tags = DB::table('product_tags as ptag')
+                ->whereIn('ptag.product_id', $productIds)
+                ->where('ptag.tag', '!=', ' ')
+                ->select('ptag.*')
+                ->get()
+                ->groupBy('product_id');
+
+            $optionalModels = DB::table('product_optional_model as op')
+                ->whereIn('op.product_id', $productIds)
+                ->select('op.*')
+                ->get()
+                ->groupBy('product_id');
+
+            // Build the result set
+
+            $pro_results = $products->map(function ($pro) use ($properties, $tags, $optionalModels) {
+                if (!self::checkContentPro($pro->pro_id)) {
+                    return null;
+                }
+
+                return [
+                    'pro_id' => $pro->pro_id,
+                    'tag_m' => $pro->tag ?? $pro->optional_model ?? '',
+                    'url_item' => $pro->url_item,
+                    'pro_code' => $pro->pro_code,
+                    'catename' => $pro->catename,
+                    'cateid' => $pro->categories_id,
+                    'picture' => $pro->picture,
+                    'status_product' => $pro->status_product,
+                    'content' => $properties[$pro->pro_id] ?? collect([]),
+                    'tags' => $tags[$pro->pro_id] ?? collect([]),
+                    'optional_models' => $optionalModels[$pro->pro_id] ?? collect([]),
+                    'dimensionL' => $pro->dimensionL,
+                    'dimensionW' => $pro->dimensionW,
+                    'dimensionD' => $pro->dimensionD,
+                ];
+            })->filter()->values();
+
+            $news = DB::table('product_news_has_categories as pnc')
+            ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
             ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
-            ->where('ct.local', $lang)
-            ->where('c.content_type', '=', 'event')
-            ->where('c.status',  1)
-            ->where('ct.title', 'LIKE', '%'.$keysearch.'%')
-            ->select('c.*' ,'ct.*')
-            ->orderBy('c.date_publish', 'desc')
-            ->distinct()
-            ->get();
-
-            $articles = DB::table('article_has_categories as anc')
-            ->join('contents as c' ,'c.id' ,'=','anc.content_id')
-            ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
-            ->join('tech_type as ty' ,'ty.id' ,'=','anc.categories_id')
-            ->join('tech_type_translation as tyt' ,'ty.id' ,'=','tyt.tech_id')
+            ->join('news_type as nt' ,'nt.id' ,'=','pnc.categories_id')
             ->where('ct.local',  $lang)
-            ->where('tyt.local',  $lang)
-            ->where('ct.title', 'LIKE', '%'.$keysearch.'%')
+            ->where('c.content_type', '=', 'news')
             ->where('c.status',  1)
-            ->where('c.content_type', '=', 'blog')
-            ->select('c.*' ,'ct.*','tyt.name as cateName' ,'anc.categories_id as typeId')
+            ->where('ct.title', 'LIKE', '%'.$keysearch.'%')
+            ->select('c.*' ,'ct.*','nt.name as cateName','pnc.categories_id as typeId')
             ->orderBy('c.date_publish', 'desc')
             ->distinct()
+            ->limit($limit_other)
             ->get();
 
-            $faqs = DB::table('faq as f')
-            ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
-            ->where('ft.local', '=',  $lang)
-            ->where('f.status', 1)
-            ->where('ft.title', 'LIKE', '%'.$keysearch.'%')
-            ->select('f.*' ,'ft.*')
-            ->get();
+                $events = DB::table('contents as c')
+                ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'event')
+                ->where('c.status',  1)
+                ->where('ct.title', 'LIKE', '%'.$keysearch.'%')
+                ->select('c.*' ,'ct.*')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
 
-            $offices = [];
-            $officesChk = [];
-            $officesSer = DB::table('office as f')
-            ->join('office_translations as oft', 'f.id', '=', 'oft.fk_office_id')
-            ->join('continents as c', 'c.id', '=', 'f.continent_id')
-            ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
-            ->where('oft.local', '=',  $lang)
-            ->where('ct.local', '=',  $lang)
-            ->where('oft.title', 'LIKE', '%'.$keysearch.'%')
-            ->Orwhere('ct.name', 'LIKE', '%'.$keysearch.'%')
-            ->where('f.type_id', '=',  1)
-            ->select('f.*' ,'oft.*')
-            ->distinct()
-            ->get();
+                $articles = DB::table('article_has_categories as anc')
+                ->join('contents as c' ,'c.id' ,'=','anc.content_id')
+                ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
+                ->join('tech_type as ty' ,'ty.id' ,'=','anc.categories_id')
+                ->join('tech_type_translation as tyt' ,'ty.id' ,'=','tyt.tech_id')
+                ->where('ct.local',  $lang)
+                ->where('tyt.local',  $lang)
+                ->where('ct.title', 'LIKE', '%'.$keysearch.'%')
+                ->where('c.status',  1)
+                ->where('c.content_type', '=', 'blog')
+                ->select('c.*' ,'ct.*','tyt.name as cateName' ,'anc.categories_id as typeId')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
 
-            foreach($officesSer as $offi){
-                if(!in_array($offi->id,$officesChk)){
-                    array_push($officesChk,$offi->id);
-                    array_push($offices,$offi);
+                $faqs = DB::table('faq as f')
+                ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
+                ->where('ft.local', '=',  $lang)
+                ->where('f.status', 1)
+                ->where('ft.title', 'LIKE', '%'.$keysearch.'%')
+                ->select('f.*' ,'ft.*')
+                ->limit($limit_other)
+                ->get();
+
+                $offices = [];
+                $officesChk = [];
+                $officesSer = DB::table('office as f')
+                ->join('office_translations as oft', 'f.id', '=', 'oft.fk_office_id')
+                ->join('continents as c', 'c.id', '=', 'f.continent_id')
+                ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
+                ->where('oft.local', '=',  $lang)
+                ->where('ct.local', '=',  $lang)
+                ->where('oft.title', 'LIKE', '%'.$keysearch.'%')
+                ->Orwhere('ct.name', 'LIKE', '%'.$keysearch.'%')
+                ->where('f.type_id', '=',  1)
+                ->select('f.*' ,'oft.*')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
+                foreach($officesSer as $offi){
+                    if(!in_array($offi->id,$officesChk)){
+                        array_push($officesChk,$offi->id);
+                        array_push($offices,$offi);
+                    }
+
                 }
 
-            }
+                $continents_office = DB::table('continents as c')
+                ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
+                ->where('type_id' ,1)
+                ->where('ct.local', '=', $lang)
+                ->select('c.*' ,'ct.*')
+                ->limit($limit_other)
+                ->get();
 
-            $continents_office = DB::table('continents as c')
-            ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
-            ->where('type_id' ,1)
-            ->where('ct.local', '=', $lang)
-            ->select('c.*' ,'ct.*')
-            ->get();
+                $continents_dis = DB::table('continents as c')
+                ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
+                ->where('type_id' ,2)
+                ->where('ct.local', '=', $lang)
+                ->select('c.*' ,'ct.*')
+                ->limit($limit_other)
+                ->get();
 
-            $continents_dis = DB::table('continents as c')
-            ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
-            ->where('type_id' ,2)
-            ->where('ct.local', '=', $lang)
-            ->select('c.*' ,'ct.*')
-            ->get();
+                $distributor = [];
+                $distriChk = [];
 
-            $distributor = [];
-            $distriChk = [];
-
-            $distrsech = DB::table('office as f')
-            ->join('office_translations as oft', 'f.id', '=', 'oft.fk_office_id')
-            ->join('continents as c', 'c.id', '=', 'f.continent_id')
-            ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
-            ->where('oft.local', '=',  $lang)
-            ->where('ct.local', '=',  $lang)
-            ->where('oft.title', 'LIKE', '%'.$keysearch.'%')
-            ->Orwhere('ct.name', 'LIKE', '%'.$keysearch.'%')
-            ->where('f.type_id', '=', 2)
-            ->select('f.*' ,'oft.*')
-            ->distinct()
-            ->get();
+                $distrsech = DB::table('office as f')
+                ->join('office_translations as oft', 'f.id', '=', 'oft.fk_office_id')
+                ->join('continents as c', 'c.id', '=', 'f.continent_id')
+                ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
+                ->where('oft.local', '=',  $lang)
+                ->where('ct.local', '=',  $lang)
+                ->where('oft.title', 'LIKE', '%'.$keysearch.'%')
+                ->Orwhere('ct.name', 'LIKE', '%'.$keysearch.'%')
+                ->where('f.type_id', '=', 2)
+                ->select('f.*' ,'oft.*')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
 
 
-            foreach($distrsech as $des){
-                if(!in_array($des->id,$distriChk)){
-                    array_push($distriChk,$des->id);
-                    array_push($distributor,$des);
+                foreach($distrsech as $des){
+                    if(!in_array($des->id,$distriChk)){
+                        array_push($distriChk,$des->id);
+                        array_push($distributor,$des);
+                    }
+
                 }
 
-            }
 
-            $applications =  DB::table('application as ap')
-            ->join('application_translation as apt','ap.id','=','apt.app_id')
-            ->where('apt.local','=',$lang)
-            ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,'apt.content' ,'apt.overview')
-            ->where('apt.name', 'LIKE', '%'.$keysearch.'%')
-            ->orderBy('ap.order_seq' ,'asc')
-            ->get();
 
-            $margetCate = DB::table('permission_marketcate as permar')
-            ->join('marketing_resource_cate as mc', 'permar.market_cate_id', '=', 'mc.cate_id')
-            ->join('marketing_resource_cate_translations as mct', 'mc.cate_id', '=', 'mct.mk_fk_id')
-            ->where('mct.local', '=',  $lang)
-            ->where('permar.permission_id', '=', 3)
-            ->select('mc.*' ,'mct.*')
-            ->get();
+                $applications =  DB::table('application as ap')
+                ->join('application_translation as apt','ap.id','=','apt.app_id')
+                ->where('apt.local','=',$lang)
+                ->select('ap.*' ,'ap.id as applica_id' , 'apt.name' ,'apt.content' ,'apt.overview')
+                ->where('apt.name', 'LIKE', '%'.$keysearch.'%')
+                ->orderBy('ap.order_seq' ,'asc')
+                ->limit($limit_other)
+                ->get();
 
-             $margeting = DB::table('marketing_resource as mr')
-            ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
-            ->where('mrt.local', '=', $lang)
-            ->whereIn('mr.cate_id',[1,2])
-            ->where('mrt.name', 'LIKE', '%'.$keysearch.'%')
-            ->select('mr.*' ,'mrt.*')
-            ->get();
+                $margetCate = DB::table('permission_marketcate as permar')
+                ->join('marketing_resource_cate as mc', 'permar.market_cate_id', '=', 'mc.cate_id')
+                ->join('marketing_resource_cate_translations as mct', 'mc.cate_id', '=', 'mct.mk_fk_id')
+                ->where('mct.local', '=',  $lang)
+                ->where('permar.permission_id', '=', 3)
+                ->select('mc.*' ,'mct.*')
+                ->limit($limit_other)
+                ->get();
 
-           return  view('front-end.resultsearch')
-           ->with('applications',$applications)
-           ->with('margetCate',$margetCate)
-           ->with('margeting',$margeting)
-           ->with('pro_results',$data)
-           ->with('news',$news)
-           ->with('events',$events)
-           ->with('articles',$articles)
-           ->with('offices',$offices)
-           ->with('distributor',$distributor)
-           ->with('continents_office',$continents_office)
-           ->with('continents_dis',$continents_dis)
-           ->with('faqs',$faqs)
-           ->with('keysearch',$keysearch);
+                $margeting = DB::table('marketing_resource as mr')
+                ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+                ->where('mrt.local', '=', $lang)
+                ->whereIn('mr.cate_id',[1,2])
+                ->where('mrt.name', 'LIKE', '%'.$keysearch.'%')
+                ->select('mr.*' ,'mrt.*')
+                ->limit($limit_other)
+                ->get();
+
+            return  view('front-end.resultsearch')
+            ->with('applications',$applications)
+            ->with('margetCate',$margetCate)
+            ->with('margeting',$margeting)
+            ->with('pro_results',$pro_results)
+            ->with('news',$news)
+            ->with('events',$events)
+            ->with('articles',$articles)
+            ->with('offices',$offices)
+            ->with('distributor',$distributor)
+            ->with('continents_office',$continents_office)
+            ->with('continents_dis',$continents_dis)
+            ->with('faqs',$faqs)
+            ->with('keysearch',$keysearch);
        }
 
        public function searchByOptionalModel($keysearchParm)
@@ -4857,17 +4781,8 @@ class FrontendController extends Controller
         $path =  base_path('../frontend-asset/image/').$image ;
         return response()->file($path);
       }
-      public function marketingLink($image){
-        $path =  base_path('../uploads_delta/partner/marketing_resources/').$image;
-        if(file_exists($path)){
-            return response()->file($path);
-        }else{
-            return  redirect()->route('index','home');
-        }
 
-      }
-
-      public function tag_product(Request $request){
+    public function tag_product(Request $request){
         $pro_id =  $request->proid;
          $tags =  DB::table('product_tags')->where('product_id',$pro_id)->get();
         return response()->json([
@@ -5191,59 +5106,69 @@ class FrontendController extends Controller
     }
 
 
-    public function checkpermission($doc){
-        $path =  base_path('../uploads_delta/partner/marketing_resources/').$doc;
+      public function checkPermission($doc)
+      {
+        $partnerId = session('partner_id');
         $lang = App::getLocale();
+        $endUserDoc = null;
+        $path = base_path('../uploads_delta/partner/marketing_resources/') . $doc;
+        $query = DB::table('marketing_resource as mr')
+            ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+            ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
+            ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
+            ->where('mrt.local', $lang)
+            ->where('mrt.file', $doc);
+        $endUserDoc = (clone $query)->where('permar.permission_id', 3)->select('mr.*')->first();
 
-        $partner_id = session('partner_id');
-        $partner = DB::table('partner')->where('id',$partner_id)->where('status',1)->first();
-
-        $margeting = null;
-        $sales_kits = DB::table('partner_documents as s')
-            ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
-            ->where('st.local' ,$lang)
-            ->where('st.file' ,$doc)
-            ->select('st.*')
-            ->first();
+        if (isset($endUserDoc)) {
+            return response()->file($path);
+        }else if(!isset($partnerId)){
+            return redirect()->route('index', 'login');
+        }
 
 
-        if(isset($partner) && $partner->role == 2 || isset($partner) && $partner->role == 1 ){
-         $margeting = DB::table('marketing_resource as mr')
-                ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
-                ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
-                ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
-                ->where('mrt.local', '=', $lang)
-                ->where('mrt.file', '=',$doc)
-                ->whereIn('permar.permission_id', [1,2])
-                ->select('mr.*' ,'mrt.*')
+        $partner = DB::table('partner')->where('id', $partnerId)->where('status', 1)->first();
+
+        if (!$partner) {
+            return redirect()->route('marketingResourcesDownloads');
+        }
+
+        $salesKit = null;
+        $fpsDoc = null;
+        $distributorDoc = null;
+
+
+        if ($partner->role == 2) {
+            $salesKit = DB::table('partner_documents as s')
+                ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
+                ->where('st.local', $lang)
+                ->where('st.file', $doc)
+                ->select('st.*')
                 ->first();
         }
 
-         $margeting_public = DB::table('marketing_resource as mr')
-                ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
-                ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
-                ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
-                ->where('mrt.local', '=', $lang)
-                ->where('mrt.file', '=',$doc)
-                ->whereIn('permar.permission_id', [3])
-                ->select('mr.*' ,'mrt.*')
-                ->first();
 
-        if(isset($margeting_public)){
-           return response()->download($path);
-        }
-        else if(isset($sales_kits)){
-            return redirect()->route('loginDocPartner',$doc );
-        }
-        else if(isset($margeting)){
-            return redirect()->route('loginDocPartner',$doc );
-        }
-        else{
-            return redirect()->route('index','home');
+
+        if ($partner->role == 2) {
+            $fpsDoc = (clone $query)->whereIn('permar.permission_id', [2])->select('mr.*', 'mrt.*')->first();
+            $distributorDoc = (clone $query)->whereIn('permar.permission_id', [2])->select('mr.*', 'mrt.*')->first();
+        }else if($partner->role == 1){
+            $fpsDoc = (clone $query)->whereIn('permar.permission_id', [1])->select('mr.*', 'mrt.*')->first();
+            $distributorDoc = (clone $query)->whereIn('permar.permission_id', [1])->select('mr.*', 'mrt.*')->first();
         }
 
+
+        if ($fpsDoc || $distributorDoc || $endUserDoc) {
+            return response()->file($path);
+        }
+
+        if ($salesKit && file_exists($path)) {
+            ob_end_clean();
+            return response()->file($path);
+        }
+
+        return redirect()->route($salesKit ? 'saleKit' : 'marketingResourcesDownloads');
       }
-
 
       public function partnerLoginDoc(Request $request){
         $str = $this->validateInput($request->email,'text',true);
@@ -5326,78 +5251,61 @@ class FrontendController extends Controller
             }
             return back()->with('flash_message_eror', 'Eror');
         }
-        public function partnerLoginDoc_success(Request $request ){
-            $doc = $this->validateInput($request->doc,'text',true);
-            $section_id = $request->section_id;
-            if(isset($section_id)){
-                $partner = DB::table('partner')->where('id',$section_id)->where('status',1)->get();
+        public function partnerLoginDocSuccess(Request $request)
+         {
+            $doc = $this->validateInput($request->doc, 'text', true);
+            $sectionId = $request->section_id;
+            $lang = App::getLocale();
 
-                $path =  base_path('../uploads_delta/partner/marketing_resources/').$doc;
-                    $lang = App::getLocale();
-                    $sales_kits = null;
-                    if($partner[0]->role == 2){
-                        $sales_kits = DB::table('partner_documents as s')
-                        ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
-                        ->where('st.local' ,$lang)
-                        ->where('st.file' ,$doc)
-                        ->select('st.*')
-                        ->first();
-                    }
-
-                    $margeting = null;
-                 if($partner[0]->role == 2 || $partner[0]->role == 1 ){
-                    $margeting = DB::table('marketing_resource as mr')
-                            ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
-                            ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
-                            ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
-                            ->where('mrt.local', '=', $lang)
-                            ->where('mrt.file', '=',$doc)
-                            ->whereIn('permar.permission_id', [1,2])
-                            ->select('mr.*' ,'mrt.*')
-                            ->first();
-                    }
-
-                    $margeting_public = DB::table('marketing_resource as mr')
-                            ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
-                            ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
-                            ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
-                            ->where('mrt.local', '=', $lang)
-                            ->where('mrt.file', '=',$doc)
-                            ->whereIn('permar.permission_id', [3])
-                            ->select('mr.*' ,'mrt.*')
-                            ->first();
-
-                            if($sales_kits){
-                                   if(file_exists($path)){
-                                    ob_end_clean();
-                                    return response()->file($path);
-                                    }else{
-                                        return redirect()->route('index','partners');
-                                    }
-                            }else if($margeting){
-                                if(file_exists($path)){
-                                    ob_end_clean();
-                                    return response()->file($path);
-                                    }else{
-                                        return redirect()->route('index','partners');
-                                }
-
-                            }else if($margeting_public){
-                                if(file_exists($path)){
-                                    ob_end_clean();
-                                    return response()->file($path);
-                                    }else{
-                                        return redirect()->route('index','partners');
-                                }
-                            }
-                            else{
-                                return redirect()->route('index','partners');
-                            }
-            }else{
-                return redirect()->route('loginDocPartner',$doc );
+            if (!$sectionId) {
+                return redirect()->route('index', 'login');
             }
 
-        }
+            $path = base_path('../uploads_delta/partner/marketing_resources/') . $doc;
+            $partner = DB::table('partner')->where('id', $sectionId)->where('status', 1)->first();
+
+            if (!$partner) {
+                return redirect()->route('marketingResourcesDownloads');
+            }
+
+            $salesKit = null;
+            $fpsDoc = null;
+            $distributorDoc = null;
+            $endUserDoc = null;
+
+            if ($partner->role == 2) {
+                $salesKit = DB::table('partner_documents as s')
+                    ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
+                    ->where('st.local', $lang)
+                    ->where('st.file', $doc)
+                    ->select('st.*')
+                    ->first();
+            }
+
+            $query = DB::table('marketing_resource as mr')
+                ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+                ->join('marketing_resource_cate as mc', 'mc.cate_id', '=', 'mr.cate_id')
+                ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mc.cate_id')
+                ->where('mrt.local', $lang)
+                ->where('mrt.file', $doc);
+
+            if ($partner->role == 2) {
+                $fpsDoc = (clone $query)->whereIn('permar.permission_id', [2])->select('mr.*', 'mrt.*')->first();
+                $distributorDoc = (clone $query)->whereIn('permar.permission_id', [2])->select('mr.*', 'mrt.*')->first();
+            }else if($partner->role == 1){
+                $fpsDoc = (clone $query)->whereIn('permar.permission_id', [1])->select('mr.*', 'mrt.*')->first();
+                $distributorDoc = (clone $query)->whereIn('permar.permission_id', [1])->select('mr.*', 'mrt.*')->first();
+            }
+
+            $endUserDoc = (clone $query)->where('permar.permission_id', 3)->select('mr.*')->first();
+
+            if (($fpsDoc || $distributorDoc || $endUserDoc || $salesKit) && file_exists($path)) {
+                ob_end_clean();
+                return response()->file($path);
+            }
+
+            return redirect()->route($salesKit ? 'index' : 'marketingResourcesDownloads', $salesKit ? 'partners' : '');
+         }
 
         public function productCate($cate){
             return redirect()->route('productFinder' );
