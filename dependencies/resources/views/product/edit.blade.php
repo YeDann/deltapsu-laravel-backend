@@ -173,12 +173,12 @@
                         </div>
                         <div class="form-group">
                             <label class="d-block">Segment <span class="req-fed">*</span></label>
-                            <?php 
+                            <?php
                                         $check1 = false;
                                         $check2 = false;
                                         $check3  = false;
                                         $check4  = false;
-                                          foreach($cerpros as $item) { 
+                                          foreach($cerpros as $item) {
                                                if($item->certificate_id == 1){
                                                 $check1 = true;
                                                }
@@ -255,7 +255,7 @@
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
                                 <input type="radio" class="custom-control-input" id="status_update" name="status_pro"
                                     value="3" {{ ($products[0]->status_product == 3 ) ? 'checked' : '' }}>
-                                <label class="custom-control-label" for="status_update">UPDATED</label>
+                                <label class="custom-control-label" for="status_update">NRND</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
                                 <input type="radio" class="custom-control-input" id="status_eol" name="status_pro"
@@ -568,7 +568,7 @@
     $(".js-example-tags").select2({
           tags: true
          });
-        
+
         $('.jssummernote').summernote({
           tabsize: 2,
           height: 200
@@ -577,15 +577,15 @@
           tabsize: 2,
           height: 300
         });
-       
+
         var section = <?= json_encode($section);?>;
         var property = <?= json_encode($propertys);?>;
-        var feilds = <?= json_encode($pd_fields);?>;  
-        var langInNotcontents  = <?= json_encode($language);?>;  
+        var feilds = <?= json_encode($pd_fields);?>;
+        var langInNotcontents  = <?= json_encode($language);?>;
         var allLangs  = <?= json_encode($allLang);?>;
         var arrCate  = <?= json_encode($arrProcate);?>;
-        
-        
+
+
          function getHtmlContent(lang){
             $('#contenttdata').empty();
             console.log(property);
@@ -644,7 +644,7 @@
                         html2 +=  'for="status_input_Mutl'+proper['pd_field_id']+'">Multiple</label>';
                         html2 +=  '</div>';
                         html2 +=  '<div class="custom-control custom-radio custom-control-inline custom-control-primary">';
-                        html2 +=  ' <input type="radio" class="custom-control-input"  onchange="selectinputtype('+proper['pd_field_id']+' ,3);"';                                             
+                        html2 +=  ' <input type="radio" class="custom-control-input"  onchange="selectinputtype('+proper['pd_field_id']+' ,3);"';
                         html2 +=  ' id="status_input_Rang'+proper['pd_field_id']+'" name="status_input['+proper['pd_field_id']+']" value="3" '+ ((proper['status_input'] == 3)  ? "checked" : " ") + '>';
                         html2 +=  ' <label class="custom-control-label"  for="status_input_Rang'+proper['pd_field_id']+'">Range</label></div>';
                         html2 +=  ' </div>';
@@ -778,7 +778,7 @@
                         html2 += '</div>';
                         html2 += '</div>';
                         }
-                   
+
 
                         html2 += '<div class="btn-add-input">'
                         html2 += '<div class="form-group input-group">';
@@ -814,11 +814,11 @@
                         }
                        }
                      });
-                     
+
                      $.each(feilds, function(index_feild,feild){
                         if(sect['sectid'] == feild['section_id']){
                           if(feild['type'] == "text"){
-                                
+
                          html2 +=  '<input type="hidden" class="form-control" name="productfieldText[]" value="'+feild['pd_field_id']+'">';
                          $.each(allLangs, function(index_allLang,allLang){
                             html2 +=  '<div class="data-text '+((allLang['name'] == lang)  ? "d-block" : "d-none")+ '">';
@@ -847,7 +847,7 @@
                         html2 +=  'for="status_input_Mutl'+feild['pd_field_id']+'">Multiple</label>';
                         html2 +=  '</div>';
                         html2 +=  '<div class="custom-control custom-radio custom-control-inline custom-control-primary">';
-                        html2 +=  ' <input type="radio" class="custom-control-input"  onchange="selectinputtype('+feild['pd_field_id']+' ,3);"';                                             
+                        html2 +=  ' <input type="radio" class="custom-control-input"  onchange="selectinputtype('+feild['pd_field_id']+' ,3);"';
                         html2 +=  ' id="status_input_Rang'+feild['pd_field_id']+'" name="status_input['+feild['pd_field_id']+']" value="3" >';
                         html2 +=  ' <label class="custom-control-label"  for="status_input_Rang'+feild['pd_field_id']+'">Range</label></div>';
                         html2 +=  ' </div>';
@@ -908,7 +908,7 @@
                         html2 +=' </div>';
                          }
                         }
-                       
+
                     });
                             html2 +=  '</div>';
                             html2 +=    '</div>';
@@ -919,7 +919,7 @@
 
          }
         function selectinputtype(id ,type){
-        
+
                 // $('.single-box'+id+' input[type="number"]').val('');
                 // $('.mulltiple-box'+id+' input[type="number"]').val('');
                 // $('.range-box'+id+' input[type="number"]').val('');
@@ -940,7 +940,7 @@
                 $('.mulltiple-box'+id).addClass('d-none');
                 $('.range-box'+id).addClass('d-block');
 
-              
+
             }
 
      }
@@ -961,7 +961,7 @@
         }else{
             alert('Max Multiple is 12');
         }
-        
+
         }
 
     function deletemutifield(id,numItems){
