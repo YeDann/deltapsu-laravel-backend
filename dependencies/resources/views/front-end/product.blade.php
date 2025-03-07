@@ -1810,7 +1810,7 @@
        var property_load = [];
        property_load = pro_perti;
        var doc_safety = documents_cate;
-        var status = [ {id:2,name:'New'}, {id:3,name:'Updated'},{id:4,name:'EOL'}];
+        var status = [ {id:2,name:'New'}, {id:3,name:'NRND'},{id:4,name:'EOL'}];
         var certificates = [
          {id:1,name:'{{$staticContent['Industrial_filter']}}'},
          {id:2,name:'{{$staticContent['Medical_filter']}}'},
