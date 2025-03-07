@@ -230,7 +230,7 @@
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
                                 <input type="radio" class="custom-control-input" id="status_update" name="status_pro"
                                     value="3">
-                                <label class="custom-control-label" for="status_update">UPDATED</label>
+                                <label class="custom-control-label" for="status_update">NRND</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
                                 <input type="radio" class="custom-control-input" id="status_eol" name="status_pro"
@@ -552,7 +552,7 @@
      tags: true
 });
      function selectinputtype(id ,type){
-       
+
              $('.single-box'+id+' input[type="number"]').val('');
              $('.mulltiple-box'+id+' input[type="number"]').val('');
              $('.range-box'+id+' input[type="number"]').val('');
@@ -573,9 +573,9 @@
                 $('.mulltiple-box'+id).addClass('d-none');
                 $('.range-box'+id).addClass('d-block');
 
-              
+
             }
-     
+
      }
      function addMutlple(id){
         var numItems = $('.mulltiple-box'+id).find('.product-custom-field').length;
@@ -593,7 +593,7 @@
         }else{
            alert('Max Multiple is 12');
         }
-       
+
      }
      function deletemutifield(id,numItems){
        $('.mulltiple-box'+id + ' .addfield'+numItems).remove();

@@ -1765,7 +1765,7 @@
          if(id == 2){
             name = 'NEW';
          }else if(id == 3){
-            name = 'UPDATED';
+            name = 'NRND';
          }else if(id == 4){
             name = 'EOL';
          }
@@ -1810,7 +1810,7 @@
        var property_load = [];
        property_load = pro_perti;
        var doc_safety = documents_cate;
-        var status = [ {id:2,name:'New'}, {id:3,name:'Updated'},{id:4,name:'EOL'}];
+        var status = [ {id:2,name:'New'}, {id:3,name:'NRND'},{id:4,name:'EOL'}];
         var certificates = [
          {id:1,name:'{{$staticContent['Industrial_filter']}}'},
          {id:2,name:'{{$staticContent['Medical_filter']}}'},
@@ -1981,7 +1981,7 @@
        var property_load = [];
        var doc_safety = [{id:2,name:'ABS'}, {id:3,name:'ATEX'},{id:4,name:'BSMI'}];
        property_load = pro_perti;
-        var status = [ {id:2,name:'NEW'}, {id:3,name:'UPDATED'},{id:4,name:'EOL'}];
+        var status = [ {id:2,name:'NEW'}, {id:3,name:'NRND'},{id:4,name:'EOL'}];
         var certificates = [ {id:1,name:'{{$staticContent['Industrial_filter']}}'}, {id:2,name:'{{$staticContent['Medical_filter']}}'},{id:3,name:'{{$staticContent['Lighting_Signage_filter']}}'} ,{id:4,name:'{{$staticContent['wireless_charging']}}'} ];
         var data_1 = [];
         var data_text = [];

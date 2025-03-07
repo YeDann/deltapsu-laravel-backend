@@ -76,7 +76,7 @@
             <option value="6"> {{$staticContent['contact_Info']}} ({{count($distributor)+count($offices)}})</option>
 
         </select>
-        <?php 
+        <?php
         function checkProcode($code){
           $string =  str_replace("/", "@",$code);
           return $string;
@@ -119,14 +119,14 @@
                     <div id="result1" class="w-100">
                         <div class="visible-up-922 ">
                             <div class="row w-100">
-                                <?php 
+                                <?php
                                 function retextdata($arr ,$unit){
                                                       $arr_data = [];
                                                    foreach ($arr as $dch){
                                                       if($dch != null && $dch != '' && $dch != 'null'){
                                                           array_push($arr_data,$dch.$unit);
                                                       }
-                                                     
+
                                                    }
                                        return $arr_data;
                                 }
@@ -146,15 +146,15 @@
                                     if($chekc == true){
                                         $data =  $prod_1.'-'.$prod_2.$unit;
                                     }
-                                   
+
                                     return  $data;
-                               } 
-              
+                               }
+
                               ?>
                                 @foreach ($pro_results as $pro)
                                 <div class=" margin-p-left-card col-xl-3 col-lg-4 col-md-4">
                                     <div class="item card">
-                                        <?php 
+                                        <?php
                                        $color = '';
                                        $name_sta = '';
                                       $stat = $pro['status_product'];
@@ -163,7 +163,7 @@
                                             $name_sta = 'NEW';
                                         }else if($stat == 3){
                                             $color = '#337ab7';
-                                            $name_sta = 'UPDATED';
+                                            $name_sta = 'NRND';
                                         }else if($stat == 4){
                                             $color = '#f0ad4e';
                                             $name_sta = 'EOL';
@@ -189,7 +189,7 @@
                                             <div class="row m-d-t">
                                                 <div class="col-6">
                                                     <div class="out-volt">
-                                                        <?php 
+                                                        <?php
                                                     $datacheck1 = [
                                                      $pro['content'][1]->data_1,
                                                      $pro['content'][1]->data_2,
@@ -204,7 +204,7 @@
                                                      $pro['content'][1]->data_11,
                                                      $pro['content'][1]->data_12,
                                                             ];
-                                             
+
                                                      $datacheck2 = [
                                                       $pro['content'][2]->data_1,
                                                       $pro['content'][2]->data_2,
@@ -219,7 +219,7 @@
                                                       $pro['content'][2]->data_11,
                                                       $pro['content'][2]->data_12,
                                                              ];
-                     
+
                                                      $datacheck3 = [
                                                       $pro['content'][0]->data_1,
                                                       $pro['content'][0]->data_2,
@@ -234,7 +234,7 @@
                                                       $pro['content'][0]->data_11,
                                                       $pro['content'][0]->data_12,
                                                              ];
-                                                             
+
                                                   ?>
                                                         <h6 class="text-title-ft-sub">
                                                             {{$staticContent['Output_Voltage']}}</h6>
@@ -356,7 +356,7 @@
                                 @foreach ($pro_results as $pro)
                                 <div class=" margin-p-left-card  col-card-product">
                                     <div class="item card">
-                                        <?php 
+                                        <?php
                                         $color = '';
                                         $name_sta = '';
                                        $stat = $pro['status_product'];
@@ -365,13 +365,13 @@
                                              $name_sta = 'NEW';
                                          }else if($stat == 3){
                                              $color = '#337ab7';
-                                             $name_sta = 'UPDATED';
+                                             $name_sta = 'NRND';
                                          }else if($stat == 4){
                                              $color = '#f0ad4e';
                                              $name_sta = 'EOL';
                                          }
                                          ?>
-                                        <?php 
+                                        <?php
                                                    $datacheck1 = [
                                                     $pro['content'][1]->data_1,
                                                     $pro['content'][1]->data_2,
@@ -386,7 +386,7 @@
                                                     $pro['content'][1]->data_11,
                                                     $pro['content'][1]->data_12,
                                                            ];
-                                            
+
                                                     $datacheck2 = [
                                                      $pro['content'][2]->data_1,
                                                      $pro['content'][2]->data_2,
@@ -401,7 +401,7 @@
                                                      $pro['content'][2]->data_11,
                                                      $pro['content'][2]->data_12,
                                                             ];
-                    
+
                                                     $datacheck3 = [
                                                      $pro['content'][0]->data_1,
                                                      $pro['content'][0]->data_2,
@@ -416,7 +416,7 @@
                                                      $pro['content'][0]->data_11,
                                                      $pro['content'][0]->data_12,
                                                             ];
-                                                            
+
                                                  ?>
                                         <div class="new-tag" style="background-color:{{$color}}">{{$name_sta}}</div>
                                         <div class="card-body ft-products-item">
@@ -583,7 +583,7 @@
                                ];
                                return  $datearray;
                         }
-                       
+
                         ?>
                         @foreach ($news as $item)
                         <div class="col-md-6 col-lg-4 mb-4">
@@ -609,7 +609,7 @@
                                                  }else{
                                                      echo '';
                                                  }
-                     
+
                                                  ?>
                                         </span>
                                     </div>
@@ -655,7 +655,7 @@
                                                     echo '';
                                                 }
                                               }
-                                              
+
                                              ?>
 
                                         </span>
@@ -710,7 +710,7 @@
                                                  }else{
                                                      echo '';
                                                  }
-                     
+
                                                  ?>
 
                                         </span>
@@ -761,9 +761,9 @@
 
 
                         @foreach ($margeting as $item2)
-                        <?php 
+                        <?php
                             $current = null;
-                            foreach($margetCate as $item) { 
+                            foreach($margetCate as $item) {
                                 if ($item2->cate_id == $item->cate_id) {
                                     $current = $item2;
                                     break;
@@ -782,7 +782,7 @@
                                     }else{
                                         echo '';
                                     }
-        
+
                                     ?>
                                 </p>
                             </div>
@@ -801,7 +801,7 @@
                             <div class="sales-offices-type pb-5">
                                 @foreach ($continents_office as $con_f)
                                 <?php
-                                $set2 = false; 
+                                $set2 = false;
                                 foreach($offices as $offic){
                                    if($offic->continent_id == $con_f->id){
                                       $set2 = true;
@@ -829,7 +829,9 @@
                                                 </div>
                                                 <a href="https://www.google.com/maps/?q={{$offic->lat}},{{$offic->lon}}&sensor=true"
                                                     target="_blank">
-                                                    <button class="btn-subscribe"> {{isset($staticContent['GetDirection']) ? $staticContent['GetDirection'] : 'Get Direction'}}</button>
+                                                    <button class="btn-subscribe">
+                                                        {{isset($staticContent['GetDirection']) ?
+                                                        $staticContent['GetDirection'] : 'Get Direction'}}</button>
                                                 </a>
                                             </div>
                                             @endif
@@ -845,7 +847,7 @@
                             <div id="find-distributor" class="find-distributor-type">
                                 @foreach ($continents_dis as $con_dis)
                                 <?php
-                                $set = false; 
+                                $set = false;
                                 foreach($distributor as $dis){
                                    if($dis->continent_id == $con_dis->id){
                                       $set = true;
@@ -873,7 +875,9 @@
                                                 </div>
                                                 <a href="https://www.google.com/maps/?q={{$dis->lat}},{{$dis->lon}}&sensor=true"
                                                     target="_blank">
-                                                    <button class="btn-subscribe"> {{isset($staticContent['GetDirection']) ? $staticContent['GetDirection'] : 'Get Direction'}}</button>
+                                                    <button class="btn-subscribe">
+                                                        {{isset($staticContent['GetDirection']) ?
+                                                        $staticContent['GetDirection'] : 'Get Direction'}}</button>
                                                 </a>
                                                 @if($dis->status_cer == 1)
                                                 <a href="{{config('app.url')}}/medias/distributor/{{$dis->file_cer}}"
@@ -972,7 +976,7 @@
     }
 </script>
 <script>
-    $('#nav-tab a').click(function(){ 
+    $('#nav-tab a').click(function(){
            var id =  $(this).data('val');
            $("#select-search-results option[value="+id+"]").prop('selected', true);
         });
