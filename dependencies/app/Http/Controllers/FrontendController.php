@@ -2906,6 +2906,7 @@ class FrontendController extends Controller
             $key2 = isset($keyParts[1]) ? $keyParts[1] : '';
             $cleanQueryString = str_replace(['-', '/', ' '], '', $keypro);
 
+
             $query = DB::table('products as p')
                     ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
                     ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
@@ -2957,13 +2958,14 @@ class FrontendController extends Controller
                     )
                     ->orderByRaw("
                         CASE
-                            WHEN REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','') = ? THEN 1
+                            WHEN REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','') LIKE ? THEN 1
                             WHEN p.pro_code LIKE ? THEN 2
-                            WHEN MAX(st.title) LIKE ? THEN 3
-                            WHEN MAX(ptag.tag) LIKE ? THEN 4
-                            ELSE 5
+                            WHEN p.pro_code LIKE ? THEN 3
+                            WHEN MAX(st.title) LIKE ? THEN 4
+                            WHEN MAX(ptag.tag) LIKE ? THEN 5
+                            ELSE 6
                         END",
-                        ['%'.$cleanQueryString.'%', '%'.$key2 .'%' , $keyParts[0] . '%', $keyParts[0] . '%']
+                        ['%'.$cleanQueryString.'%',$keyParts[0] . '%', '%'.$key2 .'%' , $keyParts[0] . '%', $keyParts[0] . '%']
                     )
                     ->limit($limit_product);
 
