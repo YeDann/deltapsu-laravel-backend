@@ -3267,7 +3267,7 @@ class FrontendController extends Controller
                     )
                     ->orderByRaw("
                         CASE
-                            WHEN REPLACE(REPLACE(REPLACE(ptag.tag, '-', ''), '/', ''),' ','') LIKE ? THEN 1
+                            WHEN REPLACE(REPLACE(REPLACE(GROUP_CONCAT(DISTINCT ptag.tag), '-', ''), '/', ''),' ','') LIKE ? THEN 1
                             ELSE 2
                         END",
                         ['%'.$cleanQueryString.'%']
