@@ -3205,7 +3205,7 @@ class FrontendController extends Controller
 
        public function searchByTag($keySearchQuery)
        {
-        $keysearch = $this->validateInput($keySearchQuery, 'text', true);
+             $keysearch = $this->validateInput($keySearchQuery, 'text', true);
             $keypro = str_replace("@", "/", $keysearch);
             $lang = App::getLocale();
             $limit_product = 100;
@@ -3227,9 +3227,19 @@ class FrontendController extends Controller
                     ->where('st.local', $lang)
                     ->where('p.enable_pro', 1)
                     ->where(function ($q) use ($keypro, $keyParts,$cleanQueryString) {
-                        $q->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(ptag.tag, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%');
-                        // $q->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%');
-
+                        $q->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(st.title, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(ptag.tag, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(op.optional_model, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%');
+                        // ->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%')
+                        // ->orWhere('op.optional_model', 'LIKE', '%' . $keypro . '%');
+                        // foreach ($keyParts as $part) {
+                        //     $q->orWhere('p.pro_code', 'LIKE', $part . '%')
+                        //     ->orWhere('p.pro_code', 'LIKE', '%' . $part . '%')
+                        //     ->orWhere('st.title', 'LIKE', $part . '%')
+                        //     ->orWhere('ptag.tag', 'LIKE', $part . '%')
+                        //     ->orWhere('op.optional_model', 'LIKE', $part . '%');
+                        // }
                     })
                     ->select(
                         'p.pro_id',
@@ -3243,8 +3253,8 @@ class FrontendController extends Controller
                         DB::raw('MAX(spt.name) as catename'),
                         DB::raw('MAX(phc.categories_id) as categories_id'),
                         DB::raw('MAX(st.title) as seName'),
-                        DB::raw('GROUP_CONCAT(DISTINCT ptag.tag) as tags'),
-                        DB::raw('GROUP_CONCAT(DISTINCT op.optional_model) as optional_models')
+                        DB::raw('GROUP_CONCAT(DISTINCT ptag.tag) as tag'),
+                        DB::raw('GROUP_CONCAT(DISTINCT op.optional_model) as optional_model')
                     )
                     ->groupBy(
                         'p.pro_id',
@@ -3257,10 +3267,10 @@ class FrontendController extends Controller
                     )
                     ->orderByRaw("
                         CASE
-                            WHEN MAX(REPLACE(REPLACE(REPLACE(ptag.tag, '-', ''), '/', ''),' ','')) LIKE ? THEN 1
+                            WHEN REPLACE(REPLACE(REPLACE(ptag.tag, '-', ''), '/', ''),' ','') LIKE ? THEN 1
                             ELSE 2
                         END",
-                        [$keypro]
+                        ['%'.$cleanQueryString.'%']
                     )
                     ->limit($limit_product);
 
@@ -3479,6 +3489,7 @@ class FrontendController extends Controller
             ->with('faqs',$faqs)
             ->with('keysearch',$keysearch);
        }
+
 
        public function searchByOptionalModel($keysearchParm)
        {
