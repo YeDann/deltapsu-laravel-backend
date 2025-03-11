@@ -3250,7 +3250,15 @@ class FrontendController extends Controller
                         DB::raw('GROUP_CONCAT(DISTINCT ptag.tag) as tags'),
                         DB::raw('GROUP_CONCAT(DISTINCT op.optional_model) as optional_models')
                     )
-                    ->groupBy('p.pro_id')
+                    ->groupBy(
+                        'p.pro_id',
+                        'p.pro_code',
+                        'p.picture',
+                        'p.status_product',
+                        'p.dimensionL',
+                        'p.dimensionW',
+                        'p.dimensionD'
+                    )
                     ->orderByRaw("
                         CASE
                             WHEN MAX(REPLACE(REPLACE(REPLACE(ptag.tag, '-', ''), '/', ''),' ','')) LIKE ? THEN 1
