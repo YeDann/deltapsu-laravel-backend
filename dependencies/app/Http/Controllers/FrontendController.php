@@ -2918,7 +2918,7 @@ class FrontendController extends Controller
                     ->where('st.local', $lang)
                     ->where('p.enable_pro', 1)
                     ->where(function ($q) use ($keypro, $keyParts ,$key2 ,$cleanQueryString) {
-                        $q->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        $q->orWhere(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
                         ->orWhere('p.pro_code', '=',  $keypro)
                         ->orWhere('p.pro_code', 'LIKE', '%' . $key2 . '%')
                         ->orWhere('st.title', 'LIKE', '%' . $keypro . '%')
