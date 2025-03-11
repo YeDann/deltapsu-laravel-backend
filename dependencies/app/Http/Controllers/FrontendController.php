@@ -2918,10 +2918,12 @@ class FrontendController extends Controller
                     ->where('st.local', $lang)
                     ->where('p.enable_pro', 1)
                     ->where(function ($q) use ($keypro, $keyParts ,$key2 ,$cleanQueryString) {
-                        $q->orWhere(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
-                        ->orWhere('st.title', 'LIKE', '%' . $keypro . '%')
-                        ->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%')
-                        ->orWhere('op.optional_model', 'LIKE', '%' . $keypro . '%');
+                        $q->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(st.title, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(ptag.tag, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(op.optional_model, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%');
+                        // ->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%')
+                        // ->orWhere('op.optional_model', 'LIKE', '%' . $keypro . '%');
                         // foreach ($keyParts as $part) {
                         //     $q->orWhere('p.pro_code', 'LIKE', $part . '%')
                         //     ->orWhere('p.pro_code', 'LIKE', '%' . $part . '%')
@@ -2957,11 +2959,9 @@ class FrontendController extends Controller
                     ->orderByRaw("
                         CASE
                             WHEN REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','') LIKE ? THEN 1
-                            WHEN MAX(st.title) LIKE ? THEN 2
-                            WHEN MAX(ptag.tag) LIKE ? THEN 3
-                            ELSE 4
+                            ELSE 2
                         END",
-                        ['%'.$cleanQueryString.'%' , $keyParts[0] . '%', $keyParts[0] . '%']
+                        ['%'.$cleanQueryString.'%']
                     )
                     ->limit($limit_product);
 
