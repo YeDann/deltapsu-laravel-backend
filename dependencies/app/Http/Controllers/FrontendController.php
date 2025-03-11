@@ -2919,18 +2919,16 @@ class FrontendController extends Controller
                     ->where('p.enable_pro', 1)
                     ->where(function ($q) use ($keypro, $keyParts ,$key2 ,$cleanQueryString) {
                         $q->orWhere(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
-                        ->orWhere('p.pro_code', '=',  $keypro)
-                        ->orWhere('p.pro_code', 'LIKE', '%' . $key2 . '%')
                         ->orWhere('st.title', 'LIKE', '%' . $keypro . '%')
                         ->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%')
                         ->orWhere('op.optional_model', 'LIKE', '%' . $keypro . '%');
-                        foreach ($keyParts as $part) {
-                            $q->orWhere('p.pro_code', 'LIKE', $part . '%')
-                            ->orWhere('p.pro_code', 'LIKE', '%' . $part . '%')
-                            ->orWhere('st.title', 'LIKE', $part . '%')
-                            ->orWhere('ptag.tag', 'LIKE', $part . '%')
-                            ->orWhere('op.optional_model', 'LIKE', $part . '%');
-                        }
+                        // foreach ($keyParts as $part) {
+                        //     $q->orWhere('p.pro_code', 'LIKE', $part . '%')
+                        //     ->orWhere('p.pro_code', 'LIKE', '%' . $part . '%')
+                        //     ->orWhere('st.title', 'LIKE', $part . '%')
+                        //     ->orWhere('ptag.tag', 'LIKE', $part . '%')
+                        //     ->orWhere('op.optional_model', 'LIKE', $part . '%');
+                        // }
                     })
                     ->select(
                         'p.pro_id',
@@ -2959,13 +2957,11 @@ class FrontendController extends Controller
                     ->orderByRaw("
                         CASE
                             WHEN REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','') LIKE ? THEN 1
-                            WHEN p.pro_code LIKE ? THEN 2
-                            WHEN p.pro_code LIKE ? THEN 3
-                            WHEN MAX(st.title) LIKE ? THEN 4
-                            WHEN MAX(ptag.tag) LIKE ? THEN 5
-                            ELSE 6
+                            WHEN MAX(st.title) LIKE ? THEN 2
+                            WHEN MAX(ptag.tag) LIKE ? THEN 3
+                            ELSE 4
                         END",
-                        ['%'.$cleanQueryString.'%',$keyParts[0] . '%', '%'.$key2 .'%' , $keyParts[0] . '%', $keyParts[0] . '%']
+                        ['%'.$cleanQueryString.'%' , $keyParts[0] . '%', $keyParts[0] . '%']
                     )
                     ->limit($limit_product);
 
