@@ -3218,7 +3218,7 @@ class FrontendController extends Controller
             // Split search term into parts (handles both spaces and dashes)
             $keyParts = preg_split('/[\s-]+/', $keypro);
             $checkArr = [];
-
+            $cleanQueryString = str_replace(['-', '/', ' '], '', $keypro);
 
             $query = DB::table('products as p')
                     ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
@@ -3230,8 +3230,9 @@ class FrontendController extends Controller
                     ->where('spt.local', $lang)
                     ->where('st.local', $lang)
                     ->where('p.enable_pro', 1)
-                    ->where(function ($q) use ($keypro, $keyParts) {
-                        $q->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%');
+                    ->where(function ($q) use ($keypro, $keyParts,$cleanQueryString) {
+                        $q->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(ptag.tag, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%');
+                        // $q->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%');
 
                     })
                     ->select(
@@ -3252,7 +3253,7 @@ class FrontendController extends Controller
                     ->groupBy('p.pro_id')
                     ->orderByRaw("
                         CASE
-                            WHEN MAX(ptag.tag) LIKE ? THEN 1
+                            WHEN MAX(REPLACE(REPLACE(REPLACE(ptag.tag, '-', ''), '/', ''),' ','')) LIKE ? THEN 1
                             ELSE 2
                         END",
                         [$keypro]
