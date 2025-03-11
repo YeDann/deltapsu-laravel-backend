@@ -333,7 +333,7 @@
                                                     @foreach ($pro['optional_models'] as $optional)
                                                     <a
                                                         class="text-tag {{$pro['tag_m'] == $optional->optional_model ?'hightlight':'' }}"><span
-                                                            onclick="viewOptionalModel('{{$optional->optional_model}}' ,'{{$pro['catename']}}'  ,'{{$pro['pro_code']}}')">{{$optional->optional_model}}{{$loop->iteration
+                                                            onclick="viewOptionalModel('{{$optional->optional_model}}' ,'{{$pro['url_item']}}'  ,'{{$pro['pro_code']}}')">{{$optional->optional_model}}{{$loop->iteration
                                                             != $loop->count?',':'' }} </span></a>
                                                     @endforeach
                                                 </div>
@@ -535,7 +535,7 @@
                                                 @foreach ($pro['optional_models'] as $optional)
                                                 <a
                                                     class="text-tag {{$pro['tag_m'] == $optional->optional_model ?'hightlight':'' }}"><span
-                                                        onclick="viewOptionalModel('{{$optional->optional_model}}' ,'{{$pro['catename']}}'  ,'{{$pro['pro_code']}}')">{{$optional->optional_model}}{{$loop->iteration
+                                                        onclick="viewOptionalModel('{{$optional->optional_model}}' ,'{{$pro['url_item']}}'  ,'{{$pro['pro_code']}}')">{{$optional->optional_model}}{{$loop->iteration
                                                         != $loop->count?',':'' }} </span></a>
                                                 @endforeach
                                             </div>
