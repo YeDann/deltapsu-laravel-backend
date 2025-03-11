@@ -1531,7 +1531,7 @@ class FrontendController extends Controller
                 ->where('spt.local' ,$lang)
                 ->where('pr.product_id',$pro->pro_id)
                 ->where('p.enable_pro' ,1)
-                ->select('p.*', 'pt.*' ,'spt.name as catename' ,'spt.sub_pro_id as pro_categories_id' ,'sp.unit_dimension','sp.unit_dimension_1')
+                ->select('p.*', 'pt.*' ,'spt.name as catename','sp.url_item as url_item' ,'spt.sub_pro_id as pro_categories_id' ,'sp.unit_dimension','sp.unit_dimension_1')
                 ->get();
 
 
@@ -1551,7 +1551,7 @@ class FrontendController extends Controller
             ->where('phc.categories_id',$pro->pro_categories_id)
             ->where('p.enable_pro',1)
             ->where('p.created_at','>',$datefor)
-            ->select('p.*', 'pt.*' ,'spt.name as catename' ,'spt.sub_pro_id as pro_categories_id' ,'sp.unit_dimension','sp.unit_dimension_1')
+            ->select('p.*', 'pt.*' ,'spt.name as catename' ,'sp.url_item as url_item','spt.sub_pro_id as pro_categories_id' ,'sp.unit_dimension','sp.unit_dimension_1')
             ->limit(4)
             ->inRandomOrder()
             ->get();
@@ -1587,6 +1587,7 @@ class FrontendController extends Controller
                         "status_product"=>$pro->status_product,
                         "content" =>$arraysub,
                         "alt_img" =>$pro->alt_img,
+                        "url_item"=>$pro->url_item,
                         "dimensionL"=>$pro->dimensionL,
                         "dimensionW"=>$pro->dimensionW,
                         "dimensionD"=>$pro->dimensionD,
