@@ -2893,7 +2893,7 @@ class FrontendController extends Controller
             return $products;
         }
 
-     public function searchAll($keySearchQuery) {
+        public function searchAll($keySearchQuery) {
             $keysearch = $this->validateInput($keySearchQuery, 'text', true);
             $keypro = str_replace("@", "/", $keysearch);
             $lang = App::getLocale();
@@ -2903,6 +2903,8 @@ class FrontendController extends Controller
             // Split search term into parts (handles both spaces and dashes)
             $keyParts = preg_split('/[\s-]+/', $keypro);
             $checkArr = [];
+            $key2 = isset($keyParts[1]) ? $keyParts[1] : '';
+            $cleanQueryString = str_replace(['-', '/', ' '], '', $keypro);
 
 
             $query = DB::table('products as p')
@@ -2915,8 +2917,10 @@ class FrontendController extends Controller
                     ->where('spt.local', $lang)
                     ->where('st.local', $lang)
                     ->where('p.enable_pro', 1)
-                    ->where(function ($q) use ($keypro, $keyParts) {
-                        $q->orWhere('p.pro_code', '=',  $keypro)
+                    ->where(function ($q) use ($keypro, $keyParts ,$key2 ,$cleanQueryString) {
+                        $q->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere('p.pro_code', '=',  $keypro)
+                        ->orWhere('p.pro_code', 'LIKE', '%' . $key2 . '%')
                         ->orWhere('st.title', 'LIKE', '%' . $keypro . '%')
                         ->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%')
                         ->orWhere('op.optional_model', 'LIKE', '%' . $keypro . '%');
@@ -2954,13 +2958,14 @@ class FrontendController extends Controller
                     )
                     ->orderByRaw("
                         CASE
-                            WHEN p.pro_code LIKE ? THEN 1
+                            WHEN REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','') LIKE ? THEN 1
                             WHEN p.pro_code LIKE ? THEN 2
-                            WHEN MAX(st.title) LIKE ? THEN 3
-                            WHEN MAX(ptag.tag) LIKE ? THEN 4
-                            ELSE 5
+                            WHEN p.pro_code LIKE ? THEN 3
+                            WHEN MAX(st.title) LIKE ? THEN 4
+                            WHEN MAX(ptag.tag) LIKE ? THEN 5
+                            ELSE 6
                         END",
-                        [$keypro, $keyParts[0] . '%', $keyParts[0] . '%', $keyParts[0] . '%']
+                        ['%'.$cleanQueryString.'%',$keyParts[0] . '%', '%'.$key2 .'%' , $keyParts[0] . '%', $keyParts[0] . '%']
                     )
                     ->limit($limit_product);
 
@@ -3179,7 +3184,6 @@ class FrontendController extends Controller
             ->with('faqs',$faqs)
             ->with('keysearch',$keysearch);
        }
-
        public function oldDoc($name){
         return redirect()->route('index','home');
        }
