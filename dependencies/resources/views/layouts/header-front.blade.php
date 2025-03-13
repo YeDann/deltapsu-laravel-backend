@@ -1147,7 +1147,9 @@ function slugifyHead($text)
                     $Sales_Inquiry = $staticContent['Sales_Inquiry'];
                  }
                 ?>
-                @if(App::getLocale() == "cn" || App::getLocale() == "tw" && $Sales_Inquiry != 'Sales Inquiry')
+                @if(
+                App::getLocale() == "cn" & strtolower(str_replace(' ', '', $Sales_Inquiry)) != 'Sales Inquiry'
+                || App::getLocale() == "tw" && strtolower(str_replace(' ', '', $Sales_Inquiry)) != 'Sales Inquiry')
                 <span class="vertical-text">
                     {{$Sales_Inquiry}}
                 </span>
