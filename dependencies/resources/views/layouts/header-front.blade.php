@@ -1143,15 +1143,13 @@ function slugifyHead($text)
                 <i class="demo-icon-destop icon-facon3 icon-question"></i>
                 <?php
                 $Sales_Inquiry = 'Sales Inquiry';
-                 if(isset($staticContent['Sales_Inquiry'])){
+                if(isset($staticContent['Sales_Inquiry'])){
                     $Sales_Inquiry = $staticContent['Sales_Inquiry'];
-                 }
-                ?>
-                @if(App::getLocale() == "cn" && strtolower(str_replace(' ', '', $Sales_Inquiry)) != 'Sales Inquiry')
-                <span class="vertical-text">
-                    {{$Sales_Inquiry}}
-                </span>
-                @elseif(App::getLocale() == "tw" && strtolower(str_replace(' ', '', $Sales_Inquiry)) != 'Sales Inquiry')
+                }
+            ?>
+
+                @if((App::getLocale() == "cn" || App::getLocale() == "tw") && strtolower(str_replace(' ', '',
+                $Sales_Inquiry)) !== 'salesinquiry')
                 <span class="vertical-text">
                     {{$Sales_Inquiry}}
                 </span>
@@ -1160,6 +1158,7 @@ function slugifyHead($text)
                     {{$Sales_Inquiry}}
                 </span>
                 @endif
+
 
 
             </a>
