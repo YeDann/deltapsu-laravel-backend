@@ -1140,7 +1140,7 @@ function slugifyHead($text)
                     $Sales_Inquiry = $staticContent['Sales_Inquiry'];
                  }
                 ?>
-                @if(App::getLocale() == "cn")
+                @if(App::getLocale() == "cn" || App::getLocale() == "tw" )
                 <span class="vertical-text">
                     {{$Sales_Inquiry}}
                 </span>
