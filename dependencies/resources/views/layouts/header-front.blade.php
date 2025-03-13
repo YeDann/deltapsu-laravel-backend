@@ -320,6 +320,15 @@
         font-size: 20px !important;
         color: #000;
     }
+
+    .vertical-text {
+        writing-mode: vertical-rl;
+        /* Display text vertically (right to left) */
+        text-orientation: upright;
+        /* Keep characters upright */
+        transform: rotate(0deg) !important;
+        padding: 6px 3px;
+    }
 </style>
 <?php
 function slugifyHead($text)
