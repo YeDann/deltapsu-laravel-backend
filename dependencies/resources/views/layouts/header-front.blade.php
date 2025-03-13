@@ -1140,8 +1140,6 @@ function slugifyHead($text)
     <ul id="distributor" class="img-pop-destop">
         <li>
             <a href="{{route('contactSupport')}}" class="skype">
-                {{-- <i class="demo-icon-destop icon-facon icon-find-dis-blue"></i> --}}
-                {{-- <img class="icon-sales-inquiry" src="{{asset('frontend-asset/image/question.webp')}}" /> --}}
                 <i class="demo-icon-destop icon-facon3 icon-question"></i>
                 <?php
                 $Sales_Inquiry = 'Sales Inquiry';
@@ -1149,7 +1147,7 @@ function slugifyHead($text)
                     $Sales_Inquiry = $staticContent['Sales_Inquiry'];
                  }
                 ?>
-                @if(App::getLocale() == "cn" || App::getLocale() == "tw" )
+                @if(App::getLocale() == "cn" || App::getLocale() == "tw" && $Sales_Inquiry != 'Sales Inquiry')
                 <span class="vertical-text">
                     {{$Sales_Inquiry}}
                 </span>
