@@ -1148,7 +1148,7 @@ function slugifyHead($text)
                  }
                 ?>
                 @if(
-                App::getLocale() == "cn" & strtolower(str_replace(' ', '', $Sales_Inquiry)) != 'Sales Inquiry'
+                App::getLocale() == "cn" && strtolower(str_replace(' ', '', $Sales_Inquiry)) != 'Sales Inquiry'
                 || App::getLocale() == "tw" && strtolower(str_replace(' ', '', $Sales_Inquiry)) != 'Sales Inquiry')
                 <span class="vertical-text">
                     {{$Sales_Inquiry}}
