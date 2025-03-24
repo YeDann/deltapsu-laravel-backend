@@ -4630,14 +4630,21 @@ class FrontendController extends Controller
         $chmodel = $this->validateInput($modelPar,'text',true);
 
         $strmodel =  str_replace("@", "/", trim($chmodel));
-        $check_2 = self::checkHaveModelOptional($strmodel);
+        $partnerId = session('partner_id');
+        if($typefile == 'Test_Report' && !isset($partnerId)){
+            return redirect()->route('index', 'login');
+        }
 
+        $check_2 = self::checkHaveModelOptional($strmodel);
         if(isset($check_2)){
             $strmodel = $check_2->pro_code;
         }
 
         $_model =  self::checkHaveModel($strmodel);
         $documents = self::getDoc($typefile,$strmodel);
+
+
+
           $file = null;
           if(isset($documents[0]->file)){
             $file = $documents[0]->file;
@@ -4680,8 +4687,9 @@ class FrontendController extends Controller
             }
 
             }else{
+
                 if(isset($_model)){
-                    return redirect()->route('productsDetailsByType',['cateid' => $_model->categories_id , 'pro_code'=>  str_replace("/", "@", trim($_model->pro_code))] );
+                    return redirect()->route('productsDetailsByType',['cateid' => $_model->url_item , 'pro_code'=>  str_replace("/", "@", trim($_model->pro_code))] );
                 }else{
                     return redirect()->route('index','home');
                 }
@@ -4694,7 +4702,8 @@ class FrontendController extends Controller
             $queryStringModel = preg_replace('/[^A-Za-z0-9\-]/','',$stringModel);
             $queryModel = DB::table('products as p')
             ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-            ->select('p.*','phc.categories_id')
+            ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+            ->select('p.*','phc.categories_id' ,'sp.url_item')
             ->where('p.enable_pro',1);
             // $queryModel->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $queryStringModel . '%');
             $queryModel->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), '=', $queryStringModel);
