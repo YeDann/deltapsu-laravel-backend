@@ -13,7 +13,7 @@
 <meta name="description"
     content="Delta’s MEG-A Series provides flexible and configurable power supplies for various industrial and medical applications.">
 <link rel="canonical" href="{{url()->current()}}" />
-<?php 
+<?php
   $lang_seo = App::getLocale();
   if($lang_seo == 'cn'){
     $lang_seo = 'zh-Hans-CN';
@@ -49,7 +49,7 @@
     <div class="container">
         <h1 class="text-title-delta visible-up-922">{{$staticContent['Configurable_Power']}}</h1>
         <h3 class="text-title-delta invisible-up-922">{{$staticContent['Configurable_Power']}}</h3>
-        <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
+        <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
         <div class="text-editor mb-4">
             {!!$subCategories[0]->content1 !!}
         </div>
@@ -79,7 +79,7 @@
                         <div class="text-editor mb-4">
                             {!!$subCategories[0]->safety_cer !!}
                         </div>
-                        <h5 class="text-color-delta">{{$staticContent['Dimensions']}}(L x W x H)</h5>
+                        <h5 class="text-color-delta">{{$staticContent['Dimensions']}}({{$staticContent['key_l']}} x {{$staticContent['key_w']}} x {{$staticContent['key_h']}})</h5>
 
                         <div class="text-editor mb-4">
                             {!!$subCategories[0]->dimension !!}

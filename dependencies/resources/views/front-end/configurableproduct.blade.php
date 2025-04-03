@@ -340,8 +340,8 @@
 							<p class="c_delta_weight text-detail-describe m-0"></p>
 							<br>
 							<p class="m-0"><span class="text-sixteen-delta c_delta"><b>{{$staticContent['Dimensions']}}
-										(L x W x
-										H)</b></span></p>
+										({{$staticContent['key_l']}} x {{$staticContent['key_w']}} x
+										{{$staticContent['key_h']}})</b></span></p>
 							<p class="c_delta_mm text-detail-describe m-0"></p>
 							<p class="c_delta_inc text-detail-describe m-0"></p>
 
@@ -407,9 +407,9 @@
 										</label>
 										<select class="form-control" id="terminal"
 											onchange="getToSummary();getToTerimal();">
-											<option value="1">T for American terminal</option>
-											<option value="2">E for European terminal</option>
-											<option value="3">C for C14</option>
+											<option value="1">{{$staticContent['t_for_american_terminal']}}</option>
+											<option value="2">{{$staticContent['e_for_european_terminal']}}</option>
+											<option value="3">{{$staticContent['c_for_c14']}}</option>
 										</select>
 									</div>
 									<div class="col-lg-6 col-md-12 mt-3">
@@ -482,7 +482,7 @@
 							class="wrp-icons">
 							<img class="img-tooltip" src="{{asset('frontend-asset/image/tooltip.svg')}}"
 								data-toggle="tooltip" data-placement="top"
-								title="Select Logic for remote on/off function. Normal logic is power supply default on, reserved logic is default off.">
+								title="{{$staticContent['Control_Code_description']}}">
 						</span></h4>
 				</div>
 				<div class="row justify-content-center add-space-mobile p-0">
@@ -491,7 +491,7 @@
 							<span class="wrp-icons">
 								<img src="{{asset('frontend-asset/image/tooltip.svg')}}" data-toggle="tooltip"
 									data-placement="top"
-									title="Select Logic for remote on/off function. Normal logic is power supply default on, reserved logic is default off.">
+									title="{{$staticContent['Control_Code_description']}}">
 							</span>
 						</h5>
 						<div id="data_tableslot"></div>
@@ -713,7 +713,7 @@
 
 										</div>
 										<div class="describe-list">
-											<p class="text-sixteen-delta"># {{$staticContent['of_slots']}} :</p>
+											<p class="text-sixteen-delta">{{$staticContent['of_slots']}} :</p>
 											<p class="text-detail-describe" id="numoutput"></p>
 										</div>
 										<div class="describe-list">
@@ -1418,51 +1418,51 @@ function selectCountry(){
 			do_a = do_a_700;
 			ts_a = ts_a_700;
 			$('#bus').empty();
-			$("#bus").append(new Option("Default N/A", "0"));
+			$("#bus").append(new Option("{{$staticContent['default_N_A']}}", "0"));
 
 		 }else{
 			do_a = do_a_gobal;
 			ts_a = ts_a_gobal;
 			$('#bus').empty();
-			$("#bus").append(new Option("Default PMBus", "0"));
-			$("#bus").append(new Option("RS232 adapter", "1"));
-			$("#bus").append(new Option("USB adapter", "2"));
-			$("#bus").append(new Option("RS485 adapter", "3"));
+			$("#bus").append(new Option("{{$staticContent['default_PMBus']}}", "0"));
+			$("#bus").append(new Option("{{$staticContent['RS232_adapter']}}", "1"));
+			$("#bus").append(new Option("{{$staticContent['USB_adapter']}}", "2"));
+			$("#bus").append(new Option("{{$staticContent['RS485_adapter']}}", "3"));
 		 }
 		 if(model_alldata[index]['max_power'] == 3000){
 
 				$('#terminal').empty();
-				$("#terminal").append(new Option("T for American terminal", "1"));
-				$("#terminal").append(new Option("E for European terminal", "2"));
-				$("#terminal").append(new Option("C for C22", "3"));
+                $("#terminal").append(new Option("{{$staticContent['t_for_american_terminal']}}", "1"));
+				$("#terminal").append(new Option("{{$staticContent['e_for_european_terminal']}}", "2"));
+				$("#terminal").append(new Option("{{$staticContent['c_for_c14']}}", "3"));
 
 				$('#logic').empty();
-				$("#logic").append(new Option("Normal Logic & Normal Fan Direction", "0"));
-				$("#logic").append(new Option("Reversed Logic & Normal Fan Direction", "1"));
+				$("#logic").append(new Option("{{$staticContent['Normal_Logic_&_Normal_Fan_Direction']}}", "0"));
+				$("#logic").append(new Option("{{$staticContent['Reversed_Logic_&_Normal_Fan_Direction']}}", "1"));
 				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description_MEG-3K0A9']}}');
 		}else if(model_alldata[index]['max_power'] == 700){
-		  $('#terminal').empty();
-				$("#terminal").append(new Option("T for American terminal", "1"));
-				$("#terminal").append(new Option("E for European terminal", "2"));
-				$("#terminal").append(new Option("C for C14", "3"));
+		        $('#terminal').empty();
+                $("#terminal").append(new Option("{{$staticContent['t_for_american_terminal']}}", "1"));
+				$("#terminal").append(new Option("{{$staticContent['e_for_european_terminal']}}", "2"));
+				$("#terminal").append(new Option("{{$staticContent['c_for_c14']}}", "3"));
 
 				$('#logic').empty();
-				$("#logic").append(new Option("Normal Logic & Normal Fan Direction", "0"));
-				$("#logic").append(new Option("Reversed Logic & Normal Fan Direction", "1"));
+				$("#logic").append(new Option("{{$staticContent['Normal_Logic_&_Normal_Fan_Direction']}}", "0"));
+				$("#logic").append(new Option("{{$staticContent['Reversed_Logic_&_Normal_Fan_Direction']}}", "1"));
 				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description']}}');
 
 		}else{
 
 				$('#terminal').empty();
-				$("#terminal").append(new Option("T for American terminal", "1"));
-				$("#terminal").append(new Option("E for European terminal", "2"));
-				$("#terminal").append(new Option("C for C14", "3"));
+				$("#terminal").append(new Option("{{$staticContent['t_for_american_terminal']}}", "1"));
+				$("#terminal").append(new Option("{{$staticContent['e_for_european_terminal']}}", "2"));
+				$("#terminal").append(new Option("{{$staticContent['c_for_c14']}}", "3"));
 
 				$('#logic').empty();
-				$("#logic").append(new Option("Normal Logic & Normal Fan Direction", "0"));
-				$("#logic").append(new Option("Reversed Logic & Normal Fan Direction", "1"));
-				$("#logic").append(new Option("Normal Logic & Reversed Fan Direction ", "2"));
-				$("#logic").append(new Option("Reversed Logic & Reversed Fan Direction", "3"));
+				$("#logic").append(new Option("{{$staticContent['Normal_Logic_&_Normal_Fan_Direction']}}", "0"));
+				$("#logic").append(new Option("{{$staticContent['Reversed_Logic_&_Normal_Fan_Direction']}}", "1"));
+				$("#logic").append(new Option("{{$staticContent['Normal_Logic_&_Reversed_Fan_Direction']}}", "2"));
+				$("#logic").append(new Option("{{$staticContent['Reversed_Logic_&_Reversed_Fan_Direction']}}", "3"));
 				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description']}}');
 
 			}
@@ -1641,7 +1641,7 @@ function selectCountry(){
 			text += '<div class="voltage col-4 column-select">';
 			text += '<select class="form-control" onchange="getSelectCurrent(this,'+type+'); getToSum('+i+');" id="volt'+i+'">';
 			text += '<option value="-1">';
-			text += 'Voltage '+index;
+			text += '{{$staticContent['voltage']}} '+index;
 			text += (type == 2) ? '.'+(i+1):'';
 			text += '</option>';
 			text += getSelectVoltage(type);
@@ -1650,13 +1650,13 @@ function selectCountry(){
 			text += '<div class="current col-4 column-select">';
 			text += '<select class="form-control" >';
 			text += '<option value="-1">';
-			text += 'Current '+index;
+			text += '{{$staticContent['current']}} '+index;
 			text += (type == 2) ? '.'+(i+1):'';
 			text += '</option>';
 			text += '</select>';
 			text += '</div>';
 			text += '<div class="input col-3 column-input">';
-			text += '<input type="text" name="watt[]" class="form-control" value="" disabled="disabled" placeholder="Power '+index;
+			text += '<input type="text" name="watt[]" class="form-control" value="" disabled="disabled" placeholder="{{$staticContent['power']}} '+index;
 			text += (type == 2) ? '.'+(i+1):'';
 			text += '" >';
 			text += '</div>';
@@ -1783,7 +1783,7 @@ function selectCountry(){
 							$(value).children('input[name=index]').val(this_val);
 							// $(value).children('p').text(this_val);
 							this_index = ($(value).children('input[name=slot]').val() != 1) ? this_val+' - '+(this_val+2) : this_val;
-							$(value).children('.col-3').children('p').html('Slot '+this_index);
+							$(value).children('.col-3').children('p').html('{{$staticContent['Slot']}} '+this_index);
 							$(value).children('.select-box').children('.col-3:last-child').children('.btn-undo-icon').attr('onclick','resetData('+this_val+')');
 
 							$(value).children('.col-9').children('.form-check:first-child').children('input').attr('name','slot-type-'+this_val);

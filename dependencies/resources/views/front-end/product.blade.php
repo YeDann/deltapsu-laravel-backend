@@ -465,10 +465,10 @@
                 <div id="showfiler-mobile" class="my-auto">
                     <div style="color:#fff;" id="filterMobile-btn" onclick="OpenFiiter();"
                         class="filter-mobile-link text-bold"><img
-                            src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt="">Filters</div>
+                            src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt="">{{$staticContent['filters']}}</div>
                 </div>
                 <div class="d-flex">
-                    <p class="text-white my-auto mr-2 text-card-detial text-bold">Sort by:</p>
+                    <p class="text-white my-auto mr-2 text-card-detial text-bold">{{$staticContent['Sort_by']}}:</p>
                     <div class="input-label my-auto">
                         <select onchange="onselectSort();" class="form-control selectSort">
                             <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
@@ -601,7 +601,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 <script>
     $('.js-example-basic-single').select2({
-        placeholder: 'Model Name'
+        placeholder: '{{$staticContent['Model_Name']}}'
 });
 </script>
 <script type="text/javascript">
@@ -638,14 +638,14 @@
 
             var html = '';
             html =
-                '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(1);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> Hide Filters</a>';
+                '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(1);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> {{$staticContent['hide_filters']}}</a>';
             document.getElementById("showfiler").innerHTML = html;
 
         } else {
 
             var html = '';
             html =
-                '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(2);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt="">Show Filters</a>';
+                '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(2);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> {{$staticContent['Show_Filters']}}</a>';
             document.getElementById("showfiler").innerHTML = html;
         }
 

@@ -665,7 +665,7 @@
                                     data-target="#collapse-box-optional-model" aria-expanded="true"
                                     aria-controls="collapse-box-optional-model" href="#collapse-box-optional-model">
                                     <a class="card-title text-sixteen-dark">
-                                        Optional Models
+                                      {{$staticContent['optional_models']}}
                                     </a>
                                 </div>
                                 <div id="collapse-box-optional-model" aria-labelledby="collapse-box-optional-model"
@@ -674,8 +674,8 @@
                                     <table class="table table-bordered table-optional-model">
                                         <thead class="thead-gray">
                                             <tr>
-                                                <th class="text-center" style="width: 40%">Model</th>
-                                                <th class="text-center">Description</th>
+                                                <th class="text-center" style="width: 40%">{{$staticContent['Model']}}</th>
+                                                <th class="text-center">{{$staticContent['description']}}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1006,7 +1006,7 @@
                                 data-target="#collapse-box-optional-model-mobile" aria-expanded="true"
                                 aria-controls="collapse-box-optional-model" href="#collapse-box-optional-model-mobile">
                                 <a class="card-title text-sixteen-dark">
-                                    Optional Models
+                                    {{$staticContent['optional_models']}}
                                 </a>
                             </div>
                             <div id="collapse-box-optional-model-mobile" aria-labelledby="collapse-box-optional-model"
@@ -1015,8 +1015,8 @@
                                 <table class="table table-bordered table-optional-model">
                                     <thead class="thead-gray">
                                         <tr>
-                                            <th class="text-center" style="width: 40%">Model</th>
-                                            <th class="text-center">Description</th>
+                                            <th class="text-center" style="width: 40%">  {{$staticContent['Model']}}</th>
+                                            <th class="text-center">  {{$staticContent['description']}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
