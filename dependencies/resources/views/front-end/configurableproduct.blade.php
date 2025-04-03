@@ -689,8 +689,8 @@
 										<br>
 										<p class="m-0"><span
 												class="text-sixteen-delta c_delta"><b>{{$staticContent['Dimensions']}}
-													(L x W x
-													H)</b></span></p>
+													({{$staticContent['key_l']}} x {{$staticContent['key_w']}} x
+													{{$staticContent['key_h']}})</b></span></p>
 										<p class="c_delta_mm text-detail-describe m-0"></p>
 										<p class="c_delta_inc text-detail-describe m-0"></p>
 									</div>
