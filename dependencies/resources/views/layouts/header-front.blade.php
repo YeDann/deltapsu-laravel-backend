@@ -10,10 +10,9 @@
         background-position: right 50%;
         background-repeat: no-repeat;
         background-size: 12px;
-        background-image: url('{{asset(' frontend-asset/image/arrow.svg')}}');
+        background-image: url('{{asset('frontend-asset/image/arrow.svg')}}');
         width: 50px;
         background-color: #fff;
-
     }
 
     .select-language:disabled,
@@ -619,8 +618,8 @@ function slugifyHead($text)
                             <div class="dropdown-submenu">
                                 @if(isset($navcategories4) && count($navcategories4) > 0 )
                                 <a id="sub4" class="sub-menu dropdown-item " onclick="mainCate('sub4')" tabindex="-1"
-                                    href="#">{{isset($staticContent['Battery_Charging'])?
-                                    $staticContent['Battery_Charging'] :'Industrial Battery Charging' }} <i
+                                    href="#">{{isset($staticContent['wireless_charging'])?
+                                    $staticContent['wireless_charging'] :'Industrial Battery Charging' }} <i
                                         class="zmdi zmdi-chevron-right"></i></a>
                                 @endif
                                 <ul class="dropdown-menu drp-subthree">
