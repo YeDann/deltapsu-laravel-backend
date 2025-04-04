@@ -90,8 +90,8 @@
                         <a
                             href="{{route('allproductsByType' ,[slugifyHead($current3->url_item),$current3->sub_pro_id ,$current3->main_cateid ])}}">
                             <p class="text-pro-link">
-                                {{isset($staticContent['Battery_Charging'])?
-                                $staticContent['Battery_Charging'] :'Industrial Battery Charging' }}</p>
+                                {{isset($staticContent['wireless_charging'])?
+                                $staticContent['wireless_charging'] :'Industrial Battery Charging' }}</p>
                         </a>
                         @endif
 
@@ -362,8 +362,8 @@
 
                         </div>
                         <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub4" data-toggle="collapse"
-                            data-target="#foot-nav-link-list-sub4">{{isset($staticContent['Battery_Charging'])?
-                            $staticContent['Battery_Charging'] :'Industrial Battery Charging' }}<i
+                            data-target="#foot-nav-link-list-sub4">{{isset($staticContent['wireless_charging'])?
+                            $staticContent['wireless_charging'] :'Industrial Battery Charging' }}<i
                                 class="zmdi zmdi-chevron-down"></i></a>
                         <div class="collapse pl-4" id="foot-nav-link-list-sub4" aria-expanded="false">
                             @foreach ($navcategories4 as $subCate)
