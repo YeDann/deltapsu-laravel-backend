@@ -3796,6 +3796,60 @@ class FrontendController extends Controller
 
 
        }
+      private function normalizeCountry($country) {
+    $validCountries = [
+        "Aaland Islands", "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra",
+        "Angola", "Anguilla", "Antarctica", "Antigua And Barbuda", "Argentina", "Armenia", "Aruba",
+        "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados",
+        "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bonaire, Saint Eustatius and Saba",
+        "Bosnia and Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory",
+        "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada",
+        "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island",
+        "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Cook Islands", "Costa Rica", "Cote D'Ivoire",
+        "Croatia", "Cuba", "Curacao", "Cyprus", "Czech Republic", "Democratic Republic of the Congo", "Denmark",
+        "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea",
+        "Eritrea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France",
+        "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany",
+        "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey",
+        "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Honduras", "Hong Kong",
+        "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy",
+        "Jamaica", "Japan", "Jersey (Channel Islands)", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait",
+        "Kyrgyzstan", "Lao People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya",
+        "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives",
+        "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia",
+        "Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco",
+        "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia",
+        "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "North Korea", "Northern Mariana Islands",
+        "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines",
+        "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Republic of Kosovo", "Reunion", "Romania", "Russia",
+        "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Martin", "Saint Vincent and the Grenadines",
+        "Samoa (Independent)", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles",
+        "Sierra Leone", "Singapore", "Sint Maarten", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa",
+        "South Georgia and the South Sandwich Islands", "South Korea", "South Sudan", "Spain", "Sri Lanka", "St. Helena",
+        "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland",
+        "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago",
+        "Tunisia", "Turkey", "Turkmenistan", "Turks & Caicos Islands", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine",
+        "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "USA Minor Outlying Islands", "Uzbekistan",
+        "Vanuatu", "Vatican City State (Holy See)", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)",
+        "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Zambia", "Zimbabwe"
+    ];
+
+    // Convert input to a standardized format (trim, lowercase)
+    $country = trim(strtolower($country));
+
+    // Pre-process valid countries list to lowercase for faster matching
+    $validCountries = array_map('strtolower', $validCountries);
+
+    // Check if the country exists in the list
+    $index = array_search($country, $validCountries);
+
+    // Return the matched country with correct casing if found
+    if ($index !== false) {
+        return $validCountries[$index]; // The country with correct formatting
+    }
+
+    return 'Other'; // Or 'Other' if needed
+}
 
        private  function subCheckBox($request){
         $email = $request->email;
@@ -3813,7 +3867,7 @@ class FrontendController extends Controller
             $checkmailC = Mailchimp::check($mailchimdata[0]['id'], trim($strmlo));
             $checkmailsta  =  Mailchimp::status($mailchimdata[0]['id'],trim($strmlo));
             $alreadysub =  DB::table('subscribes')->where('email',trim($strmlo))->get();
-
+            $country = $this->normalizeCountry($request->country);
             if(!$checkmailC){
                 if(count($alreadysub) == 0){
                     DB::table('subscribes')->insert(
@@ -3826,15 +3880,12 @@ class FrontendController extends Controller
                        ]
                    );
                 }
-                Mailchimp::subscribe($mailchimdata[0]['id'], trim($strmlo),['NAME' => $request->name, 'COUNTRY' => $request->country] ,true);
+                Mailchimp::subscribe($mailchimdata[0]['id'], trim($strmlo),['NAME' => $request->name, 'COUNTRY' => $country] ,true);
             }
         }
         }catch (\Exception $e){
             Log::channel('mail_log')->info('[EROR] message :Mailchimp::subscribe '.$e);
         }
-
-
-
 
        }
 
@@ -4246,8 +4297,8 @@ class FrontendController extends Controller
           }
 
            try {
-
-            $emaillog = Mail::to($emailsend)->send(new Contact($request->except('_token'),$ticket_id));
+          $emaillog = Mail::to('chai@degitobangkok.com')->send(new Contact($request->except('_token'),$ticket_id));
+            //$emaillog = Mail::to($emailsend)->send(new Contact($request->except('_token'),$ticket_id));
             Log::channel('mail_log')->info('[Success] message : Send Mail to '.implode(",",$emailsend));
             return \Redirect::back()->with("message","Send Email Successfully");
            } catch (\Swift_RfcComplianceException  $ex) {
