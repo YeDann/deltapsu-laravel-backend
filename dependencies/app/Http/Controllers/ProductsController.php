@@ -348,14 +348,16 @@ public function edit($id){
     ->get();
 
     $procategories = DB::table('product_has_categories as pc')
+    ->join('sub_pro_categories as sc', 'sc.sub_pro_id', '=', 'pc.categories_id')
     ->where('pc.product_id' ,$id)
+    ->select('pc.categories_id', 'sc.url_item')
     ->get();
     $arrProcate = [];
+    $arrProCateName = [];
     foreach($procategories as $item){
         array_push($arrProcate , $item->categories_id);
+        array_push($arrProCateName , $item->url_item);
     }
-    //    return dd($arrProcate);
-
      $langinproduct = [];
      foreach($products as $product){
         array_push($langinproduct ,$product->local);
@@ -465,6 +467,7 @@ public function edit($id){
 
 
     return  view('product.edit')
+    ->with('arrProCateName',$arrProCateName)
     ->with('arrProcate',$arrProcate)
     ->with('products_input',$products_input)
     ->with('products_input2',$products_input2)

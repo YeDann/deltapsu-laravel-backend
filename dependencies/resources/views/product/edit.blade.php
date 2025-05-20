@@ -155,7 +155,8 @@
                             </select> --}}
                             @foreach($subCategories as $sub)
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="checkbox" onclick="selectProductcategories({{$sub->sub_pro_id}})"
+                                <input type="checkbox"
+                                    onclick="selectProductcategories({{$sub->sub_pro_id}} ,'{{$sub->url_item}}')"
                                     class="custom-control-input" id="dataCate{{$sub->sub_pro_id}}"
                                     name="pro_categories[]" value="{{$sub->sub_pro_id}}" {{in_array($sub->sub_pro_id,
                                 $arrProcate) ? 'checked':''}} >
@@ -350,9 +351,9 @@
                                             class="jsnotenew">{{$item->content_2}}</textarea>
                                     </div>
 
-                                   <div id="box_cate_cate_battery" class="form-group mt-5">
-                                         <label for="">Short Features</label>
-                                        <textarea  name="short_features[{{$item->local}}]"
+                                    <div id="box_cate_cate_battery" class="form-group mt-5">
+                                        <label for="">Short Features</label>
+                                        <textarea name="short_features[{{$item->local}}]"
                                             class="jsnotenew_2">{{$item->short_features}}</textarea>
                                     </div>
                                     <div class="form-group">
@@ -402,9 +403,9 @@
                                         <textarea name="content[{{$item->local}}]"
                                             class="jsnotenew">{{$item->content_2}}</textarea>
                                     </div>
-                                     <div id="box_cate_cate_battery" class="form-group mt-5">
-                                         <label for="">Short Features</label>
-                                        <textarea  name="short_features[{{$item->local}}]"
+                                    <div id="box_cate_cate_battery" class="form-group mt-5">
+                                        <label for="">Short Features</label>
+                                        <textarea name="short_features[{{$item->local}}]"
                                             class="jsnotenew_2">{{$item->short_features}}</textarea>
                                     </div>
                                     <div class="form-group">
@@ -454,9 +455,9 @@
                                         <label for="">Content</label>
                                         <textarea name="content[{{$alang->name}}]" class="jsnotenew"></textarea>
                                     </div>
-                                   <div id="box_cate_cate_battery" class="form-group mt-5">
-                                         <label for="">Short Features</label>
-                                        <textarea  name="short_features[{{$item->local}}]"
+                                    <div id="box_cate_cate_battery" class="form-group mt-5">
+                                        <label for="">Short Features</label>
+                                        <textarea name="short_features[{{$item->local}}]"
                                             class="jsnotenew_2">{{$item->short_features}}</textarea>
                                     </div>
                                     <div class="form-group">
@@ -599,21 +600,10 @@
         var langInNotcontents  = <?= json_encode($language);?>;
         var allLangs  = <?= json_encode($allLang);?>;
         var arrCate  = <?= json_encode($arrProcate);?>;
-
-         $(document).ready(function () {
-            console.log(arrCate,'arrCate')
-            if(arrCate.includes(11)){
-               document.getElementById("box_cate_cate_battery").style.display =  "block";
-            }else{
-              document.getElementById("box_cate_cate_battery").style.display =  "none";
-            }
-
-         });
-
+        var arrProCateName  = <?= json_encode($arrProCateName);?>;
 
          function getHtmlContent(lang){
             $('#contenttdata').empty();
-            console.log(property);
               var typearray = [];
             var html2 = '';
                   html2 += '<div id="accordion_input">';
@@ -1010,7 +1000,7 @@
         });
 
         var categorie = arrCate;
-    function selectProductcategories(id) {
+    function selectProductcategories(id ,slug) {
 
         if(categorie.indexOf(id) == -1){
             categorie.push(id);
@@ -1021,6 +1011,11 @@
             }
         }
 
+        if(slug == 'wireless-charging-system' || arrProCateName.includes('wireless-charging-system')){
+               document.getElementById("box_cate_cate_battery").style.display =  "block";
+            }else{
+              document.getElementById("box_cate_cate_battery").style.display =  "none";
+        }
         var  serieId = "{{$products[0]->series_id}}";
         $.ajax({
             url: "{{ (route('searhSeries')) }}" ,
