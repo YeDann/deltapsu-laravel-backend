@@ -221,9 +221,10 @@
         width: 83px;
         word-break: break-all;
     }
-     .w-td-con-text-editor {
+
+    .w-td-con-text-editor {
         width: 100%;
-        text-align:center;
+        text-align: center;
         word-break: break-all;
     }
 </style>
@@ -470,7 +471,8 @@
                 <div id="showfiler-mobile" class="my-auto">
                     <div style="color:#fff;" id="filterMobile-btn" onclick="OpenFiiter();"
                         class="filter-mobile-link text-bold"><img
-                            src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt="">{{$staticContent['filters']}}</div>
+                            src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}"
+                            alt="">{{$staticContent['filters']}}</div>
                 </div>
                 <div class="d-flex">
                     <p class="text-white my-auto mr-2 text-card-detial text-bold">{{$staticContent['Sort_by']}}:</p>
@@ -670,6 +672,7 @@
     var defaultfilters =  <?= json_encode($defaultfilters);?>;
     var catename = <?= json_encode($catename);?>;
     var cateid = <?= json_encode($cateid);?>;
+    var url_name =  <?= json_encode($url_name);?>;
     var pro_perti = [];
     var ser_arr = [];
     var productFilter = [];
@@ -1373,7 +1376,7 @@
         html += '</div>';
         html += '</div>';
         html += '</div>';
-        if(cateid == 11){
+        if(url_name == "wireless-charging-system"){
         html += '<p class="text-title-ft-sub text-two">{{$staticContent['product_highLights']}}</p>';
         html += '<div class="text-editor-card mt-2"> '+checkNullTexteditor(pro['short_features']) +'</div>';
         }else{
@@ -1473,7 +1476,7 @@
         html += '</div>';
         html += '</div>';
 
-        if(cateid == 11){
+        if(url_name == "wireless-charging-system"){
         html += '<p class="text-title-ft-sub text-two">{{$staticContent['product_highLights']}}</p>';
         html += '<div class="text-editor-card mt-2"> '+checkNullTexteditor(pro['short_features']) +'</div>';
         }else{
@@ -1537,7 +1540,7 @@
         html1 += '<th id="sortdata3" class=" header-font-table w-tabfix w-120"  onclick="selectTable(3)">{{$staticContent['Output_Current']}}</th>';
         html1 += '<th id="sortdata4" class=" header-font-table w-tabfix w-120"  onclick="selectTable(4)">{{$staticContent['Output_Power']}} </th>';
         html1 += '<th id="sortdata5" class=" header-font-table w-tabfix"  onclick="selectTable(5)">{{$staticContent['Input_Voltage']}}</th>';
-        if(cateid == 11){
+        if(url_name == "wireless-charging-system"){
         html1 += '<th id="sortdata6" class="header-font-table w-tabfix" >{{$staticContent['product_highLights']}}</th>';
         }else{
         html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['Dimensions']}} <br>('+unit_dimension_1+' x W x '+unit_dimension+')</th>';
@@ -1645,7 +1648,7 @@
         }else{
          html1 += ' <td class="text-middle-td">-</td>';
         }
-       if(cateid == 11){
+        if(url_name == "wireless-charging-system"){
             html1 += ' <td class="text-middle-td"> <div class="w-td-con-text-editor">'+checkNullTexteditor(pro['short_features'])+'</div></td>';
         }else{
             if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 &&pro['dimensionW'] != '' && pro['dimensionD'] != ''){
