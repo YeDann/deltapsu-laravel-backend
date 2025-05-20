@@ -287,6 +287,11 @@
                                     <label for="">Content</label>
                                     <textarea name="content" class="jsnotenew"></textarea>
                                 </div>
+                                   <div id="box_cate_cate_battery" class="form-group mt-5">
+                                         <label for="">Short Features</label>
+                                        <textarea  name="short_features"
+                                            class="jsnotenew_2"></textarea>
+                                    </div>
                                 <div class="form-group">
                                     <label for="">Meta - Description</label>
                                     <span>Recommended 70-155 Character</span>
@@ -539,6 +544,11 @@
 </div>
 @endsection
 @section('js')
+<script type="text/javascript">
+    $(document).ready(function () {
+           document.getElementById("box_cate_cate_battery").style.display =  "none";
+    });
+</script>
 <script>
     $('.jssummernote').summernote({
         tabsize: 2,
@@ -648,6 +658,13 @@
                 categorie.splice(index, 1);
             }
         }
+        let check = false;
+         if(id == 11){
+            check = true;
+         }else{
+            check = false;
+         }
+        document.getElementById("box_cate_cate_battery").style.display = check ? "block" : "none";
         $.ajax({
             url: "{{ (route('searhSeries')) }}",
             data: {

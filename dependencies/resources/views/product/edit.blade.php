@@ -311,7 +311,6 @@
 
 
 
-
                         <div class="block block-rounded block-bordered">
                             <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
                                 @foreach ($products as $item)
@@ -345,10 +344,16 @@
                                         <textarea name="overview[{{$item->local}}]"
                                             class="jsnotenew">{{$item->content_1}}</textarea>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group mb-2">
                                         <label for="">Content</label>
                                         <textarea name="content[{{$item->local}}]"
                                             class="jsnotenew">{{$item->content_2}}</textarea>
+                                    </div>
+
+                                   <div id="box_cate_cate_battery" class="form-group mt-5">
+                                         <label for="">Short Features</label>
+                                        <textarea  name="short_features[{{$item->local}}]"
+                                            class="jsnotenew_2">{{$item->short_features}}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Meta - Description</label>
@@ -387,15 +392,20 @@
                                 </div>
                                 @else
                                 <div class="tab-pane" id="btabs-alt-static-{{$item->local}}" role="tabpanel">
-                                    <div class="form-group">
+                                    <div class="form-group ">
                                         <label for="">Highlights & Features</label>
                                         <textarea name="overview[{{$item->local}}]"
                                             class="jsnotenew">{{$item->content_1}}</textarea>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group mb-2">
                                         <label for="">Content</label>
                                         <textarea name="content[{{$item->local}}]"
                                             class="jsnotenew">{{$item->content_2}}</textarea>
+                                    </div>
+                                     <div id="box_cate_cate_battery" class="form-group mt-5">
+                                         <label for="">Short Features</label>
+                                        <textarea  name="short_features[{{$item->local}}]"
+                                            class="jsnotenew_2">{{$item->short_features}}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="">Meta - Description</label>
@@ -440,11 +450,15 @@
                                         <label for="">Highlights & Features</label>
                                         <textarea name="overview[{{$alang->name}}]" class="jsnotenew"></textarea>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group mb-2">
                                         <label for="">Content</label>
                                         <textarea name="content[{{$alang->name}}]" class="jsnotenew"></textarea>
                                     </div>
-
+                                   <div id="box_cate_cate_battery" class="form-group mt-5">
+                                         <label for="">Short Features</label>
+                                        <textarea  name="short_features[{{$item->local}}]"
+                                            class="jsnotenew_2">{{$item->short_features}}</textarea>
+                                    </div>
                                     <div class="form-group">
                                         <label class="d-block">Show Status</label>
                                         <div
@@ -564,6 +578,7 @@
 </div>
 @endsection
 @section('js')
+
 <script>
     $(".js-example-tags").select2({
           tags: true
@@ -584,6 +599,16 @@
         var langInNotcontents  = <?= json_encode($language);?>;
         var allLangs  = <?= json_encode($allLang);?>;
         var arrCate  = <?= json_encode($arrProcate);?>;
+
+         $(document).ready(function () {
+            console.log(arrCate,'arrCate')
+            if(arrCate.includes(11)){
+               document.getElementById("box_cate_cate_battery").style.display =  "block";
+            }else{
+              document.getElementById("box_cate_cate_battery").style.display =  "none";
+            }
+
+         });
 
 
          function getHtmlContent(lang){
@@ -995,8 +1020,8 @@
                 categorie.splice(index, 1);
             }
         }
+
         var  serieId = "{{$products[0]->series_id}}";
-        console.log(serieId);
         $.ajax({
             url: "{{ (route('searhSeries')) }}" ,
             data: {

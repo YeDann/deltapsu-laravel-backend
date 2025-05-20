@@ -15,7 +15,7 @@ class ProductsController extends Controller
     }
 
     public function index(){
-         
+
         $products = DB::table('products as p')
         ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
         ->where('pt.local' ,'en')
@@ -35,7 +35,7 @@ class ProductsController extends Controller
         // }
         // return dd('success');
 
-        
+
         return view('product.index')
         ->with('menu', "products")
         ->with('products', $products)
@@ -78,7 +78,7 @@ class ProductsController extends Controller
 
     }
     public function ImportOldProduct($type){
-        
+
     }
     public function searhSeries(Request $request){
          $data  = $request->data;
@@ -93,8 +93,8 @@ class ProductsController extends Controller
             ->distinct('s.se_id')
             ->get();
         }
-     
-          
+
+
         return response()->json([
             'modalContent' => $series
                 ], 200);
@@ -104,12 +104,13 @@ class ProductsController extends Controller
         $langs = $request->lang_loop;
         $overview = $request->overview;
         $content = $request->content;
+        $short_features = $request->short_features;
         $status = $request->status;
         $productfieldText = $request->productfieldText;
         $productfieldNumbers = $request->productfieldNumbers;
         $inputText = $request->inputText;
         $inputNumber = $request->inputNumber;
-        $status_input = $request->status_input;   
+        $status_input = $request->status_input;
         $certificate =  $request->status_certificate;
         $tags  = $request->tag;
         $optional_models = $request->optional_models;
@@ -218,13 +219,14 @@ class ProductsController extends Controller
             }
         }
 
-         
+
                 foreach($langs as $lang){
                     $products_translation = DB::table('products_translation')->insert(
                         [
                             "product_id" => $id,
                             "content_1" => $overview,
                             "content_2" => $content,
+                            "short_features" =>$short_features,
                             "meta_description" => $meta_description,
                             "showstatus"=>$status,
                             "local" => $lang,
@@ -232,13 +234,13 @@ class ProductsController extends Controller
                     );
                 }
                 foreach($productfieldText as $fieldTextid){
-                    
+
                     $pro_id_perty = DB::table('product_has_property')->insertGetID(
                         [
                             'product_id'=>$id,
                             'type_id'=> $fieldTextid,
                             'type_value'=>'text',
-    
+
                         ]
                     );
                     foreach($langs as $lang){
@@ -252,19 +254,19 @@ class ProductsController extends Controller
                         );
                     }
                 }
-              
+
                 foreach($productfieldNumbers as $fieldNumid){
-                 
+
                     $data4 = null;
                     $data5 = null;
                   if(isset($inputNumber[$fieldNumid]['m'][4])){
                     $data4 = $inputNumber[$fieldNumid]['m'][4];
                   }
-               
+
                   if(isset($inputNumber[$fieldNumid]['m'][5])){
                     $data5 = $inputNumber[$fieldNumid]['m'][5];
                   }
-         
+
                   if($status_input[$fieldNumid] == 1){
                     // return dd($inputNumber[3]['s'][1]);
                     $pro_id_perty = DB::table('product_has_property')->insertGetID(
@@ -311,7 +313,7 @@ class ProductsController extends Controller
                             'data_2'=>$inputNumber[$fieldNumid]['r'][2],
                         ]
                     );
-                      
+
                   }
                     foreach($langs as $lang){
                        DB::table('product_has_property_translation')->insert(
@@ -322,16 +324,16 @@ class ProductsController extends Controller
                             ]
                         );
                     }
-                   
+
 
                 }
-     
+
                 return redirect()->route('products.index')->with('flash_message', 'Insert Data successfully');
         }
 
 }
 public function edit($id){
- 
+
     $products = DB::table('products as p')
     ->join('products_translation as pt', 'pt.product_id', '=', 'p.pro_id')
     ->where('p.pro_id' ,$id)
@@ -398,7 +400,7 @@ public function edit($id){
             array_push($KeepResult ,$props );
             array_push($arrcheckuni ,$value );
         }
-    
+
     }
     // return dd(count($arrcheckuni) , count($propertys));
 
@@ -406,7 +408,7 @@ public function edit($id){
        array_push($arrayInfeild ,$pro->type_id);
     }
     $result = array_unique($arrayInfeild);
-   
+
     $pd_fields = DB::table('product_field as pf')
     ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
     ->where('pft.local', '=', 'en')
@@ -415,7 +417,7 @@ public function edit($id){
     ->orderBy('pf.created_at', 'desc')
     ->get();
 
- 
+
 
     $product_related = DB::table('product_related as pr')
     ->join('products as p', 'p.pro_id', '=', 'pr.related_id')
@@ -461,7 +463,7 @@ public function edit($id){
         array_push($proInarr ,$pro->pro_code);
     }
 
-    
+
     return  view('product.edit')
     ->with('arrProcate',$arrProcate)
     ->with('products_input',$products_input)
@@ -486,6 +488,7 @@ public function update(Request $request){
     $langs = $request->lang_loop;
     $overview = $request->overview;
     $content = $request->content;
+    $short_features = $request->short_features;
     $status = $request->status;
     $productfieldText = $request->productfieldText;
     $inputfiledNum = $request->productfieldNumbers;
@@ -516,7 +519,7 @@ public function update(Request $request){
             $thumbnailImage = $request->file('thumbnail');
             $thumbnailName = uniqid() . "." . $thumbnailImage->getClientOriginalExtension();
             $thumbnailImage->move(base_path('/../upload/thumbs/'), preg_replace('/\s+/', '', $thumbnailName));
-             
+
             $file_pointer = base_path('/../upload/thumbs/').$oldFile;
             if (file_exists($file_pointer) && $oldFile != null ) {
                 unlink($file_pointer);
@@ -579,7 +582,7 @@ public function update(Request $request){
                     );
                 }
             }
-            
+
             DB::table('product_tags')->where('product_id',$pro_id)->delete();
             if(isset($tags)){
                 foreach($tags as $tag){
@@ -602,9 +605,9 @@ public function update(Request $request){
                     DB::table('product_optional_model')->where('id',$value->id)->delete();
                 }
             }
-        
+
             if(isset($optional_models)){
-      
+
                 foreach($optional_models as $optional){
                 $optional_pro = DB::table('product_optional_model as op')
                 ->where('op.product_id',$pro_id)
@@ -612,7 +615,7 @@ public function update(Request $request){
                 ->select('op.*')
                 ->first();
 
-       
+
 
                 if(isset($optional_pro)){
                     DB::table('product_optional_model')->where('id',$optional_pro->id)->delete();
@@ -633,8 +636,8 @@ public function update(Request $request){
                 }
             }
           }
-        
-           
+
+
             if(isset($relatePros)){
                 DB::table('product_related')->where('product_id',$pro_id)->delete();
             foreach($relatePros as $relatePro){
@@ -646,13 +649,14 @@ public function update(Request $request){
                 );
             }
            }
-        
+
             foreach($langs as $lang){
                 $products_translation = DB::table('products_translation')->where('product_id',$pro_id)->where('local',$lang)->update(
                     [
                         "content_1" => $overview[$lang],
                         "content_2" => $content[$lang],
                         "meta_description" => $meta_description[$lang],
+                        "short_features"=> $short_features[$lang],
                         "showstatus"=>$status[$lang],
 
                     ]
@@ -661,7 +665,7 @@ public function update(Request $request){
             DB::table('product_has_property_translation')->where('product_id', '=', $pro_id)->delete();
             DB::table('product_has_property')->where('product_id', '=', $pro_id)->delete();
             foreach($productfieldText as $fieldTextid){
-                    
+
                 $pro_id_perty = DB::table('product_has_property')->insertGetID(
                     [
                         'product_id'=>$pro_id,
@@ -679,13 +683,13 @@ public function update(Request $request){
                             "local" => 'en',
                         ]
                     );
-                
+
             }
-           
+
             #return  dd($status_input ,$productfieldNumbers);
             foreach($productfieldNumbers as $fieldNumid){
-              
-           
+
+
               if(isset($status_input[$fieldNumid]) && $status_input[$fieldNumid] == 1){
                 $pro_id_perty = DB::table('product_has_property')->insertGetID(
                     [
@@ -698,7 +702,7 @@ public function update(Request $request){
                 );
 
               }else if(isset($status_input[$fieldNumid]) && $status_input[$fieldNumid] == 2){
-              
+
                 $pro_id_perty = DB::table('product_has_property')->insertGetID(
                     [
                         'product_id'=>$pro_id,
@@ -732,9 +736,9 @@ public function update(Request $request){
                         'data_2'=>$inputNumber[$fieldNumid]['r'][2],
                     ]
                 );
-                  
+
               }
-           
+
                     $products_translation = DB::table('product_has_property_translation')->insert(
                         [
                             "per_fk_id" => $pro_id_perty,
@@ -742,10 +746,10 @@ public function update(Request $request){
                             "local" => 'en',
                         ]
                     );
-                
+
 
             }
- 
+
             return redirect()->route('products.index')->with('flash_message', 'Update Data successfully');
     }
 }
@@ -765,7 +769,7 @@ public function deleteProduct(Request $request){
                 unlink($file_pointer);
             }
         }
-  
+
 
    DB::table('products')->where('pro_id', '=', $itemId)->delete();
    DB::table('products_translation')->where('product_id', '=', $itemId)->delete();
@@ -777,7 +781,7 @@ public function deleteProduct(Request $request){
    DB::table('product_related')->where('product_id',$itemId)->delete();
    DB::table('product_tags')->where('product_id',$itemId)->delete();
    DB::table('product_has_categories')->where('product_id',$itemId)->delete();
-   
+
 
     return redirect()->route('products.index')->with('flash_message', 'Delete Data successfully');
 }
@@ -797,7 +801,6 @@ public function duplicateProduct($id){
   ->select('ph.*','php.*' )
   ->orderBy('ph.type_id' ,'asc')
   ->get();
-//   return dd($propertys);
 
 
   $id = DB::table('products')->insertGetID(
@@ -830,7 +833,7 @@ public function duplicateProduct($id){
     $idperty = [];
     $newId  = [];
     foreach($propertys as $per){
- 
+
           if(!in_array($per->per_id, $idperty)){
              $newId  = [];
                 array_push($idperty ,$per->per_id);
@@ -862,7 +865,7 @@ public function duplicateProduct($id){
     return redirect()->route('products.index')->with('flash_message', 'Duplicate Data successfully');
 
 }
-   public function lastetproducts(){
+ public function lastetproducts(){
 
     $last_products = DB::table('least_products as lp')
     ->join('least_products_translation as lpt', 'lp.id', '=', 'lpt.last_id')
@@ -871,7 +874,7 @@ public function duplicateProduct($id){
     ->where('lpt.local','en')
     ->get();
     // return dd($last_products);
-  
+
     return  view('product.lastest_product')
     ->with('last_products' ,$last_products)
     ->with('menu', "leatest_pro")
@@ -879,16 +882,16 @@ public function duplicateProduct($id){
 
    }
    public function createlastproduct(){
-       
+
     $language = DB::table('language')->get();
-    
+
     $product  = DB::table('products as p')
     ->join('products_translation as pt', 'pt.product_id', '=', 'p.pro_id')
     ->where('pt.local','en')
     ->orderBy('p.created_at','desc')
     ->select('p.*')
     ->get();
-    
+
     return  view('product.create_lastpro')
     ->with('language' ,$language)
     ->with('product', $product)
@@ -932,7 +935,7 @@ public function duplicateProduct($id){
                         );
                     }
                     return redirect()->route('lastetproducts')->with('flash_message', 'Insert Data successfully');
-                   
+
        }else{
             $id = DB::table('least_products')->insertGetID(
                 [
@@ -977,7 +980,7 @@ public function duplicateProduct($id){
        ->where('lp.id' ,$id)
        ->get();
     //    return dd($last_products);
-       
+
        return  view('product.edit_lastpro')
        ->with('language' ,$language)
        ->with('lastId', $id)
@@ -1037,7 +1040,7 @@ public function duplicateProduct($id){
                      );
                  }
                  return redirect()->route('lastetproducts')->with('flash_message', 'Update Data successfully');
-                
+
     }else{
          DB::table('least_products')->where('id',$lastproId)->update(
              [
@@ -1110,7 +1113,7 @@ public function featureProduct(){
     ->select('s.*' ,'st.*')
     ->orderBy('order_seq' ,'asc')
     ->get();
-    
+
     $series = DB::table('least_series_product as ls')
     ->join('series as s' ,'s.se_id' ,'=' ,'ls.series_id')
     ->join('series_translations as st' ,'st.series_id' ,'=' ,'s.se_id')
@@ -1132,7 +1135,7 @@ public function featureProduct(){
     ->with('products',$products)
     ->with('Allproducts',$Allproducts);
 }
-    public function setFeatureproducts(Request $request){
+ public function setFeatureproducts(Request $request){
         $id = $request->se_id;
         $cate = $request->cateId;
         DB::table('least_series_product')->insert(
@@ -1155,7 +1158,7 @@ public function featureProduct(){
             ->select('sp.*', 'spt.*')
             ->orderBy('sp.order_seq', 'asc')
             ->get();
-            
+
                 return view('product.productSection')
                     ->with('name','Home')
                     ->with('menu','ProductSection')
@@ -1190,7 +1193,7 @@ public function featureProduct(){
         ->where('sp.sub_pro_id' ,$id)
         ->select('sp.*')
         ->get();
-    
+
     if( $subCategories[0]->status == 1){
 
         DB::table('sub_pro_categories')->where('sub_pro_id',$id)->update(
@@ -1207,7 +1210,7 @@ public function featureProduct(){
         );
         $status = "Show";
     }
-      
+
 
         return response()->json([
             'data' =>  $status,
@@ -1215,17 +1218,17 @@ public function featureProduct(){
     }
 
      public function listexternal_link(){
-         
+
          $list = DB::table('external_link as e')
          ->orderBy('e.created_at', 'desc')
          ->get();
- 
+
          return view('product.external_link')
          ->with('menu', "external_link")
          ->with('list', $list)
          ->with('name', "product");
      }
-     
+
      public function storeExternallink(Request $request){
 
         $product = $request->relatePro;
@@ -1237,7 +1240,7 @@ public function featureProduct(){
             $thumbnailImage->move(base_path('/../upload/thumbs/'), preg_replace('/\s+/', '', $thumbnailName));
             $logoname = $thumbnailName;
         }
-  
+
         DB::table('external_link')->insert(
             [
                 "name" => $request->name,
