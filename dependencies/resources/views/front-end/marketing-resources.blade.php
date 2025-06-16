@@ -125,10 +125,10 @@
                 <img src="{{asset('frontend-asset/image/icon/icon-download.svg')}}" alt="">
                 <h4 class=" text-dark">{{$staticContent['Marketing_Resources_Downloads']}}</h4>
             </a>
-            <a href="{{route('productLaunchSchedule')}}" class="marketing-grid-list">
+            {{--  <a href="{{route('productLaunchSchedule')}}" class="marketing-grid-list">
                 <img src="{{asset('frontend-asset/image/icon/icon-schedule.svg')}}" alt="">
                 <h4 class=" text-dark"> {{$staticContent['Product_launch_Schedule']}}</h4>
-            </a>
+            </a>  --}}
             <a href="{{route('successStories')}}" class="marketing-grid-list">
                 <img src="{{asset('frontend-asset/image/icon/icon-stories.svg')}}" alt="">
                 <h4 class=" text-dark">{{$staticContent['Success_Stories']}}</h4>
