@@ -51,7 +51,7 @@ class ImportController extends Controller
                           break;
                       }
                   }
-                
+
                   // return dd($checkduplicate);
                 if($find){
                   $object = (object) [
@@ -66,9 +66,9 @@ class ImportController extends Controller
                   ];
                   array_push($checkduplicate ,$object);
                  }
-                
+
                   if(isset($ph_pro) && count($ph_pro) > 0){
-                
+
                   }else{
                     (int)$typical = substr($value->typical_output_power,0,-1);
                     $pro_id_perty = DB::table('product_has_property')->insertGetID(
@@ -90,7 +90,7 @@ class ImportController extends Controller
                         ]
                     );
                   }
-                 
+
                 }
                 }else{
 
@@ -126,7 +126,7 @@ class ImportController extends Controller
           }
         }
       }
-      
+
     }
     public function getExcelProduct(){
       $pd_field = DB::table('product_field as pf')
@@ -145,8 +145,6 @@ class ImportController extends Controller
       ->with('name', "product");
     }
     public function getExportProduct(){
-
-
       $products = DB::table('products as p')
       ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
       ->where('pt.local' ,'en')
@@ -154,21 +152,21 @@ class ImportController extends Controller
       ->orderBy('pt.showstatus' ,'desc')
       ->orderBy('p.created_at', 'desc')
       ->get();
-   
+
       $doc_cate = DB::table('products_documents_categories as doc_cate')
       ->orderBy('doc_cate.title' ,'asc')
       ->pluck('doc_cate.title')
       ->toArray();
       //  return dd($doc_cate ,'doc_cate');
-  
+
       $arrNotfound = [];
       $language = DB::table('language')->get();
       $pd_field = DB::table('product_field_translation as pft')->where('local','en')->get();
       if(isset($products)){
         Excel::create('products', function ($excel) use ($products ,$language, $pd_field ,$arrNotfound ,$doc_cate)  {
           $excel->sheet('products', function ($sheet) use ($products,$language, $pd_field , $arrNotfound,$doc_cate) {
-            $arr1 = array("pro_code", "pro_categories 1", "pro_categories 2","series", "dimensionL" ,"dimensionW" ,"dimensionD","unit_weight","Status","Show ManaulPage",'Highlights & Features',"Industrial Power", "Medical Power","Lighting & Signage"); 
-            $firstColum = array_merge($arr1, $doc_cate);  
+            $arr1 = array("pro_code" ,"pro_categories 1", "pro_categories 2","series", "dimensionL" ,"dimensionW" ,"dimensionD","unit_weight","Status","Show ManaulPage",'Highlights & Features',"Industrial Power", "Medical Power","Lighting & Signage");
+            $firstColum = array_merge($arr1, $doc_cate);
             $sheet->row(1,$firstColum);
               $i = 2;
               foreach ($products as $pro) {
@@ -185,7 +183,7 @@ class ImportController extends Controller
                 }
 
 
-            
+
 
                 // $arraysub = DB::table('product_has_property as ph')
                 // ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
@@ -210,23 +208,23 @@ class ImportController extends Controller
                 ->where('c.product_id',$pro->pro_id)
                 ->where('c.certificate_id',1)
                 ->get();
-              
+
                 $cer2 = DB::table('certificate_product as c')
                 ->where('c.product_id',$pro->pro_id)
                 ->where('c.certificate_id',2)
                 ->get();
-              
+
                 $cer3 = DB::table('certificate_product as c')
                 ->where('c.product_id',$pro->pro_id)
                 ->where('c.certificate_id',3)
                 ->get();
-               
+
 
                 $arrcon2 = [];
                 array_push($arrcon2,count($cer1) > 0?'Y':'N');
                 array_push($arrcon2,count($cer2) > 0 ?'Y':'N');
                 array_push($arrcon2,count($cer3) > 0?'Y':'N');
-              
+
                 $procategories = DB::table('product_has_categories as pc')
                 ->leftjoin('sub_pro_categories_translation as spt','spt.sub_pro_id','=','pc.categories_id')
                 ->where('spt.local' ,'en')
@@ -249,9 +247,40 @@ class ImportController extends Controller
                 ];
 
                 $documents =  self::getProductDocument($doc_cate ,$pro->pro_id);
-                $collection = array_merge($arrcon2, $documents);  
-                $arrcon1 = array_merge($arrcon1, $collection);  
+                $collection = array_merge($arrcon2, $documents);
+                $arrcon1 = array_merge($arrcon1, $collection);
                       $sheet->row($i,$arrcon1);
+                      $i++;
+              }
+          });
+      })->export('csv');
+      }
+    }
+    public function getExportProductImage(){
+    $products = DB::table('products as p')
+      ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+      ->where('pt.local' ,'en')
+      ->select('p.*', 'pt.*')
+      ->orderBy('pt.showstatus' ,'desc')
+      ->orderBy('p.created_at', 'desc')
+      ->get();
+      $arrNotfound = [];
+      if(isset($products)){
+        Excel::create('products', function ($excel) use ($products ,$arrNotfound )  {
+          $excel->sheet('products', function ($sheet) use ($products,$arrNotfound) {
+            $arr1 = array("No","pro_code","thumbnail" );
+            $sheet->row(1,$arr1);
+              $i = 2;
+              foreach ($products as $pro) {
+
+                $arrcon1  =  [
+                   $i-1,
+                  $pro->pro_code,
+                   $pro->picture ? 'https://deltapsu.com/upload/thumbs/'.$pro->picture : 'No thumbnail',
+
+                ];
+
+                $sheet->row($i,$arrcon1);
                       $i++;
               }
           });
@@ -469,7 +498,7 @@ class ImportController extends Controller
       ->select('pf.id as pd_field_id','pf.unit_name' ,'pf.type', 'pf.created_at', 'pft.field_name', 'pft.local as pft_local', 'st.id as section_id', 'stt.name as section_name')
       ->orderBy('pf.id' ,'asc')
       ->get();
-    
+
       $products = DB::table('products as p')
       ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
       ->where('pt.local' ,'en')
@@ -478,23 +507,23 @@ class ImportController extends Controller
       ->orderBy('pt.showstatus' ,'desc')
       ->orderBy('p.created_at', 'desc')
       ->get();
-    
+
       $columArray = ["product_code"];
       foreach ($product_fields as $pop) {
-      //  
+      //
        $data = $pop->pd_field_id.",".$pop->field_name.",".$pop->type.",".$pop->unit_name;
        array_push($columArray,$data);
       }
       // return dd($columArray);
       if(isset($product_fields)){
- 
+
         Excel::create('product_fields', function ($excel) use ($products ,$product_fields ,$columArray)  {
           $excel->sheet('product_fields', function ($sheet) use ($products ,$product_fields,$columArray) {
-            $arr1 = $columArray; 
+            $arr1 = $columArray;
               $sheet->row(1,$arr1);
               $i = 2;
               foreach ($products as $pro) {
-              
+
 
                  $arraysub = DB::table('product_has_property as ph')
                 ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
@@ -506,7 +535,7 @@ class ImportController extends Controller
                 ->orderBy('pf.id' ,'asc')
                 ->select('pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
                 ->get();
-               
+
                 $arrcon2 = [];
                 foreach($arraysub as $sub){
                   if($sub->type_value == 'number'){
@@ -515,12 +544,12 @@ class ImportController extends Controller
                     array_push($arrcon2,$sub->value_text);
                   }
                 }
-             
+
                 $arrcon1  =  [
                   $pro->pro_code,
                 ];
 
-                $arrconmer = array_merge($arrcon1, $arrcon2);  
+                $arrconmer = array_merge($arrcon1, $arrcon2);
                       $sheet->row($i,$arrconmer);
                       $i++;
               }
@@ -537,10 +566,10 @@ class ImportController extends Controller
 
     //   $arrNotfound = [];
     //   if(isset($products)){
- 
+
     //     Excel::create('products', function ($excel) use ($products ,$arrNotfound)  {
     //       $excel->sheet('products', function ($sheet) use ($products,$arrNotfound) {
-    //         $arr1 = array("pro_code", "content_en", "content_cn","content_de", "content_ru" ,"content_tw" ); 
+    //         $arr1 = array("pro_code", "content_en", "content_cn","content_de", "content_ru" ,"content_tw" );
 
     //           $sheet->row(1,$arr1);
     //           $i = 2;
@@ -559,15 +588,15 @@ class ImportController extends Controller
     //             foreach($trandata as $tran){
     //              array_push($arrcon2,$tran->description);
     //             }
-               
-    //             $arrcon1 = array_merge($arrcon1, $arrcon2);  
+
+    //             $arrcon1 = array_merge($arrcon1, $arrcon2);
     //                   $sheet->row($i,$arrcon1);
     //                   $i++;
     //           }
     //       });
     //   })->export('csv');
     //   }
-        
+
     // }
     public function getExcelProductCerti(){
        return view('product.importfileCerti')
@@ -576,14 +605,14 @@ class ImportController extends Controller
 
     }
     public function importCertificate(Request $request){
-  
+
       if ($request->hasFile('file')) {
         $extension = File::extension($request->file->getClientOriginalName());
         if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
             $path = $request->file->getRealPath();
             $data = Excel::load($path, function ($reader) {})->get();
         }
-        
+
            if(!empty($data) && $data->count()) {
             foreach ($data as $key => $value) {
               // return dd($value->LightingSignage);
@@ -618,41 +647,41 @@ class ImportController extends Controller
                  }
 
                 }
-               
-            
+
+
           }
         }
         return redirect()->route('products.index')->with('flash_message', 'create data Successfully');
       }
       return redirect()->route('products.index')->with('error_message', 'No file');
-      
+
   }
 
 
   public function importProdoctCate(Request $request){
-  
+
     if ($request->hasFile('file')) {
-   
+
       $extension = File::extension($request->file->getClientOriginalName());
       if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
           $path = $request->file->getRealPath();
           $data = Excel::load($path, function ($reader) {})->get();
       }
-     
+
          if(!empty($data) && $data->count()) {
           foreach ($data as $key => $value) {
-        
+
               $pro = DB::table('products as p')->where('p.pro_code',trim($value->product_code))->first();
               $procate1 = DB::table('sub_pro_categories as s')
               ->join('sub_pro_categories_translation as sub','s.sub_pro_id' ,'=','sub.sub_pro_id')
-              ->where('sub.local','en')->where('s.slug', preg_replace('/\s+/', '', $value->package_type_1))->first(); 
+              ->where('sub.local','en')->where('s.slug', preg_replace('/\s+/', '', $value->package_type_1))->first();
               $procate2 = DB::table('sub_pro_categories as s')
               ->join('sub_pro_categories_translation as sub','s.sub_pro_id' ,'=','sub.sub_pro_id')
-              ->where('sub.local','en')->where('s.slug', preg_replace('/\s+/', '', $value->package_type_2))->first(); 
+              ->where('sub.local','en')->where('s.slug', preg_replace('/\s+/', '', $value->package_type_2))->first();
               // if(isset($pro->pro_code) &&  $pro->pro_code =='PMT-30V100W2BA'){
               //   return dd(isset($procate2));
               // }
-       
+
               if(isset($pro)){
                   if(isset($procate1)){
                     DB::table('product_has_categories')->insert(
@@ -671,29 +700,29 @@ class ImportController extends Controller
                     );
                   }
               }
-              
-           
-              
-          
+
+
+
+
         }
       }
       return redirect()->route('products.index')->with('flash_message', 'create data Successfully');
     }
     return redirect()->route('products.index')->with('error_message', 'No file');
-    
+
 }
 
 
 public function importStatusProduct(Request $request){
-  
+
   if ($request->hasFile('file')) {
- 
+
     $extension = File::extension($request->file->getClientOriginalName());
     if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
         $path = $request->file->getRealPath();
         $data = Excel::load($path, function ($reader) {})->get();
     }
- 
+
        if(!empty($data) && $data->count()) {
         foreach ($data as $key => $value) {
             $pro = DB::table('products as p')->where('p.pro_code',trim($value->product_code))->first();
@@ -710,14 +739,14 @@ public function importStatusProduct(Request $request){
     return redirect()->route('products.index')->with('flash_message', 'create data Successfully');
   }
   return redirect()->route('products.index')->with('error_message', 'No file');
-  
+
 }
 
 
 // public function importSuccessStory(Request $request){
-  
+
 //   if ($request->hasFile('file')) {
- 
+
 //     $extension = File::extension($request->file->getClientOriginalName());
 //     if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
 //         $path = $request->file->getRealPath();
@@ -731,7 +760,7 @@ public function importStatusProduct(Request $request){
 //           $old_userfound = DB::table('old_users')
 //           ->where('username', '=', trim($value->username))
 //           ->get();
-        
+
 //           if(count($old_userfound) == 0){
 //            array_push($value->username, $arr_chek);
 //             }else{
@@ -757,13 +786,13 @@ public function importStatusProduct(Request $request){
 //             }
 //          }
 
-       
+
 //     }
 //     return dd($arr_chek);
 //     return redirect()->route('successStory')->with('flash_message', 'create data Successfully');
 //   }
 //   return redirect()->route('successStory')->with('error_message', 'No file');
-  
+
 // }
 
 
@@ -805,14 +834,14 @@ public  function getpageSubscriber(){
 }
 public function importSubscriber(Request $request){
   if ($request->hasFile('file')) {
- 
+
     $extension = File::extension($request->file->getClientOriginalName());
     if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
         $path = $request->file->getRealPath();
         $data = Excel::load($path, function ($reader) {})->get();
     }
 
-      
+
        if(!empty($data) && $data->count()) {
         foreach ($data as $key => $value) {
           // return dd($value);
@@ -835,7 +864,7 @@ public function importSubscriber(Request $request){
     return redirect()->route('getpageSubscriber')->with('flash_message', 'create data Successfully');
   }
   return redirect()->route('getpageSubscriber')->with('error_message', 'No file');
-  
+
 }
 
 private function checkHaveModel($strmodel){
@@ -845,7 +874,7 @@ private function checkHaveModel($strmodel){
   ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
   ->select('p.*','phc.categories_id')
   ->where('p.enable_pro',1);
-  
+
   $queryModel->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $queryStringModel . '%');
   $_model = $queryModel->first();
 
