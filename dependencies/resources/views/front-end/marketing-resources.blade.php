@@ -129,10 +129,10 @@
                 <img src="{{asset('frontend-asset/image/icon/icon-schedule.svg')}}" alt="">
                 <h4 class=" text-dark"> {{$staticContent['Product_launch_Schedule']}}</h4>
             </a>  --}}
-            <a href="{{route('successStories')}}" class="marketing-grid-list">
+            {{--  <a href="{{route('successStories')}}" class="marketing-grid-list">
                 <img src="{{asset('frontend-asset/image/icon/icon-stories.svg')}}" alt="">
                 <h4 class=" text-dark">{{$staticContent['Success_Stories']}}</h4>
-            </a>
+            </a> --}}
             <a href="{{route('saleKit')}}" class="marketing-grid-list">
                 <img src="{{asset('frontend-asset/image/icon/icon-kit.svg')}}" alt="">
                 <h4 class=" text-dark">{{$staticContent['Sales_kit']}}</h4>
@@ -142,10 +142,10 @@
                 <h4 class=" text-dark">{{$staticContent['Product_Cross_Reference']}}</h4>
             </a>
 
-            <a href="{{route('confighistory')}}" class="marketing-grid-list">
+             {{--  <a href="{{route('confighistory')}}" class="marketing-grid-list">
                 <img src="{{asset('frontend-asset/image/icon/icon-config.svg')}}" alt="">
                 <h4 class=" text-dark">{{$staticContent['Configurable_History']}}</h4>
-            </a>
+            </a>  --}}
             @endif
             @foreach ($static_content as $item)
             @if(session('partner_role') == 2)
