@@ -485,6 +485,7 @@ Route::get('getExportProductSpecification','ImportController@getExportProductSpe
 
 //Route::post('importSuccessStory','ImportController@importSuccessStory')->name('importSuccessStory');
 Route::get('getExportProductProperty','ImportController@getExportProductProperty')->name('getExportProductProperty');
+Route::get('getExportProductImage','ImportController@getExportProductImage')->name('getExportProductImage');
 Route::get('subscribers/index','SubscribeController@index')->name('subscribers_index');
 Route::get('exportSubscribes','SubscribeController@exportSubscribes')->name('exportSubscribes');
 Route::get('ExportPartner','PartnerController@ExportPartner')->name('ExportPartner');

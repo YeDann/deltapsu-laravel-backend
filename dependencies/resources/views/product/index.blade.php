@@ -56,6 +56,8 @@
                     --}}
 
                     <a href="{{route('getExportProduct')}}" class="btn btn-outline-primary">Export Products</a>
+                     <a href="{{route('getExportProductImage')}}" class="btn btn-outline-primary">Export Products Image</a>
+
                     <!-- <a href="{{route('getExportProductProperty')}}" class="btn btn-outline-primary">Export Products pros</a> -->
                 </div>
             </div>
