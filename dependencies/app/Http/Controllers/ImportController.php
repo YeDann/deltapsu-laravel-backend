@@ -6,8 +6,9 @@ use App;
 use DB;
 use Illuminate\Http\Request;
 use Validator;
-use Excel;
 use File;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Concerns\FromArray;
 use Illuminate\Support\Facades\Hash;
 class ImportController extends Controller
 {
@@ -144,148 +145,180 @@ class ImportController extends Controller
       ->with('menu', "products")
       ->with('name', "product");
     }
-    public function getExportProduct(){
-      $products = DB::table('products as p')
-      ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-      ->where('pt.local' ,'en')
-      ->select('p.*', 'pt.*')
-      ->orderBy('pt.showstatus' ,'desc')
-      ->orderBy('p.created_at', 'desc')
-      ->get();
+   public function getExportProduct()
+    {
+        $products = DB::table('products as p')
+            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+            ->where('pt.local', 'en')
+            ->select('p.*', 'pt.*')
+            ->orderBy('pt.showstatus', 'desc')
+            ->orderBy('p.created_at', 'desc')
+            ->get();
 
-      $doc_cate = DB::table('products_documents_categories as doc_cate')
-      ->orderBy('doc_cate.title' ,'asc')
-      ->pluck('doc_cate.title')
-      ->toArray();
-      //  return dd($doc_cate ,'doc_cate');
+        $doc_cate = DB::table('products_documents_categories as doc_cate')
+            ->orderBy('doc_cate.title', 'asc')
+            ->pluck('doc_cate.title')
+            ->toArray();
 
-      $arrNotfound = [];
-      $language = DB::table('language')->get();
-      $pd_field = DB::table('product_field_translation as pft')->where('local','en')->get();
-      if(isset($products)){
-        Excel::create('products', function ($excel) use ($products ,$language, $pd_field ,$arrNotfound ,$doc_cate)  {
-          $excel->sheet('products', function ($sheet) use ($products,$language, $pd_field , $arrNotfound,$doc_cate) {
-            $arr1 = array("pro_code" ,"pro_categories 1", "pro_categories 2","series", "dimensionL" ,"dimensionW" ,"dimensionD","unit_weight","Status","Show ManaulPage",'Highlights & Features',"Industrial Power", "Medical Power","Lighting & Signage");
+        $arrNotfound = [];
+
+        if (isset($products)) {
+            // สร้าง array สำหรับ export
+            $exportData = [];
+
+            // Headers
+            $arr1 = [
+                "pro_code",
+                "pro_categories 1",
+                "pro_categories 2",
+                "series",
+                "dimensionL",
+                "dimensionW",
+                "dimensionD",
+                "unit_weight",
+                "Status",
+                "Show ManaulPage",
+                'Highlights & Features',
+                "Industrial Power",
+                "Medical Power",
+                "Lighting & Signage"
+            ];
             $firstColum = array_merge($arr1, $doc_cate);
-            $sheet->row(1,$firstColum);
-              $i = 2;
-              foreach ($products as $pro) {
+            $exportData[] = $firstColum;
+
+            // Data rows
+            foreach ($products as $pro) {
                 $subCategories = DB::table('sub_pro_categories as sc')
-                ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
-                ->where('sc.sub_pro_id', $pro->pro_categories_id)
-                ->select('sc.*', 'sct.*')
-                ->where('sct.local','en')
-                ->orderBy('sc.created_at', 'desc')
-                ->get();
-                $series =  DB::table('series_translations')->where('series_id', '=', $pro->series_id)->where('local','en')->get();
-                if(count($subCategories) == 0){
-                  array_push($arrNotfound ,$pro->pro_categories_id);
+                    ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
+                    ->where('sc.sub_pro_id', $pro->pro_categories_id)
+                    ->select('sc.*', 'sct.*')
+                    ->where('sct.local', 'en')
+                    ->orderBy('sc.created_at', 'desc')
+                    ->get();
+
+                $series = DB::table('series_translations')
+                    ->where('series_id', '=', $pro->series_id)
+                    ->where('local', 'en')
+                    ->get();
+
+                if (count($subCategories) == 0) {
+                    array_push($arrNotfound, $pro->pro_categories_id);
                 }
 
-
-
-
-                // $arraysub = DB::table('product_has_property as ph')
-                // ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
-                // ->join('product_field as pf','pf.id' ,'=','ph.type_id')
-                // ->join('product_field_translation as pft','ph.type_id' ,'=','pft.product_field_id')
-                // ->where('ph.product_id',$pro->pro_id)
-                // ->where('pht.local' ,'en')
-                // ->where('pft.local' ,'en')
-                // ->orderBy('pf.id' ,'asc')
-                // ->select('pht.value_text','ph.*' ,'pft.field_name as fieldCate','pf.unit_name')
-                // ->get();
-                // $arrcon2 = [];
-                // foreach($arraysub as $sub){
-                //   if($sub->type_value == 'number'){
-                //     array_push($arrcon2,$sub->data_1.''.$sub->data_2.''.$sub->data_3.''.$sub->data_4.''.$sub->data_5);
-                //   }else{
-                //     array_push($arrcon2,$sub->value_text);
-                //   }
-                // }
-
+                // Certificate checks
                 $cer1 = DB::table('certificate_product as c')
-                ->where('c.product_id',$pro->pro_id)
-                ->where('c.certificate_id',1)
-                ->get();
+                    ->where('c.product_id', $pro->pro_id)
+                    ->where('c.certificate_id', 1)
+                    ->exists();
 
                 $cer2 = DB::table('certificate_product as c')
-                ->where('c.product_id',$pro->pro_id)
-                ->where('c.certificate_id',2)
-                ->get();
+                    ->where('c.product_id', $pro->pro_id)
+                    ->where('c.certificate_id', 2)
+                    ->exists();
 
                 $cer3 = DB::table('certificate_product as c')
-                ->where('c.product_id',$pro->pro_id)
-                ->where('c.certificate_id',3)
-                ->get();
-
+                    ->where('c.product_id', $pro->pro_id)
+                    ->where('c.certificate_id', 3)
+                    ->exists();
 
                 $arrcon2 = [];
-                array_push($arrcon2,count($cer1) > 0?'Y':'N');
-                array_push($arrcon2,count($cer2) > 0 ?'Y':'N');
-                array_push($arrcon2,count($cer3) > 0?'Y':'N');
+                array_push($arrcon2, $cer1 ? 'Y' : 'N');
+                array_push($arrcon2, $cer2 ? 'Y' : 'N');
+                array_push($arrcon2, $cer3 ? 'Y' : 'N');
 
                 $procategories = DB::table('product_has_categories as pc')
-                ->leftjoin('sub_pro_categories_translation as spt','spt.sub_pro_id','=','pc.categories_id')
-                ->where('spt.local' ,'en')
-                ->where('pc.product_id',$pro->pro_id)
-                ->select('spt.name')
-                ->get();
+                    ->leftjoin('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'pc.categories_id')
+                    ->where('spt.local', 'en')
+                    ->where('pc.product_id', $pro->pro_id)
+                    ->select('spt.name')
+                    ->get();
 
-                $arrcon1  =  [
-                  $pro->pro_code,
-                  isset($procategories[0]->name) && count($procategories) > 0 ?$procategories[0]->name:'',
-                  isset($procategories[1]->name) && count($procategories) == 2 ?$procategories[1]->name:'',
-                  isset($series[0]->title) ?$series[0]->title:'',
-                  $pro->dimensionL,
-                  $pro->dimensionW,
-                  $pro->dimensionD,
-                  $pro->unit_weight,
-                  $pro->enable_pro == 1 ?'Yes':'No',
-                  $pro->manaul_page == 1 ?'Yes':'No',
-                  strip_tags($pro->content_1),
+                $arrcon1 = [
+                    $pro->pro_code,
+                    isset($procategories[0]->name) && count($procategories) > 0 ? $procategories[0]->name : '',
+                    isset($procategories[1]->name) && count($procategories) == 2 ? $procategories[1]->name : '',
+                    isset($series[0]->title) ? $series[0]->title : '',
+                    $pro->dimensionL,
+                    $pro->dimensionW,
+                    $pro->dimensionD,
+                    $pro->unit_weight,
+                    $pro->enable_pro == 1 ? 'Yes' : 'No',
+                    $pro->manaul_page == 1 ? 'Yes' : 'No',
+                    strip_tags($pro->content_1),
                 ];
 
-                $documents =  self::getProductDocument($doc_cate ,$pro->pro_id);
+                $documents = self::getProductDocument($doc_cate, $pro->pro_id);
                 $collection = array_merge($arrcon2, $documents);
                 $arrcon1 = array_merge($arrcon1, $collection);
-                      $sheet->row($i,$arrcon1);
-                      $i++;
-              }
-          });
-      })->export('csv');
-      }
+
+                $exportData[] = $arrcon1;
+            }
+
+            // Export using new Laravel Excel syntax
+            return Excel::download(new class($exportData) implements FromArray {
+                protected $data;
+
+                public function __construct(array $data)
+                {
+                    $this->data = $data;
+                }
+
+                public function array(): array
+                {
+                    return $this->data;
+                }
+            }, 'products.csv');
+        }
     }
-    public function getExportProductImage(){
-    $products = DB::table('products as p')
-      ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-      ->where('pt.local' ,'en')
-      ->select('p.*', 'pt.*')
-      ->orderBy('pt.showstatus' ,'desc')
-      ->orderBy('p.created_at', 'desc')
-      ->get();
-      $arrNotfound = [];
-      if(isset($products)){
-        Excel::create('products', function ($excel) use ($products ,$arrNotfound )  {
-          $excel->sheet('products', function ($sheet) use ($products,$arrNotfound) {
-            $arr1 = array("No","pro_code","thumbnail" );
-            $sheet->row(1,$arr1);
-              $i = 2;
-              foreach ($products as $pro) {
 
-                $arrcon1  =  [
-                   $i-1,
-                  $pro->pro_code,
-                   $pro->picture ? 'https://deltapsu.com/upload/thumbs/'.$pro->picture : 'No thumbnail',
+   public function getExportProductImage()
+    {
+        $products = DB::table('products as p')
+            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+            ->where('pt.local', 'en')
+            ->select('p.*', 'pt.*')
+            ->orderBy('pt.showstatus', 'desc')
+            ->orderBy('p.created_at', 'desc')
+            ->get();
 
+        $arrNotfound = [];
+
+        if (isset($products)) {
+            // สร้าง array สำหรับ export
+            $exportData = [];
+
+            // Headers
+            $headers = ["No", "pro_code", "thumbnail"];
+            $exportData[] = $headers;
+
+            // Data rows
+            $i = 1;
+            foreach ($products as $pro) {
+                $arrcon1 = [
+                    $i,
+                    $pro->pro_code,
+                    $pro->picture ? 'https://deltapsu.com/upload/thumbs/' . $pro->picture : 'No thumbnail',
                 ];
 
-                $sheet->row($i,$arrcon1);
-                      $i++;
-              }
-          });
-      })->export('csv');
-      }
+                $exportData[] = $arrcon1;
+                $i++;
+            }
+
+            // Export using new Laravel Excel syntax
+            return Excel::download(new class($exportData) implements FromArray {
+                protected $data;
+
+                public function __construct(array $data)
+                {
+                    $this->data = $data;
+                }
+
+                public function array(): array
+                {
+                    return $this->data;
+                }
+            }, 'products_images.csv');
+        }
     }
 
     function getExportProductSpecification(){
