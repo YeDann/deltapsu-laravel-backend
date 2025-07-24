@@ -2747,28 +2747,28 @@ class FrontendController extends Controller
     }
 
    public function loadPdffile(Request $request)
-{
-    $contentCompare = $request->datacon;
-    $string = $this->validateInput($request->arr_con, 'text', true);
-    $type_name = $this->validateInput($request->type_name, 'text', true);
-    $myArray = explode(',', $string);
-    $rsp = self::GetCoparisonHeader($myArray, $type_name);
+    {
+        $contentCompare = $request->datacon;
+        $string = $this->validateInput($request->arr_con, 'text', true);
+        $type_name = $this->validateInput($request->type_name, 'text', true);
+        $myArray = explode(',', $string);
+        $rsp = self::GetCoparisonHeader($myArray, $type_name);
 
-    $rowall = $rsp['CSV'];
+        $rowall = $rsp['CSV'];
 
-    // Laravel Excel 3.x syntax
-    return Excel::download(new class($rowall) implements \Maatwebsite\Excel\Concerns\FromArray {
-        private $data;
+        // Laravel Excel 3.x syntax
+        return Excel::download(new class($rowall) implements \Maatwebsite\Excel\Concerns\FromArray {
+            private $data;
 
-        public function __construct($data) {
-            $this->data = $data;
-        }
+            public function __construct($data) {
+                $this->data = $data;
+            }
 
-        public function array(): array {
-            return $this->data;
-        }
-    }, 'comparison_product.csv');
-  }
+            public function array(): array {
+                return $this->data;
+            }
+        }, 'comparison_product.csv');
+    }
 
        public function loadPdffilePDF(Request $request)
        {
