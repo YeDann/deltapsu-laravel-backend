@@ -67,7 +67,6 @@ Route::post('savepdfConfig','FrontendController@savepdfConfig')->name('savepdfCo
 Route::get('/user/login','FrontendController@loginpartner')->name('loginpartner');
 Route::get('/faq/detail/{name?}','FrontendController@faq_detail')->name('faq_detail');
 Route::get('/file/marketing_resources/{filename?}','FrontendController@checkPermission')->name('marketingLink');
-
 Route::get('/partners/marketing-resources/configurable-history','FrontendController@confighistory')->name('confighistory');
 Route::get('/partners/marketing-resources/product-launch-schedule','FrontendController@productLaunchSchedule')->name('productLaunchSchedule');
 Route::get('/partners/marketing-resources/marketing-resources-downloads','FrontendController@marketingResourcesDownloads')->name('marketingResourcesDownloads');
@@ -80,16 +79,13 @@ Route::get('/partners/marketing-resources/success-stories/add-success-stories','
 Route::post('/deleteImageSucess','FrontendController@deleteImageSucess')->name('deleteImageSucess');
 Route::post('/updateSuccessStories','FrontendController@updateSuccessStories')->name('updateSuccessStories');
 Route::post('/deleteSucessStory','FrontendController@deleteSucessStory')->name('deleteSucessStory');
-
 Route::get('/partners/marketing-resources','FrontendController@marketingResources')->name('marketingResources');
 Route::get('/partners/marketing-resources/product-documents','FrontendController@productDocLogin')->name('productDocLogin');
 Route::get('/tools/comparison','FrontendController@productCoparison')->name('productCoparison');
 Route::get('/tools/product-selector','FrontendController@productFinder')->name('productFinder');
-Route::get('/application/detail/{appname?}','FrontendController@applicationDetail')->name('applicationDetail');
-Route::get('/application/detail/{appname?}/{app_id?}','FrontendController@appDetailById')->name('appDetail');
-
+Route::get('/application/detail/{name?}','FrontendController@applicationDetail')->name('applicationDetail');
+Route::get('/application/detail/{name?}/{id?}','FrontendController@appDetailById')->name('appDetail');
 Route::get('/about-us/{pagename?}','FrontendController@aboutUs')->name('aboutUs');
-
 Route::get('/news/{name?}','FrontendController@updateNewsDetail')->name('updateNewsDetail');
 Route::get('/events/{name?}','FrontendController@updateEventDetail')->name('updateEventDetail');
 Route::get('/technical-articles/{name?}','FrontendController@updateTechnicalDetail')->name('updateTechnicalDetail');

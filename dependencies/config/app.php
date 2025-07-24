@@ -178,11 +178,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-        Sichikawa\LaravelSendgridDriver\SendgridTransportServiceProvider::class,
+       // Sichikawa\LaravelSendgridDriver\SendgridTransportServiceProvider::class,
         NZTim\Mailchimp\MailchimpServiceProvider::class,
         // Devfactory\Minify\Facades\MinifyFacade::class,
-        HTMLMin\HTMLMin\HTMLMinServiceProvider::class,
-    
+        //HTMLMin\HTMLMin\HTMLMinServiceProvider::class,
+
     ],
 
     /*

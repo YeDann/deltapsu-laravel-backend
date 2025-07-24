@@ -280,6 +280,16 @@
         font-size: 25px;
         color: #ffffff;
     }
+    .add-hight{
+        margin-top:10px;
+    }
+    .text-editor-card {
+        color: #5f5f5f;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 300;
+        margin-bottom: .25rem;
+     }
 </style>
 @endsection
 @section('meta')
@@ -1377,7 +1387,7 @@
         html += '</div>';
         html += '</div>';
         if(url_name == "wireless-charging-system"){
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['product_highLights']}}</p>';
+        html += '<p class="text-title-ft-sub text-two add-hight">{{$staticContent['product_highLights']}}</p>';
         html += '<div class="text-editor-card mt-2"> '+checkNullTexteditor(pro['short_features']) +'</div>';
         }else{
         html += '<div class="dimension">';
@@ -1541,7 +1551,7 @@
         html1 += '<th id="sortdata4" class=" header-font-table w-tabfix w-120"  onclick="selectTable(4)">{{$staticContent['Output_Power']}} </th>';
         html1 += '<th id="sortdata5" class=" header-font-table w-tabfix"  onclick="selectTable(5)">{{$staticContent['Input_Voltage']}}</th>';
         if(url_name == "wireless-charging-system"){
-        html1 += '<th id="sortdata6" class="header-font-table w-tabfix" >{{$staticContent['product_highLights']}}</th>';
+        html1 += '<th  class="header-font-table" >{{$staticContent['product_highLights']}}</th>';
         }else{
         html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['Dimensions']}} <br>('+unit_dimension_1+' x W x '+unit_dimension+')</th>';
         }

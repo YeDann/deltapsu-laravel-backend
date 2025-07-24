@@ -3,7 +3,6 @@
 <style>
     .tab-content>.active {
         justify-content: unset !important;
-
         display: block;
     }
 
@@ -38,11 +37,12 @@
     }
 </style>
 @endsection
+
 @section('meta')
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 <link rel="canonical" href="{{url()->current()}}" />
-<?php 
+<?php
   $lang_seo = App::getLocale();
   if($lang_seo == 'cn'){
     $lang_seo = 'zh-Hans-CN';
@@ -52,6 +52,7 @@
 ?>
 <link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
+
 @section('container')
 <div class="padding-top-content">
 </div>
@@ -72,7 +73,6 @@
                             <li><a
                                     href="{{route('index','product-documents')}}">{{$staticContent['Product_Documents']}}</a>
                             </li>
-                            {{-- <li><a href="{{route('index','login')}}">PARTNERS</a></li> --}}
                         </ul>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
@@ -82,9 +82,9 @@
         </div>
     </div>
 </div>
-<?php 
+
+<?php
 function getDateformat($date){
-       
        $eng_month_arr = array(
            "0" => "",
            "1" => "Jan",
@@ -106,22 +106,24 @@ function getDateformat($date){
            'm' =>  $eng_month_arr[$pDate[1]],
            'd'=>  $pDate[2],
            'y' => $pDate[0]
-
        ];
        return  $datearray;
 }
 ?>
+
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
 <section class="box-news pb-5">
     <div class="container">
-        <h2 class="text-title-delta visible-tablets-up"> {{$staticContent['Marketing_Resources_Downloads']}}</h2> 
-        <h3 class="text-title-delta visible-mobile">{{$staticContent['Marketing_Resources_Downloads']}}</h3> 
-        <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem;">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
+        <h2 class="text-title-delta visible-tablets-up"> {{$staticContent['Marketing_Resources_Downloads']}}</h2>
+        <h3 class="text-title-delta visible-mobile">{{$staticContent['Marketing_Resources_Downloads']}}</h3>
+        <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem;">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
+
         <select id="select-catalogs" onchange="selectdocumentType();" class="select-minimize invisible-up-922">
             @foreach ($margetCate as $cate)
             <option value="{{$cate->cate_id}}">{{$cate->name}}</option>
             @endforeach
         </select>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="nav nav-tabs d-flex justify-content-center border-b-2px visible-up-922 mb-4" id="nav-tab"
@@ -134,125 +136,113 @@ function getDateformat($date){
                     </a>
                     @endforeach
                 </div>
-                <div class="tab-content" id="nav-tabContent">
 
+                <div class="tab-content" id="nav-tabContent">
                     @foreach ($margetCate as $cate)
                     <div class="tab-pane fade {{$loop->iteration == 1?'show active':'' }} " id="pop{{$cate->cate_id}}"
                         role="tabpanel" aria-labelledby="pop{{$cate->cate_id}}-tab">
-                        <form onsubmit="searchmarketingbycate()">
-                            <div class="search-space d-flex justify-content-center w-100">
-                                <div class="box-search-input  mr-3">
 
+                        <form onsubmit="searchmarketingbycate(event, {{$cate->cate_id}})">
+                            <div class="search-space d-flex justify-content-center w-100">
+                                <div class="box-search-input mr-3">
                                     <div class="box-search-icon">
                                         <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                                     </div>
                                     <label for="searchinput" class="searchinput-filters-input">
-                                        <input type="hidden" name="cateid" value="1">
-                                        <input type="text" name="modelname"
+                                        <input type="text" name="modelname" id="modelname-{{$cate->cate_id}}"
                                             placeholder="{{$staticContent['Search_By_Name']}}">
                                     </label>
                                 </div>
-
-                                <button class="btn-search-border">{{$staticContent['Search']}} </button>
-
+                                <button type="submit" class="btn-search-border">{{$staticContent['Search']}}</button>
                             </div>
                         </form>
-                        <div class="contentdatasearch">
 
+                        <div class="contentdatasearch" id="content-{{$cate->cate_id}}">
                             @foreach ($margeting as $marget)
                             @if($marget->cate_id == $cate->cate_id )
                             <div class="resources-download">
-                                <div class="detail-download ">
+                                <div class="detail-download">
                                     <h5>{{$marget->name}}</h5>
-                                    {{-- <p>{{$staticContent['Uploaded_on']}} 13-Mar-2019 | 4.7 MB</p> --}}
-                                    <?php
-                                $date = getDateformat($marget->created_at);
-                               ?>
-                                    <p>{{$staticContent['Uploaded_on']}} {{$date['d'].'-'.$date['m'].'-'.$date['y']}}
-                                    </p>
+                                    <?php $date = getDateformat($marget->created_at); ?>
+                                    <p>{{$staticContent['Uploaded_on']}} {{$date['d'].'-'.$date['m'].'-'.$date['y']}}</p>
                                 </div>
                                 <a href="{{route('marketingLink',$marget->file)}}" target="_blank">
                                     <button class="btn-downlode">{{$staticContent['Downloads']}}</button>
                                 </a>
-
                             </div>
                             @endif
                             @endforeach
                         </div>
-
                     </div>
                     @endforeach
-
-
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-
 @endsection
 
-
 @section('js')
-
 <script>
+    var currentCateId = 1; // เก็บ category id ปัจจุบัน
+    var margeting = <?= json_encode($margeting);?>;
+
     function selectdocumentType(){
-        var typetab =  $('#select-catalogs').val();
+        var typetab = $('#select-catalogs').val();
+        currentCateId = typetab; // อัปเดต current category
         $('#pop-tab'+typetab).click();
+    }
 
-      }
-      function setdatainput(cateid){
-        $("input[name=cateid]").val(cateid);
-      }
-      var margeting = <?= json_encode($margeting);?>;
-      function searchmarketingbycate(){
-        var modelname = $("input[name=modelname]").val();
-        var cateid = $("input[name=cateid]").val();
+    function setdatainput(cateid){
+        currentCateId = cateid; // อัปเดต current category เมื่อคลิก tab
+    }
 
+    function searchmarketingbycate(event, cateid = null){
         event.preventDefault();
-        console.log(cateid);
-        var resultsearch  = [];
-        var term = modelname; // search term (regex pattern)
-        var search = new RegExp(term , 'i'); // prepare a regex object     
-            margeting.filter(function(data){
-            if(search.test(data.name)){
-                var index = resultsearch.findIndex(function(x){
-                  return  x.id === data.id;
-                })
-                if(data.cate_id == cateid ){
-                    if(index == -1){
-                        resultsearch.push(data);  
-                    }
-                }
-                  
-            }
-           });
 
+        // ใช้ cateid ที่ส่งมาจาก form หรือใช้ current category
+        var searchCateId = cateid || currentCateId;
+        var modelname = $('#modelname-' + searchCateId).val();
+
+        console.log('Searching in category:', searchCateId, 'for term:', modelname);
+
+        var resultsearch = [];
+        var term = modelname;
+        var search = new RegExp(term, 'i');
+
+        margeting.filter(function(data){
+            if(search.test(data.name) && data.cate_id == searchCateId){
+                var index = resultsearch.findIndex(function(x){
+                    return x.id === data.id;
+                });
+                if(index == -1){
+                    resultsearch.push(data);
+                }
+            }
+        });
 
         var html = '';
-        $.each(resultsearch, function(index,value){
+        $.each(resultsearch, function(index, value){
             html += '<div class="resources-download">';
-            html += '<div class="detail-download ">';
-            html +=  '<h5>'+value['name']+'</h5>';
-            html += '<p>{{$staticContent['Uploaded_on']}} '+ setformatdate(value['created_at'])+' </p>';
+            html += '<div class="detail-download">';
+            html += '<h5>' + value['name'] + '</h5>';
+            html += '<p>{{$staticContent['Uploaded_on']}} ' + setformatdate(value['created_at']) + '</p>';
             html += '</div>';
-            html += '<a href="{{config('app.url')}}/file_doc_2/marketing_resources/'+value['file']+'"  download="" >';
+            html += '<a href="{{config('app.url')}}/file_doc_2/marketing_resources/' + value['file'] + '" target="_blank">';
             html += '<button class="btn-downlode">{{$staticContent['Downloads']}}</button>';
             html += '</a>';
-            html += '</div>'
+            html += '</div>';
         });
-        $('.contentdatasearch').html(html);
-          
-      }
-      function setformatdate(val){
-            var data = val.substring(0, 10)
-            var d = new Date(data);
-           
-            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-            ];
-         return  d.getDate()+'-'+ monthNames[d.getMonth()]+'-' +d.getFullYear();
-       }
+
+        $('#content-' + searchCateId).html(html);
+    }
+
+    function setformatdate(val){
+        var data = val.substring(0, 10);
+        var d = new Date(data);
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        return d.getDate() + '-' + monthNames[d.getMonth()] + '-' + d.getFullYear();
+    }
 </script>
 @endsection

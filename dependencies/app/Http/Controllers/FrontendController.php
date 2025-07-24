@@ -2746,25 +2746,29 @@ class FrontendController extends Controller
         ->with('products' ,$products);
     }
 
-       public function loadPdffile(Request $request)
-       {
+   public function loadPdffile(Request $request)
+{
+    $contentCompare = $request->datacon;
+    $string = $this->validateInput($request->arr_con, 'text', true);
+    $type_name = $this->validateInput($request->type_name, 'text', true);
+    $myArray = explode(',', $string);
+    $rsp = self::GetCoparisonHeader($myArray, $type_name);
 
-       $contentCompare = $request->datacon;
-       $string = $this->validateInput($request->arr_con ,'text',true);
-       $type_name = $this->validateInput($request->type_name ,'text',true);
-        $myArray = explode(',', $string);
-        $rsp =  self::GetCoparisonHeader($myArray ,$type_name);
+    $rowall = $rsp['CSV'];
 
-            $rowall = $rsp['CSV'];
+    // Laravel Excel 3.x syntax
+    return Excel::download(new class($rowall) implements \Maatwebsite\Excel\Concerns\FromArray {
+        private $data;
 
-            Excel::create('comparison_product', function ($excel) use ($rowall) {
-              $excel->sheet('comparison_product', function ($sheet) use ($rowall) {
-                $sheet->fromArray($rowall, null, 'A1', false, false);
+        public function __construct($data) {
+            $this->data = $data;
+        }
 
-              });
-          })->export('csv');
-
-       }
+        public function array(): array {
+            return $this->data;
+        }
+    }, 'comparison_product.csv');
+  }
 
        public function loadPdffilePDF(Request $request)
        {
