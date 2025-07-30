@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use DB;
 use Validator;
 use Excel;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 use File;
 class EmailController extends Controller
 {
@@ -39,7 +42,7 @@ class EmailController extends Controller
         ->select('et.*','spct.name as catename')
         ->get();
        }
-      
+
         return view('feedbackEmail.index')
         ->with('name','feedbackEmail')
         ->with('menu','')
@@ -49,7 +52,7 @@ class EmailController extends Controller
 
     public function create($type)
     {
-       
+
         $subCategories = DB::table('sub_pro_categories as sp')
         ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
         ->where('spt.local', '=', 'en')
@@ -90,7 +93,7 @@ class EmailController extends Controller
 
     public function storeEmail(Request $requst){
         $type = $requst->type;
-   
+
         DB::table('email_notification')->insert(
             [
                 "country" =>$requst->country,
@@ -135,9 +138,9 @@ class EmailController extends Controller
     }
 
     public function importEmailNotification(Request $request){
-  
+
         if ($request->hasFile('file')) {
-       
+
           $extension = File::extension($request->file->getClientOriginalName());
           if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
               $path = $request->file->getRealPath();
@@ -146,7 +149,7 @@ class EmailController extends Controller
             //   return dd($data);
              if(!empty($data) && $data->count()) {
               foreach ($data as $key => $value) {
-                  
+
                 DB::table('email_notification')->insert(
                     [
                         "country" =>$value->country,
@@ -163,7 +166,7 @@ class EmailController extends Controller
           return redirect()->route('emailnotification',1)->with('flash_message', 'create data Successfully');
         }
         return redirect()->route('emailnotification',1)->with('error_message', 'No file');
-        
+
       }
 
       public function gui_dowload_index(Request $request){
@@ -175,62 +178,74 @@ class EmailController extends Controller
          ->with('name','gui_dowload')
          ->with('menu','');
       }
-      public function exportGui(){
+      public function exportGui()
+        {
+            $data = DB::table('gui_downloads_email as gu')
+                ->select('gu.*')
+                ->get();
 
-        $data = DB::table('gui_downloads_email as gu')
-        ->select('gu.*')
-        ->get();
+            // Check if we have data
+            if ($data->isEmpty()) {
+                return redirect()->route('gui_dowload_index')
+                                ->with('flash_message', 'No Data');
+            }
 
-        if(isset($data)){
-            Excel::create('GUI Downloads', function ($excel) use ($data) {
-              $excel->sheet('GUI Downloads', function ($sheet) use ($data) {
-                  $sheet->row(1,[
-                      'No',
-                      'Subject',
-                      'Name',
-                      'Email',
-                      'Country Name',
-                      'State',
-                      'Company',
-                      'Product Type',
-                      'Model',
-                      'Phone',
-                      'Accept Privacy Policy',
-                      'Created_at'
-                  ]);
-                  $i = 2;
-                  $j = 1;
-                  foreach ($data as $sub) {
-                    
-                         if($sub->accept == 1){
-                            $accept = 'Accepted';
-                         }else{
-                            $accept = 'Not accept';
-                         }
-                          $sheet->row($i, [
-                              $j,
-                              "GUI Software Download",
-                              $sub->name,
-                              $sub->email,
-                              $sub->country,
-                              '',
-                              $sub->company,
-                              $sub->type_name,
-                              $sub->model,
-                              $sub->tel,
-                              $accept,
-                              $sub->created_at
-                          ]);
-                          $i++;
-                          $j++;
-                  }
-              });
-          })->export('csv');
-          }else{
-            return redirect()->route('gui_dowload_index')->with('flash_message', 'No Data');
-          }
+            // Create export data array
+            $exportData = [];
 
-      }
+            // Add headers
+            $exportData[] = [
+                'No',
+                'Subject',
+                'Name',
+                'Email',
+                'Country Name',
+                'State',
+                'Company',
+                'Product Type',
+                'Model',
+                'Phone',
+                'Accept Privacy Policy',
+                'Created_at'
+            ];
+
+            // Add data rows
+            $counter = 1;
+            foreach ($data as $sub) {
+                $accept = $sub->accept == 1 ? 'Accepted' : 'Not accept';
+
+                $exportData[] = [
+                    $counter++,
+                    'GUI Software Download',
+                    $sub->name,
+                    $sub->email,
+                    $sub->country,
+                    '', // Empty state as in original
+                    $sub->company,
+                    $sub->type_name,
+                    $sub->model,
+                    $sub->tel,
+                    $accept,
+                    $sub->created_at
+                ];
+            }
+
+            // Create a simple export from array
+            return Excel::download(
+                new class($exportData) implements FromCollection {
+                    private $data;
+
+                    public function __construct($data) {
+                        $this->data = collect($data);
+                    }
+
+                    public function collection() {
+                        return $this->data;
+                    }
+                },
+                'GUI_Downloads.csv'
+            );
+        }
       public function feedbackform($type){
         if($type == 'All'){
             $contactemail = DB::table('contacts as c')
@@ -261,87 +276,98 @@ class EmailController extends Controller
     //    foreach($deData as $data){
     //     DB::table('contacts')->where('id',$data->id)->delete();
     //    }
-      
+
         return view('feedbackEmail.contactFeebackform')
         ->with('contactemail',$contactemail)
         ->with('selecValue',$type)
         ->with('name','feedbackform')
         ->with('menu','');
-     
+
 
       }
-      public function exportfeedbackFrom($type){
-         
-        if($type == 'All'){
-            $contactemail = DB::table('contacts as c')
-            ->select('c.*')
-            ->orderBy('c.created_at','desc')
-            ->get();
-        }else{
-            $contactemail = DB::table('contacts as c')
-            ->where('c.subject',$type)
-            ->select('c.*')
-            ->orderBy('c.created_at','desc')
-            ->get();
+
+      public function exportfeedbackFrom($type)
+        {
+            // Build the query
+            $query = DB::table('contacts as c')->select('c.*');
+
+            if ($type !== 'All') {
+                $query->where('c.subject', $type);
+            }
+
+            $contactemail = $query->orderBy('c.created_at', 'desc')->get();
+
+            // Check if we have data
+            if ($contactemail->isEmpty()) {
+                return redirect()->route('feedbackform', $type)
+                                ->with('flash_message', 'No Data');
+            }
+
+            $url = config('app.url') . '/config_history/';
+
+            // Create export data array
+            $exportData = [];
+
+            // Add headers
+            $exportData[] = [
+                'No',
+                'Subject',
+                'Ticket No',
+                'Name',
+                'Email',
+                'Country',
+                'Company',
+                'State',
+                'Product Type',
+                'Model',
+                'Tel',
+                'Accept Signup News',
+                'Message',
+                'Config file',
+                'Created_at'
+            ];
+
+            // Add data rows
+            $counter = 1;
+            foreach ($contactemail as $sub) {
+                $accept = $sub->accept_signup_news == 1 ? 'Accepted' : 'Not accept';
+                $configFile = isset($sub->file) ? $url . $sub->file : 'No file';
+
+                $exportData[] = [
+                    $counter++,
+                    $sub->subject,
+                    $sub->ticket_id,
+                    $sub->name,
+                    $sub->email,
+                    $sub->country,
+                    $sub->company,
+                    $sub->state,
+                    $sub->type_name,
+                    $sub->model_name,
+                    $sub->tel,
+                    $accept,
+                    $sub->message,
+                    $configFile,
+                    $sub->created_at
+                ];
+            }
+
+            // Create a simple export from array
+            return Excel::download(
+                new class($exportData) implements FromCollection {
+                    private $data;
+
+                    public function __construct($data) {
+                        $this->data = collect($data);
+                    }
+
+                    public function collection() {
+                        return $this->data;
+                    }
+                },
+                'FeedBackForm.csv'
+            );
         }
-        // return dd($contactemail);
-        $url =  config('app.url').'/config_history/';
-        if(isset($contactemail)){
-            Excel::create('FeedBackForm', function ($excel) use ($contactemail,$url) {
-              $excel->sheet('FeedBackForm', function ($sheet) use ($contactemail,$url) {
-                  $sheet->row(1,[
-                        'No',
-                        'Subject',
-                        'Ticket No',
-                        'Name',
-                        'Email',
-                        'Country',
-                        'Company',
-                        'State',
-                        'Product Type',
-                        'Model',
-                        'Tel',
-                        'Accept Signup News',
-                        'Message',
-                        'Config file',
-                        'Created_at'
-                  ]);
-                  $i = 2;
-                  $j = 1;
-                  foreach ($contactemail as $sub) {
-                    
-                         if($sub->accept_signup_news == 1){
-                            $accept = 'Accepted';
-                         }else{
-                            $accept = 'Not accept';
-                         }
-                          $sheet->row($i, [
-                              $j,
-                              $sub->subject,
-                              $sub->ticket_id,
-                              $sub->name,
-                              $sub->email,
-                              $sub->country,
-                              $sub->company,
-                              $sub->state,
-                              $sub->type_name,
-                              $sub->model_name,
-                              $sub->tel,
-                              $accept,
-                              $sub->message,
-                              isset($sub->file)?$url.$sub->file :'No file',
-                              $sub->created_at
-                          ]);
-                          $i++;
-                          $j++;
-                  }
-              });
-          })->export('csv');
-          }else{
-            return redirect()->route('feedbackform',$type)->with('flash_message', 'No Data');
-          }
-
-      }
 
 }
     ?>

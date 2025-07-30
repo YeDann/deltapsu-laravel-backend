@@ -1,6 +1,28 @@
 @extends('layouts.admin')
 @section('style')
+<style>
+/* Pagination custom styling */
+.pagination {
+    margin: 0px 5px;
+}
+.pagination .page-link {
+    color: #007bff;
+    border: 1px solid #dee2e6;
+    padding: 0.5rem 0.75rem;
+}
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+.pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
 
+</style>
 @endsection
 @section('content')
 <!-- Nav -->
@@ -38,8 +60,8 @@
 
             </h3>
             <div class="block-options">
-                {{-- <a href="{{route('getpageSubscriber')}}" class="btn btn-primary">Import Data</a> --}}
-                <a href="{{route('getpageSubscriber')}}" class="btn btn-primary">Import data country mail</a>
+                {{-- <a href="{{route('getpageSubscriber')}}" class="btn btn-primary">Import Data ( not Support changePHPv8)</a> --}}
+                {{--<a href="{{route('getpageSubscriber')}}" class="btn btn-primary">Import data country mail ( not Support changePHPv8) </a>--}}
                 <a href="{{route('exportSubscribes')}}" class="btn btn-primary">Export Data</a>
 
 
@@ -87,7 +109,9 @@
                     @endif
                 </tbody>
             </table>
-            {{ $subscribes->links() }}
+        <div class="d-flex justify-content-center">
+                {{ $subscribes->links('pagination.custom') }}
+            </div>
         </div>
     </div>
 </div>
