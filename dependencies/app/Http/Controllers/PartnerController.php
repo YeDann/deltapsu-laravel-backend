@@ -12,6 +12,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Auth;
 use Excel;
 use File;
+use Maatwebsite\Excel\Concerns\FromArray;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 class PartnerController extends Controller
 {
 
