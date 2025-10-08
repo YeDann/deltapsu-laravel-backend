@@ -4469,11 +4469,13 @@ class FrontendController extends Controller
             }
 
 
-             $email = Mail::to($emailsend)->send(new DowloadGui($request->except('_token')));
-            if (Mail::failures()) {
-                return \Redirect::back()->with("errorSendMail","ErorSendMail");
-            }
-            return \Redirect::back()->with("messageGUI",$filename);
+
+          try {
+            $email = Mail::to($emailsend)->send(new DowloadGui($request->except('_token')));
+             return \Redirect::back()->with("messageGUI", $filename);
+           } catch (\Exception $e) {
+             return \Redirect::back()->with("errorSendMail", "ErorSendMail");
+           }
          }else{
             return \Redirect::back()->with("vertifynotrobot_gui","ErorSendMail-vertifynotrobot");
          }
