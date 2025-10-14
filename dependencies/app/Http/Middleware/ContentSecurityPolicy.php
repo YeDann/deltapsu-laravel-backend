@@ -22,6 +22,8 @@ class ContentSecurityPolicy
             "media-src 'none';",
             "frame-src 'self' https://www.youtube.com https://www.googletagmanager.com https://www.google.com;",
             "connect-src 'self' https://api.cookiewow.com https://www.google.com https://www.googletagmanager.com https://www.gstatic.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://px.ads.linkedin.com;",
+            "require-trusted-types-for 'script'", // ✅ Optional: Enable Trusted Types
+            "trusted-types default" // ✅ Allows a default policy
         ];
 
         $response->headers->set('Content-Security-Policy', implode('; ', $cspDirectives));
