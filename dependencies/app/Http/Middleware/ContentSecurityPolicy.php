@@ -21,7 +21,7 @@ class ContentSecurityPolicy
             "font-src 'self';",
             "media-src 'none';",
             "frame-src 'self' https://www.youtube.com https://www.googletagmanager.com https://www.google.com;",
-            "connect-src 'self' https://www.google.com https://www.googletagmanager.com https://www.gstatic.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://px.ads.linkedin.com;",
+            "connect-src 'self' https://api.cookiewow.com https://www.google.com https://www.googletagmanager.com https://www.gstatic.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://px.ads.linkedin.com;",
         ];
 
         $response->headers->set('Content-Security-Policy', implode('; ', $cspDirectives));
