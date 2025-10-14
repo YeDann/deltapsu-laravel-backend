@@ -11,24 +11,19 @@ class ContentSecurityPolicy
     {
         $response = $next($request);
 
-        //update SiteScript
         $cspDirectives = [
-            "default-src 'self';",
-            "script-src 'self' 'unsafe-inline' https://cookiecdn.com https://code.jquery.com https://www.googletagmanager.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.google.com https://www.gstatic.com https://snap.licdn.com;",
-            "img-src 'self' data: https://px.ads.linkedin.com https://cookiecdn.com;",
-            "object-src 'none';",
-            "style-src 'self' 'unsafe-inline';",
-            "font-src 'self';",
-            "media-src 'none';",
-            "frame-src 'self' https://www.youtube.com https://www.googletagmanager.com https://www.google.com;",
-            "connect-src 'self' https://api.cookiewow.com https://www.google.com https://www.googletagmanager.com https://www.gstatic.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://px.ads.linkedin.com;",
-            "require-trusted-types-for 'script'", // ✅ Optional: Enable Trusted Types
-            "trusted-types default" // ✅ Allows a default policy
+            "default-src 'self'",
+            "script-src 'self' 'unsafe-inline' https://cookiecdn.com https://code.jquery.com https://www.googletagmanager.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.google.com https://www.gstatic.com https://snap.licdn.com",
+            "img-src 'self' data: https://px.ads.linkedin.com https://cookiecdn.com",
+            "object-src 'none'",
+            "style-src 'self' 'unsafe-inline'",
+            "font-src 'self'",
+            "media-src 'none'",
+            "frame-src 'self' https://www.youtube.com https://www.googletagmanager.com https://www.google.com",
+            "connect-src 'self' https://api.cookiewow.com https://www.google.com https://www.googletagmanager.com https://www.gstatic.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://px.ads.linkedin.com https://www.youtube.com https://i.ytimg.com"
         ];
 
         $response->headers->set('Content-Security-Policy', implode('; ', $cspDirectives));
-        $response->headers->set('X-Content-Security-Policy', implode('; ', $cspDirectives));
-        $response->headers->set('X-WebKit-CSP', implode('; ', $cspDirectives));
 
         return $response;
     }
