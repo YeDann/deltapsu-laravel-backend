@@ -2030,10 +2030,7 @@ class FrontendController extends Controller
 
     public function appDetailById($app_name, $app_id){
         $name = $this->validateInput($app_name,'text',true);
-        $id =  $app_id;
-
-
-        // return dd($name, $id);
+        $id = $this->validateInput($app_id ,'number',true);
 
         $lang = App::getLocale();
         $application = DB::table('application as ap')
