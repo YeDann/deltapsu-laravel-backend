@@ -30,7 +30,7 @@
                  <input type="hidden" name="userId" value="{{ $user->id }}">
                 <div class="row justify-content-center">
                     <div class="col-lg-12 col-xl-12">
-                      
+
                         <div class="form-group row">
                             <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}*</label>
 
@@ -126,9 +126,23 @@
                                 @endif
                             </div>
                         </div>
-                        *The password must be at least 8 characters.
+                         <div class="form-group row">
+                             <label class=" col-md-4 col-form-label"></label>
+                           <div class="col-md-6">
+                        <small class="form-text text-muted mt-2 ">
+                                *The password must be:
+                                <ul class="mb-0">
+                                    <li>At least one uppercase letter</li>
+                                    <li>At least one lowercase letter</li>
+                                    <li>At least two digits (numbers)</li>
+                                    <li>At least one special character</li>
+                                    <li>Minimum 8 characters</li>
+                                </ul>
+                            </small>
+                           </div>
+                          </div>
                         <div class="form-group row">
-                        
+
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }} </label>
 
                             <div class="col-md-6">
@@ -145,13 +159,13 @@
 
                         <div class="form-group row">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }} </label>
-                          
+
                             <div class="col-md-6">
                                 <input  id="password-confirm" type="password" class="form-control" name="password_confirmation" >
                                 <strong style="color:green;" id="passwordmatch"></strong>
                                 <strong style="color:red;" id="passwordmatcherror"></strong>
                             </div>
-                           
+
                         </div>
                         <div class="form-group row">
                             <label class="d-block col-md-4 col-form-label text-md-right">Role *</label>
@@ -165,7 +179,7 @@
                                     <label class="custom-control-label" for="status-2">FES</label>
                                 </div>
                             </div>
-                           
+
                         </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
@@ -174,8 +188,8 @@
                                 </button>
                             </div>
                         </div>
-                     
-                    
+
+
                     </div>
                 </div>
             </form>
@@ -189,7 +203,7 @@
     var pass = $('#password').val();
       var confipass = $('#password-confirm').val();
      if(pass != '' && confipass != ''){
-  
+
         if(pass == confipass){
          $('#passwordmatch').text('Password is matched  !!')
          document.getElementById("submitformbkuser").submit();
@@ -201,7 +215,7 @@
      }else{
          document.getElementById("submitformbkuser").submit();
      }
-  
+
   }
 
 </script>

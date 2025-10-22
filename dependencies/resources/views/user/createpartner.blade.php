@@ -27,11 +27,11 @@
             <form id="submitformbkuser" method="POST" action="{{ route('partner.store') }}">
                 @csrf
                 <!-- Basic Elements -->
-               
-                 
+
+
                 <div class="row justify-content-center">
                     <div class="col-lg-12 col-xl-12">
-                      
+
                         <div class="form-group row">
                             <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}*</label>
 
@@ -119,7 +119,7 @@
                             <div class="col-md-6">
                              <select class="form-control" name="country">
                                  @foreach ($countries as $item)
-                                 <option value="{{$item->name}}">{{$item->name}}</option> 
+                                 <option value="{{$item->name}}">{{$item->name}}</option>
                                  @endforeach
                              </select>
                             </div>
@@ -138,7 +138,21 @@
                                 @endif
                             </div>
                         </div>
-                        *The password must be at least 8 characters.
+                         <div class="form-group row">
+                             <label class=" col-md-4 col-form-label"></label>
+                           <div class="col-md-6">
+                        <small class="form-text text-muted mt-2 ">
+                                *The password must be:
+                                <ul class="mb-0">
+                                    <li>At least one uppercase letter</li>
+                                    <li>At least one lowercase letter</li>
+                                    <li>At least two digits (numbers)</li>
+                                    <li>At least one special character</li>
+                                    <li>Minimum 8 characters</li>
+                                </ul>
+                            </small>
+                           </div>
+                          </div>
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }} *</label>
 
@@ -153,20 +167,20 @@
                             </div>
                         </div>
 
-           
+
 
                         <div class="form-group row">
-                         
+
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }} *</label>
-                          
+
                             <div class="col-md-6">
                                 <input  id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                                 <strong style="color:green;" id="passwordmatch"></strong>
                                 <strong style="color:red;" id="passwordmatcherror"></strong>
                             </div>
-                           
+
                         </div>
-                
+
                         <div class="form-group row">
                             <label class="d-block col-md-4 col-form-label text-md-right">Role *</label>
                             <div class="col-md-6">
@@ -178,9 +192,9 @@
                                     <input type="radio" class="custom-control-input" id="status-2" name="role" value="2" required >
                                     <label class="custom-control-label" for="status-2">FES</label>
                                 </div>
-                             
+
                             </div>
-                           
+
                         </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
@@ -189,8 +203,8 @@
                                 </button>
                             </div>
                         </div>
-                     
-                    
+
+
                     </div>
                 </div>
             </form>
