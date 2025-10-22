@@ -27,6 +27,8 @@ class ContentSecurityPolicy
         $response->headers->set('Content-Security-Policy', implode('; ', $cspDirectives));
         $response->headers->set('X-Content-Security-Policy', implode('; ', $cspDirectives));
         $response->headers->set('X-WebKit-CSP', implode('; ', $cspDirectives));
+        $response->headers->set('Cache-Control', 'no-store');
+
 
         return $response;
     }
