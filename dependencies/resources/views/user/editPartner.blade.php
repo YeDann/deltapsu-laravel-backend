@@ -126,7 +126,21 @@
                                 @endif
                             </div>
                         </div>
-                        *The password must be at least 8 characters.
+                       <div class="form-group row">
+                             <label class=" col-md-4 col-form-label"></label>
+                           <div class="col-md-6">
+                        <small class="form-text text-muted mt-2 ">
+                                *The password must be:
+                                <ul class="mb-0">
+                                    <li>At least one uppercase letter</li>
+                                    <li>At least one lowercase letter</li>
+                                    <li>At least two digits (numbers)</li>
+                                    <li>At least one special character</li>
+                                    <li>Minimum 8 characters</li>
+                                </ul>
+                            </small>
+                           </div>
+                          </div>
                         <div class="form-group row">
 
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }} </label>
