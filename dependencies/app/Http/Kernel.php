@@ -22,6 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\ModifyRedirects::class,
        // \App\Http\Middleware\ContentSecurityPolicy::class,
         \App\Http\Middleware\RejectFatGetRequests::class,
+         \App\Http\Middleware\SanitizeUrl::class,
         //\RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
     //     \RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
     //     \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
