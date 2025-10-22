@@ -8,7 +8,7 @@
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 <link rel="canonical" href="{{url()->current()}}" />
-<?php 
+<?php
   $lang_seo = App::getLocale();
   if($lang_seo == 'cn'){
     $lang_seo = 'zh-Hans-CN';
@@ -51,18 +51,18 @@
     <div class="box-login pb-5">
         <div class="container">
             <h1 class="text-title-delta">{{$staticContent['Partners_Login']}}</h1>
-            <form id="loginform" method="POST" action="{{route('partnerLogin')}}">
+            <form id="loginform" method="POST" action="{{route('partnerLogin')}}" autocomplete="off">
                 {{csrf_field()}}
                 <div class="center">
                     <div id="requestemail" class="col-sm-6 w-100 mx-auto mb-3">
                         <label class="text-title-detail-dark">{{$staticContent['Email_Address']}}*</label>
                         <input type="email" class="input-login" name="email" id="inputEmail"
-                            placeholder="{{$staticContent['Email_Address']}}" required>
+                            placeholder="{{$staticContent['Email_Address']}}" autocomplete="off" required>
                     </div>
 
                     <div id="requestpassword" class="col-sm-6 w-100 mx-auto mb-3">
                         <label class="text-title-detail-dark">{{$staticContent['Password']}}*</label>
-                        <input type="password" class="input-login" name="password" id="inputPassword" pattern="{8,}"
+                        <input type="password" class="input-login" name="password" autocomplete="off" id="inputPassword" pattern="{8,}"
                             title="Must at least 8 or more characters" placeholder="{{$staticContent['Password']}}"
                             required>
                     </div>
@@ -158,14 +158,14 @@
 <script>
     //  function loginFunction(){
 //      console.log();
- 
+
 //     var  formData = {
 //                     'email': $("#inputEmail").val(),
 //                     'password': ectp($("#inputPassword").val())
 //                 };
 //                 console.log(formData);
 //                 event.preventDefault();
-      
+
 //            if(formData.email === ""){
 //             $('#requestemail').addClass('request');
 //            }else if(formData.password === ""){
@@ -192,8 +192,8 @@
 //             });
 
 //            }
-       
-         
+
+
 //     }
 //     function ectp(data){
 //        var hs = MD5(data);
