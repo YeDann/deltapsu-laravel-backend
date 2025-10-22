@@ -30,7 +30,7 @@
                  <input type="hidden" name="userId" value="{{ $user->id }}">
                 <div class="row justify-content-center">
                     <div class="col-lg-12 col-xl-12">
-                      
+
                         <div class="form-group row">
                             <label for="firstname" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}*</label>
 
@@ -128,7 +128,7 @@
                         </div>
                         *The password must be at least 8 characters.
                         <div class="form-group row">
-                        
+
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }} </label>
 
                             <div class="col-md-6">
@@ -145,13 +145,13 @@
 
                         <div class="form-group row">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }} </label>
-                          
+
                             <div class="col-md-6">
                                 <input  id="password-confirm" type="password" class="form-control" name="password_confirmation" >
                                 <strong style="color:green;" id="passwordmatch"></strong>
                                 <strong style="color:red;" id="passwordmatcherror"></strong>
                             </div>
-                           
+
                         </div>
                         <div class="form-group row">
                             <label class="d-block col-md-4 col-form-label text-md-right">Role *</label>
@@ -165,7 +165,7 @@
                                     <label class="custom-control-label" for="status-2">FES</label>
                                 </div>
                             </div>
-                           
+
                         </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
@@ -174,8 +174,8 @@
                                 </button>
                             </div>
                         </div>
-                     
-                    
+
+
                     </div>
                 </div>
             </form>
@@ -185,24 +185,60 @@
 @endsection
 @section('js')
 <script>
-  function validateInput(){
+function validateInput() {
     var pass = $('#password').val();
-      var confipass = $('#password-confirm').val();
-     if(pass != '' && confipass != ''){
-  
-        if(pass == confipass){
-         $('#passwordmatch').text('Password is matched  !!')
-         document.getElementById("submitformbkuser").submit();
-      }else{
-        $('#password-confirm').val('');
-        $('#passwordmatcherror').text('Password is not matched  !!')
-      }
+    var confipass = $('#password-confirm').val();
 
-     }else{
-         document.getElementById("submitformbkuser").submit();
-     }
-  
-  }
+    // Reset messages
+    $('#passwordmatch').text('');
+    $('#passwordmatcherror').text('');
 
+    if (pass !== '' && confipass !== '') {
+
+        // Check password match
+        if (pass !== confipass) {
+            $('#passwordmatcherror').text('Passwords do not match!');
+            $('#password-confirm').val('');
+            return;
+        }
+
+        // Validation checks
+        var hasUppercase = /[A-Z]/.test(pass);
+        var hasLowercase = /[a-z]/.test(pass);
+        var hasTwoDigits = (pass.match(/\d/g) || []).length >= 2;
+        var hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(pass);
+        var isLongEnough = pass.length >= 8;
+
+        // Display specific validation messages
+        if (!isLongEnough) {
+            $('#passwordmatcherror').text('Password must be at least 8 characters long!');
+            return;
+        }
+        if (!hasUppercase) {
+            $('#passwordmatcherror').text('Password must contain at least one uppercase letter!');
+            return;
+        }
+        if (!hasLowercase) {
+            $('#passwordmatcherror').text('Password must contain at least one lowercase letter!');
+            return;
+        }
+        if (!hasTwoDigits) {
+            $('#passwordmatcherror').text('Password must contain at least two numbers!');
+            return;
+        }
+        if (!hasSpecialChar) {
+            $('#passwordmatcherror').text('Password must contain at least one special character!');
+            return;
+        }
+
+        // All checks passed
+        $('#passwordmatch').text('Password is valid and matched!');
+        document.getElementById("submitformbkuser").submit();
+
+    } else {
+        // No password entered (no change)
+        document.getElementById("submitformbkuser").submit();
+    }
+}
 </script>
 @endsection
