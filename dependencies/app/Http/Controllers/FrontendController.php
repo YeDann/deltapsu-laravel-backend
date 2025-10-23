@@ -1378,7 +1378,7 @@ class FrontendController extends Controller
         $lang = App::getLocale();
         session(['lang_down' =>  $lang]);
         $proCode  = str_replace("@", "/", $pro_code);
-        $check = self::checkHaveModel($proCode);
+       // $check = self::checkHaveModel($proCode);
         $check_2 = self::checkHaveModelOptional($proCode);
          return dd($check_2, $check ,$proCode);
 
@@ -4743,6 +4743,7 @@ class FrontendController extends Controller
 
             $stringModel =  str_replace("-", "", $strmodel);
             $queryStringModel = preg_replace('/[^A-Za-z0-9\-]/','',$stringModel);
+            return dd($stringModel,'$stringModel')
             $queryModel = DB::table('products as p')
             ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
             ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
