@@ -1380,7 +1380,7 @@ class FrontendController extends Controller
         $proCode  = str_replace("@", "/", $pro_code);
        $check = self::checkHaveModel($proCode);
         $check_2 = self::checkHaveModelOptional($proCode);
-         //return dd($check_2, $check ,$proCode);
+         return dd($check_2, $check ,$proCode);
 
         if(isset($check->pro_id)){
             $prolang =  self::checkLang($lang ,$check->pro_id);
