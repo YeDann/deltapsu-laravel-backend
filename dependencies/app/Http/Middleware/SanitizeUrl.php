@@ -57,7 +57,7 @@ class SanitizeUrl
         $query = $request->getQueryString();
         $newUrl = url($newPath . ($query ? '?' . $query : ''));
 
-         return dd($newUrl,'$newUrl')
+         return dd($newUrl,'$newUrl');
 
         // Safety: ensure hostname is ours
         $host = parse_url(config('app.url') ?: url('/'), PHP_URL_HOST) ?: $request->getHost();
