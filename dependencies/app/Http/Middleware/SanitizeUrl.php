@@ -12,7 +12,8 @@ class SanitizeUrl
      * Allowed pattern for each path segment.
      * ปรับ pattern ตามความต้องการของเว็บคุณ
      */
-    protected $segmentPattern = '/^[A-Za-z0-9\-_\.]+$/';
+      protected $segmentPattern = '/^[A-Za-z0-9\-_\. ]+$/';
+
 
     /**
      * Handle an incoming request.
