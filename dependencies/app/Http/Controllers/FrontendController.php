@@ -1378,10 +1378,8 @@ class FrontendController extends Controller
         $lang = App::getLocale();
         session(['lang_down' =>  $lang]);
         $proCode  = str_replace("@", "/", $pro_code);
-        return dd($pro_code,$proCode,'$proCode');
         $check = self::checkHaveModel($proCode);
         $check_2 = self::checkHaveModelOptional($proCode);
-         return dd($check_2, $check ,$proCode);
 
         if(isset($check->pro_id)){
             $prolang =  self::checkLang($lang ,$check->pro_id);
