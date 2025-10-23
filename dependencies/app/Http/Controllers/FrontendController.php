@@ -4743,7 +4743,7 @@ class FrontendController extends Controller
 
             $stringModel =  str_replace("-", "", $strmodel);
             $queryStringModel = preg_replace('/[^A-Za-z0-9\-]/','',$stringModel);
-            return dd($stringModel,'$stringModel');
+            //return dd($stringModel,'$stringModel');
             $queryModel = DB::table('products as p')
             ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
             ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
