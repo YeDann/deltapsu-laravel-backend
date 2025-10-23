@@ -1380,7 +1380,7 @@ class FrontendController extends Controller
         $proCode  = str_replace("@", "/", $pro_code);
         $check = self::checkHaveModel($proCode);
         $check_2 = self::checkHaveModelOptional($proCode);
-         return dd($check_2, $check);
+         return dd($check_2, $check ,$proCode);
 
         if(isset($check->pro_id)){
             $prolang =  self::checkLang($lang ,$check->pro_id);
@@ -1396,6 +1396,7 @@ class FrontendController extends Controller
         }
         else{
             return  redirect()->route('productList',[$findoldCate->url_item,$findoldCate->sub_pro_id]);
+
 
         }
 
