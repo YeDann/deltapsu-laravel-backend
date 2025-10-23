@@ -4,68 +4,42 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class SanitizeUrl
 {
     /**
-     * Allowed pattern for each path segment.
-     * ปรับ pattern ตามความต้องการของเว็บคุณ
+     * คำที่ถือว่าเป็นอันตรายใน URL (case-insensitive)
      */
-    protected $segmentPattern = '/^[A-Za-z0-9\-_\.]+$/';
+    protected array $dangerousPatterns = [
+        '<script', 'script>', 'alert(', 'onerror=', 'onload=', 'onmouseover=',
+        'onclick=', 'javascript:', 'data:text/html', '<iframe', '</iframe>',
+        'eval(', 'document.cookie', 'window.location'
+    ];
 
-    /**
-     * Handle an incoming request.
-     */
     public function handle(Request $request, Closure $next)
     {
-        // get current path and query
-        $path = ltrim($request->getPathInfo(), '/'); // no leading slash
-        $segments = $path === '' ? [] : explode('/', $path);
+        $path = urldecode($request->getPathInfo());
+        $query = urldecode($request->getQueryString() ?? '');
 
-        $sanitizedSegments = [];
-        $changed = false;
+        // รวม path และ query เพื่อเช็คง่าย ๆ
+        $fullUrl = strtolower($path . '?' . $query);
 
-        foreach ($segments as $seg) {
-            // allow only safe characters per segment
-            if (preg_match($this->segmentPattern, $seg)) {
-                $sanitizedSegments[] = $seg;
-            } else {
-                // try to sanitize: strip all characters not allowed
-                $clean = preg_replace('/[^A-Za-z0-9\-_\.]/', '', $seg);
+        // ตรวจจับคำต้องห้าม
+        foreach ($this->dangerousPatterns as $pattern) {
+            if (str_contains($fullUrl, strtolower($pattern))) {
 
-                // if numeric id expected, you could allow digits only etc.
-                // if clean result is empty -> remove segment
-                if ($clean === '' ) {
-                    // drop it (or you may set to fallback)
-                    $changed = true;
-                    continue;
-                }
+                // 🔒 Log กรณีตรวจพบ (optional)
+                \Log::warning('Blocked potentially malicious URL', [
+                    'url' => $request->fullUrl(),
+                    'ip' => $request->ip(),
+                ]);
 
-                $sanitizedSegments[] = $clean;
-                $changed = true;
+                // 🔥 บล็อกทันที — ป้องกัน XSS
+                return response()->view('errors.blocked', [], 400);
             }
         }
 
-        // if nothing changed -> continue request normally
-        if (! $changed) {
-            return $next($request);
-        }
-
-        // Rebuild URL
-        $newPath = implode('/', $sanitizedSegments);
-        $query = $request->getQueryString();
-        $newUrl = url($newPath . ($query ? '?' . $query : ''));
-
-        // Safety: ensure hostname is ours
-        $host = parse_url(config('app.url') ?: url('/'), PHP_URL_HOST) ?: $request->getHost();
-        $newHost = parse_url($newUrl, PHP_URL_HOST);
-        if ($newHost !== null && $newHost !== $host) {
-            // suspicious -> abort or fallback to root
-            return redirect()->to(url('/'))->withStatus(301);
-        }
-
-        // Redirect (302) to sanitized URL (so links/bookmarks get corrected)
-        return redirect()->to($newUrl, 301);
+        // ปลอดภัย → ผ่านไปต่อ
+        return $next($request);
     }
 }
