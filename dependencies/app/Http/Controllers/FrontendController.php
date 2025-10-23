@@ -4745,9 +4745,9 @@ class FrontendController extends Controller
             $queryStringModel = preg_replace('/[^A-Za-z0-9\-]/','',$stringModel);
             //return dd($stringModel,'$stringModel');
             $queryModel = DB::table('products as p')
-            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-            ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-            ->select('p.*','phc.categories_id' ,'sp.url_item')
+            //->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+            //->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+            //->select('p.*','phc.categories_id' ,'sp.url_item')
             ->where('p.enable_pro',1);
             // $queryModel->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $queryStringModel . '%');
             $queryModel->where(\DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), '=', $queryStringModel);
