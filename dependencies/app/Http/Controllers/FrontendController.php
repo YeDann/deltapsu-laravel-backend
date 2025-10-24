@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use PDF;
 use Excel;
+use Maatwebsite\Excel\Excel as ExcelFormat;
 use Mailchimp;
 use LaravelLocalization;
 use Symfony\Component\Debug\Exception\FlattenException;
@@ -2754,17 +2755,35 @@ class FrontendController extends Controller
         $rowall = $rsp['CSV'];
 
         // Laravel Excel 3.x syntax
-        return Excel::download(new class($rowall) implements \Maatwebsite\Excel\Concerns\FromArray {
-            private $data;
+       return Excel::download(
+    new class($rowall) implements \Maatwebsite\Excel\Concerns\FromArray {
+        private $data;
 
-            public function __construct($data) {
-                $this->data = $data;
-            }
+        public function __construct($data) {
+            $this->data = $data;
+        }
 
-            public function array(): array {
-                return $this->data;
+        public function array(): array {
+            return $this->data;
+        }
+
+        // ✅ BOM + UTF-8 settings for Windows Excel
+        public function getCsvSettings(): array
+            {
+                return [
+                    'use_bom' => true,
+                    'encoding' => 'UTF-8',
+                    'delimiter' => ',',
+                ];
             }
-        }, 'comparison_product.csv');
+            },
+            'comparison_product.csv',
+            ExcelFormat::CSV,
+            [
+                'use_bom' => true,
+                'encoding' => 'UTF-8',
+            ]
+        );
     }
 
        public function loadPdffilePDF(Request $request)

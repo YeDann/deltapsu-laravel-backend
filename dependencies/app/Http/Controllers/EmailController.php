@@ -369,20 +369,35 @@ class EmailController extends Controller
             }
 
             // Create a simple export from array
-            return Excel::download(
-                new class($exportData) implements FromCollection {
-                    private $data;
+           return Excel::download(
+              new class($exportData) implements FromCollection {
+                private $data;
 
-                    public function __construct($data) {
-                        $this->data = collect($data);
-                    }
+                public function __construct($data) {
+                    $this->data = collect($data);
+                }
 
-                    public function collection() {
-                        return $this->data;
-                    }
+                public function collection() {
+                    return $this->data;
+                }
+
+               //Add CSV encoding configuration
+                public function getCsvSettings(): array
+                {
+                    return [
+                        'use_bom' => true,
+                        'encoding' => 'UTF-8',
+                        'delimiter' => ',',
+                    ];
+                }
                 },
-                'FeedBackForm.csv'
-            );
+                'FeedBackForm.csv',
+                ExcelFormat::CSV,
+                [
+                    'use_bom' => true,  // Important for Excel
+                    'encoding' => 'UTF-8',
+                ]
+             );
         }
 
 }

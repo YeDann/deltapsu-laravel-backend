@@ -14,6 +14,7 @@ use Excel;
 use File;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Excel as ExcelFormat;
 class PartnerController extends Controller
 {
 
@@ -383,6 +384,14 @@ class PartnerController extends Controller
                 {
                     return $this->data;
                 }
+                public function getCsvSettings(): array
+                {
+                    return [
+                        'use_bom' => true,
+                        'encoding' => 'UTF-8',
+                        'delimiter' => ',',
+                    ];
+                }
 
                 public function headings(): array
                 {
@@ -401,7 +410,12 @@ class PartnerController extends Controller
                     ];
                 }
             },
-            'partner.csv'
+            'partner.csv',
+           ExcelFormat::CSV,
+            [
+                'use_bom' => true,  // must have for Excel in Windows
+                'encoding' => 'UTF-8',
+            ]
         );
     }
 

@@ -9,6 +9,7 @@ use Validator;
 use File;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromArray;
+use Maatwebsite\Excel\Excel as ExcelFormat;
 use Illuminate\Support\Facades\Hash;
 class ImportController extends Controller
 {
@@ -254,20 +255,36 @@ class ImportController extends Controller
                 $exportData[] = $arrcon1;
             }
 
-            // Export using new Laravel Excel syntax
-            return Excel::download(new class($exportData) implements FromArray {
-                protected $data;
+        // Export using new Laravel Excel syntax
+        return Excel::download(
+        new class($exportData) implements FromArray {
+        protected $data;
 
-                public function __construct(array $data)
-                {
-                    $this->data = $data;
-                }
+        public function __construct(array $data) {
+            $this->data = $data;
+        }
 
-                public function array(): array
+        public function array(): array {
+            return $this->data;
+        }
+
+        // ✅ UTF-8 BOM settings for Excel
+        public function getCsvSettings(): array
                 {
-                    return $this->data;
+                    return [
+                        'use_bom' => true,
+                        'encoding' => 'UTF-8',
+                        'delimiter' => ',',
+                    ];
                 }
-            }, 'products.csv');
+            },
+            'products.csv',
+            ExcelFormat::CSV,
+            [
+                'use_bom' => true,  // must have for Excel in Windows
+                'encoding' => 'UTF-8',
+             ]
+           );
         }
     }
 
@@ -317,7 +334,22 @@ class ImportController extends Controller
                 {
                     return $this->data;
                 }
-            }, 'products_images.csv');
+                public function getCsvSettings(): array
+                {
+                    return [
+                        'use_bom' => true,
+                        'encoding' => 'UTF-8',
+                        'delimiter' => ',',
+                    ];
+                }
+            },
+            'products_images.csv',
+             ExcelFormat::CSV,
+            [
+                'use_bom' => true,  // must have for Excel in Windows
+                'encoding' => 'UTF-8',
+            ]
+          );
         }
     }
 

@@ -9,6 +9,8 @@ use File;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Excel as ExcelFormat;
+
 class SubscribeController extends Controller
 {
     public function __construct()
@@ -85,6 +87,14 @@ class SubscribeController extends Controller
                 {
                     return $this->data;
                 }
+                 public function getCsvSettings(): array
+                {
+                    return [
+                        'use_bom' => true,
+                        'encoding' => 'UTF-8',
+                        'delimiter' => ',',
+                    ];
+                }
 
                 public function headings(): array
                 {
@@ -98,7 +108,12 @@ class SubscribeController extends Controller
                     ];
                 }
             },
-            'subscribes.csv'
+            'subscribes.csv',
+             ExcelFormat::CSV,
+            [
+                'use_bom' => true,  // must have for Excel in Windows
+                'encoding' => 'UTF-8',
+            ]
         );
     }
 
