@@ -8,6 +8,7 @@ use Validator;
 use Excel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Excel as ExcelFormat;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use File;
 class EmailController extends Controller
@@ -231,19 +232,34 @@ class EmailController extends Controller
             }
 
             // Create a simple export from array
-            return Excel::download(
-                new class($exportData) implements FromCollection {
-                    private $data;
+        return Excel::download(
+        new class($exportData) implements FromCollection {
+        private $data;
 
-                    public function __construct($data) {
-                        $this->data = collect($data);
-                    }
+        public function __construct($data) {
+            $this->data = collect($data);
+        }
 
-                    public function collection() {
-                        return $this->data;
+        public function collection() {
+            return $this->data;
+        }
+
+            // ✅ Add CSV encoding configuration
+            public function getCsvSettings(): array
+                    {
+                        return [
+                            'use_bom' => true,
+                            'encoding' => 'UTF-8',
+                            'delimiter' => ',',
+                        ];
                     }
                 },
-                'GUI_Downloads.csv'
+                'GUI_Downloads.csv',
+                ExcelFormat::CSV,
+                [
+                    'use_bom' => true,  // Important for Excel
+                    'encoding' => 'UTF-8',
+                ]
             );
         }
       public function feedbackform($type){
