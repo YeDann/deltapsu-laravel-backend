@@ -1118,9 +1118,7 @@
 	};
 	var onloadCallback = function() {
 	  grecaptcha.render('recap_vertify', {
-	//    'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-         'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
-								//'sitekey' : '6LcPwHQpAAAAAL5BjEcFskLuvXnrUP9aNeeCv_9R',
+        'sitekey' : '{{config('app.recapcha_site_key')}}',
 		'callback' : verifyCallback,
 		'theme' : 'light'
 	  });
