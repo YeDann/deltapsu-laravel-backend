@@ -446,14 +446,14 @@
 										</label>
 										<select class="form-control" id="logic" onchange="getToSummary()">
 											<option selected="selected" value="0">
-												{{$staticContent['Normal_Logic_&_Normal_Fan_Direction']}}
+												{!!$staticContent['Normal_Logic_&_Normal_Fan_Direction']!!}
 											</option>
 											<option value="1">
-												{{$staticContent['Reversed_Logic_&_Normal_Fan_Direction']}}</option>
+												{!!$staticContent['Reversed_Logic_&_Normal_Fan_Direction']!!}</option>
 											<option value="2">{{$staticContent['Normal_Logic_&_Reversed_Fan_Direction']}}
 											</option>
 											<option value="3">
-												{{$staticContent['Reversed_Logic_&_Reversed_Fan_Direction']}}</option>
+												{!!$staticContent['Reversed_Logic_&_Reversed_Fan_Direction']!!}</option>
 										</select>
 									</div>
 								</div>
@@ -1437,8 +1437,8 @@ function selectCountry(){
 				$("#terminal").append(new Option("{{$staticContent['c_for_c14']}}", "3"));
 
 				$('#logic').empty();
-				$("#logic").append(new Option("{{$staticContent['Normal_Logic_&_Normal_Fan_Direction']}}", "0"));
-				$("#logic").append(new Option("{{$staticContent['Reversed_Logic_&_Normal_Fan_Direction']}}", "1"));
+				$("#logic").append(new Option("{!!$staticContent['Normal_Logic_&_Normal_Fan_Direction']!!}", "0"));
+				$("#logic").append(new Option("{!!$staticContent['Reversed_Logic_&_Normal_Fan_Direction']!!}", "1"));
 				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description_MEG-3K0A9']}}');
 		}else if(model_alldata[index]['max_power'] == 700){
 		        $('#terminal').empty();
@@ -1447,8 +1447,8 @@ function selectCountry(){
 				$("#terminal").append(new Option("{{$staticContent['c_for_c14']}}", "3"));
 
 				$('#logic').empty();
-				$("#logic").append(new Option("{{$staticContent['Normal_Logic_&_Normal_Fan_Direction']}}", "0"));
-				$("#logic").append(new Option("{{$staticContent['Reversed_Logic_&_Normal_Fan_Direction']}}", "1"));
+				$("#logic").append(new Option("{!!$staticContent['Normal_Logic_&_Normal_Fan_Direction']!!}", "0"));
+				$("#logic").append(new Option("{!!$staticContent['Reversed_Logic_&_Normal_Fan_Direction']!!}", "1"));
 				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description']}}');
 
 		}else{
@@ -1459,10 +1459,10 @@ function selectCountry(){
 				$("#terminal").append(new Option("{{$staticContent['c_for_c14']}}", "3"));
 
 				$('#logic').empty();
-				$("#logic").append(new Option("{{$staticContent['Normal_Logic_&_Normal_Fan_Direction']}}", "0"));
-				$("#logic").append(new Option("{{$staticContent['Reversed_Logic_&_Normal_Fan_Direction']}}", "1"));
-				$("#logic").append(new Option("{{$staticContent['Normal_Logic_&_Reversed_Fan_Direction']}}", "2"));
-				$("#logic").append(new Option("{{$staticContent['Reversed_Logic_&_Reversed_Fan_Direction']}}", "3"));
+				$("#logic").append(new Option("{!!$staticContent['Normal_Logic_&_Normal_Fan_Direction']!!}", "0"));
+				$("#logic").append(new Option("{!!$staticContent['Reversed_Logic_&_Normal_Fan_Direction']!!}", "1"));
+				$("#logic").append(new Option("{!!$staticContent['Normal_Logic_&_Reversed_Fan_Direction']!!}", "2"));
+				$("#logic").append(new Option("{!!$staticContent['Reversed_Logic_&_Reversed_Fan_Direction']!!}", "3"));
 				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description']}}');
 
 			}
