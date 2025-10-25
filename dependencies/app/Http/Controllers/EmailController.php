@@ -249,7 +249,7 @@ class EmailController extends Controller
                     {
                         return [
                             'use_bom' => true,
-                            'encoding' => 'UTF-8',
+                             'encoding' => 'UTF-16LE',
                             'delimiter' => ',',
                         ];
                     }
@@ -258,7 +258,7 @@ class EmailController extends Controller
                 ExcelFormat::CSV,
                 [
                     'use_bom' => true,  // Important for Excel
-                    'encoding' => 'UTF-8',
+                     'encoding' => 'UTF-16LE',
                 ]
             );
         }
@@ -386,7 +386,7 @@ class EmailController extends Controller
                 {
                     return [
                         'use_bom' => true,
-                        'encoding' => 'UTF-8',
+                         'encoding' => 'UTF-16LE',
                         'delimiter' => ',',
                     ];
                 }
@@ -395,7 +395,7 @@ class EmailController extends Controller
                 ExcelFormat::CSV,
                 [
                     'use_bom' => true,  // Important for Excel
-                    'encoding' => 'UTF-8',
+                     'encoding' => 'UTF-16LE',
                 ]
              );
         }

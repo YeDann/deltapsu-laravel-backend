@@ -273,7 +273,7 @@ class ImportController extends Controller
                 {
                     return [
                         'use_bom' => true,
-                        'encoding' => 'UTF-8',
+                         'encoding' => 'UTF-16LE',
                         'delimiter' => ',',
                     ];
                 }
@@ -282,7 +282,7 @@ class ImportController extends Controller
             ExcelFormat::CSV,
             [
                 'use_bom' => true,  // must have for Excel in Windows
-                'encoding' => 'UTF-8',
+                 'encoding' => 'UTF-16LE',
              ]
            );
         }
@@ -338,7 +338,7 @@ class ImportController extends Controller
                 {
                     return [
                         'use_bom' => true,
-                        'encoding' => 'UTF-8',
+                         'encoding' => 'UTF-16LE',
                         'delimiter' => ',',
                     ];
                 }
@@ -347,7 +347,7 @@ class ImportController extends Controller
              ExcelFormat::CSV,
             [
                 'use_bom' => true,  // must have for Excel in Windows
-                'encoding' => 'UTF-8',
+                 'encoding' => 'UTF-16LE',
             ]
           );
         }

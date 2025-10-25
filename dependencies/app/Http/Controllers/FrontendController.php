@@ -2772,7 +2772,7 @@ class FrontendController extends Controller
             {
                 return [
                     'use_bom' => true,
-                    'encoding' => 'UTF-8',
+                     'encoding' => 'UTF-16LE',
                     'delimiter' => ',',
                 ];
             }
@@ -2781,7 +2781,7 @@ class FrontendController extends Controller
             ExcelFormat::CSV,
             [
                 'use_bom' => true,
-                'encoding' => 'UTF-8',
+                 'encoding' => 'UTF-16LE',
             ]
         );
     }
