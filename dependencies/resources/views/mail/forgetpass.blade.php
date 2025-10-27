@@ -800,7 +800,7 @@
                                         Email : {{$contactForm['email']}}
                                     </p>
                                     <p style="">
-                                        Link page : <a href="https://www.deltapsu.com/changePassword/{{$pin}}">Click here</a>
+                                        Link page : <a href="{{config('app.url') }}/changePassword/{{$pin}}">Click here</a>
                                     </p>
                                     <p style="">
                                         Pin : {{$pin}}
