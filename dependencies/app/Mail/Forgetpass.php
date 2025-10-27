@@ -41,9 +41,8 @@ class Forgetpass extends Mailable
         return $this->view('mail.forgetpass',['contactForm'=>$this->request ])
                  ->with('pin', $this->pin)
                  ->with('link', $this->link)
-                ->subject("Change Your Password");
-                 ->subject('Change Your Password')
-                ->withSwiftMessage(function ($message) {
+                 ->subject("Change Your Password")
+                 ->withSwiftMessage(function ($message) {
                     // ปิด Click Tracking สำหรับ SendGrid API
                     $headers = $message->getHeaders();
                     $headers->addTextHeader('X-SMTPAPI', json_encode([
