@@ -14,7 +14,7 @@ class ContentSecurityPolicy
        $cspDirectives = [
             "default-src 'self'",
             "script-src 'self' 'unsafe-inline' https://cookiecdn.com https://code.jquery.com https://www.googletagmanager.com https://analytics.google.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.google.com https://www.gstatic.com https://snap.licdn.com",
-            "img-src 'self' data: https://px.ads.linkedin.com https://cookiecdn.com https://deltapsu.com https://www.deltapsu.com/",
+            "img-src 'self' data: https://px.ads.linkedin.com https://cookiecdn.com https://deltapsu.com https://www.deltapsu.com",
             "object-src 'none'",
             "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
             "font-src 'self'",
