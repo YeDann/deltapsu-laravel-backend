@@ -5404,7 +5404,11 @@ class FrontendController extends Controller
 
             if (($fpsDoc || $distributorDoc || $endUserDoc || $salesKit) && file_exists($path)) {
                 ob_end_clean();
-                return response()->file($path);
+                    return response()->download($path, basename($path), [
+                    'Content-Type' => 'application/octet-stream',
+                    'Content-Disposition' => 'attachment; filename="' . basename($path) . '"',
+                ]);
+                //return response()->file($path);
             }
 
             return redirect()->route($salesKit ? 'index' : 'marketingResourcesDownloads', $salesKit ? 'partners' : '');
