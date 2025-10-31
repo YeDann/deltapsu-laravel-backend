@@ -724,7 +724,7 @@
                 <li class="nav-main-item">
                     <a class="nav-main-link  {{(isset($menu) && $menu == 'Sales_Kits')?" active":""}}"
                         href="{{route('partner_doc_index',[1 ,'Sales_Kit'])}}">
-                        <span class="nav-main-link-name ">Sales Kit</span>
+                        <span class="nav-main-link-name ">Sales Tool</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
