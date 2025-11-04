@@ -15,7 +15,7 @@ class ContentSecurityPolicy
             "default-src 'self'",
             "script-src 'self' 'unsafe-inline' https://*.google.com https://*.googletagmanager.com https://*.gstatic.com https://cdn.jsdelivr.net https://code.jquery.com https://cdnjs.cloudflare.com https://cookiecdn.com https://snap.licdn.com https://*.youtube.com https://s.ytimg.com",
             "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
-            "img-src 'self' data: https://*.ytimg.com https://*.linkedin.com https://cookiecdn.com https://*.deltapsu.com",
+            "img-src 'self' data: https://*.youtube.com https://*.ytimg.com https://*.linkedin.com https://cookiecdn.com https://*.deltapsu.com",
             "font-src 'self'",
             "object-src 'none'",
             "media-src 'self' https://*.youtube.com https://*.ytimg.com",
