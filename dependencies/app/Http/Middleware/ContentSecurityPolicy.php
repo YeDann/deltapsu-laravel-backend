@@ -11,21 +11,20 @@ class ContentSecurityPolicy
     {
         $response = $next($request);
 
-       $cspDirectives = [
+        $cspDirectives = [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' https://cookiecdn.com https://code.jquery.com https://www.googletagmanager.com https://analytics.google.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.google.com https://www.gstatic.com https://snap.licdn.com https://www.youtube.com https://s.ytimg.com",
-            "img-src 'self' data: https://px.ads.linkedin.com https://cookiecdn.com https://deltapsu.com https://www.deltapsu.com https://psu.deltaww.com https://i.ytimg.com",
-            "object-src 'none'",
+            "script-src 'self' 'unsafe-inline' https://*.google.com https://*.googletagmanager.com https://*.gstatic.com https://cdn.jsdelivr.net https://code.jquery.com https://cdnjs.cloudflare.com https://cookiecdn.com https://snap.licdn.com https://*.youtube.com https://s.ytimg.com",
             "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
+            "img-src 'self' data: https://*.ytimg.com https://*.linkedin.com https://cookiecdn.com https://*.deltapsu.com",
             "font-src 'self'",
-            "media-src 'self' https://www.youtube.com https://img.youtube.com https://i.ytimg.com https://www.youtube-nocookie.com",
-            "frame-src 'self' https://www.youtube.com https://www.googletagmanager.com https://www.google.com https://analytics.google.com https://www.youtube-nocookie.com",
-            "connect-src 'self' https://api.cookiewow.com https://www.google.com https://www.googletagmanager.com  https://www.gstatic.com https://analytics.google.com https://www.google-analytics.com https://pagead2.googlesyndication.com https://px.ads.linkedin.com https://www.youtube.com https://img.youtube.com https://stats.g.doubleclick.net https://i.ytimg.com"
+            "object-src 'none'",
+            "media-src 'self' https://*.youtube.com https://*.ytimg.com",
+            "frame-src 'self' https://*.youtube.com https://*.google.com https://*.googletagmanager.com",
+            "connect-src 'self' https://*.google.com https://*.googletagmanager.com https://*.gstatic.com https://*.google-analytics.com https://*.doubleclick.net https://*.youtube.com https://*.ytimg.com https://api.cookiewow.com https://*.linkedin.com"
         ];
 
         $response->headers->set('Content-Security-Policy', implode('; ', $cspDirectives));
         $response->headers->set('Cache-Control', 'no-store');
-
 
         return $response;
     }
