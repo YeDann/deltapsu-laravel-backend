@@ -1675,7 +1675,7 @@
     /* onclick image product */
     function clickYoutube(id) {
         $('.product-show-box iframe').hide();
-        $('<iframe width="100%" style="max-height: 500px; min-height: 50%;"  src="" controls=0 allowfullscreen></iframe>').appendTo('.product-show-box');
+  $('<iframe width="100%" style="max-height: 500px; min-height: 50%;"  src="" controls=0 allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>').appendTo('.product-show-box');
         $('.product-show-box iframe').attr("src", id);
         $('.product-show-box img').hide();
     }
