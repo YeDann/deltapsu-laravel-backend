@@ -108,10 +108,20 @@
                                 {!!$office->content!!}
                             </div>
 
+                            @if($office->local == 'tw' && $office->id == 47)
+                            {{-- 羅昇企業股份有限公司 加上電商網站按鈕 office->id = 47 --}}
+                            <a href="https://www.acepillar-ec.com/collections/delta" target="_blank">
+                                <button class="btn-subscribe mt-2">
+                                    電商網站
+                                </button>
+                            </a>
+                            @endif
+
                             <a href="https://www.google.com/maps/?q={{$office->lat}},{{$office->lon}}&sensor=true"
                                 target="_blank"><button
                                     class="btn-subscribe mt-2">{{isset($staticContent['GetDirection'])?
                                     $staticContent['GetDirection'] : 'Get Direction'}}</button></a>
+
                             @if($office->status_cer == 1)
                             <a href="{{config('app.url')}}/medias/distributor/{{$office->file_cer}}" target="_blank">
                                 <button class="btn-certi"><i class="cer-icon icon-facon icon-web-certificate"></i> <span
