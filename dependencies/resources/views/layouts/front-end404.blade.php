@@ -231,9 +231,9 @@ $langch = str_replace('_', '-', app()->getLocale());
 
     <!-- Cookie Consent by https://www.cookiewow.com -->
     @if(config('app.environment') == 'production')
-    <script type="text/javascript" src="https://cookiecdn.com/cwc.js"></script>
-    <script id="cookieWow" type="text/javascript" src="https://cookiecdn.com/configs/pQrmuDVDXDn7zcMpZAhB6Mum"
-        data-cwcid="pQrmuDVDXDn7zcMpZAhB6Mum"></script>
+    <script type="text/javascript" src=https://cookiecdn.com/cwc.js></script>
+    <script id="cookieWow" type="text/javascript" src=https://cookiecdn.com/configs/9aZemFwhn82pm3Z4wtV79sGZ 
+      data-cwcid="9aZemFwhn82pm3Z4wtV79sGZ"></script>
     @endif
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
