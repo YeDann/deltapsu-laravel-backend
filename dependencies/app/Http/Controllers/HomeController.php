@@ -24,7 +24,7 @@ class HomeController extends Controller
     public function index()
     {
         return view('home')->with('name', 'product')
-        ->with('name', 'product')
-        ->with('menu', 'product_categories');
+            ->with('name', 'product')
+            ->with('menu', 'product_categories');
     }
 }
