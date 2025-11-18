@@ -107,12 +107,11 @@
                             <div class="text-editor">
                                 {!!$office->content!!}
                             </div>
-
                             {{-- 羅昇企業股份有限公司 加上電商網站按鈕 office->id = 47 --}}
-                            @if ($office->id == 47)
+                            @if (App::getLocale() == 'tw' && $office->id == 47)
                                 <a href="https://www.acepillar-ec.com/collections/delta" target="_blank">
                                     <button class="btn-subscribe mt-2">
-                                        {{ App::getLocale() == 'tw' ? '電商網站' : 'Buy Now' }}
+                                        {{ $office->local == 'tw' ? '電商網站' : 'Buy Now' }}
                                     </button>
                                 </a>
                             @endif
