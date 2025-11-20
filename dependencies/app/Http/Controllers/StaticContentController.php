@@ -159,73 +159,75 @@ class StaticContentController extends Controller
      */
     public function store(Request $request)
     {
-       $typeId = $request->type_id;
-       $con_id = $request->con_id;
-       $lang_loop = $request->lang_loop;
-       $name = $request->name;
-       $content  = $request->content;
-       $filename = $request->filename;
-       $fileimage = $request->fileimage;
-       $oldfile  = $request->oldfile;
-       $status  = $request->status;
-       if($status == null){
-           $status == 1;
-       }
-    //    return dd($fileimage);
+        $typeId = $request->type_id;
+        $con_id = $request->con_id;
+        $lang_loop = $request->lang_loop;
+        $name = $request->name;
+        $content  = $request->content;
+        $filename = $request->filename;
+        $fileimage = $request->fileimage;
+        $oldfile  = $request->oldfile;
+        $status  = $request->status;
+
+        if ($status == null) {
+            $status == 1;
+        }
      
-       if($con_id == null){
-        $arrayfileName = self::SaveimageArray($fileimage,$filename);
-        $id  = DB::table('static_content')->insertGetID(
-            [
-                "type_con_id" => $typeId,
-                "destop_image" => $arrayfileName['destop'],
-                "status" => $status,
-                "created_at" => \Carbon\Carbon::now(),
-                "updated_at" => \Carbon\Carbon::now(),
-            ]
-        );
-        foreach($lang_loop as $lang){
-            DB::table('static_content_translations')->insert(
+        if ($con_id == null) {
+            $arrayfileName = self::SaveimageArray($fileimage,$filename);
+            $id  = DB::table('static_content')->insertGetID(
                 [
-                    "sta_fk_id" => $id,
-                    "title" => isset($name[$lang]) ? $name[$lang]:'' ,
-                    "content" => $content[$lang],
-                    "local" => $lang
+                    "type_con_id" => $typeId,
+                    "destop_image" => $arrayfileName['destop'],
+                    "status" => $status,
+                    "created_at" => \Carbon\Carbon::now(),
+                    "updated_at" => \Carbon\Carbon::now(),
                 ]
             );
-        }
-        
-        return back()->with('flash_message', 'Create Data successfully');
+            foreach($lang_loop as $lang){
+                DB::table('static_content_translations')->insert(
+                    [
+                        "sta_fk_id" => $id,
+                        "title" => isset($name[$lang]) ? $name[$lang]:'' ,
+                        "content" => $content[$lang],
+                        "local" => $lang
+                    ]
+                );
+            }
+            
+            return back()->with('flash_message', 'Create Data successfully');
+        } else { 
+            if($typeId != 5 && $typeId != 6 && $typeId != 8) {
+                $arrayfileName = self::updateoldImage($fileimage,$oldfile,$filename);
+            }
 
-       }else{
-
-        $arrayfileName = self::updateoldImage($fileimage,$oldfile,$filename);
-
-       DB::table('static_content')->where('sta_id',$con_id)->update(
-            [
-                "type_con_id" => $typeId,
-                "destop_image" => $arrayfileName['destop'],
-                "status" => $status,
-                "created_at" => \Carbon\Carbon::now(),
-                "updated_at" => \Carbon\Carbon::now(),
-            ]
-        );
-        foreach($lang_loop as $lang){
-            DB::table('static_content_translations')->where('sta_fk_id',$con_id)->where('local',$lang)->update(
+            DB::table('static_content')->where('sta_id', $con_id)->update(
                 [
-                    "title" => $name[$lang],
-                    "content" => $content[$lang],
+                    "type_con_id" => $typeId,
+                    "destop_image" => isset($arrayfileName['destop']) ? $arrayfileName['destop'] : null,
+                    "status" => $status,
+                    "created_at" => \Carbon\Carbon::now(),
+                    "updated_at" => \Carbon\Carbon::now(),
                 ]
             );
-        }
-        
-          return back()->with('flash_message', 'Update Data successfully');
 
-       }
+            foreach($lang_loop as $lang){
+                DB::table('static_content_translations')->where('sta_fk_id',$con_id)->where('local',$lang)->update(
+                    [
+                        "title" => isset($name[$lang]) ? $name[$lang] : null,
+                        "content" => $content[$lang],
+                    ]
+                );
+            }
+
+            return back()->with('flash_message', 'Update Data successfully');
+        }
     
-       return back()->with('error_message', 'No update');
+        return back()->with('error_message', 'No update');
     }
-    public function uploadtoTexteditor(Request $request){
+
+    public function uploadtoTexteditor(Request $request)
+    {
         $file = $request->file;
         $url = null;
         $fileName = null;
@@ -233,15 +235,14 @@ class StaticContentController extends Controller
             $fileName = preg_replace('/\s+/', '', time().''.$file->getClientOriginalName());
             $file->move(base_path('/../editor_file'),$fileName);
         }
+
         if($fileName){
             $url = config('app.url').'/editor_file/'.$fileName;
         }
         
         return response()->json([
             'url' => $url
-                ], 200);
-
+        ], 200);
     }
-
   
 }

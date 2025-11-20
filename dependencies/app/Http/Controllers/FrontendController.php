@@ -1317,9 +1317,12 @@ class FrontendController extends Controller
          ->get();
 
         // EC Link query - Check if product ID is in comma-separated products string
+        $lang = App::getLocale();
         $ec_link = DB::table('custom_product_button as c')
-         ->select('c.*')
+         ->join('custom_product_button_translation as ct', 'c.id', '=', 'ct.button_id')
+         ->select('c.*', 'ct.name')
          ->where('c.status', 1)
+         ->where('ct.local', $lang)
          ->where(function ($query) use ($pro) {
              $query->where('c.products', 'LIKE', '%,' . $pro->pro_id . ',%')
                    ->orWhere('c.products', 'LIKE', $pro->pro_id . ',%')

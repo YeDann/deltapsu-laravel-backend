@@ -12,6 +12,7 @@ class ProductFieldController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +31,7 @@ class ProductFieldController extends Controller
             ->select('pf.id as pd_field_id', 'pf.type', 'pf.created_at', 'pft.field_name', 'pft.local as pft_local', 'st.id as section_id', 'stt.name as section_name')
             ->orderBy('pf.created_at', 'desc')
             ->get();
-      
+
         return view('product-field.index')
             ->with('name', 'product')
             ->with('menu', 'product_field')
@@ -63,7 +64,6 @@ class ProductFieldController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -72,68 +72,61 @@ class ProductFieldController extends Controller
         $section = $request->section;
         $type = $request->type;
         $unit = $request->unit;
-    
-        // return dd($title);
 
-        // return dd($_POST['title_'.$lang]);
-         $langs = $request->lang_loop;
-         
+        $langs = $request->lang_loop;
+
         $validate = Validator::make($request->all(), [
             'section' => 'required',
         ]);
-        // return dd($validate->fails());
+
         if ($validate->fails()) {
-        
             return redirect()->back()->withErrors($validate->errors());
-        } else {
-
-            $profieldId = DB::table('product_field')->insertGetID(
-                [
-                    "type" => $type,
-                    "section_id" => $section,
-                    "unit_name" => $unit,
-                    "status"=>$request->status,
-                    "created_at" => \Carbon\Carbon::now(),
-                    "updated_at" => \Carbon\Carbon::now(),
-                ]
-            );
-
-                    
-                foreach($langs as $lang){
-                    $create_pd_field_translation = DB::table('product_field_translation')->insert(
-                        [
-                            "product_field_id" => $profieldId,
-                            "field_name" => $title,
-                            "local" => $lang,
-                        ]
-                    );
-
-                }
-            
         }
-        
+
+        $profieldId = DB::table('product_field')->insertGetID(
+            [
+                    'type' => $type,
+                    'section_id' => $section,
+                    'unit_name' => $unit,
+                    'status' => $request->status,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now(),
+                ]
+        );
+
+        foreach ($langs as $lang) {
+            $create_pd_field_translation = DB::table('product_field_translation')->insert(
+                [
+                            'product_field_id' => $profieldId,
+                            'field_name' => $title,
+                            'local' => $lang,
+                        ]
+            );
+        }
+
         if ($profieldId && $create_pd_field_translation) {
             return redirect()->route('product-field.index')->with('flash_message', 'Insert Data successfully');
-        } else {
-            return redirect()->route('product-field.index')->with('error_message', 'Error insert data !!!');
         }
+
+        return redirect()->route('product-field.index')->with('error_message', 'Error insert data !!!');
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -160,8 +153,8 @@ class ProductFieldController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
@@ -171,15 +164,14 @@ class ProductFieldController extends Controller
         $type = $request->type;
         $unit = $request->unit;
 
-        
         DB::table('product_field')
-        ->where('id','=',$product_field_id)
-        ->update(array(
-            "section_id" => $section,
-            "type" => $type,
-            "status"=>$request->status,
-            "unit_name" => $request->unit
-        ));
+        ->where('id', '=', $product_field_id)
+        ->update([
+            'section_id' => $section,
+            'type' => $type,
+            'status' => $request->status,
+            'unit_name' => $request->unit,
+        ]);
 
         $pd_field = DB::table('product_field as pf')
             ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
@@ -187,20 +179,22 @@ class ProductFieldController extends Controller
             ->select('pf.*', 'pft.*')
             ->get();
 
-        foreach($pd_field as $item){
+        foreach ($pd_field as $item) {
+            $title = 'title_' . $item->local;
 
-            $title = "title_".$item->local;
-
-            DB::table('product_field_translation')->where('product_field_id', "=", $item->product_field_id)->where('local', "=", $item->local)->update(array(
-               "field_name" => $request->$title
-            ));
+            DB::table('product_field_translation')->where('product_field_id', '=', $item->product_field_id)->where('local', '=', $item->local)->update([
+               'field_name' => $request->$title,
+            ]);
         }
+
         return redirect()->route('product-field.index')->with('flash_message', 'Update Data successfully');
     }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -213,7 +207,6 @@ class ProductFieldController extends Controller
 
     public function copyProductField(Request $request)
     {
-
         $new_local = $request->language;
 
         $name_en = DB::table('product_field as pf')
@@ -223,29 +216,28 @@ class ProductFieldController extends Controller
             ->get();
 
         foreach ($name_en as $item) {
-
             $check_local = DB::table('product_field as pf')
                 ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
                 ->where('pft.product_field_id', '=', $item->product_field_id)
                 ->where('pft.local', '=', $new_local)
                 ->get();
 
-            if (count($check_local) == 0) {
+            if (0 == count($check_local)) {
                 DB::table('product_field_translation')->insert(
                     [
-                        "product_field_id" => $item->product_field_id,
-                        "field_name" => $item->field_name,
-                        "local" => $new_local,
+                        'product_field_id' => $item->product_field_id,
+                        'field_name' => $item->field_name,
+                        'local' => $new_local,
                     ]
                 );
             }
         }
+
         return redirect()->route('product-field.index')->with('flash_message', 'Copy Data successfully');
     }
 
     public function copyProductFieldsingle(Request $request)
     {
-
         $new_local = $request->language;
         $pd_field_id = $request->pd_field_id;
 
@@ -257,23 +249,23 @@ class ProductFieldController extends Controller
             ->get();
 
         foreach ($name_en as $item) {
-
             $check_local = DB::table('product_field as pf')
                 ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
                 ->where('pft.product_field_id', '=', $item->product_field_id)
                 ->where('pft.local', '=', $new_local)
                 ->get();
 
-            if (count($check_local) == 0) {
+            if (0 == count($check_local)) {
                 DB::table('product_field_translation')->insert(
                     [
-                        "product_field_id" => $item->product_field_id,
-                        "field_name" => $item->field_name,
-                        "local" => $new_local,
+                        'product_field_id' => $item->product_field_id,
+                        'field_name' => $item->field_name,
+                        'local' => $new_local,
                     ]
                 );
             }
         }
+
         return redirect()->route('product-field.index')->with('flash_message', 'Copy Data successfully');
     }
 }
