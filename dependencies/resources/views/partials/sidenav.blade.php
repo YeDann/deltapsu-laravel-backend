@@ -161,9 +161,19 @@
                         <span class="nav-main-link-name">External Link</span>
                     </a>
                     @endif
+
+                    <li class="nav-main-item">
+                        @if($menu == "ec_link")
+                        <a class="nav-main-link active" href="{{route('eclinklist')}}">
+                            <span class="nav-main-link-name">EC Link </span>
+                        </a>
+                        @else
+                        <a class="nav-main-link" href="{{route('eclinklist')}}">
+                            <span class="nav-main-link-name">EC Link</span>
+                        </a>
+                        @endif
+                    </li>
             </li>
-
-
 
         </ul>
         </li>
@@ -212,6 +222,11 @@
                 <li class="nav-main-item">
                     <a class="nav-main-link" href="{{route('externallist')}}">
                         <span class="nav-main-link-name">External Link</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('eclinklist')}}">
+                        <span class="nav-main-link-name">EC Link</span>
                     </a>
                 </li>
 

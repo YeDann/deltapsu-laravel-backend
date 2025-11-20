@@ -1213,7 +1213,6 @@ class FrontendController extends Controller
 
         $pro_code = $this->validateInput($procode, 'text', true);
 
-        // return dd($name);
         $slgSeries = null;
         $optional_model = null;
         if (isset($_GET['serie'])) {
@@ -1234,17 +1233,13 @@ class FrontendController extends Controller
             }
         }
 
-        $findoldCate_temp = DB::table('sub_pro_categories as c')
-        ->get();
-        // return dd ($findoldCate_temp);
+        $findoldCate_temp = DB::table('sub_pro_categories as c')->get();
+
         $maxSimilarity = 0;
         $findoldCateFirst = null;
         foreach ($findoldCate_temp as $item) {
             $urlItem = $item->url_item;
             $similarity = self::similarity($catename, $urlItem);
-
-            // แสดงข้อมูลสำหรับดีบัก
-            // dd($item, $similarity, $catename, $urlItem);
 
             // ถ้าความคล้ายคลึงสูงสุดใหม่ ให้เก็บข้อมูลนี้ไว้
             if ($similarity > 0) {
@@ -1254,9 +1249,6 @@ class FrontendController extends Controller
                 }
             }
         }
-
-        // ตรวจสอบผลลัพธ์
-        // return dd ($findoldCateFirst, $maxSimilarity);
 
         $findoldCate = $findoldCateFirst;
         if (null == $findoldCate) {
@@ -1315,8 +1307,6 @@ class FrontendController extends Controller
         ->orderBy('p.created_at', 'desc')
         ->first();
 
-        // return dd( $pro);
-
         if (!self::checkContentPro($pro->pro_id)) {
             return redirect()->route('productFinder');
         }
@@ -1324,6 +1314,18 @@ class FrontendController extends Controller
         $external_link = DB::table('external_link as e')
          ->select('e.*')
          ->where('e.products', $pro->pro_id)
+         ->get();
+
+        // EC Link query - Check if product ID is in comma-separated products string
+        $ec_link = DB::table('custom_product_button as c')
+         ->select('c.*')
+         ->where('c.status', 1)
+         ->where(function ($query) use ($pro) {
+             $query->where('c.products', 'LIKE', '%,' . $pro->pro_id . ',%')
+                   ->orWhere('c.products', 'LIKE', $pro->pro_id . ',%')
+                   ->orWhere('c.products', 'LIKE', '%,' . $pro->pro_id)
+                   ->orWhere('c.products', '=', $pro->pro_id);
+         })
          ->get();
 
         $vieo_img = DB::table('product_image as pm')
@@ -1511,6 +1513,7 @@ class FrontendController extends Controller
             ->with('section', $section)
             ->with('product_has_property', $product_has_property)
             ->with('external_link', $external_link)
+            ->with('ec_link', $ec_link)
             ->with('product', $data);
     }
 
@@ -1936,8 +1939,8 @@ class FrontendController extends Controller
         ->where('apt.local', '=', $lang)
         ->where('ap.id', $id)
         ->select(
-            'ap.*' ,
-            'ap.id as applica_id' ,
+            'ap.*',
+            'ap.id as applica_id',
             'apt.name',
             'apt.content',
             'apt.content_2',

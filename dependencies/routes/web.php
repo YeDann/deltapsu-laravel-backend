@@ -167,6 +167,14 @@ Route::prefix('/backend')->group(function () {
     Route::post('deleteExternallink', 'ProductsController@deleteExternallink')->name('deleteExternallink');
 
     Route::post('storeExternallink', 'ProductsController@storeExternallink')->name('storeExternallink');
+
+    // EC Link Routes
+    Route::get('eclinklist', 'ProductsController@listEcLink')->name('eclinklist');
+    Route::get('createEcLink', 'ProductsController@createEcLink')->name('createEcLink');
+    Route::get('editEcLink/{id?}', 'ProductsController@editEcLink')->name('editEcLink');
+    Route::post('storeEcLink', 'ProductsController@storeEcLink')->name('storeEcLink');
+    Route::post('updateEcLink', 'ProductsController@updateEcLink')->name('updateEcLink');
+    Route::get('deleteEcLink/{id?}', 'ProductsController@deleteEcLink')->name('deleteEcLink');
     Route::post('updateExternalLink', 'ProductsController@updateExternalLink')->name('updateExternalLink');
     //video products
     Route::get('videos_images/{id?}', 'ProductVideoImageController@index')->name('videos_images');

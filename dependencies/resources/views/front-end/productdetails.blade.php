@@ -547,16 +547,20 @@
                         {{$product[0]['pro_code']}}</h1>
                     @endif
                     <div class="btn-detail-describe my-3">
-                        <a
-                            href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}">
+                        <a href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}">
                             <button class="btn btn-enquiry">{{$staticContent['Enquiry']}}</button>
                         </a>
                         <button class="btn btn-addcompare"
                             onclick="showNavCoparison({{$product[0]['pro_id']}}, {{$product[0]['cate_id']}})">{{$staticContent['Add_to_Compare']}}</button>
                         <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}"
                             target="_blank">
-                            <button class="btn btn-datasheet mr-2">{{$staticContent['data_sheet']}}</button>
+                            <button class="btn btn-datasheet">{{$staticContent['data_sheet']}}</button>
                         </a>
+                        @foreach ($ec_link as $item)
+                        <a href="{{$item->link}}" target="_blank">
+                            <button class="btn btn-datasheet mr-2" style="background-color: #007bff;">{{$item->name}}</button>
+                        </a>
+                        @endforeach
                     </div>
                     <div class="row">
                         <div class="col-sm-4 box-product-detail">

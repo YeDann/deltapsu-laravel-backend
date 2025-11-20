@@ -1319,6 +1319,130 @@ public function featureProduct(){
         return redirect()->route('externallist')->with('flash_message', 'Delete Data successfully');
      }
 
+     // EC Link Methods
+     public function listEcLink(){
+         $list = DB::table('custom_product_button as c')
+         ->join('custom_product_button_translation as ct', 'c.id', '=', 'ct.button_id')
+         ->where('ct.local', '=', 'en')
+         ->select('c.*', 'ct.name')
+         ->orderBy('c.created_at', 'desc')
+         ->get();
+ 
+         return view('product.ec_link')
+         ->with('menu', "ec_link")
+         ->with('list', $list)
+         ->with('name', "product");
+     }
+     
+     public function createEcLink(){
+        $language = DB::table('language')->get();
+        $products  = DB::table('products as p')
+        ->join('products_translation as pt', 'pt.product_id', '=', 'p.pro_id')
+        ->where('pt.local','en')
+        ->orderBy('p.created_at','desc')
+        ->select('p.*')
+        ->get();
+         return view('product.create_ec_link')
+         ->with('products',$products)
+         ->with('language', $language)
+         ->with('menu', "ec_link")
+         ->with('name', "product");
+     }
+
+     public function storeEcLink(Request $request){
+        $product = $request->relatePro;
+        $striPro = implode(",",$product);
+        $langs = $request->lang_loop;
+  
+        $buttonId = DB::table('custom_product_button')->insertGetId(
+            [
+                "link" => $request->link,
+                "products" => $striPro,
+                "status" => $request->status ?? 1,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ]
+        );
+
+        foreach($langs as $lang){
+            DB::table('custom_product_button_translation')->insert(
+                [
+                    "button_id" => $buttonId,
+                    "name" => $request->name,
+                    "local" => $lang,
+                    "created_at" => now(),
+                    "updated_at" => now(),
+                ]
+            );
+        }
+
+        return redirect()->route('eclinklist')->with('flash_message', 'Create Data successfully');
+    }
+
+    public function editEcLink($id){
+        $item = DB::table('custom_product_button as c')
+         ->select('c.*')
+         ->where('c.id',$id)
+         ->first();
+        
+        $translations = DB::table('custom_product_button_translation as ct')
+         ->where('ct.button_id',$id)
+         ->get();
+         
+        $arrProduct = explode(",",$item->products);
+        $products  = DB::table('products as p')
+        ->join('products_translation as pt', 'pt.product_id', '=', 'p.pro_id')
+        ->where('pt.local','en')
+        ->orderBy('p.created_at','desc')
+        ->select('p.*')
+        ->get();
+        return view('product.edit_ec_link')
+         ->with('item',$item)
+         ->with('translations',$translations)
+         ->with('arrProduct',$arrProduct)
+         ->with('products',$products)
+         ->with('menu', "ec_link")
+         ->with('name', "product");
+    }
+
+    public function updateEcLink(Request $request){
+        $id = $request->old_id;
+        $product = $request->relatePro;
+        $striPro = implode(",",$product);
+
+        DB::table('custom_product_button')->where('id',$id)->update(
+            [
+                "link" => $request->link,
+                "products" => $striPro,
+                "status" => $request->status ?? 1,
+                "updated_at" => now(),
+            ]
+        );
+
+        $translations = DB::table('custom_product_button_translation as ct')
+         ->where('ct.button_id',$id)
+         ->get();
+
+        foreach($translations as $item){
+            $buttonName = "name_".$item->local;
+            DB::table('custom_product_button_translation')
+            ->where('button_id', "=", $item->button_id)
+            ->where('local', "=", $item->local)
+            ->update([
+               "name" => $request->$buttonName,
+               "updated_at" => now(),
+            ]);
+        }
+        
+        return redirect()->route('eclinklist')->with('flash_message', 'Update Data successfully');
+    }
+
+     public function deleteEcLink($id){
+        DB::table('custom_product_button_translation')->where('button_id' ,$id)->delete();
+        DB::table('custom_product_button')->where('id' ,$id)->delete();
+        return redirect()->route('eclinklist')->with('flash_message', 'Delete Data successfully');
+     }
+
 }
 
 
