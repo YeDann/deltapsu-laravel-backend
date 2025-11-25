@@ -295,6 +295,46 @@
                 imageAttributesImageFolder: ''
             });
 
+                $('.jsnotenew_2').summernote({
+                height: 200,
+                callbacks: {
+                    onImageUpload: function (files) {
+                        that = $(this);
+                        sendFile(files[0], that);
+                    }
+                },
+                popover: {
+                    image: [
+                        ['custom', ['imageAttributes']],
+                        ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                        ['remove', ['removeMedia']]
+                    ],
+                    },
+                    lang: 'en-US', // Change to your chosen language
+                    // imageAttribute configurations to enable/disable image popover tabs/fields
+                imageAttributesIcon: '<i class="note-icon-pencil"/>',
+                imageAttributesRemoveEmpty: true,
+                imageAttributesDisableImage: false,
+                imageAttributesDisableImageSource: true,
+                imageAttributesDisableImageTitle: true,
+                imageAttributesDisableImageAltText: false,
+                imageAttributesDisableImageDimensions: true,
+                imageAttributesDisableAttributes: true,
+                imageAttributesDisableAttributesClass: false,
+                imageAttributesDisableAttributesStyle: false,
+                imageAttributesDisableAttributesRole: false,
+                imageAttributesDisableLink: true,
+                imageAttributesDisableLinkUrl: true,
+                imageAttributesDisableLinkTarget: false,
+                imageAttributesDisableLinkClass: true,
+                imageAttributesDisableLinkStyle: true,
+                imageAttributesDisableLinkRel: true,
+                imageAttributesDisableLinkRole: true,
+                imageAttributesDisableUpload: true,
+                imageAttributesImageFolder: ''
+            });
+
             function sendFile(file, that) {
 
                 var data = new FormData();
@@ -315,6 +355,8 @@
                 });
             }
         });
+
+
 
     </script>
 

@@ -793,7 +793,7 @@
                                     style="text-align: left;color: #444444;font-size: 16px;line-height: 24px;font-family: Arial, Helvetica,sans-serif;max-width: 600px;min-width: 320px; width: 320px;width: calc(28000% - 167400px);">
 
                                     <h3><strong>Change Your Password</strong></h3>
-                                    <p style="">You have 24 hours to change your password by clicking on the link below.
+                                    <p style="">You have 24 hours to change your password by clicking on the link below. 
                                         Please ensure that you are using the same browser as the one you have used to make this request. Do not copy/paste the link to a different browser.
                                     </p>
                                     <p style="">
@@ -828,10 +828,10 @@
     </table>
          {{-- @if(isset($contactForm['checkData']))
          @if($contactForm['checkData'] == 1)
-          <div class="box-conpdf" style="color:#007bff">
-                 Sign up for newsletter
+          <div class="box-conpdf" style="color:#007bff"> 
+                 Sign up for newsletter   
           </div>
-          @else
+          @else 
           @endif
           @endif --}}
 </body>

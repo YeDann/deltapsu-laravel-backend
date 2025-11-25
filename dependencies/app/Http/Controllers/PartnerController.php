@@ -12,6 +12,9 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Auth;
 use Excel;
 use File;
+use Maatwebsite\Excel\Concerns\FromArray;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Excel as ExcelFormat;
 class PartnerController extends Controller
 {
 
@@ -91,9 +94,9 @@ class PartnerController extends Controller
             }else{
                 return redirect()->back()->withErrors(['email'=>'Dupplicate email']);
             }
-       
+
         }
-      
+
         return redirect()->route('partner.index')->with('error_message', 'Error');
     }
        /**
@@ -119,7 +122,7 @@ class PartnerController extends Controller
         ->with('language',$language);
     }
     public function update(Request $request){
-       
+
              $id  = $request->userId;
             //  return dd($id);
         $validate = Validator::make($request->all(), [
@@ -134,7 +137,7 @@ class PartnerController extends Controller
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
         } else {
-         
+
                if($request->password != null){
                 DB::table('partner')->where('id', $id)->update([
                     'firstname' => $request->firstname,
@@ -165,10 +168,10 @@ class PartnerController extends Controller
                }
 
                 return redirect()->route('partner.index')->with('flash_message', 'Insert Data successfully');
-            
-       
+
+
         }
-      
+
         return redirect()->route('partner.index')->with('error_message', 'Error');
 
     }
@@ -216,7 +219,7 @@ class PartnerController extends Controller
         $AllsuccessStory =  DB::table('success_storys as s')
         ->select('s.*')
         ->orderBy('s.created_at', 'desc')
-        ->where('s.id' ,$id) 
+        ->where('s.id' ,$id)
         ->get();
 
         $models = $AllsuccessStory[0]->modelname;
@@ -299,13 +302,13 @@ class PartnerController extends Controller
         ->with('image_story' ,$image_story);
     }
     public function uploadImageStory(Request $request){
-   
+
         $story_id = $request->story_id;
         if ($request->hasFile('file')) {
-            $image = $request->file('file'); 
+            $image = $request->file('file');
             $imgName = uniqid().".".$image->getClientOriginalExtension();
             $image->move(base_path('/../uploads_delta/partner/marketing_resources'),$imgName);
-       
+
             DB::table('success_storys_image')->insert(
                 [
                     'fk_story_id' => $story_id,
@@ -323,28 +326,76 @@ class PartnerController extends Controller
     public function deleteImageStory_back(Request $request){
         $story_id = $request->story_id;
         $id = $request->itemId;
-     
+
         $data = DB::table('success_storys_image')->where('id' ,$id)->get();
         $file_pointer = base_path('/../uploads_delta/partner/marketing_resources/').$data[0]->image;
         if (file_exists($file_pointer) && isset($data[0]->image) ) {
             unlink($file_pointer);
             DB::table('success_storys_image')->where('id' ,$id)->delete();
             return redirect()->route('storyImage',$story_id)->with('flash_message', 'Delete Data successfully');
-          
+
         }else{
             return redirect()->route('storyImage',$story_id)->with('flash_message', 'No image');
         }
     }
-    public function  ExportPartner(){
-
+     public function ExportPartner()
+    {
         $users = DB::table('partner')
         ->select('partner.*')
         ->get();
 
-        if(isset($users)){
-            Excel::create('Partner', function ($excel) use ($users) {
-              $excel->sheet('Partner', function ($sheet) use ($users) {
-                  $sheet->row(1,[
+
+        if ($users->isEmpty()) {
+             return redirect()->route('partner.index')->with('flash_message', 'No Data');
+        }
+
+        // Transform data for export
+        $exportData = $users->map(function ($users, $index) {
+              if($user->role == 1){
+                     $role = 'Distributor';
+              }else{
+                     $role = 'FES';
+              }
+            return [
+                'no' => $index + 1,
+                'firstname' => $users->firstname,
+                'lastname' => $users->lastname,
+                'email' => $users->email,
+                'position' => $users->position,
+                'companyName' => $users->companyName,
+                'phone' => $users->phone,
+                'fax' => $users->fax,
+                'role' =>  $role,
+                'created_at'=>$user->created_at
+
+            ];
+        })->toArray();
+
+        return Excel::download(
+            new class($exportData) implements FromArray, WithHeadings {
+                private $data;
+
+                public function __construct(array $data)
+                {
+                    $this->data = $data;
+                }
+
+                public function array(): array
+                {
+                    return $this->data;
+                }
+                public function getCsvSettings(): array
+                {
+                    return [
+                        'use_bom' => true,
+                         'encoding' => 'UTF-16LE',
+                        'delimiter' => ',',
+                    ];
+                }
+
+                public function headings(): array
+                {
+                    return [
                       'No',
                       'Firstname',
                       'Lastname',
@@ -356,46 +407,23 @@ class PartnerController extends Controller
                       'country',
                       'Role',
                       'created_at'
-                  ]);
-                  $i = 2;
-                  $j = 1;
-                  foreach ($users as $user) {
-                  
-                       
-                         if($user->role == 1){
-                             $role = 'Distributor';
-                         }else{
-                             $role = 'FES';
-                         }
-                          $sheet->row($i, [
-                              $j,
-                              $user->firstname,
-                              $user->lastname,
-                              $user->email,
-                              $user->position,
-                              $user->companyName,
-                              $user->phone,
-                              $user->fax,
-                              $user->country,
-                              $role,
-                              $user->created_at,
-                          ]);
-                          $i++;
-                          $j++;
-                  }
-              });
-          })->export('csv');
-
-          }else{
-            return redirect()->route('partner.index')->with('flash_message', 'No Data');
-          }
+                    ];
+                }
+            },
+            'partner.csv',
+           ExcelFormat::CSV,
+            [
+                'use_bom' => true,  // must have for Excel in Windows
+                 'encoding' => 'UTF-16LE',
+            ]
+        );
     }
 
     public function destroy(Request $request){
         $id =  $request->itemId;
         $user = DB::table('partner')
         ->where('partner.id',$id)
-        ->delete();                                                                                                                                                                                                                                                                 
+        ->delete();
         return redirect()->route('partner.index')->with('flash_message', 'Delete Data successfully');
      }
 

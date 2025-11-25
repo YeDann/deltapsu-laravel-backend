@@ -33,3 +33,5 @@ dependencies/storage/logs/laravel.log
 
 # local env files
 .env
+.DS_Store
+**/.DS_Store

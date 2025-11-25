@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use PDF;
 use Excel;
+use Maatwebsite\Excel\Excel as ExcelFormat;
 use Mailchimp;
 use LaravelLocalization;
 use Symfony\Component\Debug\Exception\FlattenException;
@@ -1353,8 +1354,12 @@ class FrontendController extends Controller
 
 
         $findoldCate = $findoldCateFirst;
+        // return dd($name, $findoldCate_temp, $findoldCate);
+        // return dd($findoldCate);
         if ($findoldCate == null) {
-            return redirect()->route('productsDetailsByType',[$name, $procode]);
+            return redirect()->route('productsDetailsByType',[$name, $procode] );
+
+            // return response()->view('errors.404', [], 404);
         }
         if(isset($slgSeries) && isset($findoldCate)){
             $findoldSeries = DB::table('series as s')
@@ -1366,6 +1371,7 @@ class FrontendController extends Controller
                 return redirect()->route('productFinder');
             }
         }else if(isset($findoldCate) && !isset($procode)){
+            // return dd('hello');
             return  redirect()->route('productList',[$findoldCate->url_item,$findoldCate->sub_pro_id]);
         }
 
@@ -1380,9 +1386,11 @@ class FrontendController extends Controller
         $proCode  = str_replace("@", "/", $pro_code);
         $check = self::checkHaveModel($proCode);
         $check_2 = self::checkHaveModelOptional($proCode);
+        // return dd($check_2, $check);
 
         if(isset($check->pro_id)){
             $prolang =  self::checkLang($lang ,$check->pro_id);
+
         }
         else if($check_2){
             $pro_code_n  = str_replace("/", "@",$check_2->pro_code);
@@ -1394,8 +1402,9 @@ class FrontendController extends Controller
             }
         }
         else{
+            // return dd($findoldCate->url_item,$findoldCate->sub_pro_id);
             return  redirect()->route('productList',[$findoldCate->url_item,$findoldCate->sub_pro_id]);
-
+            // return response()->view('errors.404', [], 404);
 
         }
 
@@ -2022,9 +2031,7 @@ class FrontendController extends Controller
 
     public function appDetailById($app_name, $app_id){
         $name = $this->validateInput($app_name,'text',true);
-        $id = $this->validateInput($app_id,'number',true);
-
-        // return dd($name, $id);
+        $id = $this->validateInput($app_id ,'number',true);
 
         $lang = App::getLocale();
         $application = DB::table('application as ap')
@@ -2737,25 +2744,47 @@ class FrontendController extends Controller
         ->with('products' ,$products);
     }
 
-       public function loadPdffile(Request $request)
-       {
-
-       $contentCompare = $request->datacon;
-       $string = $this->validateInput($request->arr_con ,'text',true);
-       $type_name = $this->validateInput($request->type_name ,'text',true);
+   public function loadPdffile(Request $request)
+    {
+        $contentCompare = $request->datacon;
+        $string = $this->validateInput($request->arr_con, 'text', true);
+        $type_name = $this->validateInput($request->type_name, 'text', true);
         $myArray = explode(',', $string);
-        $rsp =  self::GetCoparisonHeader($myArray ,$type_name);
+        $rsp = self::GetCoparisonHeader($myArray, $type_name);
 
-            $rowall = $rsp['CSV'];
+        $rowall = $rsp['CSV'];
 
-            Excel::create('comparison_product', function ($excel) use ($rowall) {
-              $excel->sheet('comparison_product', function ($sheet) use ($rowall) {
-                $sheet->fromArray($rowall, null, 'A1', false, false);
+        // Laravel Excel 3.x syntax
+       return Excel::download(
+    new class($rowall) implements \Maatwebsite\Excel\Concerns\FromArray {
+        private $data;
 
-              });
-          })->export('csv');
+        public function __construct($data) {
+            $this->data = $data;
+        }
 
-       }
+        public function array(): array {
+            return $this->data;
+        }
+
+        // ✅ BOM + UTF-8 settings for Windows Excel
+        public function getCsvSettings(): array
+            {
+                return [
+                    'use_bom' => true,
+                     'encoding' => 'UTF-16LE',
+                    'delimiter' => ',',
+                ];
+            }
+            },
+            'comparison_product.csv',
+            ExcelFormat::CSV,
+            [
+                'use_bom' => true,
+                 'encoding' => 'UTF-16LE',
+            ]
+        );
+    }
 
        public function loadPdffilePDF(Request $request)
        {
@@ -4456,11 +4485,13 @@ class FrontendController extends Controller
             }
 
 
-             $email = Mail::to($emailsend)->send(new DowloadGui($request->except('_token')));
-            if (Mail::failures()) {
-                return \Redirect::back()->with("errorSendMail","ErorSendMail");
-            }
-            return \Redirect::back()->with("messageGUI",$filename);
+
+          try {
+            $email = Mail::to($emailsend)->send(new DowloadGui($request->except('_token')));
+             return \Redirect::back()->with("messageGUI", $filename);
+           } catch (\Exception $e) {
+             return \Redirect::back()->with("errorSendMail", "ErorSendMail");
+           }
          }else{
             return \Redirect::back()->with("vertifynotrobot_gui","ErorSendMail-vertifynotrobot");
          }
@@ -4742,7 +4773,6 @@ class FrontendController extends Controller
 
             $stringModel =  str_replace("-", "", $strmodel);
             $queryStringModel = preg_replace('/[^A-Za-z0-9\-]/','',$stringModel);
-            //return dd($stringModel,'$stringModel');
             $queryModel = DB::table('products as p')
             ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
             ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
@@ -5374,11 +5404,11 @@ class FrontendController extends Controller
 
             if (($fpsDoc || $distributorDoc || $endUserDoc || $salesKit) && file_exists($path)) {
                 ob_end_clean();
-                //return response()->file($path);
-                  return response()->download($path, basename($path), [
+                    return response()->download($path, basename($path), [
                     'Content-Type' => 'application/octet-stream',
                     'Content-Disposition' => 'attachment; filename="' . basename($path) . '"',
                 ]);
+                //return response()->file($path);
             }
 
             return redirect()->route($salesKit ? 'index' : 'marketingResourcesDownloads', $salesKit ? 'partners' : '');

@@ -221,6 +221,12 @@
         width: 83px;
         word-break: break-all;
     }
+
+    .w-td-con-text-editor {
+        width: 100%;
+        text-align: center;
+        word-break: break-all;
+    }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 <style>
@@ -274,6 +280,16 @@
         font-size: 25px;
         color: #ffffff;
     }
+    .add-hight{
+        margin-top:10px;
+    }
+    .text-editor-card {
+        color: #5f5f5f;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 300;
+        margin-bottom: .25rem;
+     }
 </style>
 @endsection
 @section('meta')
@@ -465,7 +481,8 @@
                 <div id="showfiler-mobile" class="my-auto">
                     <div style="color:#fff;" id="filterMobile-btn" onclick="OpenFiiter();"
                         class="filter-mobile-link text-bold"><img
-                            src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt="">{{$staticContent['filters']}}</div>
+                            src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}"
+                            alt="">{{$staticContent['filters']}}</div>
                 </div>
                 <div class="d-flex">
                     <p class="text-white my-auto mr-2 text-card-detial text-bold">{{$staticContent['Sort_by']}}:</p>
@@ -665,6 +682,7 @@
     var defaultfilters =  <?= json_encode($defaultfilters);?>;
     var catename = <?= json_encode($catename);?>;
     var cateid = <?= json_encode($cateid);?>;
+    var url_name =  <?= json_encode($url_name);?>;
     var pro_perti = [];
     var ser_arr = [];
     var productFilter = [];
@@ -905,10 +923,6 @@
               return (a.pro_code > b.pro_code) ? 1 : -1;
           });
       productFilter = productarray;
-
-
-
-
 
        return productarray;
     }
@@ -1372,6 +1386,10 @@
         html += '</div>';
         html += '</div>';
         html += '</div>';
+        if(url_name == "wireless-charging-system"){
+        html += '<p class="text-title-ft-sub text-two add-hight">{{$staticContent['product_highLights']}}</p>';
+        html += '<div class="text-editor-card mt-2"> '+checkNullTexteditor(pro['short_features']) +'</div>';
+        }else{
         html += '<div class="dimension">';
         html += '<h6 class="text-title-ft-sub text-one">{{$staticContent['Dimensions']}} ('+unit_dimension_1+' x W x '+unit_dimension+') </h6>';
         if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 && ['dimensionW'] != '' && pro['dimensionD'] != ''){
@@ -1383,6 +1401,9 @@
         html += '<p class="text-ft-sub text-one">-</p>';
         }
         html += '</div>';
+        }
+
+
         // html += '<div><a class="btn btn-datasheet w-50 mr-2 mt-2" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" > {{$staticContent['data_sheet']}}</a></div>';
         // html += '<div href="#" class="btn btn-ft mt-2" onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" >{{$staticContent['Add_to_Compare']}}</div>';
         // html += '<div class="btn-enq-d mt-2"><a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'">{{$staticContent['Enquiry']}}</a></div>';
@@ -1464,6 +1485,12 @@
         html += '</div>';
         html += '</div>';
         html += '</div>';
+
+        if(url_name == "wireless-charging-system"){
+        html += '<p class="text-title-ft-sub text-two">{{$staticContent['product_highLights']}}</p>';
+        html += '<div class="text-editor-card mt-2"> '+checkNullTexteditor(pro['short_features']) +'</div>';
+        }else{
+
         html += '<div class="dimension mt-2">';
         html += '<p class="text-title-ft-sub text-two">{{$staticContent['Dimensions']}} ('+unit_dimension_1+' X W X '+unit_dimension+')</p>';
         if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 && pro['dimensionW'] != '' && pro['dimensionD'] != ''){
@@ -1475,6 +1502,9 @@
         html += '<p class="text-ft-sub text-two">-</p>';
         }
         html += '</div>';
+        }
+
+
         html += '</div>';
         html += '</div>';
         html += '<div class="w-100">';
@@ -1520,7 +1550,12 @@
         html1 += '<th id="sortdata3" class=" header-font-table w-tabfix w-120"  onclick="selectTable(3)">{{$staticContent['Output_Current']}}</th>';
         html1 += '<th id="sortdata4" class=" header-font-table w-tabfix w-120"  onclick="selectTable(4)">{{$staticContent['Output_Power']}} </th>';
         html1 += '<th id="sortdata5" class=" header-font-table w-tabfix"  onclick="selectTable(5)">{{$staticContent['Input_Voltage']}}</th>';
+        if(url_name == "wireless-charging-system"){
+        html1 += '<th  class="header-font-table" >{{$staticContent['product_highLights']}}</th>';
+        }else{
         html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['Dimensions']}} <br>('+unit_dimension_1+' x W x '+unit_dimension+')</th>';
+        }
+
         html1 += '</tr>';
         html1 += '</thead>';
         html1 += '<tbody id="listcardList">';
@@ -1617,19 +1652,24 @@
         html1 += '<td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon2,content[0]['unit_name'] ,content[0]['status_input'])+'</div></td>';
         html1 += ' <td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon3,content[2]['unit_name'] ,content[2]['status_input'])+'</div></td>';
         if(typeof content[3]['value_text']  != 'undefined' && content[3]['value_text'] != null && content[3]['value_text'] !='' && content[3]['value_text'] != 'null'){
-            html1 += ' <td class="text-middle-td">'+ stringfor(content[3]['value_text'])+'</td>';
+         html1 += ' <td class="text-middle-td">'+ stringfor(content[3]['value_text'])+'</td>';
         }else if(content[3]['value_text'] != null && content[3]['value_text'] != 'null'){
-            html1 += ' <td class="text-middle-td">'+content[3]['value_text']+'</td>';
+         html1 += ' <td class="text-middle-td">'+content[3]['value_text']+'</td>';
         }else{
-            html1 += ' <td class="text-middle-td">-</td>';
+         html1 += ' <td class="text-middle-td">-</td>';
+        }
+        if(url_name == "wireless-charging-system"){
+            html1 += ' <td class="text-middle-td"> <div class="w-td-con-text-editor">'+checkNullTexteditor(pro['short_features'])+'</div></td>';
+        }else{
+            if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 &&pro['dimensionW'] != '' && pro['dimensionD'] != ''){
+            html1 += '<td class="text-middle-td">'+pro['dimensionL']+' x '+pro['dimensionW']+' x '+pro['dimensionD']+' mm ';
+            html1 += '<br>'+mmtonich(pro['dimensionL'])+'” x '+mmtonich(pro['dimensionW'])+'” x '+mmtonich(pro['dimensionD'])+'”</td>';
+            }else{
+            html1 += '<td class="text-middle-td">'+pro['dimensionL']+'</td>';
+            }
         }
 
-        if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 &&pro['dimensionW'] != '' && pro['dimensionD'] != ''){
-        html1 += '<td class="text-middle-td">'+pro['dimensionL']+' x '+pro['dimensionW']+' x '+pro['dimensionD']+' mm ';
-        html1 += '<br>'+mmtonich(pro['dimensionL'])+'” x '+mmtonich(pro['dimensionW'])+'” x '+mmtonich(pro['dimensionD'])+'”</td>';
-        }else{
-        html1 += '<td class="text-middle-td">'+pro['dimensionL']+'</td>';
-        }
+
         html1 += '</tr>';
 
        });
@@ -1642,6 +1682,13 @@
             var newkey = key.replace(/[/]/g,'@');
             return newkey;
     }
+    function checkNullTexteditor(data){
+            if(data){
+               return data;
+            }else{
+                return '';
+            }
+     }
     function checkNullShow(dataarr,unit,status){
 
         var string = '';
@@ -2227,6 +2274,7 @@
             productObj['dimensionL'] = value['dimensionL'];
             productObj['dimensionW'] = value['dimensionW'];
             productObj['dimensionD'] = value['dimensionD'];
+            productObj['short_features'] = value['short_features'];
             productObj['alt_img'] = value['alt_img'];
             productObj['content'] = [];
             productObj['contentFilter'] = [];
@@ -2844,7 +2892,7 @@
     }
     function listItemFiler(arr){
         var current_list =  $('#current_list_item').val();
-        var showarr =  onfilsetSort(arr);
+        var showarr =  onFilterSetSor(arr);
       if(current_list == 0){
         onclickListView(showarr ,1 ,1);
       }else{
@@ -2892,7 +2940,7 @@
         }
         fillerData();
     }
-    function onfilsetSort(arr_val){
+    function onFilterSetSor(arr_val){
         var arr_result = [];
        var type_se = $('.selectSort').val();
        if(type_se == 1){
@@ -2910,7 +2958,7 @@
         return  arr_result;
     }
     function onselectSort(){
-        var arr_val = productFilter;
+        var arr_val = loadData(products,product_has_property);
         var arr_result = [];
        var type_se = $('.selectSort').val();
        var typesor = 0;
@@ -2941,12 +2989,16 @@
         $('.countproduct').text(arr_result.length);
         productFilter = arr_result;
     }
+
     function onselectSortDestop(){
         // var table = $('#dtBasicExample').DataTable();
+
         var arr_val = productFilter;
         var arr_result = [];
         var typesor = 0;
        var type_se = $('#selectSortDestop').val();
+          console.log(arr_val,'arr_val')
+          console.log(type_se,'type_se')
        if(type_se == 1){
         arr_result = sortModelName(arr_val);
         typesor = 1;
@@ -2975,7 +3027,6 @@
       }
 
         $('.countproduct').text(arr_result.length);
-        productFilter = arr_result;
 
     }
 
@@ -3026,118 +3077,154 @@
         return arr;
     }
     function sortOutputLH(array_value ,type){
-        var arr_sort = [];
         var value_data = [];
-        $.each(array_value, function(index,value){
-            value['contentFilter'].filter(function(data) {
-              if(data['type_id'] == type){
-                var obj = {
-                "pro_id":value['pro_id'],
-                 "data":data['data_1'],
-               }
-                value_data.push(obj);
-               }
+        var arr_sort = [];
+
+        // Step 1: Collect relevant contentFilter data
+        $.each(array_value, function(index, value) {
+            var filters = value['contentFilter'];
+            $.each(filters, function(i, data) {
+                if (data['type_id'] == type) {
+                    value_data.push({
+                        "pro_id": value['pro_id'],
+                        "data": data['data_1']
+                    });
+                }
             });
         });
-        value_data.sort(
-            function (a,b){
-                 return a.data > b.data ? 1 : -1;
-             });
-         $.each(value_data, function(index,value){
-           array_value.filter(function(data){
-               if(value['pro_id'] == data['pro_id'] ){
-                  arr_sort.push(data);
-               }
 
-           });
-         });
+        // Step 2: Sort by data_1
+        value_data.sort(function(a, b) {
+        return a.data > b.data ? 1 : -1;
+        });
+
+        // Step 3: Map pro_id to item for fast lookup
+        var idMap = {};
+        $.each(array_value, function(index, item) {
+            idMap[item.pro_id] = item;
+        });
+
+        // Step 4: Rebuild sorted array
+        $.each(value_data, function(index, val) {
+            if (idMap[val.pro_id]) {
+                arr_sort.push(idMap[val.pro_id]);
+            }
+        });
+
         return arr_sort;
     }
 
     function sortOutputHL(array_value ,type){
-        var arr_sort = [];
         var value_data = [];
-        $.each(array_value, function(index,value){
-            value['contentFilter'].filter(function(data) {
-              if(data['type_id'] == type){
-                var obj = {
-                "pro_id":value['pro_id'],
-                 "data":data['data_1'],
-               }
-                value_data.push(obj);
-               }
+        var arr_sort = [];
+
+        // Step 1: Collect relevant contentFilter data
+        $.each(array_value, function(index, value) {
+            var filters = value['contentFilter'];
+            $.each(filters, function(i, data) {
+                if (data['type_id'] == type) {
+                    value_data.push({
+                        "pro_id": value['pro_id'],
+                        "data": data['data_1']
+                    });
+                }
             });
         });
-        value_data.sort(
-            function (a,b){
-                 return a.data < b.data ? 1 : -1;
-             });
-         $.each(value_data, function(index,value){
-           array_value.filter(function(data){
-               if(value['pro_id'] == data['pro_id'] ){
-                  arr_sort.push(data);
-               }
 
-           });
-         });
+        // Step 2: Sort by data_1
+        value_data.sort(function(a, b) {
+        return a.data < b.data ? 1 : -1;
+        });
+
+        // Step 3: Map pro_id to item for fast lookup
+        var idMap = {};
+        $.each(array_value, function(index, item) {
+            idMap[item.pro_id] = item;
+        });
+
+        // Step 4: Rebuild sorted array
+        $.each(value_data, function(index, val) {
+            if (idMap[val.pro_id]) {
+                arr_sort.push(idMap[val.pro_id]);
+            }
+        });
+
         return arr_sort;
     }
 
     function sortInputHL(array_value ,type){
-        var arr_sort = [];
         var value_data = [];
-        $.each(array_value, function(index,value){
-            value['contentFilter'].filter(function(data) {
-              if(data['type_id'] == type){
-                var obj = {
-                "pro_id":value['pro_id'],
-                 "data":data['value_text'],
-               }
-                value_data.push(obj);
-               }
+        var arr_sort = [];
+
+        // Step 1: Collect relevant contentFilter data
+        $.each(array_value, function(index, value) {
+            var filters = value['contentFilter'];
+            $.each(filters, function(i, data) {
+                if (data['type_id'] == type) {
+                    value_data.push({
+                        "pro_id": value['pro_id'],
+                       "data":data['value_text'],
+                    });
+                }
             });
         });
-        value_data.sort(
-            function (a,b){
-                 return a.data < b.data ? 1 : -1;
-             });
-         $.each(value_data, function(index,value){
-           array_value.filter(function(data){
-               if(value['pro_id'] == data['pro_id'] ){
-                  arr_sort.push(data);
-               }
 
-           });
-         });
+        // Step 2: Sort by data_1
+        value_data.sort(function(a, b) {
+        return a.data < b.data ? 1 : -1;
+        });
+
+        // Step 3: Map pro_id to item for fast lookup
+        var idMap = {};
+        $.each(array_value, function(index, item) {
+            idMap[item.pro_id] = item;
+        });
+
+        // Step 4: Rebuild sorted array
+        $.each(value_data, function(index, val) {
+            if (idMap[val.pro_id]) {
+                arr_sort.push(idMap[val.pro_id]);
+            }
+        });
+
         return arr_sort;
     }
 
     function sortInputLH(array_value ,type){
+       var value_data = [];
         var arr_sort = [];
-        var value_data = [];
-        $.each(array_value, function(index,value){
-            value['contentFilter'].filter(function(data) {
-              if(data['type_id'] == type){
-                var obj = {
-                "pro_id":value['pro_id'],
-                 "data":data['value_text'],
-               }
-                value_data.push(obj);
-               }
+
+        // Step 1: Collect relevant contentFilter data
+        $.each(array_value, function(index, value) {
+            var filters = value['contentFilter'];
+            $.each(filters, function(i, data) {
+                if (data['type_id'] == type) {
+                    value_data.push({
+                        "pro_id": value['pro_id'],
+                       "data":data['value_text'],
+                    });
+                }
             });
         });
-        value_data.sort(
-            function (a,b){
-                 return a.data > b.data ? 1 : -1;
-             });
-         $.each(value_data, function(index,value){
-           array_value.filter(function(data){
-               if(value['pro_id'] == data['pro_id'] ){
-                  arr_sort.push(data);
-               }
 
-           });
-         });
+        // Step 2: Sort by data_1
+        value_data.sort(function(a, b) {
+        return a.data > b.data ? 1 : -1;
+        });
+
+        // Step 3: Map pro_id to item for fast lookup
+        var idMap = {};
+        $.each(array_value, function(index, item) {
+            idMap[item.pro_id] = item;
+        });
+
+        // Step 4: Rebuild sorted array
+        $.each(value_data, function(index, val) {
+            if (idMap[val.pro_id]) {
+                arr_sort.push(idMap[val.pro_id]);
+            }
+        });
+
         return arr_sort;
     }
 
@@ -3196,6 +3283,7 @@
           productObj['dimensionL'] = value['dimensionL'];
           productObj['dimensionW'] = value['dimensionW'];
           productObj['dimensionD'] = value['dimensionD'];
+          productObj['short_features'] = value['short_features'];
           productObj['alt_img'] = value['alt_img'];
           productObj['content'] = [];
           productObj['contentFilter'] = [];
@@ -3251,6 +3339,7 @@
           productObj['dimensionL'] = value['dimensionL'];
           productObj['dimensionW'] = value['dimensionW'];
           productObj['dimensionD'] = value['dimensionD'];
+          productObj['short_features'] = value['short_features'];
           productObj['alt_img'] = value['alt_img'];
           productObj['content'] = [];
           productObj['contentFilter'] = [];
