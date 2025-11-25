@@ -35,3 +35,4 @@ dependencies/storage/logs/laravel.log
 .env
 .DS_Store
 **/.DS_Store
+.php-cs-fixer.cache

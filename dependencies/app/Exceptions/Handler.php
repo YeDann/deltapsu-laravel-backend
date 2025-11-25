@@ -2,20 +2,20 @@
 
 namespace App\Exceptions;
 
-use Throwable;
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class Handler extends ExceptionHandler
 {
     /**
      * A list of the exception types that are not reported.
      *
-     * @var array<int, class-string<Throwable>>
+     * @var array<int, class-string<\Throwable>>
      */
     protected $dontReport = [
     ];
@@ -33,7 +33,7 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      */
-    public function report(Throwable $exception): void
+    public function report(\Throwable $exception): void
     {
         parent::report($exception);
     }
@@ -41,23 +41,23 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  Request  $request
      */
-    public function render($request, Throwable $exception)
+    public function render($request, \Throwable $exception)
     {
-        // ✅ 保留原本 CSRF 過期 → 轉回後台登入
         if ($exception instanceof TokenMismatchException) {
             return redirect('/backend/login')
                 ->with('flash_message', 'The session has expired. Please try again.');
         }
 
-        // ✅ 用 uat-import 的 404 處理 + cache 重構
-        if ($this->isHttpException($exception) && $exception->getStatusCode() == 404) {
+        if ($this->isHttpException($exception) && 404 == $exception->getStatusCode()) {
             $lang = App::getLocale();
             $cacheDuration = 60;
 
-            $language = Cache::remember("language_{$lang}", $cacheDuration, fn () =>
-                DB::table('language')
+            $language = Cache::remember(
+                "language_{$lang}",
+                $cacheDuration,
+                fn () => DB::table('language')
                     ->where('status', 1)
                     ->orderBy('order_seq', 'asc')
                     ->get()
@@ -91,12 +91,12 @@ class Handler extends ExceptionHandler
             });
 
             $navApplication = Cache::remember("navapplication_{$lang}", $cacheDuration, function () use ($lang) {
-            return DB::table('application as ap')
-                ->join('application_translation as apt', 'ap.id', '=', 'apt.app_id')
-                ->where('apt.local', $lang)
-                ->select('ap.*', 'ap.id as applica_id', 'apt.name', 'apt.content', 'apt.overview')
-                ->orderBy('ap.order_seq', 'asc')
-                ->get();
+                return DB::table('application as ap')
+                    ->join('application_translation as apt', 'ap.id', '=', 'apt.app_id')
+                    ->where('apt.local', $lang)
+                    ->select('ap.*', 'ap.id as applica_id', 'apt.name', 'apt.content', 'apt.overview')
+                    ->orderBy('ap.order_seq', 'asc')
+                    ->get();
             });
 
             $navAboutUs = Cache::remember("navaboutus_{$lang}", $cacheDuration, function () use ($lang) {
@@ -143,17 +143,17 @@ class Handler extends ExceptionHandler
             view()->share('mail_chimp_country', $mailChimpCountry);
 
             return response()->view('errors.404', [
-                'staticContent'      => $wordArray,
+                'staticContent' => $wordArray,
                 'mail_chimp_country' => $mailChimpCountry,
-                'countryemails'      => $countryEmails,
-                'navaboutus'         => $navAboutUs,
-                'navcategories4'     => $categoriesByMain[4] ?? [],
-                'navcategories3'     => $categoriesByMain[3] ?? [],
-                'navcategories2'     => $categoriesByMain[2] ?? [],
-                'navcategories1'     => $categoriesByMain[1] ?? [],
-                'navapplication'     => $navApplication,
-                'navcategories'      => $navCategories,
-                'language'           => $language,
+                'countryemails' => $countryEmails,
+                'navaboutus' => $navAboutUs,
+                'navcategories4' => $categoriesByMain[4] ?? [],
+                'navcategories3' => $categoriesByMain[3] ?? [],
+                'navcategories2' => $categoriesByMain[2] ?? [],
+                'navcategories1' => $categoriesByMain[1] ?? [],
+                'navapplication' => $navApplication,
+                'navcategories' => $navCategories,
+                'language' => $language,
             ], 404);
         }
 
