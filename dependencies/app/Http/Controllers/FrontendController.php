@@ -6,7 +6,6 @@ use App;
 use App\Mail\Contact;
 use App\Mail\DowloadGui;
 use App\Mail\Forgetpass;
-// use App\File;
 use App\Mail\SendPDF;
 use App\Mail\SendPDFFromFeedBack;
 use App\Mail\ThankFeedback;
@@ -16,10 +15,16 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Excel as ExcelFormat;
+use Mailchimp;
+use LaravelLocalization;
+use Symfony\Component\Debug\Exception\FlattenException;
+use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
+use App\Mail\ExceptionOccured;
+use Hamcrest\Type\IsNumeric;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
-use Mailchimp;
 use PDF;
 use Session;
 use Validator;
@@ -1262,7 +1267,6 @@ class FrontendController extends Controller
                 return redirect()->route('productList', [$findoldCate->url_item, $findoldCate->sub_pro_id, $findoldSeries->slug, $findoldSeries->se_id]);
             }
 
-            return redirect()->route('productFinder');
         } elseif (isset($findoldCate) && !isset($procode)) {
             return redirect()->route('productList', [$findoldCate->url_item, $findoldCate->sub_pro_id]);
         }
@@ -1278,6 +1282,7 @@ class FrontendController extends Controller
         $proCode = str_replace('@', '/', $pro_code);
         $check = self::checkHaveModel($proCode);
         $check_2 = self::checkHaveModelOptional($proCode);
+        // return dd($check_2, $check);
 
         if (isset($check->pro_id)) {
             $prolang = self::checkLang($lang, $check->pro_id);
@@ -2708,11 +2713,36 @@ class FrontendController extends Controller
 
         $rowall = $rsp['CSV'];
 
-        Excel::create('comparison_product', function ($excel) use ($rowall) {
-            $excel->sheet('comparison_product', function ($sheet) use ($rowall) {
-                $sheet->fromArray($rowall, null, 'A1', false, false);
-            });
-        })->export('csv');
+        // Laravel Excel 3.x syntax
+        return Excel::download(
+            new class($rowall) implements \Maatwebsite\Excel\Concerns\FromArray {
+                private $data;
+
+                public function __construct($data) {
+                    $this->data = $data;
+                }
+
+                public function array(): array {
+                    return $this->data;
+                }
+
+                // ✅ BOM + UTF-8 settings for Windows Excel
+                public function getCsvSettings(): array
+                {
+                    return [
+                        'use_bom' => true,
+                        'encoding' => 'UTF-16LE',
+                        'delimiter' => ',',
+                    ];
+                }
+            },
+            'comparison_product.csv',
+            ExcelFormat::CSV,
+            [
+                'use_bom' => true,
+                'encoding' => 'UTF-16LE',
+            ]
+        );
     }
 
     public function loadPdffilePDF(Request $request)

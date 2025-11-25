@@ -399,12 +399,12 @@
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb-ative" aria-current="page">
                         <a
-                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['url_item']) ,'pro_code' => setTextpro($product[0]['pro_code']) ])}}">{{$product[0]['pro_code']}}</a>
+                            href="{{route('productsDetailsByType' ,['cateid'=> preg_replace('/\s+/', '-', $product[0]['url_item']) ,'pro_code' => setTextpro($product[0]['pro_code']) ])}}">{{$product[0]['pro_code']}}</a>
                     </li>
                     @if($optional_model)
                     <li class="breadcrumb-item active text-breadcrumb-ative" aria-current="page">
                         <a
-                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['url_item']) ,'pro_code' => setTextpro($product[0]['pro_code'])])}}?optional_model={{setTextpro($optional_model)}}">{{$optional_model}}</a>
+                            href="{{route('productsDetailsByType' ,['cateid'=> preg_replace('/\s+/', '-', $product[0]['url_item']) ,'pro_code' => setTextpro($product[0]['pro_code'])])}}?optional_model={{setTextpro($optional_model)}}">{{$optional_model}}</a>
                     </li>
                     @endif
                 </ol>
@@ -434,12 +434,12 @@
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb-ative" aria-current="page">
                         <a
-                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['url_item']) ,'pro_code' => setTextpro($product[0]['pro_code'])])}}">{{$product[0]['pro_code']}}</a>
+                            href="{{route('productsDetailsByType' ,['cateid'=> preg_replace('/\s+/', '-', $product[0]['url_item']) ,'pro_code' => setTextpro($product[0]['pro_code'])])}}">{{$product[0]['pro_code']}}</a>
                     </li>
                     @if($optional_model)
                     <li class="breadcrumb-item active text-breadcrumb-ative" aria-current="page">
                         <a
-                            href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['url_item']) ,'pro_code' => setTextpro($product[0]['pro_code'])])}}?optional_model={{$optional_model}}">{{$optional_model}}</a>
+                            href="{{route('productsDetailsByType' ,['cateid'=> preg_replace('/\s+/', '-', $product[0]['url_item']) ,'pro_code' => setTextpro($product[0]['pro_code'])])}}?optional_model={{$optional_model}}">{{$optional_model}}</a>
                     </li>
                     @endif
                 </ol>
@@ -1465,7 +1465,7 @@
                                 <div class="new-tag" style="background-color:{{$color}}">{{$name_sta}}</div>
                                 <div class="card-body ft-products-item">
                                     <a
-                                        href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $proRelate['url_item']) ,'pro_code' => setTextpro($proRelate['pro_code']) ])}}">
+                                        href="{{route('productsDetailsByType' ,['cateid'=> preg_replace('/\s+/', '-', $proRelate['url_item']) ,'pro_code' => setTextpro($proRelate['pro_code']) ])}}">
                                         @if(isset($proRelate['picture']))
                                         <img src="{{config('app.url')}}/upload/thumbs/{{$proRelate['picture']}}"
                                             class="product-cat" alt="" style="width:70%;">
@@ -1640,7 +1640,7 @@
     function viewOptionalModel(key){
             var newkey = key.replace(/[/]/g,'@');
               event.preventDefault();
-              window.location = '{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $product[0]['url_item']) ,'pro_code' => setTextpro($product[0]['pro_code']) ])}}?optional_model='+newkey;
+              window.location = '{{route('productsDetailsByType' ,['cateid'=> preg_replace('/\s+/', '-', $product[0]['url_item']) ,'pro_code' => setTextpro($product[0]['pro_code']) ])}}?optional_model='+newkey;
     }
 </script>
 <script>
@@ -1679,7 +1679,7 @@
     /* onclick image product */
     function clickYoutube(id) {
         $('.product-show-box iframe').hide();
-  $('<iframe width="100%" style="max-height: 500px; min-height: 50%;"  src="" controls=0 allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>').appendTo('.product-show-box');
+        $('<iframe width="100%" style="max-height: 500px; min-height: 50%;"  src="" controls=0 allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>').appendTo('.product-show-box');
         $('.product-show-box iframe').attr("src", id);
         $('.product-show-box img').hide();
     }

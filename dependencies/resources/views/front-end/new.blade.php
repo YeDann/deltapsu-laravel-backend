@@ -33,11 +33,8 @@
 
     .bg-new-alert {
         background-color: #76B900;
-        /*padding: 4px 8px;*/
         border-radius: 50%;
         color: #fff;
-        /* margin-top: -25px;
-        margin-left: 20px;*/
         right: -16px;
         top: -16px;
         position: absolute;
@@ -49,39 +46,142 @@
         padding-top: 2px;
     }
 
-    .d-ply-flex {
-        display: flex;
+    /* ===== Responsive Classes ===== */
+    .visible-up-922 {
+        display: block;
     }
 
-    @media screen and (max-width: 500px) {
+    .invisible-up-922 {
+        display: none;
+    }
 
-        li.page-item {
+    @media (max-width: 921px) {
+        .visible-up-922 {
+            display: none !important;
+        }
 
+        .invisible-up-922 {
+            display: block !important;
+        }
+    }
+
+    /* ===== Modern Pagination Style ===== */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin: 30px 0;
+        flex-wrap: wrap;
+        padding-left: 0;
+        list-style: none;
+    }
+
+    .pagination .page-item {
+        margin: 0;
+    }
+
+    .pagination .page-link {
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        color: #374151;
+        padding: 10px 16px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        min-width: 44px;
+        text-align: center;
+        display: block;
+    }
+
+    .pagination .page-link:hover {
+        background-color: #f3f4f6;
+        border-color: #3b82f6;
+        color: #3b82f6;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
+    }
+
+    .pagination .page-item.active .page-link {
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border-color: #3b82f6;
+        color: white;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+
+    .pagination .page-item.disabled .page-link {
+        color: #9ca3af;
+        background-color: #f9fafb;
+        border-color: #e5e7eb;
+        cursor: not-allowed;
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    /* Arrow Styles */
+    .pagination .page-link[rel="prev"],
+    .pagination .page-link[rel="next"] {
+        font-size: 18px;
+        padding: 10px 14px;
+    }
+
+    /* ===== Mobile Responsive ===== */
+    @media (max-width: 576px) {
+        .pagination {
+            gap: 5px;
+        }
+
+        .pagination .page-link {
+            padding: 8px 12px;
+            font-size: 14px;
+            min-width: 38px;
+        }
+
+        /* ซ่อนตัวเลขบางส่วนบนมือถือ - แสดงเฉพาะ active และหน้าข้างๆ */
+        .pagination .page-item {
             display: none;
         }
 
-        .page-item:first-child,
-        .page-item:nth-child(2),
-        .page-item:nth-child(3),
-        .page-item:nth-child(4),
-        .page-item:nth-child(5),
-        .page-item:nth-last-child(2),
-        .page-item:nth-last-child(3),
-        .page-item:nth-last-child(4),
-        .page-item:nth-last-child(5) .page-item:last-child,
-        .page-item.active,
-        .page-item.disabled {
+        /* แสดง Previous */
+        .pagination .page-item:first-child,
+        /* แสดง 2 หน้าแรก */
+        .pagination .page-item:nth-child(2),
+        .pagination .page-item:nth-child(3),
+        /* แสดงหน้า active */
+        .pagination .page-item.active,
+        /* แสดง 2 หน้าสุดท้าย */
+        .pagination .page-item:nth-last-child(2),
+        .pagination .page-item:nth-last-child(3),
+        /* แสดง Next */
+        .pagination .page-item:last-child {
+            display: block;
+        }
+
+        /* แสดง disabled (Previous/Next ที่ไม่สามารถกดได้) */
+        .pagination .page-item.disabled {
             display: block;
         }
     }
+
+    @media (max-width: 400px) {
+        .pagination .page-link {
+            padding: 6px 10px;
+            font-size: 13px;
+            min-width: 34px;
+        }
+    }
+   .text-muted{
+     padding: 0 1rem;
+   }
 </style>
+
 @endsection
 @section('meta')
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 
 <link rel="canonical" href="{{url()->current()}}" />
-<?php 
+<?php
   $lang_seo = App::getLocale();
   if($lang_seo == 'cn'){
     $lang_seo = 'zh-Hans-CN';
@@ -123,7 +223,7 @@
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
 <?php
 function getDateformat($date){
-       
+
        $eng_month_arr = array(
            "0" => "",
            "1" => "Jan",
@@ -217,7 +317,7 @@ function getDateformat($date){
                                                      }else{
                                                          echo '';
                                                      }
-                         
+
                                                      ?>
                                             </span>
                                         </div>
@@ -237,12 +337,13 @@ function getDateformat($date){
                             </div>
                             @endforeach
                         </div>
-                        <div class="text-center mt-5 d-ply-flex justify-content-center visible-up-922">
-                            {{ $news->appends(request()->input())->links() }}
+                        <div class="text-center mt-5 d-flex justify-content-center visible-up-922">
+                             {{ $news->appends(request()->input())->links('pagination::bootstrap-5') }}
                         </div>
                     </div>
                     <div class="text-center mt-5 w-paing invisible-up-922">
-                        {{ $news->appends(request()->input())->links() }}
+                             {{ $news->appends(request()->input())->links('pagination::bootstrap-5') }}
+
                     </div>
                 </div>
             </div>

@@ -84,8 +84,8 @@ Route::group([
             Route::get('/partners/marketing-resources/product-documents', 'FrontendController@productDocLogin')->name('productDocLogin');
             Route::get('/tools/comparison', 'FrontendController@productCoparison')->name('productCoparison');
             Route::get('/tools/product-selector', 'FrontendController@productFinder')->name('productFinder');
-            Route::get('/application/detail/{appname?}', 'FrontendController@applicationDetail')->name('applicationDetail');
-            Route::get('/application/detail/{appname?}/{app_id?}', 'FrontendController@appDetailById')->name('appDetail');
+            Route::get('/application/detail/{name?}', 'FrontendController@applicationDetail')->name('applicationDetail');
+            Route::get('/application/detail/{name?}/{id?}', 'FrontendController@appDetailById')->name('appDetail');
 
             Route::get('/about-us/{pagename?}', 'FrontendController@aboutUs')->name('aboutUs');
 

@@ -10,7 +10,7 @@ class SanitizeUrl
     /**
      * คำที่ถือว่าเป็นอันตรายใน URL (case-insensitive)
      */
-    protected $dangerousPatterns = [
+    protected array $dangerousPatterns = [
         '<script', 'script>', 'alert(', 'onerror=', 'onload=', 'onmouseover=',
         'onclick=', 'javascript:', 'data:text/html', '<iframe', '</iframe>',
         'eval(', 'document.cookie', 'window.location'
@@ -26,7 +26,7 @@ class SanitizeUrl
 
         // ตรวจจับคำต้องห้าม
         foreach ($this->dangerousPatterns as $pattern) {
-            if (strpos($fullUrl, strtolower($pattern)) !== false) {
+            if (str_contains($fullUrl, strtolower($pattern))) {
 
                 // 🔒 Log กรณีตรวจพบ (optional)
                 \Log::warning('Blocked potentially malicious URL', [

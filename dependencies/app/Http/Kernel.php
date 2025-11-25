@@ -19,7 +19,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
-        \App\Http\Middleware\SanitizeUrl::class,
+       \App\Http\Middleware\SanitizeUrl::class,
         \App\Http\Middleware\ModifyRedirects::class,
         \App\Http\Middleware\ContentSecurityPolicy::class,
         \App\Http\Middleware\RejectFatGetRequests::class,
@@ -47,10 +47,8 @@ class Kernel extends HttpKernel
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
-            \App\Http\Middleware\SanitizeUrl::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\ShareData::class,
-
         ],
 
         'api' => [

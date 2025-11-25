@@ -62,8 +62,8 @@
 
                     <div id="requestpassword" class="col-sm-6 w-100 mx-auto mb-3">
                         <label class="text-title-detail-dark">{{$staticContent['Password']}}*</label>
-                        <input type="password" class="input-login" name="password" autocomplete="off" id="inputPassword" pattern="{8,}"
-                            title="Must at least 8 or more characters" placeholder="{{$staticContent['Password']}}"
+                        <input type="password" class="input-login" name="password" id="inputPassword" pattern="{8,}"
+                            title="Must at least 8 or more characters" autocomplete="off" placeholder="{{$staticContent['Password']}}"
                             required>
                     </div>
                     @if(Session::has('flash_message_eror'))

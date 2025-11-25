@@ -154,8 +154,9 @@
                             <label class="d-block">Select Product Category <span class="req-fed">*</span></label>
                             @foreach($subCategories as $sub)
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="checkbox" onclick="selectProductcategories({{$sub->sub_pro_id}})"
-                                    class="custom-control-input" id="dataCate{{$sub->sub_pro_id}}"
+                                <input type="checkbox"
+                                    onclick="selectProductcategories({{$sub->sub_pro_id}} , '{{$sub->url_item}}')"
+                                    class=" custom-control-input" id="dataCate{{$sub->sub_pro_id}}"
                                     name="pro_categories[]" value="{{$sub->sub_pro_id}}">
                                 <label class="custom-control-label"
                                     for="dataCate{{$sub->sub_pro_id}}">{{$sub->name}}</label>
@@ -286,6 +287,10 @@
                                 <div class="form-group">
                                     <label for="">Content</label>
                                     <textarea name="content" class="jsnotenew"></textarea>
+                                </div>
+                                <div id="box_cate_cate_battery" class="form-group mt-5">
+                                    <label for="">Short Features</label>
+                                    <textarea name="short_features" class="jsnotenew_2"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Meta - Description</label>
@@ -539,6 +544,11 @@
 </div>
 @endsection
 @section('js')
+<script type="text/javascript">
+    $(document).ready(function () {
+           document.getElementById("box_cate_cate_battery").style.display =  "none";
+    });
+</script>
 <script>
     $('.jssummernote').summernote({
         tabsize: 2,
@@ -639,7 +649,8 @@
 
     });
      var categorie = [];
-    function selectProductcategories(id) {
+    function selectProductcategories(id ,slug) {
+        console.log(slug,'slug')
         if(categorie.indexOf(id) == -1){
             categorie.push(id);
         }else{
@@ -648,6 +659,13 @@
                 categorie.splice(index, 1);
             }
         }
+        let check = false;
+         if(slug == 'wireless-charging-system'){
+            check = true;
+         }else{
+            check = false;
+         }
+        document.getElementById("box_cate_cate_battery").style.display = check ? "block" : "none";
         $.ajax({
             url: "{{ (route('searhSeries')) }}",
             data: {

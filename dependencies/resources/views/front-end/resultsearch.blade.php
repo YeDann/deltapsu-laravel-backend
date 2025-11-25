@@ -174,7 +174,7 @@
 
 
                                             <a
-                                                href="{{route('productsDetailsByType' ,['catename'=> $pro['url_item']  ,'pro_code' => checkProcode($pro['pro_code']) ])}}">
+                                                href="{{route('productsDetailsByType' ,['cateid'=> $pro['url_item']  ,'pro_code' => checkProcode($pro['pro_code']) ])}}">
                                                 <div class="pro-h-box">
                                                     @if(isset($pro['picture']))
                                                     <img src="{{config('app.url')}}/upload/thumbs/{{$pro['picture']}}"
@@ -421,7 +421,7 @@
                                         <div class="new-tag" style="background-color:{{$color}}">{{$name_sta}}</div>
                                         <div class="card-body ft-products-item">
                                             <a
-                                                href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $pro['url_item']) ,'pro_code' =>  checkProcode($pro['pro_code'])])}}">
+                                                href="{{route('productsDetailsByType' ,['cateid'=> preg_replace('/\s+/', '-', $pro['url_item']) ,'pro_code' =>  checkProcode($pro['pro_code'])])}}">
                                                 @if(isset($pro['picture']))
                                                 <img src="{{config('app.url')}}/upload/thumbs/{{$pro['picture']}}"
                                                     class="product-cat mb-2" alt="" style="width:70%;">
