@@ -162,6 +162,7 @@ class ShareData
         foreach ($staticWordCache as $word) {
             $wordArray[$word->key_word] = $word->word;
         }
+
         view()->share('staticContent', $wordArray);
 
         return $next($request);

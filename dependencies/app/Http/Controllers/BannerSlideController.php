@@ -66,8 +66,6 @@ class BannerSlideController extends Controller
          ->with('language',$language);
     }
 
-  
-
     private function  SaveimageArray($arrayfile ,$arrfilename){
           $arrayfileName = [];
         foreach ($arrfilename as $key => $value) {
@@ -83,26 +81,27 @@ class BannerSlideController extends Controller
         }
         return $arrayfileName;
     }
+
     private function  updateoldImage($arrayfile , $oldfile ,$arrfilename){
         $arrayfileName = [];
-      foreach ($arrfilename as $key => $value) {
-              $emptyornot = isset($arrayfile[$value]);
-              if($emptyornot){
-               
-                    $fileName = preg_replace('/\s+/', '', uniqid().$arrayfile[$value]->getClientOriginalName());
-                    $arrayfile[$value]->move(base_path('/../medias/banners'),$fileName);
-                    $arrayfileName[$value] = $fileName;
+        foreach ($arrfilename as $key => $value) {
+            $emptyornot = isset($arrayfile[$value]);
+            if($emptyornot){
+                $fileName = preg_replace('/\s+/', '', uniqid().$arrayfile[$value]->getClientOriginalName());
+                $arrayfile[$value]->move(base_path('/../medias/banners'), $fileName);
+                $arrayfileName[$value] = $fileName;
+                $file_pointer = base_path('/../medias/banners/').$oldfile[$value];
 
-                    $file_pointer = base_path('/../medias/banners/').$oldfile[$value];
-                    if (file_exists($file_pointer) && $oldfile[$value] != null ) {
-                        unlink($file_pointer);
-                    }
-              }else{
+                if (file_exists($file_pointer) && $oldfile[$value] != null ) {
+                    unlink($file_pointer);
+                }
+            }else{
                 $arrayfileName[$value] = $oldfile[$value];     
-              } 
-      }
-      return $arrayfileName;
-  }
+            } 
+        }
+        return $arrayfileName;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -170,18 +169,18 @@ class BannerSlideController extends Controller
         }else{
             $language = DB::table('language')->where('name',$userdata->lang)->get();
         }
-       $bannerslide = DB::table('banner_slide as bs')
-        ->join('banner_slide_translations as bst','bs.id','=','bst.ban_id')
-        ->where('bs.id','=',$id)
-        ->select('bs.*' ,'bst.*')
-        ->get();
+        $bannerslide = DB::table('banner_slide as bs')
+            ->join('banner_slide_translations as bst','bs.id','=','bst.ban_id')
+            ->where('bs.id','=',$id)
+            ->select('bs.*' ,'bst.*')
+            ->get();
      
 
         return view('banner.edit')
-        ->with('name','Home')
-        ->with('menu','bannerslide')
-        ->with('language', $language)
-        ->with('bannerslide', $bannerslide);
+            ->with('name','Home')
+            ->with('menu','bannerslide')
+            ->with('language', $language)
+            ->with('bannerslide', $bannerslide);
     }
 
     /**
@@ -206,22 +205,20 @@ class BannerSlideController extends Controller
         $btn_status = $request->btn_status;
         $arrayfilesave = self::updateoldImage($fileimage ,$oldfile ,$arrfilename);
         $lang_loop = $request->lang_loop;
-        
-    
-         
-        // return dd($arrayfilesave);
-         DB::table('banner_slide')->where('id' ,$id)->update(
-                [
-                    "image" =>  $arrayfilesave['mobile_image'],
-                    "image_destop" => $arrayfilesave['destop_image'],
-                    "title_color" => $request->title_color,
-                    "content_color" => $request->content_color,
-                    "btn_status" => $btn_status,
-                    "updated_at" => \Carbon\Carbon::now(),
-                ]
-            );
 
-           foreach($lang_loop as $lang){
+        DB::table('banner_slide')->where('id' ,$id)->update(
+            [
+                "image" =>  $arrayfilesave['mobile_image'],
+                "image_destop" => $arrayfilesave['destop_image'],
+                "title_color" => $request->title_color,
+                "content_color" => $request->content_color,
+                "btn_status" => $btn_status,
+                "updated_at" => \Carbon\Carbon::now(),
+            ]
+        );
+
+        foreach($lang_loop as $lang)
+        {
             $data = DB::table('banner_slide_translations')->where('ban_id' ,$id)->where('local' ,$lang)->get();
             if(count($data) > 0){
                 DB::table('banner_slide_translations')
@@ -250,9 +247,8 @@ class BannerSlideController extends Controller
             }
      
         }
-           
-            return redirect()->route('bannerSlide.index')->with('flash_message', 'Update Data successfully');
-        
+
+        return redirect()->route('bannerSlide.index')->with('flash_message', 'Update Data successfully');
     }
 
     /**
