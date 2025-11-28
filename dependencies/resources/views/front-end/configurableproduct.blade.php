@@ -2325,7 +2325,7 @@ function selectCountry(){
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}" >'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/font.css')}}">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/embepdf.css')}}">'+
-		 '<link rel="stylesheet" href="{{asset('/frontend-asset/css/header-front.css')}}">'+
+		 	'<link rel="stylesheet" href="{{asset('/frontend-asset/css/header-front.css')}}">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/container.css')}}">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/home.css')}}">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/product.css')}}">'+
