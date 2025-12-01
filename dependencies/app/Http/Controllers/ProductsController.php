@@ -1162,10 +1162,10 @@ public function featureProduct(){
             ->orderBy('sp.order_seq', 'asc')
             ->get();
 
-                return view('product.productSection')
-                    ->with('name','Home')
-                    ->with('menu','ProductSection')
-                    ->with('subCategories', $subCategories);
+        return view('product.productSection')
+            ->with('name','Home')
+            ->with('menu','ProductSection')
+            ->with('subCategories', $subCategories);
     }
 
     public function update_order_seriesLeast(Request $request){

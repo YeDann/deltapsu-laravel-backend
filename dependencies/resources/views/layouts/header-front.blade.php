@@ -789,7 +789,7 @@ function slugifyHead($text)
             <a class="col-nav navbar-brand-mobile d-flex justify-content-center" href="{{route('index','home')}}">
                 <img class="brand-image" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
             </a>
-            <div class="col-nav d-flex justify-content-end">
+            {{-- <div class="col-nav d-flex justify-content-end">
                 <div class="navbar-brand-mobile navbar-searchandlang" id="btn-search-mobile" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-search icon-serch" aria-hidden="true"></i>
@@ -806,8 +806,7 @@ function slugifyHead($text)
                                 break;
                             }
                         }
-                        ?>
-                    {{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}
+                    ?>
                     <option value="{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}"
                         {{App::getLocale()==$current?'selected':'' }}>
                         @if($current == 'cn')
@@ -822,7 +821,7 @@ function slugifyHead($text)
                     @endforeach
                     @endif
                 </select>
-            </div>
+            </div> --}}
 
 
         </div>
@@ -907,14 +906,40 @@ function slugifyHead($text)
                 <a href="{{route('contactSupport')}}" class="a-link-hover">
                     {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}</a>
             </div>
+
+            {{-- 多語系 --}}
             <div class="d-flex">
                 <div class="dropdown">
                     <a class="dropdown-toggle cur-lang-new-g" data-toggle="dropdown">
                         <img class="img-icon-golang" src="{{asset('frontend-asset/image/icon/Global.svg')}}">
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="https://www.deltapsu.com">Global</a></li>
-                        <li><a href="https://www.deltapsu.cn" target="_blank">China - 简体中文</a></li>
+                        @if(isset($language))
+                            @foreach ($language as $item)
+
+                            <?php
+                                $current = null;
+                                foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties) {
+                                    if ($item->name == $localeCode) {
+                                        $current = $localeCode;
+                                        break;
+                                    }
+                                }
+                            ?>
+
+                            <li>
+                                <a href="javascript:void(0);" onclick="clickLangLocationmobile('{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}');">
+                                    @if($current == 'cn')
+                                        简中
+                                    @elseif($current == 'tw')
+                                        繁中
+                                    @else
+                                        {{strtoupper($current) }}
+                                    @endif
+                                </a>
+                            </li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
             </div>
