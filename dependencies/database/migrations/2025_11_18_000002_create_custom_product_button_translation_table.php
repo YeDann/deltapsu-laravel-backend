@@ -13,6 +13,9 @@ class CreateCustomProductButtonTranslationTable extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('custom_product_button_translation')) {
+            Schema::dropIfExists('custom_product_button_translation');
+        }
         Schema::create('custom_product_button_translation', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('button_id');
