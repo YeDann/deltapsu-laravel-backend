@@ -36,7 +36,7 @@
     .form-control:focus {
         color: #495057;
         background-color: #fff;
-        border-color: #80bdff;
+        border-color: #0087DC;
         outline: unset;
         box-shadow: unset;
     }

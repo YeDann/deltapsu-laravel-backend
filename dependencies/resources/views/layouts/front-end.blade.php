@@ -68,7 +68,7 @@ $langch = str_replace('_', '-', app()->getLocale());
         .form-control:focus {
             color: #495057;
             background-color: #fff;
-            border-color: #80bdff;
+            border-color: #0087DC;
             outline: none;
             box-shadow: none;
         }
@@ -96,11 +96,10 @@ $langch = str_replace('_', '-', app()->getLocale());
         .form-control:focus {
             color: #495057;
             background-color: #fff;
-            border-color: #80bdff;
+            border-color: #0087DC;
             outline: none;
             box-shadow: none;
         }
-
 
         .color-yellow {
             background-color: #252A2C;

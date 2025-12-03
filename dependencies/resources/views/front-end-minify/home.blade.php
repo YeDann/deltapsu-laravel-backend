@@ -332,7 +332,7 @@
             <h2 class="text-title-delta-home ">{{$staticContent['Applications']}}</h2>
             <div class="grid-container">
                 @foreach ($applications as $item)
-                <a href="{{route('appDetail' ,[ 'name' => $item->slug_app , 'id' => $item->applica_id])}}" class=""
+                <a href="{{ route('appDetail', ['name' => $item->slug_app, 'id' => $item->applica_id]) }}" class="hover-border-blue"
                     style="">
                     <div class="grid-item shadow-radius-box">
                         <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy"

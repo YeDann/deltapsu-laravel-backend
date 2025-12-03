@@ -13009,6 +13009,21 @@ hr {
   }
 }
 
+.grid-sub-text {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.hover-border-blue:hover {
+  border: 2px solid #0087DC;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #0087DC !important;
+}
+
 
 .text-header-update {
     font-family: 'DeltaSans';
