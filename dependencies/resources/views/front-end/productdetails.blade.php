@@ -558,7 +558,7 @@
                         </a>
                         @foreach ($ec_link as $item)
                         <a href="{{$item->link}}" target="_blank">
-                            <button class="btn btn-datasheet mr-2" style="background-color: #007bff;">{{$item->name}}</button>
+                            <button class="btn btn-buynow mr-2">{{$item->name}}</button>
                         </a>
                         @endforeach
                     </div>

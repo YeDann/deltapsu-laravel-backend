@@ -1254,6 +1254,11 @@ a .title-new {
   cursor: pointer;
 }
 
+.btn-subscribe:hover {
+  text-decoration: none;
+  background-color: #1E50C8;
+}
+
 .btn-border-delta {
   font-family: 'DeltaSans';
   font-size: 12px;
