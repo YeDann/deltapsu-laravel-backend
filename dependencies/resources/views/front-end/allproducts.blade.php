@@ -392,7 +392,7 @@
                         @if($serie->main_cate == $mainCate->main_id)
                         @if($serie->pro_categories_id == $subCate->sub_pro_id)
                         @if($serie->mode_series == $mode->id)
-                        <div class="series-list">
+                        <div class="series-list shadow-radius-box">
                             <div class="">
                                 <div class="d-block ">
                                     <div class="m-auto series-img">
@@ -469,7 +469,7 @@
                         @foreach ($series as $serie)
                         @if($serie->main_cate == $mainCate->main_id)
                         @if($serie->pro_categories_id == $subCate->sub_pro_id)
-                        <div class="series-list">
+                        <div class="series-list shadow-radius-box">
                             <div class="">
                                 <div class="d-block ">
                                     <div class="m-auto series-img">
@@ -677,48 +677,45 @@
                     <div class="col-lg-6 product-type-boxitem-sub-banner-pic">
                         @if($subCate->sub_pro_id == 7 )
                         <a href="{{route('configurableProductDetail')}}">
+                        @else
+                        <a
+                            href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
+                            @endif
+                            {{-- @if(isset($subCate->image))
+                            <img class="img-fluid" style=""
+                                src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
                             @else
-                            <a
-                                href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
-                                @endif
-                                {{-- @if(isset($subCate->image))
-                                <img class="img-fluid" style=""
-                                    src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
-                                @else
-                                <img class="img-fluid" style="" src="{{asset('frontend-asset/image/blank.png')}}"
-                                    alt="">
-                                @endif --}}
-                                @if($mainCate->main_id == 1)
-                                @if(isset($subCate->image_type1))
-                                <img class="img-fluid max-h"
-                                    src="{{config('app.url')}}/medias/categories/{{$subCate->image_type1}}" alt="">
-                                @else
-                                <img class="img-fluid max-h"
-                                    src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
-                                @endif
-                                @elseif($mainCate->main_id == 2)
-                                @if(isset($subCate->image_type2))
-                                <img class="img-fluid max-h"
-                                    src="{{config('app.url')}}/medias/categories/{{$subCate->image_type2}}" alt="">
-                                @else
-                                <img class="img-fluid max-h"
-                                    src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
-                                @endif
-                                @elseif($mainCate->main_id == 3)
-                                @if(isset($subCate->image_type3))
-                                <img class="img-fluid max-h"
-                                    src="{{config('app.url')}}/medias/categories/{{$subCate->image_type3}}" alt="">
-                                @else
-                                <img class="img-fluid max-h"
-                                    src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
-                                @endif
-                                @endif
-
-
-                            </a>
+                            <img class="img-fluid" style="" src="{{asset('frontend-asset/image/blank.png')}}"
+                                alt="">
+                            @endif --}}
+                            @if($mainCate->main_id == 1)
+                            @if(isset($subCate->image_type1))
+                            <img class="img-fluid max-h"
+                                src="{{config('app.url')}}/medias/categories/{{$subCate->image_type1}}" alt="">
+                            @else
+                            <img class="img-fluid max-h"
+                                src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
+                            @endif
+                            @elseif($mainCate->main_id == 2)
+                            @if(isset($subCate->image_type2))
+                            <img class="img-fluid max-h"
+                                src="{{config('app.url')}}/medias/categories/{{$subCate->image_type2}}" alt="">
+                            @else
+                            <img class="img-fluid max-h"
+                                src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
+                            @endif
+                            @elseif($mainCate->main_id == 3)
+                            @if(isset($subCate->image_type3))
+                            <img class="img-fluid max-h"
+                                src="{{config('app.url')}}/medias/categories/{{$subCate->image_type3}}" alt="">
+                            @else
+                            <img class="img-fluid max-h"
+                                src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
+                            @endif
+                            @endif
+                        </a>
                     </div>
                 </div>
-
             </div>
             <div class="container">
                 @if($subCate->sub_pro_id == 6)
@@ -736,7 +733,7 @@
                     @if($serie->main_cate == $mainCate->main_id)
                     @if($serie->pro_categories_id == $subCate->sub_pro_id)
                     @if($serie->mode_series == $mode->id)
-                    <div class="series-list">
+                    <div class="series-list shadow-radius-box">
                         <div class="">
                             <div class="d-block">
                                 <div class="m-auto series-img">
@@ -787,10 +784,10 @@
                                     style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
                                 <script>
                                     $(".itemhorver{{$item->id}}").hover(function(){
-                                                $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
-                                                }, function(){
-                                                $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->icon}}')");
-                                                });
+                                        $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
+                                    }, function(){
+                                        $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->icon}}')");
+                                    });
                                 </script>
                                 @endif
                                 @endforeach
@@ -811,7 +808,7 @@
                     @foreach ($series as $serie)
                     @if($serie->main_cate == $mainCate->main_id)
                     @if($serie->pro_categories_id == $subCate->sub_pro_id)
-                    <div class="series-list">
+                    <div class="series-list shadow-radius-box">
                         <div class="">
                             <div class="d-block">
                                 <div class="m-auto series-img">
@@ -878,8 +875,6 @@
                 </div>
                 {{-- end serise --}}
                 @endif
-
-
             </div>
         </div>
         @endif

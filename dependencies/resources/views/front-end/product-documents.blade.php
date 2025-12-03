@@ -214,14 +214,13 @@
             $metatag[0]->h1 :''}}</h4>
         <div class="row">
             <div class="col-xl-3 col-lg-4  col-md-12 mb-4 padding-mobile">
-                <div class="search-filter-action border-2px">
+                <div class="search-filter-action border-2px border-radius-6">
                     <p class="text-sixteen-dark">{{$staticContent['Search_By_Model_Name']}}</p>
-                    <div class="box-search-input  mr-3">
-                        <div class="box-search-icon">
+                    <div class="box-search-input mr-3">
+                        <div class="box-search-icon" style="border-top-left-radius: 6px;border-bottom-left-radius: 6px;">
                             <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                         </div>
                         <label for="key_mobile" class="searchinput-filters-input">
-
                             <select id="key_model_input" class="js-example-basic-single form-control">
                                 <option></option>
                                 <!-- @foreach ($products as $pro)
@@ -264,10 +263,10 @@
 
                 </div> --}}
                 <h5 class="text-center pad-12px">{{$staticContent['Or']}}</h5>
-                <div class="datasheet-select border-2px">
+                <div class="datasheet-select border-2px border-radius-6">
                     <p class="text-dark text-bold mr-b-1">{{$staticContent['Type']}}</p>
 
-                    <select id="type_id" onchange="selectType();" class="form-control">
+                    <select id="type_id" onchange="selectType();" class="form-control border-radius-6">
                         @foreach ($subCategories as $sub)
                         @if($loop->iteration == 1)
                         <option value="{{$sub->sub_pro_id}}" selected>{{$sub->name}}</option>
@@ -279,32 +278,29 @@
 
                     <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Series']}}</p>
 
-                    <select id="serie_id" onchange="onSelectSeries();" class="form-control">
+                    <select id="serie_id" onchange="onSelectSeries();" class="form-control border-radius-6">
                         <option value="0">{{$staticContent['Please_Select']}}*</option>
                     </select>
 
                     <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Model']}}</p>
 
-                    <select id="model_id" onchange="onSelectProduct();" class="form-control">
+                    <select id="model_id" onchange="onSelectProduct();" class="form-control border-radius-6">
                         <option value="0">{{$staticContent['Please_Select']}}*</option>
                     </select>
 
                 </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-12">
-                <div class="image-datasheet mb-2" id="content_pro">
+                <div class="image-datasheet mb-2 border-radius-6" id="content_pro">
                 </div>
                 <div>
                     <h6 class="text-title-ft-sub mt-2">Tags</h6>
                     <div class="content_tags_pro" id="content_tags_pro">
-
                     </div>
-
                 </div>
             </div>
 
-
-            <div class="col-xl-6 col-lg-5 col-md-12 pl-2 collapse-padding-mobile">
+            <div class="col-xl-6 col-lg-5 col-md-12 pl-2 collapse-padding-mobile border-radius-6">
                 <div class="invisible-up-922 text-center">
                     <h3 class="text-color-delta text-bold my-5">{{$staticContent['Downloads']}}</h3>
                 </div>
@@ -340,32 +336,28 @@
         $(document).ready(function () {
             selectType();
             data_product = mergeDataPro();
-
         });
         function mergeDataPro(){
             var newproduct = [];
             var chproduct = [];
             var html = '';
-            $.each(products, function(index,pro){
-                if(!chproduct.includes(pro['pro_code'].toLowerCase().replace(/\s/g, ''))){
+            $.each(products, function(index,pro) {
+                if(!chproduct.includes(pro['pro_code'].toLowerCase().replace(/\s/g, ''))) {
                     newproduct.push(pro['pro_code'])
                     chproduct.push(pro['pro_code'].toLowerCase().replace(/\s/g, ''))
-               }
+                }
             });
 
-            $.each(tags_data, function(idx,tag){
-                 if(!chproduct.includes(tag['tag'].toLowerCase().replace(/\s/g, ''))){
-
+            $.each(tags_data, function(idx,tag) {
+                if(!chproduct.includes(tag['tag'].toLowerCase().replace(/\s/g, ''))) {
                     newproduct.push(tag['tag'])
                     chproduct.push(tag['tag'].toLowerCase().replace(/\s/g, ''))
-                 }
-
+                }
             });
 
             html += '<option></option>';
             $.each(newproduct, function(index,item){
-                    html += '<option value="'+item +'">'+item+'</option>';
-
+                html += '<option value="'+item +'">'+item+'</option>';
             });
             $('#key_model_input').html(html);
             return newproduct;
@@ -490,7 +482,6 @@
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            },
            success: function (res) {
-              //console.log(res['data']);
               var key = $('#key_model_input').val();
 
               var html = '';

@@ -58,7 +58,7 @@
                         <div class="select input-label w-100 my-4">
                             <h6 class="mb-0"><label class="text-dark">{{$staticContent['Country']}}<span
                                         class="red">*</span></label></h6>
-                            <select name="country" class="form-control" id="countryId" required>
+                            <select name="country" class="form-control border-radius-6" id="countryId" required>
                                 <option value="">{{$staticContent['Select']}} {{$staticContent['Country']}}</option>
                                 @foreach ($mail_chimp_country as $email)
                                 <option value="{{$email->name}}">{{$email->name}}</option>
@@ -68,14 +68,14 @@
                         <div class="input-label w-100 my-4">
                             <h6 class="mb-0"><label class="text-dark">{{$staticContent['Email_Address']}}<span
                                         class="red">*</span></label></h6>
-                            <input type="email" class="form-control" name="email" required="required"
+                            <input type="email" class="form-control border-radius-6" name="email" required="required"
                                 placeholder="Email Address">
                             {{-- <label for="email">Email Address</label> --}}
                         </div>
                         <div class="input-label w-100 my-4">
                             <h6 class="mb-0"><label class="text-dark">{{$staticContent['Name']}}<span
                                         class="red">*</span></label></h6>
-                            <input type="text" class="form-control" pattern="[A-Za-zก-๏\s]+" name="name"
+                            <input type="text" class="form-control border-radius-6" pattern="[A-Za-zก-๏\s]+" name="name"
                                 required="required" placeholder="Name">
                             {{-- <label for="email">Name</label> --}}
                         </div>

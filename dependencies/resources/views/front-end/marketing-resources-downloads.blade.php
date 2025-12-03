@@ -117,7 +117,7 @@ function getDateformat($date){
     <div class="container">
         <h2 class="text-title-delta visible-tablets-up">{{$staticContent['Marketing_Resources_Downloads']}}</h2>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['Marketing_Resources_Downloads']}}</h3>
-        <select id="select-catalogs" onchange="selectdocumentType();" class="form-control invisible-up-922">
+        <select id="select-catalogs" onchange="selectdocumentType();" class="form-control invisible-up-922 border-radius-6">
             @foreach ($margetCate as $cate)
             <option value="{{$cate->cate_id}}">{{$cate->name}}</option>
             @endforeach
@@ -144,12 +144,12 @@ function getDateformat($date){
                             <div class="search-space d-flex justify-content-center w-100">
                                 <div class="box-search-input  mr-3">
 
-                                    <div class="box-search-icon">
+                                    <div class="box-search-icon" style="border-top-left-radius: 6px;border-bottom-left-radius: 6px;">
                                         <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                                     </div>
                                     <label for="searchinput" class="searchinput-filters-input">
                                         <input type="hidden" name="cateid" value="1">
-                                        <input type="text" name="modelname"
+                                        <input type="text" name="modelname" style="border-top-right-radius: 6px;border-bottom-right-radius: 6px;"
                                             placeholder="{{$staticContent['Search_By_Name']}}">
                                     </label>
                                 </div>

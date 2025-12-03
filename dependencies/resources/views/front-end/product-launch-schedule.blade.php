@@ -209,7 +209,7 @@
             <h3 id="count-year">2019</h3>
             <a id="next-year" onclick="Years(1)"></a>
         </div>
-        <select id="select-events" onchange="selectMonthPicker();" class="select-minimize invisible-up-922 mb-4">
+        <select id="select-events" onchange="selectMonthPicker();" class="select-minimize invisible-up-922 mb-4 border-radius-6">
             <option value="00">JAN</option>
             <option value="01">FEB</option>
             <option value="02">MAR</option>
@@ -307,13 +307,13 @@
     /* calender-tab */
     var pro_launch_schedules =  <?= json_encode($relate_pro_launch_schedule);?>;
     $(document).ready(function() {
-          console.log(today.getMonth()); 
-          var mont =  ('0' + today.getMonth()).slice(-2);
-            addCalendar(mont);
-         
+        console.log(today.getMonth()); 
+        var mont =  ('0' + today.getMonth()).slice(-2);
+        addCalendar(mont);
     });
 
-    function Years(num){
+    function Years(num)
+    {
         if(num===1){
             total = total +1;
         }else if(num===-1){
@@ -326,103 +326,98 @@
        $('#tab'+radioValue).prop("checked", true );
     }
 
-
-    function addCalendar(i){ 
-         var date = new Date(years ,i,01);
-         loadproductLaunch(date);
-         $('#tab'+i).prop( "checked", true );
+    function addCalendar(i)
+    { 
+        var date = new Date(years ,i,01);
+        loadproductLaunch(date);
+        $('#tab'+i).prop( "checked", true );
         $("#select-events option[value="+i+"]").prop("selected", true);
         $('#dateforiq').text(getmonthfull(date));
     }
-    function selectMonthPicker(){
+    function selectMonthPicker()
+    {
         var i =  $('#select-events').val();
-      $("#select-events option[value="+i+"]").attr('selected', 'selected'); 
-       addCalendar(i);
-      $('#tab'+i).prop("checked", true );
-
+        $("#select-events option[value="+i+"]").attr('selected', 'selected'); 
+        addCalendar(i);
+        $('#tab'+i).prop("checked", true );
     }
-    function formatedate(datastart){
-     
-     var d = new Date(datastart);
-     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-      ];
-     return monthNames[d.getMonth()]+'-'+d.getFullYear();
-   }
-   function getmonthfull(date){
-      var month = ["January","February","March","April","May","June","July",
+    function formatedate(datastart)
+    {
+        var d = new Date(datastart);
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+        return monthNames[d.getMonth()]+'-'+d.getFullYear();
+    }
+    function getmonthfull(date)
+    {
+        var month = ["January","February","March","April","May","June","July",
             "August","September","October","November","December"];
-     return month[date.getMonth()]+' '+date.getFullYear();
-   }
+        return month[date.getMonth()]+' '+date.getFullYear();
+    }
 
-    function loadproductLaunch(date){
+    function loadproductLaunch(date)
+    {
         var html = '';
         var mobilehtml = '';
         $.each(pro_launch_schedules, function(index,pro_launch){
-         if(checkDateDate(pro_launch['monthdate'] ,date)){
-            html += '<tr class="box-cardlist row_table" style="">';
-            html += '<td class="text-middle-td"><h5 class="text-color-delta  m-0">'+pro_launch['modelname'] +'</h5></td>';
-            html += '<td class="text-middle-td">'+formatedate(pro_launch['monthdate']) +'</td>';
-            html +=  '<td class="text-middle-td">'+pro_launch['op_voltage'] +'</td>';
-            html += '<td class="text-middle-td">'+pro_launch['op_wattage'] +'</td>';
-            html += '<td class="text-middle-td">'+pro_launch['phase'] +'</td>';
-            html += '<td class="text-middle-td">'+pro_launch['remark'] +'</td>';
-            html += '<td class="text-middle-td"> <a href="{{config('app.url')}}/file_doc_2/marketing_resources/'+pro_launch['file']+'" download > <div class="btn btn-ft w-100"> {{$staticContent['Downloads']}}</div></td>';
-            html += '</tr>';
+            if (checkDateDate(pro_launch['monthdate'] ,date)) {
+                html += '<tr class="box-cardlist row_table shadow-radius-box" style="">';
+                html += '<td class="text-middle-td border-radius-6"><h5 class="text-color-delta  m-0">'+pro_launch['modelname'] +'</h5></td>';
+                html += '<td class="text-middle-td">'+formatedate(pro_launch['monthdate']) +'</td>';
+                html += '<td class="text-middle-td">'+pro_launch['op_voltage'] +'</td>';
+                html += '<td class="text-middle-td">'+pro_launch['op_wattage'] +'</td>';
+                html += '<td class="text-middle-td">'+pro_launch['phase'] +'</td>';
+                html += '<td class="text-middle-td">'+pro_launch['remark'] +'</td>';
+                html += '<td class="text-middle-td border-radius-6"> <a href="{{config('app.url')}}/file_doc_2/marketing_resources/'+pro_launch['file']+'" download > <div class="btn btn-ft w-100"> {{$staticContent['Downloads']}}</div></td>';
+                html += '</tr>';
 
-            mobilehtml += '<div class="product-launch-list">';
-            mobilehtml += '<h4 class="text-color-delta">'+pro_launch['modelname']+'</h4>';
-            mobilehtml += '<div class="row">';
-            mobilehtml += '<div class="col-6">';
-            mobilehtml += '<h6 class="text-color-delta">{{$staticContent['Launch_Date']}}</h6>';
-            mobilehtml += '<p class="text-one">'+formatedate(pro_launch['monthdate']) +'</p>';
-            mobilehtml += '<h6 class="text-color-delta">{{$staticContent['Op_Power']}}</h6>';
-            mobilehtml += '<p class="text-one">'+pro_launch['op_wattage'] +'</p>';
-            mobilehtml += '</div>';
-            mobilehtml += '<div class="col-6">';
-            mobilehtml += '<h6 class="text-color-delta">{{$staticContent['Op_Voltage']}}</h6>';
-            mobilehtml += '<p class="text-one">'+pro_launch['op_voltage'] +'</p>';
-            mobilehtml += '<h6 class="text-color-delta">PHASE</h6>';
-            mobilehtml += '<p class="text-one">'+pro_launch['phase'] +'</p>';
-            mobilehtml += '</div>';
-            mobilehtml += '</div>';
-            mobilehtml += '<div>';
-            mobilehtml += '<h6 class="text-color-delta">REMARKs</h6>';
-            mobilehtml += '<p class="text-one">'+pro_launch['remark'] +'</p>';
-            mobilehtml += '</div>';
-            mobilehtml +=  '<a href="{{config('app.url')}}/file_doc_2/marketing_resources/'+pro_launch['file']+'" download >';
-            mobilehtml += '<div class="btn btn-subscribe mt-2">PRE-LIM DS</div>';
-            mobilehtml += ' </a>';
-            mobilehtml += ' </div>';
-         
-         
-         
-         }
+                mobilehtml += '<div class="product-launch-list">';
+                mobilehtml += '<h4 class="text-color-delta">'+pro_launch['modelname']+'</h4>';
+                mobilehtml += '<div class="row">';
+                mobilehtml += '<div class="col-6">';
+                mobilehtml += '<h6 class="text-color-delta">{{$staticContent['Launch_Date']}}</h6>';
+                mobilehtml += '<p class="text-one">'+formatedate(pro_launch['monthdate']) +'</p>';
+                mobilehtml += '<h6 class="text-color-delta">{{$staticContent['Op_Power']}}</h6>';
+                mobilehtml += '<p class="text-one">'+pro_launch['op_wattage'] +'</p>';
+                mobilehtml += '</div>';
+                mobilehtml += '<div class="col-6">';
+                mobilehtml += '<h6 class="text-color-delta">{{$staticContent['Op_Voltage']}}</h6>';
+                mobilehtml += '<p class="text-one">'+pro_launch['op_voltage'] +'</p>';
+                mobilehtml += '<h6 class="text-color-delta">PHASE</h6>';
+                mobilehtml += '<p class="text-one">'+pro_launch['phase'] +'</p>';
+                mobilehtml += '</div>';
+                mobilehtml += '</div>';
+                mobilehtml += '<div>';
+                mobilehtml += '<h6 class="text-color-delta">REMARKs</h6>';
+                mobilehtml += '<p class="text-one">'+pro_launch['remark'] +'</p>';
+                mobilehtml += '</div>';
+                mobilehtml += '<a href="{{config('app.url')}}/file_doc_2/marketing_resources/'+pro_launch['file']+'" download >';
+                mobilehtml += '<div class="btn btn-subscribe mt-2">PRE-LIM DS</div>';
+                mobilehtml += '</a>';
+                mobilehtml += '</div>';
+            }
         });
 
-       $('#dataproLaunch_des').html(html);
-       $('#dataproMobile').html(mobilehtml);
+        $('#dataproLaunch_des').html(html);
+        $('#dataproMobile').html(mobilehtml);
     }
 
-    function checkDateDate(date ,curdate){
- 
+    function checkDateDate(date ,curdate)
+    {
         var datedata = date;
         var dateCheck = curdate;
       
         var data_date = new Date(datedata);  
         var check   = new Date(dateCheck);
-        // console.log(data_date);
     
-        console.log(curdate);
-          if(data_date.getFullYear() == check.getFullYear()  ){
-              if(data_date.getMonth() == check.getMonth()){
+        if (data_date.getFullYear() == check.getFullYear()) {
+            if (data_date.getMonth() == check.getMonth()) {
                 return true;
-              }
-              return false;
-          }
-
-     }
-  
+            }
+        }
+        return false;
+    }
 
 </script>
 

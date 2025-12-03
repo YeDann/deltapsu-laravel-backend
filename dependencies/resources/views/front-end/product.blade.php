@@ -430,7 +430,7 @@
                         {{$staticContent['Sort_by']}} :
                     </div>
                     <div class="input-label">
-                        <select id="selectSortDestop" onchange="onselectSortDestop();" class="form-control ">
+                        <select id="selectSortDestop" onchange="onselectSortDestop();" class="form-control border-radius-6">
                             <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
                             <option value="2">{{$staticContent['Output_Voltage_low_to_high']}}</option>
                             <option value="3">{{$staticContent['Output_Current _low_to_high']}}</option>
@@ -457,7 +457,7 @@
                     </label>
                 </div> --}}
                 <div class="box-search-input  mr-3">
-                    <div class="box-search-icon">
+                    <div class="box-search-icon" style="border-top-left-radius: 6px;border-bottom-left-radius: 6px;">
                         <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                     </div>
                     <label for="key_mobile" class="searchinput-filters-input">
@@ -487,7 +487,7 @@
                 <div class="d-flex">
                     <p class="text-white my-auto mr-2 text-card-detial text-bold">{{$staticContent['Sort_by']}}:</p>
                     <div class="input-label my-auto">
-                        <select onchange="onselectSort();" class="form-control selectSort">
+                        <select onchange="onselectSort();" class="form-control selectSort border-radius-6">
                             <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
                             <option value="2">{{$staticContent['Output_Voltage_low_to_high']}}</option>
                             <option value="3">{{$staticContent['Output_Current _low_to_high']}}</option>
@@ -555,10 +555,10 @@
             <div class="list-group panel">
                 <div id="accordion" class="accordion visible-upper-mobile">
                     <div class="search-filter">
-                        <div class="search-filter-action border-2px">
+                        <div class="search-filter-action border-2px border-radius-6">
                             <p class="text-sixteen-dark">{{$staticContent['Search_By_Model_Name']}}</p>
                             <div class="box-search-input  mr-3">
-                                <div class="box-search-icon">
+                                <div class="box-search-icon" style="border-top-left-radius: 6px;border-bottom-left-radius: 6px;">
                                     <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                                 </div>
                                 <label for="key_destop" class="searchinput-filters-input">
@@ -582,7 +582,6 @@
                         </div>
                     </div>
                     <div id="sort-filter-content" class="tap-filter mb-0">
-
 
                     </div>
 
@@ -1432,99 +1431,97 @@
         html += '<div class="GridView visible-mobile-only" id="GridView">';
         html += '<div class="margin-top-card ">';
         html += '<div id="cardGridList" class="d-flex flex-wrap">';
-        $.each(productarray, function(index_pro,pro){
-        html += '<div class="margin-p-left-card column-grid-card-mobile moreBox_mobile"  style="display: none;">';
-        html += '<div class="item card">';
-        html += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
-            if(pro['status_product'] != 1){
-        html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
+        $.each(productarray, function(index_pro,pro) {
+            html += '<div class="margin-p-left-card column-grid-card-mobile moreBox_mobile"  style="display: none;">';
+            html += '<div class="item card shadow-radius-box">';
+            html += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
+            if (pro['status_product'] != 1) {
+                html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
             }
-        html += '<div class="card-body ft-products-item hover01"><figure><img src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'" class="product-cat mb-2" style="width:70%;"></figure>';
-        html += '<div class="">';
-        html += '<h6 class="text-title-ft">'+pro['pro_code']+'</h6>';
-        html += '</a>';
-        html += '<div class="d-flex flex-wrap" >';
-        html += '<div class="mr-5">';
-        html += '<div class="out-volt mt-1">';
-        var content = onlycontent(pro['content']);
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Voltage']}}</p>';
-            var arrcon1 = [content[1]['data_1'],content[1]['data_2'],content[1]['data_3'],content[1]['data_4'],content[1]['data_5'],
-            content[1]['data_6'],content[1]['data_7'],content[1]['data_8'],content[1]['data_9'],content[1]['data_10'],content[1]['data_11'],
-            content[1]['data_12']
-            ]
-            var arrcon2 = [content[2]['data_1'],content[2]['data_2'],content[2]['data_3'],content[2]['data_4'],content[2]['data_5'],
-            content[2]['data_6'],content[2]['data_7'],content[2]['data_8'],content[2]['data_9'],content[2]['data_10'],content[2]['data_11'],
-            content[2]['data_12']
-            ]
-            var arrcon3 = [content[0]['data_1'],content[0]['data_2'],content[0]['data_3'],content[0]['data_4'],content[0]['data_5'],
-            content[0]['data_6'],content[0]['data_7'],content[0]['data_8'],content[0]['data_9'],content[0]['data_10'],content[0]['data_11'],
-            content[0]['data_12']
-            ]
+            html += '<div class="card-body ft-products-item hover01"><figure><img src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'" class="product-cat mb-2" style="width:70%;"></figure>';
+            html += '<div class="">';
+            html += '<h6 class="text-title-ft">'+pro['pro_code']+'</h6>';
+            html += '</a>';
+            html += '<div class="d-flex flex-wrap" >';
+            html += '<div class="mr-5">';
+            html += '<div class="out-volt mt-1">';
+            var content = onlycontent(pro['content']);
+            html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Voltage']}}</p>';
+                var arrcon1 = [
+                    content[1]['data_1'],content[1]['data_2'],content[1]['data_3'],content[1]['data_4'],content[1]['data_5'],
+                    content[1]['data_6'],content[1]['data_7'],content[1]['data_8'],content[1]['data_9'],content[1]['data_10'],content[1]['data_11'],
+                    content[1]['data_12']
+                ]
+                var arrcon2 = [
+                    content[2]['data_1'],content[2]['data_2'],content[2]['data_3'],content[2]['data_4'],content[2]['data_5'],
+                    content[2]['data_6'],content[2]['data_7'],content[2]['data_8'],content[2]['data_9'],content[2]['data_10'],content[2]['data_11'],
+                    content[2]['data_12']
+                ]
+                var arrcon3 = [
+                    content[0]['data_1'],content[0]['data_2'],content[0]['data_3'],content[0]['data_4'],content[0]['data_5'],
+                    content[0]['data_6'],content[0]['data_7'],content[0]['data_8'],content[0]['data_9'],content[0]['data_10'],content[0]['data_11'],
+                    content[0]['data_12']
+                ]
 
-        html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon1,content[1]['unit_name'],content[1]['status_input']).substr(0, 19)+'</div>';
+            html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon1,content[1]['unit_name'],content[1]['status_input']).substr(0, 19)+'</div>';
+            html += '</div>';
+            html += '<div class="out-power mt-2">';
+            html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Power']}}</p>';
+            html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon2,content[2]['unit_name'],content[2]['status_input']).substr(0, 19)+'</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="">';
+            html += '<div class="out-current mt-2">';
+            html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Current']}}</p>';
+            html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon3,content[0]['unit_name'],content[0]['status_input']).substr(0, 19)+'</div>';
+            html += '</div>';
+            html += '<div class="in-volt mt-2">';
+            html += '<p class="text-title-ft-sub text-two">{{$staticContent['Input_Voltage']}}</p>';
+            if (content[3]['value_text'] != null && content[3]['value_text'] != 'null') {
+                html += '<div class="text-ft-sub text-two">'+content[3]['value_text'].substr(0, 18)+'</div>';
+            } else {
+                html += '<div class="text-ft-sub text-two">-</div>';
+            }
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
 
-        html += '</div>';
-        html += '<div class="out-power mt-2">';
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Power']}}</p>';
-        html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon2,content[2]['unit_name'],content[2]['status_input']).substr(0, 19)+'</div>';
-        html += '</div>';
-        html += '</div>';
-        html += '<div class="">';
-        html += '<div class="out-current mt-2">';
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Current']}}</p>';
-        html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon3,content[0]['unit_name'],content[0]['status_input']).substr(0, 19)+'</div>';
+            if (url_name == "wireless-charging-system") {
+                html += '<p class="text-title-ft-sub text-two">{{$staticContent['product_highLights']}}</p>';
+                html += '<div class="text-editor-card mt-2"> '+checkNullTexteditor(pro['short_features']) +'</div>';
+            } else {
+                html += '<div class="dimension mt-2">';
+                html += '<p class="text-title-ft-sub text-two">{{$staticContent['Dimensions']}} ('+unit_dimension_1+' X W X '+unit_dimension+')</p>';
+                if (pro['dimensionL'] != null && pro['dimensionL'].length < 7 && pro['dimensionW'] != '' && pro['dimensionD'] != '') {
+                    html += '<p class="text-ft-sub text-two">'+pro['dimensionL']+'x'+pro['dimensionW']+'x'+pro['dimensionD']+' mm</p>';
+                    html += '<p class="text-ft-sub text-two">'+mmtonich(pro['dimensionL'])+'”x'+mmtonich(pro['dimensionW'])+'”x'+mmtonich(pro['dimensionD'])+'”</p>';
+                } else if(pro['dimensionL'] != null) {
+                    html += '<p class="text-ft-sub text-two">'+pro['dimensionL'].substr(0, 14)+'</p>';
+                } else {
+                    html += '<p class="text-ft-sub text-two">-</p>';
+                }
+                html += '</div>';
+            }
 
-        html += '</div>';
-        html += '<div class="in-volt mt-2">';
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Input_Voltage']}}</p>';
-        if(content[3]['value_text'] != null && content[3]['value_text'] != 'null'){
-        html += '<div class="text-ft-sub text-two">'+content[3]['value_text'].substr(0, 18)+'</div>';
-        }else{
-        html += '<div class="text-ft-sub text-two">-</div>';
-        }
-        html += '</div>';
-        html += '</div>';
-        html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="w-100">';
+            html += '<div class="boxlist-icon-img pd-mobile">';
+            html += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
+            html += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
+            html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+        });
 
-        if(url_name == "wireless-charging-system"){
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['product_highLights']}}</p>';
-        html += '<div class="text-editor-card mt-2"> '+checkNullTexteditor(pro['short_features']) +'</div>';
-        }else{
-
-        html += '<div class="dimension mt-2">';
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Dimensions']}} ('+unit_dimension_1+' X W X '+unit_dimension+')</p>';
-        if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 && pro['dimensionW'] != '' && pro['dimensionD'] != ''){
-        html += '<p class="text-ft-sub text-two">'+pro['dimensionL']+'x'+pro['dimensionW']+'x'+pro['dimensionD']+' mm</p>';
-        html += '<p class="text-ft-sub text-two">'+mmtonich(pro['dimensionL'])+'”x'+mmtonich(pro['dimensionW'])+'”x'+mmtonich(pro['dimensionD'])+'”</p>';
-        }else if(pro['dimensionL'] != null){
-        html += '<p class="text-ft-sub text-two">'+pro['dimensionL'].substr(0, 14)+'</p>';
-        }else{
-        html += '<p class="text-ft-sub text-two">-</p>';
-        }
-        html += '</div>';
-        }
-
-
-        html += '</div>';
-        html += '</div>';
-        html += '<div class="w-100">';
-        html += '<div class="boxlist-icon-img pd-mobile">';
-        html += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
-        html += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
-        html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
-        html += '</div>';
-        html += '</div>';
-        html += '</div>';
-        html += '</div>';
-       });
         html += '</div>';
         html += '</div>';
         html += ' <div class="text-center my-3" id="loadMore_mobile" style="" onclick="loadeMoreMobile(event,4)">';
         html += '<a href="#"  class="btn btn-boxen"> {{$staticContent['See_More']}} </a>';
         html += '</div>';
         html += '</div>';
-
-
 
         $('#contentProList').html(html);
         $(document).ready(function () {
@@ -1534,9 +1531,7 @@
         });
     }
 
-
     function onclickListView(productarray ,type ,id) {
-
         var html1 = '';
         html1 += '<div class="ListView visible-upper-mobile" id="ListView">';
         html1 += '<div class="count-products">';
@@ -1551,9 +1546,9 @@
         html1 += '<th id="sortdata4" class=" header-font-table w-tabfix w-120"  onclick="selectTable(4)">{{$staticContent['Output_Power']}} </th>';
         html1 += '<th id="sortdata5" class=" header-font-table w-tabfix"  onclick="selectTable(5)">{{$staticContent['Input_Voltage']}}</th>';
         if(url_name == "wireless-charging-system"){
-        html1 += '<th  class="header-font-table" >{{$staticContent['product_highLights']}}</th>';
+            html1 += '<th  class="header-font-table" >{{$staticContent['product_highLights']}}</th>';
         }else{
-        html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['Dimensions']}} <br>('+unit_dimension_1+' x W x '+unit_dimension+')</th>';
+            html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['Dimensions']}} <br>('+unit_dimension_1+' x W x '+unit_dimension+')</th>';
         }
 
         html1 += '</tr>';
@@ -1586,25 +1581,23 @@
             $('.icon-list img').addClass('bord-icon');
             $('.icon-grid img').removeClass('bord-icon');
             $('#contentProList').addClass('space-listviews');
-
         });
     }
 
-    function listviewCard(productarray) {
-
+    function listviewCard(productarray)
+    {
         var html1 = '';
-        //console.log(productarray ,"productarray to card")
 
-        $.each(productarray, function(index_pro,pro){
-        html1 += '<tr class="box-cardlist row_table" style="display: none;">';
+        $.each(productarray, function(index_pro,pro) {
+        html1 += '<tr class="box-cardlist row_table shadow-radius-box" style="display: none;">';
         html1 += '<td>';
         html1 += '<div class="cardlist-toadd">';
         html1 += '<div class="cardlist-view hover01">';
         html1 += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
-            if(pro['status_product'] != 1){
-        html1 += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="text-over-cardlist"> '+ statuspro(pro['status_product'])+'';
-        html1 += '</div>';
-            }
+        if (pro['status_product'] != 1) {
+            html1 += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="text-over-cardlist"> '+ statuspro(pro['status_product'])+'';
+            html1 += '</div>';
+        }
         html1 += '<figure><img class="img-card-list" alt="'+checkNullImg(pro['alt_img']) +'" src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'"></figure>';
         html1 += '</div>';
         html1 += '<div class="cardlist-text">';
@@ -1623,17 +1616,17 @@
         html1 += '</div>';
         html1 += '</td>';
         var content =  onlycontent(pro['content']);
-         var arrcon1 = [content[1]['data_1'],content[1]['data_2'],content[1]['data_3'],content[1]['data_4'],content[1]['data_5'],
-            content[1]['data_6'],content[1]['data_7'],content[1]['data_8'],content[1]['data_9'],content[1]['data_10'],content[1]['data_11'],
-            content[1]['data_12']
+        var arrcon1 = [content[1]['data_1'],content[1]['data_2'],content[1]['data_3'],content[1]['data_4'],content[1]['data_5'],
+                content[1]['data_6'],content[1]['data_7'],content[1]['data_8'],content[1]['data_9'],content[1]['data_10'],content[1]['data_11'],
+                content[1]['data_12']
             ]
             var arrcon2 = [content[0]['data_1'],content[0]['data_2'],content[0]['data_3'],content[0]['data_4'],content[0]['data_5'],
-            content[0]['data_6'],content[0]['data_7'],content[0]['data_8'],content[0]['data_9'],content[0]['data_10'],content[0]['data_11'],
-            content[0]['data_12']
+                content[0]['data_6'],content[0]['data_7'],content[0]['data_8'],content[0]['data_9'],content[0]['data_10'],content[0]['data_11'],
+                content[0]['data_12']
             ]
             var arrcon3 = [content[2]['data_1'],content[2]['data_2'],content[2]['data_3'],content[2]['data_4'],content[2]['data_5'],
-            content[2]['data_6'],content[2]['data_7'],content[2]['data_8'],content[2]['data_9'],content[2]['data_10'],content[2]['data_11'],
-            content[2]['data_12']
+                content[2]['data_6'],content[2]['data_7'],content[2]['data_8'],content[2]['data_9'],content[2]['data_10'],content[2]['data_11'],
+                content[2]['data_12']
             ]
         // html1 += '<td>';
         // html1 += '<div class="card-btn-a">';
@@ -1652,31 +1645,27 @@
         html1 += '<td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon2,content[0]['unit_name'] ,content[0]['status_input'])+'</div></td>';
         html1 += ' <td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon3,content[2]['unit_name'] ,content[2]['status_input'])+'</div></td>';
         if(typeof content[3]['value_text']  != 'undefined' && content[3]['value_text'] != null && content[3]['value_text'] !='' && content[3]['value_text'] != 'null'){
-         html1 += ' <td class="text-middle-td">'+ stringfor(content[3]['value_text'])+'</td>';
+            html1 += ' <td class="text-middle-td">'+ stringfor(content[3]['value_text'])+'</td>';
         }else if(content[3]['value_text'] != null && content[3]['value_text'] != 'null'){
-         html1 += ' <td class="text-middle-td">'+content[3]['value_text']+'</td>';
+            html1 += ' <td class="text-middle-td">'+content[3]['value_text']+'</td>';
         }else{
-         html1 += ' <td class="text-middle-td">-</td>';
+            html1 += ' <td class="text-middle-td">-</td>';
         }
         if(url_name == "wireless-charging-system"){
             html1 += ' <td class="text-middle-td"> <div class="w-td-con-text-editor">'+checkNullTexteditor(pro['short_features'])+'</div></td>';
         }else{
             if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 &&pro['dimensionW'] != '' && pro['dimensionD'] != ''){
-            html1 += '<td class="text-middle-td">'+pro['dimensionL']+' x '+pro['dimensionW']+' x '+pro['dimensionD']+' mm ';
-            html1 += '<br>'+mmtonich(pro['dimensionL'])+'” x '+mmtonich(pro['dimensionW'])+'” x '+mmtonich(pro['dimensionD'])+'”</td>';
+                html1 += '<td class="text-middle-td">'+pro['dimensionL']+' x '+pro['dimensionW']+' x '+pro['dimensionD']+' mm ';
+                html1 += '<br>'+mmtonich(pro['dimensionL'])+'” x '+mmtonich(pro['dimensionW'])+'” x '+mmtonich(pro['dimensionD'])+'”</td>';
             }else{
-            html1 += '<td class="text-middle-td">'+pro['dimensionL']+'</td>';
+                html1 += '<td class="text-middle-td">'+pro['dimensionL']+'</td>';
             }
         }
-
-
         html1 += '</tr>';
 
-       });
-
+        });
 
         $('#listcardList').html(html1);
-
     }
     function productKey(key){
             var newkey = key.replace(/[/]/g,'@');

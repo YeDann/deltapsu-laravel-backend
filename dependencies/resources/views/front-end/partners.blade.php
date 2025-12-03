@@ -112,11 +112,11 @@
     <h3 class="text-title-delta visible-mobile">{{$staticContent['Partners']}}</h3>
     <div class="container">
         <div class="partners-grid">
-            <a href="{{route('marketingResources')}}" class="partners-grid-list">
+            <a href="{{route('marketingResources')}}" class="partners-grid-list border-radius-6">
                 <img src="{{asset('frontend-asset/image/icon/icon-download-p.svg')}}" alt="">
                 <h4 class=" text-dark"> {{$staticContent['Marketing_Resources']}}</h4>
             </a>
-            <a href="{{route('productDocLogin')}}" class="partners-grid-list">
+            <a href="{{route('productDocLogin')}}" class="partners-grid-list border-radius-6">
                 <img src="{{asset('frontend-asset/image/icon/icon-product-doc.svg')}}" alt="">
                 <h4 class=" text-dark">{{$staticContent['Product_Documents']}}</h4>
             </a>

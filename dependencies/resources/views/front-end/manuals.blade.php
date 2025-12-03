@@ -175,16 +175,16 @@
         <h3 class="text-title-delta visible-mobile">{{$staticContent['Installation_Manual_&_Datasheet_Download']}}</h3>
         <div class="row">
             <div class="col-xl-3 col-lg-4  col-md-12 mb-4 padding-mobile">
-                <div class="search-filter-action border-2px">
+                <div class="search-filter-action border-2px border-radius-6">
                     <p class="text-sixteen-dark">{{$staticContent['Search_By_Model_Name']}}</p>
                     <div class="box-search-input  mr-3">
-                        <div class="box-search-icon">
+                        <div class="box-search-icon" style="border-top-left-radius: 6px;border-bottom-left-radius: 6px;">
                             <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                         </div>
                         <label for="key_mobile" class="searchinput-filters-input">
                             {{-- <input type="text" id="key_model_input"
                                 placeholder="{{$staticContent['Search_By_Model_Name']}}"> --}}
-                            <select id="key_model_input" class="js-example-basic-single form-control">
+                            <select id="key_model_input" class="js-example-basic-single form-control" style="border-top-right-radius: 6px;border-bottom-right-radius: 6px;">
                                 <option></option>
                                 @foreach ($products as $pro)
                                 <option value="{{$pro->pro_code}}">{{$pro->pro_code}}</option>
@@ -199,10 +199,10 @@
                     </div>
                 </div>
                 <h5 class="text-center pad-12px">{{$staticContent['Or']}}</h5>
-                <div class="datasheet-select border-2px">
+                <div class="datasheet-select border-2px border-radius-6">
                     <p class="text-dark text-bold mr-b-1">{{$staticContent['Type']}}</p>
 
-                    <select id="type_id" onchange="selectType();" class="form-control">
+                    <select id="type_id" onchange="selectType();" class="form-control border-radius-6">
                         @foreach ($subCategories as $sub)
                         @if($loop->iteration == 1)
                         <option value="{{$sub->sub_pro_id}}" selected>{{$sub->name}}</option>
@@ -214,24 +214,20 @@
 
                     <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Series']}}</p>
 
-                    <select id="serie_id" onchange="onSelectSeries();" class="form-control">
+                    <select id="serie_id" onchange="onSelectSeries();" class="form-control border-radius-6">
                         <option value="0">{{$staticContent['Please_Select']}}*</option>
                     </select>
 
                     <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Model']}}</p>
 
-                    <select id="model_id" onchange="onSelectProduct();" class="form-control">
+                    <select id="model_id" onchange="onSelectProduct();" class="form-control border-radius-6">
                         <option value="0">{{$staticContent['Please_Select']}}*</option>
                     </select>
                     <input type="hidden" id="modelme1">
-
                 </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-12">
-
-                <div class="image-datasheet" id="content_pro">
-                </div>
-
+                <div class="image-datasheet border-radius-6" id="content_pro"></div>
             </div>
 
             <div class="col-xl-6 col-lg-5 col-md-12 pl-2 collapse-padding-mobile">

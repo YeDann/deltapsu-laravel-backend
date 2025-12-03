@@ -150,7 +150,7 @@
                         <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
                             <div>
                                 <select onchange="selectprocom1('procomnav1')" id="procomnav1"
-                                    class="form-control w-100 pr-4 onchagetype ">
+                                    class="form-control w-100 pr-4 onchagetype border-radius-6">
                                     <option value="0">Please Select*</option>
                                     @foreach ($products as $item)
                                     <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
@@ -161,7 +161,7 @@
                         <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
                             <div>
                                 <select onchange="selectprocom2('procomnav2')" id="procomnav2"
-                                    class="form-control w-100 pr-4 onchagetype">
+                                    class="form-control w-100 pr-4 onchagetype border-radius-6">
                                     <option value="0">Please Select*</option>
                                     @foreach ($products as $item)
                                     <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
@@ -172,7 +172,7 @@
                         <td class="col-xs-3 cc-box" style="padding-right:0px !important;  position:relative">
                             <div class="">
                                 <select onchange="selectprocom3('procomnav3')" id="procomnav3"
-                                    class="form-control w-100 pr-4 onchagetype">
+                                    class="form-control w-100 pr-4 onchagetype border-radius-6">
                                     <option value="0">Please Select*</option>
                                     @foreach ($products as $item)
                                     <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
@@ -193,7 +193,7 @@
             <p class="text-center text-sixteen-dark">{{$staticContent['Type']}}</p>
             <div class="d-flex mb-3">
                 <div class="mx-auto">
-                    <select id="proType" class="form-control pr-4" onchange="chageProductType();">
+                    <select id="proType" class="form-control pr-4 border-radius-6" onchange="chageProductType();">
                         <option value="0">{{$staticContent['Please_Select']}}*</option>
                         @foreach ($Categories as $item)
                         <option {{($item->sub_pro_id == $cateid ?"selected":"")}}
@@ -203,7 +203,7 @@
                 </div>
 
                 {{-- <button onclick="loadhtml();"
-                    class="downloade-pdf btn btn-subscribe">{{$staticContent['Download_as_CSV']}}</button> --}}
+                    class="downloade-pdf btn btn-subscribe">{{$staticContent['Download_AS_CSV']}}</button> --}}
                 <div class="dropdown">
                     <button class="btn btn-subscribe dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -211,7 +211,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#"
-                            onclick="loadhtml();">{{$staticContent['Download_as_CSV']}}</a>
+                            onclick="loadhtml();">{{$staticContent['Download_AS_CSV']}}</a>
                         <a class="dropdown-item" href="#"
                             onclick="loadhtmlPDF();">{{$staticContent['Download_AS_PDF']}}</a>
                     </div>
@@ -274,7 +274,7 @@
                                 <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
                                     <div>
                                         <select onchange="selectprocom1('procom1')" id="procom1"
-                                            class="form-control w-100 pr-4 onchagetype ">
+                                            class="form-control w-100 pr-4 onchagetype border-radius-6">
                                             <option value="0">{{$staticContent['Please_Select']}}*</option>
                                             @foreach ($products as $item)
                                             <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
@@ -285,7 +285,7 @@
                                 <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
                                     <div>
                                         <select onchange="selectprocom2('procom2')" id="procom2"
-                                            class="form-control w-100 pr-4 onchagetype">
+                                            class="form-control w-100 pr-4 onchagetype border-radius-6">
                                             <option value="0">{{$staticContent['Please_Select']}}*</option>
                                             @foreach ($products as $item)
                                             <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
@@ -296,7 +296,7 @@
                                 <td class="col-xs-3 cc-box" style="padding-right:0px !important;  position:relative">
                                     <div>
                                         <select onchange="selectprocom3('procom3')" id="procom3"
-                                            class="form-control w-100 pr-4 onchagetype">
+                                            class="form-control w-100 pr-4 onchagetype border-radius-6">
                                             <option value="0">{{$staticContent['Please_Select']}}*</option>
                                             @foreach ($products as $item)
                                             <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
@@ -344,7 +344,7 @@
         <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
         <h5 class="text-center">{{$staticContent['Type']}}</h5>
         <div class="d-flex justify-content-center mb-2">
-            <select id="proType_mobile" class="form-control w-100 pr-4" onchange="chageProductTypeMobile();">
+            <select id="proType_mobile" class="form-control w-100 pr-4 border-radius-6" onchange="chageProductTypeMobile();">
                 <option value="0">{{$staticContent['Please_Select']}}*</option>
                 @foreach ($Categories as $item)
                 <option {{($item->sub_pro_id == $cateid ?"selected":"")}} value="{{$item->sub_pro_id}}">{{$item->name}}
@@ -355,7 +355,7 @@
         <h5 class="text-center">{{$staticContent['Model']}}</h5>
         <div class="d-flex justify-content-between mb-2">
             <select onchange="onSelectPromobile()" id="procom-mobile1"
-                class="form-control w-100 pr-4 mr-2 onchagetype_mobile ">
+                class="form-control w-100 pr-4 mr-2 onchagetype_mobile border-radius-6">
                 <option value="0">{{$staticContent['Please_Select']}}*</option>
                 @foreach ($products as $item)
                 <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
@@ -363,7 +363,7 @@
             </select>
             <input type="hidden" id="mobileindex" name="mobileindex" value="">
             <select onchange="onSelectPromobile2()" id="procom-mobile2"
-                class="form-control w-100 pr-4 ml-2 onchagetype_mobile ">
+                class="form-control w-100 pr-4 ml-2 onchagetype_mobile border-radius-6">
                 <option value="0">{{$staticContent['Please_Select']}}*</option>
                 @foreach ($products as $item)
                 <option value="{{$item->pro_id}}">{{$item->pro_code}}</option>
@@ -400,14 +400,14 @@
     <div class="download-pdf-mobile py-3">
         <div class="container">
             {{-- <div href="" class="btn btn-subscribe w-100 text-upercase" onclick="loadhtml();">
-                {{$staticContent['Download_as_CSV']}}</div> --}}
+                {{$staticContent['Download_AS_CSV']}}</div> --}}
             <div class="dropdown">
                 <button class="btn btn-subscribe w-100 dropdown-toggle" type="button" id="dropdownMenuButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {{$staticContent['Downloads']}}
                 </button>
                 <div class="dropdown-menu  w-100" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#" onclick="loadhtml();">{{$staticContent['Download_as_CSV']}}</a>
+                    <a class="dropdown-item" href="#" onclick="loadhtml();">{{$staticContent['Download_AS_CSV']}}</a>
                     <a class="dropdown-item" href="#" onclick="loadhtmlPDF();">{{$staticContent['Download_AS_PDF']}}</a>
                 </div>
             </div>

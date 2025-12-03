@@ -145,11 +145,11 @@ function getDateformat($date){
                         <form onsubmit="searchmarketingbycate(event, {{$cate->cate_id}})">
                             <div class="search-space d-flex justify-content-center w-100">
                                 <div class="box-search-input mr-3">
-                                    <div class="box-search-icon">
+                                    <div class="box-search-icon" style="border-top-left-radius: 6px;border-bottom-left-radius: 6px;">
                                         <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                                     </div>
                                     <label for="searchinput" class="searchinput-filters-input">
-                                        <input type="text" name="modelname" id="modelname-{{$cate->cate_id}}"
+                                        <input type="text" name="modelname" id="modelname-{{$cate->cate_id}}" style="border-top-right-radius: 6px;border-bottom-right-radius: 6px;"
                                             placeholder="{{$staticContent['Search_By_Name']}}">
                                     </label>
                                 </div>

@@ -318,10 +318,8 @@
 				<div class="row justify-content-center">
 					<div class="col-12">
 						<div class="row justify-content-center">
-
 							<div class="form-group col-12 col-lg-4">
-
-								<select name="" class="form-control" onchange="loadData();" id="model"></select>
+								<select name="" class="form-control border-radius-6" onchange="loadData();" id="model"></select>
 							</div>
 						</div>
 					</div>
@@ -405,7 +403,7 @@
 												</span>
 											</h5>
 										</label>
-										<select class="form-control" id="terminal"
+										<select class="form-control border-radius-6" id="terminal"
 											onchange="getToSummary();getToTerimal();">
 											<option value="1">{{$staticContent['t_for_american_terminal']}}</option>
 											<option value="2">{{$staticContent['e_for_european_terminal']}}</option>
@@ -423,7 +421,7 @@
 												</span>
 											</h5>
 										</label>
-										<select class="form-control" id="bus" onchange="getToSummary()">
+										<select class="form-control border-radius-6" id="bus" onchange="getToSummary()">
 											{{-- <option selected="selected" value="0">Default PMBus</option>
 											<option value="1">RS232 adapter</option>
 											<option value="2">USB adapter</option>
@@ -444,7 +442,7 @@
 												</span>
 											</h5>
 										</label>
-										<select class="form-control" id="logic" onchange="getToSummary()">
+										<select class="form-control border-radius-6" id="logic" onchange="getToSummary()">
 											<option selected="selected" value="0">
 												{!!$staticContent['Normal_Logic_&_Normal_Fan_Direction']!!}
 											</option>
@@ -665,7 +663,7 @@
 					<h4 class="text-color-delta">{{$staticContent['Summary']}}</h4>
 				</div>
 				<div id="configurable-summary">
-					<div class="d-flex flex-wrap border-2px-unmobile" id="savethis">
+					<div class="d-flex flex-wrap border-2px-unmobile border-radius-6" id="savethis">
 						{{-- <div class="col-12"> --}}
 							<div class="summary-subbody">
 								<!-- <h5 class="text-color-delta">{{$staticContent['Factory_Model_Name']}} :</h5>
@@ -936,7 +934,6 @@
 			<form id="submitSupport" name="configform" action="{{route('SubmitContact')}}"
 				onsubmit="return checkConfigFilefrom()" method="POST">
 				<div class="modal-body">
-
 					{{csrf_field()}}
 					<input type="hidden" name="config_id" id="con_id">
 					<input type="hidden" name="enquireStatus" id="enquireStatus" value="3">
@@ -950,7 +947,7 @@
 								<h6> Country <span style="color: red">*</span> :</h6>
 							</label>
 							<div class="">
-								<select name="country" class="form-control" onchange="selectCountry();"
+								<select name="country" class="form-control border-radius-6" onchange="selectCountry();"
 									id="countryemailId" required>
 									<option value="0">{{$staticContent['Select']}} {{$staticContent['Country']}}
 									</option>
@@ -965,7 +962,7 @@
 								<h6>City / State </h6>
 							</label>
 							<div class="">
-								<select name="state" class="form-control" id="stateId">
+								<select name="state" class="form-control border-radius-6" id="stateId">
 									<option value="" data-color="red">{{$staticContent['Select']}}
 										{{$staticContent['City_State']}}
 									</option>
@@ -1006,9 +1003,10 @@
 					<div class="col-12">
 						<input class="inp-cbx" id="cx-sale-en" type="checkbox" style="display: none;" />
 						<label class="cbx" for="cx-sale-en"><span>
-								<svg width="12px" height="10px" viewbox="0 0 12 10">
-									<polyline points="1.5 6 4.5 9 10.5 1"></polyline>
-								</svg></span><span>Sales Enquiry</span></label>
+							<svg width="12px" height="10px" viewbox="0 0 12 10">
+								<polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+							</svg></span><span>Sales Enquiry</span>
+						</label>
 					</div>
 
 					<div id="sale-enquiry">
@@ -1082,38 +1080,34 @@
 <script type="text/javascript" src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>
 <script>
 	$(document).ready(function() {
-        msieversion();
-       });
-      function msieversion()
-            {
-                var ua = window.navigator.userAgent;
-                var msie = ua.indexOf("MSIE");
+		msieversion();
+	});
 
-                if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) // If Internet Explorer, return version number
-                {
-                  var script = document.createElement('script');
-                    script.type = 'text/javascript';
-                    script.src = '{{asset('/frontend-asset/js/html2canvasie.js')}}';
+	function msieversion()
+	{
+		var ua = window.navigator.userAgent;
+		var msie = ua.indexOf("MSIE");
 
-                    document.getElementsByTagName('head')[0].appendChild(script);
+		if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+			var script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.src = '{{asset('/frontend-asset/js/html2canvasie.js')}}';
 
-                }
-                else  // If another browser, return 0
-                {
-                  var script = document.createElement('script');
-                    script.type = 'text/javascript';
-                    script.src = '{{asset('/frontend-asset/js/html2canvas.js')}}';
+			document.getElementsByTagName('head')[0].appendChild(script);
+		} else {
+			var script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.src = '{{asset('/frontend-asset/js/html2canvas.js')}}';
 
-                    document.getElementsByTagName('head')[0].appendChild(script);
+			document.getElementsByTagName('head')[0].appendChild(script);
+		}
 
-                }
-
-                return false;
-            }
+		return false;
+	}
 </script>
+
 <script type="text/javascript">
 	var verifyCallback = function(response) {
-	  // alert(response);
 	  $('#keyrecap').val(response);
 	};
 	var onloadCallback = function() {
@@ -1124,44 +1118,38 @@
 	  });
 	};
 	$("#submitSupport").submit(function( event ) {
-	//   if($('#keyrecap').val() == ''){
-	// 	 alert('Please Vertify I am not a robot?');
-	//   }else{
-	// 	$('#submitSupport').submit();
-	//   }
-	  $('#submitSupport').submit();
-	  event.preventDefault();
-   });
+		$('#submitSupport').submit();
+		event.preventDefault();
+   	});
 
-       @if(Session::has('message_eror'))
-        $(document).ready(function() {
-             $("#downloadgui-modal-failures").modal();
-          });
-        @endif
-		@if(Session::has('message_eror_notValid'))
-        $(document).ready(function() {
-             $("#Support_Frorm_required").modal();
-          });
-        @endif
-
+	@if(Session::has('message_eror'))
+	$(document).ready(function() {
+		$("#downloadgui-modal-failures").modal();
+	});
+	@endif
+	@if(Session::has('message_eror_notValid'))
+	$(document).ready(function() {
+		$("#Support_Frorm_required").modal();
+	});
+	@endif
 </script>
 <script src="{{asset('/frontend-asset/js/jquery.steps.min.js')}}"></script>
 <script>
 	@if(Session::has('message'))
-        $(document).ready(function() {
-             $("#sendConfigpdf").modal();
-          });
-        @endif
+	$(document).ready(function() {
+			$("#sendConfigpdf").modal();
+	});
+	@endif
 
-function checkdata(){
-	if($('#checkdataSub').val() == 0){
-		$('#checkdataSub').val(1);
-	}else{
-		$('#checkdataSub').val(0);
+	function checkdata(){
+		if($('#checkdataSub').val() == 0){
+			$('#checkdataSub').val(1);
+		}else{
+			$('#checkdataSub').val(0);
+		}
 	}
-}
 
-function selectCountry(){
+	function selectCountry(){
        var countryname = $('#countryemailId').val();
        $.ajax({
             url: "{{(route('searhstate'))}}",
@@ -1188,23 +1176,22 @@ function selectCountry(){
 <script>
 	$("#sale-enquiry").hide();
 	$("#cx-sale-en").click(function(){
-  	  $("#sale-enquiry").toggle();
+  	  	$("#sale-enquiry").toggle();
 		if($(this).prop("checked") == true){
-                // alert("Checkbox is checked.");
-				$('#name-sale').prop('required',true);
-				$('#company-sale').prop('required',true);
-				$('#message').prop('required',true);
-				$('#enquireStatus').val(0);
-				$('#subject').val(0);
-            }
-            else if($(this).prop("checked") == false){
-                // alert("Checkbox is unchecked.");
-				$('#name-sale').prop('required',false);
-				$('#company-sale').prop('required',false);
-				$('#message').prop('required',false);
-				$('#enquireStatus').val(3);
-				$('#subject').val('Configurable Power Selector PDF');
-            }
+			// alert("Checkbox is checked.");
+			$('#name-sale').prop('required',true);
+			$('#company-sale').prop('required',true);
+			$('#message').prop('required',true);
+			$('#enquireStatus').val(0);
+			$('#subject').val(0);
+		} else if($(this).prop("checked") == false){
+			// alert("Checkbox is unchecked.");
+			$('#name-sale').prop('required',false);
+			$('#company-sale').prop('required',false);
+			$('#message').prop('required',false);
+			$('#enquireStatus').val(3);
+			$('#subject').val('Configurable Power Selector PDF');
+		}
 	});
 	$("#cx-sale-en").click(function(){
 
@@ -1250,13 +1237,15 @@ function selectCountry(){
 			// $('.wizard > .content').height($('section.current').height());
 			$('.actions > ul > li:first-child').attr('style', 'display:block');
 			var index_pr = $('#model').children("option:selected").val();
-			if(currentIndex === 0){
+			$('.wizard > .actions').addClass("border-radius-6");
+
+			if (currentIndex === 0) {
 				$('.wizard > .actions').attr('style', 'border: 2px solid transparent;');
 				$('a[href$="previous"]').attr('style', 'display:none');
                 $('a[href$="next"]').attr('style', 'display:block');
 				$('a[href$="next"]').text('{{$staticContent['Select_Output(s)']}}');
 			}
-			if(currentIndex === 1){
+			if (currentIndex === 1) {
 				$('.wizard > .actions').attr('style', 'border: 2px solid transparent;');
 				$('a[href$="previous"]').attr('style', 'display:block');
 				$('a[href$="previous"]').text('{{$staticContent['Select_Model']}}');
@@ -1268,10 +1257,11 @@ function selectCountry(){
                 //Call validation function
                 validateDualInputs();
             }
-			if(currentIndex === 2){
+			if (currentIndex === 2) {
 				setActive();
-				$('.wizard > .actions').attr('style', 'border: 2px solid transparent;');
 				$('.wizard > .content').attr('style', 'border-bottom: 2px solid #E3EFF8;');
+				$('.wizard > .actions').attr('style', 'border: 2px solid transparent;');
+
 				$('a[href$="previous"]').attr('style', 'display:block');
 				$('a[href$="previous"]').text('{{$staticContent['Select_Output(s)']}}');
 				$('a[href$="next"]').text('{{$staticContent['Summary']}}');
@@ -1280,7 +1270,7 @@ function selectCountry(){
 				// $('.wizard > .content').height($('section.current').height()+60);
 			}
 
-			if(currentIndex === 3){
+			if (currentIndex === 3) {
 				setCode();
 				$('.wizard > .actions').attr('style', 'border: 2px solid #E3EFF8;');
 				$('.wizard > .content').attr('style', 'border-bottom: unset;');
@@ -1292,7 +1282,6 @@ function selectCountry(){
 				$('a[href$="previous"]').html('<button class="btn-enquiry" id="SbtRequest1" onclick="linktosupport();">{{$staticContent['Enquiry']}}</button>');
 				$('a[href$="previous"]').attr("href" ,'#');
 
-
 				var val = $('input[name=parallel]:checked').val();
 				$('#configurable-p-3 tbody tr').addClass('d-none');
 				$('#configurable-p-3 #parallel'+ val).removeClass('d-none');
@@ -1301,7 +1290,6 @@ function selectCountry(){
 				$('#parallel'+ val +' input[name=parallel-2]').prop( "checked", true );
 				// $('.wizard > .content').height($('section.current').height()+90);
 				$('#savedataauto').click();
-
 
 			}
 
@@ -1330,7 +1318,6 @@ function selectCountry(){
 		}else{
 			$('#loaderSavefile').css("display",'block');
 		}
-
 	}
 	function checkvalueConfOnly(){
 		var value = $('#con_id').val();
@@ -1340,35 +1327,32 @@ function selectCountry(){
 	}
 	function checkValueConfigFile(){
 		var state = $('#stateSelectbth').val();
-	   if(state == 1){
-		  linktosupport();
-	   }else if(state == 2){
-		checkConfigFilefrom();
-	   }
+		if (state == 1) {
+			linktosupport();
+		} else if(state == 2) {
+			checkConfigFilefrom();
+		}
 	}
 	function checkConfigFilefrom(){
-		// alert('checkfile');
-		  $('#stateSelectbth').val(2);
-		   if(document.configform.config_id.value == '' || document.configform.config_id.value == null) {
+		$('#stateSelectbth').val(2);
+		if(document.configform.config_id.value == '' || document.configform.config_id.value == null) {
 			$('#loaderSavefile').css("display",'block');
-			// alert('testconf');
 			return false;
-		   }else if(document.configform.keyrecap.value == '' || document.configform.keyrecap.value == null ){
-		    alert('Please verify you are not a robot')
+		}else if(document.configform.keyrecap.value == '' || document.configform.keyrecap.value == null ){
+			alert('Please verify you are not a robot')
 			return false;
-		   }else if(!document.configform.prichk.checked){
+		}else if(!document.configform.prichk.checked){
 			alert('Please accept Privacy Policy checkbox to continue')
 			return false;
-		   }else {
-			  if($('#keyrecap').val() != '' && $('#keyrecap').val() != null){
+		}else {
+			if($('#keyrecap').val() != '' && $('#keyrecap').val() != null){
 				document.configform.submit();
-			  }
-            }
+			}
+		}
 	}
 
 	function selectionGenerate(){
 		$.each(model_name , function(index,value){
-
 			$('#model').append('<option value="'+index+'">'+value['product_code']+'</option>');
 		});
 		$('#model').children("option:first-child").attr('selected','selected');
@@ -1381,7 +1365,6 @@ function selectCountry(){
 		$('.text-info').html(model_alldata[index]['description']);
 		$('#img-fistdata').html('<img class="img-model " src="{{config('app.url')}}/media/model/'+model_alldata[index]['thumb_img']+'">');
 		$('.img-summary-add').html('<img class="img-fluid" src="{{config('app.url')}}/media/model/'+model_alldata[index]['thumb_img']+'" >');
-
 
 		$('#certificate').html('<img class="" src="{{config('app.url') }}/media/model/'+model_alldata[index]['certificate_img']+'">');
 		var l = parseFloat(model_alldata[index]['dimensions']);
@@ -1409,16 +1392,15 @@ function selectCountry(){
 		// 	$('#bg-slot02').removeClass("bg-sixslot");
 		// 	$('#bg-slot02').addClass("bg-fourslot");
 		// }
-	     var ts_a_700 = [78.7,70,58.3,50,46.7,38.9,35,29.2,25,23.3,21.9,19.4,16.7,14.6,13,11.7];
-     	 var do_a_700 = [5,5,5,5,5,5,5,5,5,5,4.5,3.7,3.2,3];
-		 var index = $('#model').children("option:selected").val();
-		 if(model_alldata[index]['max_power'] == 700){
+		var ts_a_700 = [78.7,70,58.3,50,46.7,38.9,35,29.2,25,23.3,21.9,19.4,16.7,14.6,13,11.7];
+		var do_a_700 = [5,5,5,5,5,5,5,5,5,5,4.5,3.7,3.2,3];
+		var index = $('#model').children("option:selected").val();
+		if (model_alldata[index]['max_power'] == 700) {
 			do_a = do_a_700;
 			ts_a = ts_a_700;
 			$('#bus').empty();
 			$("#bus").append(new Option("{{$staticContent['default_N_A']}}", "0"));
-
-		 }else{
+		} else {
 			do_a = do_a_gobal;
 			ts_a = ts_a_gobal;
 			$('#bus').empty();
@@ -1426,89 +1408,84 @@ function selectCountry(){
 			$("#bus").append(new Option("{{$staticContent['RS232_adapter']}}", "1"));
 			$("#bus").append(new Option("{{$staticContent['USB_adapter']}}", "2"));
 			$("#bus").append(new Option("{{$staticContent['RS485_adapter']}}", "3"));
-		 }
-		 if(model_alldata[index]['max_power'] == 3000){
+		}
 
-				$('#terminal').empty();
-                $("#terminal").append(new Option("{{$staticContent['t_for_american_terminal']}}", "1"));
-				$("#terminal").append(new Option("{{$staticContent['e_for_european_terminal']}}", "2"));
-				$("#terminal").append(new Option("{{$staticContent['c_for_c14']}}", "3"));
+		if (model_alldata[index]['max_power'] == 3000) {
+			$('#terminal').empty();
+			$("#terminal").append(new Option("{{$staticContent['t_for_american_terminal']}}", "1"));
+			$("#terminal").append(new Option("{{$staticContent['e_for_european_terminal']}}", "2"));
+			$("#terminal").append(new Option("{{$staticContent['c_for_c14']}}", "3"));
 
-				$('#logic').empty();
-				$("#logic").append(new Option("{!!$staticContent['Normal_Logic_&_Normal_Fan_Direction']!!}", "0"));
-				$("#logic").append(new Option("{!!$staticContent['Reversed_Logic_&_Normal_Fan_Direction']!!}", "1"));
-				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description_MEG-3K0A9']}}');
-		}else if(model_alldata[index]['max_power'] == 700){
-		        $('#terminal').empty();
-                $("#terminal").append(new Option("{{$staticContent['t_for_american_terminal']}}", "1"));
-				$("#terminal").append(new Option("{{$staticContent['e_for_european_terminal']}}", "2"));
-				$("#terminal").append(new Option("{{$staticContent['c_for_c14']}}", "3"));
+			$('#logic').empty();
+			$("#logic").append(new Option("{!!$staticContent['Normal_Logic_&_Normal_Fan_Direction']!!}", "0"));
+			$("#logic").append(new Option("{!!$staticContent['Reversed_Logic_&_Normal_Fan_Direction']!!}", "1"));
+			$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description_MEG-3K0A9']}}');
+		} else if(model_alldata[index]['max_power'] == 700) {
+			$('#terminal').empty();
+			$("#terminal").append(new Option("{{$staticContent['t_for_american_terminal']}}", "1"));
+			$("#terminal").append(new Option("{{$staticContent['e_for_european_terminal']}}", "2"));
+			$("#terminal").append(new Option("{{$staticContent['c_for_c14']}}", "3"));
 
-				$('#logic').empty();
-				$("#logic").append(new Option("{!!$staticContent['Normal_Logic_&_Normal_Fan_Direction']!!}", "0"));
-				$("#logic").append(new Option("{!!$staticContent['Reversed_Logic_&_Normal_Fan_Direction']!!}", "1"));
-				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description']}}');
+			$('#logic').empty();
+			$("#logic").append(new Option("{!!$staticContent['Normal_Logic_&_Normal_Fan_Direction']!!}", "0"));
+			$("#logic").append(new Option("{!!$staticContent['Reversed_Logic_&_Normal_Fan_Direction']!!}", "1"));
+			$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description']}}');
+		} else {
+			$('#terminal').empty();
+			$("#terminal").append(new Option("{{$staticContent['t_for_american_terminal']}}", "1"));
+			$("#terminal").append(new Option("{{$staticContent['e_for_european_terminal']}}", "2"));
+			$("#terminal").append(new Option("{{$staticContent['c_for_c14']}}", "3"));
 
-		}else{
+			$('#logic').empty();
+			$("#logic").append(new Option("{!!$staticContent['Normal_Logic_&_Normal_Fan_Direction']!!}", "0"));
+			$("#logic").append(new Option("{!!$staticContent['Reversed_Logic_&_Normal_Fan_Direction']!!}", "1"));
+			$("#logic").append(new Option("{!!$staticContent['Normal_Logic_&_Reversed_Fan_Direction']!!}", "2"));
+			$("#logic").append(new Option("{!!$staticContent['Reversed_Logic_&_Reversed_Fan_Direction']!!}", "3"));
+			$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description']}}');
+		}
 
-				$('#terminal').empty();
-				$("#terminal").append(new Option("{{$staticContent['t_for_american_terminal']}}", "1"));
-				$("#terminal").append(new Option("{{$staticContent['e_for_european_terminal']}}", "2"));
-				$("#terminal").append(new Option("{{$staticContent['c_for_c14']}}", "3"));
-
-				$('#logic').empty();
-				$("#logic").append(new Option("{!!$staticContent['Normal_Logic_&_Normal_Fan_Direction']!!}", "0"));
-				$("#logic").append(new Option("{!!$staticContent['Reversed_Logic_&_Normal_Fan_Direction']!!}", "1"));
-				$("#logic").append(new Option("{!!$staticContent['Normal_Logic_&_Reversed_Fan_Direction']!!}", "2"));
-				$("#logic").append(new Option("{!!$staticContent['Reversed_Logic_&_Reversed_Fan_Direction']!!}", "3"));
-				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description']}}');
-
-			}
-
-		 loadparallel(model_alldata[index]['translate_id'] ,model_alldata[index]['max_slot']);
-			getSelectConnector(model_alldata[index]['translate_id'],model_alldata[index]);
+		loadparallel(model_alldata[index]['translate_id'] ,model_alldata[index]['max_slot']);
+		getSelectConnector(model_alldata[index]['translate_id'],model_alldata[index]);
 		//addMoreOutput();
 		$('.slot').empty();
 		addSlotOutput();
-
 	}
 
-	function getSelectConnector(proId ,model){
-	if(connectors_images.length > 0){
-		$('#terminal').empty();
-		$.each(connectors_images,function(index,value){
-	     if(value.product_id == proId){
-							if(value.value == 1){
-									if(value.image){
-										$('.img-summary-add').html('<img class="img-fluid" src="{{config('app.url')}}/upload/thumbs/'+value.image+'" >');
-									}else{
-										$('.img-summary-add').html('<img class="img-fluid" src="{{config('app.url')}}/media/model/'+model['thumb_img']+'" >');
-									}
-					  	}
-								$("#terminal").append(new Option(value.code, value.value));
+	function getSelectConnector(proId ,model) {
+		if (connectors_images.length > 0) {
+			$('#terminal').empty();
+			$.each(connectors_images,function(index,value) {
+				if (value.product_id == proId) {
+					if(value.value == 1){
+						if (value.image) {
+							$('.img-summary-add').html('<img class="img-fluid" src="{{config('app.url')}}/upload/thumbs/'+value.image+'" >');
+						} else {
+							$('.img-summary-add').html('<img class="img-fluid" src="{{config('app.url')}}/media/model/'+model['thumb_img']+'" >');
 						}
-		});
-	}
-
-	}
-	function loadparallel(id, max_slot){
-		$.ajax({
-					url: "{{route('loadparallercon')}}",
-					data: {'model_id': id},
-					type: 'POST',
-					headers: {
-						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					},
-					success: function(data){
-						paralls_cons = data.data;
-						renderTable(max_slot,'parallel',paralls_cons,'data_tableslot');
-						renderTable(max_slot,'parallel-2',paralls_cons,'data_table2_con');
-					},
-					error: function(data){
-						console.log(data);
-						}
+					}
+					$("#terminal").append(new Option(value.code, value.value));
+				}
 			});
+		}
+	}
 
+	function loadparallel(id, max_slot) {
+		$.ajax({
+			url: "{{route('loadparallercon')}}",
+			data: {'model_id': id},
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			success: function(data) {
+				paralls_cons = data.data;
+				renderTable(max_slot,'parallel',paralls_cons,'data_tableslot');
+				renderTable(max_slot,'parallel-2',paralls_cons,'data_table2_con');
+			},
+			error: function(data) {
+				console.log(data);
+			}
+		});
 	}
 
     function validateDualInputs() {
@@ -1563,7 +1540,6 @@ function selectCountry(){
             } else {
                 if (nextButton.text() === '{{$staticContent["Select_Parallel"]}}') {
                     nextButton.css('display', 'none');
-
                 }
             }
         }
@@ -1577,13 +1553,12 @@ function selectCountry(){
         });
     }
 
-	function addSlotOutput(){
+	function addSlotOutput() {
 		if(checkSlotMax()){
 			var index = $('#model').children("option:selected").val();
 			alert('You have reached maximum slot of '+model_alldata[index]['product_code']+' ('+model_alldata[index]['max_slot']+' slots)');
 			return;
 		}
-
 
 		var index = indexBetween();
 		var text = '';
@@ -1625,19 +1600,17 @@ function selectCountry(){
 		$('.slot #child-'+index+' #single'+index+'').attr('checked', 'checked');
 		// $('#numoutput').text(index);
 		checkSlotMax();
-
 	}
 
-	function getSelecter(_this){
+	function getSelecter(_this) {
 		var type = $(_this).val();
 		var index = $(_this).parent().parent().parent().children('input[name=index]').val();
 		var text = '';
 
 		for(var i = 0 ; i < type ; i++){
-
 			text += '<div class="w-100 select-box my-1 d-flex flex-wrap" id="select-box'+i+'">';
 			text += '<div class="voltage col-4 column-select">';
-			text += '<select class="form-control" onchange="getSelectCurrent(this,'+type+'); getToSum('+i+');" id="volt'+i+'">';
+			text += '<select class="form-control border-radius-6" onchange="getSelectCurrent(this,'+type+'); getToSum('+i+');" id="volt'+i+'">';
 			text += '<option value="-1">';
 			text += '{{$staticContent['voltage']}} '+index;
 			text += (type == 2) ? '.'+(i+1):'';
@@ -1646,7 +1619,7 @@ function selectCountry(){
 			text += '</select>';
 			text += '</div>';
 			text += '<div class="current col-4 column-select">';
-			text += '<select class="form-control" >';
+			text += '<select class="form-control border-radius-6" >';
 			text += '<option value="-1">';
 			text += '{{$staticContent['current']}} '+index;
 			text += (type == 2) ? '.'+(i+1):'';
@@ -1679,8 +1652,6 @@ function selectCountry(){
 		setHeight();
 		setModelPreview();
 		setModelPreviewToSum();
-
-
 	}
 	function getToSummary02(i){
 		// alert("55555555555");
@@ -1704,7 +1675,7 @@ function selectCountry(){
 		var array_a = (type == 1) ? ss_a : do_a;
 
 
-		text += '<select class="form-control" onchange="currentChange(this,'+type+')" >';
+		text += '<select class="form-control border-radius-6" onchange="currentChange(this,'+type+')" >';
 		text += '<option value="'+array_a[value]+'">';
 		text += parseFloat(array_a[value]).toFixed(2)+'A';
 		text += '</option>';
@@ -1881,7 +1852,6 @@ function selectCountry(){
 	function setModelPreview(){
 		var index = $('#model').children("option:selected").val();
 		var max_slot = model_alldata[index]['max_slot'];
-		// console.log(max_slot);
 		var checked = false;
 		var text = '';
 		var _value = null;
@@ -2019,7 +1989,7 @@ function selectCountry(){
     function renderTable(slot,name,paralles,where_is){
 		// console.log(paralles);
     var html = '';
-	    html += '<table class="w-100 parallel"style="margin-top:12px;">';
+	    html += '<table class="w-100 parallel rounded-table" style="margin-top:12px;">';
 	    html += '<thead>';
 		html += '<tr class="header-td">';
 		html +=	'<td ></td>';
