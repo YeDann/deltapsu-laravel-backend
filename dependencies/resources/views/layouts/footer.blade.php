@@ -96,6 +96,8 @@
                         @endif
 
                     </div>{{-- product --}}
+
+                    {{-- Application Start --}}
                     <div class="col-xl-2 col-lg-2">
                         <div class="text-footer-main ">
                             <h6>{{isset($staticContent['Applications'])?$staticContent['Applications']:"Applications"}}
@@ -112,8 +114,11 @@
                         @endif
 
 
-                    </div>{{-- appli --}}
-                    <div class="col-xl-2 col-lg-2">
+                    </div>
+                    {{-- Application End --}}
+
+                    {{-- Selector --}}
+                    {{-- <div class="col-xl-2 col-lg-2">
                         <div class="text-footer-main">
                             <h6>{{isset($staticContent['Tools'])?$staticContent['Tools']:"Tools"}}</h6>
                         </div>
@@ -129,13 +134,6 @@
                             <a href="{{route('configurableproduct')}}">
                                 <p class="text-pro-link">{{isset($staticContent['configurable_power_selector'])
                                     ?$staticContent['configurable_power_selector']:"Configurable Power Selector" }}</p>
-
-                            </a>
-                        </div>
-                        <div class=" ">
-                            <a href="{{route('productCoparison')}}">
-                                <p class="text-pro-link">{{isset($staticContent['product_comparison'])?
-                                    $staticContent['product_comparison']:"Product Comparison" }}</p>
 
                             </a>
                         </div>
@@ -157,15 +155,18 @@
                                     {{isset($staticContent['Events'])?$staticContent['Events']:"Events" }}</p>
                             </a>
                         </div>
-                        {{-- <div class=" ">
+                        <div class=" ">
                             <a href="{{route('index','technical-articles')}}">
                                 <p class="text-pro-link">
                                     {{isset($staticContent['Technical_Articles'])?$staticContent['Technical_Articles']:"Technical
                                     Articles"}}</p>
 
                             </a>
-                        </div> --}}
-                    </div>{{-- TOOL&UPDATE --}}
+                        </div>
+                    </div> --}}
+                    {{-- Tools, Selector --}}
+
+                    {{-- Technical Support --}}
                     <div class="col-xl-2 col-lg-2">
                         {{-- <div class="text-footer-main ">
                             <h6>{{isset($staticContent['About'])?$staticContent['About']:"About"}}</h6>
@@ -180,7 +181,7 @@
                         @endforeach
                         <br> --}}
                         <div class="text-footer-main  footer-two">
-                            <h6>{{isset($staticContent['Downloads'])?$staticContent['Downloads']:"Downloads"}}</h6>
+                            <h6>{{isset($staticContent['Technical_Support'])?$staticContent['Technical_Support']:"Technical Support"}}</h6>
                         </div>
                         <div class=" ">
                             <a href="{{route('index','catalogs')}}">
@@ -190,32 +191,62 @@
                             </a>
                         </div>
                         <div class=" ">
-                            <a href="{{route('index','product-documents')}}">
+                            <a href="{{route('index', 'product-documents')}}">
                                 <p class="text-pro-link">
                                     {{isset($staticContent['Product_Documents'])?$staticContent['Product_Documents']:"Product
                                     Documents"}}</p>
 
                             </a>
                         </div>
+                        <div class=" ">
+                            <a href="{{route('productCoparison')}}">
+                                <p class="text-pro-link">{{isset($staticContent['product_comparison'])?
+                                    $staticContent['product_comparison']:"Product Comparison" }}</p>
 
-                    </div>{{-- about&RESOURCE --}}
+                            </a>
+                        </div>
+                        <div class=" ">
+                            <a href="{{route('index','faqs')}}">
+                                <p class="text-pro-link">{{isset($staticContent['FAQs'])?$staticContent['FAQs']:"FAQs"}}
+                                </p>
+
+                            </a>
+                        </div>
+                    </div>
+                    {{-- Technical Support End --}}
+
+                    {{-- News --}}
+                    <div class="col-xl-2 col-lg-2">
+                        <div class="text-footer-main footer-two">
+                            <h6>{{isset($staticContent['News_Events'])?$staticContent['News_Events']:"News&Events"}}</h6>
+                        </div>
+                        <div class=" ">
+                            <a href="{{route('index','news')}}">
+                                <p class="text-pro-link">
+                                    {{isset($staticContent['Product_News'])?$staticContent['Product_News']:"News"}}</p>
+
+                            </a>
+                        </div>
+                        <div class=" ">
+                            <a href="{{route('index','events')}}">
+                                <p class="text-pro-link">
+                                    {{isset($staticContent['Events'])?$staticContent['Events']:"Events"}}</p>
+
+                            </a>
+                        </div>
+                    </div>
+                    {{-- News End --}}
+                    
+                    {{-- Where to buy --}}
                     <div class="col-xl-2 col-lg-2">
                         <div class="text-footer-main ">
-                            <h6>{{isset($staticContent['Supports'])?$staticContent['Supports']:"Supports"}}</h6>
+                            <h6>{{isset($staticContent['where_to_buy'])?$staticContent['where_to_buy']:"Where to Buy"}}</h6>
                         </div>
                         <div class=" ">
                             <a href="{{route('contactSupport')}}">
                                 <p class="text-pro-link">
                                     {{isset($staticContent['contact_us'])?$staticContent['contact_us']:"Contact Us"}}
                                 </p>
-
-                            </a>
-                        </div>
-                        <div class=" ">
-                            <a href="{{route('contactSalesOffices')}}">
-                                <p class="text-pro-link">
-                                    {{isset($staticContent['sales_offices'])?$staticContent['sales_offices']:"Sales
-                                    Offices"}}</p>
 
                             </a>
                         </div>
@@ -228,13 +259,13 @@
                             </a>
                         </div>
                         <div class=" ">
-                            <a href="{{route('index','faqs')}}">
-                                <p class="text-pro-link">{{isset($staticContent['FAQs'])?$staticContent['FAQs']:"FAQs"}}
-                                </p>
+                            <a href="{{route('contactSalesOffices')}}">
+                                <p class="text-pro-link">
+                                    {{isset($staticContent['sales_offices'])?$staticContent['sales_offices']:"Sales
+                                    Offices"}}</p>
 
                             </a>
                         </div>
-
 
                     </div>{{-- contact&PARTNER--}}
                     <div class="col-xl-2 col-lg-2">

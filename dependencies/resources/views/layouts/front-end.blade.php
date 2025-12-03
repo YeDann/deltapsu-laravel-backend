@@ -30,7 +30,7 @@ $langch = str_replace('_', '-', app()->getLocale());
     @yield('meta')
     <!-- Bootstrap CSS -->
 
-    <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{mix('/css/all.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/fontello3.css')}}" />
     <link rel="stylesheet" type="text/css"
         href="{{asset('/frontend-asset/material-design-iconic-font/css/material-design-iconic-font.min.css')}}" />
@@ -733,12 +733,11 @@ if (!Array.prototype.findIndex) {
       } */
         function bigImg(image ,id){
           // console.log(image);
-           if(image != ''){
+          if(image != ''){
             $('.imageNav'+id).attr('src' ,'{{config('app.url')}}/medias/categories/'+image);
-           }else {
+          }else {
             $('.imageNav'+id).attr('src' ,'{{asset('frontend-asset/image/blank.png')}}');
-
-           }
+          }
         }
         function mainCate(id){
           // console.log(id);
@@ -769,6 +768,9 @@ if (!Array.prototype.findIndex) {
           // console.log(nameArr ,link );
           // setlocaltion(nameArr[1] , nameArr[0]);
         }
+        function clickLangLocationmobile(link) {
+          window.location = link;
+        }
         function setlocaltion(lang ,link){
           // console.log(lang);
           // if(lang == 'jp'){
@@ -781,20 +783,19 @@ if (!Array.prototype.findIndex) {
           //   window.cwcCookieBanner.setLang('en')
           // }
           $.ajax({
-           url: "{{route('setlocaltion')}}",
-           data: {
-          'lang': lang,
-           },
-           type: 'POST',
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           success: function (res) {
-            //  console.log(res);
-             window.location = link;
-           }
+            url: "{{route('setlocaltion')}}",
+            data: {
+              'lang': lang,
+            },
+            type: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (res) {
+              //  console.log(res);
+              window.location = link;
+            }
           });
-
         }
 
     </script>

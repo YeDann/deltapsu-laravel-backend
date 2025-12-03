@@ -76,7 +76,7 @@
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
 <section class="box-news  my-5 {{-- visible-up-922 --}}">
     <div class="container">
-        <div class="box-news-detail">
+        <div class="box-news-detail border-radius-6">
             <h1 class="text-dark">
                 {{isset($contents[0]->title)? $contents[0]->title:'' }}
 
@@ -155,7 +155,7 @@
         <div class="row">
             @foreach ($otherNews as $item)
             <div class="col-lg-4 col-sm-6">
-                <div class="card">
+                <div class="card border-radius-6">
                     <a href="{{route('updateNewsDetail',['name'=> $item->slug])}}">
                         <div class="post-image">
                             <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""

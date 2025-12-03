@@ -506,7 +506,7 @@
                                 <div id="related-product"
                                     class="owl-carousel owl-theme ft-products-body owl-loaded owl-drag mr-b-12px">
                                     @foreach ($relatedApp as $serie)
-                                    <div class="item-related d-flex">
+                                    <div class="item-related d-flex border-radius-6">
                                         <a style="color:inherit;" class=""
                                             href="{{ route('productBySeries',[$serie->title,$serie->se_id])}}">
                                             <div class="m-auto">
@@ -547,7 +547,7 @@
                                     @foreach ($otherapp as $app)
                                     <div class="col-lg-3">
                                         <a href="{{route('appDetail' ,[ 'name' => $app->slug_app , 'id' => $app->applica_id])}}"
-                                            class="other-applications-list media">
+                                            class="other-applications-list media border-radius-6">
 
                                             <div class="app-middle-box align-self-center">
                                                 <img class="mr-3"
@@ -640,7 +640,7 @@
                             <div id="related-product-mobile"
                                 class="owl-carousel owl-theme ft-products-body owl-loaded owl-drag mr-b-12px">
                                 @foreach ($relatedApp as $serie)
-                                <div class="item-related d-flex">
+                                <div class="item-related d-flex border-radius-6">
                                     <a style="color:inherit;" class=""
                                         href="{{ route('productBySeries',[$serie->title,$serie->se_id])}}">
                                         <div class="m-auto">
@@ -669,10 +669,9 @@
                             <div class="container">
                                 <div class="row">
                                     @foreach ($otherapp as $app)
-
                                     <div class="col-md-6">
                                         <a href="{{route('appDetail' ,[ 'name' => $app->slug_app , 'id' => $app->applica_id])}}"
-                                            class="other-applications-grid-mobile-list">
+                                            class="other-applications-grid-mobile-list border-radius-6">
                                             <img class="center my-2"
                                                 src="{{config('app.url')}}/medias/categories/{{$app->color_icon}}">
                                             <h6 class="text-title-dark text-center">{{$app->name}}</h6>

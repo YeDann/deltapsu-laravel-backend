@@ -445,12 +445,12 @@ class FrontendController extends Controller
             ->get();
 
             $faqs = DB::table('faq as f')
-            ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
-            ->where('ft.local', '=', $lang)
-            ->where('f.status', 1)
-            ->select('f.*', 'ft.*')
-            ->orderBy('order_seq')
-            ->get();
+                ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
+                ->where('ft.local', '=', $lang)
+                ->where('f.status', 1)
+                ->select('f.*', 'ft.*')
+                ->orderBy('order_seq')
+                ->get();
             $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id', 14)
@@ -459,9 +459,9 @@ class FrontendController extends Controller
                 ->get();
 
             return view('front-end.faqs')
-            ->with('metatag', $metatag)
-            ->with('faqs', $faqs)
-            ->with('faq_categories', $faq_categories);
+                ->with('metatag', $metatag)
+                ->with('faqs', $faqs)
+                ->with('faq_categories', $faq_categories);
         }
 
         if ('product-documents' == $page) {
@@ -739,10 +739,10 @@ class FrontendController extends Controller
         $lang = App::getLocale();
         $model = DB::table('cproducts')->select('product_code')->where('language', $lang)->where('status', '1')->get();
         $model_alldata = DB::table('cproducts')->where('language', $lang)->where('status', '1')->get();
-        // return dd($model_alldata);
+
         $connectors_images = DB::table('connector_image as cm')
-        ->select('cm.*')
-        ->get();
+            ->select('cm.*')
+            ->get();
 
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
@@ -752,10 +752,10 @@ class FrontendController extends Controller
                 ->get();
 
         return view('front-end.configurableproduct')
-        ->with('metatag', $metatag)
-        ->with('model', $model)
-        ->with('connectors_images', $connectors_images)
-        ->with('model_alldata', $model_alldata);
+            ->with('metatag', $metatag)
+            ->with('model', $model)
+            ->with('connectors_images', $connectors_images)
+            ->with('model_alldata', $model_alldata);
     }
 
     public function allproductsByType($cate_parname, $cate_par_id = 0, $main_pId)
@@ -2135,24 +2135,9 @@ class FrontendController extends Controller
         $lang = App::getLocale();
 
         return redirect()->route('index', 'home');
+
         $name = $this->validateInput($namePar, 'text', true);
         $contents = DB::table('article_has_categories as anc')
-        ->join('contents as c', 'c.id', '=', 'anc.content_id')
-        ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
-        ->join('tech_type as ty', 'ty.id', '=', 'anc.categories_id')
-        ->join('tech_type_translation as tyt', 'ty.id', '=', 'tyt.tech_id')
-        ->where('ct.local', $lang)
-        ->where('tyt.local', $lang)
-        ->where('c.status', 1)
-        ->where('c.slug', $name)
-        ->where('c.content_type', '=', 'blog')
-        ->select('c.*', 'ct.*', 'tyt.name as cateName')
-        ->orderBy('c.date_publish', 'desc')
-        ->get();
-        // return dd($contents);
-        $otherNews = [];
-        if (0 != count($contents)) {
-            $otherNews = DB::table('article_has_categories as anc')
             ->join('contents as c', 'c.id', '=', 'anc.content_id')
             ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
             ->join('tech_type as ty', 'ty.id', '=', 'anc.categories_id')
@@ -2160,16 +2145,32 @@ class FrontendController extends Controller
             ->where('ct.local', $lang)
             ->where('tyt.local', $lang)
             ->where('c.status', 1)
-            ->where('c.id', $contents[0]->id)
+            ->where('c.slug', $name)
             ->where('c.content_type', '=', 'blog')
             ->select('c.*', 'ct.*', 'tyt.name as cateName')
             ->orderBy('c.date_publish', 'desc')
             ->get();
+
+        $otherNews = [];
+        if (0 != count($contents)) {
+            $otherNews = DB::table('article_has_categories as anc')
+                ->join('contents as c', 'c.id', '=', 'anc.content_id')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->join('tech_type as ty', 'ty.id', '=', 'anc.categories_id')
+                ->join('tech_type_translation as tyt', 'ty.id', '=', 'tyt.tech_id')
+                ->where('ct.local', $lang)
+                ->where('tyt.local', $lang)
+                ->where('c.status', 1)
+                ->where('c.id', $contents[0]->id)
+                ->where('c.content_type', '=', 'blog')
+                ->select('c.*', 'ct.*', 'tyt.name as cateName')
+                ->orderBy('c.date_publish', 'desc')
+                ->get();
         }
 
         return view('front-end.technical-detail')
-        ->with('otherNews', $otherNews)
-        ->with('contents', $contents);
+            ->with('otherNews', $otherNews)
+            ->with('contents', $contents);
     }
 
     public function updateProductNoticelDetail()
@@ -2181,11 +2182,11 @@ class FrontendController extends Controller
     {
         $lang = App::getLocale();
         $subCategories = DB::table('sub_pro_categories as sc')
-        ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
-        ->select('sc.*', 'sct.*')
-        ->where('sct.local', $lang)
-        ->orderBy('sct.name', 'asc')
-        ->get();
+            ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
+            ->select('sc.*', 'sct.*')
+            ->where('sct.local', $lang)
+            ->orderBy('sct.name', 'asc')
+            ->get();
 
         $static_content = DB::table('static_content as st')
             ->join('static_content_translations as sct', 'st.sta_id', '=', 'sct.sta_fk_id')
@@ -2203,23 +2204,25 @@ class FrontendController extends Controller
             ->distinct()
             ->orderBy('st.title', 'asc')
             ->get();
-        // return dd(session('enquireModel'));
+
         $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 10)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
+            ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+            ->where('mtp.id', 10)
+            ->where('mtpt.local', $lang)
+            ->select('mtp.*', 'mtpt.*')
+            ->get();
+
         $setType = DB::table('email_notification as et')
-        ->select('et.*')
-        ->where('et.type', 3)
-        ->get();
+            ->select('et.*')
+            ->where('et.type', 3)
+            ->get();
+
         $arr_settype = [];
         foreach ($setType as $type) {
             array_push($arr_settype, $type->product_type);
         }
 
-        //  return dd($arr_settype);
+        // dd($static_content);
         return view('front-end.support')
             ->with('arr_settype', $arr_settype)
             ->with('metatag', $metatag)
@@ -2232,117 +2235,120 @@ class FrontendController extends Controller
     {
         $lang = App::getLocale();
         $continents = DB::table('continents as c')
-        ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
-        ->where('type_id', 1)
-        ->where('ct.local', '=', $lang)
-        ->orderBy('c.order_seq', 'asc')
-        ->select('c.*', 'ct.*')
-        ->get();
+            ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
+            ->where('type_id', 1)
+            ->where('ct.local', '=', $lang)
+            ->orderBy('c.order_seq', 'asc')
+            ->select('c.*', 'ct.*')
+            ->get();
 
         $offices = DB::table('office as f')
-        ->join('office_translations as oft', 'f.id', '=', 'oft.fk_office_id')
-        ->where('f.type_id', 1)
-        ->where('oft.local', '=', $lang)
-        ->select('f.*', 'oft.*')
-        ->where('f.status', 1)
-        ->get();
+            ->join('office_translations as oft', 'f.id', '=', 'oft.fk_office_id')
+            ->where('f.type_id', 1)
+            ->where('oft.local', '=', $lang)
+            ->select('f.*', 'oft.*')
+            ->where('f.status', 1)
+            ->get();
 
         $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 11)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
+            ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+            ->where('mtp.id', 11)
+            ->where('mtpt.local', $lang)
+            ->select('mtp.*', 'mtpt.*')
+            ->get();
 
         return view('front-end.sales-offices')
-        ->with('metatag', $metatag)
-        ->with('offices', $offices)
-        ->with('continents', $continents);
+            ->with('metatag', $metatag)
+            ->with('offices', $offices)
+            ->with('continents', $continents);
     }
 
     public function contactFindDistributor()
     {
         $lang = App::getLocale();
         $continents = DB::table('continents as c')
-        ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
-        ->where('type_id', 2)
-        ->where('ct.local', '=', $lang)
-        ->select('c.*', 'ct.*')
-        ->get();
+            ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
+            ->where('type_id', 2)
+            ->where('ct.local', '=', $lang)
+            ->select('c.*', 'ct.*')
+            ->get();
 
         $offices = DB::table('office as f')
-        ->join('office_translations as oft', 'f.id', '=', 'oft.fk_office_id')
-        ->where('f.type_id', 2)
-        ->where('oft.local', '=', $lang)
-        ->where('f.status', 1)
-        ->select('f.*', 'oft.*')
-        ->get();
+            ->join('office_translations as oft', 'f.id', '=', 'oft.fk_office_id')
+            ->where('f.type_id', 2)
+            ->where('oft.local', '=', $lang)
+            ->where('f.status', 1)
+            ->select('f.*', 'oft.*')
+            ->get();
+
         $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 12)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
+            ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+            ->where('mtp.id', 12)
+            ->where('mtpt.local', $lang)
+            ->select('mtp.*', 'mtpt.*')
+            ->get();
 
         return view('front-end.find-distributor')
-        ->with('metatag', $metatag)
-        ->with('offices', $offices)
-        ->with('continents', $continents);
+            ->with('metatag', $metatag)
+            ->with('offices', $offices)
+            ->with('continents', $continents);
     }
 
     public function termsOfUse()
     {
         $lang = App::getLocale();
         $static_content = DB::table('static_content as st')
-        ->join('static_content_translations as sct', 'st.sta_id', '=', 'sct.sta_fk_id')
-        ->where('type_con_id', 6)
-        ->where('sct.local', $lang)
-        ->select('st.*', 'sct.*')
-        ->first();
+            ->join('static_content_translations as sct', 'st.sta_id', '=', 'sct.sta_fk_id')
+            ->where('type_con_id', 6)
+            ->where('sct.local', $lang)
+            ->select('st.*', 'sct.*')
+            ->first();
+
         $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 24)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
+            ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+            ->where('mtp.id', 24)
+            ->where('mtpt.local', $lang)
+            ->select('mtp.*', 'mtpt.*')
+            ->get();
 
         return view('front-end.terms-of-use')
-        ->with('metatag', $metatag)
-        ->with('static_content', $static_content);
+            ->with('metatag', $metatag)
+            ->with('static_content', $static_content);
     }
 
     public function privacyPolicy()
     {
         $lang = App::getLocale();
         $static_content = DB::table('static_content as st')
-        ->join('static_content_translations as sct', 'st.sta_id', '=', 'sct.sta_fk_id')
-        ->where('type_con_id', 5)
-        ->where('sct.local', $lang)
-        ->select('st.*', 'sct.*')
-        ->first();
+            ->join('static_content_translations as sct', 'st.sta_id', '=', 'sct.sta_fk_id')
+            ->where('type_con_id', 5)
+            ->where('sct.local', $lang)
+            ->select('st.*', 'sct.*')
+            ->first();
+
         $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 25)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
+            ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+            ->where('mtp.id', 25)
+            ->where('mtpt.local', $lang)
+            ->select('mtp.*', 'mtpt.*')
+            ->get();
 
         return view('front-end.privacy-policy')
-        ->with('metatag', $metatag)
-        ->with('static_content', $static_content);
+            ->with('metatag', $metatag)
+            ->with('static_content', $static_content);
     }
 
     public function configurableProductDetail()
     {
         $lang = App::getLocale();
         $subCategories = DB::table('sub_pro_categories as sc')
-        ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
-        ->where('sc.sub_pro_id', 7)
-        ->select('sc.*', 'sct.*')
-        ->orderBy('sc.created_at', 'desc')
-        ->where('sct.local', $lang)
-        ->get();
-        // return dd($subCategories);
+            ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
+            ->where('sc.sub_pro_id', 7)
+            ->select('sc.*', 'sct.*')
+            ->orderBy('sc.created_at', 'desc')
+            ->where('sct.local', $lang)
+            ->get();
+
         return view('front-end.Configure-detail')->with('subCategories', $subCategories);
     }
 
@@ -2350,29 +2356,30 @@ class FrontendController extends Controller
     {
         $sectionId = session('partner_id');
         self::checkExpiryLogin();
+
         if (null == $sectionId) {
             return redirect()->route('index', 'login');
         }
 
         $lang = App::getLocale();
         $relate_pro_launch_schedule = DB::table('relate_pro_launch_schedule as rpls')
-        ->join('relate_pro_launch_schedule_translation as rplst', 'rplst.fk_relate_pl', '=', 'rpls.re_id')
-        ->join('product_launch_schedule_month as plsm', 'plsm.pl_m_id', '=', 'rpls.fk_pl')
-        ->join('product_launch_schedule as pls', 'pls.pl_id', '=', 'plsm.pl_fk_id')
-        ->select('rpls.*', 'rplst.*', 'plsm.month as monthdate', 'pls.title', 'pls.date as years')
-        ->where('rplst.local', $lang)
-        ->get();
+            ->join('relate_pro_launch_schedule_translation as rplst', 'rplst.fk_relate_pl', '=', 'rpls.re_id')
+            ->join('product_launch_schedule_month as plsm', 'plsm.pl_m_id', '=', 'rpls.fk_pl')
+            ->join('product_launch_schedule as pls', 'pls.pl_id', '=', 'plsm.pl_fk_id')
+            ->select('rpls.*', 'rplst.*', 'plsm.month as monthdate', 'pls.title', 'pls.date as years')
+            ->where('rplst.local', $lang)
+            ->get();
 
         $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 16)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
+            ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+            ->where('mtp.id', 16)
+            ->where('mtpt.local', $lang)
+            ->select('mtp.*', 'mtpt.*')
+            ->get();
 
         return view('front-end.product-launch-schedule')
-        ->with('metatag', $metatag)
-        ->with('relate_pro_launch_schedule', $relate_pro_launch_schedule);
+            ->with('metatag', $metatag)
+            ->with('relate_pro_launch_schedule', $relate_pro_launch_schedule);
     }
 
     public function marketingResources()
@@ -2380,24 +2387,26 @@ class FrontendController extends Controller
         $lang = App::getLocale();
         $sectionId = session('partner_id');
         self::checkExpiryLogin();
+
         if (null == $sectionId) {
             return redirect()->route('index', 'login');
         }
+
         $static_content = DB::table('partner_page_info as pi')
-        ->join('partner_page_info_translation as pit', 'pit.fk_p_id', '=', 'pi.id')
-        ->select('pi.*', 'pit.*')
-        ->where('pit.local', $lang)
-        ->get();
+            ->join('partner_page_info_translation as pit', 'pit.fk_p_id', '=', 'pi.id')
+            ->select('pi.*', 'pit.*')
+            ->where('pit.local', $lang)
+            ->get();
         $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 17)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
+            ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+            ->where('mtp.id', 17)
+            ->where('mtpt.local', $lang)
+            ->select('mtp.*', 'mtpt.*')
+            ->get();
 
         return view('front-end.marketing-resources')
-        ->with('metatag', $metatag)
-        ->with('static_content', $static_content);
+            ->with('metatag', $metatag)
+            ->with('static_content', $static_content);
     }
 
     public function marketingResourcesDownloads()
@@ -2406,9 +2415,11 @@ class FrontendController extends Controller
         $sectionId = session('partner_id');
         $roleId = session('partner_role');
         self::checkExpiryLogin();
+
         if (null == $sectionId) {
             return redirect()->route('index', 'login');
         }
+
         $margetCate = DB::table('permission_marketcate as permar')
             ->join('marketing_resource_cate as mc', 'permar.market_cate_id', '=', 'mc.cate_id')
             ->join('marketing_resource_cate_translations as mct', 'mc.cate_id', '=', 'mct.mk_fk_id')
@@ -2423,17 +2434,18 @@ class FrontendController extends Controller
             ->where('mrt.local', '=', $lang)
             ->select('mr.*', 'mrt.*')
             ->get();
+
         $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 15)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
+            ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+            ->where('mtp.id', 15)
+            ->where('mtpt.local', $lang)
+            ->select('mtp.*', 'mtpt.*')
+            ->get();
 
         return view('front-end.marketing-resources-downloads')
-        ->with('metatag', $metatag)
-        ->with('margetCate', $margetCate)
-        ->with('margeting', $margeting);
+            ->with('metatag', $metatag)
+            ->with('margetCate', $margetCate)
+            ->with('margeting', $margeting);
     }
 
     public function saleKit()
@@ -2444,18 +2456,20 @@ class FrontendController extends Controller
         if (null == $sectionId) {
             return redirect()->route('index', 'login');
         }
+
         $product_docs = DB::table('partner_documents as s')
-        ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
-        ->where('st.local', $lang)
-        ->where('s.type_info', 1)
-        ->select('s.*', 'st.*')
-        ->get();
+            ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
+            ->where('st.local', $lang)
+            ->where('s.type_info', 1)
+            ->select('s.*', 'st.*')
+            ->get();
+
         $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 19)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
+            ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+            ->where('mtp.id', 19)
+            ->where('mtpt.local', $lang)
+            ->select('mtp.*', 'mtpt.*')
+            ->get();
 
         return view('front-end.sale-kit')->with('metatag', $metatag)->with('product_docs', $product_docs);
     }
@@ -2468,18 +2482,20 @@ class FrontendController extends Controller
         if (null == $sectionId) {
             return redirect()->route('index', 'login');
         }
+
         $product_docs = DB::table('partner_documents as s')
-        ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
-        ->where('st.local', $lang)
-        ->where('s.type_info', 2)
-        ->select('s.*', 'st.*')
-        ->get();
+            ->join('partner_documents_translations as st', 's.id', '=', 'st.sk_fk_id')
+            ->where('st.local', $lang)
+            ->where('s.type_info', 2)
+            ->select('s.*', 'st.*')
+            ->get();
+
         $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 20)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
+            ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+            ->where('mtp.id', 20)
+            ->where('mtpt.local', $lang)
+            ->select('mtp.*', 'mtpt.*')
+            ->get();
 
         return view('front-end.product-cross-reference')->with('product_docs', $product_docs)->with('metatag', $metatag);
     }
@@ -2488,11 +2504,11 @@ class FrontendController extends Controller
     {
         $lang = App::getLocale();
         $static_content = DB::table('partner_page_info as pi')
-        ->join('partner_page_info_translation as pit', 'pit.fk_p_id', '=', 'pi.id')
-        ->where('pi.id', $id)
-        ->select('pi.*', 'pit.*')
-        ->where('pit.local', $lang)
-        ->get();
+            ->join('partner_page_info_translation as pit', 'pit.fk_p_id', '=', 'pi.id')
+            ->where('pi.id', $id)
+            ->select('pi.*', 'pit.*')
+            ->where('pit.local', $lang)
+            ->get();
         $sectionId = session('partner_id');
         self::checkExpiryLogin();
         if (null == $sectionId) {
@@ -2517,14 +2533,14 @@ class FrontendController extends Controller
 
         if ('name_asc' == $order || 'name_desc' == $order) {
             $con_his = DB::table('configuration_history as ch')
-            ->select('ch.*')
-            ->orderBy('ch.customer_model', 'name_asc' == $order ? 'asc' : 'desc')
-            ->get();
+                ->select('ch.*')
+                ->orderBy('ch.customer_model', 'name_asc' == $order ? 'asc' : 'desc')
+                ->get();
         } else {
             $con_his = DB::table('configuration_history as ch')
-            ->select('ch.*')
-            ->orderBy('ch.created_at', $order)
-            ->get();
+                ->select('ch.*')
+                ->orderBy('ch.created_at', $order)
+                ->get();
         }
 
         $sectionId = session('partner_id');
@@ -2534,11 +2550,11 @@ class FrontendController extends Controller
         }
 
         $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 21)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
+            ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+            ->where('mtp.id', 21)
+            ->where('mtpt.local', $lang)
+            ->select('mtp.*', 'mtpt.*')
+            ->get();
 
         return view('front-end.config-history')->with('metatag', $metatag)->with('con_his', $con_his);
     }
@@ -2642,24 +2658,24 @@ class FrontendController extends Controller
         $lang = App::getLocale();
         session(['lang_down' => $lang]);
         $subCategories = DB::table('sub_pro_categories as sc')
-        ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
-        ->select('sc.*', 'sct.*')
-        ->where('sct.local', $lang)
-        ->orderBy('sct.name', 'asc')
-        ->get();
+            ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
+            ->select('sc.*', 'sct.*')
+            ->where('sct.local', $lang)
+            ->orderBy('sct.name', 'asc')
+            ->get();
 
         $products = DB::table('products as p')
-        ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-        ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-        ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-        ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-        ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-        ->where('pt.local', $lang)
-        ->where('st.local', $lang)
-        ->where('spt.local', $lang)
-        ->select('p.*', 'pt.*', 'spt.name as catename', 'sp.url_item', 'st.title as seriesename')
-        ->orderBy('p.pro_code', 'asc')
-        ->get();
+            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+            ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+            ->where('pt.local', $lang)
+            ->where('st.local', $lang)
+            ->where('spt.local', $lang)
+            ->select('p.*', 'pt.*', 'spt.name as catename', 'sp.url_item', 'st.title as seriesename')
+            ->orderBy('p.pro_code', 'asc')
+            ->get();
 
         $series = DB::table('series_has_pro_categories as sc')
             ->join('series as s', 'sc.se_id', '=', 's.se_id')
@@ -2690,17 +2706,17 @@ class FrontendController extends Controller
             ->orderBy('pdc.title', 'asc')
             ->get();
         $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 9)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
+            ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+            ->where('mtp.id', 9)
+            ->where('mtpt.local', $lang)
+            ->select('mtp.*', 'mtpt.*')
+            ->get();
 
         return view('front-end.login-pro-document')
-        ->with('metatag', $metatag)
-        ->with('subCategories', $subCategories)
-        ->with('series', $series)
-        ->with('products', $products);
+            ->with('metatag', $metatag)
+            ->with('subCategories', $subCategories)
+            ->with('series', $series)
+            ->with('products', $products);
     }
 
     public function loadPdffile(Request $request)
@@ -3707,7 +3723,7 @@ class FrontendController extends Controller
             if (isset($inputpassword) && null != $inputpassword) {
                 $checkPas = Hash::check($inputpassword, $partner[0]->password);
             }
-            //return dd($checkPas);
+
             if ($checkPas) {
                 $member_id = $partner[0]->id;
                 $member_firstname = $partner[0]->firstname;
@@ -3731,8 +3747,6 @@ class FrontendController extends Controller
         }
 
         return back()->with('flash_message_eror', 'No user account found in the system.');
-
-        return back()->with('flash_message_eror', 'Eror');
     }
 
     public function uploadmulImagestory(Request $request)
@@ -4620,13 +4634,13 @@ class FrontendController extends Controller
         $lang = App::getLocale();
         $name = $this->validateInput($name, 'text', true);
         $faqs = DB::table('faq as f')
-      ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
-      ->join('faq_categories_translations as fct', 'fct.f_cate_id', '=', 'f.cate_id')
-      ->where('f.url_name', $name)
-      ->where('ft.local', '=', $lang)
-      ->where('fct.local', '=', $lang)
-      ->select('f.*', 'ft.*', 'fct.name as cateName')
-      ->get();
+            ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
+            ->join('faq_categories_translations as fct', 'fct.f_cate_id', '=', 'f.cate_id')
+            ->where('f.url_name', $name)
+            ->where('ft.local', '=', $lang)
+            ->where('fct.local', '=', $lang)
+            ->select('f.*', 'ft.*', 'fct.name as cateName')
+            ->get();
 
         return view('front-end.faq-detail')->with('faqs', $faqs);
     }

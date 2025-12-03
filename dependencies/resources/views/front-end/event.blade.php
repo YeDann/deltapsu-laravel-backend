@@ -173,7 +173,7 @@
             <h3 id="count-year"></h3>
             <a id="next-year" onclick="Years(1)"></a>
         </div>
-        <select id="select-events" onchange="selectMonthPicker();" class="form-control invisible-up-922 mb-4">
+        <select id="select-events" onchange="selectMonthPicker();" class="form-control invisible-up-922 mb-4 border-radius-6">
             <option value="00">JAN</option>
             <option value="01">FEB</option>
             <option value="02">MAR</option>
@@ -250,8 +250,7 @@
             <h2 class="text-title-delta">{{$staticContent['Upcoming_Event']}}</h2>
             <div class="row">
                 <?php 
-                        function getDateformat($date){
-                               
+                        function getDateformat($date){  
                                $eng_month_arr = array(
                                    "0" => "",
                                    "1" => "Jan",
@@ -280,7 +279,7 @@
                     ?>
                 @foreach (array_slice($events->toArray(), 0, 3) as $item)
                 <div class="col-lg-4 col-sm-6 col-md-6 mb-3">
-                    <div class="card">
+                    <div class="card border-radius-6">
                         <a href="{{route('updateEventDetail',$item->slug )}}">
                             <div class="post-image">
                                 <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""

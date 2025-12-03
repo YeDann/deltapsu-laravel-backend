@@ -30,12 +30,20 @@
 
 /* scrollTop */
 .bg-w-banner {
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7));
+  /* background-image: linear-gradient(to right, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)); */
   padding: 20px 48px;
   background-repeat: no-repeat;
   background-size: 517px 100%;
   width: 517px;
-
+  /* width: 440px; */
+  /* height: 24px; */
+  /* font-size: 28px; */
+  line-height: 36px;
+  background: linear-gradient(
+      0deg,
+      rgba(68, 86, 69, 0.6) 0%,
+      rgba(0, 108, 159, 0.5) 100%
+  );
 }
 
 .bg-w-mobile-banner {
@@ -349,8 +357,6 @@ a:hover {
   height: auto;
 }
 
-
-
 #slide-banner .owl-dots,
 #slide-banner-mobile .owl-dots {
   position: absolute !important;
@@ -406,17 +412,14 @@ a:hover {
   bottom: 3%;
 }
 
-
 .text-title-banner {
   color: #0087DC;
   font-weight: bold;
 }
 
-.text-p-banner {
-  color: #444444;
-
+.text-p-banner p {
+  color: inherit;
 }
-
 
 /* bn end */
 
