@@ -276,7 +276,7 @@
         <h2 class="text-title-delta-home"> {{$staticContent['Product_Selector']}}</h2>
         <div id="product-selector-carousel" class="owl-carousel owl-theme product-selector text-center">
             @foreach($subCategories as $sub)
-            <div class="product-selector-list border-2px d-flex align-items-center shadow-radius-box">
+            <div class="product-selector-list border-2px d-flex align-items-center border-radius-6">
                 <div class="m-auto">
                     <a href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
                         @if($sub->image != null)
@@ -302,8 +302,7 @@
         <div id="product-selector-carousel-mobile" class="owl-carousel owl-theme product-selector text-center">
             @foreach($subCategories as $sub)
             <div class="product-selector-list">
-                <div class="border-2px d-flex h-100 p-1 align-items-center shadow-radius-box"
-                    style="box-shadow: 0px 4px 5px 2px rgba(0, 0, 0, 0.09);">
+                <div class="border-2px d-flex h-100 p-1 align-items-center border-radius-6">
                     <div class="m-auto">
                         <a
                             href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
@@ -599,7 +598,7 @@ function retextdata($arr ,$unit){
                 <div class="col-lg-4">
                     <h2 class="text-title-delta-home">{{$staticContent['Upcoming_Event']}}</h2>
                     @if(isset($events[0]))
-                    <div class="card shadow-radius-box">
+                    <div class="card shadow-radius-box border-radius-6">
                         <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
                             <div class="post-image">
                                 <img data-src="{{config('app.url')}}/uploads_delta/{{$events[0]['thumb']}}"
@@ -638,7 +637,7 @@ function retextdata($arr ,$unit){
                 <div class="col-lg-4">
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
-                    <div class="card shadow-radius-box">
+                    <div class="card shadow-radius-box border-radius-6">
                         <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
                             <div class="post-image">
                                 <img data-src="{{config('app.url')}}/uploads_delta/{{$news[0]['thumb']}}" loading="lazy"
@@ -686,7 +685,7 @@ function retextdata($arr ,$unit){
                 </div>
                 <div class="col-lg-4">
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
-                    <div class="card shadow-radius-box">
+                    <div class="card shadow-radius-box border-radius-6">
                         <a href="{{route('index','faqs')}}">
                             <div class="post-image w-100">
 
@@ -725,7 +724,7 @@ function retextdata($arr ,$unit){
                 <div class="col-md-6">
                     <h2 class="text-title-delta-home">{{$staticContent['Upcoming_Event']}}</h2>
                     @if(isset($events[0]))
-                    <div class="card shadow-radius-box">
+                    <div class="card shadow-radius-box border-radius-6">
                         <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
                             <div class="post-image">
                                 @if(isset($events[0]['thumb']))
@@ -775,7 +774,7 @@ function retextdata($arr ,$unit){
                 <div class="col-md-6">
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
-                    <div class="card shadow-radius-box">
+                    <div class="card shadow-radius-box border-radius-6">
                         <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
                             <div class="post-image">
                                 @if(isset($news[0]['thumb']))
@@ -826,7 +825,7 @@ function retextdata($arr ,$unit){
                 </div>
                 <div class="col-md-6">
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
-                    <div class="card shadow-radius-box">
+                    <div class="card shadow-radius-box border-radius-6">
                         <a href="{{route('index','faqs')}}">
                             <div class="post-image w-100">
                                 <img src="{{config('app.url')}}/medias/static_content/{{$faqbanner->destop_image}}"
