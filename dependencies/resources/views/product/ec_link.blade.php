@@ -30,7 +30,10 @@
                     <tr>
                         <th class="text-center" style="width: 80px;">#</th>
                         <th>Button Name</th>
+                        <th>Language</th>
+                        <th>Model Name</th>
                         <th>Link</th>
+                        <th>Note</th>
                         <th>Status</th>
                         <th>Created</th>
                         <th class="text-center" style="width: 100px;">Actions</th>
@@ -42,10 +45,21 @@
                         <td class="text-center">{{$index + 1}}</td>
                         <td class="font-w600">{{$item->name}}</td>
                         <td>
+                            <span class="badge badge-info">{{strtoupper($item->local)}}</span>
+                        </td>
+                        <td>
+                            @if($item->product_names)
+                                <span class="text-muted">{{$item->product_names}}</span>
+                            @else
+                                <span class="text-muted">No products</span>
+                            @endif
+                        </td>
+                        <td>
                             <a href="{{$item->link}}" target="_blank" class="text-primary">
                                 {{Str::limit($item->link, 50)}}
                             </a>
                         </td>
+                        <td>{{Str::limit($item->note ?? 'No note', 30)}}</td>
                         <td>
                             @if($item->status == 1)
                                 <span class="badge badge-success">Active</span>
