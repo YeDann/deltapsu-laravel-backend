@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCustomProductButtonTranslationTable extends Migration
+class DropCustomProductButtonTranslationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,6 +13,17 @@ class CreateCustomProductButtonTranslationTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('custom_product_button_translation');
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        // Recreate the translation table if rollback is needed
         Schema::create('custom_product_button_translation', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('button_id');
@@ -23,15 +34,5 @@ class CreateCustomProductButtonTranslationTable extends Migration
             $table->foreign('button_id')->references('id')->on('custom_product_button')->onDelete('cascade');
             $table->unique(['button_id', 'local']);
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('custom_product_button_translation');
     }
 }

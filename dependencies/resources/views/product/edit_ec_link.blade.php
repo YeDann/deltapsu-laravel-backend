@@ -31,41 +31,28 @@
                     <div class="col-lg-12">
                         <input type="hidden" name="old_id" value="{{$item->id}}">
                         
-                        <div class="block block-rounded block-bordered">
-                            <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
-                                @foreach ($translations->sortBy('local') as $trans)
-                                @if($trans->local == 'en')
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#btabs-alt-static-{{$trans->local}}" style="text-transform: capitalize;">{{$trans->local}}</a>
-                                </li>
-                                @else
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#btabs-alt-static-{{$trans->local}}" style="text-transform: capitalize;">{{$trans->local}}</a>
-                                </li>
-                                @endif
+                        <div class="form-group">
+                            <label for="language"><span class="req-fed">*</span>Language</label>
+                            <select name="language" class="form-control" required>
+                                <option value="">Select Language</option>
+                                @foreach ($language as $lang)
+                                <option value="{{$lang->name}}" {{$item->local == $lang->name ? 'selected' : ''}}>{{strtoupper($lang->name)}}</option>
                                 @endforeach
-                            </ul>
-                            <div class="block-content tab-content">
-                                @foreach ($translations->sortBy('local') as $trans)
-                                @if($trans->local == 'en')
-                                <div class="tab-pane active" id="btabs-alt-static-{{$trans->local}}" role="tabpanel">
-                                    <div class="form-group">
-                                        <label for="name_{{$trans->local}}"><span class="req-fed">*</span>Button Name</label>
-                                        <input type="text" class="form-control {{ $errors->has('name_'.$trans->local) ? 'is-invalid' : '' }}"
-                                            name="name_{{$trans->local}}" value="{{$trans->name}}" placeholder="Enter button display text..." required>
-                                    </div>
-                                </div>
-                                @else
-                                <div class="tab-pane" id="btabs-alt-static-{{$trans->local}}" role="tabpanel">
-                                    <div class="form-group">
-                                        <label for="name_{{$trans->local}}"><span class="req-fed">*</span>Button Name</label>
-                                        <input type="text" class="form-control {{ $errors->has('name_'.$trans->local) ? 'is-invalid' : '' }}"
-                                            name="name_{{$trans->local}}" value="{{$trans->name}}" placeholder="Enter button display text..." required>
-                                    </div>
-                                </div>
-                                @endif
-                                @endforeach
-                            </div>
+                            </select>
+                            <small class="form-text text-muted">Select the language for this EC Link button</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="name"><span class="req-fed">*</span>Button Name</label>
+                            <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                name="name" value="{{$item->name}}" placeholder="Enter button display text..." required>
+                            <small class="form-text text-muted">Enter the button text for the selected language</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="note">Note</label>
+                            <textarea class="form-control" name="note" rows="3" placeholder="Enter additional notes or description...">{{$item->note}}</textarea>
+                            <small class="form-text text-muted">Optional notes for internal reference</small>
                         </div>
                         
                         <div class="form-group">

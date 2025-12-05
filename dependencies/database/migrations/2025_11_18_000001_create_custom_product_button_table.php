@@ -13,6 +13,9 @@ class CreateCustomProductButtonTable extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable('custom_product_button')) {
+            Schema::dropIfExists('custom_product_button');
+        }
         Schema::create('custom_product_button', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->comment('按鈕顯示文字');

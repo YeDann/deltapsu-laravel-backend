@@ -1299,163 +1299,157 @@ class FrontendController extends Controller
         }
 
         $pro = DB::table('products as p')
-        ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-        ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-        ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-        ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-        ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
-        ->where('pt.local', $prolang)
-        // ->where('st.local' ,$lang)
-        ->where('spt.local', $lang)
-        ->where('p.pro_id', $check->pro_id)
-        ->select('p.*', 'pt.*', 'st.title as serieName', 'spt.name as catename', 'sp.url_item as url_item', 'spt.sub_pro_id as pro_categories_id', 'sp.unit_dimension', 'sp.unit_dimension_1')
-        ->orderBy('p.created_at', 'desc')
-        ->first();
+            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+            ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
+            ->where('pt.local', $prolang)
+            ->where('spt.local', $lang)
+            ->where('p.pro_id', $check->pro_id)
+            ->select('p.*', 'pt.*', 'st.title as serieName', 'spt.name as catename', 'sp.url_item as url_item', 'spt.sub_pro_id as pro_categories_id', 'sp.unit_dimension', 'sp.unit_dimension_1')
+            ->orderBy('p.created_at', 'desc')
+            ->first();
 
         if (!self::checkContentPro($pro->pro_id)) {
             return redirect()->route('productFinder');
         }
 
         $external_link = DB::table('external_link as e')
-         ->select('e.*')
-         ->where('e.products', $pro->pro_id)
-         ->get();
+            ->select('e.*')
+            ->where('e.products', $pro->pro_id)
+            ->get();
 
         // EC Link query - Check if product ID is in comma-separated products string
-        $lang = App::getLocale();
-        $ec_link = DB::table('custom_product_button as c')
-         ->join('custom_product_button_translation as ct', 'c.id', '=', 'ct.button_id')
-         ->select('c.*', 'ct.name')
-         ->where('c.status', 1)
-         ->where('ct.local', $lang)
-         ->where(function ($query) use ($pro) {
-             $query->where('c.products', 'LIKE', '%,' . $pro->pro_id . ',%')
-                   ->orWhere('c.products', 'LIKE', $pro->pro_id . ',%')
-                   ->orWhere('c.products', 'LIKE', '%,' . $pro->pro_id)
-                   ->orWhere('c.products', '=', $pro->pro_id);
-         })
-         ->get();
+        $ec_link = DB::table('custom_product_button')
+            ->where('status', 1)
+            ->where('local', $lang)
+            ->where(function ($query) use ($pro) {
+                $query->where('products', 'LIKE', '%,' . $pro->pro_id . ',%')
+                    ->orWhere('products', 'LIKE', $pro->pro_id . ',%')
+                    ->orWhere('products', 'LIKE', '%,' . $pro->pro_id)
+                    ->orWhere('products', '=', $pro->pro_id);
+            })
+            ->get();
 
         $vieo_img = DB::table('product_image as pm')
-        ->where('pm.pro_id', $pro->pro_id)
-        ->select('pm.*')
-        ->orderBy('pm.created_at', 'asc')
-        ->get();
+            ->where('pm.pro_id', $pro->pro_id)
+            ->select('pm.*')
+            ->orderBy('pm.created_at', 'asc')
+            ->get();
         $tags_pro = DB::table('product_tags as pt')
-        ->where('pt.product_id', $pro->pro_id)
-        ->where('pt.tag', '!=', ' ')
-        ->select('pt.*')
-        ->get();
+            ->where('pt.product_id', $pro->pro_id)
+            ->where('pt.tag', '!=', ' ')
+            ->select('pt.*')
+            ->get();
 
         $optional_pro = DB::table('product_optional_model as op')
-        ->where('op.product_id', $pro->pro_id)
-        ->select('op.*')
-        ->get();
+            ->where('op.product_id', $pro->pro_id)
+            ->select('op.*')
+            ->get();
         $documents = DB::table('product_has_documents as phd')
-        ->join('products as p', 'p.pro_id', '=', 'phd.product_id')
-        ->join('product_ducuments as pd', 'phd.document_id', '=', 'pd.doc_id')
-        ->join('product_ducument_translations as pdt', 'pdt.doc_fk_id', '=', 'pd.doc_id')
-        ->join('products_documents_categories as pdc', 'pdc.id', '=', 'pd.cate_id')
-        ->where('phd.product_id', $pro->pro_id)
-        ->where('pdt.local', $lang)
-        ->where('pdt.file', '!=', null)
-        ->where('pdt.file', '!=', '')
-        ->whereNotIn('pdc.id', [4])
-        ->select('p.pro_code', 'pd.doc_id', 'p.pro_id as product_id', 'pdt.name', 'pdc.title as catename', 'pdc.slug', 'pd.created_at', 'pdc.main_cate_id', 'pdt.file', 'pd.cate_id')
-        ->orderBy('pdc.title', 'asc')
-        ->get();
+            ->join('products as p', 'p.pro_id', '=', 'phd.product_id')
+            ->join('product_ducuments as pd', 'phd.document_id', '=', 'pd.doc_id')
+            ->join('product_ducument_translations as pdt', 'pdt.doc_fk_id', '=', 'pd.doc_id')
+            ->join('products_documents_categories as pdc', 'pdc.id', '=', 'pd.cate_id')
+            ->where('phd.product_id', $pro->pro_id)
+            ->where('pdt.local', $lang)
+            ->where('pdt.file', '!=', null)
+            ->where('pdt.file', '!=', '')
+            ->whereNotIn('pdc.id', [4])
+            ->select('p.pro_code', 'pd.doc_id', 'p.pro_id as product_id', 'pdt.name', 'pdc.title as catename', 'pdc.slug', 'pd.created_at', 'pdc.main_cate_id', 'pdt.file', 'pd.cate_id')
+            ->orderBy('pdc.title', 'asc')
+            ->get();
 
         $product_has_property = DB::table('product_has_property as ph')
-        ->join('product_has_property_translation as pht', 'ph.per_id', '=', 'pht.per_fk_id')
-        ->join('product_field as pf', 'pf.id', '=', 'ph.type_id')
-        ->join('product_field_translation as pft', 'ph.type_id', '=', 'pft.product_field_id')
-        ->where('pht.local', 'en')
-        ->where('pft.local', $lang)
-        ->where('ph.product_id', $pro->pro_id)
-        ->where('ph.type_id', '!=', 115)
-        ->orderBy('ph.type_id', 'asc')
-        ->select('pht.value_text', 'ph.*', 'pf.section_id', 'pft.field_name as fieldCate', 'pf.unit_name')
-        ->get();
-
-        //  return dd($product_has_property);
+            ->join('product_has_property_translation as pht', 'ph.per_id', '=', 'pht.per_fk_id')
+            ->join('product_field as pf', 'pf.id', '=', 'ph.type_id')
+            ->join('product_field_translation as pft', 'ph.type_id', '=', 'pft.product_field_id')
+            ->where('pht.local', 'en')
+            ->where('pft.local', $lang)
+            ->where('ph.product_id', $pro->pro_id)
+            ->where('ph.type_id', '!=', 115)
+            ->orderBy('ph.type_id', 'asc')
+            ->select('pht.value_text', 'ph.*', 'pf.section_id', 'pft.field_name as fieldCate', 'pf.unit_name')
+            ->get();
 
         $series_has_application = DB::table('series_has_application as shp')
-        ->join('application as app', 'app.id', '=', 'shp.app_id')
-        ->join('application_translation as appt', 'appt.app_id', '=', 'app.id')
-        ->where('appt.local', 'en')
-        ->where('shp.se_id', $pro->series_id)
-        ->select('shp.app_id', 'app.*', 'appt.name')
-        ->get();
+            ->join('application as app', 'app.id', '=', 'shp.app_id')
+            ->join('application_translation as appt', 'appt.app_id', '=', 'app.id')
+            ->where('appt.local', 'en')
+            ->where('shp.se_id', $pro->series_id)
+            ->select('shp.app_id', 'app.*', 'appt.name')
+            ->get();
 
         $data = [];
         $arraysub = [];
         $arraysub = DB::table('product_has_property as ph')
-                ->join('product_has_property_translation as pht', 'ph.per_id', '=', 'pht.per_fk_id')
-                ->join('product_field as pf', 'pf.id', '=', 'ph.type_id')
-                ->join('product_field_translation as pft', 'ph.type_id', '=', 'pft.product_field_id')
-                ->where('ph.product_id', $pro->pro_id)
-                ->where('pht.local', 'en')
-                ->where('pft.local', $lang)
-                ->whereIn('ph.type_id', [4, 3, 8, 31])
-                ->orderBy('ph.type_id', 'asc')
-                ->select('pht.value_text', 'ph.*', 'pft.field_name as fieldCate', 'pf.unit_name')
-                ->get();
+            ->join('product_has_property_translation as pht', 'ph.per_id', '=', 'pht.per_fk_id')
+            ->join('product_field as pf', 'pf.id', '=', 'ph.type_id')
+            ->join('product_field_translation as pft', 'ph.type_id', '=', 'pft.product_field_id')
+            ->where('ph.product_id', $pro->pro_id)
+            ->where('pht.local', 'en')
+            ->where('pft.local', $lang)
+            ->whereIn('ph.type_id', [4, 3, 8, 31])
+            ->orderBy('ph.type_id', 'asc')
+            ->select('pht.value_text', 'ph.*', 'pft.field_name as fieldCate', 'pf.unit_name')
+            ->get();
         $data[0] = [
-                    'pro_id' => $pro->pro_id,
-                    'pro_code' => $pro->pro_code,
-                    'picture' => $pro->picture,
-                    'created_at' => $pro->created_at,
-                    'updated_at' => $pro->updated_at,
-                    'unit_weight' => $pro->unit_weight,
-                    'unit_dimension' => $pro->unit_dimension,
-                    'unit_dimension_1' => $pro->unit_dimension_1,
-                    'content_1' => $pro->content_1,
-                    'content_2' => $pro->content_2,
-                    'meta_description' => $pro->meta_description,
-                    'serie_id' => $pro->series_id,
-                    'serie_name' => $pro->serieName,
-                    'cate_name' => $pro->catename,
-                    'url_item' => $pro->url_item,
-                    'cate_id' => $pro->pro_categories_id,
-                    'alt_img' => $pro->alt_img,
-                    'content' => $arraysub,
-                    'dimensionL' => $pro->dimensionL,
-                    'dimensionW' => $pro->dimensionW,
-                    'dimensionD' => $pro->dimensionD,
-                ];
+            'pro_id' => $pro->pro_id,
+            'pro_code' => $pro->pro_code,
+            'picture' => $pro->picture,
+            'created_at' => $pro->created_at,
+            'updated_at' => $pro->updated_at,
+            'unit_weight' => $pro->unit_weight,
+            'unit_dimension' => $pro->unit_dimension,
+            'unit_dimension_1' => $pro->unit_dimension_1,
+            'content_1' => $pro->content_1,
+            'content_2' => $pro->content_2,
+            'meta_description' => $pro->meta_description,
+            'serie_id' => $pro->series_id,
+            'serie_name' => $pro->serieName,
+            'cate_name' => $pro->catename,
+            'url_item' => $pro->url_item,
+            'cate_id' => $pro->pro_categories_id,
+            'alt_img' => $pro->alt_img,
+            'content' => $arraysub,
+            'dimensionL' => $pro->dimensionL,
+            'dimensionW' => $pro->dimensionW,
+            'dimensionD' => $pro->dimensionD,
+        ];
 
         $product_related = DB::table('product_related as pr')
-                ->join('products as p', 'p.pro_id', '=', 'pr.related_id')
-                ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-                ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-                ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-                ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
-                ->where('pt.local', $lang)
-                ->where('spt.local', $lang)
-                ->where('pr.product_id', $pro->pro_id)
-                ->where('p.enable_pro', 1)
-                ->select('p.*', 'pt.*', 'spt.name as catename', 'sp.url_item as url_item', 'spt.sub_pro_id as pro_categories_id', 'sp.unit_dimension', 'sp.unit_dimension_1')
-                ->get();
-
-        $date = now();
-        $datefor = date('Y-m-d H:i:s', strtotime($date) - ((24 * 3600 * 365) * 2));
-
-        if (0 == count($product_related)) {
-            $product_related = DB::table('products as p')
+            ->join('products as p', 'p.pro_id', '=', 'pr.related_id')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
             ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
             ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
             ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
             ->where('pt.local', $lang)
             ->where('spt.local', $lang)
-            ->where('p.pro_id', '!=', $pro->pro_id)
-            ->where('phc.categories_id', $pro->pro_categories_id)
+            ->where('pr.product_id', $pro->pro_id)
             ->where('p.enable_pro', 1)
-            ->where('p.created_at', '>', $datefor)
             ->select('p.*', 'pt.*', 'spt.name as catename', 'sp.url_item as url_item', 'spt.sub_pro_id as pro_categories_id', 'sp.unit_dimension', 'sp.unit_dimension_1')
-            ->limit(4)
-            ->inRandomOrder()
             ->get();
+
+        $date = now();
+        $datefor = date('Y-m-d H:i:s', strtotime($date) - ((24 * 3600 * 365) * 2));
+
+        if (0 == count($product_related)) {
+            $product_related = DB::table('products as p')
+                ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+                ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+                ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+                ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
+                ->where('pt.local', $lang)
+                ->where('spt.local', $lang)
+                ->where('p.pro_id', '!=', $pro->pro_id)
+                ->where('phc.categories_id', $pro->pro_categories_id)
+                ->where('p.enable_pro', 1)
+                ->where('p.created_at', '>', $datefor)
+                ->select('p.*', 'pt.*', 'spt.name as catename', 'sp.url_item as url_item', 'spt.sub_pro_id as pro_categories_id', 'sp.unit_dimension', 'sp.unit_dimension_1')
+                ->limit(4)
+                ->inRandomOrder()
+                ->get();
         }
 
         $data_other = [];
@@ -1464,52 +1458,50 @@ class FrontendController extends Controller
         foreach ($product_related as $pro) {
             $arraysub = [];
             $arraysub = DB::table('product_has_property as ph')
-                    ->join('product_has_property_translation as pht', 'ph.per_id', '=', 'pht.per_fk_id')
-                    ->join('product_field as pf', 'pf.id', '=', 'ph.type_id')
-                    ->join('product_field_translation as pft', 'ph.type_id', '=', 'pft.product_field_id')
-                    ->where('ph.product_id', $pro->pro_id)
-                    ->where('pht.local', 'en')
-                    ->where('pft.local', $lang)
-                    ->whereIn('ph.type_id', [3, 4, 8, 31])
-                    ->orderBy('ph.type_id', 'asc')
-                    ->select('pht.value_text', 'ph.*', 'pft.field_name as fieldCate', 'pf.unit_name')
-                    ->get();
+                ->join('product_has_property_translation as pht', 'ph.per_id', '=', 'pht.per_fk_id')
+                ->join('product_field as pf', 'pf.id', '=', 'ph.type_id')
+                ->join('product_field_translation as pft', 'ph.type_id', '=', 'pft.product_field_id')
+                ->where('ph.product_id', $pro->pro_id)
+                ->where('pht.local', 'en')
+                ->where('pft.local', $lang)
+                ->whereIn('ph.type_id', [3, 4, 8, 31])
+                ->orderBy('ph.type_id', 'asc')
+                ->select('pht.value_text', 'ph.*', 'pft.field_name as fieldCate', 'pf.unit_name')
+                ->get();
 
             if (!in_array($pro->pro_id, $data_check_poOther) && self::checkContentPro($pro->pro_id)) {
                 array_push($data_check_poOther, $pro->pro_id);
                 $data_other[$j] = [
-                        'pro_id' => $pro->pro_id,
-                        'pro_code' => $pro->pro_code,
-                        'catename' => $pro->catename,
-                        'cate_id' => $pro->pro_categories_id,
-                        'picture' => $pro->picture,
-                        'unit_dimension_1' => $pro->unit_dimension_1,
-                        'unit_dimension' => $pro->unit_dimension,
-                        'status_product' => $pro->status_product,
-                        'content' => $arraysub,
-                        'alt_img' => $pro->alt_img,
-                        'url_item' => $pro->url_item,
-                        'dimensionL' => $pro->dimensionL,
-                        'dimensionW' => $pro->dimensionW,
-                        'dimensionD' => $pro->dimensionD,
-                    ];
+                    'pro_id' => $pro->pro_id,
+                    'pro_code' => $pro->pro_code,
+                    'catename' => $pro->catename,
+                    'cate_id' => $pro->pro_categories_id,
+                    'picture' => $pro->picture,
+                    'unit_dimension_1' => $pro->unit_dimension_1,
+                    'unit_dimension' => $pro->unit_dimension,
+                    'status_product' => $pro->status_product,
+                    'content' => $arraysub,
+                    'alt_img' => $pro->alt_img,
+                    'url_item' => $pro->url_item,
+                    'dimensionL' => $pro->dimensionL,
+                    'dimensionW' => $pro->dimensionW,
+                    'dimensionD' => $pro->dimensionD,
+                ];
             }
 
             ++$j;
         }
 
         $section = DB::table('section as st')
-                ->join('section_translation as stt', 'st.id', '=', 'stt.section_id')
-                ->where('stt.local', $lang)
-                // ->where('st.status', 1)
-                ->select('st.id', 'stt.sortname', 'stt.name')
-                ->get();
-        // return dd($data_other);
+            ->join('section_translation as stt', 'st.id', '=', 'stt.section_id')
+            ->where('stt.local', $lang)
+            ->select('st.id', 'stt.sortname', 'stt.name')
+            ->get();
+
         if ($findoldCate->url_item != $name) {
-            // return dd($pro_code, $findoldCate->url_item);
             return redirect()->to('/products/' . $findoldCate->url_item . '/' . $procode, 301);
         }
-        // return dd('eslse', $data);
+
         return view('front-end.productdetails')
             ->with('optional_model', $optional_model)
             ->with('tags_pro', $tags_pro)
@@ -1535,18 +1527,18 @@ class FrontendController extends Controller
         $lang = App::getLocale();
         $sess_arr = session('product_comp');
         $data = DB::table('products as p')
-        ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-        ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-        ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-        ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-        ->where('pt.local', $lang)
-        ->where('spt.local', $lang)
-        ->where('st.local', $lang)
-        ->where('pt.showstatus', 1)
-        ->whereIn('p.pro_id', $sess_arr)
-        ->select('p.*', 'pt.*', 'spt.sub_pro_id as pro_categories_id', 'spt.name as catename', 'st.title as seName')
-        ->orderBy('p.created_at', 'desc')
-        ->get();
+            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+            ->where('pt.local', $lang)
+            ->where('spt.local', $lang)
+            ->where('st.local', $lang)
+            ->where('pt.showstatus', 1)
+            ->whereIn('p.pro_id', $sess_arr)
+            ->select('p.*', 'pt.*', 'spt.sub_pro_id as pro_categories_id', 'spt.name as catename', 'st.title as seName')
+            ->orderBy('p.created_at', 'desc')
+            ->get();
         $cateid = null;
 
         if (isset($data) && count($data) > 0) {
@@ -1589,17 +1581,17 @@ class FrontendController extends Controller
         }
         $pro_new = self::removeDuplicates($products, 'pro_code');
         $pd_field = DB::table('product_field as pf')
-        ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
-        ->where('pft.local', '=', $lang)
-        ->where('pf.id', '!=', 115)
-        ->select('pf.*', 'pft.field_name')
-        ->orderBy('pf.id', 'asc')
-        ->get();
+            ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
+            ->where('pft.local', '=', $lang)
+            ->where('pf.id', '!=', 115)
+            ->select('pf.*', 'pft.field_name')
+            ->orderBy('pf.id', 'asc')
+            ->get();
         $section = DB::table('section as st')
-        ->join('section_translation as stt', 'st.id', '=', 'stt.section_id')
-        ->where('stt.local', '=', $lang)
-        ->select('st.id', 'stt.name')
-        ->get();
+            ->join('section_translation as stt', 'st.id', '=', 'stt.section_id')
+            ->where('stt.local', '=', $lang)
+            ->select('st.id', 'stt.name')
+            ->get();
 
         // $product_has_property = DB::table('product_has_property as ph')
         // ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
@@ -1614,21 +1606,21 @@ class FrontendController extends Controller
         //  return dd($product_has_property);
 
         $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 13)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
+            ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+            ->where('mtp.id', 13)
+            ->where('mtpt.local', $lang)
+            ->select('mtp.*', 'mtpt.*')
+            ->get();
 
         return view('front-end.productcoparison')
-        ->with('metatag', $metatag)
-        ->with('cateid', $cateid)
-        ->with('sess_arr', $sess_arr)
-        ->with('data_re', $data)
-        ->with('section', $section)
-        ->with('Categories', $Categories)
-        ->with('pd_field', $pd_field)
-        ->with('products', $pro_new);
+            ->with('metatag', $metatag)
+            ->with('cateid', $cateid)
+            ->with('sess_arr', $sess_arr)
+            ->with('data_re', $data)
+            ->with('section', $section)
+            ->with('Categories', $Categories)
+            ->with('pd_field', $pd_field)
+            ->with('products', $pro_new);
     }
 
     public function getProductByType(Request $request)
