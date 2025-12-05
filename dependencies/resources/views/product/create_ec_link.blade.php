@@ -29,15 +29,28 @@
                 <!-- Basic Elements -->
                 <div class="row">
                     <div class="col-lg-12">
-                        @foreach ($language as $item)
-                        <input type="hidden" name="lang_loop[]" value="{{$item->name}}">
-                        @endforeach
+                        <div class="form-group">
+                            <label for="language"><span class="req-fed">*</span>Language</label>
+                            <select name="language" class="form-control" required>
+                                <option value="">Select Language</option>
+                                @foreach ($language as $lang)
+                                <option value="{{$lang->name}}">{{strtoupper($lang->name)}}</option>
+                                @endforeach
+                            </select>
+                            <small class="form-text text-muted">Select the language for this EC Link button</small>
+                        </div>
                         
                         <div class="form-group">
                             <label for="name"><span class="req-fed">*</span>Button Name</label>
                             <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                 name="name" placeholder="Enter button display text..." required>
-                            <small class="form-text text-muted">This text will be used for all languages initially. You can customize each language after creation.</small>
+                            <small class="form-text text-muted">Enter the button text for the selected language</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="note">Note</label>
+                            <textarea class="form-control" name="note" rows="3" placeholder="Enter additional notes or description..."></textarea>
+                            <small class="form-text text-muted">Optional notes for internal reference</small>
                         </div>
                         
                         <div class="form-group">
