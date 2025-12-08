@@ -9243,6 +9243,11 @@ html[html_lang="ru"] label {
   position: relative;
 }
 
+.img-btn-icon-pro:hover{
+    background-color: #0087DC;
+    cursor: pointer;
+}
+
 .pd-mobile{
     padding: 10px 13px;
 }
@@ -9252,7 +9257,6 @@ html[html_lang="ru"] label {
 }
 .img-btn-icon-pro span {
     display: none;
-    
 }
 .img-btn-icon-pro:hover span {
     padding: 5px;
@@ -11763,6 +11767,11 @@ a .title-new {
   cursor: pointer;
 }
 
+.btn-subscribe:hover {
+  text-decoration: none;
+  background-color: #1E50C8;
+}
+
 .btn-border-delta {
   font-family: 'DeltaSans';
   font-size: 12px;
@@ -13000,6 +13009,21 @@ hr {
   }
 }
 
+.grid-sub-text {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.hover-border-blue:hover {
+  border: 2px solid #0087DC;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #0087DC !important;
+}
+
 
 .text-header-update {
     font-family: 'DeltaSans';
@@ -13654,8 +13678,32 @@ hr {
     cursor: pointer;
 }
 
+.btn-buynow {
+    min-width: 120px;
+    height: 40px;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+    background-color: #0087DC;
+}
+
 .btn-enquiry {
     background-color: rgb(120,120,120);
+}
+
+.btn-addcompare:hover, 
+.btn-enquiry:hover,
+.btn-datasheet:hover {
+  text-decoration: none;
+  background-color: #0087DC;
+}
+
+.btn-buynow:hover {
+  text-decoration: none;
+  background-color: #1E50C8;
 }
 
 .btn-addcompare {
@@ -13993,18 +14041,17 @@ table.model-num tbody td:last-child {
 
 }
 @media (max-width:543px){
-.btn-enquiry,
-.btn-addcompare {
-    min-width: auto;
-    height: 40px;
-    border-radius: 4px;
-    border: 2px solid transparent;
-    font-size: 12px;
-    font-weight: bold;
-    color: #ffffff;
-    cursor: pointer;
-}
-
+    .btn-enquiry,
+    .btn-addcompare {
+        min-width: auto;
+        height: 40px;
+        border-radius: 4px;
+        border: 2px solid transparent;
+        font-size: 12px;
+        font-weight: bold;
+        color: #ffffff;
+        cursor: pointer;
+    }
 }
 .box-result-search .nav-tabs {
     display: flex;
@@ -14592,7 +14639,6 @@ table.model-num tbody td:last-child {
 }
 .card-btn-a-detail{
     position: relative;
-
 }
 
 .text-name-data{

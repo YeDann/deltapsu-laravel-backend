@@ -201,7 +201,7 @@
             <div class="row">
                 @foreach($subCategories as $sub)
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="border-r shadow-radius-box">
+                    <div class="border-r shadow-radius-box hover-border-blue">
                         <a class=""
                             href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
                             @if($sub->image != null)
