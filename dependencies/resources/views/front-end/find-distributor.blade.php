@@ -125,7 +125,7 @@
                             <a href="{{config('app.url')}}/medias/distributor/{{$office->file_cer}}" target="_blank">
                                 <button class="btn-certi mt-2">
                                     {{-- <i class="cer-icon icon-facon icon-web-certificate"></i> --}}
-                                    Certificate
+                                    {{ $office->local == 'tw' ? '代理證書' : 'Certificate' }}
                                     {{-- <span class="f-btn">Certificate</span> --}}
                                 </button>
                             </a>
