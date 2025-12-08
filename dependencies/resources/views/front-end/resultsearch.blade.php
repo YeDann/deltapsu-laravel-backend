@@ -3,15 +3,15 @@
 <style>
     .btn-certi {
         height: 40px;
-        width: 160px;
+        min-width: 160px;
         border-radius: 5px;
         border: 2px solid #444444;
         background-color: #ffffff;
-
         color: #000000;
         font-weight: bold;
         cursor: pointer;
-
+        font-size: 14px;
+        letter-spacing: 1px;
     }
 
     .f-btn {
@@ -882,9 +882,10 @@
                                                 @if($dis->status_cer == 1)
                                                 <a href="{{config('app.url')}}/medias/distributor/{{$dis->file_cer}}"
                                                     download="">
-                                                    <button class="btn-certi"><i
-                                                            class="cer-icon icon-facon icon-web-certificate"></i> <span
-                                                            class="f-btn">{{$staticContent['Certificates']}}</span></button>
+                                                    <button class="btn-certi">
+                                                        <i class="cer-icon icon-facon icon-web-certificate"></i>
+                                                        <span class="f-btn">{{$staticContent['Certificates']}}</span>
+                                                    </button>
                                                 </a>
                                                 @endif
                                             </div>

@@ -625,17 +625,24 @@
 
                     <div class="w-100">
                         <div class="boxlist-icon-img pd-mobile">
-                            <a
-                                href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}"><button
+                            <a href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}"><button
                                     class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img
-                                        src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button></a>
+                                        src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button>
+                            </a>
                             <button onclick="showNavCoparison({{$product[0]['pro_id']}} ,{{$product[0]['cate_id']}})"
                                 class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img
                                     src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>
-                            <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}"
-                                target="_blank"><button
+                            <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}" target="_blank"><button
                                     class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img
-                                        src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>
+                                        src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button>
+                            </a>
+
+                            @foreach ($ec_link as $item)
+                            <a href="{{$item->link}}" target="_blank"><button
+                                    class="btn img-btn-icon-pro tooltip2"><span>{{$item->name}}</span><img
+                                        src="{{asset('/frontend-asset/image/Buy.svg')}}"></button>
+                            </a>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -963,6 +970,12 @@
                             target="_blank"><button
                                 class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img
                                     src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>
+                        @foreach ($ec_link as $item)
+                        <a href="{{ $item->link }}" target="_blank"><button
+                                class="btn img-btn-icon-pro tooltip2"><span>{{ $item->name }}</span><img
+                                    src="{{asset('/frontend-asset/image/Buy.svg')}}"></button>
+                        </a>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -1034,6 +1047,11 @@
                     <button class="btn btn-datasheet w-100 mr-2">{{$staticContent['data_sheet']}}</button>
                 </a>
 
+                @foreach ($ec_link as $item)
+                <a href="{{$item->link}}" target="_blank">
+                    <button class="btn btn-buynow w-100 my-2">{{$item->name}}</button>
+                </a>
+                @endforeach
             </div>
 
             <div class="box-detail">
