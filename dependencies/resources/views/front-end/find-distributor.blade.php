@@ -11,15 +11,15 @@
 
     .btn-certi {
         height: 40px;
-        width: 160px;
+        min-width: 160px;
         border-radius: 5px;
         border: 2px solid #444444;
         background-color: #ffffff;
-
         color: #000000;
         font-weight: bold;
         cursor: pointer;
-
+        font-size: 14px;
+        letter-spacing: 1px;
     }
 
     .f-btn {
@@ -109,7 +109,7 @@
                             </div>
                             {{-- 羅昇企業股份有限公司 加上電商網站按鈕 office->id = 47 --}}
                             @if (App::getLocale() == 'tw' && $office->id == 47)
-                                <a href="https://www.acepillar-ec.com/collections/delta" target="_blank">
+                                <a href="https://www.acepillar-ec.com/collections/power" target="_blank">
                                     <button class="btn-subscribe mt-2">
                                         {{ $office->local == 'tw' ? '電商網站' : 'Buy Now' }}
                                     </button>
@@ -123,8 +123,11 @@
 
                             @if($office->status_cer == 1)
                             <a href="{{config('app.url')}}/medias/distributor/{{$office->file_cer}}" target="_blank">
-                                <button class="btn-certi"><i class="cer-icon icon-facon icon-web-certificate"></i> <span
-                                        class="f-btn">Certificate</span></button>
+                                <button class="btn-certi mt-2">
+                                    {{-- <i class="cer-icon icon-facon icon-web-certificate"></i> --}}
+                                    Certificate
+                                    {{-- <span class="f-btn">Certificate</span> --}}
+                                </button>
                             </a>
                             @endif
                         </div>
