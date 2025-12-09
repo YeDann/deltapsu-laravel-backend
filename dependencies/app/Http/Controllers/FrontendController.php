@@ -945,72 +945,96 @@ class FrontendController extends Controller
         return redirect()->route('index', 'home');
     }
 
+    /**
+     * 商品列表頁面.
+     *
+     * @param string $cate_parname => DB: url_item
+     * @param int    $cate_par_id => DB: sub_pro_id
+     * @param string $se_par_name => 系列名城
+     * @param int    $se_par_id => 系列 id
+     */
     public function productList($cate_parname, $cate_par_id, $se_par_name = null, $se_par_id = null)
     {
         $lang = App::getLocale();
+
+        // 判斷 cate_par_id 是否為數字，若不是則回傳 404 頁面
         if (!is_numeric($cate_par_id)) {
             return response()->view('errors.404', [], 404);
         }
 
+        // 取得 子商品分類的 url_item
         $cate = DB::table('sub_pro_categories as sc')
-    ->select('sc.url_item')
-    ->where('sc.sub_pro_id', $cate_par_id)
-    ->first();
+            ->select('sc.url_item')
+            ->where('sc.sub_pro_id', $cate_par_id)
+            ->first();
 
+        // 以 子商品分類 id 取得資料，判斷若 url_item 不符合，則重新導向到正確的 URL
         if ($cate && $cate->url_item !== $cate_parname) {
             return redirect()->route('productList', [$cate->url_item, $cate_par_id, $se_par_id]);
         }
 
+        // 驗證並清理輸入參數
         $catename = $this->validateInput($cate_parname, 'text', true);
         $cateid = $this->validateInput($cate_par_id, 'number', true);
         $se_name = $this->validateInput($se_par_name, 'text', true);
         $se_id = $this->validateInput($se_par_id, 'number', true);
 
+        // 取得子商品分類的翻譯資料（用於列表上方的子商品分類描述）
         $subCategories = DB::table('sub_pro_categories as sc')
-        ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
-        ->select('sc.*', 'sct.*')
-        ->where('sct.local', $lang)
-        ->where('sc.sub_pro_id', $cateid)
-        ->orderBy('sc.created_at', 'desc')
-        ->get();
+            ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
+            ->select('sc.*', 'sct.*')
+            ->where('sct.local', $lang)
+            ->where('sc.sub_pro_id', $cateid)
+            ->orderBy('sc.created_at', 'desc')
+            ->get();
 
         $arrproid = [];
 
+        // 根據 子商品分類，取得 商品資料
         $searchPro = DB::table('product_has_categories as phc')
-    ->join('products as p', 'p.pro_id', '=', 'phc.product_id')
-    ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-    ->where('pt.local', 'en')
-    ->where('phc.categories_id', $cateid)
-    ->where('p.enable_pro', 1)
-    ->select('p.*', 'pt.*')
-    ->orderBy('p.pro_code', 'asc')
-    ->get();
+            ->join('products as p', 'p.pro_id', '=', 'phc.product_id') // join 商品
+            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id') // join 商品翻譯
+            ->where('pt.local', 'en') // 先以英文抓取，之後再依需求切換語言
+            ->where('phc.categories_id', $cateid) // 篩選 子商品分類
+            ->where('p.enable_pro', 1) // 篩選 啟用的商品
+            ->select('p.*', 'pt.*')
+            ->orderBy('p.pro_code', 'asc')
+            ->get();
+
         $products = [];
         $productCodeArr = [];
+        // 遍歷主商品 ($searchPro)，若屬性檢查通過 (count >= 4)，查詢並加入衍生型號商品
+        // 所以 $products 的數量會大於 $searchPro
         foreach ($searchPro as $pro) {
+            // 取得 商品屬性資料
             $product_has_prm = DB::table('product_has_property as ph')
-        ->whereIn('ph.type_id', [4, 3, 8, 31])
-        ->where('ph.product_id', $pro->pro_id)
-        ->orderBy('ph.type_id', 'asc')
-        ->select('ph.*')
-        ->get();
+                ->whereIn('ph.type_id', [4, 3, 8, 31])
+                ->where('ph.product_id', $pro->pro_id)
+                ->orderBy('ph.type_id', 'asc')
+                ->select('ph.*')
+                ->get();
             // return dd(count($product_has_prm));
             //Check Eror input content product
 
+            // 判斷 商品屬性數量，若符合條件則加入最終商品陣列
             if (count($product_has_prm) >= 4) {
                 array_push($arrproid, $pro->pro_id);
+                // 根據語言設定，取得對應語言的商品資料
                 $prolang = self::checkLang($lang, $pro->pro_id);
+                //
                 $datapro = DB::table('products as p')
-            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-            ->where('pt.local', $prolang)
-            ->where('p.pro_id', $pro->pro_id)
-            ->where('p.enable_pro', 1)
-            ->select('p.*', 'pt.*')
-            ->orderBy('p.created_at', 'desc')
-            ->first();
+                    ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+                    ->where('pt.local', $prolang)
+                    ->where('p.pro_id', $pro->pro_id)
+                    ->where('p.enable_pro', 1)
+                    ->select('p.*', 'pt.*')
+                    ->orderBy('p.created_at', 'desc')
+                    ->first();
 
                 array_push($products, $datapro);
                 array_push($productCodeArr, trim($datapro->pro_code));
+
+                // 取得 可選型號 商品資料
                 $optional_product = DB::table('product_optional_model as po')
                     ->join('products as p', 'p.pro_id', '=', 'po.product_id')
                     ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -1029,46 +1053,50 @@ class FrontendController extends Controller
             }
         }
         $pro_new = self::removeDuplicates($products, 'pro_code');
-
 //    return dd($products);
         // return dd(count($products));
+        // 取得 系列資料
         $series = DB::table('series_has_pro_categories as sc')
-        ->join('series as s', 'sc.se_id', '=', 's.se_id')
-        ->join('series_translations as st', 'st.series_id', '=', 's.se_id')
-        ->where('sc.pro_categories_id', $cateid)
-        ->where('st.local', $lang)
-        ->where('s.status', 1)
-        ->select('s.se_id', 'st.title')
-        ->distinct()
-        ->orderBy('st.title', 'asc')
-        ->get();
+            ->join('series as s', 'sc.se_id', '=', 's.se_id')
+            ->join('series_translations as st', 'st.series_id', '=', 's.se_id')
+            ->where('sc.pro_categories_id', $cateid)
+            ->where('st.local', $lang)
+            ->where('s.status', 1)
+            ->select('s.se_id', 'st.title')
+            ->distinct()
+            ->orderBy('st.title', 'asc')
+            ->get();
         // return dd($series);
+        // 取得 商品欄位資料
         $pd_field = DB::table('product_field as pf')
-        ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
-        ->join('section as st', 'pf.section_id', '=', 'st.id')
-        ->join('section_translation as stt', 'st.id', '=', 'stt.section_id')
-        ->where('pft.local', '=', $lang)
-        ->where('stt.local', '=', $lang)
-        ->select('pf.id as pd_field_id', 'pf.type', 'pf.created_at', 'pft.field_name', 'pft.local as pft_local', 'st.id as section_id', 'stt.name as section_name')
-        ->orderBy('pf.created_at', 'desc')
-        ->get();
+            ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
+            ->join('section as st', 'pf.section_id', '=', 'st.id')
+            ->join('section_translation as stt', 'st.id', '=', 'stt.section_id')
+            ->where('pft.local', '=', $lang)
+            ->where('stt.local', '=', $lang)
+            ->select('pf.id as pd_field_id', 'pf.type', 'pf.created_at', 'pft.field_name', 'pft.local as pft_local', 'st.id as section_id', 'stt.name as section_name')
+            ->orderBy('pf.created_at', 'desc')
+            ->get();
 
+        // 取得 商品篩選欄位資料
         $filter_pro = DB::table('sub_pro_has_product_filter as shf')
-        ->join('subpro_has_profilter_translation as shpt', 'shf.id', '=', 'shpt.fk_sub_pro_id')
-        ->Leftjoin('product_field as pf', 'pf.id', '=', 'shf.field_id')
-        ->where('shf.sub_pro_id', $cateid)
-        ->where('shpt.local', '=', $lang)
-        ->orderBy('shf.order_seq', 'asc')
-        ->select('shf.sub_pro_id', 'shf.field_id', 'shpt.title', 'pf.type', 'pf.section_id')
-        ->get();
+            ->join('subpro_has_profilter_translation as shpt', 'shf.id', '=', 'shpt.fk_sub_pro_id')
+            ->Leftjoin('product_field as pf', 'pf.id', '=', 'shf.field_id')
+            ->where('shf.sub_pro_id', $cateid)
+            ->where('shpt.local', '=', $lang)
+            ->orderBy('shf.order_seq', 'asc')
+            ->select('shf.sub_pro_id', 'shf.field_id', 'shpt.title', 'pf.type', 'pf.section_id')
+            ->get();
 
         // return dd($filter_pro);
+        // 取得 區段資料
         $section = DB::table('section as st')
-        ->join('section_translation as stt', 'st.id', '=', 'stt.section_id')
-        ->where('stt.local', '=', $lang)
-        ->select('st.id', 'stt.name')
-        ->get();
+            ->join('section_translation as stt', 'st.id', '=', 'stt.section_id')
+            ->where('stt.local', '=', $lang)
+            ->select('st.id', 'stt.name')
+            ->get();
 
+        // 取得 商品屬性資料
         $product_has_property = DB::table('product_has_property as ph')
            ->join('product_has_property_translation as pht', 'ph.per_id', '=', 'pht.per_fk_id')
            ->join('product_field as pf', 'pf.id', '=', 'ph.type_id')
@@ -1081,6 +1109,7 @@ class FrontendController extends Controller
            ->select('pht.value_text', 'ph.*', 'pft.field_name as fieldCate', 'pf.unit_name')
            ->get();
 
+        // 取得 文件分類資料
         $documents_cate = DB::table('products_documents_categories as pdc')
            ->join('pro_ducuments_cate_translations as pdct', 'pdct.doc_cate_id', '=', 'pdc.id')
            ->where('pdct.local', '=', $lang)
@@ -1099,14 +1128,18 @@ class FrontendController extends Controller
         //    ->where('pdc.main_cate_id',2)
         //    ->select('phd.*','pd.cate_id as cate_id' )
         //    ->get();
+
+        // 取得 預設篩選資料
         $defaultfilters = DB::table('default_filter as df')
            ->select('df.*')
            ->get();
 
+        // 取得 認證產品資料
         $certi_products = DB::table('certificate_product as cp')
            ->select('cp.*')
            ->get();
 
+        // 取得 SEO 資料
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id', 3)
@@ -1114,6 +1147,7 @@ class FrontendController extends Controller
                 ->select('mtp.*', 'mtpt.*')
                 ->get();
 
+        //  回傳 商品列表頁面，若無商品則回傳 404 頁面
         if (!empty($products)) {
             return view('front-end.product')
             ->with('metatag', $metatag)
@@ -1882,9 +1916,15 @@ class FrontendController extends Controller
         ], 200);
     }
 
+    /**
+     * product selector（商品選擇器）
+     *
+     * @return void
+     */
     public function productFinder()
     {
         $lang = App::getLocale();
+        // 取得 所有『對應語系、已啟用』的子分類，根據 order_seq 排序
         $subCategories = DB::table('sub_pro_categories as sp')
             ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
             ->where('spt.local', '=', $lang)
@@ -4283,17 +4323,22 @@ class FrontendController extends Controller
 
     public function checkLang($lang, $id)
     {
+        // 預設英文
         $returnlang = 'en';
+
+        // 檢查產品是否有該語言
         $hidelangPro = DB::table('products_translation as pt')
             ->where('pt.product_id', $id)
             ->where('pt.local', $lang)
             ->where('pt.showstatus', 1)
             ->first();
 
+        // 如果有則回傳該語言，沒有則回傳英文
         if (isset($hidelangPro)) {
             return $lang;
         }
 
+        // 回傳預設語言
         return $returnlang;
     }
 
