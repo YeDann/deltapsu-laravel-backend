@@ -633,6 +633,63 @@
     });
 </script>
 <script type="text/javascript">
+    /**
+     * 
+     * 1. 初始化與篩選邏輯
+     *    # popcheckSerries()
+     *      功能：初始化系列篩選的勾選狀態。
+     *      邏輯：如果有傳入 series_id，則自動勾選該系列並展開側邊欄；否則僅展開側邊欄但不預設勾選任何系列。
+     *    # filterAllSeries()
+     *      功能：根據勾選的系列篩選產品。
+     *      邏輯：如果 ser_arr (已勾選系列陣列) 為空，則顯示所有產品；如果有值，則只顯示符合該系列的產品。
+     *    # fillerData()
+     *      功能：執行所有篩選條件並更新產品列表。
+     *      邏輯：綜合處理系列、屬性、認證、狀態等多重篩選條件，並更新 productFilter 陣列。
+     *    # series_filter(type, value)
+     *      功能：處理系列篩選的勾選與取消勾選。
+     *      邏輯：將選中的系列 ID 加入或移出 ser_arr，並呼叫 fillerData() 重新篩選。
+     * 2. 視圖切換
+     *    # onclickListView(productarray, type, id)
+     *      功能：切換至列表視圖 (List View)。
+     *      參數：productarray (產品資料), type (排序類型), id (排序欄位 ID)。
+     *    # onclickGridView(productarray)
+     *      功能：切換至網格視圖 (Grid View)。
+     *      參數：productarray (產品資料)。
+     *    # onclickshow(id)
+     *      功能：切換側邊欄 (篩選器) 的顯示與隱藏。
+     *      參數：id (1: 隱藏, 2: 顯示)。
+     * 3. 搜尋功能
+     *    # onsearchProduct()
+     *      功能：桌面版搜尋產品。
+     *      邏輯：根據桌面版輸入框的關鍵字篩選產品，並重置其他篩選條件。
+     *    # onsearchProductMobile()
+     *      功能：手機版搜尋產品。
+     *      邏輯：根據手機版輸入框的關鍵字篩選產品，並同步關鍵字到桌面版輸入框。
+     * 4. 排序功能
+     *    # sortModelName(array_value)：依型號名稱排序 (A-Z)。
+     *    # sortModelNameZA(array_value)：依型號名稱排序 (Z-A)。
+     *    # sortOutputLH(array_value, type)：依輸出規格排序 (數值小到大)。
+     *    # sortOutputHL(array_value, type)：依輸出規格排序 (數值大到小)。
+     *    # sortInputLH(array_value, type)：依輸入規格排序 (數值小到大)。
+     *    # sortInputHL(array_value, type)：依輸入規格排序 (數值大到小)。
+     *    # diminsionLH(array_value)：依尺寸排序 (小到大)。
+     *    # diminsionHL(array_value)：依尺寸排序 (大到小)。
+     *    # sortDateModify(array_value)：依更新日期排序 (新到舊)。
+     *    # onselectSortArr(re_arr)：對搜尋結果進行排序並顯示。
+     * 5. 滑桿與數值處理
+     *    # createSlider()
+     *      功能：建立手機版數值滑桿 (Slider)。
+     *      邏輯：使用 noUiSlider 套件建立雙向滑桿，用於數值範圍篩選。
+     *    # createSliderDestop()
+     *      功能：建立桌面版數值滑桿。
+     *      邏輯：同上，但針對桌面版介面。
+     *    # findDataRage(arrRage, type)
+     *      功能：根據滑桿數值範圍篩選產品。
+     *      參數：arrRage (數值範圍 [min, max]), type (規格類型 ID)。
+     *    # getMinMaxValueById(id)
+     *      功能：取得指定規格類型的最大最小值。
+     *      用途：用於設定滑桿的初始範圍。
+     **/
     /* filter */
     function checkboxaddremove(i){
         if ($('.checkfilter' + i).is(':checked')) {
@@ -643,6 +700,10 @@
                     $("." + inputValue).hide();
             }
     }
+    /**
+     * 切換側邊欄顯示/隱藏
+     * @param {Number} id 狀態ID (1: 隱藏, 2: 顯示)
+     */
     function onclickshow(id) {
         var element = document.getElementById("contentProList");
         if ($("#sidebar").hasClass("show") == true) {
@@ -946,6 +1007,10 @@
       }
 
     }
+    /**
+     * 執行所有篩選條件並更新產品列表
+     * 包含系列、屬性、認證、狀態等篩選
+     */
     function fillerData(){
        productFilter = [];
        $('#current_method').val(0);
@@ -1318,6 +1383,10 @@
             var newkey = key.replace(/[/]/g,'@');
            return newkey;
     }
+    /**
+     * 切換至網格視圖
+     * @param {Array} productarray 產品陣列
+     */
     function onclickGridView(productarray) {
 
         $('#current_list_item').val(1);
@@ -1531,6 +1600,12 @@
         });
     }
 
+    /**
+     * 切換至列表視圖
+     * @param {Array} productarray 產品陣列
+     * @param {Number} type 排序類型
+     * @param {Number} id 排序欄位ID
+     */
     function onclickListView(productarray ,type ,id) {
         var html1 = '';
         html1 += '<div class="ListView visible-upper-mobile" id="ListView">';
@@ -2186,6 +2261,11 @@
     }
 
 
+    /**
+     * 初始化系列篩選勾選狀態
+     * 如果有傳入 series_id，則勾選該系列並展開側邊欄
+     * 否則展開側邊欄但不預設勾選任何系列
+     */
     function popcheckSerries(){
         if(series_id){
             $("#cx-series01"+series_id).prop("checked" ,true);
@@ -2194,11 +2274,6 @@
             onclickshow(2);
             ser_arr.push({{$se_id}});
         }else{
-            $.each(series, function(index,val){
-            ser_arr.push(val['se_id']);
-            $("#cx-series01"+val['se_id']).prop("checked" ,true);
-            $("#cx-series01"+val['se_id']+"_mobile").prop("checked" ,true);
-            });
            $("#sidebar").addClass("show");
             onclickshow(2);
         }
@@ -2234,6 +2309,11 @@
     }
 
 
+    /**
+     * 處理系列篩選的勾選/取消勾選
+     * @param {String} type 類型
+     * @param {Number} value 系列ID
+     */
     function series_filter(type,value){
        if(ser_arr.indexOf(value) == -1){
            ser_arr.push(value);
@@ -2245,14 +2325,30 @@
        }
        fillerData();
     }
+    /**
+     * 根據勾選的系列篩選產品
+     * 如果 ser_arr 為空，則顯示所有產品
+     * 如果 ser_arr 有值，則只顯示符合該系列的產品
+     */
     function filterAllSeries(){
 
         var eachpro = [];
         $.each(products, function(index,value){
          var productObj = {};
          var productObj2 = {};
-         $.each(ser_arr, function(index_ser,value_ser){
-           if(value_ser == value['series_id']){
+         var is_match = false;
+
+         if(ser_arr.length > 0){
+            $.each(ser_arr, function(index_ser,value_ser){
+                if(value_ser == value['series_id']){
+                    is_match = true;
+                }
+            });
+         }else{
+             is_match = true;
+         }
+
+         if(is_match){
             productObj['pro_id'] = value['pro_id'];
             productObj['pro_code'] = value['pro_code'];
             productObj['series_id'] = value['series_id'];
@@ -2282,9 +2378,6 @@
             productFilter.push(productObj);
 
           }
-
-         });
-
       });
 
     //  findresultfeildbypro(productFilter);
@@ -2897,6 +2990,10 @@
       }
       $('.countproduct').text(showarr.length);
     }
+    /**
+     * 清除所有篩選條件
+     * 重置所有表單並重新載入資料
+     */
     function resetAllTab(){
         ser_arr = [];
         arr_status = [];
@@ -3019,6 +3116,9 @@
 
     }
 
+    /**
+     * 依型號名稱排序 (A-Z)
+     */
     function sortModelName(array_value){
         var arr = [];
          arr = array_value.sort(
@@ -3027,6 +3127,9 @@
              });
         return arr;
     }
+    /**
+     * 依型號名稱排序 (Z-A)
+     */
     function sortModelNameZA(array_value){
         var arr = [];
          arr = array_value.sort(
@@ -3038,6 +3141,9 @@
         return arr;
     }
 
+    /**
+     * 依尺寸排序 (小到大)
+     */
     function diminsionLH(array_value){
 
         var arr = [];
@@ -3047,6 +3153,9 @@
              });
         return arr;
     }
+    /**
+     * 依尺寸排序 (大到小)
+     */
     function diminsionHL(array_value){
         var arr = [];
          arr = array_value.sort(
@@ -3057,6 +3166,9 @@
         return arr;
     }
 
+    /**
+     * 依更新日期排序
+     */
     function sortDateModify(array_value){
         var arr = [];
         arr = array_value.sort(
@@ -3065,6 +3177,11 @@
              });
         return arr;
     }
+    /**
+     * 依輸出規格排序 (小到大)
+     * @param {Array} array_value 產品陣列
+     * @param {Number} type 規格類型ID
+     */
     function sortOutputLH(array_value ,type){
         var value_data = [];
         var arr_sort = [];
@@ -3103,6 +3220,11 @@
         return arr_sort;
     }
 
+    /**
+     * 依輸出規格排序 (大到小)
+     * @param {Array} array_value 產品陣列
+     * @param {Number} type 規格類型ID
+     */
     function sortOutputHL(array_value ,type){
         var value_data = [];
         var arr_sort = [];
@@ -3141,6 +3263,11 @@
         return arr_sort;
     }
 
+    /**
+     * 依輸入規格排序 (大到小)
+     * @param {Array} array_value 產品陣列
+     * @param {Number} type 規格類型ID
+     */
     function sortInputHL(array_value ,type){
         var value_data = [];
         var arr_sort = [];
@@ -3179,6 +3306,11 @@
         return arr_sort;
     }
 
+    /**
+     * 依輸入規格排序 (小到大)
+     * @param {Array} array_value 產品陣列
+     * @param {Number} type 規格類型ID
+     */
     function sortInputLH(array_value ,type){
        var value_data = [];
         var arr_sort = [];
@@ -3217,6 +3349,11 @@
         return arr_sort;
     }
 
+    /**
+     * 取得指定規格類型的最大最小值
+     * @param {Number} id 規格類型ID
+     * @returns {Object} 包含 min 和 max 的物件
+     */
     function getMinMaxValueById(id){
         var value_data = [];
         pro_perti.filter(function(data) {
@@ -3246,6 +3383,10 @@
        };
     }
 
+     /**
+      * 桌面版搜尋產品
+      * 根據輸入的關鍵字篩選產品
+      */
      function  onsearchProduct(){
         var re_arr = [];
             ser_arr = [];
@@ -3308,6 +3449,10 @@
            $('#current_method').val(1);
 
      }
+     /**
+      * 手機版搜尋產品
+      * 根據輸入的關鍵字篩選產品
+      */
      function onsearchProductMobile(){
         var re_arr = [];
         $.each(filter_pro, function(index_con,fil_con){
@@ -3363,6 +3508,10 @@
            $('#current_method').val(2);
      }
 
+     /**
+      * 對搜尋結果進行排序並顯示
+      * @param {Array} re_arr 搜尋結果陣列
+      */
      function onselectSortArr(re_arr){
         var arr_val = re_arr;
         var arr_result = [];
@@ -3408,6 +3557,9 @@
 
     /* slidebar */
 
+    /**
+     * 建立手機版數值滑桿
+     */
     function createSlider(){
         $.each(fildnumberMobile, function(index_con,fil_con){
         if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03'  ){
@@ -3440,6 +3592,9 @@
         });
     }
 
+    /**
+     * 建立桌面版數值滑桿
+     */
     function createSliderDestop(){
          $.each(fildnumber, function(index_con,fil_con){
         var data = getMinMaxValueById(fil_con['field_id']);
@@ -3473,6 +3628,11 @@
     });
 
     }
+    /**
+     * 根據滑桿數值範圍篩選產品
+     * @param {Array} arrRage 數值範圍 [min, max]
+     * @param {Number} type 規格類型ID
+     */
     function findDataRage(arrRage ,type){
 
         var pro_arr = [];
@@ -3544,48 +3704,53 @@
     }
 
 </script>
+/**
+ * 載入更多產品功能
+ * 
+ * loadeMore (網格視圖)
+ * loadeMoreMobile (手機版網格視圖)
+ * loadlistview (列表視圖)
+ **/
 <script>
     function loadeMore(event,i){
-    if ($(".moreBox:hidden").length != 0) {
-      $("#loadMore").show();
+        if ($(".moreBox:hidden").length != 0) {
+        $("#loadMore").show();
+        }
+        event.preventDefault();
+
+        $(".moreBox:hidden").slice(0, 4).slideDown();
+        if ($(".moreBox:hidden").length == 0) {
+            $("#loadMore").fadeOut('hide');
+        }
     }
-      event.preventDefault();
+    function loadeMoreMobile(event,i){
+        if ($(".moreBox_mobile:hidden").length != 0) {
+        $("#loadMore_mobile").show();
+        }
+        event.preventDefault();
 
-      $(".moreBox:hidden").slice(0, 4).slideDown();
-      if ($(".moreBox:hidden").length == 0) {
-        $("#loadMore").fadeOut('hide');
-      }
-  }
-  function loadeMoreMobile(event,i){
-    if ($(".moreBox_mobile:hidden").length != 0) {
-      $("#loadMore_mobile").show();
+        $(".moreBox_mobile:hidden").slice(0, 4).slideDown();
+        if ($(".moreBox_mobile:hidden").length == 0) {
+            $("#loadMore_mobile").fadeOut('hide');
+        }
     }
-      event.preventDefault();
+    function loadlistview(event ,i){
+        if ($(".row_table:hidden").length != 0) {
+        $("#loadlistview").show();
+        }
+        event.preventDefault();
 
-      $(".moreBox_mobile:hidden").slice(0, 4).slideDown();
-      if ($(".moreBox_mobile:hidden").length == 0) {
-        $("#loadMore_mobile").fadeOut('hide');
-      }
-  }
-  function loadlistview(event ,i){
-    if ($(".row_table:hidden").length != 0) {
-      $("#loadlistview").show();
+        $(".row_table:hidden").slice(0, 4).slideDown();
+        if ($(".row_table:hidden").length == 0) {
+            $("#loadlistview").fadeOut('hide');
+        }
     }
-      event.preventDefault();
 
-      $(".row_table:hidden").slice(0, 4).slideDown();
-      if ($(".row_table:hidden").length == 0) {
-        $("#loadlistview").fadeOut('hide');
-      }
-  }
-
-  $(window).resize(function() {
-   if($(window).width() <= 786){
-    $('#current_list_item').val(1);
-    fillerData();
-   }
- });
-
+    $(window).resize(function() {
+        if($(window).width() <= 786){
+            $('#current_list_item').val(1);
+            fillerData();
+        }
+    });
 </script>
-
 @endsection
