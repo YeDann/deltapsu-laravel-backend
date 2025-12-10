@@ -1118,9 +1118,7 @@
 	};
 	var onloadCallback = function() {
 	  grecaptcha.render('recap_vertify', {
-	//    'sitekey' : '6LdshPcUAAAAACIioRg3pa05GCUYQ9S0hVLv-4zv',
-         'sitekey' : '6LeFKfYUAAAAAL-q5mHlmjUTPQ-LvlDjNtev9QhA',
-								//'sitekey' : '6LcPwHQpAAAAAL5BjEcFskLuvXnrUP9aNeeCv_9R',
+        'sitekey' : '{{config('app.recapcha_site_key')}}',
 		'callback' : verifyCallback,
 		'theme' : 'light'
 	  });
@@ -1442,7 +1440,7 @@ function selectCountry(){
 				$("#option_ti").attr('data-original-title', '{{$staticContent['Inlet_Type_description_MEG-3K0A9']}}');
 		}else if(model_alldata[index]['max_power'] == 700){
 		        $('#terminal').empty();
-                $("#terminal").append(new Option("{$staticContent['t_for_american_terminal']}}", "1"));
+                $("#terminal").append(new Option("{{$staticContent['t_for_american_terminal']}}", "1"));
 				$("#terminal").append(new Option("{{$staticContent['e_for_european_terminal']}}", "2"));
 				$("#terminal").append(new Option("{{$staticContent['c_for_c14']}}", "3"));
 
@@ -2327,7 +2325,7 @@ function selectCountry(){
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/bootstrap.min.css')}}" >'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/font.css')}}">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/embepdf.css')}}">'+
-		 '<link rel="stylesheet" href="{{asset('/frontend-asset/css/header-front.css')}}">'+
+		 	'<link rel="stylesheet" href="{{asset('/frontend-asset/css/header-front.css')}}">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/container.css')}}">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/home.css')}}">'+
 			'<link rel="stylesheet" href="{{asset('/frontend-asset/css/product.css')}}">'+

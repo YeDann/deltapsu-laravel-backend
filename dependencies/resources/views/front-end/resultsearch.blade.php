@@ -3,15 +3,15 @@
 <style>
     .btn-certi {
         height: 40px;
-        width: 160px;
+        min-width: 160px;
         border-radius: 5px;
         border: 2px solid #444444;
         background-color: #ffffff;
-
         color: #000000;
         font-weight: bold;
         cursor: pointer;
-
+        font-size: 14px;
+        letter-spacing: 1px;
     }
 
     .f-btn {
@@ -174,7 +174,7 @@
 
 
                                             <a
-                                                href="{{route('productsDetailsByType' ,['catename'=> $pro['url_item']  ,'pro_code' => checkProcode($pro['pro_code']) ])}}">
+                                                href="{{route('productsDetailsByType' ,['cateid'=> $pro['url_item']  ,'pro_code' => checkProcode($pro['pro_code']) ])}}">
                                                 <div class="pro-h-box">
                                                     @if(isset($pro['picture']))
                                                     <img src="{{config('app.url')}}/upload/thumbs/{{$pro['picture']}}"
@@ -421,7 +421,7 @@
                                         <div class="new-tag" style="background-color:{{$color}}">{{$name_sta}}</div>
                                         <div class="card-body ft-products-item">
                                             <a
-                                                href="{{route('productsDetailsByType' ,['catename'=> preg_replace('/\s+/', '-', $pro['url_item']) ,'pro_code' =>  checkProcode($pro['pro_code'])])}}">
+                                                href="{{route('productsDetailsByType' ,['cateid'=> preg_replace('/\s+/', '-', $pro['url_item']) ,'pro_code' =>  checkProcode($pro['pro_code'])])}}">
                                                 @if(isset($pro['picture']))
                                                 <img src="{{config('app.url')}}/upload/thumbs/{{$pro['picture']}}"
                                                     class="product-cat mb-2" alt="" style="width:70%;">
@@ -882,9 +882,10 @@
                                                 @if($dis->status_cer == 1)
                                                 <a href="{{config('app.url')}}/medias/distributor/{{$dis->file_cer}}"
                                                     download="">
-                                                    <button class="btn-certi"><i
-                                                            class="cer-icon icon-facon icon-web-certificate"></i> <span
-                                                            class="f-btn">{{$staticContent['Certificates']}}</span></button>
+                                                    <button class="btn-certi">
+                                                        <i class="cer-icon icon-facon icon-web-certificate"></i>
+                                                        <span class="f-btn">{{$staticContent['Certificates']}}</span>
+                                                    </button>
                                                 </a>
                                                 @endif
                                             </div>

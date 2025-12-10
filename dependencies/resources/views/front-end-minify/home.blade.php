@@ -316,7 +316,7 @@
                             <img data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy" class="lazyload"
                                 alt="blank.png">
                             @endif
-                            <div style="height: 50px; " class="d-flex">
+                            <div style="height: 50px;" class="d-flex">
                                 <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$sub->name}}</h4>
                             </div>
                         </a>

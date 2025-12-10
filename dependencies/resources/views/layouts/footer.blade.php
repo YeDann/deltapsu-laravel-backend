@@ -292,7 +292,7 @@
     </div>
     <div class="footer-nav">
         <div class="container">
-            <ul>Copyright © 2020 DeltaPSU. All Rights Reserved.</ul>
+            <ul>Copyright © {{ date('Y') }} DeltaPSU. All Rights Reserved.</ul>
             {{-- <ul>Designed by Degito</ul> --}}
         </div>
     </div>
