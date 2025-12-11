@@ -507,6 +507,7 @@ function slugifyHead($text)
                         </a>
                         <div class="dropdown-menu s-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
                             <div class="dropdown-submenu">
+                                {{-- 全部商品列表（Products_Overview） --}}
                                 <a class="sub-menu dropdown-item" href="{{ route('allproduct') }}">
                                     {{ $staticContent['Products_Overview'] }}
                                 </a>
@@ -514,7 +515,7 @@ function slugifyHead($text)
                                     {{ isset($staticContent['Industrial_Power']) ? $staticContent['Industrial_Power'] : 'Industrial Power' }}
                                     <i class="zmdi zmdi-chevron-right"></i>
                                 </a>
-                                <ul class="dropdown-menu drp-subthree">
+                                {{-- <ul class="dropdown-menu drp-subthree">
                                     @if(isset($navcategories2))
                                     @foreach ($navcategories2 as $subCate)
                                         @if($subCate->main_cateid == 1)
@@ -550,9 +551,9 @@ function slugifyHead($text)
                                             data-src="{{asset('frontend-asset/image/Industrial_Power_Supplies.png')}}"
                                             alt="Industrial_Power_Supplies.png">
                                     </div>
-                                </ul>
+                                </ul> --}}
                             </div>
-                            <div class="dropdown-submenu">
+                            {{-- <div class="dropdown-submenu">
                                 <a id="sub2" class="sub-menu" onclick="mainCate('sub2')" tabindex="-1" href="#">
                                     {{isset($staticContent['Medical_Power'])?
                                     $staticContent['Medical_Power'] :'Medical Power ' }} <i
@@ -665,38 +666,46 @@ function slugifyHead($text)
                                             alt="Battery Charging Image">
                                     </div>
                                 </ul>
-                            </div>
+                            </div> --}}
                         </div>
                     </li>
 
-                    {{-- Selector --}}
+                    {{-- Selector (Tools 選單) --}}
                     <li class="nav-item dropdown">
+                        {{-- Tools 主連結 --}}
                         <a id="nav-uderline" class="nav-link " href="" id="dropdown02" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false"> {{isset($staticContent['Tools'])?
                             $staticContent['Tools'] :'Tools' }} <i class="zmdi zmdi-chevron-down"></i></a>
                         <div class="dropdown-menu s-menu" role="menu" aria-labelledby="dropdown02">
+                            {{-- Product Selector 連結 --}}
                             {{--
                     <li class="dropdown-item"> --}}<a class="dropdown-item" href="{{route('productFinder')}}">
                             {{isset($staticContent['Product_Selector'])?
                             $staticContent['Product_Selector'] :'Product Selector' }} </a>{{-- </li> --}}
+                    
+                    {{-- Configurable Power Selector 連結 --}}
                     {{-- <li class="dropdown-item"> --}}<a class="dropdown-item"
                             href="{{route('configurableproduct')}}">
                             {{isset($staticContent['configurable_power_selector'])?
                             $staticContent['configurable_power_selector'] :'configurable power selector' }}</a>{{--
                     </li>
                     --}}
+                    
+                    {{-- Product Comparison 連結 --}}
                     {{-- <li class="dropdown-item"> --}}<a class="dropdown-item" href="{{route('productCoparison')}}">
                             {{isset($staticContent['product_comparison'])?
                             $staticContent['product_comparison'] :'product comparison' }}</a>{{-- </li> --}}
                         </div>
                     </li>
 
-                    {{-- Applications --}}
+                    {{-- Applications (應用領域選單) --}}
                     <li class="nav-item dropdown ">
+                        {{-- Applications 主連結 --}}
                         <a id="nav-uderline" class="nav-link " href="" id="dropdown03" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false"> {{isset($staticContent['Applications'])?
                             $staticContent['Applications'] :'Applications' }} <i class="zmdi zmdi-chevron-down"></i></a>
                         <div class="dropdown-menu s-menu" role="menu" aria-labelledby="dropdown03">
+                            {{-- 迴圈顯示所有應用領域 --}}
                             @if(isset($navapplication))
                             @foreach ($navapplication as $app)
                             <a class="dropdown-item"

@@ -138,6 +138,7 @@ class ShareData
         view()->share('mail_chimp_country', $mailChimpCountry);
 
         // Cache static_word
+        // 取得 靜態關鍵字 與 翻譯
         $cacheKeyStaticWord = 'static_word_' . $lang;
         $staticWordCache = Cache::remember($cacheKeyStaticWord, $cacheDuration, function () use ($lang) {
             return DB::table('static_keyword as w')
@@ -147,6 +148,7 @@ class ShareData
                 ->get();
         });
 
+        // 如果沒有找到對應語言的靜態關鍵字，則用英文
         if (count($staticWordCache) == 0) {
             $cacheKeyStaticWordEn = 'static_word_en';
             $staticWordCache = Cache::remember($cacheKeyStaticWordEn, $cacheDuration, function () {
@@ -158,6 +160,7 @@ class ShareData
             });
         }
 
+        // 將靜態關鍵字轉換為關聯陣列，方便在視圖中使用
         $wordArray = [];
         foreach ($staticWordCache as $word) {
             $wordArray[$word->key_word] = $word->word;
