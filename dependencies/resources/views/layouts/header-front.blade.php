@@ -492,51 +492,56 @@ function slugifyHead($text)
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
                 aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon">
-
-                </span>
+                <span class="navbar-toggler-icon"></span>
             </button>
+
+            {{-- 桌機版header --}}
             <div class="collapse navbar-collapse header-bar-line" id="navbar">
                 <ul id="nav-all" class="navbar-nav mr-center-nav ul-nav-inner">
-
+                    {{-- Products --}}
                     <li class="nav-item dropdown">
                         <a id="nav-uderline" class="nav-link" id="dropdown01" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">{{isset($staticContent['Products'])?
-                            $staticContent['Products'] :'Products' }}
-
+                            aria-haspopup="true" aria-expanded="false">
+                            {{ isset($staticContent['Products']) ? $staticContent['Products'] : 'Products' }}
                             <i class="zmdi zmdi-chevron-down"></i>
                         </a>
                         <div class="dropdown-menu s-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
-
                             <div class="dropdown-submenu">
-                                <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1"
-                                    href="#">{{isset($staticContent['Industrial_Power'])?
-                                    $staticContent['Industrial_Power'] :'Industrial Power' }} <i
-                                        class="zmdi zmdi-chevron-right"></i></a>
+                                <a class="sub-menu dropdown-item" href="{{ route('allproduct') }}">
+                                    {{ $staticContent['Products_Overview'] }}
+                                </a>
+                                <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1" href="#">
+                                    {{ isset($staticContent['Industrial_Power']) ? $staticContent['Industrial_Power'] : 'Industrial Power' }}
+                                    <i class="zmdi zmdi-chevron-right"></i>
+                                </a>
                                 <ul class="dropdown-menu drp-subthree">
                                     @if(isset($navcategories2))
                                     @foreach ($navcategories2 as $subCate)
-                                    @if($subCate->main_cateid == 1)
-                                    <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}',2)"
-                                            href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
-                                        </a>
-                                    </li>
-                                    @elseif($subCate->main_cateid == 2)
-                                    <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type2}}',2)"
-                                            href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
-                                        </a>
-                                    </li>
-                                    @elseif($subCate->main_cateid == 3)
-                                    <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}',2)"
-                                            href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
-                                        </a>
-                                    </li>
-                                    @else
-                                    <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}',2)"
-                                            href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
-                                        </a>
-                                    </li>
-                                    @endif
+                                        @if($subCate->main_cateid == 1)
+                                        <li>
+                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}',2)"
+                                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                                            </a>
+                                        </li>
+                                        @elseif($subCate->main_cateid == 2)
+                                        <li>
+                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type2}}',2)"
+                                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                                            </a>
+                                        </li>
+                                        @elseif($subCate->main_cateid == 3)
+                                        <li>
+                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}',2)"
+                                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                                            </a>
+                                        </li>
+                                        @else
+                                        <li>
+                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}',2)"
+                                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                                            </a>
+                                        </li>
+                                        @endif
                                     @endforeach
                                     @endif
                                     <div class="image-dropdown d-flex justify-content-center "
@@ -664,7 +669,8 @@ function slugifyHead($text)
                         </div>
                     </li>
 
-                    <li class="nav-item dropdown ">
+                    {{-- Selector --}}
+                    <li class="nav-item dropdown">
                         <a id="nav-uderline" class="nav-link " href="" id="dropdown02" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false"> {{isset($staticContent['Tools'])?
                             $staticContent['Tools'] :'Tools' }} <i class="zmdi zmdi-chevron-down"></i></a>
@@ -682,24 +688,24 @@ function slugifyHead($text)
                     {{-- <li class="dropdown-item"> --}}<a class="dropdown-item" href="{{route('productCoparison')}}">
                             {{isset($staticContent['product_comparison'])?
                             $staticContent['product_comparison'] :'product comparison' }}</a>{{-- </li> --}}
-            </div>
-            </li>
+                        </div>
+                    </li>
 
-
-            <li class="nav-item dropdown ">
-                <a id="nav-uderline" class="nav-link " href="" id="dropdown03" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false"> {{isset($staticContent['Applications'])?
-                    $staticContent['Applications'] :'Applications' }} <i class="zmdi zmdi-chevron-down"></i></a>
-                <div class="dropdown-menu s-menu" role="menu" aria-labelledby="dropdown03">
-                    @if(isset($navapplication))
-                    @foreach ($navapplication as $app)
-                    <a class="dropdown-item"
-                        href="{{route('appDetail' ,[ 'name' => $app->slug_app , 'id' => $app->applica_id])}}">
-                        {{$app->name}}</a>
-                    @endforeach
-                    @endif
-                </div>
-            </li>
+                    {{-- Applications --}}
+                    <li class="nav-item dropdown ">
+                        <a id="nav-uderline" class="nav-link " href="" id="dropdown03" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false"> {{isset($staticContent['Applications'])?
+                            $staticContent['Applications'] :'Applications' }} <i class="zmdi zmdi-chevron-down"></i></a>
+                        <div class="dropdown-menu s-menu" role="menu" aria-labelledby="dropdown03">
+                            @if(isset($navapplication))
+                            @foreach ($navapplication as $app)
+                            <a class="dropdown-item"
+                                href="{{route('appDetail' ,[ 'name' => $app->slug_app , 'id' => $app->applica_id])}}">
+                                {{$app->name}}</a>
+                            @endforeach
+                            @endif
+                        </div>
+                    </li>
             {{-- Memu About Us --}}
             {{-- <li class="nav-item dropdown ">
                 <a id="nav-uderline" class="nav-link " href="" id="dropdown04" data-toggle="dropdown"
@@ -783,7 +789,7 @@ function slugifyHead($text)
                 <div class="menu-buger">
                     <div class="bar"></div>
                     <div class="bar"></div>
-                    <div class="bar"> </div>
+                    <div class="bar"></div>
                 </div>
             </a>
             <a class="col-nav navbar-brand-mobile d-flex justify-content-center" href="{{route('index','home')}}">
