@@ -302,8 +302,8 @@
   }else if($lang_seo == 'tw'){
     $lang_seo = 'zh-Hans-TW';
   }
-  $url_name = $subCategories[0]->url_item ? $subCategories[0]->url_item  : null;
-  $categories_id = $subCategories[0]->sub_pro_id ? $subCategories[0]->sub_pro_id  : null;
+  $url_name = isset($subCategories[0]) ? $subCategories[0]->url_item  : null;
+  $categories_id = isset($subCategories[0]) ? $subCategories[0]->sub_pro_id  : null;
 ?>
 <link rel="canonical" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$url_name}}/{{$categories_id}}" />
 <link rel="alternate" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$url_name}}/{{$categories_id}}"
@@ -639,9 +639,9 @@
      *    # popcheckSerries()
      *      功能：初始化系列篩選的勾選狀態。
      *      邏輯：如果有傳入 series_id，則自動勾選該系列並展開側邊欄；否則僅展開側邊欄但不預設勾選任何系列。
-     *    # filterAllSeries()
+     *    # filterBaseData()
      *      功能：根據勾選的系列篩選產品。
-     *      邏輯：如果 ser_arr (已勾選系列陣列) 為空，則顯示所有產品；如果有值，則只顯示符合該系列的產品。
+     *      邏輯：如果有勾選系列，則過濾出屬於該系列的產品；否則顯示所有產品。
      *    # fillerData()
      *      功能：執行所有篩選條件並更新產品列表。
      *      邏輯：綜合處理系列、屬性、認證、狀態等多重篩選條件，並更新 productFilter 陣列。
@@ -733,10 +733,9 @@
     var filter_pro = <?= json_encode($filter_pro);?>;
     var domainUrl = '{{config('app.url')}}';
     var series_id = '{{$se_id}}';
+    var categoriesHasMainPro =  <?= json_encode($categoriesHasMainPro);?>;
     var series =  <?= json_encode($series);?>;
     var section =  <?= json_encode($section);?>;
-    var unit_dimension =  <?= json_encode($subCategories[0]->unit_dimension);?>;
-    var unit_dimension_1 =  <?= json_encode($subCategories[0]->unit_dimension_1);?>;
     var documents_cate =  <?= json_encode($documents_cate);?>;
     var certi_products =  <?= json_encode($certi_products);?>;
     var defaultfilters =  <?= json_encode($defaultfilters);?>;
@@ -745,6 +744,7 @@
     var url_name =  <?= json_encode($url_name);?>;
     var pro_perti = [];
     var ser_arr = [];
+    var pro_type_arr = [];
     var productFilter = [];
     var productTextSearch = [];
     var fildnumber = [];
@@ -755,6 +755,18 @@
     var arr_value1 = [];
 
     $(document).ready(function () {
+        // 將 product_type 的 filter 移到最前面
+        // 確保 filter_pro 是陣列
+        // if (!Array.isArray(filter_pro)) {
+        //     filter_pro = Object.values(filter_pro);
+        // }
+        // // 排序：將 field_id 為 'product_type' 的項目排在第一位
+        // filter_pro.sort(function(a, b) {
+        //     if (a.field_id === 'product_type') return -1;
+        //     if (b.field_id === 'product_type') return 1;
+        //     return 0;
+        // });
+
         loadAddContent();
         filtercontentMobile();
         filtercontent();
@@ -770,6 +782,11 @@
             //  $(".moreBox_mobile").slice(0, 12).show();
             //  $(".row_table").slice(0, 6).show();
         }else{
+            // 桌面版預設開啟 Sidebar
+            if (!$("#sidebar").hasClass("show")) {
+                 $("#sidebar").addClass("show");
+                 onclickshow(2);
+            }
             fillerData();
             // FristloadData();
         }
@@ -1014,7 +1031,7 @@
     function fillerData(){
        productFilter = [];
        $('#current_method').val(0);
-       filterAllSeries();
+       filterBaseData();
       var arr_filterall = [];
         checktypegroup = arr_type_an_val.every(
                  function(val, i, arr){
@@ -1459,7 +1476,7 @@
         html += '<div class="text-editor-card mt-2"> '+checkNullTexteditor(pro['short_features']) +'</div>';
         }else{
         html += '<div class="dimension">';
-        html += '<h6 class="text-title-ft-sub text-one">{{$staticContent['Dimensions']}} ('+unit_dimension_1+' x W x '+unit_dimension+') </h6>';
+        html += '<h6 class="text-title-ft-sub text-one">{{$staticContent['Dimensions']}}</h6>';
         if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 && ['dimensionW'] != '' && pro['dimensionD'] != ''){
         html += '<p class="text-ft-sub text-one">'+pro['dimensionL']+'x'+pro['dimensionW']+'x'+pro['dimensionD']+' mm</p>';
         html += '<p class="text-ft-sub text-one">'+mmtonich(pro['dimensionL'])+'”x'+mmtonich(pro['dimensionW'])+'”x'+mmtonich(pro['dimensionD'])+'”</p>';
@@ -1560,7 +1577,7 @@
                 html += '<div class="text-editor-card mt-2"> '+checkNullTexteditor(pro['short_features']) +'</div>';
             } else {
                 html += '<div class="dimension mt-2">';
-                html += '<p class="text-title-ft-sub text-two">{{$staticContent['Dimensions']}} ('+unit_dimension_1+' X W X '+unit_dimension+')</p>';
+                html += '<p class="text-title-ft-sub text-two">{{$staticContent['Dimensions']}}</p>';
                 if (pro['dimensionL'] != null && pro['dimensionL'].length < 7 && pro['dimensionW'] != '' && pro['dimensionD'] != '') {
                     html += '<p class="text-ft-sub text-two">'+pro['dimensionL']+'x'+pro['dimensionW']+'x'+pro['dimensionD']+' mm</p>';
                     html += '<p class="text-ft-sub text-two">'+mmtonich(pro['dimensionL'])+'”x'+mmtonich(pro['dimensionW'])+'”x'+mmtonich(pro['dimensionD'])+'”</p>';
@@ -1623,7 +1640,7 @@
         if(url_name == "wireless-charging-system"){
             html1 += '<th  class="header-font-table" >{{$staticContent['product_highLights']}}</th>';
         }else{
-            html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['Dimensions']}} <br>('+unit_dimension_1+' x W x '+unit_dimension+')</th>';
+            html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['Dimensions']}}</th>';
         }
 
         html1 += '</tr>';
@@ -1938,9 +1955,34 @@
             html3 += fil_con['title'];
             html3 += '</a>';
             html3 += '</div>';
-            html3 += '<div id="collapse-fliter_'+fil_con['field_id']+'" class="card-body-filter collapse '+(fil_con['field_id']== 'series01'?'show':'') +'" >';
+            // 預設展開 product_type 的 accordion
+            html3 += '<div id="collapse-fliter_'+fil_con['field_id']+'" class="card-body-filter collapse '+(fil_con['field_id']== 'product_type'?'show':'') +'" >';
             html3 += '<form id="form-'+fil_con['field_id']+'" class="'+fil_con['field_id']+'">';
             html3 += '<div class="scrollbar dataserchfilter'+fil_con['field_id']+'" id="style-1">';
+
+            // 新增 product type 的 filter 區塊
+            if(fil_con['field_id'] == 'product_type'){
+                $.each(categoriesHasMainPro, function(index_category,category){
+                    html3 += '<div onchange="product_type_filter('+"'"+fil_con['field_id']+"'"+','+category['cate_id']+');" class="box-input-checkbox">';
+                    html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+category['cate_id']+'" type="checkbox" style="display: none;" >';
+                    html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+category['cate_id']+'"><span>';
+                    html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+                    html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+                    html3 += '</svg></span><span>'+category['name']+'</span></label>';
+                    html3 += '</div>' ;
+                  });
+            }
+            if(fil_con['field_id'] == 'series01'){
+                $.each(series, function(index_serie,serie){
+                    html3 += '<div onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="box-input-checkbox">';
+                    html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+serie['se_id']+'" type="checkbox" style="display: none;" >';
+                    html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+serie['se_id']+'"><span>';
+                    html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+                    html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+                    html3 += '</svg></span><span>'+serie['title']+'</span></label>';
+                    html3 += '</div>' ;
+                  });
+             }
             if(fil_con['field_id'] == 'series01'){
                 $.each(series, function(index_serie,serie){
                     html3 += '<div onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="box-input-checkbox">';
@@ -2086,8 +2128,13 @@
         $('#sort-filter-content').html(html3);
         createSliderDestop();
         popcheckSerries();
+        popcheckProductType();
 
     }
+    /**
+     * 渲染手機版篩選器內容
+     * Render mobile filter content
+     */
     function  filtercontentMobile(){
        var property_load = [];
        var doc_safety = [{id:2,name:'ABS'}, {id:3,name:'ATEX'},{id:4,name:'BSMI'}];
@@ -2104,9 +2151,25 @@
             html3 += fil_con['title'];
             html3 += '</a>';
             html3 += '</div>';
-            html3 += '<div id="collapse-fliter_'+fil_con['field_id']+'_mobile" class="card-body-filter collapse '+(fil_con['field_id']== 'series01'?'show':'') +'">';
+            // 預設展開 product_type 的 accordion
+            html3 += '<div id="collapse-fliter_'+fil_con['field_id']+'_mobile" class="card-body-filter collapse '+(fil_con['field_id']== 'product_type'?'show':'') +'">';
             html3 += '<form id="form-mobile'+fil_con['field_id']+'" class="'+fil_con['field_id']+'_mobile">';
             html3 += '<div class="scrollbar dataserchfiltermobile'+fil_con['field_id']+'" id="style-1">';
+
+            // 產品類型 (Product Type)
+            if(fil_con['field_id'] == 'product_type'){
+                $.each(categoriesHasMainPro, function(index_category,category){
+                    html3 += '<div class="box-input-checkbox">';
+                    html3 += '<input onchange="product_type_filter('+"'"+fil_con['field_id']+"'"+','+category['cate_id']+');" class="inp-cbx" id="cx-'+fil_con['field_id']+category['cate_id']+'_mobile" type="checkbox" style="display: none;" >';
+                    html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+category['cate_id']+'_mobile"><span>';
+                    html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+                    html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+                    html3 += '</svg></span><span>'+category['name']+'</span></label>';
+                    html3 += '</div>' ;
+                  });
+            }
+
+            // 系列 (Series)
             if(fil_con['field_id'] == 'series01'){
                 $.each(series, function(index_serie,serie){
                     html3 += '<div class="box-input-checkbox">';
@@ -2118,6 +2181,7 @@
                     html3 += '</div>' ;
                   });
              }
+             // 狀態 (Status: NEW, NRND, EOL)
              if(fil_con['field_id'] == 'status02'){
                 $.each(status, function(index_status,sta){
                     html3 += '<div class="box-input-checkbox">';
@@ -2129,6 +2193,7 @@
                     html3 += '</div>' ;
                   });
              }
+             // 安規 (Safety: ABS, ATEX, BSMI)
              if(fil_con['field_id'] == 'safety03'){
                 $.each(doc_safety, function(id_doc,safety){
                     html3 += '<div class="box-input-checkbox">';
@@ -2141,6 +2206,7 @@
                   });
              }
 
+             // 應用領域/證書 (Certificates/Applications)
              if(fil_con['field_id'] == 'certifi04'){
                 $.each(certificates, function(index_cer,certi){
                     html3 += '<div class="box-input-checkbox">';
@@ -2152,6 +2218,7 @@
                     html3 += '</div>' ;
                   });
              }
+             // 其他動態屬性 (Other dynamic properties)
              if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03'  ){
                var property =  property_load.sort(function(a, b) {
                     if(a.data_1 < b.data_1){
@@ -2251,13 +2318,10 @@
             html3 +=  '</div>';
             }
             html3 +=  '</div></div>';
-
-            // createSlider('slidebar-value-box'+fil_con['field_id']);
         });
         $('#sort-filter-content_mobile').html(html3);
-         createSlider();
-
-
+        createSlider();
+        popcheckProductType();
     }
 
 
@@ -2270,15 +2334,38 @@
         if(series_id){
             $("#cx-series01"+series_id).prop("checked" ,true);
             $("#cx-series01"+series_id+"_mobile").prop("checked" ,true);
+            
+            // 展開 Series Accordion
+            $("#collapse-fliter_series01").addClass("show");
+            $("#collapse-fliter_series01_mobile").addClass("show");
+            
             $("#sidebar").addClass("show");
             onclickshow(2);
             ser_arr.push({{$se_id}});
-        }else{
-           $("#sidebar").addClass("show");
-            onclickshow(2);
         }
     }
 
+    /**
+     * 初始化 Product Type 篩選
+     * 如果有 cateid (URL 參數)，則自動勾選並展開
+     * 如果沒有參數，且 series 也沒展開，則預設展開側邊欄
+     */
+    function popcheckProductType(){
+        if(cateid){
+            $("#cx-product_type"+cateid).prop("checked" ,true);
+            $("#cx-product_type"+cateid+"_mobile").prop("checked" ,true);
+            
+            // 如果 series 沒有觸發展開，這裡要負責展開，避免重複 toggle 導致跑版
+            if(!series_id){
+                $("#sidebar").addClass("show");
+                onclickshow(2);
+            }
+            
+            if(pro_type_arr.indexOf(cateid) == -1){
+                pro_type_arr.push(cateid);
+            }
+        }
+    }
 
     function containsObject(obj, list) {
      var  index = list.findIndex(
@@ -2314,7 +2401,20 @@
      * @param {String} type 類型
      * @param {Number} value 系列ID
      */
+    function product_type_filter(type,value){
+        if(pro_type_arr.indexOf(value) == -1){
+            pro_type_arr.push(value);
+        }else{
+            var index_se = pro_type_arr.indexOf(value);
+                if (index_se > -1) {
+                    pro_type_arr.splice(index_se, 1);
+                }
+        }
+       fillerData();
+    }
+
     function series_filter(type,value){
+        console.log('type',type);
        if(ser_arr.indexOf(value) == -1){
            ser_arr.push(value);
        }else{
@@ -2326,62 +2426,73 @@
        fillerData();
     }
     /**
-     * 根據勾選的系列篩選產品
-     * 如果 ser_arr 為空，則顯示所有產品
-     * 如果 ser_arr 有值，則只顯示符合該系列的產品
+     * 根據勾選的系列與產品類型篩選產品，並組裝產品資料
+     * 如果 ser_arr 為空，則顯示所有系列
+     * 如果 pro_type_arr 為空，則顯示所有產品類型
      */
-    function filterAllSeries(){
-
+    function filterBaseData(){
         var eachpro = [];
         $.each(products, function(index,value){
-         var productObj = {};
-         var productObj2 = {};
-         var is_match = false;
+            var productObj = {};
+            var productObj2 = {};
+            var is_match = false;
+            var is_match_type = false;
 
-         if(ser_arr.length > 0){
-            $.each(ser_arr, function(index_ser,value_ser){
-                if(value_ser == value['series_id']){
-                    is_match = true;
-                }
-            });
-         }else{
-             is_match = true;
-         }
+            // 確認 商品的 series 是否再篩選條件中
+            if(ser_arr.length > 0){
+                $.each(ser_arr, function(index_ser,value_ser){
+                    if(value_ser == value['series_id']){
+                        is_match = true;
+                    }
+                });
+            }else{
+                // 沒有任何勾選，預設選全部
+                is_match = true;
+            }
 
-         if(is_match){
-            productObj['pro_id'] = value['pro_id'];
-            productObj['pro_code'] = value['pro_code'];
-            productObj['series_id'] = value['series_id'];
-            productObj['status_product'] = value['status_product'];
-            productObj['certificate'] = value['certificate'];
-            productObj['updated_at'] = value['updated_at'];
-            productObj['picture'] = value['picture'];
-            productObj['dimensionL'] = value['dimensionL'];
-            productObj['dimensionW'] = value['dimensionW'];
-            productObj['dimensionD'] = value['dimensionD'];
-            productObj['short_features'] = value['short_features'];
-            productObj['alt_img'] = value['alt_img'];
-            productObj['content'] = [];
-            productObj['contentFilter'] = [];
-            $.each(product_has_property, function(index2,value2){
-                if(value['pro_id'] == value2['product_id']){
-                    productObj['content'].push(value2);
-                }
-              });
-              $.each(pro_perti, function(index3,value3){
-                if(value['pro_id'] == value3['product_id']){
-                    productObj['contentFilter'].push(value3);
-                }
+            // 確認 商品的 product_type（sub_category） 是否再篩選條件中
+            if(pro_type_arr.length > 0){
+                $.each(pro_type_arr, function(index_type,value_type){
+                    // 檢查 cate_ids 是否包含該分類，或者 cate_id 是否匹配 (相容舊資料)
+                    if(value['cate_ids'] && value['cate_ids'].indexOf(value_type) > -1){
+                        is_match_type = true;
+                    }
+                });
+            }else{
+                // 沒有任何勾選，預設選全部
+                is_match_type = true;
+            }
 
-
-              });
-            productFilter.push(productObj);
-
-          }
-      });
-
-    //  findresultfeildbypro(productFilter);
-
+            if(is_match && is_match_type){
+                productObj['pro_id'] = value['pro_id'];
+                productObj['pro_code'] = value['pro_code'];
+                productObj['cate_id'] = value['cate_id'];
+                productObj['cate_ids'] = value['cate_ids'];
+                productObj['series_id'] = value['series_id'];
+                productObj['status_product'] = value['status_product'];
+                productObj['certificate'] = value['certificate'];
+                productObj['updated_at'] = value['updated_at'];
+                productObj['picture'] = value['picture'];
+                productObj['dimensionL'] = value['dimensionL'];
+                productObj['dimensionW'] = value['dimensionW'];
+                productObj['dimensionD'] = value['dimensionD'];
+                productObj['short_features'] = value['short_features'];
+                productObj['alt_img'] = value['alt_img'];
+                productObj['content'] = [];
+                productObj['contentFilter'] = [];
+                $.each(product_has_property, function(index2,value2){
+                    if(value['pro_id'] == value2['product_id']){
+                        productObj['content'].push(value2);
+                    }
+                });
+                $.each(pro_perti, function(index3,value3){
+                    if(value['pro_id'] == value3['product_id']){
+                        productObj['contentFilter'].push(value3);
+                    }
+                });
+                productFilter.push(productObj);
+            }
+        });   
     }
 
 
@@ -3001,6 +3112,7 @@
         arr_inputtxt = [];
         arr_type_an_val = [];
         arr_value1 = [];
+        pro_type_arr = [];
         $.each(filter_pro, function(index_con,fil_con){
               $('#collapse-fliter_'+fil_con['field_id']).removeClass('show');
               $('#form-'+fil_con['field_id'] )[0].reset();
@@ -3014,6 +3126,8 @@
         $('#form-mobile'+id)[0].reset();
         if(id == 'series01'){
             ser_arr = [];
+        }else if(id == 'product_type'){
+            pro_type_arr = [];
         }else if(id == 'status02'){
             arr_status = [];
         }else if(id == 'certifi04'){

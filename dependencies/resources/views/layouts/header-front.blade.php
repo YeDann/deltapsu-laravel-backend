@@ -506,52 +506,62 @@ function slugifyHead($text)
                             <i class="zmdi zmdi-chevron-down"></i>
                         </a>
                         <div class="dropdown-menu s-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
+                            {{-- 全部商品列表（Products_Overview）--}}
                             <div class="dropdown-submenu">
-                                {{-- 全部商品列表（Products_Overview） --}}
                                 <a class="sub-menu dropdown-item" href="{{ route('allproduct') }}">
                                     {{ $staticContent['Products_Overview'] }}
                                 </a>
+                            </div>
+                            {{-- 工業電源及模組（Industrial_Power_Supplies_&_Modules）--}}
+                            <div class="dropdown-submenu">
                                 <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1" href="#">
-                                    {{ isset($staticContent['Industrial_Power']) ? $staticContent['Industrial_Power'] : 'Industrial Power' }}
+                                    {{ isset($staticContent['Industrial_Power_Supplies_Modules']) ? $staticContent['Industrial_Power_Supplies_Modules'] : 'Industrial Power Supplies & Modules' }}
                                     <i class="zmdi zmdi-chevron-right"></i>
                                 </a>
-                                {{-- <ul class="dropdown-menu drp-subthree">
+                                <ul class="dropdown-menu drp-subthree">
+                                    {{-- 檢查是否有 Industrial Power 的子分類資料 ($navcategories2) --}}
                                     @if(isset($navcategories2))
                                     @foreach ($navcategories2 as $subCate)
+                                        {{-- 根據 main_cateid 判斷要顯示哪種類型的圖片 (image_type1, image_type2, image_type3 或 image) --}}
+                                        {{-- onmouseover="bigImg(...)" 用於滑鼠懸停時切換右側預覽圖 --}}
                                         @if($subCate->main_cateid == 1)
                                         <li>
                                             <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}',2)"
-                                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                                                href="{{route('productList' ,[$subCate->main_cateid, slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                                             </a>
                                         </li>
                                         @elseif($subCate->main_cateid == 2)
                                         <li>
                                             <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type2}}',2)"
-                                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                                                href="{{route('productList' ,[$subCate->main_cateid, slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                                             </a>
                                         </li>
                                         @elseif($subCate->main_cateid == 3)
                                         <li>
                                             <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}',2)"
-                                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                                                href="{{route('productList' ,[$subCate->main_cateid, slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                                             </a>
                                         </li>
                                         @else
                                         <li>
                                             <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}',2)"
-                                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
+                                                href="{{route('productList' ,[$subCate->main_cateid, slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
                                             </a>
                                         </li>
                                         @endif
                                     @endforeach
                                     @endif
+                                    
+                                    {{-- 下拉選單底部的預設圖片區塊 --}}
                                     <div class="image-dropdown d-flex justify-content-center "
                                         style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('{{asset('frontend-asset/image/Dropdown.jpg')}}')no-repeat;">
+                                        {{-- 預設顯示 Industrial Power Supplies 的圖片 --}}
                                         <img class="imageNav2 img-hove-on-dropdown lazyload" loading="lazy"
                                             data-src="{{asset('frontend-asset/image/Industrial_Power_Supplies.png')}}"
                                             alt="Industrial_Power_Supplies.png">
                                     </div>
-                                </ul> --}}
+                                </ul>
+                                {{-- Industrial Power 子選單結束 --}}
                             </div>
                             {{-- <div class="dropdown-submenu">
                                 <a id="sub2" class="sub-menu" onclick="mainCate('sub2')" tabindex="-1" href="#">

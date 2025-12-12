@@ -64,6 +64,7 @@ class ShareData
         view()->share('navcategories1', $navCategories1);
 
         // Cache navcategories2
+        // 工業電源及模組（Industrial_Power_Supplies_&_Modules）的下拉選單
         $cacheKeyNavCategories2 = 'navcategories2_' . $lang;
         $navCategories2 = Cache::remember($cacheKeyNavCategories2, $cacheDuration, function () use ($lang) {
             return DB::table('categories_has_main_pro as chmp')
