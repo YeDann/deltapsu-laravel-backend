@@ -512,7 +512,7 @@ function slugifyHead($text)
                                     {{ $staticContent['Products_Overview'] }}
                                 </a>
                             </div>
-                            {{-- 工業電源及模組（Industrial_Power_Supplies_&_Modules）--}}
+                            {{-- Sub1 工業電源及模組（Industrial_Power_Supplies_&_Modules）--}}
                             <div class="dropdown-submenu">
                                 <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1" href="#">
                                     {{ isset($staticContent['Industrial_Power_Supplies_Modules']) ? $staticContent['Industrial_Power_Supplies_Modules'] : 'Industrial Power Supplies & Modules' }}
@@ -563,11 +563,12 @@ function slugifyHead($text)
                                 </ul>
                                 {{-- Industrial Power 子選單結束 --}}
                             </div>
-                            {{-- <div class="dropdown-submenu">
+
+                            {{-- Sub2 醫療電源（Medical Power Supplies）--}}
+                            <div class="dropdown-submenu">
                                 <a id="sub2" class="sub-menu" onclick="mainCate('sub2')" tabindex="-1" href="#">
-                                    {{isset($staticContent['Medical_Power'])?
-                                    $staticContent['Medical_Power'] :'Medical Power ' }} <i
-                                        class="zmdi zmdi-chevron-right"></i>
+                                    {{ isset($staticContent['Medical_Power_Supplies']) ? $staticContent['Medical_Power_Supplies'] :'Medical Power Supplies' }} 
+                                    <i class="zmdi zmdi-chevron-right"></i>
                                 </a>
                                 <ul class="dropdown-menu drp-subthree">
                                     @if(isset($navcategories1))
@@ -603,38 +604,19 @@ function slugifyHead($text)
                                     </div>
                                 </ul>
                             </div>
+
+                            {{-- 可配置式電源（Configurable Power Supplies）--}}
                             <div class="dropdown-submenu">
-                                <a id="sub3" class="sub-menu" onclick="mainCate('sub3')" tabindex="-1"
-                                    href="#">{{isset($staticContent['LED_Power'])?
-                                    $staticContent['LED_Power'] :'LED Power' }} <i
-                                        class="zmdi zmdi-chevron-right"></i></a>
-                                <ul class="dropdown-menu drp-subthree">
-                                    <li><a tabindex="-1" class="text-c"
-                                            href="{{route('allproductsByType',[slugifyHead('CC-Cv-Mode'),1 , 3])}}">{{isset($staticContent['CC_Cv_Mode'])?
-                                            $staticContent['CC_Cv_Mode'] :'CC Cv Mode' }}</a>
-                                    </li>
-                                    <li><a tabindex="-1" class="text-c"
-                                            href="{{route('allproductsByType',[slugifyHead('CC-Mode'),2 ,3])}}">{{isset($staticContent['CC_Mode'])?
-                                            $staticContent['CC_Mode'] :'CC Mode' }}</a>
-                                    </li>
-                                    <li><a tabindex="-1" class="text-c"
-                                            href="{{route('allproductsByType',[slugifyHead('CV_Mode'),3 ,3])}}">{{isset($staticContent['CV_Mode'])?
-                                            $staticContent['CV_Mode'] :'CV Mode' }}</a>
-                                    </li>
-                                    <div class="image-dropdown d-flex justify-content-center "
-                                        style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('{{asset('frontend-asset/image/Dropdown.jpg')}}') no-repeat;">
-                                        @if(isset($navcategories3))
-                                        <img class="imageNav3 img-hove-on-dropdown lazyload"
-                                            data-src="{{config('app.url')}}/medias/categories/{{$navcategories3[0]->image}}"
-                                            loading="lazy" alt="{{$navcategories3[0]->image}}">
-                                        @endif
-                                    </div>
-                                </ul>
+                                <a class="sub-menu dropdown-item" href="{{ route('configurableproduct') }}">
+                                    {{ $staticContent['Configurable_Power_Supplies'] }}
+                                </a>
                             </div>
+
+                            {{-- Sub4 工業電池充電器（Industrial Battery Charging）--}}
                             <div class="dropdown-submenu">
                                 @if(isset($navcategories4) && count($navcategories4) > 0 )
                                 <a id="sub4" class="sub-menu dropdown-item " onclick="mainCate('sub4')" tabindex="-1"
-                                    href="#">{{isset($staticContent['wireless_charging'])?
+                                    href="#">{{ isset($staticContent['wireless_charging'])?
                                     $staticContent['wireless_charging'] :'Industrial Battery Charging' }} <i
                                         class="zmdi zmdi-chevron-right"></i></a>
                                 @endif
@@ -676,7 +658,37 @@ function slugifyHead($text)
                                             alt="Battery Charging Image">
                                     </div>
                                 </ul>
-                            </div> --}}
+                            </div>
+
+                            {{-- Sub3 LED電源（LED Driver）--}}
+                            <div class="dropdown-submenu">
+                                <a id="sub3" class="sub-menu" onclick="mainCate('sub3')" tabindex="-1"
+                                    href="#">{{isset($staticContent['LED_Power'])?
+                                    $staticContent['LED_Power'] :'LED Driver' }} <i
+                                        class="zmdi zmdi-chevron-right"></i></a>
+                                <ul class="dropdown-menu drp-subthree">
+                                    <li><a tabindex="-1" class="text-c"
+                                            href="{{route('allproductsByType',[slugifyHead('CC-Cv-Mode'),1 , 3])}}">{{isset($staticContent['CC_Cv_Mode'])?
+                                            $staticContent['CC_Cv_Mode'] :'CC + CV Mode' }}</a>
+                                    </li>
+                                    <li><a tabindex="-1" class="text-c"
+                                            href="{{route('allproductsByType',[slugifyHead('CC-Mode'),2 ,3])}}">{{isset($staticContent['CC_Mode'])?
+                                            $staticContent['CC_Mode'] :'CC Mode' }}</a>
+                                    </li>
+                                    <li><a tabindex="-1" class="text-c"
+                                            href="{{route('allproductsByType',[slugifyHead('CV_Mode'),3 ,3])}}">{{isset($staticContent['CV_Mode'])?
+                                            $staticContent['CV_Mode'] :'CV Mode' }}</a>
+                                    </li>
+                                    <div class="image-dropdown d-flex justify-content-center "
+                                        style="background: linear-gradient(to bottom, #fff, transparent, transparent),url('{{asset('frontend-asset/image/Dropdown.jpg')}}') no-repeat;">
+                                        @if(isset($navcategories3))
+                                        <img class="imageNav3 img-hove-on-dropdown lazyload"
+                                            data-src="{{config('app.url')}}/medias/categories/{{$navcategories3[0]->image}}"
+                                            loading="lazy" alt="{{$navcategories3[0]->image}}">
+                                        @endif
+                                    </div>
+                                </ul>
+                            </div>
                         </div>
                     </li>
 

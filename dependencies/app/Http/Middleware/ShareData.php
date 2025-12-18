@@ -61,6 +61,7 @@ class ShareData
                 ->orderBy('chmp.order_seq', 'asc')
                 ->get();
         });
+
         view()->share('navcategories1', $navCategories1);
 
         // Cache navcategories2
@@ -90,6 +91,7 @@ class ShareData
                 ->orderBy('chmp.order_seq', 'asc')
                 ->get();
         });
+
         view()->share('navcategories3', $navCategories3);
 
         // Cache navcategories4
@@ -104,6 +106,7 @@ class ShareData
                 ->orderBy('chmp.order_seq', 'asc')
                 ->get();
         });
+
         view()->share('navcategories4', $navCategories4);
 
         // Cache navaboutus
