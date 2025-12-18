@@ -38,6 +38,7 @@ class ShareData
         view()->share('navcategories', $navCategories);
 
         // Cache navapplication
+        // 應用領域 (Applications) 的下拉選單
         $cacheKeyNavApplication = 'navapplication_' . $lang;
         $navApplication = Cache::remember($cacheKeyNavApplication, $cacheDuration, function () use ($lang) {
             return DB::table('application as ap')
@@ -50,6 +51,7 @@ class ShareData
         view()->share('navapplication', $navApplication);
 
         // Cache navcategories1
+        // 醫療電源（Medical_Power_Supplies）的下拉選單
         $cacheKeyNavCategories1 = 'navcategories1_' . $lang;
         $navCategories1 = Cache::remember($cacheKeyNavCategories1, $cacheDuration, function () use ($lang) {
             return DB::table('categories_has_main_pro as chmp')
@@ -61,7 +63,6 @@ class ShareData
                 ->orderBy('chmp.order_seq', 'asc')
                 ->get();
         });
-
         view()->share('navcategories1', $navCategories1);
 
         // Cache navcategories2
@@ -80,6 +81,7 @@ class ShareData
         view()->share('navcategories2', $navCategories2);
 
         // Cache navcategories3
+        // LED驅動器（LED_Driver）的下拉選單
         $cacheKeyNavCategories3 = 'navcategories3_' . $lang;
         $navCategories3 = Cache::remember($cacheKeyNavCategories3, $cacheDuration, function () use ($lang) {
             return DB::table('categories_has_main_pro as chmp')
@@ -91,10 +93,10 @@ class ShareData
                 ->orderBy('chmp.order_seq', 'asc')
                 ->get();
         });
-
         view()->share('navcategories3', $navCategories3);
 
         // Cache navcategories4
+        // 工業電池充電（Industrial_Battery_Charging）的下拉選單
         $cacheKeyNavCategories4 = 'navcategories4_' . $lang;
         $navCategories4 = Cache::remember($cacheKeyNavCategories4, $cacheDuration, function () use ($lang) {
             return DB::table('categories_has_main_pro as chmp')
@@ -169,8 +171,18 @@ class ShareData
         foreach ($staticWordCache as $word) {
             $wordArray[$word->key_word] = $word->word;
         }
-
         view()->share('staticContent', $wordArray);
+
+        // 
+        $newsTypes = DB::table('news_type as nt')
+            ->join('news_type_translation as ntt', 'ntt.fk_nt_id', '=', 'nt.id')
+            ->select('nt.*', 'ntt.title as typename')
+            ->where('ntt.local', $lang)
+            ->orderBy('nt.order_seq', 'asc')
+            ->get()
+            ->keyBy('name');
+        view()->share('newsTypes', $newsTypes);
+
 
         return $next($request);
     }
