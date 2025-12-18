@@ -207,8 +207,8 @@
         });
 
     </script>
-    <script src="{{asset('/admin-assets/addons/js/datatables.min.js')}}"></script>
-    <script src="{{asset('/admin-assets/addons/js/datatables-select.min.js')}}"></script>
+    <script src="{{asset('/backend-asset/addons/js/datatables.min.js')}}"></script>
+    <script src="{{asset('/backend-asset/addons/js/datatables-select.min.js')}}"></script>
     <style>
         .select2-container--default .select2-selection--multiple {
             position: relative;

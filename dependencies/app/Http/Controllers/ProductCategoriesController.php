@@ -12,6 +12,7 @@ class ProductCategoriesController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,13 +22,11 @@ class ProductCategoriesController extends Controller
     {
         $language = DB::table('language')->get();
         $mainCategories = DB::table('main_pro_categories as mp')
-        ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
-        ->where('mpt.local', '=', 'en')
-        ->select('mp.*', 'mpt.*')
-        ->orderBy('mp.created_at', 'desc')
-        ->get();
-
-        // return dd($mainCategories);
+            ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
+            ->where('mpt.local', '=', 'en')
+            ->select('mp.*', 'mpt.*')
+            ->orderBy('mp.created_at', 'desc')
+            ->get();
 
         return view('pro_categories.main_index')
             ->with('name', 'product')
@@ -43,7 +42,6 @@ class ProductCategoriesController extends Controller
      */
     public function create()
     {
-        // return dd('55');
         $language = DB::table('language')->get();
 
         return view('pro_categories.main_create')
@@ -66,34 +64,39 @@ class ProductCategoriesController extends Controller
         $validate = Validator::make($request->all(), [
             'name' => 'required',
         ]);
-        // return dd($validate->fails());
-        if ($validate->fails()) {
 
+        if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
         } else {
+            // Handle banner image upload
+            $bannerName = null;
+            if ($request->hasFile('banner')) {
+                $bannerImage = $request->file('banner');
+                $bannerName = uniqid() . "." . $bannerImage->getClientOriginalExtension();
+                $bannerImage->move(base_path('/../medias/categories'), preg_replace('/\s+/', '', $bannerName));
+            }
 
             $id = DB::table('main_pro_categories')->insertGetID(
                 [
+                    "banner" => $bannerName,
                     "created_at" => \Carbon\Carbon::now(),
                     "updated_at" => \Carbon\Carbon::now(),
                 ]
             );
 
-                foreach($langs as $lang){
-                    $main_pro_categories = DB::table('main_pro_categories_translations')->insert(
-                        [
-                            "main_pro_id" => $id,
-                            "name" => $name,
-                            "local" => $lang,
-                        ]
-                    );
+            foreach($langs as $lang){
+                $main_pro_categories = DB::table('main_pro_categories_translations')->insert(
+                    [
+                        "main_pro_id" => $id,
+                        "name" => $name,
+                        "local" => $lang,
+                    ]
+                );
 
-                }
-                return redirect()->route('mainprotype.index')->with('flash_message', 'Insert Data successfully');
+            }
 
+            return redirect()->route('mainprotype.index')->with('flash_message', 'Insert Data successfully');
         }
-
-
     }
 
 
@@ -105,18 +108,21 @@ class ProductCategoriesController extends Controller
      */
     public function edit($id)
     {
-
-         $mainCategories = DB::table('main_pro_categories as mp')
+        $mainCategories = DB::table('main_pro_categories as mp')
             ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
             ->where('mp.main_id', '=',$id)
             ->select('mp.*', 'mpt.*')
             ->get();
-
+        $mainCategory =  DB::table('main_pro_categories as mp')
+            ->where('mp.main_id', '=',$id)
+            ->select('mp.*')
+            ->first();
 
         return view('pro_categories.main_edit')
             ->with('name', 'product')
             ->with('menu', 'mainCategories')
             ->with('mainId', $id)
+            ->with('mainCategory', $mainCategory)
             ->with('mainCategories', $mainCategories);
     }
 
@@ -132,17 +138,38 @@ class ProductCategoriesController extends Controller
         $name = $request->name;
         $langs = $request->lang_loop;
         $mainId = $request->mainId;
+        
+        // Get current banner filename for potential deletion
+        $currentData = DB::table('main_pro_categories')->where('main_id', $mainId)->first();
+        $currentBanner = $currentData ? $currentData->banner : null;
+
+        // Handle banner image upload
+        $bannerName = $currentBanner; // Keep current banner if no new upload
+        if ($request->hasFile('banner')) {
+            $bannerImage = $request->file('banner');
+            $bannerName = uniqid() . "." . $bannerImage->getClientOriginalExtension();
+            $bannerImage->move(base_path('/../medias/categories'), preg_replace('/\s+/', '', $bannerName));
+            
+            // Delete old banner file if exists
+            if ($currentBanner) {
+                $file_pointer = base_path('/../medias/categories/') . $currentBanner;
+                if (file_exists($file_pointer)) {
+                    unlink($file_pointer);
+                }
+            }
+        }
 
         DB::table('main_pro_categories')
-        ->where('main_id','=',$mainId)
-        ->update(array(
-            "updated_at" => \Carbon\Carbon::now()
-        ));
+            ->where('main_id','=',$mainId)
+            ->update(array(
+                "banner" => $bannerName,
+                "updated_at" => \Carbon\Carbon::now()
+            ));
         foreach($langs as $lang){
             DB::table('main_pro_categories_translations')->where('main_pro_id', "=", $mainId)
-            ->where('local',$lang)->update(array(
-               "name" => $name[$lang]
-            ));
+                ->where('local',$lang)->update(array(
+                    "name" => $name[$lang]
+                ));
         }
         return redirect()->route('mainprotype.index')->with('flash_message', 'Update Data successfully');
     }
@@ -156,7 +183,16 @@ class ProductCategoriesController extends Controller
 
     {
         $id = $request->itemId;
-        // return dd($id);
+        
+        // Get banner filename before deletion
+        $currentData = DB::table('main_pro_categories')->where('main_id', $id)->first();
+        if ($currentData && $currentData->banner) {
+            $file_pointer = base_path('/../medias/categories/') . $currentData->banner;
+            if (file_exists($file_pointer)) {
+                unlink($file_pointer);
+            }
+        }
+        
         DB::table('main_pro_categories')->where('main_id', '=', $id)->delete();
         DB::table('main_pro_categories_translations')->where('main_pro_id', '=', $id)->delete();
 
@@ -226,7 +262,6 @@ class ProductCategoriesController extends Controller
         $thumbnailOpt = $request->thumbnailOpt;
         $typeImage  = $request->typeImage;
         $arrayfileName = self::savearrayfile($thumbnailOpt ,$typeImage);
-        // return dd($arrayfileName['type2']);
 
         $re1 = str_replace("/","_",$name);
         $key = str_replace(" ","-",$re1);
@@ -243,7 +278,7 @@ class ProductCategoriesController extends Controller
         $validate = Validator::make($request->all(), [
             'name' => 'required',
         ]);
-        // return dd($validate->fails());
+
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
         } else {
@@ -267,7 +302,6 @@ class ProductCategoriesController extends Controller
                 );
 
             }else{
-
                 $id = DB::table('sub_pro_categories')->insertGetID(
                     [
                         "unit_dimension" => $request->unit_dimension,
@@ -277,8 +311,6 @@ class ProductCategoriesController extends Controller
                         'warranty_file'=>$warranty_file,
                     ]
                 );
-
-
             }
             foreach($main_id as $main){
                 DB::table('categories_has_main_pro')->insert(

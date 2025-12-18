@@ -1163,6 +1163,14 @@ class FrontendController extends Controller
            ->select('pht.value_text', 'ph.*', 'pft.field_name as fieldCate', 'pf.unit_name')
            ->get();
 
+        // 取得主分類資訊
+        $mainCategory = DB::table('main_pro_categories as mpc')
+            ->join('main_pro_categories_translations as mpct', 'mpc.main_id', '=', 'mpct.main_pro_id')
+            ->where('mpc.main_id', $main_cate_id)
+            ->where('mpct.local', $lang)
+            ->select('mpc.*', 'mpct.*')
+            ->first();
+
         // 取得子商品分類的翻譯資料（用於列表上方的子商品分類描述）
         $subCategories = DB::table('sub_pro_categories as sc')
             ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
@@ -1186,23 +1194,24 @@ class FrontendController extends Controller
 
         if (!empty($products)) {
             return view('front-end.product')
-            ->with('metatag', $metatag)
-            ->with('defaultfilters', $defaultfilters)
-            ->with('certi_products', $certi_products)
-            ->with('documents_cate', $documents_cate)
-            ->with('section', $section)
-            ->with('products', $proNew)
-            ->with('filter_pro', $filterPro)
-            ->with('pd_field', $pdField)
-            ->with('product_has_property', $productHasProperty)
-            ->with('subCategories', $subCategories)
-            ->with('categoriesHasMainPro', $categoriesHasMainPro)
-            ->with('catename', $cate_parname) // TODO 上面要驗證
-            ->with('main_cate_id', $main_cate_id) // TODO 上面要驗證
-            ->with('cateid', $cate_par_id) // TODO 上面要驗證
-            ->with('se_name', $se_par_name) // TODO 上面要驗證
-            ->with('series', $series)
-            ->with('se_id', $se_par_id); // TODO 上面要驗證
+                ->with('metatag', $metatag)
+                ->with('defaultfilters', $defaultfilters)
+                ->with('certi_products', $certi_products)
+                ->with('documents_cate', $documents_cate)
+                ->with('section', $section)
+                ->with('products', $proNew)
+                ->with('filter_pro', $filterPro)
+                ->with('pd_field', $pdField)
+                ->with('product_has_property', $productHasProperty)
+                ->with('mainCategory', $mainCategory)
+                ->with('subCategories', $subCategories)
+                ->with('categoriesHasMainPro', $categoriesHasMainPro)
+                ->with('catename', $cate_parname) // TODO 上面要驗證
+                ->with('main_cate_id', $main_cate_id) // TODO 上面要驗證
+                ->with('cateid', $cate_par_id) // TODO 上面要驗證
+                ->with('se_name', $se_par_name) // TODO 上面要驗證
+                ->with('series', $series)
+                ->with('se_id', $se_par_id); // TODO 上面要驗證
         }
 
         return response()->view('errors.404', [], 404);

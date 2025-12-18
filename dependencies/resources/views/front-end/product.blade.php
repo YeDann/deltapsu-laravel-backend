@@ -334,41 +334,39 @@
         style="background-image: url('{{asset('frontend-asset/image/Categories@2x.png')}}');">
         {{-- style="background-color: #818181;background-image: url('');" --}}
         <div class="container">
-            @foreach ($subCategories as $subCate)
             <div class="row">
                 <div class="col-lg-6">
                     <div class="box-banner-pro-type-all">
                         <div class="text-middle">
-                            <h1 class="text-title-banner">{{$subCate->name}}</h1>
-                            <div class="text-p-banner my-2">{!!$subCate->content!!}</div>
-                            @if(isset($subCate->file))
+                            <h1 class="text-title-banner">{{ $mainCategory->name }}</h1>
+                            {{-- <div class="text-p-banner my-2">{!!$subCate->content!!}</div> --}}
+                            {{-- @if(isset($subCate->file))
                             <a class="text-color-delta text-bold"
                                 href="{{config('app.url')}}/medias/categories/{{$subCate->file}}" target="_blank"><img
                                     class="align-baseline mr-2"
                                     src="{{asset('frontend-asset/image/icon/download-icon.svg')}}" alt="">
                                 {{$staticContent['Download_selection_guide']}}
                             </a>
-                            @else
+                            @else --}}
                             {{-- <a class="text-color-delta text-bold" href="#"><img class="align-baseline mr-1"
                                     src="{{asset('frontend-asset/image/icon/download-icon.svg')}}" alt=""> Empty
                                 selection
                                 guide
                             </a> --}}
-                            @endif
+                            {{-- @endif --}}
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 banner-products-pic ">
                     {{-- <img src="{{asset('frontend-asset/image/DIN RAIL POWER SUPPLY@2x.png')}}" alt=""> --}}
-                    @if(isset($subCate->image))
-                    <img class="img-fluid middle-img" src="{{config('app.url')}}/medias/categories/{{$subCate->image}}"
-                        alt="">
+                    @if(isset($mainCategory->banner))
+                    <img class="img-fluid middle-img" src="{{config('app.url')}}/medias/categories/{{ $mainCategory->banner }}"
+                        alt="Main Category Banner">
                     @else
                     <img class="img-fluid middle-img" src="{{asset('frontend-asset/image/blank.png')}}" alt="">
                     @endif
                 </div>
             </div>
-            @endforeach
         </div>
     </div>
 </div>
