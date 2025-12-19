@@ -165,35 +165,6 @@
 <div class="visible-tablets-up">
     <div class="padding-top-content">
     </div>
-    <div class="products-index-nav">
-        <div class="bg-bredcrumb">
-            <div class="container">
-                <nav aria-label="breadcrumb" id="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item text-breadcrumb-home"><a
-                                href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-                        <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
-                                data-toggle="dropdown" id="tools-dropdown"> {{$staticContent['Tools']}}</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Tools']}}</a>
-                                </li>
-                                <hr>
-                                <li><a href="{{route('productFinder')}}">{{$staticContent['Product_Selector']}}</a></li>
-                                <li><a
-                                        href="{{route('configurableproduct')}}">{{$staticContent['configurable_power_selector']}}</a>
-                                </li>
-                                <li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
-                                href="#">{{$staticContent['Product_Selector']}}</a></li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <div class="padding-top-content-breadcrumb"></div>
     <div class="box-product-finder mb-5">
         <div class="container">
             <h1 class="text-title-delta">{{$staticContent['Product_Selector']}}</h1>
@@ -236,7 +207,6 @@
     </div>
 </div>
 <div class="visible-mobile">
-    <div class="padding-top-content-breadcrumb"></div>
     <div class="box-product-finder container mb-5">
         <h3 class="text-title-delta">{{$staticContent['Product_Selector']}}</h3>
         <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>  
