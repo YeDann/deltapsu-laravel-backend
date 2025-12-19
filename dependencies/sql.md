@@ -164,7 +164,7 @@ VALUES
 ```
 
 
-## 3. 調整 main category 的資料 Industrial Power Supplies Modules - 分類更改
+## 9. 調整 main category 的資料 Industrial Power Supplies Modules - 分類更改
 
 ```sql
 DELETE FROM `categories_has_main_pro`
@@ -180,7 +180,7 @@ VALUES
 (5, 2, 5); -- 順序 5
 ```
 
-## 4. 加入 Medical_Power_Supplies 多語系設定
+## 10. 加入 Medical_Power_Supplies 多語系設定
 
 ```sql
 INSERT INTO `static_keyword` (`key_word`)
@@ -202,7 +202,7 @@ VALUES
 ('Medical_Power_Supplies', 'Medical Power Supplies', 'jp');
 ```
 
-## 5. 調整 main category 的資料 Medical Power Supplies - 分類更改
+## 11. 調整 main category 的資料 Medical Power Supplies - 分類更改
 
 ```sql
 DELETE FROM `categories_has_main_pro`
@@ -216,19 +216,7 @@ VALUES
 (8, 1, 3); -- 順序 3
 ```
 
-## 6. 調整 main category 的資料 LED Drivers - 分類更改 TODO 待確認
-
-```sql
-DELETE FROM `categories_has_main_pro`
-WHERE `main_cateid` = 3;
-
-INSERT INTO `categories_has_main_pro` (`cate_id`, `main_cateid`, `order_seq`)
-VALUES
-/* main_cateid = 3 的資料：cate_id 3,9,8 */
-(6, 3, 1), -- 順序 1
-```
-
-## 7. Configurable Power Supplies 多語系設定
+## 12. Configurable Power Supplies 多語系設定
 
 ```sql
 INSERT INTO `static_keyword` (`key_word`)

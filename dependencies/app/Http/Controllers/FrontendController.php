@@ -957,11 +957,12 @@ class FrontendController extends Controller
     {
         $lang = App::getLocale();
 
-        // 判斷 cate_par_id 是否為數字，若不是則回傳 404 頁面
+        // 判斷 main_cate_id 是否為數字，若不是則回傳 404 頁面
         if (!is_numeric($main_cate_id)) {
             return response()->view('errors.404', [], 404);
         }
 
+        // 取得 main_pro_categories 底下的 子商品分類
         $categoriesHasMainPro = DB::table('categories_has_main_pro as chmp')
             ->join('sub_pro_categories_translation as spct', 'chmp.cate_id', '=', 'spct.sub_pro_id')
             ->where('chmp.main_cateid', $main_cate_id)
@@ -970,7 +971,8 @@ class FrontendController extends Controller
             ->get();
 
         $isSubCateExists = true;
-        if (!is_null($cate_par_id)) {
+        // 判斷 cate_par_id 是否存在於 main_pro_categories 底下的 子商品分類
+        if (!is_null($cate_par_id) && $main_cate_id !== 3) {
             $isSubCateExists = $categoriesHasMainPro->contains(function ($item) use ($cate_par_id) {
                 return $item->cate_id === $cate_par_id;
             });
@@ -1009,9 +1011,10 @@ class FrontendController extends Controller
         $searchProGrooupByPrdId = DB::table('product_has_categories as phc')
             ->join('products as p', 'p.pro_id', '=', 'phc.product_id') // join 商品
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id') // join 商品翻譯
+            ->leftJoin('series as s', 's.se_id', '=', 'p.series_id') // join 系列
             ->whereIn('phc.categories_id', $subCategoryIds) // main_cate 底下的子分類
             ->where('p.enable_pro', 1) // 篩選 啟用的商品
-            ->select('p.*', 'pt.*', 'phc.categories_id as cate_id')
+            ->select('p.*', 'pt.*', 'phc.categories_id as cate_id', 's.mode_series')
             ->orderBy('p.pro_code', 'asc')
             ->get()
             ->groupBy('pro_id');
@@ -1132,13 +1135,23 @@ class FrontendController extends Controller
             ->get()
             ->unique('field_id');
         // 放在最前面
-        $filterPro->prepend([
-            "sub_pro_id" => null,
-            "field_id" => "product_type",
-            "title" => "Product Type",
-            "type" => "number",
-            "section_id" => null,
-        ]);
+        if ($main_cate_id == 3) {
+            $filterPro = $filterPro->prepend([
+                "sub_pro_id" => null,
+                "field_id" => "mode_series",
+                "title" => "Mode",
+                "type" => "number",
+                "section_id" => null,
+            ]);
+        } else {
+            $filterPro = $filterPro->prepend([
+                "sub_pro_id" => null,
+                "field_id" => "product_type",
+                "title" => "Product Type",
+                "type" => "number",
+                "section_id" => null,
+            ]);
+        }
 
         // 取得 商品欄位資料
         $pdField = DB::table('product_field as pf')
@@ -1187,10 +1200,13 @@ class FrontendController extends Controller
             ->whereIn('sc.pro_categories_id', $subCategoriesIds)
             ->where('st.local', $lang)
             ->where('s.status', 1)
-            ->select('s.se_id', 'st.title')
+            ->select('s.se_id', 'st.title', 's.mode_series')
             ->distinct()
             ->orderBy('st.title', 'asc')
             ->get();
+
+        // 取得 Mode Series 資料
+        $modeSeries = DB::table('mode_series')->get();
 
         if (!empty($products)) {
             return view('front-end.product')
@@ -1211,6 +1227,7 @@ class FrontendController extends Controller
                 ->with('cateid', $cate_par_id) // TODO 上面要驗證
                 ->with('se_name', $se_par_name) // TODO 上面要驗證
                 ->with('series', $series)
+                ->with('modeSeries', $modeSeries)
                 ->with('se_id', $se_par_id); // TODO 上面要驗證
         }
 

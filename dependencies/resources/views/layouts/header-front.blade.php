@@ -670,15 +670,15 @@ function slugifyHead($text)
                                         class="zmdi zmdi-chevron-right"></i></a>
                                 <ul class="dropdown-menu drp-subthree">
                                     <li><a tabindex="-1" class="text-c"
-                                            href="{{route('allproductsByType',[slugifyHead('CC-Cv-Mode'),1 , 3])}}">{{isset($staticContent['CC_Cv_Mode'])?
+                                            href="{{route('productList',[3, slugifyHead('CC-Cv-Mode'),1])}}">{{isset($staticContent['CC_Cv_Mode'])?
                                             $staticContent['CC_Cv_Mode'] :'CC + CV Mode' }}</a>
                                     </li>
                                     <li><a tabindex="-1" class="text-c"
-                                            href="{{route('allproductsByType',[slugifyHead('CC-Mode'),2 ,3])}}">{{isset($staticContent['CC_Mode'])?
+                                            href="{{route('productList',[3, slugifyHead('CC-Mode'),2])}}">{{isset($staticContent['CC_Mode'])?
                                             $staticContent['CC_Mode'] :'CC Mode' }}</a>
                                     </li>
                                     <li><a tabindex="-1" class="text-c"
-                                            href="{{route('allproductsByType',[slugifyHead('CV_Mode'),3 ,3])}}">{{isset($staticContent['CV_Mode'])?
+                                            href="{{route('productList',[3, slugifyHead('CV_Mode'),3])}}">{{isset($staticContent['CV_Mode'])?
                                             $staticContent['CV_Mode'] :'CV Mode' }}</a>
                                     </li>
                                     <div class="image-dropdown d-flex justify-content-center "

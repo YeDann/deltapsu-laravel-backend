@@ -733,15 +733,18 @@
     var series_id = '{{$se_id}}';
     var categoriesHasMainPro =  <?= json_encode($categoriesHasMainPro);?>;
     var series =  <?= json_encode($series);?>;
+    var modeSeries = <?= json_encode($modeSeries);?>;
     var section =  <?= json_encode($section);?>;
     var documents_cate =  <?= json_encode($documents_cate);?>;
     var certi_products =  <?= json_encode($certi_products);?>;
     var defaultfilters =  <?= json_encode($defaultfilters);?>;
     var catename = <?= json_encode($catename);?>;
     var cateid = <?= json_encode($cateid);?>;
+    var main_cate_id = <?= json_encode($main_cate_id);?>;
     var url_name =  <?= json_encode($url_name);?>;
     var pro_perti = [];
     var ser_arr = [];
+    var mode_series_arr = [];
     var pro_type_arr = [];
     var productFilter = [];
     var productTextSearch = [];
@@ -753,18 +756,6 @@
     var arr_value1 = [];
 
     $(document).ready(function () {
-        // 將 product_type 的 filter 移到最前面
-        // 確保 filter_pro 是陣列
-        // if (!Array.isArray(filter_pro)) {
-        //     filter_pro = Object.values(filter_pro);
-        // }
-        // // 排序：將 field_id 為 'product_type' 的項目排在第一位
-        // filter_pro.sort(function(a, b) {
-        //     if (a.field_id === 'product_type') return -1;
-        //     if (b.field_id === 'product_type') return 1;
-        //     return 0;
-        // });
-
         loadAddContent();
         filtercontentMobile();
         filtercontent();
@@ -797,7 +788,7 @@
         var arr = [];
         var arrproid = [];
        $.each(filter_pro, function(index,element){
-             if(element['field_id'] != 'series01' && element['field_id'] != 'status02' && element['field_id'] != 'safety03' && element['field_id'] != 'certifi04'  ){
+             if(element['field_id'] != 'series01' && element['field_id'] != 'status02' && element['field_id'] != 'safety03' && element['field_id'] != 'certifi04' && element['field_id'] != 'mode_series' ){
                 arr.push(element['field_id']);
              }
          });
@@ -816,7 +807,6 @@
            },
            success: function (res) {
             pro_perti =  res['data'];
-            //console.log(res['data']);
            },
            async: false,
            });
@@ -842,15 +832,6 @@
                 }
 
             }
-        // if(fil_con['field_id'] == 'series01' || fil_con['field_id'] == 'status02'  || fil_con['field_id'] == 'certifi04' || fil_con['field_id'] == 'safety03'  ){
-        //     html2  += ' <input type="checkbox"  id="checkpop'+fil_con['field_id']+'" value="'+fil_con['field_id']+'"';
-        //     html2  += 'class="inp-cbx checkfilter'+fil_con['field_id']+'" style="display: none;">';
-        //     html2  += '<label class="cbx" for="checkpop'+fil_con['field_id']+'"><span>';
-        //     html2  += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
-        //     html2  += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
-        //     html2  += '</svg></span><span>'+fil_con['title']+'</span></label>';
-        // }
-
         });
         $('#popUp_filter1').html(html2);
         getappendhtml();
@@ -868,7 +849,7 @@
             html2  += '</svg></span><span>'+fil_con['title']+'</span></label>';
             $('#settingFilter'+fil_con['section_id']).append(html2);
 
-        if(fil_con['field_id'] == 'series01' || fil_con['field_id'] == 'status02'  || fil_con['field_id'] == 'certifi04' || fil_con['field_id'] == 'safety03'  ){
+        if(fil_con['field_id'] == 'series01' || fil_con['field_id'] == 'status02'  || fil_con['field_id'] == 'certifi04' || fil_con['field_id'] == 'safety03' || fil_con['field_id'] == 'mode_series' ){
            var html1 = '';
             html1  += ' <input type="checkbox"  id="checkpop'+fil_con['field_id']+'" value="'+fil_con['field_id']+'"';
             html1  += 'class="inp-cbx checkfilter'+fil_con['field_id']+'" style="display: none;">';
@@ -895,9 +876,23 @@
         $.each(defaultfilters, function(index,defaultfil){
             defultfilter.push(defaultfil['filter_id']);
         });
-    function setDefultShow(){
 
-        // var defultfilter = ['series01','status02','safety03' ,'certifi04' ,3 ,4, 8 ,31 ];
+        // Force default filters based on main_cate_id (Mutually Exclusive)
+        // Note: Total products (160) vs Filtered Sum (124) discrepancy:
+        // Products with mode_series values NOT in [1, 2, 3] (or null) will not be counted 
+        // in the hardcoded filter options, but will appear in the "All" list.
+        if(main_cate_id == 3){
+            // For Adapter category (ID 3), force 'mode_series'
+            if(defultfilter.indexOf('mode_series') == -1){
+                defultfilter.push('mode_series');
+            }
+        } else {
+            // For other categories, force 'product_type'
+            if(defultfilter.indexOf('product_type') == -1){
+                defultfilter.push('product_type');
+            }
+        }
+    function setDefultShow(){
         $.each(defultfilter, function(index,defilId){
            $("#checkpop"+defilId).prop("checked" ,true);
            checkboxaddremove(defilId);
@@ -915,22 +910,20 @@
 
     });
     $('.btn-done').click(function () {
-     $.each(filter_pro, function(index_con,fil_con){
-     checkboxaddremove(fil_con['field_id']);
-    });
-
+        $.each(filter_pro, function(index_con,fil_con){
+            checkboxaddremove(fil_con['field_id']);
+        });
     });
     function checkboxaddremove(i){
-
         if ($('.checkfilter'+i).is(':checked')) {
-                    var inputValue = $('.checkfilter' + i).attr("value");
-                    $(".fliter_head"+inputValue).show();
-                    $(".fliter_head_mobile"+inputValue).show();
-                } else {
-                    var inputValue = $('.checkfilter' + i).attr("value");
-                    $(".fliter_head"+inputValue).hide();
-                    $(".fliter_head_mobile"+inputValue).hide();
-            }
+            var inputValue = $('.checkfilter' + i).attr("value");
+            $(".fliter_head"+inputValue).show();
+            $(".fliter_head_mobile"+inputValue).show();
+        } else {
+            var inputValue = $('.checkfilter' + i).attr("value");
+            $(".fliter_head"+inputValue).hide();
+            $(".fliter_head_mobile"+inputValue).hide();
+        }
     }
 
     function loadData(products ,product_has_property){
@@ -1091,7 +1084,7 @@
                             }
                           }
                    }
-            });
+                });
             });
           });
 
@@ -1280,17 +1273,6 @@
                     }
                 });
                 });
-                // if(arr_cer.length > 1){
-                //         var lookup = arr_seg.reduce(function(a,e) {
-                //         a[e.product_id] = ++a[e.product_id] || 0;
-                //         return a;
-                //         }, {});
-                //         profilter =  arr_seg.filter(function(e) {
-                //            return lookup[e.product_id];
-                //         });
-                //     }else{
-
-                //     }
                 profilter =  arr_seg;
                 profilter.forEach(function(element) {
                     arrFilterInput.filter(function(data) {
@@ -1932,7 +1914,6 @@
 
 
     function  filtercontent(){
-
        var property_load = [];
        property_load = pro_perti;
        var doc_safety = documents_cate;
@@ -1970,6 +1951,23 @@
                     html3 += '</div>' ;
                   });
             }
+            if(fil_con['field_id'] == 'mode_series'){
+                // Hardcoded Mode Series options as requested
+                var hardcodedModeSeries = [
+                    {id: 1, title: 'CC + CV Mode'},
+                    {id: 2, title: 'CC Mode'},
+                    {id: 3, title: 'CV Mode'}
+                ];
+                $.each(hardcodedModeSeries, function(index_mode, mode){
+                    html3 += '<div onchange="mode_series_filter('+"'"+fil_con['field_id']+"'"+','+mode['id']+');" class="box-input-checkbox">';
+                    html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+mode['id']+'" type="checkbox" style="display: none;" >';
+                    html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+mode['id']+'"><span>';
+                    html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+                    html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+                    html3 += '</svg></span><span>'+mode['title']+'</span></label>';
+                    html3 += '</div>' ;
+                  });
+             }
             if(fil_con['field_id'] == 'series01'){
                 $.each(series, function(index_serie,serie){
                     html3 += '<div onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="box-input-checkbox">';
@@ -2112,7 +2110,7 @@
             html3 += '</div>';
             html3 += '<button onclick="resetformById('+"'"+fil_con['field_id']+"'"+');" class="btn-reset" type="button">{{$staticContent['Clear']}}</button>';
             html3 +=  '</form>';
-            if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['type'] == 'number'  ){
+            if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['field_id'] != 'mode_series' && fil_con['type'] == 'number'  ){
             html3 +=  '<div class="slidebar-value-box mb-4 mt-4">';
             html3 +=  '<div   id="slidebar-value-box_des'+fil_con['field_id']+'"class="slider noUi-target noUi-ltr noUi-horizontal type'+fil_con['field_id']+'"  ></div>';
             html3 +=  ' <div class="value-form-bar-box">';
@@ -2125,8 +2123,9 @@
         });
         $('#sort-filter-content').html(html3);
         createSliderDestop();
-        popcheckSerries();
         popcheckProductType();
+        popcheckSerries();
+        popcheckModeSeries();
 
     }
     /**
@@ -2163,6 +2162,25 @@
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span>'+category['name']+'</span></label>';
+                    html3 += '</div>' ;
+                  });
+            }
+
+            // Mode Series
+            if(fil_con['field_id'] == 'mode_series'){
+                // Hardcoded Mode Series options as requested
+                var hardcodedModeSeries = [
+                    {id: 1, title: 'CC + CV Mode'},
+                    {id: 2, title: 'CC Mode'},
+                    {id: 3, title: 'CV Mode'}
+                ];
+                $.each(hardcodedModeSeries, function(index_mode, mode){
+                    html3 += '<div class="box-input-checkbox">';
+                    html3 += '<input onchange="mode_series_filter('+"'"+fil_con['field_id']+"'"+','+mode['id']+');" class="inp-cbx" id="cx-'+fil_con['field_id']+mode['id']+'_mobile" type="checkbox" style="display: none;" >';
+                    html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+mode['id']+'_mobile"><span>';
+                    html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+                    html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+                    html3 += '</svg></span><span>'+mode['title']+'</span></label>';
                     html3 += '</div>' ;
                   });
             }
@@ -2306,7 +2324,7 @@
             html3 += '</div>';
             html3 += '<button onclick="resetformById('+"'"+fil_con['field_id']+"'"+');" class="btn-reset" type="button">CLEAR</button>';
             html3 +=  '</form>';
-            if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['type'] == 'number'  ){
+            if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['field_id'] != 'mode_series' && fil_con['type'] == 'number'  ){
             html3 +=  '<div class="slidebar-value-box mb-4 mt-4">';
             html3 +=  '<div  id="slidebar-value-box'+fil_con['field_id']+'"class="slider noUi-target noUi-ltr noUi-horizontal slider'+fil_con['field_id']+'"  ></div>';
             html3 +=  ' <div  class="value-form-bar-box">';
@@ -2320,6 +2338,7 @@
         $('#sort-filter-content_mobile').html(html3);
         createSlider();
         popcheckProductType();
+        popcheckModeSeries();
     }
 
 
@@ -2337,7 +2356,6 @@
             $("#collapse-fliter_series01").addClass("show");
             $("#collapse-fliter_series01_mobile").addClass("show");
             
-            $("#sidebar").addClass("show");
             onclickshow(2);
             ser_arr.push({{$se_id}});
         }
@@ -2349,18 +2367,35 @@
      * 如果沒有參數，且 series 也沒展開，則預設展開側邊欄
      */
     function popcheckProductType(){
-        if(cateid){
+        if(cateid && main_cate_id != 3){
             $("#cx-product_type"+cateid).prop("checked" ,true);
             $("#cx-product_type"+cateid+"_mobile").prop("checked" ,true);
             
-            // 如果 series 沒有觸發展開，這裡要負責展開，避免重複 toggle 導致跑版
-            if(!series_id){
-                $("#sidebar").addClass("show");
-                onclickshow(2);
-            }
+            onclickshow(2);
             
             if(pro_type_arr.indexOf(cateid) == -1){
                 pro_type_arr.push(cateid);
+            }
+        }
+    }
+
+    /**
+     * 初始化 Mode Series 篩選
+     * 如果有 cateid (URL 參數) 且 main_cate_id 為 3，則自動勾選並展開
+     */
+    function popcheckModeSeries(){
+        if(cateid && main_cate_id == 3){
+            $("#cx-mode_series"+cateid).prop("checked" ,true);
+            $("#cx-mode_series"+cateid+"_mobile").prop("checked" ,true);
+            
+            // Expand the accordion
+            $("#collapse-fliter_mode_series").addClass("show");
+            $("#collapse-fliter_mode_series_mobile").addClass("show");
+            
+            onclickshow(2);
+            
+            if(mode_series_arr.indexOf(cateid) == -1){
+                mode_series_arr.push(cateid);
             }
         }
     }
@@ -2423,6 +2458,18 @@
        }
        fillerData();
     }
+
+    function mode_series_filter(type,value){
+       if(mode_series_arr.indexOf(value) == -1){
+           mode_series_arr.push(value);
+       }else{
+        var index_se = mode_series_arr.indexOf(value);
+            if (index_se > -1) {
+                mode_series_arr.splice(index_se, 1);
+            }
+       }
+       fillerData();
+    }
     /**
      * 根據勾選的系列與產品類型篩選產品，並組裝產品資料
      * 如果 ser_arr 為空，則顯示所有系列
@@ -2435,6 +2482,7 @@
             var productObj2 = {};
             var is_match = false;
             var is_match_type = false;
+            var is_match_mode = false;
 
             // 確認 商品的 series 是否再篩選條件中
             if(ser_arr.length > 0){
@@ -2461,12 +2509,25 @@
                 is_match_type = true;
             }
 
-            if(is_match && is_match_type){
+            // 確認 商品的 mode_series 是否再篩選條件中
+            if(mode_series_arr.length > 0){
+                $.each(mode_series_arr, function(index_mode,value_mode){
+                    if(value_mode == value['mode_series']){
+                        is_match_mode = true;
+                    }
+                });
+            }else{
+                // 沒有任何勾選，預設選全部
+                is_match_mode = true;
+            }
+
+            if(is_match && is_match_type && is_match_mode){
                 productObj['pro_id'] = value['pro_id'];
                 productObj['pro_code'] = value['pro_code'];
                 productObj['cate_id'] = value['cate_id'];
                 productObj['cate_ids'] = value['cate_ids'];
                 productObj['series_id'] = value['series_id'];
+                productObj['mode_series'] = value['mode_series'];
                 productObj['status_product'] = value['status_product'];
                 productObj['certificate'] = value['certificate'];
                 productObj['updated_at'] = value['updated_at'];
@@ -3111,6 +3172,7 @@
         arr_type_an_val = [];
         arr_value1 = [];
         pro_type_arr = [];
+        mode_series_arr = [];
         $.each(filter_pro, function(index_con,fil_con){
               $('#collapse-fliter_'+fil_con['field_id']).removeClass('show');
               $('#form-'+fil_con['field_id'] )[0].reset();
@@ -3126,6 +3188,8 @@
             ser_arr = [];
         }else if(id == 'product_type'){
             pro_type_arr = [];
+        }else if(id == 'mode_series'){
+            mode_series_arr = [];
         }else if(id == 'status02'){
             arr_status = [];
         }else if(id == 'certifi04'){
@@ -3674,7 +3738,7 @@
      */
     function createSlider(){
         $.each(fildnumberMobile, function(index_con,fil_con){
-        if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03'  ){
+        if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['field_id'] != 'mode_series' ){
             var data = 'slidebar-value-box'+fil_con['field_id'];
             var valuemin ='slider-limit-value-min'+fil_con['field_id'];
             var valuemax ='slider-limit-value-max'+fil_con['field_id'];
@@ -3710,7 +3774,7 @@
     function createSliderDestop(){
          $.each(fildnumber, function(index_con,fil_con){
         var data = getMinMaxValueById(fil_con['field_id']);
-        if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03'  ){
+        if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['field_id'] != 'mode_series' ){
             var data_des = 'slidebar-value-box_des'+fil_con['field_id'];
             var valuemindes ='slider-limit-value-min_des'+fil_con['field_id'];
             var valuemaxdes ='slider-limit-value-max_des'+fil_con['field_id'];
