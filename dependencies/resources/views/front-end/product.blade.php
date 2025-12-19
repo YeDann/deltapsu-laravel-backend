@@ -704,26 +704,29 @@
      */
     function onclickshow(id) {
         var element = document.getElementById("contentProList");
-        if ($("#sidebar").hasClass("show") == true) {
-            $(element).toggleClass("col-xl-9 col-lg-12 col-md-12 pl-lg-0");
-        } else {
-            $(element).toggleClass("col-md-12 col-xl-9 col-lg-12");
-        }
+        
         if (id == 2) {
+            // Show Sidebar
+            $(element).removeClass("col-md-12").addClass("col-xl-9 col-lg-12 pl-lg-0");
+            
+            if (!$("#sidebar").hasClass("show")) {
+                $("#sidebar").addClass("show");
+            }
 
-            var html = '';
-            html =
-                '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(1);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> {{$staticContent['hide_filters']}}</a>';
+            var html = '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(1);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> {{$staticContent['hide_filters']}}</a>';
             document.getElementById("showfiler").innerHTML = html;
 
         } else {
+            // Hide Sidebar
+            $(element).removeClass("col-xl-9 col-lg-12 pl-lg-0").addClass("col-md-12");
+            
+            if ($("#sidebar").hasClass("show")) {
+                $("#sidebar").removeClass("show");
+            }
 
-            var html = '';
-            html =
-                '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(2);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> {{$staticContent['Show_Filters']}}</a>';
+            var html = '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(2);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> {{$staticContent['Show_Filters']}}</a>';
             document.getElementById("showfiler").innerHTML = html;
         }
-
     }
 
     var products = <?= json_encode($products);?>;
@@ -1935,7 +1938,7 @@
             html3 += '</a>';
             html3 += '</div>';
             // 預設展開 product_type 的 accordion
-            html3 += '<div id="collapse-fliter_'+fil_con['field_id']+'" class="card-body-filter collapse '+(fil_con['field_id']== 'product_type'?'show':'') +'" >';
+            html3 += '<div id="collapse-fliter_'+fil_con['field_id']+'" class="card-body-filter collapse '+(fil_con['field_id']== 'product_type' || fil_con['field_id']== 'mode_series'?'show':'') +'" >';
             html3 += '<form id="form-'+fil_con['field_id']+'" class="'+fil_con['field_id']+'">';
             html3 += '<div class="scrollbar dataserchfilter'+fil_con['field_id']+'" id="style-1">';
 
@@ -2149,7 +2152,7 @@
             html3 += '</a>';
             html3 += '</div>';
             // 預設展開 product_type 的 accordion
-            html3 += '<div id="collapse-fliter_'+fil_con['field_id']+'_mobile" class="card-body-filter collapse '+(fil_con['field_id']== 'product_type'?'show':'') +'">';
+            html3 += '<div id="collapse-fliter_'+fil_con['field_id']+'_mobile" class="card-body-filter collapse '+(fil_con['field_id']== 'product_type' || fil_con['field_id']== 'mode_series'?'show':'') +'">';
             html3 += '<form id="form-mobile'+fil_con['field_id']+'" class="'+fil_con['field_id']+'_mobile">';
             html3 += '<div class="scrollbar dataserchfiltermobile'+fil_con['field_id']+'" id="style-1">';
 
@@ -3880,13 +3883,6 @@
     }
 
 </script>
-/**
- * 載入更多產品功能
- * 
- * loadeMore (網格視圖)
- * loadeMoreMobile (手機版網格視圖)
- * loadlistview (列表視圖)
- **/
 <script>
     function loadeMore(event,i){
         if ($(".moreBox:hidden").length != 0) {
