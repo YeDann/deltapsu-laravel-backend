@@ -59,7 +59,9 @@ class ProductCategoriesController extends Controller
     public function store(Request $request)
     {
         $name = $request->name;
+        $content = $request->content;
         $langs = $request->lang_loop;
+        $fileGU = $request->file('fileGU');
 
         $validate = Validator::make($request->all(), [
             'name' => 'required',
@@ -84,15 +86,25 @@ class ProductCategoriesController extends Controller
                 ]
             );
 
+            // Handle multi-language data with separate files per language
             foreach($langs as $lang){
+                $filename = '';
+                // Handle file upload for each language
+                if ($fileGU && isset($fileGU[$lang]) && $fileGU[$lang] != null) {
+                    $file = $fileGU[$lang];
+                    $filename = preg_replace('/\s+/', '', uniqid() . "." . $file->getClientOriginalExtension());
+                    $file->move(base_path('/../medias/categories'), $filename);
+                }
+
                 $main_pro_categories = DB::table('main_pro_categories_translations')->insert(
                     [
                         "main_pro_id" => $id,
-                        "name" => $name,
+                        "name" => ($name && isset($name[$lang])) ? $name[$lang] : '',
+                        "content" => ($content && isset($content[$lang])) ? $content[$lang] : '',
+                        "file" => $filename,
                         "local" => $lang,
                     ]
                 );
-
             }
 
             return redirect()->route('mainprotype.index')->with('flash_message', 'Insert Data successfully');
@@ -136,13 +148,15 @@ class ProductCategoriesController extends Controller
     public function update(Request $request)
     {
         $name = $request->name;
+        $content = $request->content;
         $langs = $request->lang_loop;
         $mainId = $request->mainId;
+        $oldfile = $request->oldfile;
+        $fileGU = $request->file('fileGU');
         
         // Get current banner filename for potential deletion
         $currentData = DB::table('main_pro_categories')->where('main_id', $mainId)->first();
         $currentBanner = $currentData ? $currentData->banner : null;
-
         // Handle banner image upload
         $bannerName = $currentBanner; // Keep current banner if no new upload
         if ($request->hasFile('banner')) {
@@ -159,6 +173,28 @@ class ProductCategoriesController extends Controller
             }
         }
 
+        // Handle multi-language file uploads
+        $arrayfileName = [];
+        foreach($langs as $lang) {
+            $arrayfileName[$lang] = isset($oldfile[$lang]) ? $oldfile[$lang] : '';
+            
+            if ($fileGU && isset($fileGU[$lang]) && $fileGU[$lang] != null) {
+                $file = $fileGU[$lang];
+                $filename = preg_replace('/\s+/', '', uniqid() . "." . $file->getClientOriginalExtension());
+                $file->move(base_path('/../medias/categories'), $filename);
+                
+                // Delete old file if exists
+                if (isset($oldfile[$lang]) && $oldfile[$lang]) {
+                    $file_pointer = base_path('/../medias/categories/') . $oldfile[$lang];
+                    if (file_exists($file_pointer)) {
+                        unlink($file_pointer);
+                    }
+                }
+                
+                $arrayfileName[$lang] = $filename;
+            }
+        }
+
         DB::table('main_pro_categories')
             ->where('main_id','=',$mainId)
             ->update(array(
@@ -168,7 +204,9 @@ class ProductCategoriesController extends Controller
         foreach($langs as $lang){
             DB::table('main_pro_categories_translations')->where('main_pro_id', "=", $mainId)
                 ->where('local',$lang)->update(array(
-                    "name" => $name[$lang]
+                    "name" => ($name && isset($name[$lang])) ? $name[$lang] : '',
+                    "content" => ($content && isset($content[$lang])) ? $content[$lang] : '',
+                    "file" => isset($arrayfileName[$lang]) ? $arrayfileName[$lang] : ''
                 ));
         }
         return redirect()->route('mainprotype.index')->with('flash_message', 'Update Data successfully');
@@ -1193,6 +1231,21 @@ class ProductCategoriesController extends Controller
             ]
         );
         return redirect()->route('editSubCategories',$id)->with('flash_message', 'Delete File successfully');
+
+
+    }
+
+    public function removefileMainCategoriesDoc($id,$lang){
+
+        DB::table('main_pro_categories_translations')
+        ->where('local' ,$lang)
+        ->where('main_pro_id' ,$id)->update(
+            [
+
+                "file" => null,
+            ]
+        );
+        return redirect()->route('mainprotype.edit',$id)->with('flash_message', 'Delete File successfully');
 
 
     }

@@ -339,31 +339,31 @@
                     <div class="box-banner-pro-type-all">
                         <div class="text-middle">
                             <h1 class="text-title-banner">{{ $mainCategory->name }}</h1>
-                            {{-- <div class="text-p-banner my-2">{!!$subCate->content!!}</div> --}}
-                            {{-- @if(isset($subCate->file))
+                            <div class="text-p-banner my-2">{!! $mainCategory->content !!}</div>
+                            @if(isset($mainCategory->file))
                             <a class="text-color-delta text-bold"
-                                href="{{config('app.url')}}/medias/categories/{{$subCate->file}}" target="_blank"><img
+                                href="{{ config('app.url') }}/medias/categories/{{ $mainCategory->file }}" target="_blank"><img
                                     class="align-baseline mr-2"
-                                    src="{{asset('frontend-asset/image/icon/download-icon.svg')}}" alt="">
-                                {{$staticContent['Download_selection_guide']}}
+                                    src="{{ asset('frontend-asset/image/icon/download-icon.svg') }}" alt="">
+                                {{ $staticContent['Download_selection_guide'] }}
                             </a>
-                            @else --}}
+                            @else
                             {{-- <a class="text-color-delta text-bold" href="#"><img class="align-baseline mr-1"
                                     src="{{asset('frontend-asset/image/icon/download-icon.svg')}}" alt=""> Empty
                                 selection
                                 guide
                             </a> --}}
-                            {{-- @endif --}}
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 banner-products-pic ">
                     {{-- <img src="{{asset('frontend-asset/image/DIN RAIL POWER SUPPLY@2x.png')}}" alt=""> --}}
                     @if(isset($mainCategory->banner))
-                    <img class="img-fluid middle-img" src="{{config('app.url')}}/medias/categories/{{ $mainCategory->banner }}"
+                    <img class="img-fluid middle-img" src="{{ config('app.url') }}/medias/categories/{{ $mainCategory->banner }}"
                         alt="Main Category Banner">
                     @else
-                    <img class="img-fluid middle-img" src="{{asset('frontend-asset/image/blank.png')}}" alt="">
+                    <img class="img-fluid middle-img" src="{{ asset('frontend-asset/image/blank.png') }}" alt="">
                     @endif
                 </div>
             </div>

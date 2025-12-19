@@ -1171,6 +1171,7 @@ class FrontendController extends Controller
             ->select('mpc.*', 'mpct.*')
             ->first();
 
+
         // 取得子商品分類的翻譯資料（用於列表上方的子商品分類描述）
         $subCategories = DB::table('sub_pro_categories as sc')
             ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')

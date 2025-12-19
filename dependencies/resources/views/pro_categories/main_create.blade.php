@@ -30,16 +30,70 @@
                 <div class="row push">
                     <div class="col-lg-12">
                         <div class="block block-rounded block-bordered">
+                            <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
+                                @foreach ($language as $item)
+                                @if($loop->iteration == 1)
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#btabs-alt-static-{{$item->name}}"
+                                        style="text-transform: capitalize;">{{$item->name}}</a>
+                                </li>
+                                @else
+                                <li class="nav-item">
+                                    <a class="nav-link " href="#btabs-alt-static-{{$item->name}}"
+                                        style="text-transform: capitalize;">{{$item->name}}</a>
+                                </li>
+                                @endif
+                                @endforeach
+                            </ul>
                             <div class="block-content tab-content">
                                 @foreach ($language as $item)
                                 <input type="hidden" name="lang_loop[]" value="{{$item->name}}">
-                                @endforeach
-                                <div class="form-group">
-                                    <label for="example-select">Name</label>
-                                    <input type="text"
-                                        class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                                        name="name" placeholder="Enter name...">
+                                @if($loop->iteration == 1)
+                                <div class="tab-pane active" id="btabs-alt-static-{{$item->name}}" role="tabpanel">
+                                    <div class="form-group">
+                                        <label for="example-select">Name</label>
+                                        <input type="text"
+                                            class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                            name="name[{{$item->name}}]" placeholder="Enter name...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-select">Overview</label>
+                                        <textarea rows="4" class="form-control"
+                                            name="content[{{$item->name}}]"> </textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-select">File</label>
+                                        <div class="custom-file " style="width:100%;">
+                                            <input type="file" class="custom-file-input file_input"
+                                                name="fileGU[{{$item->name}}]" data-toggle="custom-file-input">
+                                            <label class="custom-file-label" for="fileImage">Choose file</label>
+                                        </div>
+                                    </div>
                                 </div>
+                                @else
+                                <div class="tab-pane" id="btabs-alt-static-{{$item->name}}" role="tabpanel">
+                                    <div class="form-group">
+                                        <label for="example-select">Name</label>
+                                        <input type="text"
+                                            class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                                            name="name[{{$item->name}}]" placeholder="Enter name...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-select">Overview</label>
+                                        <textarea rows="4" class="form-control"
+                                            name="content[{{$item->name}}]"> </textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-select">File</label>
+                                        <div class="custom-file " style="width:100%;">
+                                            <input type="file" class="custom-file-input file_input"
+                                                name="fileGU[{{$item->name}}]" data-toggle="custom-file-input">
+                                            <label class="custom-file-label" for="fileImage">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                                @endforeach
                             </div>
                         </div>
                     </div>
