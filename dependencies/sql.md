@@ -185,6 +185,6 @@ VALUES
 (5, '可配置電源', 'cn'),
 (5, 'Configurable Power', 'de'),
 (5, 'Configurable Power', 'ru'),
-(5, 'Configurable Power', 'jp'),
+(5, 'Configurable Power', 'jp');
 
 ```
