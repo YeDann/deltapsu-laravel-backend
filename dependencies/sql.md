@@ -22,28 +22,6 @@ VALUES
 ('Products_Overview', 'Products Overview', 'jp');
 ```
 
-## 2. 加入 Industrial Power Supplies Modules 多語系設定
-
-```sql
-INSERT INTO `static_keyword` (`key_word`)
-VALUES ('Industrial_Power_Supplies_Modules');
-
-INSERT INTO `static_keyword_translations` (`key_word`, `word`, `local`)
-VALUES
-/* English (en) - 原文 */
-('Industrial_Power_Supplies_Modules', 'Industrial Power Supplies & Modules', 'en'),
-/* Traditional Chinese (tw) - 繁體中文 */
-('Industrial_Power_Supplies_Modules', '工業電源供應器與模組', 'tw'),
-/* Simplified Chinese (cn) - 簡體中文 (加入 CN 前綴以區分) */
-('Industrial_Power_Supplies_Modules', '工業電源供應器與模組', 'cn'),
-/* German (de) - 德文 */
-('Industrial_Power_Supplies_Modules', 'Industrial Power Supplies & Modules', 'de'),
-/* Russian (ru) - 俄文 */
-('Industrial_Power_Supplies_Modules', 'Industrial Power Supplies & Modules', 'ru'),
-/* Japan (jp) - 日文 */
-('Industrial_Power_Supplies_Modules', 'Industrial Power Supplies & Modules', 'jp');
-```
-
 ## 3. 加入 Technical Support 多語系設定
 
 ```sql
@@ -180,28 +158,6 @@ VALUES
 (5, 2, 5); -- 順序 5
 ```
 
-## 10. 加入 Medical_Power_Supplies 多語系設定
-
-```sql
-INSERT INTO `static_keyword` (`key_word`)
-VALUES ('Medical_Power_Supplies');
-
-INSERT INTO `static_keyword_translations` (`key_word`, `word`, `local`)
-VALUES
-/* English (en) - 原文 */
-('Medical_Power_Supplies', 'Medical Power Supplies', 'en'),
-/* Traditional Chinese (tw) - 繁體中文 */
-('Medical_Power_Supplies', '醫用電源', 'tw'),
-/* Simplified Chinese (cn) - 簡體中文 (加入 CN 前綴以區分) */
-('Medical_Power_Supplies', '醫用電源', 'cn'),
-/* German (de) - 德文 */
-('Medical_Power_Supplies', 'Medical Power Supplies', 'de'),
-/* Russian (ru) - 俄文 */
-('Medical_Power_Supplies', 'Medical Power Supplies', 'ru'),
-/* Japan (jp) - 日文 */
-('Medical_Power_Supplies', 'Medical Power Supplies', 'jp');
-```
-
 ## 11. 調整 main category 的資料 Medical Power Supplies - 分類更改
 
 ```sql
@@ -216,24 +172,19 @@ VALUES
 (8, 1, 3); -- 順序 3
 ```
 
-## 12. Configurable Power Supplies 多語系設定
+## 12. 加入 main category 
 
 ```sql
-INSERT INTO `static_keyword` (`key_word`)
-VALUES ('Configurable_Power_Supplies');
+INSERT INTO `main_pro_categories` (`order_seq`, `active`, `created_at`, `updated_at`)
+VALUES (5, 1, NOW(), NOW());
 
-INSERT INTO `static_keyword_translations` (`key_word`, `word`, `local`)
+INSERT INTO `main_pro_categories_translations` (`tran_id`, `main_pro_id`, `name`, `local`)
 VALUES
-/* English (en) - 原文 */
-('Configurable_Power_Supplies', 'Configurable Power Supplies', 'en'),
-/* Traditional Chinese (tw) - 繁體中文 */
-('Configurable_Power_Supplies', '可配置式電源', 'tw'),
-/* Simplified Chinese (cn) - 簡體中文 (加入 CN 前綴以區分) */
-('Configurable_Power_Supplies', '可配置式电源', 'cn'),
-/* German (de) - 德文 */
-('Configurable_Power_Supplies', 'Configurable Power Supplies', 'de'),
-/* Russian (ru) - 俄文 */
-('Configurable_Power_Supplies', 'Configurable Power Supplies', 'ru'),
-/* Japan (jp) - 日文 */
-('Configurable_Power_Supplies', 'Configurable Power Supplies', 'jp');
+(5, 'Configurable Power', 'en'),
+(5, '可配置電源', 'tw'),
+(5, '可配置電源', 'cn'),
+(5, 'Configurable Power', 'de'),
+(5, 'Configurable Power', 'ru'),
+(5, 'Configurable Power', 'jp'),
+
 ```

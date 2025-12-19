@@ -509,13 +509,13 @@ function slugifyHead($text)
                             {{-- 全部商品列表（Products_Overview）--}}
                             <div class="dropdown-submenu">
                                 <a class="" href="{{ route('allproduct') }}">
-                                    {{ $staticContent['Products_Overview'] }}
+                                    {{ isset($staticContent['Products_Overview']) ? $staticContent['Products_Overview'] : 'Products Overview' }}
                                 </a>
                             </div>
-                            {{-- Sub1 工業電源及模組（Industrial_Power_Supplies_&_Modules）--}}
+                            {{-- Sub1 工業電源及模組（Industrial_Power）--}}
                             <div class="dropdown-submenu">
                                 <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1" href="#">
-                                    {{ isset($staticContent['Industrial_Power_Supplies_Modules']) ? $staticContent['Industrial_Power_Supplies_Modules'] : 'Industrial Power Supplies & Modules' }}
+                                    {{ isset($staticContent['Industrial_Power']) ? $staticContent['Industrial_Power'] : 'Industrial Power' }}
                                     <i class="zmdi zmdi-chevron-right"></i>
                                 </a>
                                 <ul class="dropdown-menu drp-subthree">
@@ -567,7 +567,7 @@ function slugifyHead($text)
                             {{-- Sub2 醫療電源（Medical Power Supplies）--}}
                             <div class="dropdown-submenu">
                                 <a id="sub2" class="sub-menu" onclick="mainCate('sub2')" tabindex="-1" href="#">
-                                    {{ isset($staticContent['Medical_Power_Supplies']) ? $staticContent['Medical_Power_Supplies'] :'Medical Power Supplies' }} 
+                                    {{ isset($staticContent['Medical_Power']) ? $staticContent['Medical_Power'] :'Medical Power' }} 
                                     <i class="zmdi zmdi-chevron-right"></i>
                                 </a>
                                 <ul class="dropdown-menu drp-subthree">
@@ -606,10 +606,10 @@ function slugifyHead($text)
                                 </ul>
                             </div>
 
-                            {{-- 可配置式電源（Configurable Power Supplies）--}}
+                            {{-- 可配置式電源（Configurable Power--}}
                             <div class="dropdown-submenu">
                                 <a class="" href="{{ route('configurableproduct') }}">
-                                    {{ $staticContent['Configurable_Power_Supplies'] }}
+                                    {{ isset($staticContent['Configurable_Power']) ? $staticContent['Configurable_Power'] : 'Configurable Power' }}
                                 </a>
                             </div>
 
@@ -729,17 +729,17 @@ function slugifyHead($text)
                                 {{isset($staticContent['product_comparison'])?
                                 $staticContent['product_comparison'] :'product comparison' }}
                             </a>
-                            <a class="dropdown-item" href="{{route('index', ['page' => 'news', 'type' => slugifyHead($newsTypes['Industry Know-How'] ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How'), 'type-id' => $newsTypes['Industry Know-How'] ? $newsTypes['Industry Know-How']->id : '' ])}}">
-                                {{!is_null($newsTypes['Industry Know-How'])
+                            <a class="dropdown-item" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How'), 'type-id' => isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->id : '' ])}}">
+                                {{isset($newsTypes['Industry Know-How'])
                                 ? $newsTypes['Industry Know-How']->typename
                                 : 'Industry Know-How' }} 
                             </a>
-                            <a class="dropdown-item" href="{{route('index', ['page' => 'news', 'type' => slugifyHead($newsTypes['Product Notice'] ? $newsTypes['Product Notice']->typename : 'Product Notice'), 'type-id' => $newsTypes['Product Notice'] ? $newsTypes['Product Notice']->id : '' ])}}">
+                            <a class="dropdown-item" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice'), 'type-id' => isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->id : '' ])}}">
                                 {{isset($newsTypes['Product Notice'])
                                 ? $newsTypes['Product Notice']->typename
                                 : 'Product Notice' }} 
                             </a>
-                            <a class="dropdown-item" href="{{route('index', ['page' => 'news', 'type' => slugifyHead($newsTypes['EOL'] ? $newsTypes['EOL']->typename : 'EOL'), 'type-id' => $newsTypes['EOL'] ? $newsTypes['EOL']->id : '' ])}}">
+                            <a class="dropdown-item" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['EOL']) ? $newsTypes['EOL']->typename : 'EOL'), 'type-id' => isset($newsTypes['EOL']) ? $newsTypes['EOL']->id : '' ])}}">
                                 {{isset($newsTypes['EOL'])
                                 ? $newsTypes['EOL']->typename
                                 : 'EOL' }} 
@@ -1008,15 +1008,14 @@ function slugifyHead($text)
             </a>
 
             <a class="text-normal pl-3" href="#" onclick="toggle_visibility('btn-sidenav-sub1')">{{
-                isset($staticContent['Industrial_Power_Supplies_Modules'])? $staticContent['Industrial_Power_Supplies_Modules'] : 'Industrial Power Supplies & Modules' }}<i
+                isset($staticContent['Industrial_Power'])? $staticContent['Industrial_Power'] : 'Industrial Power' }}<i
                     class="zmdi zmdi-chevron-right"></i></a>
             <a class="text-normal pl-3" href="#"
-                onclick="toggle_visibility('btn-sidenav-sub2')">{{isset($staticContent['Medical_Power_Supplies']) ?
-                $staticContent['Medical_Power_Supplies'] :'Medical Power Supplies' }}<i class="zmdi zmdi-chevron-right"></i></a>
-
+                onclick="toggle_visibility('btn-sidenav-sub2')">{{isset($staticContent['Medical_Power']) ?
+                $staticContent['Medical_Power'] :'Medical Power' }}<i class="zmdi zmdi-chevron-right"></i></a>
             <a class="text-normal pl-3"
-                href="{{route('configurableproduct')}}">{{isset($staticContent['Configurable_Power_Supplies'])?
-                $staticContent['Configurable_Power_Supplies'] :'Configurable Power Supplies' }}</a>
+                href="{{route('configurableproduct')}}">{{isset($staticContent['Configurable_Power'])?
+                $staticContent['Configurable_Power'] :'Configurable Power' }}</a>
 
             @if(isset($navcategories4) && count($navcategories4) > 0 )
             <a class="text-normal pl-3" href="#"
@@ -1031,8 +1030,8 @@ function slugifyHead($text)
         </div>
         <div id="btn-sidenav-sub1" class="btn-sidenav  pad-ar-24px">
             <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub1')"><i
-                    class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Industrial_Power_Supplies_Modules'])?
-                $staticContent['Industrial_Power_Supplies_Modules'] : 'Industrial Power Supplies & Modules'}}</a>
+                    class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Industrial_Power'])?
+                $staticContent['Industrial_Power'] : 'Industrial Power'}}</a>
             @if(isset($navcategories2))
             @foreach ($navcategories2 as $subCate)
             <a class="text-normal pl-3 "
@@ -1043,8 +1042,8 @@ function slugifyHead($text)
 
         <div id="btn-sidenav-sub2" class="btn-sidenav  pad-ar-24px">
             <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub2')"><i
-                    class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Medical_Power_Supplies'])?
-                $staticContent['Medical_Power_Supplies'] :'Medical Power Supplies' }}</a>
+                    class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Medical_Power'])?
+                $staticContent['Medical_Power'] :'Medical Power' }}</a>
             @if(isset($navcategories1))
             @foreach ($navcategories1 as $subCate)
             <a class="text-normal pl-3 "
@@ -1103,13 +1102,13 @@ function slugifyHead($text)
                 {{isset($staticContent['product_comparison'])?
                 $staticContent['product_comparison'] :'product comparison' }}</a>
 
-            <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead($newsTypes['Industry Know-How'] ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How'), 'type-id' => $newsTypes['Industry Know-How'] ? $newsTypes['Industry Know-How']->id : '' ])}}">
-                {{!is_null($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How' }}
+            <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How'), 'type-id' => isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->id : '' ])}}">
+                {{isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How' }}
             </a>
-            <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead($newsTypes['Product Notice'] ? $newsTypes['Product Notice']->typename : 'Product Notice'), 'type-id' => $newsTypes['Product Notice'] ? $newsTypes['Product Notice']->id : '' ])}}">
+            <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice'), 'type-id' => isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->id : '' ])}}">
                 {{isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice' }}
             </a>
-            <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead($newsTypes['EOL'] ? $newsTypes['EOL']->typename : 'EOL'), 'type-id' => $newsTypes['EOL'] ? $newsTypes['EOL']->id : '' ])}}">
+            <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['EOL']) ? $newsTypes['EOL']->typename : 'EOL'), 'type-id' => isset($newsTypes['EOL']) ? $newsTypes['EOL']->id : '' ])}}">
                 {{isset($newsTypes['EOL']) ? $newsTypes['EOL']->typename : 'EOL' }}
             </a>
 
