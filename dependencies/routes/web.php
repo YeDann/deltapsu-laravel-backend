@@ -306,6 +306,7 @@ Route::prefix('/backend')->group(function () {
     Route::get('orderSeries/{id?}', 'ProductCategoriesController@orderSeries')->name('orderSeries');
 
     Route::get('removefileDocSelectionGuide/{id?}/{lang?}', 'ProductCategoriesController@removefileDocSelectionGuide')->name('removefileDocSelectionGuide');
+    Route::get('removefileMainCategoriesDoc/{id?}/{lang?}', 'ProductCategoriesController@removefileMainCategoriesDoc')->name('removefileMainCategoriesDoc');
     //News Type
     Route::resource('newstype', 'NewstypeController');
     Route::post('newstypeUpdate', 'NewstypeController@update')->name('newstypeUpdate');

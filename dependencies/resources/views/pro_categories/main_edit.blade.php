@@ -57,6 +57,31 @@
                                             class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                             name="name[{{$item->local}}]" value="{{$item->name}}" placeholder="Enter name...">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="example-select">Overview</label>
+                                        <textarea rows="4" class="form-control"
+                                            name="content[{{$item->local}}]">{{isset($item->content) ? $item->content :''}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-select">File</label>
+                                        <input type="hidden" name="oldfile[{{$item->local}}]" 
+                                            value="{{isset($item->file) ? $item->file :''}}">
+                                        @if($item->file && $item->file != '')
+                                        <a target="_blank"
+                                            href="{{config('app.url')}}/medias/categories/{{$item->file}}">{{$item->file}}</a>
+                                        <a href="{{route('removefileMainCategoriesDoc',[$mainId,$item->local])}}"
+                                            onclick="return confirm('Are you sure?');">
+                                            <button type="button" class="btn btn-sm btn-danger"
+                                                style="margin: 10px 0px 10px 10px;"><i class="fa fa-trash"></i></button>
+                                        </a>
+                                        @endif
+                                        <br>
+                                        <div class="custom-file " style="width:100%;">
+                                            <input type="file" class="custom-file-input file_input"
+                                                name="fileGU[{{$item->local}}]" data-toggle="custom-file-input">
+                                            <label class="custom-file-label" for="fileImage">Choose file</label>
+                                        </div>
+                                    </div>
                                 </div>
                                 @else
                                 <div class="tab-pane" id="btabs-alt-static-{{$item->local}}" role="tabpanel">
@@ -65,6 +90,31 @@
                                         <input type="text"
                                             class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                             name="name[{{$item->local}}]" value="{{$item->name}}" placeholder="Enter name...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-select">Overview</label>
+                                        <textarea rows="4" class="form-control"
+                                            name="content[{{$item->local}}]">{{isset($item->content) ? $item->content :''}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-select">File</label>
+                                        <input type="hidden" name="oldfile[{{$item->local}}]" 
+                                            value="{{isset($item->file) ? $item->file :''}}">
+                                        @if($item->file && $item->file != '')
+                                        <a target="_blank"
+                                            href="{{config('app.url')}}/medias/categories/{{$item->file}}">{{$item->file}}</a>
+                                        <a href="{{route('removefileMainCategoriesDoc',[$mainId,$item->local])}}"
+                                            onclick="return confirm('Are you sure?');">
+                                            <button type="button" class="btn btn-sm btn-danger"
+                                                style="margin: 10px 0px 10px 10px;"><i class="fa fa-trash"></i> </button>
+                                        </a>
+                                        @endif
+                                        <br>
+                                        <div class="custom-file " style="width:100%;">
+                                            <input type="file" class="custom-file-input file_input"
+                                                name="fileGU[{{$item->local}}]" data-toggle="custom-file-input">
+                                            <label class="custom-file-label" for="fileImage">Choose file</label>
+                                        </div>
                                     </div>
                                 </div>
                                 @endif
@@ -98,7 +148,7 @@
                                         <td class="">
                                             <img src="{{ config('app.url') }}/medias/categories/{{ $mainCategory->banner }}"
                                                 class="img-thumbnail res-image" alt="">
-                                            <input type="hidden" name="oldfile" value="{{ $mainCategory->banner}}">
+                                            <input type="hidden" name="oldbanner" value="{{ $mainCategory->banner}}">
                                         </td>
                                         <td class="">
                                             <img src="https://via.placeholder.com/375x184.png"
