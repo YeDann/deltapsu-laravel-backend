@@ -3,12 +3,12 @@
 <style>
     .box-product-selector .container {
         text-align: center;
-
     }
 
     /* .visible-mobile .box-product-selector .container{
         padding: 16px;
     } */
+
     .text-hover {
         /* display: none; */
         opacity: 0;
@@ -231,7 +231,6 @@
     <div class="box-banner">
         <div id="slide-banner-mobile" class="owl-carousel owl-theme ">
             @foreach ($banners as $index => $banner)
-
             <div class="item banner-item ">
                 <a href="{{$banner->btn_link}}">
                     <div loading="lazy" data-src="{{config('app.url')}}/medias/banners/{{$banner->image}}"
@@ -272,23 +271,22 @@
 <!-- selecter -->
 
 <div class="visible-tablets-up">
-    <div class="box-product-selector container ">
+    <div class="box-product-selector container">
         <h2 class="text-title-delta-home"> {{$staticContent['Product_Selector']}}</h2>
         <div id="product-selector-carousel" class="owl-carousel owl-theme product-selector text-center">
-            @foreach($subCategories as $sub)
+            @foreach($mainCategories as $mainCate)
             <div class="product-selector-list border-2px d-flex align-items-center border-radius-6">
                 <div class="m-auto">
-                    {{-- TODO Annie --}}
-                    <a href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
-                        @if($sub->image != null)
-                        <img data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy"
-                            class="lazyload" alt="{{$sub->image}}">
+                    <a href="{{ route('productList',[$mainCate->main_id])}}">
+                        @if($mainCate->banner != null)
+                        <img data-src="{{config('app.url')}}/medias/categories/{{$mainCate->banner}}" loading="lazy"
+                            class="lazyload" alt="{{$mainCate->banner}}">
                         @else
                         <img data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy" class="lazyload"
                             alt="blank.png">
                         @endif
                         <div style="height: 50px; " class="d-flex">
-                            <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$sub->name}}</h4>
+                            <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$mainCate->name}}</h4>
                         </div>
                     </a>
                 </div>
@@ -301,22 +299,21 @@
     <div class="box-product-selector padd-left-rbox">
         <h2 class="text-title-delta-home ">{{$staticContent['Product_Selector']}}</h2>
         <div id="product-selector-carousel-mobile" class="owl-carousel owl-theme product-selector text-center">
-            @foreach($subCategories as $sub)
+            @foreach($mainCategories as $mainCate)
             <div class="product-selector-list">
                 <div class="border-2px d-flex h-100 p-1 align-items-center border-radius-6">
                     <div class="m-auto">
-                        {{-- TODO Annie --}}
                         <a
-                            href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
-                            @if($sub->image != null)
-                            <img data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy"
-                                class="lazyload" alt="{{$sub->image}}">
+                            href="{{ route('productList',[$mainCate->main_id])}}">
+                            @if($mainCate->banner != null)
+                            <img data-src="{{config('app.url')}}/medias/categories/{{$mainCate->banner}}" loading="lazy"
+                                class="lazyload" alt="{{$mainCate->banner}}">
                             @else
                             <img data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy" class="lazyload"
                                 alt="blank.png">
                             @endif
                             <div style="height: 50px;" class="d-flex">
-                                <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$sub->name}}</h4>
+                                <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$mainCate->name}}</h4>
                             </div>
                         </a>
                     </div>
@@ -1148,10 +1145,10 @@ function retextdata($arr ,$unit){
                     items: 4
                 },
                 1200: {
-                    items: 6
+                    items: 5
                 },
                 1400: {
-                    items: 6
+                    items: 5
                 }
             },
             navText: ['<i class="zmdi zmdi-chevron-left" aria-hidden="true"></i>',
