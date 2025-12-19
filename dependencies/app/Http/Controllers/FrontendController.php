@@ -939,6 +939,7 @@ class FrontendController extends Controller
         ->first();
 
         if (isset($series)) {
+            // TODO Annie
             return redirect()->route('productList', [$series->catename, $series->cateid, $series->se_name, $series->se_id]);
         }
 
@@ -982,6 +983,7 @@ class FrontendController extends Controller
 
         // 判斷 sub_pro_products 是否存在於 main_pro_categories
         if (!$isSubCateExists) {
+            // TODO Annie
             return redirect()->route('productList', [$main_cate_id]);
         }
 
@@ -1362,10 +1364,12 @@ class FrontendController extends Controller
             ->where('s.slug', $slgSeries)
             ->first();
             if ($findoldSeries) {
+                // TODO Annie
                 return redirect()->route('productList', [$findoldCate->url_item, $findoldCate->sub_pro_id, $findoldSeries->slug, $findoldSeries->se_id]);
             }
 
         } elseif (isset($findoldCate) && !isset($procode)) {
+            // TODO Annie
             return redirect()->route('productList', [$findoldCate->url_item, $findoldCate->sub_pro_id]);
         }
 
@@ -1393,6 +1397,7 @@ class FrontendController extends Controller
 
             return response()->view('errors.404', [], 404);
         } else {
+            // TODO Annie
             return redirect()->route('productList', [$findoldCate->url_item, $findoldCate->sub_pro_id]);
         }
 

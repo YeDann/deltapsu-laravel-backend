@@ -544,10 +544,12 @@
                         <a href="#">{{$staticContent['Products']}}</a>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page">
+                        {{-- TODO Annie --}}
                         <a
                             href="{{ route('productList',[preg_replace('/\s+/', '-',  $product[0]['url_item']),$product[0]['cate_id']])}}">{{$product[0]['cate_name']}}</a>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page">
+                        {{-- TODO Annie --}}
                         <a
                             href="{{ route('productList',[preg_replace('/\s+/', '-', $product[0]['url_item']),$product[0]['cate_id'],$product[0]['serie_name'],$product[0]['serie_id']])}}">{{$product[0]['serie_name']}}
                             {{$staticContent['Series']}}</a>
@@ -583,6 +585,7 @@
                             href="{{ route('productList',[preg_replace('/\s+/', '-',  $product[0]['url_item']),$product[0]['cate_id']])}}">{{$product[0]['cate_name']}}</a>
                     </li> --}}
                     <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page">
+                        {{-- TODO Annie --}}
                         <a
                             href="{{ route('productList',[preg_replace('/\s+/', '-', $product[0]['url_item']),$product[0]['cate_id'],$product[0]['serie_name'],$product[0]['serie_id']])}}">{{$product[0]['serie_name']}}
                             {{$staticContent['Series']}}</a>

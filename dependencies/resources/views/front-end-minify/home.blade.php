@@ -278,6 +278,7 @@
             @foreach($subCategories as $sub)
             <div class="product-selector-list border-2px d-flex align-items-center border-radius-6">
                 <div class="m-auto">
+                    {{-- TODO Annie --}}
                     <a href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
                         @if($sub->image != null)
                         <img data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy"
@@ -304,6 +305,7 @@
             <div class="product-selector-list">
                 <div class="border-2px d-flex h-100 p-1 align-items-center border-radius-6">
                     <div class="m-auto">
+                        {{-- TODO Annie --}}
                         <a
                             href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
                             @if($sub->image != null)
@@ -452,6 +454,7 @@ function retextdata($arr ,$unit){
                                 @if($serie->se_id == 26)
                                 <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                     @else
+                                    {{-- TODO Annie --}}
                                     <a style="color:inherit;" class=""
                                         href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         @endif
@@ -470,6 +473,7 @@ function retextdata($arr ,$unit){
                                 @if($serie->se_id == 26)
                                 <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                     @else
+                                    {{-- TODO Annie --}}
                                     <a style="color:inherit;" class="m-auto"
                                         href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         @endif
@@ -479,6 +483,7 @@ function retextdata($arr ,$unit){
                             @if($serie->se_id == 26)
                             <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                 @else
+                                {{-- TODO Annie --}}
                                 <a style="color:inherit;" class="m-auto"
                                     href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                     @endif
@@ -528,6 +533,7 @@ function retextdata($arr ,$unit){
                                 @if($serie->se_id == 26)
                                 <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                     @else
+                                    {{-- TODO Annie --}}
                                     <a style="color:inherit;" class=""
                                         href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         @endif
@@ -546,6 +552,7 @@ function retextdata($arr ,$unit){
                                 @if($serie->se_id == 26)
                                 <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                     @else
+                                    {{-- TODO Annie --}}
                                     <a style="color:inherit;" class="m-auto"
                                         href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         @endif
@@ -555,6 +562,7 @@ function retextdata($arr ,$unit){
                             @if($serie->se_id == 26)
                             <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                 @else
+                                {{-- TODO Annie --}}
                                 <a style="color:inherit;" class="m-auto"
                                     href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                     @endif

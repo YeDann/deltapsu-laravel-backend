@@ -288,6 +288,7 @@
                                 @if($subCate->sub_pro_id == 7 )
                                 <a class="text-more_detail" href="{{route('configurableProductDetail')}}">
                                     @else
+                                    {{-- TODO Annie --}}
                                     <a style="color:inherit"
                                         href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
                                         @endif
@@ -331,6 +332,7 @@
                                 @if($subCate->sub_pro_id == 7)
                                 <a class="d-flex w-100" href="{{route('configurableProductDetail')}}">
                                     @else
+                                    {{-- TODO Annie --}}
                                     <a class="d-flex w-100" style="color:inherit"
                                         href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
                                         @endif
@@ -399,6 +401,7 @@
                                         @if($serie->se_id == 26)
                                         <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                             @else
+                                            {{-- TODO Annie --}}
                                             <a style="color:inherit;" class=""
                                                 href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                                 @endif
@@ -419,6 +422,7 @@
                                         <a style="color:inherit;" class="m-auto"
                                             href="{{route('configurableProductDetail')}}">
                                             @else
+                                            {{-- TODO Annie --}}
                                             <a style="color:inherit;" class="m-auto"
                                                 href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                                 @endif
@@ -429,6 +433,7 @@
                                     <a style="color:inherit;" class="m-auto"
                                         href="{{route('configurableProductDetail')}}">
                                         @else
+                                        {{-- TODO Annie --}}
                                         <a style="color:inherit;" class="m-auto"
                                             href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                             @endif
@@ -476,6 +481,7 @@
                                         @if($serie->se_id == 26)
                                         <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                             @else
+                                            {{-- TODO Annie --}}
                                             <a style="color:inherit;" class=""
                                                 href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                                 @endif
@@ -496,6 +502,7 @@
                                         <a style="color:inherit;" class="m-auto"
                                             href="{{route('configurableProductDetail')}}">
                                             @else
+                                            {{-- TODO Annie --}}
                                             <a style="color:inherit;" class="m-auto"
                                                 href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                                 @endif
@@ -506,6 +513,7 @@
                                     <a style="color:inherit;" class="m-auto"
                                         href="{{route('configurableProductDetail')}}">
                                         @else
+                                        {{-- TODO Annie --}}
                                         <a style="color:inherit;" class="m-auto"
                                             href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                             @endif
@@ -651,6 +659,7 @@
                         @if($subCate->sub_pro_id == 7 )
                         <a href="{{route('configurableProductDetail')}}">
                             @else
+                            {{-- TODO Annie --}}
                             <a
                                 href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
                                 @endif
@@ -678,6 +687,7 @@
                         @if($subCate->sub_pro_id == 7 )
                         <a href="{{route('configurableProductDetail')}}">
                         @else
+                        {{-- TODO Annie --}}
                         <a
                             href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
                             @endif
@@ -740,6 +750,7 @@
                                     @if($serie->se_id == 26)
                                     <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                         @else
+                                        {{-- TODO Annie --}}
                                         <a style="color:inherit;" class=""
                                             href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                             @endif
@@ -756,6 +767,7 @@
                             </div>
                             <div class="series-text text-center">
                                 <div style="min-height:64px; " class="d-flex">
+                                    {{-- TODO Annie --}}
                                     <a style="color:inherit; " class="m-auto"
                                         href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         <h3 class="text-dark text-untransfrom  m-0">{{$serie->title}}</h3>
@@ -765,6 +777,7 @@
                                 <a style="color:inherit;text-decoration: none;"
                                     href="{{route('configurableProductDetail')}}">
                                     @else
+                                    {{-- TODO Annie --}}
                                     <a style="color:inherit;text-decoration: none;" class=""
                                         href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         @endif
@@ -815,6 +828,7 @@
                                     @if($serie->se_id == 26)
                                     <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                         @else
+                                        {{-- TODO Annie --}}
                                         <a style="color:inherit;" class=""
                                             href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                             @endif
@@ -831,6 +845,7 @@
                             </div>
                             <div class="series-text text-center">
                                 <div style="min-height:64px; " class="d-flex">
+                                    {{-- TODO Annie --}}
                                     <a style="color:inherit; " class="m-auto"
                                         href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         <h3 class="text-dark text-untransfrom  m-0">{{$serie->title}}</h3>
@@ -840,6 +855,7 @@
                                 <a style="color:inherit;text-decoration: none;"
                                     href="{{route('configurableProductDetail')}}">
                                     @else
+                                    {{-- TODO Annie --}}
                                     <a style="color:inherit;text-decoration: none;" class=""
                                         href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '-', $serie->slug),$serie->se_id])}}">
                                         @endif

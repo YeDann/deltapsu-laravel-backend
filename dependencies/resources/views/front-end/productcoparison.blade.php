@@ -555,6 +555,7 @@
      function selectNewProductByType(){
         var typename = $( "#proType option:selected" ).text();
         var type_id = $('#proType').val();
+        // TODO Annie
         window.open('{{ route('productList', ['main_cate' => 2]) }}/' + typename + '/' + type_id);
      }
 

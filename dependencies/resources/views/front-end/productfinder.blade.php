@@ -202,6 +202,7 @@
                 @foreach($subCategories as $sub)
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="border-r shadow-radius-box hover-border-blue">
+                        {{-- TODO Annie --}}
                         <a class=""
                             href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
                             @if($sub->image != null)
@@ -228,6 +229,7 @@
         <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>  
         <div class="box-product-finder-grid">
             @foreach($subCategories as $sub)
+            {{-- TODO Annie --}}
             <a href="{{ route('productList',[preg_replace('/\s+/', '_', $sub->url_item),$sub->sub_pro_id])}}"
                 class="box-product-finder-item d-flex shadow-radius-box">
                 <div class="m-auto">
