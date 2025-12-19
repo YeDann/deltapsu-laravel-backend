@@ -47,6 +47,7 @@
     $lang_seo = 'zh-Hans-TW';
   }
 ?>
+
 <link rel="alternate" href="{{ config('app.url') }}/{{App::getLocale()}}/product/all-product-categories"
     hreflang="{{$lang_seo}}" />
 
@@ -288,9 +289,8 @@
                                 @if($subCate->sub_pro_id == 7 )
                                 <a class="text-more_detail" href="{{route('configurableProductDetail')}}">
                                     @else
-                                    {{-- TODO Annie --}}
                                     <a style="color:inherit"
-                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
+                                        href="{{ route('productList',[$mainCate->main_id,preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
                                         @endif
                                         <h2 class="text-dark">{{$subCate->name}}</h2>
                                         @if(isset($subCate->contenttype1) || isset($subCate->contenttype2) ||
@@ -332,9 +332,8 @@
                                 @if($subCate->sub_pro_id == 7)
                                 <a class="d-flex w-100" href="{{route('configurableProductDetail')}}">
                                     @else
-                                    {{-- TODO Annie --}}
                                     <a class="d-flex w-100" style="color:inherit"
-                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
+                                        href="{{ route('productList',[$mainCate->main_id,preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
                                         @endif
 
                                         @if($mainCate->main_id == 1)
@@ -381,12 +380,13 @@
                     </div>
                     @if($subCate->sub_pro_id == 6)
                     @foreach ($modeSeries as $mode)
+                    @php
+                        $modeText = $mode->id == 1 ? $staticContent['CC_Cv_Mode'] : ($mode->id == 2 ? $staticContent['CC_Mode'] : $staticContent['CV_Mode']);
+                        $urlText = $mode->id == 1 ? 'cc-cv-mode' : ($mode->id == 2 ? 'cc-mode' : 'cv-mode');
+                    @endphp
                     <div class="bordr-name-se">
                         <h3 class="text-dark" id="mode3{{$mode->id}}">
-
-                            {{$mode->id == 1 ? $staticContent['CC_Cv_Mode'] :'' }}
-                            {{$mode->id == 2 ? $staticContent['CC_Mode'] :'' }}
-                            {{$mode->id == 3 ? $staticContent['CV_Mode'] :'' }}
+                            {{ $modeText }}
                         </h3>
                     </div>
                     <div class="series-grid">
@@ -399,21 +399,20 @@
                                 <div class="d-block ">
                                     <div class="m-auto series-img">
                                         @if($serie->se_id == 26)
-                                        <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
-                                            @else
-                                            {{-- TODO Annie --}}
+                                            <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
+                                        @else
                                             <a style="color:inherit;" class=""
-                                                href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
-                                                @endif
-                                                @if(isset($serie->image))
-                                                <img class="img-fluid m-auto"
-                                                    src="{{config('app.url')}}/medias/categories/{{$serie->image}}"
-                                                    alt="">
-                                                @else
-                                                <img class="img-fluid m-auto"
-                                                    src="{{asset('frontend-asset/image/blank.png')}}" alt="">
-                                                @endif
-                                            </a>
+                                                href="{{ route('productList',[$mainCate->main_id,$urlText,$mode->id,strtolower(preg_replace('/\s+/', '-',$serie->slug)),$serie->se_id])}}">
+                                        @endif
+                                        @if(isset($serie->image))
+                                            <img class="img-fluid m-auto"
+                                                src="{{config('app.url')}}/medias/categories/{{$serie->image}}"
+                                                alt="">
+                                        @else
+                                            <img class="img-fluid m-auto"
+                                                src="{{asset('frontend-asset/image/blank.png')}}" alt="">
+                                        @endif
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="series-text text-center">
@@ -422,9 +421,8 @@
                                         <a style="color:inherit;" class="m-auto"
                                             href="{{route('configurableProductDetail')}}">
                                             @else
-                                            {{-- TODO Annie --}}
                                             <a style="color:inherit;" class="m-auto"
-                                                href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                                href="{{ route('productList',[$mainCate->main_id,$urlText,$mode->id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                                 @endif
                                                 <h3 class="text-dark  m-0">{{$serie->title}}</h3>
                                             </a>
@@ -433,9 +431,8 @@
                                     <a style="color:inherit;" class="m-auto"
                                         href="{{route('configurableProductDetail')}}">
                                         @else
-                                        {{-- TODO Annie --}}
                                         <a style="color:inherit;" class="m-auto"
-                                            href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                            href="{{ route('productList',[$mainCate->main_id,$urlText,$mode->id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                             @endif
                                             <div class="series-text-detail">
                                                 {!! $serie->overview_content !!}
@@ -481,9 +478,8 @@
                                         @if($serie->se_id == 26)
                                         <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                             @else
-                                            {{-- TODO Annie --}}
                                             <a style="color:inherit;" class=""
-                                                href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                                href="{{ route('productList',[$mainCate->main_id,preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                                 @endif
                                                 @if(isset($serie->image))
                                                 <img class="img-fluid m-auto"
@@ -502,9 +498,8 @@
                                         <a style="color:inherit;" class="m-auto"
                                             href="{{route('configurableProductDetail')}}">
                                             @else
-                                            {{-- TODO Annie --}}
                                             <a style="color:inherit;" class="m-auto"
-                                                href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                                href="{{ route('productList',[$mainCate->main_id,preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                                 @endif
                                                 <h3 class="text-dark  m-0">{{$serie->title}}</h3>
                                             </a>
@@ -513,9 +508,8 @@
                                     <a style="color:inherit;" class="m-auto"
                                         href="{{route('configurableProductDetail')}}">
                                         @else
-                                        {{-- TODO Annie --}}
                                         <a style="color:inherit;" class="m-auto"
-                                            href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                            href="{{ route('productList',[$mainCate->main_id,preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                             @endif
                                             <div class="series-text-detail">
                                                 {!! $serie->overview_content !!}
@@ -659,9 +653,8 @@
                         @if($subCate->sub_pro_id == 7 )
                         <a href="{{route('configurableProductDetail')}}">
                             @else
-                            {{-- TODO Annie --}}
                             <a
-                                href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
+                                href="{{ route('productList',[$mainCate->main_id,preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
                                 @endif
                                 <h2 class="text-dark">{{$subCate->name}}</h2>
                             </a>
@@ -687,9 +680,8 @@
                         @if($subCate->sub_pro_id == 7 )
                         <a href="{{route('configurableProductDetail')}}">
                         @else
-                        {{-- TODO Annie --}}
                         <a
-                            href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
+                            href="{{ route('productList',[$mainCate->main_id,preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
                             @endif
                             {{-- @if(isset($subCate->image))
                             <img class="img-fluid" style=""
@@ -730,11 +722,13 @@
             <div class="container">
                 @if($subCate->sub_pro_id == 6)
                 @foreach ($modeSeries as $mode)
+                @php
+                    $modeText = $mode->id == 1 ? $staticContent['CC_Cv_Mode'] : ($mode->id == 2 ? $staticContent['CC_Mode'] : $staticContent['CV_Mode']);
+                    $urlText = $mode->id == 1 ? 'cc-cv-mode' : ($mode->id == 2 ? 'cc-mode' : 'cv-mode');
+                @endphp
                 <div class="bordr-name-se">
                     <h3 class="text-dark" id="mode_mobile3{{$mode->id}}">
-                        {{$mode->id == 1 ? $staticContent['CC_Cv_Mode'] :'' }}
-                        {{$mode->id == 2 ? $staticContent['CC_Mode'] :'' }}
-                        {{$mode->id == 3 ? $staticContent['CV_Mode'] :'' }}
+                        {{$modeText}}
                     </h3>
                 </div>
                 {{-- Start serise --}}
@@ -750,9 +744,8 @@
                                     @if($serie->se_id == 26)
                                     <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                         @else
-                                        {{-- TODO Annie --}}
                                         <a style="color:inherit;" class=""
-                                            href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                            href="{{ route('productList',[$mainCate->main_id,$urlText,$mode->id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                             @endif
                                             @if(isset($serie->image))
                                             <img class="img-fluid m-auto"
@@ -767,9 +760,8 @@
                             </div>
                             <div class="series-text text-center">
                                 <div style="min-height:64px; " class="d-flex">
-                                    {{-- TODO Annie --}}
                                     <a style="color:inherit; " class="m-auto"
-                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',[$mainCate->main_id,$urlText,$mode->id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         <h3 class="text-dark text-untransfrom  m-0">{{$serie->title}}</h3>
                                     </a>
                                 </div>
@@ -777,9 +769,8 @@
                                 <a style="color:inherit;text-decoration: none;"
                                     href="{{route('configurableProductDetail')}}">
                                     @else
-                                    {{-- TODO Annie --}}
                                     <a style="color:inherit;text-decoration: none;" class=""
-                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',[$mainCate->main_id,$urlText,$mode->id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         @endif
                                         <div class="series-text-detail" style="min-height:72px;">
                                             {!! $serie->overview_content !!}
@@ -828,9 +819,8 @@
                                     @if($serie->se_id == 26)
                                     <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                         @else
-                                        {{-- TODO Annie --}}
                                         <a style="color:inherit;" class=""
-                                            href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                            href="{{ route('productList',[$mainCate->main_id,preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                             @endif
                                             @if(isset($serie->image))
                                             <img class="img-fluid m-auto"
@@ -845,9 +835,8 @@
                             </div>
                             <div class="series-text text-center">
                                 <div style="min-height:64px; " class="d-flex">
-                                    {{-- TODO Annie --}}
                                     <a style="color:inherit; " class="m-auto"
-                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',[$mainCate->main_id,preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
                                         <h3 class="text-dark text-untransfrom  m-0">{{$serie->title}}</h3>
                                     </a>
                                 </div>
@@ -855,9 +844,8 @@
                                 <a style="color:inherit;text-decoration: none;"
                                     href="{{route('configurableProductDetail')}}">
                                     @else
-                                    {{-- TODO Annie --}}
                                     <a style="color:inherit;text-decoration: none;" class=""
-                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '-', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',[$mainCate->main_id,preg_replace('/\s+/', '-', $subCate->url_item),$serie->pro_categories_id,preg_replace('/\s+/', '-', $serie->slug),$serie->se_id])}}">
                                         @endif
                                         <div class="series-text-detail" style="min-height:72px;">
                                             {!! $serie->overview_content !!}
