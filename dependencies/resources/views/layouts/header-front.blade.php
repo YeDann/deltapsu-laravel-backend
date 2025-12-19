@@ -1056,20 +1056,16 @@ function slugifyHead($text)
                     class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['LED_Power']) ?
                 $staticContent['LED_Power']
                 :'LED Driver' }}</a>
-            {{-- @foreach ($navcategories3 as $subCate)
-            <a class="text-normal pl-3 "
-                href="{{route('allproductsByType' ,[ preg_replace('/\s+/', '_', $subCate->url_item),$subCate->sub_pro_id,3])}}">{{$subCate->name}}</a>
-            @endforeach --}}
             <a class="text-normal pl-3"
-                href="{{route('allproductsByType',[slugifyHead('CC-Cv-Mode'),1 , 3])}}">{{isset($staticContent['CC_Cv_Mode'])
+                href="{{route('productList',[3, slugifyHead('CC-Cv-Mode'),1])}}">{{isset($staticContent['CC_Cv_Mode'])
                 ? $staticContent['CC_Cv_Mode'] : 'CC + CV Mode' }}</a>
 
             <a class="text-normal pl-3"
-                href="{{route('allproductsByType',[slugifyHead('CC-Mode'),2 ,3])}}">{{isset($staticContent['CC_Mode'])?
+                href="{{route('productList',[3, slugifyHead('CC-Mode'),2])}}">{{isset($staticContent['CC_Mode'])?
                 $staticContent['CC_Mode'] :'CC Mode' }}</a>
 
             <a class="text-normal pl-3"
-                href="{{route('allproductsByType',[slugifyHead('CV_Mode'),3 ,3])}}">{{isset($staticContent['CV_Mode'])?
+                href="{{route('productList',[3, slugifyHead('CV_Mode'),3])}}">{{isset($staticContent['CV_Mode'])?
                 $staticContent['CV_Mode']: 'CV Mode'}}</a>
 
 
