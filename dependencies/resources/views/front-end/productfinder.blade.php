@@ -199,22 +199,35 @@
             <h1 class="text-title-delta">{{$staticContent['Product_Selector']}}</h1>
             <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
             <div class="row">
-                @foreach($subCategories as $sub)
+                @foreach($mainCategories as $mainCate)
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="border-r shadow-radius-box hover-border-blue">
-                        {{-- TODO Annie --}}
-                        <a class=""
-                            href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
-                            @if($sub->image != null)
-                            <img class="w-100 mt-2" src="{{config('app.url')}}/medias/categories/{{$sub->image}}"
-                                alt="">
-                            @else
-                            <img class="w-100 mt-2" src="{{asset('frontend-asset/image/pro1.png')}}" alt="">
-                            @endif
-                            <div class="d-block m-auto pt-2 pb-2">
-                                <h4 class="text-title-dark text-center">{{$sub->name}} </h4>
-                            </div>
-                        </a>
+                        
+                        @if($mainCate->main_id == 5)
+                            <a href="{{ route('configurableproduct')}}">
+                                @if($mainCate->banner != null)
+                                <img class="w-100 mt-2" src="{{config('app.url')}}/medias/categories/{{$mainCate->banner}}"
+                                    alt="">
+                                @else
+                                <img class="w-100 mt-2" src="{{asset('frontend-asset/image/pro1.png')}}" alt="">
+                                @endif
+                                <div class="d-block m-auto pt-2 pb-2">
+                                    <h4 class="text-title-dark text-center">{{$mainCate->name}} </h4>
+                                </div>
+                            </a>
+                        @else
+                            <a href="{{ route('productList',[$mainCate->main_id])}}">
+                                @if($mainCate->banner != null)
+                                <img class="w-100 mt-2" src="{{config('app.url')}}/medias/categories/{{$mainCate->banner}}"
+                                    alt="">
+                                @else
+                                <img class="w-100 mt-2" src="{{asset('frontend-asset/image/pro1.png')}}" alt="">
+                                @endif
+                                <div class="d-block m-auto pt-2 pb-2">
+                                    <h4 class="text-title-dark text-center">{{$mainCate->name}} </h4>
+                                </div>
+                            </a>
+                        @endif
                     </div>
                 </div>
                 @endforeach
@@ -228,21 +241,33 @@
         <h3 class="text-title-delta">{{$staticContent['Product_Selector']}}</h3>
         <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>  
         <div class="box-product-finder-grid">
-            @foreach($subCategories as $sub)
-            {{-- TODO Annie --}}
-            <a href="{{ route('productList',[preg_replace('/\s+/', '_', $sub->url_item),$sub->sub_pro_id])}}"
+            @foreach($mainCategories as $mainCate)
+            @if ($mainCate->main_id == 5)
+                <a href="{{ route('configurableproduct')}}"
+                    class="box-product-finder-item d-flex shadow-radius-box">
+                    <div class="m-auto">
+                        @if($mainCate->banner != null)
+                        <img src="{{config('app.url')}}/medias/categories/{{$mainCate->banner}}" alt="">
+                        @else
+                        <img src="{{asset('frontend-asset/image/pro1.png')}}" alt="">
+                        @endif
+                        <h5 class="text-title-dark text-center">{{$mainCate->name}} </h5>
+                    </div>
+                </a>
+            @else
+                <a href="{{ route('productList',[$mainCate->main_id])}}"
                 class="box-product-finder-item d-flex shadow-radius-box">
                 <div class="m-auto">
-                    @if($sub->image != null)
-                    <img src="{{config('app.url')}}/medias/categories/{{$sub->image}}" alt="">
+                    @if($mainCate->banner != null)
+                    <img src="{{config('app.url')}}/medias/categories/{{$mainCate->banner}}" alt="">
                     @else
                     <img src="{{asset('frontend-asset/image/pro1.png')}}" alt="">
                     @endif
-                    <h5 class="text-title-dark text-center">{{$sub->name}} </h5>
-                    {{-- <div class="text-hover text-center">{!! iconv_substr(strip_tags($sub->content),0,90,'UTF-8')
-                        !!}...</div> --}}
+                    <h5 class="text-title-dark text-center">{{$mainCate->name}} </h5>
                 </div>
             </a>
+            @endif
+            
             @endforeach
         </div>
 
