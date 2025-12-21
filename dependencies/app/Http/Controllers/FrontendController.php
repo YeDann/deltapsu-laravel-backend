@@ -57,13 +57,14 @@ class FrontendController extends Controller
                 ->orderBy('bs.order_seq', 'asc')
                 ->get();
             }
-            $subCategories = DB::table('sub_pro_categories as sp')
-            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
-            ->where('spt.local', '=', $lang)
-            ->where('sp.status', '=', 1)
-            ->select('sp.*', 'spt.*')
-            ->orderBy('sp.order_seq', 'asc')
-            ->get();
+
+            $mainCategories = DB::table('main_pro_categories as mp')
+                ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
+                ->where('mpt.local', '=', $lang)
+                ->where('mp.active', 1)
+                ->select('mp.*', 'mpt.*')
+                ->orderBy('mp.order_seq', 'asc')
+                ->get();
 
             $applications = DB::table('application as ap')
             ->join('application_translation as apt', 'ap.id', '=', 'apt.app_id')
@@ -93,74 +94,6 @@ class FrontendController extends Controller
             ->select('st.*', 'sct.*')
             ->first();
 
-            // $products = DB::table('products as p')
-            // ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-            // ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-            // ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-            // ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
-            // ->where('pt.local' ,$lang)
-            // ->where('spt.local' ,$lang)
-            // ->where('p.feature_product' ,1)
-            // ->where('pt.showstatus' ,1)
-            // ->select('p.*', 'pt.*' ,'spt.sub_pro_id as cateid' ,'spt.name as catename' ,'sp.unit_dimension')
-            // ->orderBy('p.created_at', 'desc')
-            // ->get();
-            // $procheckarr = [];
-
-            // $data = [];
-            //      $i = 0;
-            //     foreach($products as $item){
-
-            //       $prolang = self::checkLang($lang,$item->pro_id);
-            //         $pro = DB::table('products as p')
-            //         ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-            //         ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-            //         ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-            //         ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
-            //         ->where('pt.local' ,$prolang)
-            //         ->where('spt.local' ,$lang)
-            //         ->where('p.feature_product' ,1)
-            //         ->where('p.enable_pro' ,1)
-            //         ->where('p.pro_id' ,$item->pro_id)
-            //         ->select('p.*', 'pt.*' ,'spt.sub_pro_id as cateid' , 'spt.name as catename' ,'sp.unit_dimension')
-            //         ->orderBy('p.created_at', 'desc')
-            //         ->first();
-
-            //         $arraysub = [];
-            //         $arraysub = DB::table('product_has_property as ph')
-            //         ->join('product_has_property_translation as pht','ph.per_id' ,'=','pht.per_fk_id')
-            //         ->join('product_field as pf','pf.id' ,'=','ph.type_id')
-            //         ->join('product_field_translation as pft','ph.type_id' ,'=','pft.product_field_id')
-            //         ->where('ph.product_id',$item->pro_id)
-            //         ->where('pht.local' ,'en')
-            //         ->where('pft.local' ,$lang)
-            //         ->whereIn('ph.type_id',[4,3,8,31])
-            //         ->orderBy('ph.type_id' ,'asc')
-            //         ->select('pht.value_text','ph.*','pft.field_name as fieldCate','pf.unit_name')
-            //         ->get();
-            //         if(isset($pro)){
-            //                 if(!in_array($pro->pro_id, $procheckarr)){
-            //                 if(self::checkContentPro($pro->pro_id)){
-            //                     array_push($procheckarr,$pro->pro_id);
-            //                     $data[$i] = [
-            //                         "pro_id"=>$pro->pro_id,
-            //                         "pro_code"=>$pro->pro_code,
-            //                         "cateid"=>$pro->cateid,
-            //                         "catename"=>$pro->catename,
-            //                         "picture"=>$pro->picture,
-            //                         "unit_dimension"=>$pro->unit_dimension,
-            //                         "status_product"=>$pro->status_product,
-            //                         "content" =>$arraysub,
-            //                         "dimensionL"=>$pro->dimensionL,
-            //                         "dimensionW"=>$pro->dimensionW,
-            //                         "dimensionD"=>$pro->dimensionD,
-            //                     ];
-            //                 }
-            //             }
-            //             $i++;
-            //         }
-
-            //     }
             $now = date('Y-m-d');
             $events_q = DB::table('contents as c')
                 ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
@@ -240,17 +173,16 @@ class FrontendController extends Controller
                 ->select('mtp.*', 'mtpt.*')
                 ->get();
 
-            //return dd($metatag);
-
             $series = DB::table('least_series_product as ls')
                 ->join('series as s', 's.se_id', '=', 'ls.series_id')
                 ->join('series_translations as st', 'st.series_id', '=', 's.se_id')
                 ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'ls.cate_id')
                 ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
+                ->join('categories_has_main_pro as chmp', 'chmp.cate_id', '=', 'sp.sub_pro_id')
                 ->where('st.local', $lang)
                 ->where('spt.local', $lang)
                 ->where('s.status', 1)
-                ->select('s.*', 'ls.*', 'st.title', 'st.overview_content', 'sp.url_item', 'sp.sub_pro_id as cate_id', 'spt.name as cateName')
+                ->select('s.*', 'ls.*', 'st.title', 'st.overview_content', 'sp.url_item', 'sp.sub_pro_id as cate_id', 'spt.name as cateName', 'chmp.main_cateid')
                 ->orderBy('ls.order_seq', 'asc')
                 ->get();
 
@@ -273,7 +205,7 @@ class FrontendController extends Controller
             ->with('events', $events)
             ->with('news', $news)
             ->with('teachni', $teachni)
-            ->with('subCategories', $subCategories);
+            ->with('mainCategories', $mainCategories);
         }
 
         if ('news' == $page) {
@@ -928,19 +860,18 @@ class FrontendController extends Controller
 
     public function productBySeries($se_par_name, $se_parid)
     {
-        // return dd('de');
         $se_name = $this->validateInput($se_par_name, 'text', true);
         $se_id = $this->validateInput($se_parid, 'number', true);
         $series = DB::table('series_has_pro_categories as shc')
         ->join('series as s', 'shc.se_id', '=', 's.se_id')
         ->join('sub_pro_categories as sc', 'shc.pro_categories_id', '=', 'sc.sub_pro_id')
+        ->join('categories_has_main_pro as chmp', 'chmp.cate_id', '=', 'sc.sub_pro_id')
         ->where('shc.se_id', $se_id)
-        ->select('sc.url_item as catename', 's.slug as se_name', 's.se_id', 'sc.sub_pro_id as cateid')
+        ->select('sc.url_item as catename', 's.slug as se_name', 's.se_id', 'sc.sub_pro_id as cateid', 'chmp.main_cateid')
         ->first();
 
         if (isset($series)) {
-            // TODO Annie
-            return redirect()->route('productList', [$series->catename, $series->cateid, $series->se_name, $series->se_id]);
+            return redirect()->route('productList', ['main_cate' => $series->main_cateid, 'cate_name' => $series->catename, 'cate_id' => $series->cateid, 'se_name' => $series->se_name, 'se_id' => $series->se_id]);
         }
 
         return redirect()->route('index', 'home');
@@ -951,7 +882,7 @@ class FrontendController extends Controller
      *
      * @param string $cate_parname => DB: url_item
      * @param int    $cate_par_id => DB: sub_pro_id
-     * @param string $se_par_name => 系列名城
+     * @param string $se_par_name => 系列名稱
      * @param int    $se_par_id => 系列 id
      */
     public function productList(int $main_cate_id, ?string $cate_parname = null, ?int $cate_par_id = null, ?string $se_par_name = null, ?int $se_par_id = null)
@@ -962,18 +893,19 @@ class FrontendController extends Controller
         if (!is_numeric($main_cate_id)) {
             return response()->view('errors.404', [], 404);
         }
+        $mainCateId = $this->validateInput($main_cate_id, 'number', true);
 
         // 取得 main_pro_categories 底下的 子商品分類
         $categoriesHasMainPro = DB::table('categories_has_main_pro as chmp')
             ->join('sub_pro_categories_translation as spct', 'chmp.cate_id', '=', 'spct.sub_pro_id')
-            ->where('chmp.main_cateid', $main_cate_id)
+            ->where('chmp.main_cateid', $mainCateId)
             ->where('spct.local', $lang)
             ->select('*')
             ->get();
 
         $isSubCateExists = true;
         // 判斷 cate_par_id 是否存在於 main_pro_categories 底下的 子商品分類
-        if (!is_null($cate_par_id) && $main_cate_id !== 3) {
+        if (!is_null($cate_par_id) && $mainCateId !== 3) {
             $isSubCateExists = $categoriesHasMainPro->contains(function ($item) use ($cate_par_id) {
                 return $item->cate_id === $cate_par_id;
             });
@@ -983,29 +915,25 @@ class FrontendController extends Controller
 
         // 判斷 sub_pro_products 是否存在於 main_pro_categories
         if (!$isSubCateExists) {
-            // TODO Annie
-            return redirect()->route('productList', [$main_cate_id]);
+            return redirect()->route('productList', [$mainCateId]);
         }
 
-
-        // TODO Annie 這邊他之前有做驗證，但想說先處理功能所以先跳過，這邊再補一下 ＸＤ
-
         // 取得 子商品分類的 url_item
-        // $cate = DB::table('sub_pro_categories as sc')
-        //     ->select('sc.url_item')
-        //     ->where('sc.sub_pro_id', $cate_par_id)
-        //     ->first();
+        $cate = DB::table('sub_pro_categories as sc')
+            ->select('sc.url_item')
+            ->where('sc.sub_pro_id', $cate_par_id)
+            ->first();
 
-        // // 以 子商品分類 id 取得資料，判斷若 url_item 不符合，則重新導向到正確的 URL
-        // if ($cate && $cate->url_item !== $cate_parname) {
-        //     return redirect()->route('productList', [$cate->url_item, $cate_par_id, $se_par_id]);
-        // }
+        // 以 子商品分類 id 取得資料，判斷若 url_item 不符合，則重新導向到正確的 URL
+        if ($cate && $cate->url_item !== $cate_parname) {
+            return redirect()->route('productList', ['main_cate' => $mainCateId, 'cate_name' => $cate->url_item, 'cate_id' => $cate_par_id, 'se_name' => $se_par_name, 'se_id' => $se_par_id]);
+        }
 
         // 驗證並清理輸入參數
-        // $catename = $this->validateInput($cate_parname, 'text', true);
-        // $cateid = $this->validateInput($cate_par_id, 'number', true);
-        // $se_name = $this->validateInput($se_par_name, 'text', true);
-        // $se_id = $this->validateInput($se_par_id, 'number', true);
+        $catename = $this->validateInput($cate_parname, 'text', true);
+        $cateid = $this->validateInput($cate_par_id, 'number', true);
+        $seName = $this->validateInput($se_par_name, 'text', true);
+        $seId = $this->validateInput($se_par_id, 'number', true);
 
         $subCategoryIds = $categoriesHasMainPro->pluck('cate_id');
 
@@ -1112,7 +1040,7 @@ class FrontendController extends Controller
            ->join('pro_ducuments_cate_translations as pdct', 'pdct.doc_cate_id', '=', 'pdc.id')
            ->where('pdct.local', '=', $lang)
            ->whereNotIn('pdc.id', [6, 7, 4])
-           ->where('pdc.main_cate_id', 2)
+           ->where('pdc.mainCateId', 2)
            ->select('pdc.*', 'pdct.lable')
            ->orderBy('pdc.title', 'asc')
            ->get();
@@ -1137,7 +1065,7 @@ class FrontendController extends Controller
             ->get()
             ->unique('field_id');
         // 放在最前面
-        if ($main_cate_id == 3) {
+        if ($mainCateId == 3) {
             $filterPro = $filterPro->prepend([
                 "sub_pro_id" => null,
                 "field_id" => "mode_series",
@@ -1181,7 +1109,7 @@ class FrontendController extends Controller
         // 取得主分類資訊
         $mainCategory = DB::table('main_pro_categories as mpc')
             ->join('main_pro_categories_translations as mpct', 'mpc.main_id', '=', 'mpct.main_pro_id')
-            ->where('mpc.main_id', $main_cate_id)
+            ->where('mpc.main_id', $mainCateId)
             ->where('mpct.local', $lang)
             ->select('mpc.*', 'mpct.*')
             ->first();
@@ -1225,13 +1153,13 @@ class FrontendController extends Controller
                 ->with('mainCategory', $mainCategory)
                 ->with('subCategories', $subCategories)
                 ->with('categoriesHasMainPro', $categoriesHasMainPro)
-                ->with('catename', $cate_parname) // TODO 上面要驗證
-                ->with('main_cate_id', $main_cate_id) // TODO 上面要驗證
-                ->with('cateid', $cate_par_id) // TODO 上面要驗證
-                ->with('se_name', $se_par_name) // TODO 上面要驗證
+                ->with('catename', $catename)
+                ->with('main_cate_id', $mainCateId)
+                ->with('cateid', $cateid)
+                ->with('se_name', $seName)
                 ->with('series', $series)
                 ->with('modeSeries', $modeSeries)
-                ->with('se_id', $se_par_id); // TODO 上面要驗證
+                ->with('se_id', $seId);
         }
 
         return response()->view('errors.404', [], 404);
@@ -1304,12 +1232,11 @@ class FrontendController extends Controller
         ->join('categories_has_main_pro as ch', 'ch.cate_id', '=', 's.sub_pro_id')
         ->where('s.url_item', $cate)
         ->first();
-        // return dd($findoldCate);
+
         if ($findoldCate) {
             return redirect()->route('allproductsByType', [$cate, $findoldCate->sub_pro_id, $findoldCate->main_cateid], 301);
         }
-        // return redirect()->route('productFinder');
-        // return redirect()->route('productFinder', [], 301);
+
         return response()->view('errors.404', [], 404);
     }
 
@@ -1339,7 +1266,10 @@ class FrontendController extends Controller
             }
         }
 
-        $findoldCate_temp = DB::table('sub_pro_categories as c')->get();
+        $findoldCate_temp = DB::table('sub_pro_categories as c')
+            ->leftJoin('categories_has_main_pro as chmp', 'chmp.cate_id', '=', 'c.sub_pro_id')
+            ->select('c.*', 'chmp.main_cateid')
+            ->get();
 
         $maxSimilarity = 0;
         $findoldCateFirst = null;
@@ -1365,13 +1295,11 @@ class FrontendController extends Controller
             ->where('s.slug', $slgSeries)
             ->first();
             if ($findoldSeries) {
-                // TODO Annie
-                return redirect()->route('productList', [$findoldCate->url_item, $findoldCate->sub_pro_id, $findoldSeries->slug, $findoldSeries->se_id]);
+                return redirect()->route('productList', ['main_cate' => $findoldCate->main_cateid, 'cate_name' => $findoldCate->url_item, 'cate_id' => $findoldCate->sub_pro_id, 'se_name' => $findoldSeries->slug, 'se_id' => $findoldSeries->se_id]);
             }
 
         } elseif (isset($findoldCate) && !isset($procode)) {
-            // TODO Annie
-            return redirect()->route('productList', [$findoldCate->url_item, $findoldCate->sub_pro_id]);
+            return redirect()->route('productList', ['main_cate' => $findoldCate->main_cateid, 'cate_name' => $findoldCate->url_item, 'cate_id' => $findoldCate->sub_pro_id]);
         }
 
         if ('configurable-product-selection' == $name) {
@@ -1398,8 +1326,7 @@ class FrontendController extends Controller
 
             return response()->view('errors.404', [], 404);
         } else {
-            // TODO Annie
-            return redirect()->route('productList', [$findoldCate->url_item, $findoldCate->sub_pro_id]);
+            return redirect()->route('productList', ['main_cate' => $findoldCate->main_cateid, 'cate_name' => $findoldCate->url_item, 'cate_id' => $findoldCate->sub_pro_id]);
         }
 
         $pro = DB::table('products as p')
@@ -1607,6 +1534,7 @@ class FrontendController extends Controller
         }
 
         return view('front-end.productdetails')
+            ->with('current_main_cate_id', $findoldCate->main_cateid)
             ->with('optional_model', $optional_model)
             ->with('tags_pro', $tags_pro)
             ->with('optional_pro', $optional_pro)
@@ -1995,22 +1923,21 @@ class FrontendController extends Controller
     {
         $lang = App::getLocale();
         // 取得 所有『對應語系、已啟用』的子分類，根據 order_seq 排序
-        $subCategories = DB::table('sub_pro_categories as sp')
-            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
-            ->where('spt.local', '=', $lang)
-            ->where('sp.status', '=', 1)
-            ->select('sp.*', 'spt.*')
-            ->orderBy('sp.order_seq', 'asc')
+        $mainCategories = DB::table('main_pro_categories as mpc')
+            ->join('main_pro_categories_translations as mpct', 'mpc.main_id', '=', 'mpct.main_pro_id')
+            ->where('mpct.local', $lang)
+            ->select('mpc.*', 'mpct.*') // 這裡會選出 banner 欄位
             ->get();
+
         $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id', 4)
                 ->where('mtpt.local', $lang)
                 ->select('mtp.*', 'mtpt.*')
                 ->get();
-        //return dd ($metatag)
+
         return view('front-end.productfinder')
-        ->with('subCategories', $subCategories)->with('metatag', $metatag);
+        ->with('mainCategories', $mainCategories)->with('metatag', $metatag);
     }
 
     public function applicationDetail($namePram)
@@ -5262,10 +5189,11 @@ class FrontendController extends Controller
         return redirect()->route($salesKit ? 'index' : 'marketingResourcesDownloads', $salesKit ? 'partners' : '');
     }
 
-    public function productCate($cate)
-    {
-        return redirect()->route('productFinder');
-    }
+    // TODO 看起來沒再用了，測試確認後，下一版移除
+    // public function productCate($cate)
+    // {
+    //     return redirect()->route('productFinder');
+    // }
 
     public function searchDocByModelId(Request $request)
     {
@@ -5465,7 +5393,7 @@ class FrontendController extends Controller
         ->orderBy('ph.type_id', 'asc')
         ->select('ph.*')
         ->get();
-        // return dd($contentEror_ifnothave);
+
         if (count($contentEror_ifnothave) >= 3) {
             return true;
         }
