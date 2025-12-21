@@ -313,18 +313,6 @@
             </div>
         </div>
     </div>
-    {{-- <div class="box-need-compare-product "
-        style=" background: url('{{asset('frontend-asset/image/Find-Product-BG.jpg')}}');">
-        <div class="container">
-            <div class="box-need-compare-product-all">
-                <h3 class="text-title-subscribe mb-5">{{$staticContent['Need_to_compare_other_product']}}</h3>
-                <button class="btn btn-subscribe"
-                    onclick="selectNewProductByType();">{{$staticContent['Select_Product']}}</button>
-            </div>
-
-            <img class="image-doc" src="{{asset('frontend-asset/image/NEEDCOMPAREOTHERPRODUCTS.png')}}" alt="">
-        </div>
-    </div> --}}
 </div>
 <div class="visible-nav-minimize">
     <div class="nav-enquiry-mobile">
@@ -415,21 +403,10 @@
     </div>
     <div id="comparison_mobile" class="comparison-collapse">
     </div>
-    {{-- <div class="box-need-to-comparison"
-        style="background-image: url('{{asset('frontend-asset/image/Find-Product-BG@2x.png')}}');">
-        <h3 class="text-color-delta mb-5">{{$staticContent['Need_to_compare_other_product']}}</h3>
-        <button onclick="selectNewProductByType();"
-            class="btn btn-subscribe center">{{$staticContent['Select_Product']}}</button>
-        <img class="img-fluid w-75 mb-2" src="{{asset('frontend-asset/image/NEEDCOMPAREOTHERPRODUCTS.png')}}" alt="">
-    </div> --}}
 </div>
-
-
 @endsection
 
-
-@section('js')
-
+@section('js') 
 
 <script>
     $("#collapse-output").collapse('show');
@@ -551,12 +528,6 @@
             $('#comtentcompare2').val($('#comparison').html());
             document.getElementById("ContentComparePDF").submit();
          }
-     }
-     function selectNewProductByType(){
-        var typename = $( "#proType option:selected" ).text();
-        var type_id = $('#proType').val();
-        // TODO Annie
-        window.open('{{ route('productList', ['main_cate' => 2]) }}/' + typename + '/' + type_id);
      }
 
     function setAllFrist(pro1 ,pro2 , pro3){
