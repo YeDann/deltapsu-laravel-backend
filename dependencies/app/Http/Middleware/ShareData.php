@@ -173,7 +173,6 @@ class ShareData
         }
         view()->share('staticContent', $wordArray);
 
-        // 
         $newsTypes = DB::table('news_type as nt')
             ->join('news_type_translation as ntt', 'ntt.fk_nt_id', '=', 'nt.id')
             ->select('nt.*', 'ntt.title as typename')
@@ -182,7 +181,6 @@ class ShareData
             ->get()
             ->keyBy('name');
         view()->share('newsTypes', $newsTypes);
-
 
         return $next($request);
     }

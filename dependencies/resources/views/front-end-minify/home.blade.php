@@ -466,7 +466,6 @@ function retextdata($arr ,$unit){
                                 @if($serie->se_id == 26)
                                 <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                     @else
-                                    {{-- TODO Annie --}}
                                     <a style="color:inherit;" class=""
                                         href="{{ route('productList',$urlParams)}}">
                                         @endif
@@ -485,7 +484,6 @@ function retextdata($arr ,$unit){
                                 @if($serie->se_id == 26)
                                 <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                     @else
-                                    {{-- TODO Annie --}}
                                     <a style="color:inherit;" class="m-auto"
                                         href="{{ route('productList',$urlParams)}}">
                                         @endif
@@ -495,7 +493,6 @@ function retextdata($arr ,$unit){
                             @if($serie->se_id == 26)
                             <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                 @else
-                                {{-- TODO Annie --}}
                                 <a style="color:inherit;" class="m-auto"
                                     href="{{ route('productList',$urlParams)}}">
                                     @endif
@@ -560,7 +557,6 @@ function retextdata($arr ,$unit){
                                 @if($serie->se_id == 26)
                                 <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                     @else
-                                    {{-- TODO Annie --}}
                                     <a style="color:inherit;" class=""
                                         href="{{ route('productList',$urlParams)}}">
                                         @endif
@@ -579,7 +575,6 @@ function retextdata($arr ,$unit){
                                 @if($serie->se_id == 26)
                                 <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                     @else
-                                    {{-- TODO Annie --}}
                                     <a style="color:inherit;" class="m-auto"
                                         href="{{ route('productList',$urlParams)}}">
                                         @endif
@@ -589,7 +584,6 @@ function retextdata($arr ,$unit){
                             @if($serie->se_id == 26)
                             <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                 @else
-                                {{-- TODO Annie --}}
                                 <a style="color:inherit;" class="m-auto"
                                     href="{{ route('productList',$urlParams)}}">
                                     @endif
