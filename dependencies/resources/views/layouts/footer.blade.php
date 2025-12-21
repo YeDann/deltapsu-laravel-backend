@@ -39,59 +39,48 @@
                         <div class="text-footer-main ">
                             <h6>{{isset($staticContent['Products'])?$staticContent['Products']:"Products"}}</h6>
                         </div>
-                        <?php
-                        $current1 = null;
-                        foreach($navcategories as $item1) {
-                            if ($item1->main_cateid == 2) {
-                                $current1 = $item1;
-                                break;
-                            }
-                        }
-
-                      ?>
-                        <a
-                            href="{{route('allproductsByType' ,[slugifyHead($current1->url_item),$current1->sub_pro_id ,$current1->main_cateid ])}}">
+                        
+                        <a href="{{ route('allproduct') }}">
                             <p class="text-pro-link">
-                                {{isset($staticContent['Industrial_Power'])?$staticContent['Industrial_Power']:"Industrial
-                                Power"}}</p>
+                                {{ isset($staticContent['Products_Overview']) ? $staticContent['Products_Overview'] : 'Products Overview' }}
+                            </p>
                         </a>
 
-                        <?php
-                        $current2 = null;
-                        foreach($navcategories as $item2) {
-                            if ($item2->main_cateid == 1) {
-                                $current2 = $item2;
-                                break;
-                            }
-                        }
-                      ?>
-
-                        <a
-                            href="{{route('allproductsByType' ,[slugifyHead($current2->url_item),$current2->sub_pro_id ,$current2->main_cateid ])}}">
-                            <p class="text-pro-link">{{isset($staticContent['Medical_Power'])?
-                                $staticContent['Medical_Power']:"Medical Power"}}</p>
-                        </a>
-                        <a href="{{route('allproductsByType',[slugifyHead('CC-Cv-Mode'),1 , 3])}}">
+                        @if(isset($navcategories2) && count($navcategories2) > 0)
+                        <a href="{{ route('productList', [$navcategories2->first()->main_cateid]) }}">
                             <p class="text-pro-link">
-                                {{isset($staticContent['LED_Power'])?$staticContent['LED_Power']:"LED Power"}}</p>
+                                {{isset($staticContent['Industrial_Power'])?$staticContent['Industrial_Power']:"Industrial Power"}}
+                            </p>
                         </a>
-                        <?php
-                        $current3 = null;
-                        foreach($navcategories as $item1) {
-                            if ($item1->main_cateid == 4) {
-                                $current3 = $item1;
-                                break;
-                            }
-                        }
+                        @endif
 
-                      ?>
-
-                        @if(isset($current3))
-                        <a
-                            href="{{route('allproductsByType' ,[slugifyHead($current3->url_item),$current3->sub_pro_id ,$current3->main_cateid ])}}">
+                        @if(isset($navcategories1) && count($navcategories1) > 0)
+                        <a href="{{ route('productList', [$navcategories1->first()->main_cateid]) }}">
                             <p class="text-pro-link">
-                                {{isset($staticContent['wireless_charging'])?
-                                $staticContent['wireless_charging'] :'Industrial Battery Charging' }}</p>
+                                {{isset($staticContent['Medical_Power'])?$staticContent['Medical_Power']:"Medical Power"}}
+                            </p>
+                        </a>
+                        @endif
+
+                        <a href="{{ route('configurableproduct') }}">
+                            <p class="text-pro-link">
+                                {{ isset($staticContent['Configurable_Power']) ? $staticContent['Configurable_Power'] : 'Configurable Power' }}
+                            </p>
+                        </a>
+
+                        @if(isset($navcategories4) && count($navcategories4) > 0)
+                        <a href="{{ route('productList', [$navcategories4->first()->main_cateid]) }}">
+                            <p class="text-pro-link">
+                                {{isset($staticContent['wireless_charging'])? $staticContent['wireless_charging'] :'Industrial Battery Charging' }}
+                            </p>
+                        </a>
+                        @endif
+
+                        @if(isset($navcategories3) && count($navcategories3) > 0)
+                        <a href="{{ route('productList', [$navcategories3->first()->main_cateid]) }}">
+                            <p class="text-pro-link">
+                                {{isset($staticContent['LED_Power'])?$staticContent['LED_Power']:"LED Power"}}
+                            </p>
                         </a>
                         @endif
 
@@ -359,51 +348,40 @@
                     <a tabindex="-1" href="#foot-nav-link-list1" data-toggle="collapse"
                         data-target="#foot-nav-link-list1">{{$staticContent['Products']}}<i
                             class="zmdi zmdi-chevron-down"></i></a>
-                    <div class="collapse pl-4" id="foot-nav-link-list1" data-parent="#footer-nav-mobile" {{--
-                        aria-expanded="false" --}}>
+                    <div class="collapse pl-4" id="foot-nav-link-list1" data-parent="#footer-nav-mobile">
 
-                        <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub1" data-toggle="collapse"
-                            data-target="#foot-nav-link-list-sub1">{{$staticContent['Industrial_Power']}}<i
-                                class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="collapse pl-4" id="foot-nav-link-list-sub1" aria-expanded="false">
-                            @foreach ($navcategories2 as $subCate)
-                            <a class="text-normal "
-                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
-                            </a>
-                            @endforeach
+                        <a class="text-normal" href="{{ route('allproduct') }}">
+                            {{ isset($staticContent['Products_Overview']) ? $staticContent['Products_Overview'] : 'Products Overview' }}
+                        </a>
 
-                        </div>
-                        <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub2" data-toggle="collapse"
-                            data-target="#foot-nav-link-list-sub2">{{$staticContent['Medical_Power']}}<i
-                                class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="collapse pl-4" id="foot-nav-link-list-sub2" aria-expanded="false">
-                            @foreach ($navcategories1 as $subCate)
-                            <a class="text-normal "
-                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}</a>
-                            @endforeach
-                        </div>
-                        <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub3" data-toggle="collapse"
-                            data-target="#foot-nav-link-list-sub3">{{$staticContent['LED_Power']}} <i
-                                class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="collapse pl-4" id="foot-nav-link-list-sub3" aria-expanded="false">
-                            @foreach ($navcategories3 as $subCate)
-                            <a class="text-normal "
-                                href="{{route('allproductsByType',[slugifyHead('CC-Cv-Mode'),1 , 3])}}">{{$subCate->name}}</a>
-                            @endforeach
+                        @if(isset($navcategories2) && count($navcategories2) > 0)
+                        <a class="text-normal" href="{{ route('productList', [$navcategories2->first()->main_cateid]) }}">
+                            {{isset($staticContent['Industrial_Power'])?$staticContent['Industrial_Power']:"Industrial Power"}}
+                        </a>
+                        @endif
 
-                        </div>
-                        <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub4" data-toggle="collapse"
-                            data-target="#foot-nav-link-list-sub4">{{isset($staticContent['wireless_charging'])?
-                            $staticContent['wireless_charging'] :'Industrial Battery Charging' }}<i
-                                class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="collapse pl-4" id="foot-nav-link-list-sub4" aria-expanded="false">
-                            @foreach ($navcategories4 as $subCate)
-                            <a class="text-normal "
-                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,4])}}">{{$subCate->name}}
-                            </a>
-                            @endforeach
+                        @if(isset($navcategories1) && count($navcategories1) > 0)
+                        <a class="text-normal" href="{{ route('productList', [$navcategories1->first()->main_cateid]) }}">
+                            {{isset($staticContent['Medical_Power'])?$staticContent['Medical_Power']:"Medical Power"}}
+                        </a>
+                        @endif
 
-                        </div>
+                        <a class="text-normal" href="{{ route('configurableproduct') }}">
+                            {{ isset($staticContent['Configurable_Power']) ? $staticContent['Configurable_Power'] : 'Configurable Power' }}
+                        </a>
+
+                        @if(isset($navcategories4) && count($navcategories4) > 0)
+                        <a class="text-normal" href="{{ route('productList', [$navcategories4->first()->main_cateid]) }}">
+                            {{isset($staticContent['wireless_charging'])? $staticContent['wireless_charging'] :'Industrial Battery Charging' }}
+                        </a>
+                        @endif
+
+                        @if(isset($navcategories3) && count($navcategories3) > 0)
+                        <a class="text-normal" href="{{ route('productList', [$navcategories3->first()->main_cateid]) }}">
+                            {{isset($staticContent['LED_Power'])?$staticContent['LED_Power']:"LED Power"}}
+                        </a>
+                        @endif
+
                     </div>
                 </div>
                 <div class="border-b-2px">

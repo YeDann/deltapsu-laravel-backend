@@ -123,7 +123,7 @@ WHERE name = 'New Products';
 
 ```sql
 INSERT INTO `static_keyword` (`key_word`)
-VALUES ('Where to Buy');
+VALUES ('Where_to_Buy');
 
 INSERT INTO `static_keyword_translations` (`key_word`, `word`, `local`)
 VALUES
@@ -186,5 +186,23 @@ VALUES
 (5, 'Configurable Power', 'de'),
 (5, 'Configurable Power', 'ru'),
 (5, 'Configurable Power', 'jp');
+
+INSERT INTO `static_keyword` (`key_word`)
+VALUES ('Configurable_Power');
+
+INSERT INTO `static_keyword_translations` (`key_word`, `word`, `local`)
+VALUES
+/* English (en) - 原文 */
+('Configurable_Power', 'Configurable Power', 'en'),
+/* Traditional Chinese (tw) - 繁體中文 */
+('Configurable_Power', '可配置電源', 'tw'),
+/* Simplified Chinese (cn) - 簡體中文 */
+('Configurable_Power', '可配置電源', 'cn'),
+/* German (de) - 德文 */
+('Configurable_Power', 'Configurable Power', 'de'),
+/* Russian (ru) - 俄文 */
+('Configurable_Power', 'Configurable Power', 'ru'),
+/* Japan (jp) - 日文 */
+('Configurable_Power', 'Configurable Power', 'jp');
 
 ```

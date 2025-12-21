@@ -1040,7 +1040,7 @@ class FrontendController extends Controller
            ->join('pro_ducuments_cate_translations as pdct', 'pdct.doc_cate_id', '=', 'pdc.id')
            ->where('pdct.local', '=', $lang)
            ->whereNotIn('pdc.id', [6, 7, 4])
-           ->where('pdc.mainCateId', 2)
+           ->where('pdc.main_cate_id', 2)
            ->select('pdc.*', 'pdct.lable')
            ->orderBy('pdc.title', 'asc')
            ->get();
