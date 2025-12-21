@@ -1135,7 +1135,7 @@
                                     && data10 == datacom10
                                     && data11 == datacom11
                                     && data12 == datacom12){
-                                    arrcheck.push(true);
+                                    arrcheck.push(data.type_id);
                                 }
                             }
 
@@ -1143,7 +1143,8 @@
 
                 });
                 var con = checkmethod(arr_type_an_val);
-                if(arrcheck.length >= con){
+                var uniqueMatches = arrcheck.filter(function(v, i, a) { return a.indexOf(v) === i; }).length;
+                if(uniqueMatches >= con){
                     var  index = arr_filterall.findIndex( function(x){
                     return  x.pro_code === value.pro_code;
                     })
@@ -1241,13 +1242,14 @@
                                 data.value_text = '';
                             }
                             if(data.value_text.trim() == element['value_text'].trim()){
-                                checkarr.push(true);
+                                checkarr.push(data.type_id);
                             }
                     }
                 });
             });
             var con = checkmethod(arr_inputtxt);
-           if(checkarr.length >= con){
+           var uniqueMatches = checkarr.filter(function(v, i, a) { return a.indexOf(v) === i; }).length;
+           if(uniqueMatches >= con){
             var  index = filterIn.findIndex(
                      function(x){
                     return x.pro_code === value.pro_code;
@@ -2438,38 +2440,60 @@
      * @param {Number} value 系列ID
      */
     function product_type_filter(type,value){
-        if(pro_type_arr.indexOf(value) == -1){
-            pro_type_arr.push(value);
+        // 強制轉為數字，避免字串與數字比對問題
+        var val = parseInt(value);
+        var index_se = -1;
+        
+        // 使用寬鬆比對查找索引
+        $.each(pro_type_arr, function(i, v){
+            if(v == val){
+                index_se = i;
+                return false;
+            }
+        });
+
+        if(index_se == -1){
+            pro_type_arr.push(val);
         }else{
-            var index_se = pro_type_arr.indexOf(value);
-                if (index_se > -1) {
-                    pro_type_arr.splice(index_se, 1);
-                }
+            pro_type_arr.splice(index_se, 1);
         }
        fillerData();
     }
 
     function series_filter(type,value){
-        console.log('type',type);
-       if(ser_arr.indexOf(value) == -1){
-           ser_arr.push(value);
-       }else{
-        var index_se = ser_arr.indexOf(value);
-            if (index_se > -1) {
-                ser_arr.splice(index_se, 1);
+        var val = parseInt(value);
+        var index_se = -1;
+        
+        $.each(ser_arr, function(i, v){
+            if(v == val){
+                index_se = i;
+                return false;
             }
+        });
+
+       if(index_se == -1){
+           ser_arr.push(val);
+       }else{
+            ser_arr.splice(index_se, 1);
        }
        fillerData();
     }
 
     function mode_series_filter(type,value){
-       if(mode_series_arr.indexOf(value) == -1){
-           mode_series_arr.push(value);
-       }else{
-        var index_se = mode_series_arr.indexOf(value);
-            if (index_se > -1) {
-                mode_series_arr.splice(index_se, 1);
+        var val = parseInt(value);
+        var index_se = -1;
+        
+        $.each(mode_series_arr, function(i, v){
+            if(v == val){
+                index_se = i;
+                return false;
             }
+        });
+
+       if(index_se == -1){
+           mode_series_arr.push(val);
+       }else{
+            mode_series_arr.splice(index_se, 1);
        }
        fillerData();
     }
@@ -2502,8 +2526,17 @@
             // 確認 商品的 product_type（sub_category） 是否再篩選條件中
             if(pro_type_arr.length > 0){
                 $.each(pro_type_arr, function(index_type,value_type){
-                    // 檢查 cate_ids 是否包含該分類，或者 cate_id 是否匹配 (相容舊資料)
-                    if(value['cate_ids'] && value['cate_ids'].indexOf(value_type) > -1){
+                    // 檢查 cate_ids 是否包含該分類
+                    if(value['cate_ids']){
+                        $.each(value['cate_ids'], function(i, id){
+                            if(id == value_type){
+                                is_match_type = true;
+                            }
+                        });
+                    }
+                    
+                    // 檢查 cate_id 是否匹配 (相容舊資料)
+                    if(value['cate_id'] == value_type){
                         is_match_type = true;
                     }
                 });
