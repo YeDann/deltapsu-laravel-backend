@@ -33,7 +33,7 @@ class CreateSuccessCaseTables extends Migration
 
         Schema::create('product_success_case_has_categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('content_id');
+            $table->unsignedInteger('content_id');
             $table->unsignedBigInteger('categories_id');
             $table->timestamps();
 
