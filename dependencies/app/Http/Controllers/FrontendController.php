@@ -2210,7 +2210,7 @@ class FrontendController extends Controller
         ->where('ct.local', '=', $lang)
         ->where('ntt.local', '=', $lang)
         ->where('c.content_type', '=', 'success-case')
-        ->select('c.*', 'ct.*', 'pnc.categories_id', 'ntt.title as cateName')
+        ->select('c.*', 'ct.*', 'pnc.categories_id', 'ntt.title as cateName', 'nt.color_type')
         ->orderBy('c.created_at', 'desc')
         ->get();
 
@@ -2230,7 +2230,7 @@ class FrontendController extends Controller
             ->where('c.id', '!=', $contents[0]->id)
             ->where('pnc.categories_id', $contents[0]->categories_id)
             ->where('c.content_type', '=', 'success-case')
-            ->select('c.*', 'ct.*', 'pnc.categories_id', 'ntt.title as cateName')
+            ->select('c.*', 'ct.*', 'pnc.categories_id', 'ntt.title as cateName', 'nt.color_type')
             ->where('c.status', 1)
             ->limit(3)
             ->inRandomOrder()
