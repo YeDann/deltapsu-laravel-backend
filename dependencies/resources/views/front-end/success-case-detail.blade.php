@@ -59,11 +59,11 @@
                             <hr>
                             <li><a href="{{route('index','news')}}">{{$staticContent['Product_News']}}</a></li>
                             <li><a href="{{route('index','events')}}">{{$staticContent['Events']}}</a></li>
-                            <li><a href="{{route('index','success-case')}}">Success Case</a></li>
+                            <li><a href="{{route('index','success-case')}}">{{$staticContent['Success_Case']}}</a></li>
                         </ul>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a
-                            href="{{route('index','success-case')}}">Success Case</a></li>
+                            href="{{route('index','success-case')}}">{{$staticContent['Success_Case']}}</a></li>
                     <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
                             href="#">{{isset($contents[0]->title)? $contents[0]->title:'' }}</a></li>
                 </ol>
@@ -148,7 +148,7 @@
 
         </div>
         @if(count($otherNews) > 0)
-        <h3 class="text-center text-drak margin-title"> Related Success Case</h3>
+        <h3 class="text-center text-drak margin-title"> {{$staticContent['Related_News']}}</h3>
         @endif
         <div class="row">
             @foreach ($otherNews as $item)

@@ -208,11 +208,11 @@
                             <hr>
                             <li><a href="{{route('index','news')}}">{{$staticContent['Product_News']}}</a></li>
                             <li><a href="{{route('index','events')}}">{{$staticContent['Events']}}</a></li>
-                            <li><a href="{{route('index','success-case')}}">Success Case</a></li>
+                            <li><a href="{{route('index','success-case')}}">{{$staticContent['Success_Case']}}</a></li>
                         </ul>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
-                            href="#">Success Case</a></li>
+                            href="#">{{$staticContent['Success_Case']}}</a></li>
                 </ol>
             </nav>
         </div>
@@ -250,7 +250,7 @@ function getDateformat($date){
 ?>
 <section class="box-news">
     <div class="container">
-        <h1 class="text-title-delta ">Success Case</h1>
+        <h1 class="text-title-delta ">{{$staticContent['Success_Case']}}</h1>
         <select id="select-news" onchange="selectDatanews();" class="form-control invisible-up-922 mb-4 w-75 m-auto border-radius-6">
             <option value="0" {{$type_id==0 ? 'selected' :''}}>{{$staticContent['All']}}</option>
             @foreach ($news_type as $type)
