@@ -787,7 +787,15 @@ function slugifyHead($text)
                                             : 'Product News' }} 
                                         </a>
                                     </li>
+                                    <li>
+                                        <a tabindex="-1" href="{{route('index','success-case')}}">
+                                            {{ isset($staticContent['Success_Case'])
+                                            ? $staticContent['Success_Case'] 
+                                            : 'Success Case' }}
+                                        </a>
+                                    </li>
                                 </ul>
+
                                 <a class="dropdown-item" href="{{route('index','events')}}">
                                     {{ isset($staticContent['Events'])
                                     ? $staticContent['Events'] 
@@ -1148,6 +1156,7 @@ function slugifyHead($text)
                 <i class="zmdi zmdi-chevron-right"></i>
             </a>
 
+
             <a class="text-normal pl-3" href="{{route('index','events')}}">{{isset($staticContent['Events'])?
                 $staticContent['Events'] :'Events' }}</a>
         </div>
@@ -1164,6 +1173,8 @@ function slugifyHead($text)
             <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Product News']) ? $newsTypes['Product News']->typename : 'Product News'), 'type-id' => $newsTypes['Product News'] ? $newsTypes['Product News']->id : '' ])}}">
                 {{isset($newsTypes['Product News']) ? $newsTypes['Product News']->typename : 'Product News' }} 
             </a>
+            <a class="text-normal pl-3" href="{{route('index','success-case')}}">{{isset($staticContent['Success_Case'])?
+                $staticContent['Success_Case'] :'Success Case' }}</a>
         </div>
 
         {{-- WHERE TO BUY --}}

@@ -90,6 +90,7 @@ Route::group([
             Route::get('/about-us/{pagename?}', 'FrontendController@aboutUs')->name('aboutUs');
 
             Route::get('/news/{name?}', 'FrontendController@updateNewsDetail')->name('updateNewsDetail');
+            Route::get('/success-case/{name?}', 'FrontendController@updateSuccessCaseDetail')->name('updateSuccessCaseDetail');
             Route::get('/events/{name?}', 'FrontendController@updateEventDetail')->name('updateEventDetail');
             Route::get('/technical-articles/{name?}', 'FrontendController@updateTechnicalDetail')->name('updateTechnicalDetail');
             Route::get('/product-notice/product-notice-detail', 'FrontendController@updateProductNoticelDetail')->name('updateProductNoticelDetail');
@@ -320,6 +321,20 @@ Route::prefix('/backend')->group(function () {
     Route::post('copyNewssingle', 'NewsController@copyNewssingle')->name('copyNewssingle');
     Route::post('copyNews', 'NewsController@copyNews')->name('copyNews');
     Route::get('removefileDocNews/{name?}/{id?}', 'NewsController@removeFileNewsDoc')->name('removeFileNewsDoc');
+
+    //Success Case Type
+    Route::resource('success-case-type', 'SuccessCaseTypeController');
+    Route::post('successCaseTypeUpdate', 'SuccessCaseTypeController@update')->name('successCaseTypeUpdate');
+    Route::get('successCaseTypeDestroy/{id?}', 'SuccessCaseTypeController@destroy')->name('successCaseTypeDestroy');
+
+    //Success Case
+    Route::resource('success-case', 'SuccessCaseController');
+    Route::post('successCaseUpdate', 'SuccessCaseController@update')->name('successCaseUpdate');
+    Route::get('destroySuccessCase/{id?}', 'SuccessCaseController@destroy')->name('destroySuccessCase');
+    Route::post('copySuccessCasesingle', 'SuccessCaseController@copySuccessCasesingle')->name('copySuccessCasesingle');
+    Route::post('copySuccessCase', 'SuccessCaseController@copySuccessCase')->name('copySuccessCase');
+    Route::get('removeFileSuccessCaseDoc/{name?}/{id?}', 'SuccessCaseController@removeFileSuccessCaseDoc')->name('removeFileSuccessCaseDoc');
+
     //Event
     Route::resource('event', 'EventController');
     Route::post('eventUpdate', 'EventController@update')->name('eventUpdate');
