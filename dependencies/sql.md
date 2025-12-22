@@ -206,3 +206,27 @@ VALUES
 ('Configurable_Power', 'Configurable Power', 'jp');
 
 ```
+
+## 13. 加入 success case
+
+```sql
+INSERT INTO `static_keyword` (`key_word`)
+VALUES ('Success_Case');
+
+INSERT INTO `static_keyword_translations` (`key_word`, `word`, `local`)
+VALUES
+/* English (en) - 原文 */
+('Success_Case', 'Success Case', 'en'),
+/* Traditional Chinese (tw) - 繁體中文 */
+('Success_Case', '成功案例', 'tw'),
+/* Simplified Chinese (cn) - 簡體中文 */
+('Success_Case', '成功案例', 'cn'),
+/* German (de) - 德文 */
+('Success_Case', 'Success Case', 'de'),
+/* Russian (ru) - 俄文 */
+('Success_Case', 'Success Case', 'ru'),
+/* Japan (jp) - 日文 */
+('Success_Case', 'Success Case', 'jp');
+
+```
+
