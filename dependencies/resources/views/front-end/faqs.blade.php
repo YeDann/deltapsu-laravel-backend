@@ -61,9 +61,10 @@
                     <li class="breadcrumb-item text-breadcrumb-home"><a
                             href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
                     <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
-                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Supports']}}</a>
+                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Technical_Support']}}</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Supports']}}</a>
+                            <li>
+                                <a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Technical_Support']}}</a>
                             </li>
                             <hr>
                             <li><a href="{{route('contactSupport')}}">{{$staticContent['contact_us']}}</a></li>

@@ -38,6 +38,7 @@ class ShareData
         view()->share('navcategories', $navCategories);
 
         // Cache navapplication
+        // 應用領域 (Applications) 的下拉選單
         $cacheKeyNavApplication = 'navapplication_' . $lang;
         $navApplication = Cache::remember($cacheKeyNavApplication, $cacheDuration, function () use ($lang) {
             return DB::table('application as ap')
@@ -50,6 +51,7 @@ class ShareData
         view()->share('navapplication', $navApplication);
 
         // Cache navcategories1
+        // 醫療電源（Medical_Power_Supplies）的下拉選單
         $cacheKeyNavCategories1 = 'navcategories1_' . $lang;
         $navCategories1 = Cache::remember($cacheKeyNavCategories1, $cacheDuration, function () use ($lang) {
             return DB::table('categories_has_main_pro as chmp')
@@ -64,6 +66,7 @@ class ShareData
         view()->share('navcategories1', $navCategories1);
 
         // Cache navcategories2
+        // 工業電源及模組（Industrial_Power_Supplies_&_Modules）的下拉選單
         $cacheKeyNavCategories2 = 'navcategories2_' . $lang;
         $navCategories2 = Cache::remember($cacheKeyNavCategories2, $cacheDuration, function () use ($lang) {
             return DB::table('categories_has_main_pro as chmp')
@@ -78,6 +81,7 @@ class ShareData
         view()->share('navcategories2', $navCategories2);
 
         // Cache navcategories3
+        // LED驅動器（LED_Driver）的下拉選單
         $cacheKeyNavCategories3 = 'navcategories3_' . $lang;
         $navCategories3 = Cache::remember($cacheKeyNavCategories3, $cacheDuration, function () use ($lang) {
             return DB::table('categories_has_main_pro as chmp')
@@ -92,6 +96,7 @@ class ShareData
         view()->share('navcategories3', $navCategories3);
 
         // Cache navcategories4
+        // 工業電池充電（Industrial_Battery_Charging）的下拉選單
         $cacheKeyNavCategories4 = 'navcategories4_' . $lang;
         $navCategories4 = Cache::remember($cacheKeyNavCategories4, $cacheDuration, function () use ($lang) {
             return DB::table('categories_has_main_pro as chmp')
@@ -103,6 +108,7 @@ class ShareData
                 ->orderBy('chmp.order_seq', 'asc')
                 ->get();
         });
+
         view()->share('navcategories4', $navCategories4);
 
         // Cache navaboutus
@@ -138,6 +144,7 @@ class ShareData
         view()->share('mail_chimp_country', $mailChimpCountry);
 
         // Cache static_word
+        // 取得 靜態關鍵字 與 翻譯
         $cacheKeyStaticWord = 'static_word_' . $lang;
         $staticWordCache = Cache::remember($cacheKeyStaticWord, $cacheDuration, function () use ($lang) {
             return DB::table('static_keyword as w')
@@ -147,6 +154,7 @@ class ShareData
                 ->get();
         });
 
+        // 如果沒有找到對應語言的靜態關鍵字，則用英文
         if (count($staticWordCache) == 0) {
             $cacheKeyStaticWordEn = 'static_word_en';
             $staticWordCache = Cache::remember($cacheKeyStaticWordEn, $cacheDuration, function () {
@@ -158,12 +166,21 @@ class ShareData
             });
         }
 
+        // 將靜態關鍵字轉換為關聯陣列，方便在視圖中使用
         $wordArray = [];
         foreach ($staticWordCache as $word) {
             $wordArray[$word->key_word] = $word->word;
         }
-
         view()->share('staticContent', $wordArray);
+
+        $newsTypes = DB::table('news_type as nt')
+            ->join('news_type_translation as ntt', 'ntt.fk_nt_id', '=', 'nt.id')
+            ->select('nt.*', 'ntt.title as typename')
+            ->where('ntt.local', $lang)
+            ->orderBy('nt.order_seq', 'asc')
+            ->get()
+            ->keyBy('name');
+        view()->share('newsTypes', $newsTypes);
 
         return $next($request);
     }

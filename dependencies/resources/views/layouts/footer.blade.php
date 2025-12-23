@@ -35,67 +35,57 @@
         <div class="container">
             <div class="padding-top-bottom">
                 <div class="row">
+                    {{-- Products Start --}}
                     <div class="col-xl-2 col-lg-2">
                         <div class="text-footer-main ">
                             <h6>{{isset($staticContent['Products'])?$staticContent['Products']:"Products"}}</h6>
                         </div>
-                        <?php
-                        $current1 = null;
-                        foreach($navcategories as $item1) {
-                            if ($item1->main_cateid == 2) {
-                                $current1 = $item1;
-                                break;
-                            }
-                        }
-
-                      ?>
-                        <a
-                            href="{{route('allproductsByType' ,[slugifyHead($current1->url_item),$current1->sub_pro_id ,$current1->main_cateid ])}}">
+                        
+                        <a href="{{ route('allproduct') }}">
                             <p class="text-pro-link">
-                                {{isset($staticContent['Industrial_Power'])?$staticContent['Industrial_Power']:"Industrial
-                                Power"}}</p>
+                                {{ isset($staticContent['Products_Overview']) ? $staticContent['Products_Overview'] : 'Products Overview' }}
+                            </p>
                         </a>
 
-                        <?php
-                        $current2 = null;
-                        foreach($navcategories as $item2) {
-                            if ($item2->main_cateid == 1) {
-                                $current2 = $item2;
-                                break;
-                            }
-                        }
-                      ?>
-
-                        <a
-                            href="{{route('allproductsByType' ,[slugifyHead($current2->url_item),$current2->sub_pro_id ,$current2->main_cateid ])}}">
-                            <p class="text-pro-link">{{isset($staticContent['Medical_Power'])?
-                                $staticContent['Medical_Power']:"Medical Power"}}</p>
-                        </a>
-                        <a href="{{route('allproductsByType',[slugifyHead('CC-Cv-Mode'),1 , 3])}}">
+                        @if(isset($navcategories2) && count($navcategories2) > 0)
+                        <a href="{{ route('productList', [$navcategories2->first()->main_cateid]) }}">
                             <p class="text-pro-link">
-                                {{isset($staticContent['LED_Power'])?$staticContent['LED_Power']:"LED Power"}}</p>
-                        </a>
-                        <?php
-                        $current3 = null;
-                        foreach($navcategories as $item1) {
-                            if ($item1->main_cateid == 4) {
-                                $current3 = $item1;
-                                break;
-                            }
-                        }
-
-                      ?>
-
-                        @if(isset($current3))
-                        <a
-                            href="{{route('allproductsByType' ,[slugifyHead($current3->url_item),$current3->sub_pro_id ,$current3->main_cateid ])}}">
-                            <p class="text-pro-link">
-                                {{isset($staticContent['wireless_charging'])?
-                                $staticContent['wireless_charging'] :'Industrial Battery Charging' }}</p>
+                                {{isset($staticContent['Industrial_Power'])?$staticContent['Industrial_Power']:"Industrial Power"}}
+                            </p>
                         </a>
                         @endif
 
-                    </div>{{-- product --}}
+                        @if(isset($navcategories1) && count($navcategories1) > 0)
+                        <a href="{{ route('productList', [$navcategories1->first()->main_cateid]) }}">
+                            <p class="text-pro-link">
+                                {{isset($staticContent['Medical_Power'])?$staticContent['Medical_Power']:"Medical Power"}}
+                            </p>
+                        </a>
+                        @endif
+
+                        <a href="{{ route('configurableproduct') }}">
+                            <p class="text-pro-link">
+                                {{ isset($staticContent['Configurable_Power']) ? $staticContent['Configurable_Power'] : 'Configurable Power' }}
+                            </p>
+                        </a>
+
+                        @if(isset($navcategories4) && count($navcategories4) > 0)
+                        <a href="{{ route('productList', [$navcategories4->first()->main_cateid]) }}">
+                            <p class="text-pro-link">
+                                {{isset($staticContent['wireless_charging'])? $staticContent['wireless_charging'] :'Industrial Battery Charging' }}
+                            </p>
+                        </a>
+                        @endif
+
+                        @if(isset($navcategories3) && count($navcategories3) > 0)
+                        <a href="{{ route('productList', [$navcategories3->first()->main_cateid]) }}">
+                            <p class="text-pro-link">
+                                {{isset($staticContent['LED_Power'])?$staticContent['LED_Power']:"LED Power"}}
+                            </p>
+                        </a>
+                        @endif
+
+                    </div>
 
                     {{-- Application Start --}}
                     <div class="col-xl-2 col-lg-2">
@@ -112,8 +102,6 @@
                         </div>
                         @endforeach
                         @endif
-
-
                     </div>
                     {{-- Application End --}}
 
@@ -180,36 +168,77 @@
                         </div>
                         @endforeach
                         <br> --}}
-                        <div class="text-footer-main  footer-two">
+                        <div class="text-footer-main footer-two">
                             <h6>{{isset($staticContent['Technical_Support'])?$staticContent['Technical_Support']:"Technical Support"}}</h6>
                         </div>
                         <div class=" ">
-                            <a href="{{route('index','catalogs')}}">
+                            <a href="{{route('index', 'catalogs')}}">
                                 <p class="text-pro-link">
                                     {{isset($staticContent['catalogs'])?$staticContent['catalogs']:"Catalogs"}}</p>
-
                             </a>
                         </div>
                         <div class=" ">
                             <a href="{{route('index', 'product-documents')}}">
                                 <p class="text-pro-link">
-                                    {{isset($staticContent['Product_Documents'])?$staticContent['Product_Documents']:"Product
-                                    Documents"}}</p>
-
+                                    {{isset($staticContent['Product_Documents'])
+                                    ? $staticContent['Product_Documents']
+                                    : "Product Documents"}}</p>
                             </a>
                         </div>
                         <div class=" ">
                             <a href="{{route('productCoparison')}}">
-                                <p class="text-pro-link">{{isset($staticContent['product_comparison'])?
-                                    $staticContent['product_comparison']:"Product Comparison" }}</p>
-
+                                <p class="text-pro-link">
+                                    {{isset($staticContent['product_comparison']) 
+                                    ? $staticContent['product_comparison'] 
+                                    : "Product Comparison" }}</p>
                             </a>
                         </div>
                         <div class=" ">
-                            <a href="{{route('index','faqs')}}">
-                                <p class="text-pro-link">{{isset($staticContent['FAQs'])?$staticContent['FAQs']:"FAQs"}}
-                                </p>
-
+                            <a href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How'), 'type-id' => isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->id : '' ])}}">
+                                <p class="text-pro-link">
+                                    {{isset($staticContent['Industry Know-How']) 
+                                    ? $newsTypes['Industry Know-How']->typename
+                                    : "Industry Know-How" }}</p>
+                            </a>
+                        </div>
+                        <div class=" ">
+                            <a href="{{route('index', ['page' => 'videos'])}}">
+                                <p class="text-pro-link">
+                                    {{isset($staticContent['Videos']) 
+                                    ? $staticContent['Videos'] 
+                                    : "Videos" }}</p>
+                            </a>
+                        </div>
+                        <div class=" ">
+                            <a href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice'), 'type-id' => isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->id : '' ])}}">
+                                <p class="text-pro-link">
+                                    {{isset($newsTypes['Product Notice'])
+                                    ? $newsTypes['Product Notice']->typename
+                                    : 'Product Notice' }} </p>
+                            </a>
+                        </div>
+                        <div class=" ">
+                            <a href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['EOL']) ? $newsTypes['EOL']->typename : 'EOL'), 'type-id' => isset($newsTypes['EOL']) ? $newsTypes['EOL']->id : '' ])}}">
+                                <p class="text-pro-link">
+                                    {{isset($newsTypes['EOL'])
+                                    ? $newsTypes['EOL']->typename
+                                    : 'EOL' }} </p>
+                            </a>
+                        </div>
+                        <div class=" ">
+                            <a href="{{route('index', 'faqs')}}">
+                                <p class="text-pro-link">
+                                    {{isset($staticContent['FAQs']) 
+                                    ? $staticContent['FAQs'] 
+                                    : "FAQs"}}</p>
+                            </a>
+                        </div>
+                        <div class=" ">
+                            <a href="{{route('contactSupport')}}">
+                                <p class="text-pro-link">
+                                    {{isset($staticContent['Technical_Service']) 
+                                    ? $staticContent['Technical_Service'] 
+                                    : "Technical Service" }}</p>
                             </a>
                         </div>
                     </div>
@@ -224,14 +253,12 @@
                             <a href="{{route('index','news')}}">
                                 <p class="text-pro-link">
                                     {{isset($staticContent['Product_News'])?$staticContent['Product_News']:"News"}}</p>
-
                             </a>
                         </div>
                         <div class=" ">
                             <a href="{{route('index','events')}}">
                                 <p class="text-pro-link">
                                     {{isset($staticContent['Events'])?$staticContent['Events']:"Events"}}</p>
-
                             </a>
                         </div>
                     </div>
@@ -240,30 +267,33 @@
                     {{-- Where to buy --}}
                     <div class="col-xl-2 col-lg-2">
                         <div class="text-footer-main ">
-                            <h6>{{isset($staticContent['where_to_buy'])?$staticContent['where_to_buy']:"Where to Buy"}}</h6>
+                            <h6>{{isset($staticContent['where_to_buy']) 
+                                ? $staticContent['where_to_buy'] 
+                                : "Where to Buy"}}</h6>
                         </div>
                         <div class=" ">
                             <a href="{{route('contactSupport')}}">
                                 <p class="text-pro-link">
-                                    {{isset($staticContent['contact_us'])?$staticContent['contact_us']:"Contact Us"}}
+                                    {{isset($staticContent['contact_us']) 
+                                    ? $staticContent['contact_us'] 
+                                    : "Contact Us"}}
                                 </p>
-
                             </a>
                         </div>
                         <div class=" ">
                             <a href="{{route('contactFindDistributor')}}">
                                 <p class="text-pro-link">
-                                    {{isset($staticContent['find_a_distributor'])?$staticContent['find_a_distributor']:"find
-                                    a distributor"}}</p>
-
+                                    {{isset($staticContent['find_a_distributor']) 
+                                    ? $staticContent['find_a_distributor'] 
+                                    : "find a distributor"}}</p>
                             </a>
                         </div>
                         <div class=" ">
                             <a href="{{route('contactSalesOffices')}}">
                                 <p class="text-pro-link">
-                                    {{isset($staticContent['sales_offices'])?$staticContent['sales_offices']:"Sales
-                                    Offices"}}</p>
-
+                                    {{isset($staticContent['sales_offices']) 
+                                    ? $staticContent['sales_offices'] 
+                                    : "Sales Offices"}}</p>
                             </a>
                         </div>
 
@@ -275,17 +305,17 @@
                         <div class=" ">
                             <a href="{{route('termsOfUse')}}">
                                 <p class="text-pro-link">
-                                    {{isset($staticContent['Terms_of_Use'])?$staticContent['Terms_of_Use']:"Terms of
-                                    Use"}}</p>
-
+                                    {{isset($staticContent['Terms_of_Use']) 
+                                    ? $staticContent['Terms_of_Use']
+                                    : "Terms of Use"}}</p>
                             </a>
                         </div>
                         <div class=" ">
                             <a href="{{route('privacyPolicy')}}">
                                 <p class="text-pro-link">
-                                    {{isset($staticContent['Privacy_Policy'])?$staticContent['Privacy_Policy']:"Privacy
-                                    Policy" }}</p>
-
+                                    {{isset($staticContent['Privacy_Policy']) 
+                                    ? $staticContent['Privacy_Policy']
+                                    : "Privacy Policy" }}</p>
                             </a>
                         </div>
                         {{-- <div class=" ">
@@ -296,9 +326,9 @@
                         </div> --}}
                         <br><br><br>
                         <div class="text-footer-main footer-four">
-                            <h6>{{isset($staticContent['Follow_us_on_social'])?$staticContent['Follow_us_on_social']:"Follow
-                                us on social"}}</h6>
-
+                            <h6>{{isset($staticContent['Follow_us_on_social']) 
+                                ? $staticContent['Follow_us_on_social']
+                                : "Follow us on social"}}</h6>
                         </div>
 
                         <div class="d-flex icon-social">
@@ -341,7 +371,7 @@
 
             <div class="box-input-sub">
                 <label for="inp" class="inp">
-                    <input type="text" id="inp4" placeholder="&nbsp;" data-toggle="modal"
+                    <input type="text" id="inp" placeholder="&nbsp;" data-toggle="modal"
                         data-target="#subscribe-modal">
                     <span class="label text-center">{{$staticContent['Enter_email_address']}}</span>
                     <span class="border"></span>
@@ -355,62 +385,53 @@
     <div class="bg-footer-mobile">
         <div class="footer-nav-mobile " id="footer-nav-mobile">
             <div class="w-100 pt-5">
+                {{-- Products --}}
                 <div class="border-b-2px">
                     <a tabindex="-1" href="#foot-nav-link-list1" data-toggle="collapse"
                         data-target="#foot-nav-link-list1">{{$staticContent['Products']}}<i
                             class="zmdi zmdi-chevron-down"></i></a>
-                    <div class="collapse pl-4" id="foot-nav-link-list1" data-parent="#footer-nav-mobile" {{--
-                        aria-expanded="false" --}}>
+                    <div class="collapse pl-4" id="foot-nav-link-list1" data-parent="#footer-nav-mobile">
 
-                        <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub1" data-toggle="collapse"
-                            data-target="#foot-nav-link-list-sub1">{{$staticContent['Industrial_Power']}}<i
-                                class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="collapse pl-4" id="foot-nav-link-list-sub1" aria-expanded="false">
-                            @foreach ($navcategories2 as $subCate)
-                            <a class="text-normal "
-                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,2])}}">{{$subCate->name}}
-                            </a>
-                            @endforeach
+                        <a class="text-normal" href="{{ route('allproduct') }}">
+                            {{ isset($staticContent['Products_Overview']) ? $staticContent['Products_Overview'] : 'Products Overview' }}
+                        </a>
 
-                        </div>
-                        <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub2" data-toggle="collapse"
-                            data-target="#foot-nav-link-list-sub2">{{$staticContent['Medical_Power']}}<i
-                                class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="collapse pl-4" id="foot-nav-link-list-sub2" aria-expanded="false">
-                            @foreach ($navcategories1 as $subCate)
-                            <a class="text-normal "
-                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,1])}}">{{$subCate->name}}</a>
-                            @endforeach
-                        </div>
-                        <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub3" data-toggle="collapse"
-                            data-target="#foot-nav-link-list-sub3">{{$staticContent['LED_Power']}} <i
-                                class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="collapse pl-4" id="foot-nav-link-list-sub3" aria-expanded="false">
-                            @foreach ($navcategories3 as $subCate)
-                            <a class="text-normal "
-                                href="{{route('allproductsByType',[slugifyHead('CC-Cv-Mode'),1 , 3])}}">{{$subCate->name}}</a>
-                            @endforeach
+                        @if(isset($navcategories2) && count($navcategories2) > 0)
+                        <a class="text-normal" href="{{ route('productList', [$navcategories2->first()->main_cateid]) }}">
+                            {{isset($staticContent['Industrial_Power'])?$staticContent['Industrial_Power']:"Industrial Power"}}
+                        </a>
+                        @endif
 
-                        </div>
-                        <a class="text-normal" tabindex="-1" href="#foot-nav-link-list-sub4" data-toggle="collapse"
-                            data-target="#foot-nav-link-list-sub4">{{isset($staticContent['wireless_charging'])?
-                            $staticContent['wireless_charging'] :'Industrial Battery Charging' }}<i
-                                class="zmdi zmdi-chevron-down"></i></a>
-                        <div class="collapse pl-4" id="foot-nav-link-list-sub4" aria-expanded="false">
-                            @foreach ($navcategories4 as $subCate)
-                            <a class="text-normal "
-                                href="{{route('allproductsByType' ,[slugifyHead($subCate->url_item),$subCate->sub_pro_id ,4])}}">{{$subCate->name}}
-                            </a>
-                            @endforeach
+                        @if(isset($navcategories1) && count($navcategories1) > 0)
+                        <a class="text-normal" href="{{ route('productList', [$navcategories1->first()->main_cateid]) }}">
+                            {{isset($staticContent['Medical_Power'])?$staticContent['Medical_Power']:"Medical Power"}}
+                        </a>
+                        @endif
 
-                        </div>
+                        <a class="text-normal" href="{{ route('configurableproduct') }}">
+                            {{ isset($staticContent['Configurable_Power']) ? $staticContent['Configurable_Power'] : 'Configurable Power' }}
+                        </a>
+
+                        @if(isset($navcategories4) && count($navcategories4) > 0)
+                        <a class="text-normal" href="{{ route('productList', [$navcategories4->first()->main_cateid]) }}">
+                            {{isset($staticContent['wireless_charging'])? $staticContent['wireless_charging'] :'Industrial Battery Charging' }}
+                        </a>
+                        @endif
+
+                        @if(isset($navcategories3) && count($navcategories3) > 0)
+                        <a class="text-normal" href="{{ route('productList', [$navcategories3->first()->main_cateid]) }}">
+                            {{isset($staticContent['LED_Power'])?$staticContent['LED_Power']:"LED Power"}}
+                        </a>
+                        @endif
+
                     </div>
                 </div>
-                <div class="border-b-2px">
+
+                {{-- <div class="border-b-2px">
                     <a class="" tabindex="-1" href="#foot-nav-link-list2" data-toggle="collapse"
                         data-target="#foot-nav-link-list2">{{$staticContent['Tools']}}<i
                             class="zmdi zmdi-chevron-down"></i></a>
-                    <div class="collapse pl-4" id="foot-nav-link-list2" {{-- aria-expanded="false" --}}
+                    <div class="collapse pl-4" id="foot-nav-link-list2"
                         data-parent="#footer-nav-mobile">
                         <a class="text-normal "
                             href="{{route('productFinder')}}">{{$staticContent['Product_Selector']}}</a>
@@ -419,21 +440,46 @@
                         <a class="text-normal "
                             href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a>
                     </div>
-                </div>
+                </div> --}}
 
+                {{-- Applications --}}
                 <div class="border-b-2px">
                     <a class="" tabindex="-1" href="#foot-nav-link-list3" data-toggle="collapse"
                         data-target="#foot-nav-link-list3">{{$staticContent['Applications']}}<i
                             class="zmdi zmdi-chevron-down"></i></a>
-                    <div class="collapse pl-4" id="foot-nav-link-list3" {{-- aria-expanded="false" --}}
+                    <div class="collapse pl-4" id="foot-nav-link-list3"
                         data-parent="#footer-nav-mobile">
                         @if(isset($navapplication))
                         @foreach ($navapplication as $app)
                         <a class=" text-normal"
-                            href="{{route('appDetail' ,[ 'name' => $app->slug_app , 'id' => $app->applica_id])}}">{{$app->name}}</a>
+                            href="{{route('appDetail', [ 'name' => $app->slug_app, 'id' => $app->applica_id])}}">{{$app->name}}</a>
                         @endforeach
                         @endif
+                    </div>
+                </div>
 
+                {{-- Technical Support --}}
+                <div class="border-b-2px">
+                    <a class="" tabindex="-1" href="#foot-nav-link-list5" data-toggle="collapse"
+                        data-target="#foot-nav-link-list5">{{$staticContent['Technical_Support']}}<i
+                            class="zmdi zmdi-chevron-down"></i></a>
+                    <div class="collapse pl-4" id="foot-nav-link-list5"
+                        data-parent="#footer-nav-mobile">
+                        <a class="text-normal " href="{{route('index','catalogs')}}">{{$staticContent['catalogs']}}</a>
+                        <a class="text-normal " href="{{route('index','product-documents')}}">{{$staticContent['Product_Documents']}}</a>
+                        <a class="text-normal " href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a>
+                        <a class="text-normal " href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How'), 'type-id' => isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->id : '' ])}}">{{isset($newsTypes['Industry Know-How'])
+                                ? $newsTypes['Industry Know-How']->typename
+                                : 'Industry Know-How' }} </a>
+                        <a class="text-normal " href="{{route('index', ['page' => 'videos'])}}">{{$staticContent['Videos']}}</a>
+                        <a class="text-normal " href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice'), 'type-id' => isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->id : '' ])}}">{{isset($newsTypes['Product Notice'])
+                                ? $newsTypes['Product Notice']->typename
+                                : 'Product Notice' }} </a>
+                        <a class="text-normal " href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['EOL']) ? $newsTypes['EOL']->typename : 'EOL'), 'type-id' => isset($newsTypes['EOL']) ? $newsTypes['EOL']->id : '' ])}}">{{isset($newsTypes['EOL'])
+                                ? $newsTypes['EOL']->typename
+                                : 'EOL' }} </a>
+                        <a class="text-normal " href="{{route('index','faqs')}}">{{$staticContent['FAQs']}}</a>
+                        <a class="text-normal " href="{{route('contactSupport')}}">{{$staticContent['Technical_Service']}}</a>
                     </div>
                 </div>
 
@@ -448,54 +494,55 @@
                     </div>
                 </div> --}}
 
+                {{-- News and Events --}}
                 <div class="border-b-2px">
                     <a class="" tabindex="-1" href="#foot-nav-link-list5" data-toggle="collapse"
                         data-target="#foot-nav-link-list5">{{$staticContent['Updates']}}<i
                             class="zmdi zmdi-chevron-down"></i></a>
-                    <div class="collapse pl-4" id="foot-nav-link-list5" {{-- aria-expanded="false" --}}
+                    <div class="collapse pl-4" id="foot-nav-link-list5"
                         data-parent="#footer-nav-mobile">
                         <a class="text-normal " href="{{route('index','news')}}">{{$staticContent['Product_News']}}</a>
                         <a class="text-normal " href="{{route('index','events')}}">{{$staticContent['Events']}}</a>
                     </div>
                 </div>
 
-                <div class="border-b-2px">
+                {{-- <div class="border-b-2px">
                     <a class="" tabindex="-1" href="#foot-nav-link-list6" data-toggle="collapse"
                         data-target="#foot-nav-link-list6">{{$staticContent['Downloads']}}<i
                             class="zmdi zmdi-chevron-down"></i></a>
-                    <div class="collapse pl-4" id="foot-nav-link-list6" {{-- aria-expanded="false" --}}
+                    <div class="collapse pl-4" id="foot-nav-link-list6"
                         data-parent="#footer-nav-mobile">
                         <a class="text-normal " href="{{route('index','catalogs')}}">{{$staticContent['catalogs']}}</a>
                         <a class="text-normal "
                             href="{{route('index','product-documents')}}">{{$staticContent['Product_Documents']}}</a>
-
                     </div>
-                </div>
+                </div> --}}
 
+                {{-- Where_to_Buy --}}
                 <div class="border-b-2px">
                     <a class="" tabindex="-1" href="#foot-nav-link-list7" data-toggle="collapse"
-                        data-target="#foot-nav-link-list7">{{$staticContent['Supports']}} <i
+                        data-target="#foot-nav-link-list7">{{$staticContent['Where_to_Buy']}} <i
                             class="zmdi zmdi-chevron-down"></i></a>
-                    <div class="collapse pl-4" id="foot-nav-link-list7" {{-- aria-expanded="false" --}}
+                    <div class="collapse pl-4" id="foot-nav-link-list7"
                         data-parent="#footer-nav-mobile">
                         <a class="text-normal " href="{{route('contactSupport')}}">{{$staticContent['contact_us']}}</a>
                         <a class="text-normal "
-                            href="{{route('contactSalesOffices')}}">{{$staticContent['sales_offices']}}</a>
-                        <a class="text-normal "
                             href="{{route('contactFindDistributor')}}">{{$staticContent['find_a_distributor']}}</a>
-                        <a class="text-normal " href="{{route('index','faqs')}}">{{$staticContent['FAQs']}}</a>
+                        <a class="text-normal "
+                            href="{{route('contactSalesOffices')}}">{{$staticContent['sales_offices']}}</a>
                     </div>
                 </div>
+
+                {{-- Information --}}
                 <div class="border-b-2px">
                     <a class="" tabindex="-1" href="#foot-nav-link-list8" data-toggle="collapse"
                         data-target="#foot-nav-link-list8">{{$staticContent['Information']}} <i
                             class="zmdi zmdi-chevron-down"></i></a>
-                    <div class="collapse pl-4" id="foot-nav-link-list8" {{-- aria-expanded="false" --}}
+                    <div class="collapse pl-4" id="foot-nav-link-list8"
                         data-parent="#footer-nav-mobile">
                         <a class="text-normal " href="{{route('termsOfUse')}}">{{$staticContent['Terms_of_Use']}}</a>
                         <a class="text-normal "
                             href="{{route('privacyPolicy')}}">{{$staticContent['Privacy_Policy']}}</a>
-                        {{-- <a class="text-normal " href="">MANUAL</a> --}}
                     </div>
                 </div>
 
@@ -511,15 +558,12 @@
                             <i class="zmdi zmdi-linkedin icon-footer-center"></i>
                         </div>
                     </a>
-
                 </div>
-
             </div>
         </div>
         <div class="footer-mobile">
             <div class="container text-center">
-                Copyright © 2020 DeltaPSU. All Rights Reserved.
-                {{-- <br>Designed by Degito --}}
+                Copyright © {{ date('Y') }} DeltaPSU. All Rights Reserved.
             </div>
         </div>
     </div>
@@ -531,8 +575,11 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content ">
             <div class="modal-header pl-4">
-                <h4 class="text-color-delta mb-0" id="subscribe-modal-title">{{isset($staticContent['Subscribe'])?
-                    $staticContent['Subscribe'] :"Subscribe"}}</h4>
+                <h4 class="text-color-delta mb-0" id="subscribe-modal-title">
+                    {{isset($staticContent['Subscribe']) 
+                    ? $staticContent['Subscribe'] 
+                    : "Subscribe"}}
+                </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -599,12 +646,12 @@
                         {{isset($staticContent['To_unsubscribe'])?$staticContent['To_unsubscribe']:"To unsubscribe,
                         click the link in our newsletter. We will treat your data with respect."}}</p>
                     <div class="mt-3 mb-3" id="recap_vertify_subscribe"></div>
-                    <input type="hidden" id="key_input_subscribe" name="keyrecap">
-                    <button type="submit"
-                        class="btn btn-subscribe">{{isset($staticContent['Subscribe'])?$staticContent['Subscribe']:"Subscribe"}}</button>
+                        <input type="hidden" id="key_input_subscribe" name="keyrecap">
+                        <button type="submit"
+                            class="btn btn-subscribe">{{isset($staticContent['Subscribe'])?$staticContent['Subscribe']:"Subscribe"}}</button>
+                    </div>
+                </form>
             </div>
-            </form>
-
         </div>
     </div>
 </div>
