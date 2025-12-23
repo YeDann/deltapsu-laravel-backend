@@ -711,23 +711,28 @@ function slugifyHead($text)
                             @endif
                         </div>
                     </li>
+
                     {{-- Technical Support --}}
                     <li class="nav-item dropdown">
                         <a id="nav-uderline" class="nav-link " href="" id="dropdown06" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">{{isset($staticContent['Technical_Support'])?
-                            $staticContent['Technical_Support'] :'Technical Support' }}
+                            $staticContent['Technical_Support'] : 'Technical Support' }}
                             <i class="zmdi zmdi-chevron-down"></i></a>
                         <div class="dropdown-menu megamenu sp-dropdown02 s-menu" aria-labelledby="dropdown06">
-                            <a class="dropdown-item" href="{{route('index','catalogs')}}">{{isset($staticContent['catalogs'])?
-                                $staticContent['catalogs'] :'catalogs' }}
+                            <a class="dropdown-item" href="{{route('index','catalogs')}}">
+                                {{isset($staticContent['catalogs'])
+                                ? $staticContent['catalogs'] 
+                                : 'catalogs' }}
                             </a>
-                            <a class="dropdown-item"
-                                href="{{route('index','product-documents')}}">{{isset($staticContent['Product_Documents'])?
-                                $staticContent['Product_Documents'] :'Product_Documents' }}
+                            <a class="dropdown-item" ref="{{route('index','product-documents')}}">
+                                {{isset($staticContent['Product_Documents']) 
+                                ? $staticContent['Product_Documents'] 
+                                : 'Product Documents' }}
                             </a>
                             <a class="dropdown-item" href="{{route('productCoparison')}}">
-                                {{isset($staticContent['product_comparison'])?
-                                $staticContent['product_comparison'] :'product comparison' }}
+                                {{isset($staticContent['product_comparison']) 
+                                ? $staticContent['product_comparison']
+                                : 'product comparison' }}
                             </a>
                             <a class="dropdown-item" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How'), 'type-id' => isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->id : '' ])}}">
                                 {{isset($newsTypes['Industry Know-How'])
@@ -735,8 +740,9 @@ function slugifyHead($text)
                                 : 'Industry Know-How' }} 
                             </a>
                             <a class="dropdown-item" href="{{route('index', ['page' => 'videos'])}}">
-                                {{isset($staticContent['Videos'])?
-                                $staticContent['Videos'] :'Videos' }}
+                                {{isset($staticContent['Videos'])
+                                ? $staticContent['Videos']
+                                : 'Videos' }}
                             </a>
                             <a class="dropdown-item" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice'), 'type-id' => isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->id : '' ])}}">
                                 {{isset($newsTypes['Product Notice'])
@@ -749,13 +755,14 @@ function slugifyHead($text)
                                 : 'EOL' }} 
                             </a>
                             <a class="dropdown-item" href="{{route('index','faqs')}}">
-                                {{isset($staticContent['FAQs']) ? $staticContent['FAQs'] :'FAQs' }}
+                                {{isset($staticContent['FAQs']) ? $staticContent['FAQs'] : 'FAQs' }}
                             </a>
                             <a class="dropdown-item" href="{{route('contactSupport')}}">
-                                {{isset($staticContent['Technical_Service']) ? $staticContent['Technical_Service'] :'Technical Service' }}
+                                {{isset($staticContent['Technical_Service']) ? $staticContent['Technical_Service'] : 'Technical Service' }}
                             </a>
                         </div>
                     </li>
+
                     {{-- News and Events --}}
                     <li class="nav-item dropdown ">
                         <a id="nav-uderline" class="nav-link" id="dropdown01" data-toggle="dropdown"
@@ -815,24 +822,26 @@ function slugifyHead($text)
                             </div>
                         </div>
                     </li>
+
+                    {{-- Where_to_Buy --}}
                     <li class="nav-item dropdown ">
                         <a id="nav-uderline" class="nav-link" href="" id="dropdown07" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
                             {{isset($staticContent['Where_to_Buy'])
                                 ? $staticContent['Where_to_Buy'] 
-                                :'Where_to_Buy' 
+                                : 'Where_to_Buy' 
                             }}
                             <i class="zmdi zmdi-chevron-down"></i>
                         </a>
                         <div class="dropdown-menu megamenu s-menu" aria-labelledby="dropdown07">
                             <a class="dropdown-item" href="{{route('contactSupport')}}">
-                                {{isset($staticContent['contact_us']) ? $staticContent['contact_us'] :'Contact Us' }}
+                                {{isset($staticContent['contact_us']) ? $staticContent['contact_us'] : 'Contact Us' }}
                             </a>
                             <a class="dropdown-item"
-                                href="{{route('contactFindDistributor')}}">{{isset($staticContent['find_a_distributor'])?
-                                $staticContent['find_a_distributor'] :'Find a Distributor' }}</a>
-                            <a class="dropdown-item" href="{{route('contactSalesOffices')}}">{{isset($staticContent['sales_offices'])?
-                                $staticContent['sales_offices'] :'Sales Offices' }}</a>
+                                href="{{route('contactFindDistributor')}}">{{isset($staticContent['find_a_distributor']) ?
+                                $staticContent['find_a_distributor'] : 'Find a Distributor' }}</a>
+                            <a class="dropdown-item" href="{{route('contactSalesOffices')}}">{{isset($staticContent['sales_offices']) ?
+                                $staticContent['sales_offices'] : 'Sales Offices' }}</a>
                         </div>
                     </li>
                  </ul>
@@ -844,8 +853,8 @@ function slugifyHead($text)
         <div id="listAllcomparesesion" class="d-flex align-items-stretch all-list-to-comparison">
         </div>
         <a href="{{route('productCoparison')}}" class="btn btn-subscribe to-comparison">
-            {{isset($staticContent['View_compare'])?
-            $staticContent['View_compare'] :'View_compare' }}
+            {{isset($staticContent['View_compare']) ?
+            $staticContent['View_compare'] : 'View_compare' }}
             (<span id="numberselect"></span>/3)</a>
     </div>
 </div>
@@ -1087,7 +1096,6 @@ function slugifyHead($text)
                 href="{{route('productList',[3, slugifyHead('CV_Mode'),3])}}">{{isset($staticContent['CV_Mode'])?
                 $staticContent['CV_Mode']: 'CV Mode'}}</a>
 
-
         </div>
         <div id="btn-sidenav-sub4" class="btn-sidenav  pad-ar-24px">
             <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub4')"><i
@@ -1100,6 +1108,7 @@ function slugifyHead($text)
             @endforeach
             @endif
         </div>
+
         {{-- TECHNICAL SUPPORT --}}
         <div id="btn-sidenav2" class="btn-sidenav pad-ar-24px">
             <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav2')"><i
@@ -1119,6 +1128,9 @@ function slugifyHead($text)
 
             <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How'), 'type-id' => isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->id : '' ])}}">
                 {{isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How' }}
+            </a>
+            <a class="text-normal pl-3" href="{{route('index', ['page' => 'videos'])}}">
+                {{isset($staticContent['Videos']) ? $staticContent['Videos'] : 'Videos' }}
             </a>
             <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice'), 'type-id' => isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->id : '' ])}}">
                 {{isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice' }}
