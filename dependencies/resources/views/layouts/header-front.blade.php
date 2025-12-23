@@ -734,6 +734,10 @@ function slugifyHead($text)
                                 ? $newsTypes['Industry Know-How']->typename
                                 : 'Industry Know-How' }} 
                             </a>
+                            <a class="dropdown-item" href="{{route('index', ['page' => 'videos'])}}">
+                                {{isset($staticContent['Videos'])?
+                                $staticContent['Videos'] :'Videos' }}
+                            </a>
                             <a class="dropdown-item" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice'), 'type-id' => isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->id : '' ])}}">
                                 {{isset($newsTypes['Product Notice'])
                                 ? $newsTypes['Product Notice']->typename
@@ -792,6 +796,13 @@ function slugifyHead($text)
                                             {{ isset($staticContent['Success_Case'])
                                             ? $staticContent['Success_Case'] 
                                             : 'Success Case' }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a tabindex="-1" href="{{route('index', ['page' => 'videos'])}}">
+                                            {{ isset($staticContent['Videos'])
+                                            ? $staticContent['Videos'] 
+                                            : 'Videos' }}
                                         </a>
                                     </li>
                                 </ul>
@@ -1175,6 +1186,8 @@ function slugifyHead($text)
             </a>
             <a class="text-normal pl-3" href="{{route('index','success-case')}}">{{isset($staticContent['Success_Case'])?
                 $staticContent['Success_Case'] :'Success Case' }}</a>
+            <a class="text-normal pl-3" href="{{route('index', ['page' => 'videos'])}}">{{isset($staticContent['Videos'])?
+                $staticContent['Videos'] :'Videos' }}</a>
         </div>
 
         {{-- WHERE TO BUY --}}

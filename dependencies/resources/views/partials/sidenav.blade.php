@@ -397,6 +397,17 @@
                     @endif
                 </li>
                 <li class="nav-main-item">
+                    @if($menu == "videos")
+                    <a class="nav-main-link active" href="{{route('video.index')}}">
+                        <span class="nav-main-link-name ">Videos</span>
+                    </a>
+                    @else
+                    <a class="nav-main-link" href="{{route('video.index')}}">
+                        <span class="nav-main-link-name ">Videos</span>
+                    </a>
+                    @endif
+                </li>
+                <li class="nav-main-item">
                     @if($menu == "event")
                     <a class="nav-main-link active" href="{{route('event.index')}}">
                         <span class="nav-main-link-name ">Events</span>

@@ -285,6 +285,62 @@ class FrontendController extends Controller
             ->with('news', $news);
         }
 
+        if ('videos' == $page) {
+            $lang = App::getLocale();
+
+            $video_type = DB::table('video_type as vt')
+            ->join('video_type_translation as vtt', 'vtt.fk_vt_id', '=', 'vt.id')
+            ->select('vt.*', 'vtt.title as typename')
+            ->where('vtt.local', $lang)
+            ->orderBy('vt.order_seq', 'asc')
+            ->get();
+            $type_id = 0;
+            if (isset($_GET['type-id']) && 0 != $_GET['type-id']) {
+                $type_id = $this->validateInput($_GET['type-id'], 'number', true);
+                $videos = DB::table('product_video_has_categories as pvc')
+                ->join('contents as c', 'c.id', '=', 'pvc.content_id')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->join('video_type as vt', 'vt.id', '=', 'pvc.categories_id')
+                ->join('video_type_translation as vtt', 'vtt.fk_vt_id', '=', 'vt.id')
+                ->where('ct.local', $lang)
+                ->where('vtt.local', $lang)
+                ->where('c.content_type', '=', 'video')
+                ->where('vt.id', $type_id)
+                ->where('c.status', 1)
+                ->select('c.*', 'ct.*', 'vtt.title as cateName', 'vt.color_type', 'pvc.categories_id as typeId', 'pvc.video_link')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->paginate(15);
+            } else {
+                $videos = DB::table('product_video_has_categories as pvc')
+                ->join('contents as c', 'c.id', '=', 'pvc.content_id')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->join('video_type as vt', 'vt.id', '=', 'pvc.categories_id')
+                ->join('video_type_translation as vtt', 'vtt.fk_vt_id', '=', 'vt.id')
+                ->where('ct.local', $lang)
+                ->where('vtt.local', $lang)
+                ->where('c.content_type', '=', 'video')
+                ->where('c.status', 1)
+                ->select('c.*', 'ct.*', 'vtt.title as cateName', 'vt.color_type', 'pvc.categories_id as typeId', 'pvc.video_link')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->paginate(15);
+            }
+
+            $metatag = DB::table('meta_tag_page as mtp')
+                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+                ->where('mtp.id', 7) // Video meta tag page id
+                ->where('mtpt.local', $lang)
+                ->select('mtp.*', 'mtpt.*')
+                ->get();
+
+            return view('front-end.video')
+            ->with('metatag', $metatag)
+            ->with('video_type', $video_type)
+            ->with('type_id', $type_id)
+            ->with('videos', $videos);
+        }
+
         if ('success-case' == $page) {
             $lang = App::getLocale();
 
@@ -2238,6 +2294,56 @@ class FrontendController extends Controller
         }
 
         return view('front-end.success-case-detail')
+          ->with('otherNews', $otherNews)
+          ->with('contents', $contents);
+    }
+
+    public function updateVideoDetail($namePar)
+    {
+        // Get the current URL
+        $currentUrl = url()->current();
+        $lowercaseUrl = strtolower($currentUrl);
+        // If the URL is not in lowercase, redirect to the lowercase version
+        if ($currentUrl !== $lowercaseUrl) {
+            return redirect()->to($lowercaseUrl, 301);
+        }
+        $lang = App::getLocale();
+        $name = $this->validateInput($namePar, 'text', true);
+        $contents = DB::table('product_video_has_categories as pvc')
+        ->join('contents as c', 'c.id', '=', 'pvc.content_id')
+        ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+        ->join('video_type as vt', 'vt.id', '=', 'pvc.categories_id')
+        ->join('video_type_translation as vtt', 'vtt.fk_vt_id', '=', 'vt.id')
+        ->where('c.slug', $name)
+        ->where('ct.local', '=', $lang)
+        ->where('vtt.local', '=', $lang)
+        ->where('c.content_type', '=', 'video')
+        ->select('c.*', 'ct.*', 'pvc.categories_id', 'pvc.video_link', 'vtt.title as cateName', 'vt.color_type')
+        ->orderBy('c.created_at', 'desc')
+        ->get();
+        if (0 == count($contents)) {
+            return response()->view('errors.404', [], 404);
+        }
+        $otherNews = [];
+        if (0 != count($contents)) {
+            $otherNews = DB::table('product_video_has_categories as pvc')
+            ->join('contents as c', 'c.id', '=', 'pvc.content_id')
+            ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+            ->join('video_type as vt', 'vt.id', '=', 'pvc.categories_id')
+            ->join('video_type_translation as vtt', 'vtt.fk_vt_id', '=', 'vt.id')
+            ->where('ct.local', '=', $lang)
+            ->where('vtt.local', '=', $lang)
+            ->where('c.id', '!=', $contents[0]->id)
+            ->where('pvc.categories_id', $contents[0]->categories_id)
+            ->where('c.content_type', '=', 'video')
+            ->select('c.*', 'ct.*', 'pvc.categories_id', 'vtt.title as cateName', 'vt.color_type')
+            ->where('c.status', 1)
+            ->limit(3)
+            ->orderBy('c.date_publish', 'desc')
+            ->get();
+        }
+        
+        return view('front-end.video-detail')
           ->with('otherNews', $otherNews)
           ->with('contents', $contents);
     }

@@ -91,6 +91,7 @@ Route::group([
 
             Route::get('/news/{name?}', 'FrontendController@updateNewsDetail')->name('updateNewsDetail');
             Route::get('/success-case/{name?}', 'FrontendController@updateSuccessCaseDetail')->name('updateSuccessCaseDetail');
+            Route::get('/video/{name?}', 'FrontendController@updateVideoDetail')->name('updateVideoDetail');
             Route::get('/events/{name?}', 'FrontendController@updateEventDetail')->name('updateEventDetail');
             Route::get('/technical-articles/{name?}', 'FrontendController@updateTechnicalDetail')->name('updateTechnicalDetail');
             Route::get('/product-notice/product-notice-detail', 'FrontendController@updateProductNoticelDetail')->name('updateProductNoticelDetail');
@@ -132,7 +133,7 @@ Route::prefix('/backend')->group(function () {
 
     Route::get('deshboard', 'HomeController@index')->name('deshboard');
 
-    Route::resource('doc_download', 'Doc_DownloadController');
+    // Route::resource('doc_download', 'Doc_DownloadController');
 
     //Language
     Route::resource('language', 'LanguageController');
@@ -334,6 +335,19 @@ Route::prefix('/backend')->group(function () {
     Route::post('copySuccessCasesingle', 'SuccessCaseController@copySuccessCasesingle')->name('copySuccessCasesingle');
     Route::post('copySuccessCase', 'SuccessCaseController@copySuccessCase')->name('copySuccessCase');
     Route::get('removeFileSuccessCaseDoc/{name?}/{id?}', 'SuccessCaseController@removeFileSuccessCaseDoc')->name('removeFileSuccessCaseDoc');
+
+    //Video Type
+    Route::resource('video-type', 'VideoTypeController');
+    Route::post('videoTypeUpdate', 'VideoTypeController@update')->name('videoTypeUpdate');
+    Route::get('videoTypeDestroy/{id?}', 'VideoTypeController@destroy')->name('videoTypeDestroy');
+
+    //Video
+    Route::resource('video', 'VideoController');
+    Route::post('videoUpdate', 'VideoController@update')->name('videoUpdate');
+    Route::get('destroyVideo/{id?}', 'VideoController@destroy')->name('destroyVideo');
+    Route::post('copyVideosingle', 'VideoController@copyVideosingle')->name('copyVideosingle');
+    Route::post('copyVideo', 'VideoController@copyVideo')->name('copyVideo');
+    Route::get('removeFileVideoDoc/{name?}/{id?}', 'VideoController@removeFileVideoDoc')->name('removeFileVideoDoc');
 
     //Event
     Route::resource('event', 'EventController');

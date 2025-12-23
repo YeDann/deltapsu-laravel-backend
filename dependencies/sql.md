@@ -141,7 +141,6 @@ VALUES
 ('Where_to_Buy', 'Where to Buy', 'jp');
 ```
 
-
 ## 9. 調整 main category 的資料 Industrial Power Supplies Modules - 分類更改
 
 ```sql
@@ -178,7 +177,7 @@ VALUES
 INSERT INTO `main_pro_categories` (`order_seq`, `active`, `created_at`, `updated_at`)
 VALUES (5, 1, NOW(), NOW());
 
-INSERT INTO `main_pro_categories_translations` (`tran_id`, `main_pro_id`, `name`, `local`)
+INSERT INTO `main_pro_categories_translations` (`main_pro_id`, `name`, `local`)
 VALUES
 (5, 'Configurable Power', 'en'),
 (5, '可配置電源', 'tw'),
@@ -204,7 +203,6 @@ VALUES
 ('Configurable_Power', 'Configurable Power', 'ru'),
 /* Japan (jp) - 日文 */
 ('Configurable_Power', 'Configurable Power', 'jp');
-
 ```
 
 ## 13. 加入 success case
@@ -227,6 +225,26 @@ VALUES
 ('Success_Case', 'Success Case', 'ru'),
 /* Japan (jp) - 日文 */
 ('Success_Case', 'Success Case', 'jp');
-
 ```
 
+## 14. 加入 Video
+
+```sql
+INSERT INTO `static_keyword` (`key_word`)
+VALUES ('Videos');
+
+INSERT INTO `static_keyword_translations` (`key_word`, `word`, `local`)
+VALUES
+/* English (en) - 原文 */
+('Videos', 'Videos', 'en'),
+/* Traditional Chinese (tw) - 繁體中文 */
+('Videos', '影音', 'tw'),
+/* Simplified Chinese (cn) - 簡體中文 */
+('Videos', '視頻', 'cn'),
+/* German (de) - 德文 */
+('Videos', 'Videos', 'de'),
+/* Russian (ru) - 俄文 */
+('Videos', 'Videos', 'ru'),
+/* Japan (jp) - 日文 */
+('Videos', 'Videos', 'jp');
+```
