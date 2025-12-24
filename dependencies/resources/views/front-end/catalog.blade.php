@@ -64,14 +64,93 @@
                     <li class="breadcrumb-item text-breadcrumb-home"><a
                             href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
                     <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
-                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['nav_dowloads']}}</a>
+                                data-toggle="dropdown" id="tools-dropdown"> {{$staticContent['Technical_Support']}}</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['nav_dowloads']}}</a>
+                            <li>
+                                <a href="#" class="text-bold">
+                                    {{ isset($staticContent['Technical_Support'])
+                                        ? $staticContent['Technical_Support']
+                                        : 'Technical Support' }}
+                                </a>
                             </li>
                             <hr>
-                            <li><a href="{{route('index','catalogs')}}">{{$staticContent['catalogs']}}</a></li>
-                            <li><a
-                                    href="{{route('index','product-documents')}}">{{$staticContent['Product_Documents']}}</a>
+                            <!-- Catalog / Documents -->
+                            <li>
+                                <a href="{{ route('index','catalogs') }}">
+                                    {{ isset($staticContent['catalogs']) ? $staticContent['catalogs'] : 'Catalogs' }}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('index','product-documents') }}">
+                                    {{ isset($staticContent['Product_Documents']) ? $staticContent['Product_Documents'] : 'Product Documents' }}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('productCoparison') }}">
+                                    {{ isset($staticContent['product_comparison'])
+                                        ? $staticContent['product_comparison']
+                                        : 'Product Comparison' }}
+                                </a>
+                            </li>
+
+                            <!-- News / Media -->
+                            <li>
+                                <a href="{{ route('index', [
+                                    'page' => 'news',
+                                    'type' => slugifyHead(isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How'),
+                                    'type-id' => isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->id : ''
+                                ]) }}">
+                                    {{ isset($newsTypes['Industry Know-How'])
+                                        ? $newsTypes['Industry Know-How']->typename
+                                        : 'Industry Know-How' }}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('index', ['page' => 'videos']) }}">
+                                    {{ isset($staticContent['Videos']) ? $staticContent['Videos'] : 'Videos' }}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('index', [
+                                    'page' => 'news',
+                                    'type' => slugifyHead(isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice'),
+                                    'type-id' => isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->id : ''
+                                ]) }}">
+                                    {{ isset($newsTypes['Product Notice'])
+                                        ? $newsTypes['Product Notice']->typename
+                                        : 'Product Notice' }}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('index', [
+                                    'page' => 'news',
+                                    'type' => slugifyHead(isset($newsTypes['EOL']) ? $newsTypes['EOL']->typename : 'EOL'),
+                                    'type-id' => isset($newsTypes['EOL']) ? $newsTypes['EOL']->id : ''
+                                ]) }}">
+                                    {{ isset($newsTypes['EOL'])
+                                        ? $newsTypes['EOL']->typename
+                                        : 'EOL' }}
+                                </a>
+                            </li>
+
+                            <!-- Support -->
+                            <li>
+                                <a href="{{ route('index','faqs') }}">
+                                    {{ isset($staticContent['FAQs']) ? $staticContent['FAQs'] : 'FAQs' }}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('contactSupport') }}">
+                                    {{ isset($staticContent['Technical_Service'])
+                                        ? $staticContent['Technical_Service']
+                                        : 'Technical Service' }}
+                                </a>
                             </li>
                         </ul>
                     </li>

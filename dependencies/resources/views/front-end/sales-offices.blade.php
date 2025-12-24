@@ -35,22 +35,18 @@
                     <li class="breadcrumb-item text-breadcrumb-home"><a
                             href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
                     <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
-                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Supports']}}</a>
+                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Where_to_Buy']}}</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Supports']}}</a>
+                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Where_to_Buy']}}</a>
                             </li>
                             <hr>
                             <li><a href="{{route('contactSupport')}}">{{$staticContent['contact_us']}}</a></li>
+                            <li><a href="{{route('contactFindDistributor')}}">{{$staticContent['find_a_distributor']}}</a></li>
                             <li><a href="{{route('contactSalesOffices')}}">{{$staticContent['sales_offices']}}</a></li>
-                            <li><a
-                                    href="{{route('contactFindDistributor')}}">{{$staticContent['find_a_distributor']}}</a>
-                            </li>
-                            <li><a href="{{route('index','faqs')}}">{{$staticContent['FAQs']}}</a></li>
                         </ul>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
                             href="#">{{$staticContent['sales_offices']}}</a></li>
-
                 </ol>
             </nav>
         </div>
