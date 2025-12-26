@@ -450,6 +450,11 @@
                     </a>
                 </li>
                 <li class="nav-main-item">
+                    <a class="nav-main-link active" href="{{route('video.index')}}">
+                        <span class="nav-main-link-name ">Videos</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
                     <a class="nav-main-link" href="{{route('event.index')}}">
                         <span class="nav-main-link-name ">Events</span>
                     </a>
