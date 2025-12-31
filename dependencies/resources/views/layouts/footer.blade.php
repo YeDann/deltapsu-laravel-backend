@@ -598,7 +598,7 @@
                     <div class="select input-label w-100 my-4">
                         <h6 class="mb-0"><label class="text-dark">{{$staticContent['Country']}}<span
                                     class="red">*</span></label></h6>
-                        <select name="country" class="form-control" id="countryId" required>
+                        <select name="country" class="form-control border-radius-6" id="countryId" required>
                             <option value="">{{isset($staticContent['Select'])? $staticContent['Select'] :"Select"}}
                                 {{isset($staticContent['Country'])?$staticContent['Country']:"Country"}}</option>
                             @foreach ($mail_chimp_country as $email)
@@ -610,7 +610,7 @@
                         <h6 class="mb-0"><label
                                 class="text-dark">{{isset($staticContent['Email_Address'])?$staticContent['Email_Address']:"Email
                                 Address"}}<span class="red">*</span></label></h6>
-                        <input type="email" class="form-control" name="email" required="required"
+                        <input type="email" class="form-control border-radius-6" name="email" required="required"
                             placeholder="Email Address">
                         {{-- <label for="email">Email Address</label> --}}
                     </div>
@@ -618,7 +618,7 @@
                         <h6 class="mb-0"><label
                                 class="text-dark">{{isset($staticContent['Name'])?$staticContent['Name']:"Name"}}<span
                                     class="red">*</span></label></h6>
-                        <input type="text" class="form-control" pattern="[A-Za-zก-๏\s]+" name="name" required="required"
+                        <input type="text" class="form-control border-radius-6" pattern="[A-Za-zก-๏\s]+" name="name" required="required"
                             placeholder="Name">
                         {{-- <label for="email">Name</label> --}}
                     </div>
