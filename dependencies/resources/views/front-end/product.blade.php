@@ -1023,17 +1023,26 @@
      * 包含系列、屬性、認證、狀態等篩選
      */
     function fillerData(){
+       // 初始化產品篩選陣列
        productFilter = [];
+       // 設定篩選模式為預設 (0)
        $('#current_method').val(0);
+       
+       // 1. 執行基礎篩選 (系列 Series)
        filterBaseData();
+       
       var arr_filterall = [];
+        
+        // 檢查是否所有篩選條件都屬於同一屬性類型
         checktypegroup = arr_type_an_val.every(
-                 function(val, i, arr){
-                    return  val.type === arr[0].type
-                 }
-            );
+            function(val, i, arr){
+               return  val.type === arr[0].type
+            }
+        );
 
         if(checktypegroup){
+            // 情況 A：單一屬性類型篩選 (例如僅篩選 Output Voltage)
+            // 邏輯：只要符合該類型中的任一條件即可 (OR 邏輯)
 
             $.each(productFilter, function(index,value){
             productFilter[index]['contentFilter'].filter(function(data) {
@@ -1092,6 +1101,8 @@
           });
 
         }else{
+            // 情況 B：多重屬性類型篩選 (例如同時篩選 Output Voltage 與 Input Voltage)
+            // 邏輯：必須同時符合所有不同類型的條件 (AND 邏輯)
 
             $.each(productFilter, function(index,value){
                 var arrcheck = [];
@@ -1156,25 +1167,33 @@
 
         }
 
+        // 2. 文字屬性篩選 (Input Text Filter)
         var resultinputtext = [];
         if(arr_type_an_val.length > 0){
+            // 若已有數值篩選結果，則基於該結果進行文字篩選
             resultinputtext  = loaddatafilterTypeText(arr_filterall);
         }else{
+            // 否則基於基礎篩選結果進行文字篩選
             resultinputtext  = loaddatafilterTypeText(productFilter);
         }
 
+        // 3. 安全認證篩選 (Safety/Certificate Filter)
         var resultCertificate = [];
         if(arr_safety.length > 0){
           resultCertificate = loadfilterCertificate(resultinputtext);
         }else{
           resultCertificate = resultinputtext;
         }
+        
+        // 4. 應用領域篩選 (Segment/Application Filter)
         var resultSegment = [];
         if(arr_cer.length > 0){
            resultSegment =  loadSegment(resultCertificate);
         }else{
           resultSegment = resultCertificate;
         }
+        
+        // 5. 產品狀態篩選 (Status Filter: New, EOL, etc.)
         var resultstatus = [];
         if(arr_status.length > 0){
             resultstatus =  filterStatusAll(resultSegment);
@@ -1183,17 +1202,21 @@
         }
 
 
-
+    // 最終篩選結果彙整
     var summaryResult = resultstatus;
+    
+    // 若有啟用任何篩選條件，更新 UI 顯示篩選後的結果
     if(arr_status.length > 0 ||  arr_cer.length > 0 ||  arr_safety.length > 0 || arr_type_an_val.length > 0 || arr_inputtxt.length > 0 ){
-        listItemFiler(summaryResult);
-        findresultfeildbypro(summaryResult);
-        productFilter = summaryResult;
+        listItemFiler(summaryResult); // 更新列表視圖
+        findresultfeildbypro(summaryResult); // 更新篩選器計數
+        productFilter = summaryResult; // 更新全域變數
      }else{
+        // 若無額外篩選條件，顯示基礎篩選結果
         listItemFiler(productFilter);
         findresultfeildbypro(productFilter);
      }
 
+      // 清空搜尋框內容
       $('#key_destop').val("");
       $('#key_mobile').val("");
     }

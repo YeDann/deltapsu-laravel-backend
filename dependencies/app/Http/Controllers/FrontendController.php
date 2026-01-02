@@ -1025,7 +1025,8 @@ class FrontendController extends Controller
         if (!is_numeric($main_cate_id)) {
             return response()->view('errors.404', [], 404);
         }
-        $mainCateId = $this->validateInput($main_cate_id, 'number', true);
+
+        $mainCateId = (int)$this->validateInput($main_cate_id, 'number', true);
 
         // 取得 main_pro_categories 底下的 子商品分類
         $categoriesHasMainPro = DB::table('categories_has_main_pro as chmp')
@@ -1057,7 +1058,7 @@ class FrontendController extends Controller
             ->first();
 
         // 以 子商品分類 id 取得資料，判斷若 url_item 不符合，則重新導向到正確的 URL
-        if ($cate && $cate->url_item !== $cate_parname) {
+        if ($mainCateId !== 3 && $cate && $cate->url_item !== $cate_parname) {
             return redirect()->route('productList', ['main_cate' => $mainCateId, 'cate_name' => $cate->url_item, 'cate_id' => $cate_par_id, 'se_name' => $se_par_name, 'se_id' => $se_par_id]);
         }
 
@@ -1070,18 +1071,26 @@ class FrontendController extends Controller
         $subCategoryIds = $categoriesHasMainPro->pluck('cate_id');
 
         // 根據 子商品分類，取得 商品資料
-        $searchProGrooupByPrdId = DB::table('product_has_categories as phc')
+        $searchProQuery = DB::table('product_has_categories as phc')
             ->join('products as p', 'p.pro_id', '=', 'phc.product_id') // join 商品
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id') // join 商品翻譯
-            ->leftJoin('series as s', 's.se_id', '=', 'p.series_id') // join 系列
-            ->whereIn('phc.categories_id', $subCategoryIds) // main_cate 底下的子分類
-            ->where('p.enable_pro', 1) // 篩選 啟用的商品
+            ->join('series as s', 's.se_id', '=', 'p.series_id'); // join 系列
+
+        // 不是 LED 主分類，則加入 子商品分類 篩選條件
+        if ($mainCateId !== 3) {
+            $searchProQuery = $searchProQuery->whereIn('phc.categories_id', $subCategoryIds); // main_cate 底下的子分類
+        } else {
+            // LED 主分類，加入 可選型號 篩選條件
+            $searchProQuery = $searchProQuery->whereNotNull('s.mode_series');
+        }
+
+        $searchProGroupByPrdId = $searchProQuery->where('p.enable_pro', 1) // 篩選 啟用的商品
             ->select('p.*', 'pt.*', 'phc.categories_id as cate_id', 's.mode_series')
             ->orderBy('p.pro_code', 'asc')
             ->get()
             ->groupBy('pro_id');
 
-        $searchProIds = $searchProGrooupByPrdId->keys();
+        $searchProIds = $searchProGroupByPrdId->keys();
 
         // 取得 商品的所有分類 ID (解決多分類與 Optional Model 篩選問題)
         $productCategories = DB::table('product_has_categories')
@@ -1113,8 +1122,8 @@ class FrontendController extends Controller
         $arrproid = [];
         $productsArr = [];
         $productCodeArr = [];
-
-        foreach ($searchProGrooupByPrdId as $prdId => $products) {
+        
+        foreach ($searchProGroupByPrdId as $prdId => $products) {
             // 取得 商品屬性資料
             $productHasPrm = $productHasPrmGroupByPrdId->get($prdId, collect());
 
@@ -1138,11 +1147,11 @@ class FrontendController extends Controller
 
                 // 取得 可選型號 商品資料
                 $optionalProduct = $optionalProducts->get($prdId, collect())->get($prolang, collect());
-
                 foreach ($optionalProduct as $optional) {
                     if (!in_array(trim($optional->optional_model), $productCodeArr)) {
                         // 將分類 ID 列表賦值給可選型號 (繼承主商品分類)
                         $optional->cate_ids = $cateIds;
+                        $optional->mode_series = $product->mode_series;
                         array_push($productsArr, $optional);
                     }
                 }
@@ -2342,7 +2351,7 @@ class FrontendController extends Controller
             ->orderBy('c.date_publish', 'desc')
             ->get();
         }
-        
+
         return view('front-end.video-detail')
           ->with('otherNews', $otherNews)
           ->with('contents', $contents);
