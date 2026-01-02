@@ -697,7 +697,7 @@
                                 ? $staticContent['catalogs'] 
                                 : 'catalogs' }}
                             </a>
-                            <a class="dropdown-item" ref="{{route('index','product-documents')}}">
+                            <a class="dropdown-item" href="{{route('index','product-documents')}}">
                                 {{isset($staticContent['Product_Documents']) 
                                 ? $staticContent['Product_Documents'] 
                                 : 'Product Documents' }}
@@ -1091,9 +1091,12 @@
             <a class="text-normal pl-3" href="{{route('index','catalogs')}}">{{isset($staticContent['catalogs'])?
                 $staticContent['catalogs'] :'catalogs' }} </a>
             
-            <a class="text-normal pl-3"
-                href="{{route('index','product-documents')}}">{{isset($staticContent['Product_Documents'])?
-                $staticContent['Product_Documents'] :'Product_Documents' }}</a>
+            <a class="text-normal pl-3" href="{{route('index','product-documents')}}">
+                {{  isset($staticContent['Product_Documents'])
+                    ? $staticContent['Product_Documents'] 
+                    : 'Product_Documents' 
+                }}
+            </a>
 
             <a class="text-normal pl-3" href="{{route('productCoparison')}}">
                 {{isset($staticContent['product_comparison'])?
