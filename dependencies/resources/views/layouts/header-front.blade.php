@@ -328,6 +328,23 @@
         transform: rotate(0deg) !important;
         padding: 6px 3px;
     }
+    .dropdown-submenu > .dropdown-menu {
+        display: block;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.1s ease;
+        transition-delay: 0.4s;
+    }
+    .dropdown-submenu:not(.news-submenu):hover > .dropdown-menu {
+        visibility: visible;
+        opacity: 1;
+        transition-delay: 0s;
+    }
+    .dropdown-submenu.show > .dropdown-menu {
+        visibility: visible;
+        opacity: 1;
+        transition-delay: 0s;
+    }
 </style>
 
 ?>
@@ -487,7 +504,7 @@
                             </div>
                             {{-- Sub1 工業電源及模組（Industrial_Power）--}}
                             <div class="dropdown-submenu">
-                                <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1" href="#">
+                                <a id="sub1" class="sub-menu dropdown-item" onmouseover="mainCate('sub1')" tabindex="-1" href="{{ (isset($navcategories2) && count($navcategories2) > 0) ? route('productList', [$navcategories2->first()->main_cateid]) : '#' }}">
                                     {{ isset($staticContent['Industrial_Power']) ? $staticContent['Industrial_Power'] : 'Industrial Power' }}
                                     <i class="zmdi zmdi-chevron-right"></i>
                                 </a>
@@ -539,7 +556,7 @@
 
                             {{-- Sub2 醫療電源（Medical Power Supplies）--}}
                             <div class="dropdown-submenu">
-                                <a id="sub2" class="sub-menu" onclick="mainCate('sub2')" tabindex="-1" href="#">
+                                <a id="sub2" class="sub-menu" onmouseover="mainCate('sub2')" tabindex="-1" href="{{ (isset($navcategories1) && count($navcategories1) > 0) ? route('productList', [$navcategories1->first()->main_cateid]) : '#' }}">
                                     {{ isset($staticContent['Medical_Power']) ? $staticContent['Medical_Power'] :'Medical Power' }} 
                                     <i class="zmdi zmdi-chevron-right"></i>
                                 </a>
@@ -589,8 +606,8 @@
                             {{-- Sub4 工業電池充電器（Industrial_Battery_Charging）--}}
                             <div class="dropdown-submenu">
                                 @if(isset($navcategories4) && count($navcategories4) > 0 )
-                                <a id="sub4" class="sub-menu dropdown-item " onclick="mainCate('sub4')" tabindex="-1"
-                                    href="#">{{ isset($staticContent['wireless_charging'])?
+                                <a id="sub4" class="sub-menu dropdown-item " onmouseover="mainCate('sub4')" tabindex="-1"
+                                    href="{{ route('productList', [$navcategories4->first()->main_cateid]) }}">{{ isset($staticContent['wireless_charging'])?
                                     $staticContent['wireless_charging'] :'Industrial Battery Charging' }} <i
                                         class="zmdi zmdi-chevron-right"></i></a>
                                 @endif
@@ -637,8 +654,8 @@
 
                             {{-- Sub3 LED電源（LED Driver）--}}
                             <div class="dropdown-submenu">
-                                <a id="sub3" class="sub-menu" onclick="mainCate('sub3')" tabindex="-1"
-                                    href="#">{{isset($staticContent['LED_Power'])?
+                                <a id="sub3" class="sub-menu" onmouseover="mainCate('sub3')" tabindex="-1"
+                                    href="{{ (isset($navcategories3) && count($navcategories3) > 0) ? route('productList', [$navcategories3->first()->main_cateid]) : '#' }}">{{isset($staticContent['LED_Power'])?
                                     $staticContent['LED_Power'] :'LED Driver' }} <i
                                         class="zmdi zmdi-chevron-right"></i></a>
                                 <ul class="dropdown-menu drp-subthree">
@@ -744,7 +761,7 @@
                             <i class="zmdi zmdi-chevron-down"></i>
                         </a>
                         <div class="dropdown-menu s-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
-                            <div class="dropdown-submenu">
+                            <div class="dropdown-submenu news-submenu">
                                 <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1" href="#">
                                     {{ isset($staticContent['Product_News']) ? $staticContent['Product_News'] : 'Product_News' }}
                                     <i class="zmdi zmdi-chevron-right"></i>
@@ -1689,3 +1706,4 @@
         </div>
     </div>
 </div>
+@include('layouts.header-front-script')

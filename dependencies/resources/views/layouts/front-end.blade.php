@@ -478,17 +478,6 @@ if (!Array.prototype.findIndex) {
                     e.stopPropagation();
                 });
             });
-
-             $(document).ready(function() {
-                $('.sp-dropdown a.sub-menu').on("click", function(e) {
-
-                  $('ul.drp-subthree').css( "display","none" )
-                  $(this).next('ul').toggle();
-                  e.stopPropagation();
-                  e.preventDefault();
-
-                });
-            });
     </script>
 
     <script>
@@ -888,7 +877,6 @@ if (!Array.prototype.findIndex) {
               $('.sp-dropdown').removeClass('show');
               $('.sub-menu').removeClass('active');
               $('#sub1').removeClass('show');
-              $('.drp-subthree').css('display','none');
         })
 
     </script>
@@ -963,7 +951,6 @@ if (!Array.prototype.findIndex) {
             var browVersion = navigator.sayswho.split(" ");
 
            var browVer = parseInt(browVersion[1])
-                //  console.log(browVersion[0]);
                if(browVersion[0] != 'Chrome' && browVersion[0] != 'Firefox' && browVersion[0] != 'Safari'){
                 document.getElementById("alert-browser-check").style.display ="block";
                }
