@@ -1152,27 +1152,28 @@ function retextdata($arr ,$unit){
             autoplayHoverPause:true
 
         });
+        const mainCateCount = {{ count($mainCategories) }};
         $("#product-selector-carousel").owlCarousel({
-            loop: true,
+            loop: false,
             margin: 10,
             dotsEach: 3,
             nav: true,
+            center: mainCateCount == 1,
             responsive: {
                 0: {
-                    items: 2
-
+                    items: 2,
                 },
                 600: {
-                    items: 3
+                    items: 3,
                 },
                 992: {
-                    items: 4
+                    items: 4,
                 },
                 1200: {
-                    items: 5
+                    items: 5,
                 },
                 1400: {
-                    items: 5
+                    items: 5,
                 }
             },
             navText: ['<i class="zmdi zmdi-chevron-left" aria-hidden="true"></i>',
