@@ -219,7 +219,7 @@
             <div class=" visible-up-922">
                 <div class="row mr-b-12px">
                     <div class="col-8  pad-ar-24px">
-                        <div class="border-2px p-3">
+                        <div class="border-2px p-3 border-radius-6">
                             <div class="scrollbar " id="style-1">
                                 <div class="force-overflow" id="content_event">
 
