@@ -34,7 +34,7 @@
     font-size: 0.865em !important;
 }
 #navbar {
-    height: 74px;
+    height: 64px;
 }
 .dropdown-item.active, .dropdown-item:active{
     background-color: #fff;
@@ -652,7 +652,7 @@ body {
 }
 
 .nav-search-btn {
-    border-bottom: 2px solid #444444;
+    /* border-bottom: 2px solid #444444; */
     color: #222222;
     word-spacing: 30px;
     font-style: italic;
