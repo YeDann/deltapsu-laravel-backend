@@ -333,8 +333,8 @@
                 <a href="{{ route('appDetail', ['name' => $item->slug_app, 'id' => $item->applica_id]) }}" class="hover-border-blue"
                     style="">
                     <div class="grid-item">
-                        <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy"
-                            class="grid-sub-pic">
+                        <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy" 
+                            class="grid-sub-pic" style="border-radius: 6px 0 0 6px">
                         </div>
                         <div class="grid-sub-text">
                             <img src="{{config('app.url')}}/medias/categories/{{$item->color_icon}}" alt="">
@@ -384,7 +384,7 @@
                     class="blogBox-mb moreBox-mb" style="display: none;">
                     <div class="grid-item">
                         <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy"
-                            class="grid-sub-pic">
+                            class="grid-sub-pic" style="border-radius: 6px 0 0 6px">
                         </div>
                         <div class="grid-sub-text">
                             <img class="lazyload"
