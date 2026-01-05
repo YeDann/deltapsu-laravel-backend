@@ -1276,18 +1276,17 @@
                         @foreach ($documents as $item)
                         @if($item->main_cate_id == 3)
                         <?php
-                    $date2 = getDateformat($item->created_at);
-                ?>
+                            $date2 = getDateformat($item->created_at);
+                        ?>
 
                         <div class="data-sheet-downloade d-flex justify-content-between ">
                             <div class="detail-downlode ">
                                 <p class="text-dark text-bold">{{$item->catename}}</p>
-                                <p class="text-dark">{{$staticContent['Uploaded_on']}} {{ $date2['d']
-                                    .'-'.$date2['m'].'-'.$date2['y']}} </p>
+                                <p class="text-dark">{{$staticContent['Uploaded_on']}} {{$date2['d'] . '-' . $date2['m'] . '-'.$date2['y']}}</p>
                             </div>
                             <a data-toggle="modal" data-target="#downloadgui-modal"
                                 onclick="downloadGUI('{{$item->file}}','{{setTextpro($product[0]['pro_code'])}}','{{$product[0]['cate_name']}}')"
-                                href="{{route('downloadFIle',[$item->slug,setTextpro($product[0]['pro_code'])])}}"
+                                {{-- href="{{route('downloadFIle',[$item->slug,setTextpro($product[0]['pro_code'])])}}" --}}
                                 target="_blank">
                                 <button class="btn-downlode">{{$staticContent['Downloads']}}</button>
                             </a>
@@ -1764,14 +1763,12 @@
               html += '</a>';
              $('#linkdownloadsuc').html(html);
              $("#downloadgui-modal-success").modal();
-
           });
         @endif
 
         @if(Session::has('errorSendMail'))
         $(document).ready(function() {
              $("#downloadgui-modal-failures").modal();
-
           });
         @endif
 </script>

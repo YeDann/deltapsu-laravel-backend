@@ -60,23 +60,21 @@
                 <tbody>
                     @if(isset($categories) and !empty($categories))
                     @foreach ($categories as $item)
-                    <td class="text-center">{{$loop->iteration}}</td>
-                    @if($item->main_cate_id == 1)
-                    <td class="d-none d-sm-table-cell">Documents</td>
-                    @elseif($item->main_cate_id == 2)
-                    <td class="d-none d-sm-table-cell">Certificate</td>
-                    @elseif($item->main_cate_id == 3)
-                    <td class="d-none d-sm-table-cell"> GUI Software</td>
-                    @endif
-                    <td class="d-none d-sm-table-cell">{{$item->title}}</td>
-                    <td class="d-none d-sm-table-cell">{{$item->created_at}}</td>
-                    <td class="text-center">
-                           
-                                <a href="{{route('editProDocCategories' ,$item->id)}}" class="btn btn-primary">Edit</a>
+                        <td class="text-center">{{$loop->iteration}}</td>
+                        @if($item->main_cate_id == 1)
+                        <td class="d-none d-sm-table-cell">Documents</td>
+                        @elseif($item->main_cate_id == 2)
+                        <td class="d-none d-sm-table-cell">Certificate</td>
+                        @elseif($item->main_cate_id == 3)
+                        <td class="d-none d-sm-table-cell"> GUI Software</td>
+                        @endif
+                        <td class="d-none d-sm-table-cell">{{$item->title}}</td>
+                        <td class="d-none d-sm-table-cell">{{$item->created_at}}</td>
+                        <td class="text-center">
+                            <a href="{{route('editProDocCategories' ,$item->id)}}" class="btn btn-primary">Edit</a>
                             <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
-                       
-                    </td>
-                    </tr>
+                        </td>
+                        </tr>
                     @endforeach
                     @endif
                 </tbody>
