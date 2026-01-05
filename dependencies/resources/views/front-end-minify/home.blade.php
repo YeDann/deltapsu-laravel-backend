@@ -332,7 +332,7 @@
                 @foreach ($applications as $item)
                 <a href="{{ route('appDetail', ['name' => $item->slug_app, 'id' => $item->applica_id]) }}" class="hover-border-blue"
                     style="">
-                    <div class="grid-item shadow-radius-box">
+                    <div class="grid-item">
                         <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy"
                             class="grid-sub-pic">
                         </div>
@@ -382,7 +382,7 @@
                 @foreach ($applications as $item)
                 <a href="{{route('appDetail' ,[ 'name' => $item->slug_app, 'id' => $item->applica_id])}}"
                     class="blogBox-mb moreBox-mb" style="display: none;">
-                    <div class="grid-item shadow-radius-box">
+                    <div class="grid-item">
                         <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy"
                             class="grid-sub-pic">
                         </div>
@@ -459,7 +459,7 @@ function retextdata($arr ,$unit){
                         $urlParams = [$serie->main_cateid, preg_replace('/\s+/', '-', $serie->url_item), $serie->cate_id, preg_replace('/\s+/', '', $serie->slug), $serie->se_id];
                     }
                 @endphp
-                <div class="series-list-home shadow-radius-box">
+                <div class="series-list-home">
                     <div class="">
                         <div class="d-block ">
                             <div class="m-auto series-img">
@@ -550,7 +550,7 @@ function retextdata($arr ,$unit){
                         $urlParams = [$serie->main_cateid, preg_replace('/\s+/', '-', $serie->url_item), $serie->cate_id, preg_replace('/\s+/', '', $serie->slug), $serie->se_id];
                     }
                 @endphp
-                <div class="series-list-home shadow-radius-box">
+                <div class="series-list-home">
                     <div class="">
                         <div class="d-block ">
                             <div class="m-auto series-img">
@@ -627,7 +627,7 @@ function retextdata($arr ,$unit){
                 <div class="col-lg-4">
                     <h2 class="text-title-delta-home">{{$staticContent['Upcoming_Event']}}</h2>
                     @if(isset($events[0]))
-                    <div class="card shadow-radius-box border-radius-6">
+                    <div class="card border-radius-6">
                         <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
                             <div class="post-image">
                                 <img data-src="{{config('app.url')}}/uploads_delta/{{$events[0]['thumb']}}"
@@ -666,7 +666,7 @@ function retextdata($arr ,$unit){
                 <div class="col-lg-4">
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
-                    <div class="card shadow-radius-box border-radius-6">
+                    <div class="card border-radius-6">
                         <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
                             <div class="post-image">
                                 <img data-src="{{config('app.url')}}/uploads_delta/{{$news[0]['thumb']}}" loading="lazy"
@@ -714,7 +714,7 @@ function retextdata($arr ,$unit){
                 </div>
                 <div class="col-lg-4">
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
-                    <div class="card shadow-radius-box border-radius-6">
+                    <div class="card border-radius-6">
                         <a href="{{route('index','faqs')}}">
                             <div class="post-image w-100">
 
@@ -753,7 +753,7 @@ function retextdata($arr ,$unit){
                 <div class="col-md-6">
                     <h2 class="text-title-delta-home">{{$staticContent['Upcoming_Event']}}</h2>
                     @if(isset($events[0]))
-                    <div class="card shadow-radius-box border-radius-6">
+                    <div class="card border-radius-6">
                         <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
                             <div class="post-image">
                                 @if(isset($events[0]['thumb']))
@@ -803,7 +803,7 @@ function retextdata($arr ,$unit){
                 <div class="col-md-6">
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
-                    <div class="card shadow-radius-box border-radius-6">
+                    <div class="card border-radius-6">
                         <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
                             <div class="post-image">
                                 @if(isset($news[0]['thumb']))
@@ -854,7 +854,7 @@ function retextdata($arr ,$unit){
                 </div>
                 <div class="col-md-6">
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
-                    <div class="card shadow-radius-box border-radius-6">
+                    <div class="card border-radius-6">
                         <a href="{{route('index','faqs')}}">
                             <div class="post-image w-100">
                                 <img src="{{config('app.url')}}/medias/static_content/{{$faqbanner->destop_image}}"
