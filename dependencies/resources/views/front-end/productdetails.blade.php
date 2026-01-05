@@ -824,14 +824,13 @@
                                 !!}
                             </div>
 
-                            {{-- <h5 class="text-color-delta mt-2">Optional Models </h5> --}}
                             @if(count($optional_pro) > 0)
                             <div id="box-optional-model" class="box-optional-model">
                                 <div class="box-optional-model-list collapsed" data-toggle="collapse"
                                     data-target="#collapse-box-optional-model" aria-expanded="true"
                                     aria-controls="collapse-box-optional-model" href="#collapse-box-optional-model">
                                     <a class="card-title text-sixteen-dark">
-                                      {{$staticContent['optional_models']}}
+                                        {{ isset($staticContent['optional_models']) ? $staticContent['optional_models'] : 'Optional Models' }}
                                     </a>
                                 </div>
                                 <div id="collapse-box-optional-model" aria-labelledby="collapse-box-optional-model"
@@ -841,7 +840,9 @@
                                         <thead class="thead-gray">
                                             <tr>
                                                 <th class="text-center" style="width: 40%">{{$staticContent['Model']}}</th>
-                                                <th class="text-center">{{$staticContent['description']}}</th>
+                                                <th class="text-center">
+                                                    {{ isset($staticContent['description']) ? $staticContent['description'] : 'Description' }}
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1182,7 +1183,7 @@
                                 data-target="#collapse-box-optional-model-mobile" aria-expanded="true"
                                 aria-controls="collapse-box-optional-model" href="#collapse-box-optional-model-mobile">
                                 <a class="card-title text-sixteen-dark">
-                                    {{$staticContent['optional_models']}}
+                                    {{ isset($staticContent['optional_models']) ? $staticContent['optional_models'] : 'Optional Models' }}
                                 </a>
                             </div>
                             <div id="collapse-box-optional-model-mobile" aria-labelledby="collapse-box-optional-model"
@@ -1192,7 +1193,9 @@
                                     <thead class="thead-gray">
                                         <tr>
                                             <th class="text-center" style="width: 40%">  {{$staticContent['Model']}}</th>
-                                            <th class="text-center">  {{$staticContent['description']}}</th>
+                                            <th class="text-center">  
+                                                {{ isset($staticContent['description']) ? $staticContent['description'] : 'Description' }}
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1624,7 +1627,11 @@
                     <div class="widget-bar"></div>
                     <h1 class="widget-title">{{ $staticContent['Looking_for_support_for_this'] }}</h1>
                     <p class="widget-text"></p> 
-                    <a href="{{ route('contactSupport') }}" class="widget-btn">{{ $staticContent['Get_Support'] }}</a>
+                    <a href="{{ route('contactSupport') }}">
+                        <button class="btn btn-subscribe">
+                            {{isset($staticContent['Get_Support'])?$staticContent['Get_Support']:"Get Support"}}
+                        </button>
+                    </a>
                 </article>
 
                 <article class="widget-card">
@@ -1632,8 +1639,12 @@
                     <h1 class="widget-title">{{ isset($staticContent['Subscribe_to_our_newsletter']) ?
                             $staticContent['Subscribe_to_our_newsletter'] : "Subscribe to our newsletter" }}</h1>
                     <p class="widget-text"></p>
-                    <a href="javascript:void(0);" onclick="resetfield();" data-toggle="modal" data-target="#subscribe-modal"
-                        class="widget-btn">{{ isset($staticContent['Subscribe']) ? $staticContent['Subscribe'] : "Subscribe" }}</a>
+
+                    <a href="javascript:void(0);">
+                        <button class="btn btn-subscribe" onclick="resetfield();" data-toggle="modal" data-target="#subscribe-modal">
+                            {{isset($staticContent['Subscribe'])?$staticContent['Subscribe']:"Subscribe"}}
+                        </button>
+                    </a>
                 </article>
             </div>
         </div>
