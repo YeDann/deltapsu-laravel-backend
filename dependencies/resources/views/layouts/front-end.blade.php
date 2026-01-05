@@ -351,45 +351,43 @@ $langch = str_replace('_', '-', app()->getLocale());
     </script>
 
     <script type="text/javascript">
-        var verifyCallbackData = function(response) {
-      $('#keyrecapgui').val(response);
-    };
-    var verifyCallbackDataSub = function(response) {
-      $('#key_input_subscribe').val(response);
-    };
-    var verifyCallback = function(response) {
-        $('#keyrecap').val(response);
-     };
-  var onloadCallback = function() {
-    grecaptcha.render('recap_vertifygetGui', {
-      'sitekey' : '{{config('app.recapcha_site_key')}}',
-      'callback' : verifyCallbackData,
-      'theme' : 'light'
-    });
-    grecaptcha.render('recap_vertify_subscribe', {
-      'sitekey' : '{{config('app.recapcha_site_key')}}',
-      'callback' : verifyCallbackDataSub,
-      'theme' : 'light'
-    });
-    grecaptcha.render('recap_vertify', {
-       'sitekey' : '{{config('app.recapcha_site_key')}}',
-      'callback' : verifyCallback,
-      'theme' : 'light'
-    });
-  };
+      var verifyCallbackData = function(response) {
+        $('#keyrecapgui').val(response);
+      };
+      var verifyCallbackDataSub = function(response) {
+        $('#key_input_subscribe').val(response);
+      };
+      var verifyCallback = function(response) {
+          $('#keyrecap').val(response);
+      };
+      var onloadCallback = function() {
+        grecaptcha.render('recap_vertifygetGui', {
+          'sitekey' : '{{config('app.recapcha_site_key')}}',
+          'callback' : verifyCallbackData,
+          'theme' : 'light'
+        });
+        grecaptcha.render('recap_vertify_subscribe', {
+          'sitekey' : '{{config('app.recapcha_site_key')}}',
+          'callback' : verifyCallbackDataSub,
+          'theme' : 'light'
+        });
+        grecaptcha.render('recap_vertify', {
+          'sitekey' : '{{config('app.recapcha_site_key')}}',
+          'callback' : verifyCallback,
+          'theme' : 'light'
+        });
+      };
 
-
-  function validateFormGUI(form){
-
-                if(!form.acceptPolicyGui.checked){
-                    $("#Support_policy_required").modal();
-                    return false;
-                }else if(form.keyresponseCap.value == ''){
-                    $("#downloadgui-modal-vetify-robot").modal();
-                    return false;
-                } else{
-                    return true;
-                }
+      function validateFormGUI(form){
+        if(!form.acceptPolicyGui.checked){
+          $("#Support_policy_required").modal();
+          return false;
+        }else if(form.keyresponseCap.value == ''){
+          $("#downloadgui-modal-vetify-robot").modal();
+          return false;
+        } else{
+          return true;
+        }
       }
     </script>
 
@@ -893,7 +891,7 @@ if (!Array.prototype.findIndex) {
 
     </script>
     <script>
-        function downloadGUI(file , procode ,proCate){
+        function downloadGUI(file, procode, proCate){
           $('#procodeGui').val(procode);
           $('#procateGui').val(proCate);
           $('#fileguidownload').val(file);

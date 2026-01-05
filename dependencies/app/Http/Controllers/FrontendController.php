@@ -4477,30 +4477,30 @@ class FrontendController extends Controller
                 $typeName = $this->validateInput($request->procateGui, 'text', true);
 
                 $subCategories = DB::table('sub_pro_categories as sp')
-            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
-            ->where('spt.local', '=', $lang)
-            ->where('spt.name', '=', $typeName)
-            ->where('sp.status', '=', 1)
-            ->select('sp.sub_pro_id')
-            ->orderBy('sp.order_seq', 'asc')
-            ->first();
+                    ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
+                    ->where('spt.local', '=', $lang)
+                    ->where('spt.name', '=', $typeName)
+                    ->where('sp.status', '=', 1)
+                    ->select('sp.sub_pro_id')
+                    ->orderBy('sp.order_seq', 'asc')
+                    ->first();
 
                 $path = base_path('../upload/product_files/') . $filename;
                 $emailsend = [];
 
                 DB::table('gui_downloads_email')->insert(
                     [
-                    'name' => $name,
-                    'tel' => $tel,
-                    'email' => $email,
-                    'company' => $company,
-                    'country' => $country,
-                    'filename' => $filename,
-                    'model' => $modelname,
-                    'type_name' => $typeName,
-                    'accept' => $acept,
-                    'created_at' => \Carbon\Carbon::now(),
-                ]
+                        'name' => $name,
+                        'tel' => $tel,
+                        'email' => $email,
+                        'company' => $company,
+                        'country' => $country,
+                        'filename' => $filename,
+                        'model' => $modelname,
+                        'type_name' => $typeName,
+                        'accept' => $acept,
+                        'created_at' => \Carbon\Carbon::now(),
+                    ]
                 );
 
                 if (1 == $acept) {
@@ -4508,11 +4508,11 @@ class FrontendController extends Controller
                 }
 
                 $emailSg1 = DB::table('email_notification as et')
-            ->select('et.*')
-            ->where('et.country', $country)
-            ->where('et.type', 1)
-            ->orderBy('et.country', 'asc')
-            ->first();
+                    ->select('et.*')
+                    ->where('et.country', $country)
+                    ->where('et.type', 1)
+                    ->orderBy('et.country', 'asc')
+                    ->first();
                 if (isset($emailSg1)) {
                     $emailg1 = explode(',', $emailSg1->email_gui);
                     if (count($emailg1) > 0) {
@@ -4526,11 +4526,11 @@ class FrontendController extends Controller
 
                 if ($subCategories && $subCategories->sub_pro_id) {
                     $emailSg3 = DB::table('email_notification as et')
-                    ->select('et.*')
-                    ->where('et.product_type', $subCategories->sub_pro_id)
-                    ->where('et.type', 3)
-                    ->orderBy('et.country', 'asc')
-                    ->first();
+                        ->select('et.*')
+                        ->where('et.product_type', $subCategories->sub_pro_id)
+                        ->where('et.type', 3)
+                        ->orderBy('et.country', 'asc')
+                        ->first();
                     if (isset($emailSg3)) {
                         $emailg3 = explode(',', $emailSg3->email);
                         if (count($emailg3) > 0) {
@@ -4543,8 +4543,9 @@ class FrontendController extends Controller
                     }
                 }
 
-                $email = Mail::to($emailsend)->send(new DowloadGui($request->except('_token')));
-                if (Mail::failures()) {
+                try {
+                    Mail::to($emailsend)->send(new DowloadGui($request->except('_token')));
+                } catch (\Exception $e) {
                     return \Redirect::back()->with('errorSendMail', 'ErorSendMail');
                 }
 
