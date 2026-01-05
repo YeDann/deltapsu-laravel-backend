@@ -210,11 +210,15 @@
                 <nav id="bar-product-type-nav">
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         @foreach ($mainCategories as $mainCate)
-                        <a class="nav-item nav-link {{($loop->iteration == 1)?" active":""}}"
-                            id="maincate{{$mainCate->main_id}}" data-toggle="tab"
-                            href="#tab_mainCate{{$mainCate->main_id}}" role="tab"
-                            aria-controls="tab_mainCate{{$mainCate->main_id}}s"
-                            aria-selected="true">{{$mainCate->name}}</a>
+                            @if($mainCate->main_id != 5)
+                                <a class="nav-item nav-link {{($loop->iteration == 1)?" active":""}}"
+                                    id="maincate{{$mainCate->main_id}}" data-toggle="tab"
+                                    href="#tab_mainCate{{$mainCate->main_id}}" role="tab"
+                                    aria-controls="tab_mainCate{{$mainCate->main_id}}s"
+                                    aria-selected="true">{{$mainCate->name}}</a>
+                            @else
+                                <a class="nav-item nav-link" href="{{ route('configurableproduct') }}">{{$mainCate->name}}</a>
+                            @endif
                         @endforeach
                     </div>
                 </nav>
@@ -276,6 +280,7 @@
         </div>
         {{-- delta industrial power supplies --}}
         @foreach ($mainCategories as $mainCate)
+        @continue($mainCate->main_id == 5)
         <div class="product-type-boxitem" id="tab_cate_main{{$mainCate->main_id}}">
             <div class="container">
                 <h2 class="text-title-delta">{{$mainCate->name}}</h2>
