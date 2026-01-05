@@ -287,7 +287,7 @@
                 @foreach ($subCategories as $subCate)
                 @if($subCate->main_cateid == $mainCate->main_id)
                 <div class="product-type-boxitem-sub" id="tab_cate{{$mainCate->main_id}}{{$subCate->sub_pro_id}}">
-                    <div class="product-type-boxitem-sub-banner rounded"
+                    <div class="product-type-boxitem-sub-banner border-radius-6"
                         style=" background-image: url('{{asset('frontend-asset/image/Categories@2x.png')}}');">
                         <div class="row" >
                             <div class="col-lg-6 product-type-boxitem-sub-banner-text">
