@@ -1439,8 +1439,8 @@
                                 <p class="text-dark">{{$staticContent['Uploaded_on']}} {{$date2['d'] . '-' . $date2['m'] . '-'.$date2['y']}}</p>
                             </div>
                             <a data-toggle="modal" data-target="#downloadgui-modal"
-                                onclick="downloadGUI('{{$item->file}}','{{setTextpro($product[0]['pro_code'])}}','{{$product[0]['cate_name']}}')"
-                                {{-- href="{{route('downloadFIle',[$item->slug,setTextpro($product[0]['pro_code'])])}}" --}}
+                                onclick="downloadGUI('{{$item->file}}', '{{setTextpro($product[0]['pro_code'])}}', '{{$product[0]['cate_name']}}')"
+                                {{-- href="{{route('downloadFIle',[$item->slug, setTextpro($product[0]['pro_code'])])}}" --}}
                                 target="_blank">
                                 <button class="btn-downlode">{{$staticContent['Downloads']}}</button>
                             </a>
@@ -1950,20 +1950,20 @@
 <script>
     @if(Session::has('messageGUI'))
         $(document).ready(function() {
-          var file =  '{{Session::get('messageGUI')}}';
-          var html = '';
-              html += '<a href="{{config('app.url')}}/upload/product_files/'+file +'" target="_blank">';
-              html += '{{config('app.url')}}/upload/product_files/'+file+'';
-              html += '</a>';
-             $('#linkdownloadsuc').html(html);
-             $("#downloadgui-modal-success").modal();
-          });
-        @endif
+            var file =  '{{Session::get('messageGUI')}}';
+            var html = '';
+                html += '<a href="{{config('app.url')}}/upload/product_files/'+file +'" target="_blank">';
+                html += '{{config('app.url')}}/upload/product_files/'+file+'';
+                html += '</a>';
+            $('#linkdownloadsuc').html(html);
+            $("#downloadgui-modal-success").modal();
+        });
+    @endif
 
-        @if(Session::has('errorSendMail'))
+    @if(Session::has('errorSendMail'))
         $(document).ready(function() {
-             $("#downloadgui-modal-failures").modal();
-          });
-        @endif
+            $("#downloadgui-modal-failures").modal();
+        });
+    @endif
 </script>
 @endsection
