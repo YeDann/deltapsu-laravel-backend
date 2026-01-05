@@ -54,9 +54,9 @@
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 1rem;
+        max-height: 85px;
+        object-fit: contain;
     }
-
-
 
     .btn.focus,
     .btn:focus {
@@ -303,8 +303,7 @@
             <div class="product-selector-list">
                 <div class="border-2px d-flex h-100 p-1 align-items-center border-radius-6">
                     <div class="m-auto">
-                        <a
-                            href="{{ route('productList',[$mainCate->main_id])}}">
+                        <a href="{{ route('productList',[$mainCate->main_id])}}">
                             @if($mainCate->banner != null)
                             <img data-src="{{config('app.url')}}/medias/categories/{{$mainCate->banner}}" loading="lazy"
                                 class="lazyload" alt="{{$mainCate->banner}}">
