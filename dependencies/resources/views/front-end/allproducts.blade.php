@@ -399,7 +399,7 @@
                         @if($serie->main_cate == $mainCate->main_id)
                         @if($serie->pro_categories_id == $subCate->sub_pro_id)
                         @if($serie->mode_series == $mode->id)
-                        <div class="series-list shadow-radius-box">
+                        <div class="series-list">
                             <div class="">
                                 <div class="d-block ">
                                     <div class="m-auto series-img">
@@ -476,7 +476,7 @@
                         @foreach ($series as $serie)
                         @if($serie->main_cate == $mainCate->main_id)
                         @if($serie->pro_categories_id == $subCate->sub_pro_id)
-                        <div class="series-list shadow-radius-box">
+                        <div class="series-list">
                             <div class="">
                                 <div class="d-block ">
                                     <div class="m-auto series-img">
@@ -742,7 +742,7 @@
                     @if($serie->main_cate == $mainCate->main_id)
                     @if($serie->pro_categories_id == $subCate->sub_pro_id)
                     @if($serie->mode_series == $mode->id)
-                    <div class="series-list shadow-radius-box">
+                    <div class="series-list">
                         <div class="">
                             <div class="d-block">
                                 <div class="m-auto series-img">
@@ -817,7 +817,7 @@
                     @foreach ($series as $serie)
                     @if($serie->main_cate == $mainCate->main_id)
                     @if($serie->pro_categories_id == $subCate->sub_pro_id)
-                    <div class="series-list shadow-radius-box">
+                    <div class="series-list">
                         <div class="">
                             <div class="d-block">
                                 <div class="m-auto series-img">
