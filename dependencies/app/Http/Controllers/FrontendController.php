@@ -4200,17 +4200,17 @@ class FrontendController extends Controller
 
                 DB::table('gui_downloads_email')->insert(
                     [
-                    'name' => $name,
-                    'tel' => $tel,
-                    'email' => $email,
-                    'company' => $company,
-                    'country' => $country,
-                    'filename' => $filename,
-                    'model' => $modelname,
-                    'type_name' => $typeName,
-                    'accept' => $acept,
-                    'created_at' => \Carbon\Carbon::now(),
-                ]
+                        'name' => $name,
+                        'tel' => $tel,
+                        'email' => $email,
+                        'company' => $company,
+                        'country' => $country,
+                        'filename' => $filename,
+                        'model' => $modelname,
+                        'type_name' => $typeName,
+                        'accept' => $acept,
+                        'created_at' => \Carbon\Carbon::now(),
+                    ]
                 );
 
                 if (1 == $acept) {
@@ -4253,8 +4253,9 @@ class FrontendController extends Controller
                     }
                 }
 
-                $email = Mail::to($emailsend)->send(new DowloadGui($request->except('_token')));
-                if (Mail::failures()) {
+                try {
+                    Mail::to($emailsend)->send(new DowloadGui($request->except('_token')));
+                } catch (\Exception $e) {
                     return \Redirect::back()->with('errorSendMail', 'ErorSendMail');
                 }
 
