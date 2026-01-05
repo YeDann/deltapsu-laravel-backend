@@ -910,8 +910,8 @@
                             {{-- <i class="zmdi zmdi-chevron-down"></i> --}}
                         </a>
                         <div class="dropdown-menu s-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
-                            <div class="dropdown-submenu news-submenu">
-                                <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1" href="#">
+                            <div class="dropdown-submenu">
+                                <a id="sub1" class="sub-menu dropdown-item " tabindex="-1" href="#">
                                     {{ isset($staticContent['Product_News']) ? $staticContent['Product_News'] : 'Product_News' }}
                                     <i class="zmdi zmdi-chevron-right"></i>
                                 </a>
@@ -944,19 +944,11 @@
                                             : 'Success Case' }}
                                         </a>
                                     </li>
-                                    <li>
-                                        <a tabindex="-1" href="{{route('index', ['page' => 'videos'])}}">
-                                            {{ isset($staticContent['Videos'])
-                                            ? $staticContent['Videos'] 
-                                            : 'Videos' }}
-                                        </a>
-                                    </li>
                                 </ul>
-
-                                <a class="dropdown-item" href="{{route('index','events')}}">
-                                    {{ isset($staticContent['Events'])
-                                    ? $staticContent['Events'] 
-                                    : 'Events' }}
+                            </div>
+                            <div class="dropdown-submenu">
+                                <a class="" href="{{ route('index','events') }}">
+                                    {{ isset($staticContent['Events']) ? $staticContent['Events'] : 'Events' }}
                                 </a>
                             </div>
                         </div>
