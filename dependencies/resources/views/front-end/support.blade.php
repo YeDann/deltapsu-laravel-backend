@@ -21,7 +21,7 @@
         background-position: right 50%;
         background-repeat: no-repeat;
         background-image: url('{{$imgDown}}');
-        font-size: 16px;
+        font-size: 16px !important;
     }
 
     .form-control:disabled,
