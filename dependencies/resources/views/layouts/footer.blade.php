@@ -22,7 +22,7 @@
                                 </span>
                                 <span class="border"></span>
                             </label>
-                            <button class="btn btn-subscribe" onclick="resetfield();" data-toggle="modal"
+                            <button class="btn btn-subscribe shadow-radius-box" onclick="resetfield();" data-toggle="modal"
                                 data-target="#subscribe-modal">{{isset($staticContent['Subscribe'])?$staticContent['Subscribe']:"Subscribe"}}</button>
                         </div>
                     </div>

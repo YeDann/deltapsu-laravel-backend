@@ -207,7 +207,7 @@
                                         {!!$banner->content!!}
                                     </div>
                                     @if($banner->btn_status == 1)
-                                    <button class="btn btn-subscribe">{{$banner->btn_name}}</button>
+                                    <button class="btn btn-subscribe shadow-radius-box">{{$banner->btn_name}}</button>
 
                                     @endif
                                 </div>
@@ -252,7 +252,7 @@
                                     </h2>
                                     @if($banner->btn_status == 1)
                                     <button
-                                        class="btn btn-subscribe mt-3 posit-btn-mobile">{{$banner->btn_name}}</button>
+                                        class="btn btn-subscribe mt-3 posit-btn-mobile shadow-radius-box">{{$banner->btn_name}}</button>
                                     @endif
                                 </div>
                             </div>
@@ -950,7 +950,7 @@ function retextdata($arr ,$unit){
                     {!! $static_content->content !!}
                 </div>
                 <a href="{{route('index','product-documents')}}">
-                    <button class="btn btn-subscribe" href="">{{$staticContent['Learn_More']}}</button>
+                    <button class="btn btn-subscribe shadow-radius-box" href="">{{$staticContent['Learn_More']}}</button>
                 </a>
             </div>
 
@@ -971,7 +971,7 @@ function retextdata($arr ,$unit){
                     {!! $static_content->content !!}
                 </div>
                 <a href="{{route('index','product-documents')}}">
-                    <button class="btn btn-subscribe" href="">{{$staticContent['Learn_More']}}</button>
+                    <button class="btn btn-subscribe shadow-radius-box" href="">{{$staticContent['Learn_More']}}</button>
                 </a>
             </div>
         </div>
