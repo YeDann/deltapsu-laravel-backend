@@ -298,7 +298,7 @@
   background-color: #ffffff;
   border-radius: 12px;
   padding: 32px 40px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 2px 7px 2px rgba(0,0,0,0.16)!important;
   max-width: 360px;
 }
 
