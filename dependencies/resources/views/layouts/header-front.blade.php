@@ -590,7 +590,7 @@
             <a class="navbar-brand" href="{{route('index','home')}}">
                 <img class="brand-image mt-1" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
             </a>
-            <a href="#" class="power-supplies-link">Standard Power Supplies</a>
+            <a href="#" class="power-supplies-link">{{ $staticContent['Standard_Power_Supplies'] }}</a>
             <a class="nav-search nav-link" id="dropdown08">
                 <div class="nav-search-btn"> 
                     {{-- {{isset($staticContent['Search'])?$staticContent['Search'] :''}} --}}
@@ -1006,7 +1006,7 @@
             <a class="col-nav navbar-brand-mobile d-flex justify-content-center" href="{{route('index','home')}}">
                 <img class="brand-image" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
             </a>
-            <a href="#" class="power-supplies-link-mobile">Standard Power Supplies</a>
+            <a href="#" class="power-supplies-link-mobile">{{ $staticContent['Standard_Power_Supplies'] }}</a>
             {{-- <div class="col-nav d-flex justify-content-end">
                 <div class="navbar-brand-mobile navbar-searchandlang" id="btn-search-mobile" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
