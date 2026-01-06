@@ -281,21 +281,8 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item text-breadcrumb-home"><a
 							href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-					<li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
-							data-toggle="dropdown" id="tools-dropdown"> {{$staticContent['Tools']}}</a>
-						<ul class="dropdown-menu">
-							<li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Tools']}}</a></li>
-							<hr>
-							<li><a href="{{route('productFinder')}}">{{$staticContent['Product_Selector']}}</a></li>
-							<li><a
-									href="{{route('configurableproduct')}}">{{$staticContent['configurable_power_selector']}}</a>
-							</li>
-							<li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a>
-							</li>
-						</ul>
-					</li>
 					<li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
-							href="#">{{$staticContent['configurable_power_selector']}}</a></li>
+                            href="#">{{$staticContent['Products']}}</a></li>
 				</ol>
 			</nav>
 		</div>
