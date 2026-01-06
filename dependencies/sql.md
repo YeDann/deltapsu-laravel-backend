@@ -270,3 +270,25 @@ VALUES
 /* Japan (jp) - 日文 */
 ('Download_AS_CSV', 'Download as CSV', 'jp');
 ```
+
+## 16. 加入 Standard_Power_Supplies 多語系設定
+
+```sql
+INSERT INTO `static_keyword` (`key_word`)
+VALUES ('Standard_Power_Supplies');
+
+INSERT INTO `static_keyword_translations` (`key_word`, `word`, `local`)
+VALUES
+/* English (en) - 原文 */
+('Standard_Power_Supplies', 'Standard Power Supplies', 'en'),
+/* Traditional Chinese (tw) - 繁體中文 */
+('Standard_Power_Supplies', 'Standard Power Supplies', 'tw'),
+/* Simplified Chinese (cn) - 簡體中文 */
+('Standard_Power_Supplies', 'Standard Power Supplies', 'cn'),
+/* German (de) - 德文 */
+('Standard_Power_Supplies', 'Standard Power Supplies', 'de'),
+/* Russian (ru) - 俄文 */
+('Standard_Power_Supplies', 'Standard Power Supplies', 'ru'),
+/* Japan (jp) - 日文 */
+('Standard_Power_Supplies', 'Standard Power Supplies', 'jp');
+```
