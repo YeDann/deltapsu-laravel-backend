@@ -9272,7 +9272,7 @@ html[html_lang="ru"] label {
     font-size: 0.865em !important;
 }
 #navbar {
-    height: 74px;
+    height: 64px;
 }
 .dropdown-item.active, .dropdown-item:active{
     background-color: #fff;
@@ -9548,7 +9548,7 @@ body {
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
-    padding: 20px 15px;
+    padding: 20px 12px;
     outline: none;
     /* padding-right: 15px;
     padding-left: 15px; */
@@ -9890,7 +9890,7 @@ body {
 }
 
 .nav-search-btn {
-    border-bottom: 2px solid #444444;
+    /* border-bottom: 2px solid #444444; */
     color: #222222;
     word-spacing: 30px;
     font-style: italic;
@@ -10767,7 +10767,7 @@ a:hover {
 }
 
 .owl-theme .owl-nav [class*='owl-'] {
-  color: #000 !important;
+  color: #007bff !important;
   font-size: 30px !important;
   margin: 5px;
   padding: 4px 7px;
@@ -16390,7 +16390,8 @@ e.search-filter-action {
 
 .shadow-radius-box{
     border-radius: 6px;
-    box-shadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.1), -2px 2px 7px 2px rgba(0, 0, 0, 0.1), 4px 4px 7px 2px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.1), -2px 2px 7px 2px rgba(0, 0, 0, 0.1), 4px 4px 7px 2px rgba(0, 0, 0, 0.1); */
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.16) 0px 2px 7px 2px;
 }
 
 .visible-mobile-only .margin-p-left-card .shadow-radius-box{

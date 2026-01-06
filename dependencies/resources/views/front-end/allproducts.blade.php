@@ -210,11 +210,15 @@
                 <nav id="bar-product-type-nav">
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         @foreach ($mainCategories as $mainCate)
-                        <a class="nav-item nav-link {{($loop->iteration == 1)?" active":""}}"
-                            id="maincate{{$mainCate->main_id}}" data-toggle="tab"
-                            href="#tab_mainCate{{$mainCate->main_id}}" role="tab"
-                            aria-controls="tab_mainCate{{$mainCate->main_id}}s"
-                            aria-selected="true">{{$mainCate->name}}</a>
+                            @if($mainCate->main_id != 5)
+                                <a class="nav-item nav-link {{($loop->iteration == 1)?" active":""}}"
+                                    id="maincate{{$mainCate->main_id}}" data-toggle="tab"
+                                    href="#tab_mainCate{{$mainCate->main_id}}" role="tab"
+                                    aria-controls="tab_mainCate{{$mainCate->main_id}}s"
+                                    aria-selected="true">{{$mainCate->name}}</a>
+                            @else
+                                <a class="nav-item nav-link" href="{{ route('configurableproduct') }}">{{$mainCate->name}}</a>
+                            @endif
                         @endforeach
                     </div>
                 </nav>
@@ -276,15 +280,16 @@
         </div>
         {{-- delta industrial power supplies --}}
         @foreach ($mainCategories as $mainCate)
+        @continue($mainCate->main_id == 5)
         <div class="product-type-boxitem" id="tab_cate_main{{$mainCate->main_id}}">
             <div class="container">
                 <h2 class="text-title-delta">{{$mainCate->name}}</h2>
                 @foreach ($subCategories as $subCate)
                 @if($subCate->main_cateid == $mainCate->main_id)
                 <div class="product-type-boxitem-sub" id="tab_cate{{$mainCate->main_id}}{{$subCate->sub_pro_id}}">
-                    <div class="product-type-boxitem-sub-banner"
+                    <div class="product-type-boxitem-sub-banner border-radius-6"
                         style=" background-image: url('{{asset('frontend-asset/image/Categories@2x.png')}}');">
-                        <div class="row">
+                        <div class="row" >
                             <div class="col-lg-6 product-type-boxitem-sub-banner-text">
                                 @if($subCate->sub_pro_id == 7 )
                                 <a class="text-more_detail" href="{{route('configurableProductDetail')}}">
@@ -394,7 +399,7 @@
                         @if($serie->main_cate == $mainCate->main_id)
                         @if($serie->pro_categories_id == $subCate->sub_pro_id)
                         @if($serie->mode_series == $mode->id)
-                        <div class="series-list shadow-radius-box">
+                        <div class="series-list">
                             <div class="">
                                 <div class="d-block ">
                                     <div class="m-auto series-img">
@@ -471,7 +476,7 @@
                         @foreach ($series as $serie)
                         @if($serie->main_cate == $mainCate->main_id)
                         @if($serie->pro_categories_id == $subCate->sub_pro_id)
-                        <div class="series-list shadow-radius-box">
+                        <div class="series-list">
                             <div class="">
                                 <div class="d-block ">
                                     <div class="m-auto series-img">
@@ -737,7 +742,7 @@
                     @if($serie->main_cate == $mainCate->main_id)
                     @if($serie->pro_categories_id == $subCate->sub_pro_id)
                     @if($serie->mode_series == $mode->id)
-                    <div class="series-list shadow-radius-box">
+                    <div class="series-list">
                         <div class="">
                             <div class="d-block">
                                 <div class="m-auto series-img">
@@ -812,7 +817,7 @@
                     @foreach ($series as $serie)
                     @if($serie->main_cate == $mainCate->main_id)
                     @if($serie->pro_categories_id == $subCate->sub_pro_id)
-                    <div class="series-list shadow-radius-box">
+                    <div class="series-list">
                         <div class="">
                             <div class="d-block">
                                 <div class="m-auto series-img">

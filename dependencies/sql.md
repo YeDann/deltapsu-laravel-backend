@@ -248,3 +248,25 @@ VALUES
 /* Japan (jp) - 日文 */
 ('Videos', 'Videos', 'jp');
 ```
+
+## 15. 加入 Download_AS_CSV 多語系設定
+
+```sql
+INSERT INTO `static_keyword` (`key_word`)
+VALUES ('Download_AS_CSV');
+
+INSERT INTO `static_keyword_translations` (`key_word`, `word`, `local`)
+VALUES
+/* English (en) - 原文 */
+('Download_AS_CSV', 'Download as CSV', 'en'),
+/* Traditional Chinese (tw) - 繁體中文 */
+('Download_AS_CSV', 'Download as CSV', 'tw'),
+/* Simplified Chinese (cn) - 簡體中文 */
+('Download_AS_CSV', 'Download as CSV', 'cn'),
+/* German (de) - 德文 */
+('Download_AS_CSV', 'Download as CSV', 'de'),
+/* Russian (ru) - 俄文 */
+('Download_AS_CSV', 'Download as CSV', 'ru'),
+/* Japan (jp) - 日文 */
+('Download_AS_CSV', 'Download as CSV', 'jp');
+```

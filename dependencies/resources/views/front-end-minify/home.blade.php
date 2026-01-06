@@ -54,9 +54,9 @@
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 1rem;
+        max-height: 85px;
+        object-fit: contain;
     }
-
-
 
     .btn.focus,
     .btn:focus {
@@ -207,7 +207,7 @@
                                         {!!$banner->content!!}
                                     </div>
                                     @if($banner->btn_status == 1)
-                                    <button class="btn btn-subscribe">{{$banner->btn_name}}</button>
+                                    <button class="btn btn-subscribe shadow-radius-box">{{$banner->btn_name}}</button>
 
                                     @endif
                                 </div>
@@ -252,7 +252,7 @@
                                     </h2>
                                     @if($banner->btn_status == 1)
                                     <button
-                                        class="btn btn-subscribe mt-3 posit-btn-mobile">{{$banner->btn_name}}</button>
+                                        class="btn btn-subscribe mt-3 posit-btn-mobile shadow-radius-box">{{$banner->btn_name}}</button>
                                     @endif
                                 </div>
                             </div>
@@ -303,8 +303,7 @@
             <div class="product-selector-list">
                 <div class="border-2px d-flex h-100 p-1 align-items-center border-radius-6">
                     <div class="m-auto">
-                        <a
-                            href="{{ route('productList',[$mainCate->main_id])}}">
+                        <a href="{{ route('productList',[$mainCate->main_id])}}">
                             @if($mainCate->banner != null)
                             <img data-src="{{config('app.url')}}/medias/categories/{{$mainCate->banner}}" loading="lazy"
                                 class="lazyload" alt="{{$mainCate->banner}}">
@@ -332,9 +331,9 @@
                 @foreach ($applications as $item)
                 <a href="{{ route('appDetail', ['name' => $item->slug_app, 'id' => $item->applica_id]) }}" class="hover-border-blue"
                     style="">
-                    <div class="grid-item shadow-radius-box">
-                        <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy"
-                            class="grid-sub-pic">
+                    <div class="grid-item">
+                        <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy" 
+                            class="grid-sub-pic" style="border-radius: 6px 0 0 6px">
                         </div>
                         <div class="grid-sub-text">
                             <img src="{{config('app.url')}}/medias/categories/{{$item->color_icon}}" alt="">
@@ -382,9 +381,9 @@
                 @foreach ($applications as $item)
                 <a href="{{route('appDetail' ,[ 'name' => $item->slug_app, 'id' => $item->applica_id])}}"
                     class="blogBox-mb moreBox-mb" style="display: none;">
-                    <div class="grid-item shadow-radius-box">
+                    <div class="grid-item">
                         <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy"
-                            class="grid-sub-pic">
+                            class="grid-sub-pic" style="border-radius: 6px 0 0 6px">
                         </div>
                         <div class="grid-sub-text">
                             <img class="lazyload"
@@ -459,7 +458,7 @@ function retextdata($arr ,$unit){
                         $urlParams = [$serie->main_cateid, preg_replace('/\s+/', '-', $serie->url_item), $serie->cate_id, preg_replace('/\s+/', '', $serie->slug), $serie->se_id];
                     }
                 @endphp
-                <div class="series-list-home shadow-radius-box">
+                <div class="series-list-home">
                     <div class="">
                         <div class="d-block ">
                             <div class="m-auto series-img">
@@ -550,7 +549,7 @@ function retextdata($arr ,$unit){
                         $urlParams = [$serie->main_cateid, preg_replace('/\s+/', '-', $serie->url_item), $serie->cate_id, preg_replace('/\s+/', '', $serie->slug), $serie->se_id];
                     }
                 @endphp
-                <div class="series-list-home shadow-radius-box">
+                <div class="series-list-home">
                     <div class="">
                         <div class="d-block ">
                             <div class="m-auto series-img">
@@ -627,7 +626,7 @@ function retextdata($arr ,$unit){
                 <div class="col-lg-4">
                     <h2 class="text-title-delta-home">{{$staticContent['Upcoming_Event']}}</h2>
                     @if(isset($events[0]))
-                    <div class="card shadow-radius-box border-radius-6">
+                    <div class="card border-radius-6">
                         <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
                             <div class="post-image">
                                 <img data-src="{{config('app.url')}}/uploads_delta/{{$events[0]['thumb']}}"
@@ -666,7 +665,7 @@ function retextdata($arr ,$unit){
                 <div class="col-lg-4">
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
-                    <div class="card shadow-radius-box border-radius-6">
+                    <div class="card border-radius-6">
                         <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
                             <div class="post-image">
                                 <img data-src="{{config('app.url')}}/uploads_delta/{{$news[0]['thumb']}}" loading="lazy"
@@ -714,7 +713,7 @@ function retextdata($arr ,$unit){
                 </div>
                 <div class="col-lg-4">
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
-                    <div class="card shadow-radius-box border-radius-6">
+                    <div class="card border-radius-6">
                         <a href="{{route('index','faqs')}}">
                             <div class="post-image w-100">
 
@@ -753,7 +752,7 @@ function retextdata($arr ,$unit){
                 <div class="col-md-6">
                     <h2 class="text-title-delta-home">{{$staticContent['Upcoming_Event']}}</h2>
                     @if(isset($events[0]))
-                    <div class="card shadow-radius-box border-radius-6">
+                    <div class="card border-radius-6">
                         <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
                             <div class="post-image">
                                 @if(isset($events[0]['thumb']))
@@ -803,7 +802,7 @@ function retextdata($arr ,$unit){
                 <div class="col-md-6">
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
-                    <div class="card shadow-radius-box border-radius-6">
+                    <div class="card border-radius-6">
                         <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
                             <div class="post-image">
                                 @if(isset($news[0]['thumb']))
@@ -854,7 +853,7 @@ function retextdata($arr ,$unit){
                 </div>
                 <div class="col-md-6">
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
-                    <div class="card shadow-radius-box border-radius-6">
+                    <div class="card border-radius-6">
                         <a href="{{route('index','faqs')}}">
                             <div class="post-image w-100">
                                 <img src="{{config('app.url')}}/medias/static_content/{{$faqbanner->destop_image}}"
@@ -951,7 +950,7 @@ function retextdata($arr ,$unit){
                     {!! $static_content->content !!}
                 </div>
                 <a href="{{route('index','product-documents')}}">
-                    <button class="btn btn-subscribe" href="">{{$staticContent['Learn_More']}}</button>
+                    <button class="btn btn-subscribe shadow-radius-box" href="">{{$staticContent['Learn_More']}}</button>
                 </a>
             </div>
 
@@ -972,7 +971,7 @@ function retextdata($arr ,$unit){
                     {!! $static_content->content !!}
                 </div>
                 <a href="{{route('index','product-documents')}}">
-                    <button class="btn btn-subscribe" href="">{{$staticContent['Learn_More']}}</button>
+                    <button class="btn btn-subscribe shadow-radius-box" href="">{{$staticContent['Learn_More']}}</button>
                 </a>
             </div>
         </div>
@@ -1152,27 +1151,28 @@ function retextdata($arr ,$unit){
             autoplayHoverPause:true
 
         });
+        const mainCateCount = {{ count($mainCategories) }};
         $("#product-selector-carousel").owlCarousel({
-            loop: true,
+            loop: false,
             margin: 10,
             dotsEach: 3,
             nav: true,
+            center: mainCateCount == 1,
             responsive: {
                 0: {
-                    items: 2
-
+                    items: 2,
                 },
                 600: {
-                    items: 3
+                    items: 3,
                 },
                 992: {
-                    items: 4
+                    items: 4,
                 },
                 1200: {
-                    items: 5
+                    items: 5,
                 },
                 1400: {
-                    items: 5
+                    items: 5,
                 }
             },
             navText: ['<i class="zmdi zmdi-chevron-left" aria-hidden="true"></i>',

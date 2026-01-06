@@ -281,21 +281,8 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item text-breadcrumb-home"><a
 							href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
-					<li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
-							data-toggle="dropdown" id="tools-dropdown"> {{$staticContent['Tools']}}</a>
-						<ul class="dropdown-menu">
-							<li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Tools']}}</a></li>
-							<hr>
-							<li><a href="{{route('productFinder')}}">{{$staticContent['Product_Selector']}}</a></li>
-							<li><a
-									href="{{route('configurableproduct')}}">{{$staticContent['configurable_power_selector']}}</a>
-							</li>
-							<li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a>
-							</li>
-						</ul>
-					</li>
 					<li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
-							href="#">{{$staticContent['configurable_power_selector']}}</a></li>
+                            href="#">{{$staticContent['Products']}}</a></li>
 				</ol>
 			</nav>
 		</div>
@@ -360,9 +347,8 @@
 					<h4 class="text-color-delta">{{$staticContent['Select_Output(s)']}}</h4>
 				</div>
 				<div class="row add-space-mobile reverse-on-mobile ">
-
 					<div class="col-lg-12 col-md-12 order-lg-2">
-						<div class="row  mt-lg-5">
+						<div class="row mt-lg-5">
 							<div class="col-lg-6">
 								<h5 class="visible-up-922">{{$staticContent['Select_Output(s)']}}</h5>
 								<div class="slot ">
@@ -374,19 +360,20 @@
 								</button>
 							</div>
 							<div class="col-lg-6">
-								<div class="row mt-3 pt-2 add-space-mobile border-t-2px">
+								<div class="visible-up-922" style="height: 34px"></div>
+								<div class="row add-space-mobile border-t-2px">
 									<div class="col-4 column-total">
 										<label for="output_total">
 											<h5>{{$staticContent['Total_No_of_Output']}}</h5>
 										</label>
-										<input type="text" id="output_total" name="output_total" class="form-control"
+										<input type="text" id="output_total" name="output_total" class="form-control border-radius-6"
 											value="1" disabled="disabled">
 									</div>
 									<div class="col-4 offset-4 column-total">
 										<label for="power">
 											<h5>{{$staticContent['Total_Output_Power']}}</h5>
 										</label>
-										<input type="text" id="power" name="power" class="form-control" value=""
+										<input type="text" id="power" name="power" class="form-control border-radius-6" value=""
 											disabled="disabled" placeholder="Total Power">
 									</div>
 								</div>
@@ -1627,7 +1614,7 @@
 			text += '</select>';
 			text += '</div>';
 			text += '<div class="input col-3 column-input">';
-			text += '<input type="text" name="watt[]" class="form-control" value="" disabled="disabled" placeholder="{{$staticContent['power']}} '+index;
+			text += '<input type="text" name="watt[]" class="form-control border-radius-6" value="" disabled="disabled" placeholder="{{$staticContent['power']}} '+index;
 			text += (type == 2) ? '.'+(i+1):'';
 			text += '" >';
 			text += '</div>';

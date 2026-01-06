@@ -47,7 +47,7 @@
     .select-language{
         font-size: 22px !important;
     }
-} */
+    } */
     .pad-logout {
         padding: 0 5px;
         color: #444444;
@@ -296,6 +296,150 @@
         transform: translateY(-6px) rotate(-45deg);
     }
 
+    /* Power Supplies link - aligned with navbar-brand bottom */
+    .power-supplies-link {
+        position: absolute;
+        left: 180px; /* logo位置 + logo寬度 + 26px間距 */
+        top: 25px; /* 先試試這個位置 */
+        color: #444444;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 18px;
+        z-index: 5;
+        line-height: 1;
+    }
+
+    .power-supplies-link:hover {
+        color: #6c757d;
+        text-decoration: none;
+    }
+
+    /* Override original mr-center-nav - keep it centered with constraints */
+    .mr-center-nav {
+        margin: 0 auto !important; /* 保持置中 */
+        width: fit-content !important; /* 只佔用需要的寬度 */
+        position: relative !important;
+        left: 200px; /* 稍微向右偏移，平衡logo和Power Supplies的空間 */
+    }
+
+    /* Make search icon larger and align automatically */
+    .nav-search {
+        top: auto !important; /* 讓它自動對齊 */
+    }
+    
+    .nav-search .fa-search {
+        font-size: 22px;
+    }
+
+    /* Ensure nav-link-list is the positioning context */
+    .nav-link-list {
+        position: relative !important;
+    }
+
+    /* Power Supplies link for mobile/tablet - align to bottom of nav-link-list */
+    .power-supplies-link-mobile {
+        color: #444444;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 10px;
+        white-space: nowrap;
+        position: absolute;
+        left: calc(50% + 75px); /* logo 中心 + logo 寬度一半 + 一點距離 */
+        bottom: 0; /* 貼齊 nav-link-list 底部 */
+    }
+
+    .power-supplies-link-mobile:hover {
+        color: #6c757d;
+        text-decoration: none;
+    }
+
+    /* Responsive font size for small screens */
+    @media (max-width: 375px) {
+        .power-supplies-link-mobile {
+            font-size: 8px;
+        }
+    }
+
+    @media (max-width: 320px) {
+        .power-supplies-link-mobile {
+            font-size: 6px;
+        }
+    }
+
+    /* Remove original header bar line */
+    .header-bar-line {
+        border-bottom: none !important;
+    }
+
+    .header-bar-line::before,
+    .header-bar-line::after {
+        display: none !important;
+    }
+
+    /* New header color bar */
+    .header-color-bar {
+        height: 7px;
+        background-color: #64d7d7;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 1032; /* 比 nav-firts 的 1031 高 */
+    }
+
+    /* Push nav-firts down */
+    .nav-firts {
+        top: 7px !important; /* 往下推 7px */
+    }
+
+    /* Header color bar for both desktop and mobile */
+    .header-color-bar,
+    .header-color-bar-mobile {
+        height: 7px;
+        background-color: #64d7d7;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 1032;
+    }
+
+    .header-color-bar::before,
+    .header-color-bar-mobile::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 60%;
+        height: 100%;
+        background-color: #0087dc;
+    }
+
+    .header-color-bar::after,
+    .header-color-bar-mobile::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 20%;
+        height: 100%;
+        background-color: #b9eb5f;
+    }
+
+    /* Push nav-mobile down and remove original color bar */
+    .nav-mobile {
+        margin-top: 7px !important;
+        border-bottom: none !important;
+    }
+
+    .nav-mobile::before,
+    .nav-mobile::after {
+        display: none !important;
+    }
+
+
     .font-size-tab {
         color: #0087DC !important;
     }
@@ -328,11 +472,28 @@
         transform: rotate(0deg) !important;
         padding: 6px 3px;
     }
+    .dropdown-submenu > .dropdown-menu {
+        display: block;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.1s ease;
+        transition-delay: 0.4s;
+    }
+    .dropdown-submenu:not(.news-submenu):hover > .dropdown-menu {
+        visibility: visible;
+        opacity: 1;
+        transition-delay: 0s;
+    }
+    .dropdown-submenu.show > .dropdown-menu {
+        visibility: visible;
+        opacity: 1;
+        transition-delay: 0s;
+    }
 </style>
 
-?>
 <div class="invisible-nav-minimize">
-
+    <div class="header-color-bar"></div>
+    
     <div class="nav-firts ">
         <div class="alert-browser" id="alert-browser-check" style="display: none;">
             <div class="color-yellow">
@@ -429,9 +590,11 @@
             <a class="navbar-brand" href="{{route('index','home')}}">
                 <img class="brand-image mt-1" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
             </a>
+            <a href="#" class="power-supplies-link">Standard Power Supplies</a>
             <a class="nav-search nav-link" id="dropdown08">
-                <div class="nav-search-btn"> {{isset($staticContent['Search'])?$staticContent['Search'] :''}} <i
-                        class="fa fa-search"></i>
+                <div class="nav-search-btn"> 
+                    {{-- {{isset($staticContent['Search'])?$staticContent['Search'] :''}} --}}
+                    <i class="fa fa-search"></i>
                 </div>
             </a>
 
@@ -476,7 +639,7 @@
                         <a id="nav-uderline" class="nav-link" id="dropdown01" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             {{ isset($staticContent['Products']) ? $staticContent['Products'] : 'Products' }}
-                            <i class="zmdi zmdi-chevron-down"></i>
+                            {{-- <i class="zmdi zmdi-chevron-down"></i> --}}
                         </a>
                         <div class="dropdown-menu s-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
                             {{-- 全部商品列表（Products_Overview）--}}
@@ -487,7 +650,7 @@
                             </div>
                             {{-- Sub1 工業電源及模組（Industrial_Power）--}}
                             <div class="dropdown-submenu">
-                                <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1" href="#">
+                                <a id="sub1" class="sub-menu dropdown-item" onmouseover="mainCate('sub1')" tabindex="-1" href="{{ (isset($navcategories2) && count($navcategories2) > 0) ? route('productList', [$navcategories2->first()->main_cateid]) : '#' }}">
                                     {{ isset($staticContent['Industrial_Power']) ? $staticContent['Industrial_Power'] : 'Industrial Power' }}
                                     <i class="zmdi zmdi-chevron-right"></i>
                                 </a>
@@ -539,7 +702,7 @@
 
                             {{-- Sub2 醫療電源（Medical Power Supplies）--}}
                             <div class="dropdown-submenu">
-                                <a id="sub2" class="sub-menu" onclick="mainCate('sub2')" tabindex="-1" href="#">
+                                <a id="sub2" class="sub-menu" onmouseover="mainCate('sub2')" tabindex="-1" href="{{ (isset($navcategories1) && count($navcategories1) > 0) ? route('productList', [$navcategories1->first()->main_cateid]) : '#' }}">
                                     {{ isset($staticContent['Medical_Power']) ? $staticContent['Medical_Power'] :'Medical Power' }} 
                                     <i class="zmdi zmdi-chevron-right"></i>
                                 </a>
@@ -589,8 +752,8 @@
                             {{-- Sub4 工業電池充電器（Industrial_Battery_Charging）--}}
                             <div class="dropdown-submenu">
                                 @if(isset($navcategories4) && count($navcategories4) > 0 )
-                                <a id="sub4" class="sub-menu dropdown-item " onclick="mainCate('sub4')" tabindex="-1"
-                                    href="#">{{ isset($staticContent['wireless_charging'])?
+                                <a id="sub4" class="sub-menu dropdown-item " onmouseover="mainCate('sub4')" tabindex="-1"
+                                    href="{{ route('productList', [$navcategories4->first()->main_cateid]) }}">{{ isset($staticContent['wireless_charging'])?
                                     $staticContent['wireless_charging'] :'Industrial Battery Charging' }} <i
                                         class="zmdi zmdi-chevron-right"></i></a>
                                 @endif
@@ -637,8 +800,8 @@
 
                             {{-- Sub3 LED電源（LED Driver）--}}
                             <div class="dropdown-submenu">
-                                <a id="sub3" class="sub-menu" onclick="mainCate('sub3')" tabindex="-1"
-                                    href="#">{{isset($staticContent['LED_Power'])?
+                                <a id="sub3" class="sub-menu" onmouseover="mainCate('sub3')" tabindex="-1"
+                                    href="{{ (isset($navcategories3) && count($navcategories3) > 0) ? route('productList', [$navcategories3->first()->main_cateid]) : '#' }}">{{isset($staticContent['LED_Power'])?
                                     $staticContent['LED_Power'] :'LED Driver' }} <i
                                         class="zmdi zmdi-chevron-right"></i></a>
                                 <ul class="dropdown-menu drp-subthree">
@@ -671,8 +834,10 @@
                     <li class="nav-item dropdown ">
                         {{-- Applications 主連結 --}}
                         <a id="nav-uderline" class="nav-link " href="" id="dropdown03" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false"> {{isset($staticContent['Applications'])?
-                            $staticContent['Applications'] :'Applications' }} <i class="zmdi zmdi-chevron-down"></i></a>
+                            aria-haspopup="true" aria-expanded="false">
+                            {{ isset($staticContent['Applications']) ? $staticContent['Applications'] : 'Applications' }} 
+                            {{-- <i class="zmdi zmdi-chevron-down"></i> --}}
+                        </a>
                         <div class="dropdown-menu s-menu" role="menu" aria-labelledby="dropdown03">
                             {{-- 迴圈顯示所有應用領域 --}}
                             @if(isset($navapplication))
@@ -688,16 +853,17 @@
                     {{-- Technical Support --}}
                     <li class="nav-item dropdown">
                         <a id="nav-uderline" class="nav-link " href="" id="dropdown06" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">{{isset($staticContent['Technical_Support'])?
-                            $staticContent['Technical_Support'] : 'Technical Support' }}
-                            <i class="zmdi zmdi-chevron-down"></i></a>
+                            aria-expanded="false">
+                            {{ isset($staticContent['Technical_Support']) ? $staticContent['Technical_Support'] : 'Technical Support' }}
+                            {{-- <i class="zmdi zmdi-chevron-down"></i> --}}
+                        </a>
                         <div class="dropdown-menu megamenu sp-dropdown02 s-menu" aria-labelledby="dropdown06">
                             <a class="dropdown-item" href="{{route('index','catalogs')}}">
                                 {{isset($staticContent['catalogs'])
                                 ? $staticContent['catalogs'] 
                                 : 'catalogs' }}
                             </a>
-                            <a class="dropdown-item" ref="{{route('index','product-documents')}}">
+                            <a class="dropdown-item" href="{{route('index','product-documents')}}">
                                 {{isset($staticContent['Product_Documents']) 
                                 ? $staticContent['Product_Documents'] 
                                 : 'Product Documents' }}
@@ -741,11 +907,11 @@
                         <a id="nav-uderline" class="nav-link" id="dropdown01" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             {{ isset($staticContent['Updates']) ? $staticContent['Updates'] : 'Updates' }}
-                            <i class="zmdi zmdi-chevron-down"></i>
+                            {{-- <i class="zmdi zmdi-chevron-down"></i> --}}
                         </a>
                         <div class="dropdown-menu s-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
                             <div class="dropdown-submenu">
-                                <a id="sub1" class="sub-menu dropdown-item " onclick="mainCate('sub1')" tabindex="-1" href="#">
+                                <a id="sub1" class="sub-menu dropdown-item " tabindex="-1" href="#">
                                     {{ isset($staticContent['Product_News']) ? $staticContent['Product_News'] : 'Product_News' }}
                                     <i class="zmdi zmdi-chevron-right"></i>
                                 </a>
@@ -778,19 +944,11 @@
                                             : 'Success Case' }}
                                         </a>
                                     </li>
-                                    <li>
-                                        <a tabindex="-1" href="{{route('index', ['page' => 'videos'])}}">
-                                            {{ isset($staticContent['Videos'])
-                                            ? $staticContent['Videos'] 
-                                            : 'Videos' }}
-                                        </a>
-                                    </li>
                                 </ul>
-
-                                <a class="dropdown-item" href="{{route('index','events')}}">
-                                    {{ isset($staticContent['Events'])
-                                    ? $staticContent['Events'] 
-                                    : 'Events' }}
+                            </div>
+                            <div class="dropdown-submenu">
+                                <a class="" href="{{ route('index','events') }}">
+                                    {{ isset($staticContent['Events']) ? $staticContent['Events'] : 'Events' }}
                                 </a>
                             </div>
                         </div>
@@ -800,11 +958,11 @@
                     <li class="nav-item dropdown ">
                         <a id="nav-uderline" class="nav-link" href="" id="dropdown07" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                            {{isset($staticContent['Where_to_Buy'])
+                            {{ isset($staticContent['Where_to_Buy'])
                                 ? $staticContent['Where_to_Buy'] 
                                 : 'Where_to_Buy' 
                             }}
-                            <i class="zmdi zmdi-chevron-down"></i>
+                            {{-- <i class="zmdi zmdi-chevron-down"></i> --}}
                         </a>
                         <div class="dropdown-menu megamenu s-menu" aria-labelledby="dropdown07">
                             <a class="dropdown-item" href="{{route('contactSupport')}}">
@@ -833,6 +991,7 @@
 </div>
 </div>
 <div class="visible-nav-minimize">
+    <div class="header-color-bar-mobile"></div>
     <div class="nav-mobile scrolled w-100">
         <div class="nav-link-list d-flex">
             <a class="col-nav navbar-brand-mobile" href="#" onclick="openNav();">
@@ -847,6 +1006,7 @@
             <a class="col-nav navbar-brand-mobile d-flex justify-content-center" href="{{route('index','home')}}">
                 <img class="brand-image" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
             </a>
+            <a href="#" class="power-supplies-link-mobile">Standard Power Supplies</a>
             {{-- <div class="col-nav d-flex justify-content-end">
                 <div class="navbar-brand-mobile navbar-searchandlang" id="btn-search-mobile" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
@@ -1091,9 +1251,12 @@
             <a class="text-normal pl-3" href="{{route('index','catalogs')}}">{{isset($staticContent['catalogs'])?
                 $staticContent['catalogs'] :'catalogs' }} </a>
             
-            <a class="text-normal pl-3"
-                href="{{route('index','product-documents')}}">{{isset($staticContent['Product_Documents'])?
-                $staticContent['Product_Documents'] :'Product_Documents' }}</a>
+            <a class="text-normal pl-3" href="{{route('index','product-documents')}}">
+                {{  isset($staticContent['Product_Documents'])
+                    ? $staticContent['Product_Documents'] 
+                    : 'Product_Documents' 
+                }}
+            </a>
 
             <a class="text-normal pl-3" href="{{route('productCoparison')}}">
                 {{isset($staticContent['product_comparison'])?
@@ -1686,3 +1849,4 @@
         </div>
     </div>
 </div>
+@include('layouts.header-front-script')
