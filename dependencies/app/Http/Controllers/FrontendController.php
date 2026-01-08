@@ -937,19 +937,19 @@ class FrontendController extends Controller
         ->get();
 
         $mainCategories = DB::table('main_pro_categories as mp')
-        ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
-        ->where('mpt.local', '=', $lang)
-        ->select('mp.*', 'mpt.*')
-        ->orderBy('mp.order_seq', 'asc')
-        ->get();
-
+            ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
+            ->where('mpt.local', '=', $lang)
+            ->select('mp.*', 'mpt.*')
+            ->orderBy('mp.order_seq', 'asc')
+            ->get();
+        
         $subCategories = DB::table('categories_has_main_pro as chmp')
-        ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
-        ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
-        ->select('sc.*', 'sct.*', 'chmp.*')
-        ->where('sct.local', $lang)
-        ->orderBy('chmp.order_seq', 'asc')
-        ->get();
+            ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
+            ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
+            ->select('sc.*', 'sct.*', 'chmp.*')
+            ->where('sct.local', $lang)
+            ->orderBy('chmp.order_seq', 'asc')
+            ->get();
 
         $series = DB::table('series_has_pro_categories as sc')
         ->join('series as s', 'sc.se_id', '=', 's.se_id')
