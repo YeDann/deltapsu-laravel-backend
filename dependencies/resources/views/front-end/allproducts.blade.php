@@ -210,15 +210,15 @@
                 <nav id="bar-product-type-nav">
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         @foreach ($mainCategories as $mainCate)
-                            @if($mainCate->main_id != 5)
+                            {{-- @if($mainCate->main_id != 5) --}}
                                 <a class="nav-item nav-link {{($loop->iteration == 1)?" active":""}}"
                                     id="maincate{{$mainCate->main_id}}" data-toggle="tab"
                                     href="#tab_mainCate{{$mainCate->main_id}}" role="tab"
                                     aria-controls="tab_mainCate{{$mainCate->main_id}}s"
                                     aria-selected="true">{{$mainCate->name}}</a>
-                            @else
+                            {{-- @else
                                 <a class="nav-item nav-link" href="{{ route('configurableproduct') }}">{{$mainCate->name}}</a>
-                            @endif
+                            @endif --}}
                         @endforeach
                     </div>
                 </nav>
@@ -265,6 +265,14 @@
                                     <img src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" class=""
                                         alt="">
                                     @endif
+                                    @elseif($mainCate->main_id == 5)
+                                    @if(isset($subCate->image_type5))
+                                    <img src="{{config('app.url')}}/medias/categories/{{$subCate->image_type5}}"
+                                        class="" alt="">
+                                    @else
+                                    <img src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" class=""
+                                        alt="">
+                                    @endif
                                     @endif
                                 </div>
                                 <div class="carousel__item-name">{{$subCate->name}}</div>
@@ -280,7 +288,7 @@
         </div>
         {{-- delta industrial power supplies --}}
         @foreach ($mainCategories as $mainCate)
-        @continue($mainCate->main_id == 5)
+        {{-- @continue($mainCate->main_id == 5) --}}
         <div class="product-type-boxitem" id="tab_cate_main{{$mainCate->main_id}}">
             <div class="container">
                 <h2 class="text-title-delta">{{$mainCate->name}}</h2>
@@ -399,7 +407,7 @@
                         @if($serie->main_cate == $mainCate->main_id)
                         @if($serie->pro_categories_id == $subCate->sub_pro_id)
                         @if($serie->mode_series == $mode->id)
-                        <div class="series-list">
+                        <div class="series-list border-radius-6">
                             <div class="">
                                 <div class="d-block ">
                                     <div class="m-auto series-img">
@@ -476,7 +484,7 @@
                         @foreach ($series as $serie)
                         @if($serie->main_cate == $mainCate->main_id)
                         @if($serie->pro_categories_id == $subCate->sub_pro_id)
-                        <div class="series-list">
+                        <div class="series-list border-radius-6">
                             <div class="">
                                 <div class="d-block ">
                                     <div class="m-auto series-img">
@@ -742,7 +750,7 @@
                     @if($serie->main_cate == $mainCate->main_id)
                     @if($serie->pro_categories_id == $subCate->sub_pro_id)
                     @if($serie->mode_series == $mode->id)
-                    <div class="series-list">
+                    <div class="series-list border-radius-6">
                         <div class="">
                             <div class="d-block">
                                 <div class="m-auto series-img">
@@ -817,7 +825,7 @@
                     @foreach ($series as $serie)
                     @if($serie->main_cate == $mainCate->main_id)
                     @if($serie->pro_categories_id == $subCate->sub_pro_id)
-                    <div class="series-list">
+                    <div class="series-list border-radius-6">
                         <div class="">
                             <div class="d-block">
                                 <div class="m-auto series-img">
