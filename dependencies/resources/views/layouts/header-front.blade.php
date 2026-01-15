@@ -242,9 +242,10 @@
     }
 
     .icon-serch {
-        margin-top: 10px;
-        margin-right: 10px;
+        margin-top: 6px;
+        margin-right: 5px;
         color: #444444;
+        font-size: 22px;
     }
 
     .menu-buger {
@@ -264,7 +265,7 @@
 
     .bar {
         height: 3px;
-        width: 29px;
+        width: 25px;
         display: block;
         margin: 5px auto;
         position: relative;
@@ -279,10 +280,10 @@
     }
 
     .menu-buger.active .bar:nth-of-type(1) {
-        -moz-transform: translateY(10px) rotate(45deg);
-        -ms-transform: translateY(10px) rotate(45deg);
-        -webkit-transform: translateY(10px) rotate(45deg);
-        transform: translateY(10px) rotate(45deg);
+        -moz-transform: translateY(9px) rotate(45deg);
+        -ms-transform: translateY(9px) rotate(45deg);
+        -webkit-transform: translateY(9px) rotate(45deg);
+        transform: translateY(9px) rotate(45deg);
     }
 
     .menu-buger.active .bar:nth-of-type(2) {
@@ -290,10 +291,10 @@
     }
 
     .menu-buger.active .bar:nth-of-type(3) {
-        -moz-transform: translateY(-6px) rotate(-45deg);
-        -ms-transform: translateY(-6px) rotate(-45deg);
-        -webkit-transform: translateY(-6px) rotate(-45deg);
-        transform: translateY(-6px) rotate(-45deg);
+        -moz-transform: translateY(-7px) rotate(-45deg);
+        -ms-transform: translateY(-7px) rotate(-45deg);
+        -webkit-transform: translateY(-7px) rotate(-45deg);
+        transform: translateY(-7px) rotate(-45deg);
     }
 
     /* Power Supplies link - aligned with navbar-brand bottom */
@@ -341,10 +342,10 @@
         color: #444444;
         text-decoration: none;
         font-weight: bold;
-        font-size: 10px;
+        font-size: 12px;
         white-space: nowrap;
         position: absolute;
-        left: calc(50% + 75px); /* logo 中心 + logo 寬度一半 + 一點距離 */
+        /* left: calc(50% + 75px); logo 中心 + logo 寬度一半 + 一點距離 */
         bottom: 0; /* 貼齊 nav-link-list 底部 */
     }
 
@@ -396,7 +397,7 @@
     /* Header color bar for both desktop and mobile */
     .header-color-bar,
     .header-color-bar-mobile {
-        height: 7px;
+        height: 5px;
         background-color: #64d7d7;
         position: fixed;
         top: 0;
@@ -406,6 +407,9 @@
         z-index: 1032;
     }
 
+    .header-color-bar-mobile {
+        height: 3px;
+    }
     .header-color-bar::before,
     .header-color-bar-mobile::before {
         content: '';
@@ -428,9 +432,14 @@
         background-color: #b9eb5f;
     }
 
+    .header-shadow{
+        box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+        --tw-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10) !important;
+    }
+
     /* Push nav-mobile down and remove original color bar */
     .nav-mobile {
-        margin-top: 7px !important;
+        margin-top: 3px !important;
         border-bottom: none !important;
     }
 
@@ -449,7 +458,7 @@
     }
 
     .img-icon-golang {
-        height: 28px;
+        height: 22px;
         margin-top: -2px;
     }
 
@@ -500,110 +509,78 @@
                 We recommend using the latest version of Chrome, Firefox or Safari.
             </div>
         </div>
-        <div class="container">
+        <div class="container container-gap-nav">
             @if(session('partner_id') == null)
             <a class="d-flex" href="{{route('index','login')}}">
-                <img class="mr-1" src="{{asset('frontend-asset/image/person-login.svg')}}" alt="">
+                {{-- <img class="mr-1" src="{{asset('frontend-asset/image/person-login.svg')}}" alt=""> --}}
                 <div class="link-nav-first">
-                    {{isset($staticContent['Login']) ? $staticContent['Login']:'' }}
+                    {{isset($staticContent['Login']) ? $staticContent['Login'] : ''}}
                 </div>
-            </a> <span class="fs-front">|</span>
+            </a> 
+            {{-- <span class="fs-front">|</span> --}}
             @else
-
-            <a class="pad-logout fs-front" href="{{route('index','login')}}"> <img
-                    src="{{asset('frontend-asset/image/person-login.svg')}}" alt="">{{session('partner_firstname')}}</a>
-            <span class="fs-front">/</span> <a href="{{route('index','logoutfrontend')}}"
-                class="pad-logout fs-front">{{isset($staticContent['Logout'])?
-                $staticContent['Logout'] :'Logout' }}</a>
-            <span class="fs-front">|</span>
-
+            <a class="pad-logout fs-front" href="{{route('index','login')}}">
+                <img src="{{asset('frontend-asset/image/person-login.svg')}}" alt="">{{session('partner_firstname')}}
+            </a>
+            <span class="fs-front">/</span> 
+            <a href="{{route('index','logoutfrontend')}}" class="pad-logout fs-front">
+                {{isset($staticContent['Logout']) ? $staticContent['Logout'] : 'Logout'}}
+            </a>
+            {{-- <span class="fs-front">|</span> --}}
             @endif
             <a class="d-flex" onclick="subscribe()" data-toggle="modal" data-target="#subscribe-modal">
-                <img class="mr-1" src="{{asset('frontend-asset/image/sub-new.svg')}}" alt="">
+                {{-- <img class="mr-1" src="{{asset('frontend-asset/image/sub-new.svg')}}" alt=""> --}}
                 <div class="link-nav-first">
-
                     {{isset($staticContent['Subscribe']) ? $staticContent['Subscribe']:'' }}
                 </div>
             </a>
-            <span class="fs-front">|</span>
+            {{-- <span class="fs-front">|</span> --}}
             <a class="d-flex" href="{{route('contactSupport')}}">
-                <img src="{{asset('frontend-asset/image/question.webp')}}" alt="" class="mr-2 icon-img-menu-top">
+                {{-- <img src="{{asset('frontend-asset/image/question.webp')}}" alt="" class="mr-2 icon-img-menu-top"> --}}
                 <div class="link-nav-first">
                     {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}
                 </div>
             </a>
-
-            <span class="fs-front">|</span>
-            <a class="lang-space link-nav-first dropdown-toggle text-uppercase" id="dropdown06" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                @if(App::getLocale() == 'cn')
-                简中
-                @elseif(App::getLocale() == 'tw')
-                繁中
-                @else
-                {{App::getLocale()}}
-                @endif
-
-                <i class="zmdi zmdi-chevron-down"></i></a>
-            <div class="dropdown-menu" aria-labelledby="about-us">
-                @if(isset($language))
-                @foreach ($language as $item)
-                <?php
-                $current = null;
-                foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties) {
-                    if ($item->name == $localeCode) {
-                        $current = $localeCode;
-                        break;
-                    }
-                }
-               ?>
-                <a onclick="setlocaltion('{{$current}}','{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}');"
-                    class="dropdown-item lang-drop-down text-uppercase cur-link {{App::getLocale()== $current ? 'active' : ''}}">
-                    @if($current == 'cn')
-                    简中
-                    @elseif($current == 'tw')
-                    繁中
-                    @else
-                    {{$current}}
-                    @endif
-                </a>
-                @endforeach
-                @endif
-            </div>
-            <span class="fs-front">|</span>
-            <div class="dropdown">
-                <a class="dropdown-toggle cur-lang-new-g" data-toggle="dropdown">
-                    <img class="img-icon-golang" src="{{asset('frontend-asset/image/icon/Global.svg')}}">
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a href="https://www.deltapsu.com">Global</a></li>
-                    <li><a href="https://www.deltapsu.cn" target="_blank">China - 简体中文</a></li>
-                </ul>
-            </div>
+            {{-- <span class="fs-front">|</span> --}}
+            
+            
 
         </div>
 
     </div>
-    <div class="nav-position des-scrolled">
+    <div class="nav-position des-scrolled nav-underline">
         <div class="container nav-here">
-
-            <a class="navbar-brand" href="{{route('index','home')}}">
+            <a class="navbar-brand" href="https://www.deltaww.com">
                 <img class="brand-image mt-1" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
             </a>
             <a href="#" class="power-supplies-link">{{ $staticContent['Standard_Power_Supplies'] }}</a>
-            <a class="nav-search nav-link" id="dropdown08">
-                <div class="nav-search-btn"> 
-                    {{-- {{isset($staticContent['Search'])?$staticContent['Search'] :''}} --}}
-                    <i class="fa fa-search"></i>
+            <div class="nav-search" style="display: flex;gap: 16px;">
+                <a class="nav-link" id="dropdown08" style="padding-top: 0px;">
+                    <div class="nav-search-btn"> 
+                        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21L16.1667 16.1667M18.7778 9.88889C18.7778 14.7981 14.7981 18.7778 9.88889 18.7778C4.97969 18.7778 1 14.7981 1 9.88889C1 4.97969 4.97969 1 9.88889 1C14.7981 1 18.7778 4.97969 18.7778 9.88889Z" stroke="#646464" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        {{-- {{isset($staticContent['Search'])?$staticContent['Search'] :''}} --}}
+                        {{-- <i class="fa fa-search"></i> --}}
+                    </div>
+                </a>
+                <div class="dropdown">
+                    <a class="dropdown-toggle cur-lang-new-g" data-toggle="dropdown">
+                        {{-- <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 11C21 16.5228 16.5228 21 11 21M21 11C21 5.47715 16.5228 1 11 1M21 11H1M11 21C5.47715 21 1 16.5228 1 11M11 21C13.5013 18.2616 14.9228 14.708 15 11C14.9228 7.29203 13.5013 3.73835 11 1M11 21C8.49872 18.2616 7.07725 14.708 7 11C7.07725 7.29203 8.49872 3.73835 11 1M1 11C1 5.47715 5.47715 1 11 1" stroke="#646464" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg> --}}
+                        <img class="img-icon-golang" src="{{asset('frontend-asset/image/icon/Global.svg')}}">
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="https://www.deltapsu.com">Global</a></li>
+                        <li><a href="https://www.deltapsu.cn" target="_blank">China - 简体中文</a></li>
+                    </ul>
                 </div>
-            </a>
-
+            </div>
+            
         </div>
         <div id="search-box" class="search-box" style="display:none;">
             <div class="nav-btn-search">
                 <div class="border-nav-topsearch">
                     <div class="box-search">
-                        <i class="fa fa-search"></i>
+                        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21L16.1667 16.1667M18.7778 9.88889C18.7778 14.7981 14.7981 18.7778 9.88889 18.7778C4.97969 18.7778 1 14.7981 1 9.88889C1 4.97969 4.97969 1 9.88889 1C14.7981 1 18.7778 4.97969 18.7778 9.88889Z" stroke="#646464" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        {{-- <i class="fa fa-search"></i> --}}
                     </div>
                     <label for="searchinput" class="searchinput mar-b">
                         <form id="formseachall">
@@ -992,27 +969,31 @@
 </div>
 <div class="visible-nav-minimize">
     <div class="header-color-bar-mobile"></div>
-    <div class="nav-mobile scrolled w-100">
+    <div class="nav-mobile scrolled w-100 header-shadow">
         <div class="nav-link-list d-flex">
-            <a class="col-nav navbar-brand-mobile" href="#" onclick="openNav();">
-                {{-- <img class="burger-img" src="{{asset('frontend-asset/image/hamburger.svg')}}">
-                --}}
-                <div class="menu-buger">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                </div>
-            </a>
-            <a class="col-nav navbar-brand-mobile d-flex justify-content-center" href="{{route('index','home')}}">
+            
+            <a class="col-nav navbar-brand-mobile d-flex justify-content-center" href="https://www.deltaww.com">
                 <img class="brand-image" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
             </a>
-            <a href="#" class="power-supplies-link-mobile">{{ $staticContent['Standard_Power_Supplies'] }}</a>
-            {{-- <div class="col-nav d-flex justify-content-end">
-                <div class="navbar-brand-mobile navbar-searchandlang" id="btn-search-mobile" data-toggle="dropdown"
+
+            <div class="col-nav d-flex">
+                <a href="#" class="power-supplies-link-mobile">{{ $staticContent['Standard_Power_Supplies'] }}</a>
+            </div>
+            <div class="col-nav d-flex justify-content-end" style="gap: 8px;">
+                <div class="navbar-brand-mobile navbar-searchandlang icon-serch" id="btn-search-mobile" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-search icon-serch" aria-hidden="true"></i>
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21L16.1667 16.1667M18.7778 9.88889C18.7778 14.7981 14.7981 18.7778 9.88889 18.7778C4.97969 18.7778 1 14.7981 1 9.88889C1 4.97969 4.97969 1 9.88889 1C14.7981 1 18.7778 4.97969 18.7778 9.88889Z" stroke="#646464" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    {{-- <i class="fa fa-search icon-serch" aria-hidden="true"></i> --}}
                 </div>
-                <select name="" id="select-mobile-lang" onchange="changeLangLocationmobile();"
+
+                <a class="navbar-brand-mobile" href="#" onclick="openNav();">
+                    <div class="menu-buger">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                </a>
+                {{-- <select name="" id="select-mobile-lang" onchange="changeLangLocationmobile();"
                     class="select-language text-uppercase">
                     @if(isset($language))
                     @foreach ($language as $item)
@@ -1038,15 +1019,16 @@
                     </option>
                     @endforeach
                     @endif
-                </select>
-            </div> --}}
-
-
+                </select> --}}
+            </div>
+            
         </div>
+
         <div id="search-box-mobile" class="search-box-mobile" style="display:none;">
             <div class="nav-btn-search">
                 <div class="box-search">
-                    <i class="fa fa-search"></i>
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21L16.1667 16.1667M18.7778 9.88889C18.7778 14.7981 14.7981 18.7778 9.88889 18.7778C4.97969 18.7778 1 14.7981 1 9.88889C1 4.97969 4.97969 1 9.88889 1C14.7981 1 18.7778 4.97969 18.7778 9.88889Z" stroke="#646464" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    {{-- <i class="fa fa-search"></i> --}}
                 </div>
                 <form id="formseachall_mobile">
                     <label for="searchinput-mobile" class="searchinput_mobile">
@@ -1087,36 +1069,31 @@
                 onclick="toggle_visibility('btn-sidenav7')">{{isset($staticContent['Where_to_Buy'])?
                 $staticContent['Where_to_Buy'] :'Where_to_Buy' }} <i class="zmdi zmdi-chevron-right"></i></a>
             <div class="d-flex">
-                <img src="{{asset('frontend-asset/image/person-login-dark.svg')}}" alt="" class="mr-2">
+                {{-- <img src="{{asset('frontend-asset/image/person-login-dark.svg')}}" alt="" class="mr-2"> --}}
                 @if(session('partner_id') == null)
                 <a class="a-link-hover" tabindex="-1" href="{{route('index','login')}}">Login </a>
-
                 @else
-
                 <a class="pad-logout fs-front" href="{{route('index','login')}}">
                     {{session('partner_firstname')}} /
                 </a>
-
                 <a href="{{route('index','logoutfrontend')}}" class="pad-logout fs-front"> &nbsp;
-                    {{isset($staticContent['Logout'])?
-                    $staticContent['Logout'] :'Logout' }}
+                    {{isset($staticContent['Logout']) ? $staticContent['Logout'] : 'Logout' }}
                 </a>
-
                 @endif
 
             </div>
             <div class="d-flex">
-                <img src="{{asset('frontend-asset/image/sub-new-dark.svg')}}" alt="" class="mr-2"><a
-                    class="a-link-hover" tabindex="-1" onclick="subscribe()" data-toggle="modal"
+                {{-- <img src="{{asset('frontend-asset/image/sub-new-dark.svg')}}" alt="" class="mr-2"> --}}
+                <a class="a-link-hover" tabindex="-1" onclick="subscribe()" data-toggle="modal"
                     data-target="#subscribe-modal">
-                    {{isset($staticContent['Subscribe'])?
-                    $staticContent['Subscribe'] :'Subscribe' }}</a>
+                    {{isset($staticContent['Subscribe']) ? $staticContent['Subscribe'] : 'Subscribe' }}
+                </a>
             </div>
             <div class="d-flex">
                 {{-- <i class="icon-facon mr-1 icon-find-dis-blue f-size-enquiry-mobile"></i> --}}
-                <img src="{{asset('frontend-asset/image/question.webp')}}" alt="" class="mr-2 icon-img-menu-top-mobile">
+                {{-- <img src="{{asset('frontend-asset/image/question.webp')}}" alt="" class="mr-2 icon-img-menu-top-mobile"> --}}
                 <a href="{{route('contactSupport')}}" class="a-link-hover">
-                    {{isset($staticContent['Sales_Inquiry'])? $staticContent['Sales_Inquiry'] :'Sales Inquiry' }}</a>
+                    {{isset($staticContent['Sales_Inquiry']) ? $staticContent['Sales_Inquiry'] : 'Sales Inquiry' }}</a>
             </div>
 
             {{-- 多語系 --}}
