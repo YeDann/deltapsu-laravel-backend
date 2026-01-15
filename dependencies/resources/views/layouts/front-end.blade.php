@@ -588,6 +588,7 @@ if (!Array.prototype.findIndex) {
            var e = document.getElementById('in-sidenav');
            if(e.style.visibility == 'hidden'){
            $('#in-sidenav').css('visibility','visible');
+            $('#search-box-mobile').hide();
             document.getElementById("Sidenav").classList.add("show");
             document.getElementById('bg-backslidenav').style.display="block";
             $('.menu-buger').addClass('active');

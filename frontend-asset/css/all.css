@@ -9508,7 +9508,7 @@ body {
 }
 
 .nav-firts img {
-    padding-left: 10px;
+    /* padding-left: 10px; */
 }
 
 .link-nav-first {
@@ -9537,10 +9537,18 @@ body {
 
 .nav-position {
     position: fixed;
-    top: 30px;
+    top: 37px;
     right: 0;
     left: 0;
     z-index: 1030;
+}
+
+.nav-underline {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.container-gap-nav {
+    gap: 24px;
 }
 
 .underline {
@@ -9899,7 +9907,7 @@ body {
 
 .nav-here .dropdown-menu {
     width: 100%;
-    transform: translate3d(0px, 86px, 0px) !important;
+    transform: translate3d(0px, 43px, 0px) !important;
     border: unset;
 }
 
@@ -12765,7 +12773,6 @@ hr {
   .grid-eventnews {
     grid-gap: 24px;
     grid-template-columns: 1fr 1fr;
-
   }
 
   .grid-container {
