@@ -300,8 +300,8 @@
     /* Power Supplies link - aligned with navbar-brand bottom */
     .power-supplies-link {
         position: absolute;
-        left: 180px; /* logo位置 + logo寬度 + 26px間距 */
-        top: 25px; /* 先試試這個位置 */
+        left: 226px; /* logo位置 + logo寬度 + 26px間距 */
+        top: 23px;
         color: #444444;
         text-decoration: none;
         font-weight: bold;
@@ -391,7 +391,7 @@
 
     /* Push nav-firts down */
     .nav-firts {
-        top: 7px !important; /* 往下推 7px */
+        top: 5px !important; /* 往下推 7px */
     }
 
     /* Header color bar for both desktop and mobile */
@@ -553,7 +553,11 @@
             <a class="navbar-brand" href="https://www.deltaww.com">
                 <img class="brand-image mt-1" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
             </a>
-            <a href="#" class="power-supplies-link">{{ $staticContent['Standard_Power_Supplies'] }}</a>
+            {{-- <a href="/" class="power-supplies-link">{{ $staticContent['Standard_Power_Supplies'] }}</a> --}}
+            <a href="/" class="power-supplies-link">
+                {!! preg_replace('/\s+/', '<br>', $staticContent['Standard_Power_Supplies'], 1) !!}
+            </a>
+
             <div class="nav-search" style="display: flex;gap: 16px;">
                 <a class="nav-link" id="dropdown08" style="padding-top: 0px;">
                     <div class="nav-search-btn"> 

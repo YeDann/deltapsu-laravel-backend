@@ -9272,7 +9272,7 @@ html[html_lang="ru"] label {
     font-size: 0.865em !important;
 }
 #navbar {
-    height: 64px;
+    height: 70px;
 }
 .dropdown-item.active, .dropdown-item:active{
     background-color: #fff;
@@ -9439,7 +9439,7 @@ html[html_lang="ru"] label {
 }
 
 .brand-image {
-    height: 40px;
+    height: 56px;
 }
 .brand-image-search{
     height: 21px;
@@ -9481,7 +9481,7 @@ body {
 .nav-link {
     font-family: 'DeltaSans';
     font-weight: 600;
-    font-size: 16px;
+    font-size: 18px;
     padding: 5px 4px 0px 4px;
 }
 
@@ -9518,7 +9518,7 @@ body {
     padding-left: 0;
     padding-right: 10px;
     cursor: pointer;
-    font-weight: bold;
+    /* font-weight: bold; */
     font-size: 16px;
 }
 
@@ -9537,7 +9537,7 @@ body {
 
 .nav-position {
     position: fixed;
-    top: 37px;
+    top: 35px;
     right: 0;
     left: 0;
     z-index: 1030;
@@ -9556,7 +9556,7 @@ body {
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
-    padding: 20px 12px;
+    padding: 28px 7px 0px 7px;
     outline: none;
     /* padding-right: 15px;
     padding-left: 15px; */
@@ -9893,7 +9893,7 @@ body {
     top: -6px;
     right: 0;
     z-index: 5;
-    padding: 22px 15px;
+    padding: 36px 15px 0px 15px;
     cursor: text;
 }
 
