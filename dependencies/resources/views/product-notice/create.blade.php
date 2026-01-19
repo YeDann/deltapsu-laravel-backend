@@ -1,0 +1,260 @@
+@extends('layouts.admin')
+@section('style')
+
+<style>
+    #test-label {
+        height: 100px !important;
+    }
+
+    #item-wrap {
+        margin: 8px 8px 8px 8px;
+        background: #eee;
+        padding: 5px 10px 30px 5px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        position: relative;
+    }
+
+    .text-count {
+        right: 7px;
+        bottom: 4px;
+        position: absolute;
+        font-size: 14px;
+    }
+</style>
+@endsection
+@section('content')
+@if(Session::has('flash_message'))
+<div class="alert alert-success" role="alert">
+    <button class="close" data-dismiss="alert"></button>
+    {!! Session('flash_message') !!}
+</div>
+@endif
+@if(Session::has('error_message'))
+<div class="alert alert-danger" role="alert">
+    <button class="close" data-dismiss="alert"></button>
+    {!! Session('error_message') !!}
+</div>
+@endif
+<!-- Nav -->
+<div class="bg-body-light">
+    <div class="content content-full">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Product Notice</h1>
+            <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{route('product-notice.index')}}">Product Notice</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Create</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Content -->
+<div class="content">
+    <div class="block block-rounded block-bordered">
+        <div class="block-header block-header-default">
+            <h3 class="block-title">Create Content</h3>
+        </div>
+        <br>
+        <form id="form-work" class="form-horizontal" role="form" autocomplete="off" action="{{route('product-notice.store')}}"
+            method="post" novalidate="novalidate" enctype="multipart/form-data">
+            {{csrf_field()}}
+            
+            <div class="row pl-4 pr-4">
+                <div class="col-md-12">
+                    <div class="block block-rounded block-bordered">
+                        <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
+                            @foreach ($language as $item)
+                            <input type="hidden" name="langloop[]" value="{{$item->name}}">
+                            @if($loop->iteration == 1)
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#btabs-alt-static-{{$item->name}}"
+                                    style="text-transform: capitalize;">{{$item->name}}</a>
+                            </li>
+                            @else
+                            <li class="nav-item">
+                                <a class="nav-link " href="#btabs-alt-static-{{$item->name}}"
+                                    style="text-transform: capitalize;">{{$item->name}}</a>
+                            </li>
+                            @endif
+                            @endforeach
+                        </ul>
+                        <div class="block-content tab-content">
+                            @foreach ($language as $item)
+                            
+                            <div class="tab-pane {{($loop->iteration == 1)?" active":""}}"
+                                id="btabs-alt-static-{{$item->name}}" role="tabpanel">
+                                <div class="form-group">
+                                    <label for="">Title</label>
+                                    <input type="text" class="form-control" name="title[{{$item->name}}]"
+                                        value="" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Excerpt</label>
+                                    <textarea rows="4" name="description[{{$item->name}}]"
+                                        class="jsnotenew form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Content</label>
+                                    <textarea name="content[{{$item->name}}]"
+                                        class="jsnotenew form-control"></textarea>
+                                </div>
+
+                                <div class="form-group w-50">
+                                    <label>File <span class="req-fed">* Max File Size 20 MB</span></label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="Filelang[{{$item->name}}]"
+                                            data-toggle="custom-file-input" id="file_input">
+                                        <label class="custom-file-label" for="file_input">Choose file</label>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <label for="">Meta - Title </label>
+                                    <span>Recommended 30-60 Character</span>
+                                    <div id="item-wrap">
+                                        <input id="input-metaTitle-{{$item->name}}"
+                                            onkeyup="countCharacter('metaTitle-{{$item->name}}')"
+                                            type="meta_title[{{$item->name}}]" class="form-control"
+                                            name="meta_title[{{$item->name}}]"
+                                            value="">
+                                        <div class="text-count">Count Character :
+                                            <span id="count-metaTitle-{{$item->name}}">
+                                                0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Meta - Description</label>
+                                    <span>Recommended 70-155 Character</span>
+                                    <div id="item-wrap">
+                                        <textarea rows="4" id="input-meta_des-{{$item->name}}"
+                                            onkeyup="countCharacter('meta_des-{{$item->name}}')"
+                                            name="meta_des[{{$item->name}}]"
+                                            class="form-control "></textarea>
+                                        <div class="text-count"> Count Character :
+                                            <span id="count-meta_des-{{$item->name}}">
+                                                0</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">Product Notice Type</label>
+                        <select name="productNoticeType" class="form-control" id="">
+                            @foreach ($productNoticeType as $type)
+                            <option value="{{$type->id}}">{{$type->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="example-text-input">Date info*</label>
+                        <input type="text" class="js-datepicker form-control" id="example-datepicker1" name="dateinfo"
+                            data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                            data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="example-text-input">Date Publish*</label>
+                        <input type="text" class="js-datepicker form-control" id="example-datepicker1"
+                            name="datePublish" data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                            data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
+                            value="">
+                    </div>
+                    <div class="form-group">
+                        <label class="d-block">Product Notice Status</label>
+                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                            <input type="radio" class="custom-control-input" id="status-line-1" name="productNoticeStatus"
+                                value="1" checked>
+                            <label class="custom-control-label" for="status-line-1">Show</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                            <input type="radio" class="custom-control-input" id="status-line-2" name="productNoticeStatus"
+                                value="0">
+                                <label class="custom-control-label" for="status-line-2">Hide</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="example-text-input">Image-thumbnail</label>
+                        <div id="imagePreview">
+                            <img src="https://via.placeholder.com/415x250.png"
+                                class="img-thumbnail imagePreview" alt="">
+                        </div><br>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" data-toggle="custom-file-input" id="image"
+                                name="thumb">
+                            <label class="custom-file-label" for="fileImage">Choose file</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-success text-uppercase col-2">Create
+                        </button>
+                        <a href="{{route('product-notice.index')}}" class="btn btn-secondary text-uppercase col-2">Cancel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+@endsection
+@section('js')
+
+<script>
+    var previewImage = function (input, block) {
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
+        var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
+        var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
+
+        if (isSuccess) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                block.attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            alert('File Type is not accepted!');
+        }
+    };
+
+   
+    $(document).on('change', '#image', function () {
+        var FileSize = this.files[0].size / 1024 / 1024; // in MB
+        if (FileSize > 2) {
+            alert("File size exceeds 2 MB!");
+            this.value = "";
+            $('#label2').text('Choose file');
+        }else{
+            previewImage(this, $('.imagePreview'));
+        }
+
+});
+
+
+$(document).on('change', '.custom-file-input', function () {
+        // alert(this.files[0].size);
+        var FileSize = this.files[0].size / 1024 / 1024; // in MB
+        if (FileSize > 20) {
+            alert("File size exceeds 20 MB!");
+            this.value = "";
+        };
+    });
+
+</script>
+<script type="text/javascript">
+    function countCharacter(id){
+           var str = $('#input-'+id).val();
+          $('#count-'+id).text(str.length);
+      }
+</script>
+@endsection

@@ -555,7 +555,7 @@
             </a>
             {{-- <a href="/" class="power-supplies-link">{{ $staticContent['Standard_Power_Supplies'] }}</a> --}}
             <a href="/" class="power-supplies-link">
-                {!! preg_replace('/\s+/', '<br>', $staticContent['Standard_Power_Supplies'], 1) !!}
+                {!! preg_replace('/\s+/', '<br>', (isset($staticContent['Standard_Power_Supplies']) ? $staticContent['Standard_Power_Supplies'] : 'Standard Power Supplies'), 1) !!}
             </a>
 
             <div class="nav-search" style="display: flex;gap: 16px;">
@@ -981,7 +981,7 @@
             </a>
 
             <div class="col-nav d-flex">
-                <a href="#" class="power-supplies-link-mobile">{{ $staticContent['Standard_Power_Supplies'] }}</a>
+                <a href="#" class="power-supplies-link-mobile">{{ isset($staticContent['Standard_Power_Supplies']) ? $staticContent['Standard_Power_Supplies'] : 'Standard Power Supplies' }}</a>
             </div>
             <div class="col-nav d-flex justify-content-end" style="gap: 8px;">
                 <div class="navbar-brand-mobile navbar-searchandlang icon-serch" id="btn-search-mobile" data-toggle="dropdown"

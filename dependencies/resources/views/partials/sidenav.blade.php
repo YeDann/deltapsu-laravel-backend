@@ -397,6 +397,21 @@
                     @endif
                 </li>
                 <li class="nav-main-item">
+                    <a class="nav-main-link {{ ($menu == 'industry-know-how') ? 'active' : '' }}" href="{{route('industry-know-how.index')}}">
+                        <span class="nav-main-link-name ">Industry Know-How</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link {{ ($menu == 'product-notice') ? 'active' : '' }}" href="{{route('product-notice.index')}}">
+                        <span class="nav-main-link-name ">Product Notice</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link {{ ($menu == 'eol') ? 'active' : '' }}" href="{{route('eol.index')}}">
+                        <span class="nav-main-link-name ">EOL</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
                     @if($menu == "videos")
                     <a class="nav-main-link active" href="{{route('video.index')}}">
                         <span class="nav-main-link-name ">Videos</span>

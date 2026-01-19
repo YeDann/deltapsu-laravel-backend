@@ -336,6 +336,46 @@ Route::prefix('/backend')->group(function () {
     Route::post('copySuccessCase', 'SuccessCaseController@copySuccessCase')->name('copySuccessCase');
     Route::get('removeFileSuccessCaseDoc/{name?}/{id?}', 'SuccessCaseController@removeFileSuccessCaseDoc')->name('removeFileSuccessCaseDoc');
 
+    //Industry Know-How Type
+    Route::resource('industry-know-how-type', 'IndustryKnowHowTypeController');
+    Route::post('industryKnowHowTypeUpdate', 'IndustryKnowHowTypeController@update')->name('industryKnowHowTypeUpdate');
+    Route::get('industryKnowHowTypeDestroy/{id?}', 'IndustryKnowHowTypeController@destroy')->name('industryKnowHowTypeDestroy');
+
+    //Industry Know-How
+    Route::resource('industry-know-how', 'IndustryKnowHowController');
+    Route::post('industryKnowHowUpdate', 'IndustryKnowHowController@update')->name('industryKnowHowUpdate');
+    Route::get('destroyIndustryKnowHow/{id?}', 'IndustryKnowHowController@destroy')->name('destroyIndustryKnowHow');
+    Route::post('copyIndustryKnowHowsingle', 'IndustryKnowHowController@copyIndustryKnowHowsingle')->name('copyIndustryKnowHowsingle');
+    Route::post('copyIndustryKnowHow', 'IndustryKnowHowController@copyIndustryKnowHow')->name('copyIndustryKnowHow');
+    Route::get('removeFileIndustryKnowHowDoc/{name?}/{id?}', 'IndustryKnowHowController@removeFileIndustryKnowHowDoc')->name('removeFileIndustryKnowHowDoc');
+
+    //Product Notice Type
+    Route::resource('product-notice-type', 'ProductNoticeTypeController');
+    Route::post('productNoticeTypeUpdate', 'ProductNoticeTypeController@update')->name('productNoticeTypeUpdate');
+    Route::get('productNoticeTypeDestroy/{id?}', 'ProductNoticeTypeController@destroy')->name('productNoticeTypeDestroy');
+
+    //Product Notice
+    Route::resource('product-notice', 'ProductNoticeController');
+    Route::post('productNoticeUpdate', 'ProductNoticeController@update')->name('productNoticeUpdate');
+    Route::get('destroyProductNotice/{id?}', 'ProductNoticeController@destroy')->name('destroyProductNotice');
+    Route::post('copyProductNoticesingle', 'ProductNoticeController@copyProductNoticesingle')->name('copyProductNoticesingle');
+    Route::post('copyProductNotice', 'ProductNoticeController@copyProductNotice')->name('copyProductNotice');
+    Route::get('removeFileProductNoticeDoc/{name?}/{id?}', 'ProductNoticeController@removeFileProductNoticeDoc')->name('removeFileProductNoticeDoc');
+
+    //EOL Type
+    Route::resource('eol-type', 'EolTypeController');
+    Route::post('eolTypeUpdate', 'EolTypeController@update')->name('eolTypeUpdate');
+    Route::get('eolTypeDestroy/{id?}', 'EolTypeController@destroy')->name('destroyEolType');
+    Route::get('sortEolType', 'EolTypeController@sort')->name('sortEolType');
+
+    //EOL
+    Route::resource('eol', 'EolController');
+    Route::post('eolUpdate', 'EolController@update')->name('eolUpdate');
+    Route::get('destroyEol/{id?}', 'EolController@destroy')->name('destroyEol');
+    Route::post('copyEolsingle', 'EolController@copyEolsingle')->name('copyEolsingle');
+    Route::post('copyEol', 'EolController@copyEol')->name('copyEol');
+    Route::get('removeFileEolDoc/{name?}/{id?}', 'EolController@removeFileEolDoc')->name('removeFileEolDoc');
+
     //Video Type
     Route::resource('video-type', 'VideoTypeController');
     Route::post('videoTypeUpdate', 'VideoTypeController@update')->name('videoTypeUpdate');
