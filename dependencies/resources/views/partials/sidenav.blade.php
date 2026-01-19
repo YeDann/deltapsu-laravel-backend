@@ -397,19 +397,37 @@
                     @endif
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link {{ ($menu == 'industry-know-how') ? 'active' : '' }}" href="{{route('industry-know-how.index')}}">
-                        <span class="nav-main-link-name ">Industry Know-How</span>
-                    </a>
+                    @if ($menu == "industry-know-how")
+                        <a class="nav-main-link active" href="{{route('industry-know-how.index')}}">
+                            <span class="nav-main-link-name ">Industry Know-How</span>
+                        </a>
+                    @else
+                        <a class="nav-main-link" href="{{route('industry-know-how.index')}}">
+                            <span class="nav-main-link-name ">Industry Know-How</span>
+                        </a>
+                    @endif
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link {{ ($menu == 'product-notice') ? 'active' : '' }}" href="{{route('product-notice.index')}}">
-                        <span class="nav-main-link-name ">Product Notice</span>
-                    </a>
+                    @if ($menu == "product-notice")
+                        <a class="nav-main-link active" href="{{route('product-notice.index')}}">
+                            <span class="nav-main-link-name ">Product Notice</span>
+                        </a>
+                    @else
+                        <a class="nav-main-link" href="{{route('product-notice.index')}}">
+                            <span class="nav-main-link-name ">Product Notice</span>
+                        </a>
+                    @endif
                 </li>
                 <li class="nav-main-item">
-                    <a class="nav-main-link {{ ($menu == 'eol') ? 'active' : '' }}" href="{{route('eol.index')}}">
-                        <span class="nav-main-link-name ">EOL</span>
-                    </a>
+                    @if ($menu == "eol")
+                        <a class="nav-main-link active" href="{{route('eol.index')}}">
+                            <span class="nav-main-link-name ">EOL</span>
+                        </a>
+                    @else
+                        <a class="nav-main-link" href="{{route('eol.index')}}">
+                            <span class="nav-main-link-name ">EOL</span>
+                        </a>
+                    @endif
                 </li>
                 <li class="nav-main-item">
                     @if($menu == "videos")
@@ -462,6 +480,21 @@
                 <li class="nav-main-item">
                     <a class="nav-main-link" href="{{route('success-case.index')}}">
                         <span class="nav-main-link-name ">Success Case</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('industry-know-how.index')}}">
+                        <span class="nav-main-link-name ">Industry Know-How</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('product-notice.index')}}">
+                        <span class="nav-main-link-name ">Product Notice</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="{{route('eol.index')}}">
+                        <span class="nav-main-link-name ">EOL</span>
                     </a>
                 </li>
                 <li class="nav-main-item">
