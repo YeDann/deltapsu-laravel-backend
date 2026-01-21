@@ -157,14 +157,25 @@
                     <li class="breadcrumb-item text-breadcrumb-home"><a
                             href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
                     <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
-                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Where_to_Buy']}}</a>
+                                data-toggle="dropdown" id="tools-dropdown"> {{$staticContent['Technical_Support']}}</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Where_to_Buy']}}</a>
+                            <li>
+                                <a href="#" class="text-bold">
+                                    {{ isset($staticContent['Technical_Support'])
+                                        ? $staticContent['Technical_Support']
+                                        : 'Technical Support' }}
+                                </a>
                             </li>
                             <hr>
-                            <li><a href="{{route('contactSupport')}}">{{$staticContent['contact_us']}}</a></li>
-                            <li><a href="{{route('contactFindDistributor')}}">{{$staticContent['find_a_distributor']}}</a></li>
-                            <li><a href="{{route('contactSalesOffices')}}">{{$staticContent['sales_offices']}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'catalogs'])}}">{{$staticContent['catalogs'] ?? 'Catalogs'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'product-documents'])}}">{{$staticContent['Product_Documents'] ?? 'Product Documents'}}</a></li>
+                            <li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison'] ?? 'Product Comparison'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'industry-know-how'])}}">{{$staticContent['Industry_Know_How'] ?? 'Industry Know-How'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'videos'])}}">{{$staticContent['Videos'] ?? 'Videos'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'eol'])}}">{{$staticContent['EOL'] ?? 'EOL'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'faqs'])}}">{{$staticContent['FAQs'] ?? 'FAQs'}}</a></li>
+                            <li><a href="{{route('contactSupport')}}">{{$staticContent['Technical_Service'] ?? 'Technical Service'}}</a></li>
                         </ul>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a

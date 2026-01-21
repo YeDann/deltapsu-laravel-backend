@@ -196,84 +196,15 @@
                                 </a>
                             </li>
                             <hr>
-                            <!-- Catalog / Documents -->
-                            <li>
-                                <a href="{{ route('index','catalogs') }}">
-                                    {{ isset($staticContent['catalogs']) ? $staticContent['catalogs'] : 'Catalogs' }}
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('index','product-documents') }}">
-                                    {{ isset($staticContent['Product_Documents']) ? $staticContent['Product_Documents'] : 'Product Documents' }}
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('productCoparison') }}">
-                                    {{ isset($staticContent['product_comparison'])
-                                        ? $staticContent['product_comparison']
-                                        : 'Product Comparison' }}
-                                </a>
-                            </li>
-
-                            <!-- News / Media -->
-                            <li>
-                                <a href="{{ route('index', [
-                                    'page' => 'news',
-                                    'type' => slugifyHead(isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How'),
-                                    'type-id' => isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->id : ''
-                                ]) }}">
-                                    {{ isset($newsTypes['Industry Know-How'])
-                                        ? $newsTypes['Industry Know-How']->typename
-                                        : 'Industry Know-How' }}
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('index', ['page' => 'videos']) }}">
-                                    {{ isset($staticContent['Videos']) ? $staticContent['Videos'] : 'Videos' }}
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('index', [
-                                    'page' => 'news',
-                                    'type' => slugifyHead(isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice'),
-                                    'type-id' => isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->id : ''
-                                ]) }}">
-                                    {{ isset($newsTypes['Product Notice'])
-                                        ? $newsTypes['Product Notice']->typename
-                                        : 'Product Notice' }}
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('index', [
-                                    'page' => 'news',
-                                    'type' => slugifyHead(isset($newsTypes['EOL']) ? $newsTypes['EOL']->typename : 'EOL'),
-                                    'type-id' => isset($newsTypes['EOL']) ? $newsTypes['EOL']->id : ''
-                                ]) }}">
-                                    {{ isset($newsTypes['EOL'])
-                                        ? $newsTypes['EOL']->typename
-                                        : 'EOL' }}
-                                </a>
-                            </li>
-
-                            <!-- Support -->
-                            <li>
-                                <a href="{{ route('index','faqs') }}">
-                                    {{ isset($staticContent['FAQs']) ? $staticContent['FAQs'] : 'FAQs' }}
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('contactSupport') }}">
-                                    {{ isset($staticContent['Technical_Service'])
-                                        ? $staticContent['Technical_Service']
-                                        : 'Technical Service' }}
-                                </a>
-                            </li>
+                            <li><a href="{{route('index', ['page' => 'catalogs'])}}">{{$staticContent['catalogs'] ?? 'Catalogs'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'product-documents'])}}">{{$staticContent['Product_Documents'] ?? 'Product Documents'}}</a></li>
+                            <li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison'] ?? 'Product Comparison'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'industry-know-how'])}}">{{$staticContent['Industry_Know_How'] ?? 'Industry Know-How'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'videos'])}}">{{$staticContent['Videos'] ?? 'Videos'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'eol'])}}">{{$staticContent['EOL'] ?? 'EOL'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'faqs'])}}">{{$staticContent['FAQs'] ?? 'FAQs'}}</a></li>
+                            <li><a href="{{route('contactSupport')}}">{{$staticContent['Technical_Service'] ?? 'Technical Service'}}</a></li>
                         </ul>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
