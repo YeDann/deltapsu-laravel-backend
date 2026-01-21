@@ -237,7 +237,9 @@ $langch = str_replace('_', '-', app()->getLocale());
       data-cwcid="9aZemFwhn82pm3Z4wtV79sGZ"></script>
     @endif
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" 
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" 
+            crossorigin="anonymous"></script>
 
     <!-- Google Tag Manager -->
     <script async defer>
@@ -345,8 +347,9 @@ $langch = str_replace('_', '-', app()->getLocale());
     });
     // Dynamically import the LazySizes library
     const script = document.createElement('script');
-    script.src =
-      'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js';
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js';
+    script.integrity = 'sha384-VfiE0kAa5A1NOLJ/oMdX0/EO8mF8H5J1T2XSMK8l7OE+RfLLM9q/VJ3QPUJnQLHa';
+    script.crossOrigin = 'anonymous';
     document.body.appendChild(script);
   }
     </script>
