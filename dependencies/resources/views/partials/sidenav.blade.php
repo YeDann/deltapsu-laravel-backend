@@ -385,17 +385,7 @@
                     </a>
                     @endif
                 </li>
-                <li class="nav-main-item">
-                    @if($menu == "success-case")
-                    <a class="nav-main-link active" href="{{route('success-case.index')}}">
-                        <span class="nav-main-link-name ">Success Case</span>
-                    </a>
-                    @else
-                    <a class="nav-main-link" href="{{route('success-case.index')}}">
-                        <span class="nav-main-link-name ">Success Case</span>
-                    </a>
-                    @endif
-                </li>
+            
                 <li class="nav-main-item">
                     @if ($menu == "industry-know-how")
                         <a class="nav-main-link active" href="{{route('industry-know-how.index')}}">
@@ -475,11 +465,6 @@
                 <li class="nav-main-item">
                     <a class="nav-main-link" href="{{route('news.index')}}">
                         <span class="nav-main-link-name ">Product News</span>
-                    </a>
-                </li>
-                <li class="nav-main-item">
-                    <a class="nav-main-link" href="{{route('success-case.index')}}">
-                        <span class="nav-main-link-name ">Success Case</span>
                     </a>
                 </li>
                 <li class="nav-main-item">

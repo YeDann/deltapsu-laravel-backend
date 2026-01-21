@@ -919,7 +919,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a tabindex="-1" href="{{route('index','success-case')}}">
+                                        <a tabindex="-1" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Success Case']) ? $newsTypes['Success Case']->typename : 'Success Case'), 'type-id' => $newsTypes['Success Case'] ? $newsTypes['Success Case']->id : '' ])}}">
                                             {{ isset($staticContent['Success_Case'])
                                             ? $staticContent['Success_Case'] 
                                             : 'Success Case' }}
@@ -1313,7 +1313,7 @@
             <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Product News']) ? $newsTypes['Product News']->typename : 'Product News'), 'type-id' => $newsTypes['Product News'] ? $newsTypes['Product News']->id : '' ])}}">
                 {{isset($newsTypes['Product News']) ? $newsTypes['Product News']->typename : 'Product News' }} 
             </a>
-            <a class="text-normal pl-3" href="{{route('index','success-case')}}">{{isset($staticContent['Success_Case'])?
+            <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Success Case']) ? $newsTypes['Success Case']->typename : 'Success Case'), 'type-id' => $newsTypes['Success Case'] ? $newsTypes['Success Case']->id : '' ])}}">{{isset($staticContent['Success_Case'])?
                 $staticContent['Success_Case'] :'Success Case' }}</a>
             <a class="text-normal pl-3" href="{{route('index', ['page' => 'videos'])}}">{{isset($staticContent['Videos'])?
                 $staticContent['Videos'] :'Videos' }}</a>
