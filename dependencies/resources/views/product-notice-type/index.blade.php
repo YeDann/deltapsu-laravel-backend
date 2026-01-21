@@ -38,8 +38,7 @@
             <h3 class="block-title"><a href="{{route('product-notice.index')}}" class="btn btn-info" > <i class="fa fa-chevron-left"></i>  Product Notice</a></h3>
             <div class="block-options">
                 <div class="block-options-item">
-                    <a href="{{route('product-notice-type.create')}}" class="btn btn-success">Create </a>
-
+                    <a href="{{route('product-notice-type.create')}}" class="btn btn-success">Create </a>                                                    
                     
                 </div>
             </div>
@@ -63,7 +62,7 @@
                     <td class="text-center">
                         <div class="">
                                 <a href="{{route('product-notice-type.edit',$item->id)}}" class="btn btn-primary">Edit </a>
-                            <button type="button" class="btn btn-danger" data-toggle="tooltip" id="delbutton"
+                                <button type="button" class="btn btn-danger" data-toggle="tooltip" id="delbutton"
                                 title="Delete" onclick="deleteProductNoticeType({{$item->id}})">
                                 Delete
                             </button>

@@ -56,11 +56,11 @@
                             <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Technical_Support']}}</a></li>
                             <hr>
                             <li><a href="{{route('index', ['page' => 'videos'])}}">{{$staticContent['Videos'] ?? 'Videos'}}</a></li>
-                             <li><a href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</a></li>
+                             <li><a href="{{route('index', ['page' => 'industry-know-how'])}}">{{$staticContent['Industry_Know_How'] ?? 'Industry Know-How'}}</a></li>
                         </ul>
                     </li>
                     <li class="breadcrumb-item text-breadcrumb-home"><a
-                            href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</a></li>
+                            href="{{route('index', ['page' => 'industry-know-how'])}}">{{$staticContent['Industry_Know_How'] ?? 'Industry Know-How'}}</a></li>
                     <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
                             href="#">{{isset($contents[0]->title)? $contents[0]->title :''}}</a></li>
                 </ol>
@@ -144,13 +144,13 @@
 <section class="box-news my-5">
     <div class="container">
         @if(count($otherNews) > 0)
-        <h3 class="text-center text-drak margin-title"> {{isset($staticContent['Related_Product_Notice']) ? $staticContent['Related_Product_Notice'] : 'Related Product Notice'}}</h3>
+        <h3 class="text-center text-drak margin-title"> {{isset($staticContent['Related_Industry_Know_How']) ? $staticContent['Related_Industry_Know_How'] : 'Related Industry Know-How'}}</h3>
         @endif
         <div class="row">
             @foreach ($otherNews as $item)
             <div class="col-lg-4 col-sm-6">
                 <div class="card border-radius-6">
-                    <a href="{{route('updateProductNoticeDetail',['name'=> $item->slug])}}">
+                    <a href="{{route('updateIndustryKnowHowDetail',['name'=> $item->slug])}}">
                         <div class="post-image">
                             <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""
                                 class="img-responsive">
@@ -159,7 +159,7 @@
                     <div class="news-content">
 
                         <div class="post-meta">
-                            <a href="{{route('updateProductNoticeDetail',['name'=> $item->slug])}}">
+                            <a href="{{route('updateIndustryKnowHowDetail',['name'=> $item->slug])}}">
                                 <span class="sub-news" style="color:{{$item->color_type}}">
                                     {{$item->cateName}}
                                 </span>
@@ -178,7 +178,7 @@
                             </span>
                         </div>
                         <h4 class="post-header title-new">
-                            <a href="{{route('updateProductNoticeDetail',['name'=> $item->slug])}}">
+                            <a href="{{route('updateIndustryKnowHowDetail',['name'=> $item->slug])}}">
                                 {{$item->title}}
                             </a>
                         </h4>
@@ -187,7 +187,7 @@
 
                     </div>
 
-                    <a href="{{route('updateProductNoticeDetail',['name'=> $item->slug])}}"
+                    <a href="{{route('updateIndustryKnowHowDetail',['name'=> $item->slug])}}"
                         class="read-more">{{$staticContent['Read_More']}}</a>
                 </div>
             </div>

@@ -35,7 +35,7 @@
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
             <h3 class="block-title">
-                {{-- <form action="{{route('deleteEol')}}" method="post">
+                {{-- <form action="{{route('destroyEol')}}" method="post">
                     {{csrf_field()}}
                     <button type="submit" class="btn btn-danger">Delete {{$countContent}} </button>
                 </form> --}}
@@ -50,7 +50,6 @@
                 <div class="block-options-item">
                     <a href="{{route('eol.create')}}" class="btn btn-success"><i class="fa fa-plus"></i> Create </a>
                     {{-- <a href="{{route('ImportNewsData','eol')}}" class="btn btn-info" > GET Data </a> --}}
-                   
                 </div>
             </div>
         </div>
@@ -69,29 +68,30 @@
                 <tbody>
                     @if(isset($contents) and !empty($contents))
                     @foreach ($contents as $item)
-                    <td class="text-center">{{$loop->iteration}}</td>
-                    <td class="d-none d-sm-table-cell">{{$item->title}}</td>
-                    {{-- <td class="d-none d-sm-table-cell">{{$item->cateName}}</td> --}}
-                    <td class="font-w600 text-center">
+                    <tr>
+                        <td class="text-center">{{$loop->iteration}}</td>
+                        <td class="d-none d-sm-table-cell">{{$item->title}}</td>
+                        {{-- <td class="d-none d-sm-table-cell">{{$item->cateName}}</td> --}}
+                        <td class="font-w600 text-center">
                             @if($item->status == "1")
                             <span class="badge badge-success text-uppercase">Show</span>
                             @elseif($item->status == "0")
                             <span class="badge badge-secondary text-uppercase">Hide</span>
                             @endif
-                    </td>
-                    <td class="font-w600 text-center">{{$item->date_publish}}</td>
-                    <td class="text-center">
-                        <div class="">
-                            {{-- <button class="btn btn-secondary btn-sm"  
+                        </td>
+                        <td class="font-w600 text-center">{{$item->date_publish}}</td>
+                        <td class="text-center">
+                            <div class="">
+                                {{-- <button class="btn btn-secondary btn-sm"
                                 data-target="#modal-block-popin-2"  data-toggle="modal" onclick="sendId({{$item->id}})" >Duplicate <i class="far fa-clone"></i> </button>
-                                    --}}
-                                    <a href="{{route('eol.edit',$item->id)}}" class="btn btn-primary">Edit  </a>
-                            <button type="button" class="btn btn-danger" data-toggle="tooltip" id="delbutton"
-                                title="Delete" onclick="deleteEol({{$item->id}})">
-                                Delete
-                            </button>
-                        </div>
-                    </td>
+                                --}}
+                                <a href="{{route('eol.edit',$item->id)}}" class="btn btn-primary">Edit </a>
+                                <button type="button" class="btn btn-danger" data-toggle="tooltip" id="delbutton"
+                                    title="Delete" onclick="deleteEol({{$item->id}})">
+                                    Delete
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                     @endforeach
                     @endif
@@ -100,10 +100,6 @@
         </div>
     </div>
 </div>
-
-
-
-
 @endsection
 @section('js')
 <script>

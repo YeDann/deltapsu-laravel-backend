@@ -1,9 +1,41 @@
 @extends('layouts.admin')
 @section('style')
 
-@endsection
+<style>
+    #test-label {
+        height: 100px !important;
+    }
 
+    #item-wrap {
+        margin: 8px 8px 8px 8px;
+        background: #eee;
+        padding: 5px 10px 30px 5px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        position: relative;
+    }
+
+    .text-count {
+        right: 7px;
+        bottom: 4px;
+        position: absolute;
+        font-size: 14px;
+    }
+</style>
+@endsection
 @section('content')
+@if(Session::has('flash_message'))
+<div class="alert alert-success" role="alert">
+    <button class="close" data-dismiss="alert"></button>
+    {!! Session('flash_message') !!}
+</div>
+@endif
+@if(Session::has('error_message'))
+<div class="alert alert-danger" role="alert">
+    <button class="close" data-dismiss="alert"></button>
+    {!! Session('error_message') !!}
+</div>
+@endif
 <!-- Nav -->
 <div class="bg-body-light">
     <div class="content content-full">
@@ -18,187 +50,237 @@
         </div>
     </div>
 </div>
-
 <!-- Content -->
 <div class="content">
-
-    @if(Session::has('flash_message'))
-    <div class="alert alert-success" role="alert">
-        <button class="close" data-dismiss="alert"></button>
-        {!! Session('flash_message') !!}
-    </div>
-    @endif
-    @if(Session::has('error_message'))
-    <div class="alert alert-danger" role="alert">
-        <button class="close" data-dismiss="alert"></button>
-        {!! Session('error_message') !!}
-    </div>
-    @endif
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
-            Edit EOL 
-            <div class="block-options">
-            </div>
+            <h3 class="block-title">Edit Content</h3>
         </div>
-        <form action="{{route('eol.update',$content->id)}}" method="post" enctype="multipart/form-data">
-        <div class="block-content block-content-full">
-                {{csrf_field()}}
-                {{method_field('PUT')}}
-                
-                 {{-- Main --}}
-                 <div class="row">
-                    <div class="col-md-9 mb-4">
-                        <div class="form-group">
-                            <label>Status</label>
-                            <div class="custom-control custom-switch custom-control-success mb-1">
-                                <input type="checkbox" class="custom-control-input" id="status" name="status" value="1" @if($content->status == 1) checked @endif>
-                                <label class="custom-control-label" for="status">Show / Hide</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Publish</label>
-                            <input type="text" class="js-flatpickr form-control bg-white" id="date_publish" name="date_publish" placeholder="Please select a date" data-enable-time="true" data-time_24hr="true" value="{{$content->date_publish}}">
-                        </div>
-
-                      
-                        <div class="block block-bordered block-rounded">
-                            <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#btabs-en">English</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#btabs-cn">Simple Chinese</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#btabs-tw">Traditional Chinese</a>
-                                </li>
-                            </ul>
-                            <div class="block-content tab-content overflow-hidden">
-                                {{-- EN --}}
-                                <div class="tab-pane fade fade-left show active" id="btabs-en" role="tabpanel">
-                                    <div class="form-group">
-                                        <label>Title </label>
-                                        <input type="text" class="form-control" name="title_en" placeholder="Please fill in" value="{{$content->translate('en')->title}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Keywords</label>
-                                        <input type="text" class="form-control" name="keywords_en" placeholder="Please fill in" value="{{$content->translate('en')->keywords}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Description</label>
-                                        <input type="text" class="form-control" name="description_en" placeholder="Please fill in" value="{{$content->translate('en')->description}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Content</label>
-                                        <textarea class="js-summernote" name="content_en">{!! $content->translate('en')->content !!}</textarea>
-                                    </div>
-                                </div>
-                                {{-- CN --}}
-                                <div class="tab-pane fade fade-left" id="btabs-cn" role="tabpanel">
-                                    <div class="form-group">
-                                        <label>Title </label>
-                                        <input type="text" class="form-control" name="title_cn" placeholder="Please fill in" value="{{$content->translate('zh-CN')->title}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Keywords</label>
-                                        <input type="text" class="form-control" name="keywords_cn" placeholder="Please fill in" value="{{$content->translate('zh-CN')->keywords}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Description</label>
-                                        <input type="text" class="form-control" name="description_cn" placeholder="Please fill in" value="{{$content->translate('zh-CN')->description}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Description</label>
-                                        <textarea class="js-summernote" name="content_cn">{!! $content->translate('zh-CN')->content !!}</textarea>
-                                    </div>
-                                </div>
-                                {{-- TW --}}
-                                <div class="tab-pane fade fade-left" id="btabs-tw" role="tabpanel">
-                                    <div class="form-group">
-                                        <label>Title </label>
-                                        <input type="text" class="form-control" name="title_tw" placeholder="Please fill in" value="{{$content->translate('zh-TW')->title}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Keywords</label>
-                                        <input type="text" class="form-control" name="keywords_tw" placeholder="Please fill in" value="{{$content->translate('zh-TW')->keywords}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Description</label>
-                                        <input type="text" class="form-control" name="description_tw" placeholder="Please fill in" value="{{$content->translate('zh-TW')->description}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Description</label>
-                                        <textarea class="js-summernote" name="content_tw">{!! $content->translate('zh-TW')->content !!}</textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Cover Image</label>
-                           <br>
-                           @if($content->image)
-                            <img id="img1" src="{{asset($content->image)}}" style="width: 100%;height: auto;background: #ccc;margin-bottom: 20px;">
-                           @else
-                            <img id="img1" src="{{asset('backend-asset/image/default_img.png')}}" style="width: 100%;height: auto;background: #ccc;margin-bottom: 20px;">
-                           @endif
-                            <br>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input js-custom-file-input-enabled" id="image" name="image" data-toggle="custom-file-input" accept="image/*" onchange="readURL1(this);">
-                                <label class="custom-file-label" for="image">Choose file</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>File Upload </label>
-                            @if($content->file)
-                                <a href="{{asset($content->file)}}" target="_blank">{{basename($content->file)}}</a>
+        <br>
+        <form id="form-work" class="form-horizontal" role="form" autocomplete="off" action="{{route('eolUpdate')}}"
+            method="post" novalidate="novalidate" enctype="multipart/form-data">
+            {{csrf_field()}}
+            <input type="hidden" name="eolId" value="{{$contents[0]->content_id}}">
+            <div class="row pl-4 pr-4">
+                <div class="col-md-12">
+                    <div class="block block-rounded block-bordered">
+                        <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
+                            @foreach ($language as $item)
+                            <input type="hidden" name="langloop[]" value="{{$item->name}}">
+                            @if($loop->iteration == 1)
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#btabs-alt-static-{{$item->name}}"
+                                    style="text-transform: capitalize;">{{$item->name}}</a>
+                            </li>
+                            @else
+                            <li class="nav-item">
+                                <a class="nav-link " href="#btabs-alt-static-{{$item->name}}"
+                                    style="text-transform: capitalize;">{{$item->name}}</a>
+                            </li>
                             @endif
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input js-custom-file-input-enabled" id="file" name="file" data-toggle="custom-file-input" >
-                                <label class="custom-file-label" for="file">Choose file</label>
+                            @endforeach
+                        </ul>
+                        <div class="block-content tab-content">
+                            @foreach ($language as $item)
+                            <?php 
+                            $current = null;
+                            foreach($contents as $item2) { 
+                                if ($item->name == $item2->local) {
+                                    $current = $item2;
+                                    break;
+                                }
+                            }
+                          ?>
+
+                            <div class="tab-pane {{($loop->iteration == 1)?" active":""}}"
+                                id="btabs-alt-static-{{$item->name}}" role="tabpanel">
+                                <div class="form-group">
+                                    <label for="">Title</label>
+                                    <input type="text" class="form-control" name="title[{{$item->name}}]"
+                                        value="{{isset($current->title) ? $current->title :''}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Excerpt</label>
+                                    <textarea rows="4" name="description[{{$item->name}}]"
+                                        class="jsnotenew form-control">{{isset($current->description) ? $current->description :''}}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Content</label>
+                                    <textarea name="content[{{$item->name}}]"
+                                        class="jsnotenew form-control">{{isset($current->content) ? $current->content :''}}</textarea>
+                                </div>
+
+                                <div class="form-group w-50">
+                                    <label>Old File</label>
+                                    <a target="_blank"
+                                        href="{{config('app.url')}}/uploads_delta/{{isset($current->file) ? $current->file :''}}">{{isset($current->file)
+                                            ? $current->file :''}}</a>
+                                    <input type="hidden" name="oldFile[{{$item->name}}]"
+                                        value="{{isset($current->file) ? $current->file :''}}">
+                                    @if(isset($current->file))
+                                    <a href="{{route('removeFileEolDoc',[$item->name,$contents[0]->id])}}"
+                                        target="_blank" class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
+                                    @endif
+                                </div>
+                                <div class="form-group w-50">
+                                    <label>File <span class="req-fed">* Max File Size 20 MB</span></label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="Filelang[{{$item->name}}]"
+                                            data-toggle="custom-file-input" id="file_input">
+                                        <label class="custom-file-label" for="file_input">Choose file</label>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <label for="">Meta - Title </label>
+                                    <span>Recommended 30-60 Character</span>
+                                    <div id="item-wrap">
+                                        <input id="input-metaTitle-{{$item->name}}"
+                                            onkeyup="countCharacter('metaTitle-{{$item->name}}')"
+                                            type="meta_title[{{$item->name}}]" class="form-control"
+                                            name="meta_title[{{$item->name}}]"
+                                            value="{{isset($current->meta_title) ? $current->meta_title :''}}">
+                                        <div class="text-count">Count Character :
+                                            <span id="count-metaTitle-{{$item->name}}">
+                                                {{strlen($current->meta_title)}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Meta - Description</label>
+                                    <span>Recommended 70-155 Character</span>
+                                    <div id="item-wrap">
+                                        <textarea rows="4" id="input-meta_des-{{$item->name}}"
+                                            onkeyup="countCharacter('meta_des-{{$item->name}}')"
+                                            name="meta_des[{{$item->name}}]"
+                                            class="form-control ">{{isset($current->meta_description) ? $current->meta_description :''}}</textarea>
+                                        <div class="text-count"> Count Character :
+                                            <span id="count-meta_des-{{$item->name}}">
+                                                {{strlen($current->meta_description)}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Categories </label>
-                            <select class="js-select2 form-control" id="type" name="type[]" style="width: 100%;" data-placeholder="Choose one.." multiple>
-                                <option></option>
-                                @foreach ($eolType as $item)
-                                    <option value="{{$item->id}}" 
-                                        @if(in_array($item->id,$content->eolType->pluck('id')->toArray())) selected @endif
-                                        >{{$item->title}}</option>
-                                @endforeach
-                            </select>
+
+                            @endforeach
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="row">
-                    <div class="col-md-12 text-center">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="">EOL Type</label>
+                        <select name="eolType" class="form-control" id="">
+                            @foreach ($eolType as $type)
+                            @if($contents[0]->categories_id == $type->id)
+                            <option value="{{$type->id}}" selected>{{$type->name}}</option>
+                            @else
+                            <option value="{{$type->id}}">{{$type->name}}</option>
+                            @endif
+                            @endforeach
+                        </select>
                     </div>
-                </div> --}}
-                
-        </div>
-        <div class="block-content block-content-full text-right border-top">
-            <button type="submit" class="btn btn-primary">Save</button>
-            <a href="{{route('eol.index')}}" class="btn btn-secondary">Cancel</a>
-        </div>
-    </form>
+                    <div class="form-group">
+                        <label for="example-text-input">Date info*</label>
+                        <input type="text" class="js-datepicker form-control" id="example-datepicker1" name="dateinfo"
+                            data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                            data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="{{$contents[0]->date_info}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="example-text-input">Date Publish*</label>
+                        <input type="text" class="js-datepicker form-control" id="example-datepicker1"
+                            name="datePublish" data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                            data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
+                            value="{{$contents[0]->date_publish}}">
+                    </div>
+                    <div class="form-group">
+                        <label class="d-block">EOL Status</label>
+                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                            <input type="radio" class="custom-control-input" id="status-line-1" name="eolStatus"
+                                value="1" {{($contents[0]->status == 1) ?"checked":""}}>
+                            <label class="custom-control-label" for="status-line-1">Show</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                            <input type="radio" class="custom-control-input" id="status-line-2" name="eolStatus"
+                                value="0" {{($contents[0]->status == 0 ) ?"checked":""}}>
+                            <label class="custom-control-label" for="status-line-2">Hide</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="example-text-input">Image-thumbnail</label>
+                        <div id="imagePreview">
+                            <img src="{{asset('/uploads_delta/'.$contents[0]->thumb)}}"
+                                class="img-thumbnail imagePreview" alt="">
+                            <input type="hidden" name="oldfilethumb" value="{{$contents[0]->thumb}}">
+                        </div><br>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" data-toggle="custom-file-input" id="image"
+                                name="thumb">
+                            <label class="custom-file-label" for="fileImage">Choose file</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-success text-uppercase col-2">Update
+                        </button>
+                        <a href="{{route('eol.index')}}" class="btn btn-secondary text-uppercase col-2">Cancel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
+</div>
 </div>
 @endsection
 @section('js')
+
 <script>
-    function readURL1(input) {
-        if (input.files && input.files[0]) {
+    var previewImage = function (input, block) {
+        var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
+        var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
+        var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
+        if (isSuccess) {
             var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#img1').attr('src', e.target.result);
-            }
+
+            reader.onload = function (e) {
+                block.attr('src', e.target.result);
+            };
             reader.readAsDataURL(input.files[0]);
+        } else {
+            alert('File Type is not accepted!');
         }
-    }
+    };
+
+   
+    $(document).on('change', '#image', function () {
+        var FileSize = this.files[0].size / 1024 / 1024; // in MB
+        if (FileSize > 2) {
+            alert("File size exceeds 2 MB!");
+            this.value = "";
+            $('#label2').text('Choose file');
+        }else{
+            previewImage(this, $('.imagePreview'));
+        }
+
+});
+
+
+$(document).on('change', '.custom-file-input', function () {
+        // alert(this.files[0].size);
+        var FileSize = this.files[0].size / 1024 / 1024; // in MB
+        if (FileSize > 20) {
+            alert("File size exceeds 20 MB!");
+            this.value = "";
+        };
+    });
+
+</script>
+<script type="text/javascript">
+    function countCharacter(id){
+           var str = $('#input-'+id).val();
+          $('#count-'+id).text(str.length);
+      }
 </script>
 @endsection

@@ -2,7 +2,6 @@
 @section('style')
 
 @endsection
-
 @section('content')
 <!-- Nav -->
 <div class="bg-body-light">
@@ -11,130 +10,93 @@
             <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">EOL Type</h1>
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('eol.index')}}">EOL</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('eol-type.index')}}">EOL Type</a></li>
+                    <li class="breadcrumb-item">EOL Type</li>
                     <li class="breadcrumb-item active" aria-current="page">Edit</li>
                 </ol>
             </nav>
         </div>
     </div>
 </div>
-
 <!-- Content -->
 <div class="content">
-
-    @if(Session::has('flash_message'))
-    <div class="alert alert-success" role="alert">
-        <button class="close" data-dismiss="alert"></button>
-        {!! Session('flash_message') !!}
-    </div>
-    @endif
-    @if(Session::has('error_message'))
-    <div class="alert alert-danger" role="alert">
-        <button class="close" data-dismiss="alert"></button>
-        {!! Session('error_message') !!}
-    </div>
-    @endif
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
-            Edit EOL Type
-            <div class="block-options">
-            </div>
+            <h3 class="block-title"><a href="{{route('eol-type.index')}}" class="btn btn-info" > <i class="fa fa-chevron-left"></i> EOL Type</a></h3>
         </div>
-        <form action="{{route('eol-type.update',$contents[0]->eol_type_id)}}" method="post" enctype="multipart/form-data">
-        <div class="block-content block-content-full">
+        <div class="block-content">
+            <form action="{{route('eolTypeUpdate')}}" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
-                {{method_field('PUT')}}
-                <input type="hidden" name="typeId" value="{{$contents[0]->eol_type_id}}">
-                
-                 {{-- Main --}}
-                 <div class="row">
-                    <div class="col-md-12 mb-4">
-                        
-                        <div class="block block-bordered block-rounded">
-                            <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#btabs-en">English</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#btabs-cn">Simple Chinese</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#btabs-tw">Traditional Chinese</a>
-                                </li>
-                            </ul>
-                            <div class="block-content tab-content overflow-hidden">
-                                {{-- EN --}}
-                                <div class="tab-pane fade fade-left show active" id="btabs-en" role="tabpanel">
-                                     <input type="hidden" name="langloop[]" value="en">
-                                    <div class="form-group">
-                                        <label>Title </label>
-                                        <input type="text" class="form-control" name="name[en]" placeholder="Please fill in" 
-                                        @foreach($contents as $row)
-                                            @if($row->local == 'en')
-                                                value="{{$row->name}}"
-                                            @endif
-                                        @endforeach
-                                        >
-                                    </div>
-                                    {{-- <div class="form-group">
-                                        <label>Description</label>
-                                        <input type="text" class="form-control" name="description[en]" placeholder="Please fill in" >
-                                    </div> --}}
-                                </div>
-                                {{-- CN --}}
-                                <div class="tab-pane fade fade-left" id="btabs-cn" role="tabpanel">
-                                    <input type="hidden" name="langloop[]" value="zh-CN">
-                                    <div class="form-group">
-                                        <label>Title </label>
-                                        <input type="text" class="form-control" name="name[zh-CN]" placeholder="Please fill in" 
-                                        @foreach($contents as $row)
-                                            @if($row->local == 'zh-CN')
-                                                value="{{$row->name}}"
-                                            @endif
-                                        @endforeach
-                                        >
-                                    </div>
-                                    {{-- <div class="form-group">
-                                        <label>Description</label>
-                                        <input type="text" class="form-control" name="description[zh-CN]" placeholder="Please fill in" >
-                                    </div> --}}
-                                </div>
-                                {{-- TW --}}
-                                <div class="tab-pane fade fade-left" id="btabs-tw" role="tabpanel">
-                                    <input type="hidden" name="langloop[]" value="zh-TW">
-                                    <div class="form-group">
-                                        <label>Title </label>
-                                        <input type="text" class="form-control" name="name[zh-TW]" placeholder="Please fill in" 
-                                        @foreach($contents as $row)
-                                            @if($row->local == 'zh-TW')
-                                                value="{{$row->name}}"
-                                            @endif
-                                        @endforeach
-                                        >
-                                    </div>
-                                    {{-- <div class="form-group">
-                                        <label>Description</label>
-                                        <input type="text" class="form-control" name="description[zh-TW]" placeholder="Please fill in" >
-                                    </div> --}}
+                <!-- Basic Elements -->
+                <input type="hidden" name="type_id" value="{{$contents[0]->id}}">
+                <div class="row push">
+                    <div class="col-lg-4">
+                        <p class="text-muted">
+                            {{-- The most often used inputs you know and love --}}
+                        </p>
+                    </div>
+                    <div class="col-lg-8 col-xl-5">
+                        <div class="form-group">
+                            <label for="example-colorpicker2">Type Color</label>
+                            <div class="js-colorpicker input-group" data-format="hex">
+                                <input type="text" class="form-control" id="example-colorpicker2" name="color_type" value="{{$contents[0]->color_type}}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text colorpicker-input-addon">
+                                        <i></i>
+                                    </span>
                                 </div>
                             </div>
+                         </div>
+                        <div class="block block-rounded block-bordered">
+                            <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
+                                @foreach ($language as $item)
+                                <input type="hidden" name="langloop[]" value="{{$item->name}}" >
+                                @if($loop->iteration == 1)
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#btabs-alt-static-{{$item->name}}"
+                                        style="text-transform: capitalize;">{{$item->name}}</a>
+                                </li>
+                                @else
+                                <li class="nav-item">
+                                    <a class="nav-link " href="#btabs-alt-static-{{$item->name}}"
+                                        style="text-transform: capitalize;">{{$item->name}}</a>
+                                </li>
+                                @endif
+                                @endforeach
+                            </ul>
+                        
+                            <div class="block-content tab-content">
+                                @foreach ($language as $item)
+                                <?php 
+                                $current = null;
+                                foreach($contents as $item2) { 
+                                    if ($item->name == $item2->local) {
+                                        $current = $item2;
+                                        break;
+                                    }
+                                }
+                              ?>
+                                <div class="tab-pane {{($loop->iteration == 1)?" active":""}}" id="btabs-alt-static-{{$item->name}}" role="tabpanel">
+                                    <div class="form-group">
+                                        <label for="example-select">Name</label>
+                                    <input type="text" class="form-control" name="name[{{$item->name}}]" value="{{isset($current->title) ? $current->title :''}}" >
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                            <div class="form-group">
+                            <label for="example-select">Order_Seq</label>
+                            <input type="text" class="form-control" name="order_seq" value="{{$contents[0]->order_seq}}" placeholder="Number" >
+                            </div>
+                        <div class="form-group">
+                            <button class="btn btn-success" type="submit" >Update</button>
+                            <a href="{{route('eol-type.index')}}" class="btn btn-secondary">
+                                Cancel
+                            </a>
                         </div>
-
                     </div>
                 </div>
-
-                {{-- <div class="row">
-                    <div class="col-md-12 text-center">
-                    </div>
-                </div> --}}
-                
+            </form>
         </div>
-        <div class="block-content block-content-full text-right border-top">
-            <button type="submit" class="btn btn-primary">Save</button>
-            <a href="{{route('eol-type.index')}}" class="btn btn-secondary">Cancel</a>
-        </div>
-    </form>
     </div>
 </div>
 @endsection

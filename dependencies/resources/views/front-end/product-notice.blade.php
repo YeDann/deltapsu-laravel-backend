@@ -297,7 +297,7 @@ function getDateformat($date){
                             @foreach ($news as $item)
                             <div class="col-lg-4 col-sm-6">
                                 <div class="card border-radius-6">
-                                    <a href="{{route('updateProductNoticelDetail')}}">
+                                    <a href="{{route('updateProductNoticeDetail', ['name' => $item->slug])}}">
                                         <div class="post-image">
                                             <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""
                                                 class="img-responsive">
@@ -306,7 +306,7 @@ function getDateformat($date){
                                     <div class="news-content">
 
                                         <div class="post-meta">
-                                            <a href="{{route('updateProductNoticelDetail')}}">
+                                            <a href="{{route('updateProductNoticeDetail', ['name' => $item->slug])}}">
                                                 <span class="sub-news" style="color:{{$item->color_type}}">
                                                     {{$item->cateName}}
                                                 </span>
@@ -326,7 +326,7 @@ function getDateformat($date){
                                             </span>
                                         </div>
                                         <h4 class="post-header title-new">
-                                            <a href="{{route('updateProductNoticelDetail')}}">
+                                            <a href="{{route('updateProductNoticeDetail', ['name' => $item->slug])}}">
                                                 {{$item->title}}
                                             </a>
                                         </h4>
@@ -335,7 +335,7 @@ function getDateformat($date){
 
                                     </div>
 
-                                    <a href="{{route('updateProductNoticelDetail')}}"
+                                    <a href="{{route('updateProductNoticeDetail', ['name' => $item->slug])}}"
                                         class="read-more">{{$staticContent['Read_More']}}</a>
                                 </div>
                             </div>
@@ -379,3 +379,5 @@ function getDateformat($date){
 </script>
 
 @endsection
+
+```

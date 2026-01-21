@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Illuminate\Http\Request;
+use DB;
 use Validator;
 
 class EolTypeController extends Controller
@@ -20,21 +20,19 @@ class EolTypeController extends Controller
     public function index()
     {
         $contents = DB::table('eol_type as et')
-            ->join('eol_type_translation as ett', 'ett.fk_et_id', '=', 'et.id')
-            ->where('ett.local', '=', 'en')
-            ->select('et.*', 'ett.title as name')
-            ->orderBy('et.order_seq', 'asc')
-            ->get();
-
-
-        $countContent = count($contents);
+        ->join('eol_type_translation as ett', 'ett.fk_et_id', '=', 'et.id')
+        ->select('ett.*', 'et.*')
+        ->where('ett.local', 'en')
+        ->orderBy('et.order_seq', 'asc')
+        ->get();
+        // return dd($contents);
 
         return view('eol-type.index')
-            ->with('name', 'update')
-            ->with('menu', 'eol-type')
-            ->with('contents', $contents)
-            ->with('countContent', $countContent);
+        ->with('name', 'update')
+        ->with('menu', 'eol')
+        ->with('contents', $contents);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -42,11 +40,9 @@ class EolTypeController extends Controller
      */
     public function create()
     {
-        $language = DB::table('language')->get();
         return view('eol-type.create')
-            ->with('name', "update")
-            ->with('menu', "eol-type")
-            ->with('language', $language);
+        ->with('name', 'update')
+        ->with('menu', 'eol');
     }
 
     /**
@@ -63,35 +59,30 @@ class EolTypeController extends Controller
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
         } else {
+
             $name = $request->name;
-            // $description = $request->description;
-            // $metaTitle = $request->meta_title;
-            // $metaDescription = $request->meta_des;
-            // $metaKeyword = $request->metaKeyword;
 
-            $langloop = $request->langloop;
-
-            $id = DB::table('eol_type')->insertGetID(
+            $id =  DB::table('eol_type')->insertGetID(
                 [
-                    "created_at" => \Carbon\Carbon::now(),
-                    "updated_at" => \Carbon\Carbon::now(),
-                    "sort" => 0,
-                    // "color_type" => ... if needed
-                ]
+                     "name" => $name,
+                     "color_type" => $request->color_type,
+                     "created_at" => \Carbon\Carbon::now(),
+                     "updated_at" => \Carbon\Carbon::now(),
+                 ]
             );
-
-            foreach ($langloop as $lang) {
+            $language = DB::table('language')->get();
+            foreach ($language as $lang) {
                 DB::table('eol_type_translation')->insert(
                     [
+                        "title" => $name,
                         "fk_et_id" => $id,
-                        "title" => isset($name[$lang]) ? $name[$lang] : '',
-                        "local" => $lang,
+                        "local" => $lang->name,
                     ]
                 );
             }
 
-            return redirect()->route('eol-type.index')->with('flash_message', 'Insert Data successfully');
         }
+        return redirect()->route('eol-type.index')->with('flash_message', 'Insert Data successfully');
     }
 
     /**
@@ -113,19 +104,21 @@ class EolTypeController extends Controller
      */
     public function edit($id)
     {
+        // $contents = DB::table('eol_type')
+        // ->where('id','=',$id)
+        // ->select('eol_type.*')
+        // ->get();
         $contents = DB::table('eol_type as et')
-            ->join('eol_type_translation as ett', 'et.id', '=', 'ett.fk_et_id')
-            ->where('et.id', '=', $id)
-            ->select('et.*', 'ett.*')
-            ->orderBy('et.updated_at', 'desc')
-            ->get();
+        ->where('et.id', '=', $id)
+        ->Leftjoin('eol_type_translation as ett', 'ett.fk_et_id', '=', 'et.id')
+        ->select('ett.*', 'et.*')
+        ->get();
         $language = DB::table('language')->get();
-
         return view('eol-type.edit')
-            ->with('name', "update")
-            ->with('menu', "eol-type")
-            ->with('contents', $contents)
-            ->with('language', $language);
+        ->with('name', 'update')
+        ->with('menu', 'eol')
+        ->with('language', $language)
+        ->with('contents', $contents);
     }
 
     /**
@@ -137,43 +130,42 @@ class EolTypeController extends Controller
      */
     public function update(Request $request)
     {
-        $typeId = $request->typeId;
-        $name = $request->name;
-        // $description = $request->description;
-        // $metaTitle = $request->meta_title;
-        // $metaDescription = $request->meta_des;
-        // $metaKeyword = $request->metaKeyword;
+        $validate = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+        if ($validate->fails()) {
+            return redirect()->back()->withErrors($validate->errors());
+        } else {
 
-        $langloop = $request->langloop;
+            $name = $request->name;
+            $langloop = $request->langloop;
+            // return dd($name);
+            DB::table('eol_type')->where('id', '=', $request->type_id)->update(array(
+                "color_type" => $request->color_type,
+                "order_seq" => $request->order_seq,
+                "updated_at" => \Carbon\Carbon::now()
+            ));
+            foreach ($langloop as $lang) {
+                $data = DB::table('eol_type_translation')->where('fk_et_id', '=', $request->type_id)->where('local', $lang)->get();
+                if (count($data) > 0) {
+                    DB::table('eol_type_translation')->where('fk_et_id', '=', $request->type_id)->where('local', $lang)->update(array(
+                        "title" => $name[$lang]
+                    ));
+                } else {
+                    DB::table('eol_type_translation')->insert(
+                        [
+                            "title" => $name[$lang],
+                            "fk_et_id" => $request->type_id,
+                            "local" => $lang,
+                        ]
+                    );
+                }
 
-        DB::table('eol_type')->where('id', $typeId)->update(
-            [
-                "updated_at" => \Carbon\Carbon::now(),
-            ]
-        );
+            }
 
-        foreach ($langloop as $lang) {
-            DB::table('eol_type_translation')->where('fk_et_id', $typeId)->where('local', $lang)->update(
-                [
-                    "title" => $name[$lang],
-                ]
-            );
+
         }
-
         return redirect()->route('eol-type.index')->with('flash_message', 'Update Data successfully');
-    }
-
-    public function sort(Request $request)
-    {
-        $array_sort = $request->sort;
-        $i = 1;
-        foreach ($array_sort as $sort) {
-            DB::table('eol_type')
-                ->where('id', $sort)
-                ->update(['sort' => $i]);
-            $i++;
-        }
-        return "Sort Data successfully";
     }
 
     /**
@@ -186,7 +178,6 @@ class EolTypeController extends Controller
     {
         DB::table('eol_type')->where('id', '=', $id)->delete();
         DB::table('eol_type_translation')->where('fk_et_id', '=', $id)->delete();
-
         return back()->with('flash_message', 'Delete Data successfully');
     }
 }

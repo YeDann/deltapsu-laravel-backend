@@ -255,11 +255,11 @@ function getDateformat($date){
                 <div class="nav nav-tabs d-flex justify-content-center border-b-2px visible-up-922 mb-5" id="nav-tab"
                     role="tablist">
                     <a class="nav-item nav-link font-size-tab  {{$type_id == 0 ? 'active' :''}}"
-                        href="{{route('index','end-of-life-products')}}?type=all&type-id=0">{{$staticContent['All']}}</a>
+                        href="{{route('index','eol')}}?type=all&type-id=0">{{$staticContent['All']}}</a>
 
                     @foreach ($news_type as $type)
                     <a class="nav-item nav-link font-size-tab position-relative {{$type_id == $type->id ? 'active' :''}}"
-                        href="{{route('index','end-of-life-products')}}?type={{preg_replace('/\s+/', '-',strtolower($type->typename))}}&type-id={{$type->id}}">{{$type->typename}}
+                        href="{{route('index','eol')}}?type={{preg_replace('/\s+/', '-',strtolower($type->typename))}}&type-id={{$type->id}}">{{$type->typename}}
                     </a>
                     @endforeach
 
@@ -270,7 +270,7 @@ function getDateformat($date){
                             @foreach ($news as $item)
                             <div class="col-lg-4 col-sm-6">
                                 <div class="card border-radius-6">
-                                    <a href="#">
+                                    <a href="{{route('updateEOLDetail',['name'=> $item->slug])}}">
                                         <div class="post-image">
                                             <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""
                                                 class="img-responsive">
@@ -279,7 +279,7 @@ function getDateformat($date){
                                     <div class="news-content">
 
                                         <div class="post-meta">
-                                            <a href="#">
+                                            <a href="{{route('updateEOLDetail',['name'=> $item->slug])}}">
                                                 <span class="sub-news" style="color:{{$item->color_type}}">
                                                     {{$item->cateName}}
                                                 </span>
@@ -299,7 +299,7 @@ function getDateformat($date){
                                             </span>
                                         </div>
                                         <h4 class="post-header title-new">
-                                            <a href="#">
+                                            <a href="{{route('updateEOLDetail',['name'=> $item->slug])}}">
                                                 {{$item->title}}
                                             </a>
                                         </h4>
@@ -308,7 +308,7 @@ function getDateformat($date){
 
                                     </div>
 
-                                    <a href="#"
+                                    <a href="{{route('updateEOLDetail',['name'=> $item->slug])}}"
                                         class="read-more">{{$staticContent['Read_More']}}</a>
                                 </div>
                             </div>
@@ -343,10 +343,10 @@ function getDateformat($date){
             if(find){
              type_name =  find.typename.toLowerCase().replace(/\s+/g, '-');
              type_id =  value_tab;
-             window.location = '{{route('index','end-of-life-products')}}?type='+type_name +'&type-id='+type_id ;
+             window.location = '{{route('index','eol')}}?type='+type_name +'&type-id='+type_id ;
             }
         }else{
-            window.location = "{{route('index','end-of-life-products')}}?type=all&type-id=0";
+            window.location = "{{route('index','eol')}}?type=all&type-id=0";
         }
      }
 </script>

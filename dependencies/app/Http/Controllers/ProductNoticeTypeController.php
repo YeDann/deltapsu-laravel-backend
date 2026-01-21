@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Illuminate\Http\Request;
+use DB;
 use Validator;
 
 class ProductNoticeTypeController extends Controller
@@ -20,20 +20,19 @@ class ProductNoticeTypeController extends Controller
     public function index()
     {
         $contents = DB::table('product_notice_type as pnt')
-            ->join('product_notice_type_translation as pntt', 'pntt.fk_pnt_id', '=', 'pnt.id')
-            ->where('pntt.local', '=', 'en')
-            ->select('pnt.*', 'pntt.title as name')
-            ->orderBy('pnt.order_seq', 'asc')
-            ->get();
-
-        $countContent = count($contents);
+        ->join('product_notice_type_translation as pntt', 'pntt.fk_pnt_id', '=', 'pnt.id')
+        ->select('pntt.*', 'pnt.*')
+        ->where('pntt.local', 'en')
+        ->orderBy('pnt.order_seq', 'asc')
+        ->get();
+        // return dd($contents);
 
         return view('product-notice-type.index')
-            ->with('name', 'update')
-            ->with('menu', 'product-notice-type')
-            ->with('contents', $contents)
-            ->with('countContent', $countContent);
+        ->with('name', 'update')
+        ->with('menu', 'product-notice')
+        ->with('contents', $contents);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -41,11 +40,9 @@ class ProductNoticeTypeController extends Controller
      */
     public function create()
     {
-        $language = DB::table('language')->get();
         return view('product-notice-type.create')
-            ->with('name', "update")
-            ->with('menu', "product-notice-type")
-            ->with('language', $language);
+        ->with('name', 'update')
+        ->with('menu', 'product-notice');
     }
 
     /**
@@ -57,43 +54,35 @@ class ProductNoticeTypeController extends Controller
     public function store(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'title' => 'required',
+            'name' => 'required',
         ]);
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
         } else {
-            $title = $request->title;
-            // $description = $request->description;
-            // $metaTitle = $request->meta_title;
-            // $metaDescription = $request->meta_des;
-            // $metaKeyword = $request->metaKeyword;
 
-            $langloop = $request->langloop;
+            $name = $request->name;
 
-            $id = DB::table('product_notice_type')->insertGetID(
+            $id =  DB::table('product_notice_type')->insertGetID(
                 [
-                    "created_at" => \Carbon\Carbon::now(),
-                    "updated_at" => \Carbon\Carbon::now(),
-                    "sort" => 0,
-                ]
+                     "name" => $name,
+                     "color_type" => $request->color_type,
+                     "created_at" => \Carbon\Carbon::now(),
+                     "updated_at" => \Carbon\Carbon::now(),
+                 ]
             );
-
-            foreach ($langloop as $lang) {
+            $language = DB::table('language')->get();
+            foreach ($language as $lang) {
                 DB::table('product_notice_type_translation')->insert(
                     [
+                        "title" => $name,
                         "fk_pnt_id" => $id,
-                        "title" => isset($title[$lang]) ? $title[$lang] : '',
-                        // "description" => $description[$lang],
-                        // "meta_title" => $metaTitle[$lang],
-                        // "meta_description" => $metaDescription[$lang],
-                        // "meta_keywords" => $metaKeyword[$lang],
-                        "local" => $lang,
+                        "local" => $lang->name,
                     ]
                 );
             }
 
-            return redirect()->route('product-notice-type.index')->with('flash_message', 'Insert Data successfully');
         }
+        return redirect()->route('product-notice-type.index')->with('flash_message', 'Insert Data successfully');
     }
 
     /**
@@ -115,19 +104,21 @@ class ProductNoticeTypeController extends Controller
      */
     public function edit($id)
     {
+        // $contents = DB::table('product_notice_type')
+        // ->where('id','=',$id)
+        // ->select('product_notice_type.*')
+        // ->get();
         $contents = DB::table('product_notice_type as pnt')
-            ->join('product_notice_type_translation as pntt', 'pnt.id', '=', 'pntt.fk_pnt_id')
-            ->where('pnt.id', '=', $id)
-            ->select('pnt.*', 'pntt.*')
-            ->orderBy('pnt.updated_at', 'desc')
-            ->get();
+        ->where('pnt.id', '=', $id)
+        ->Leftjoin('product_notice_type_translation as pntt', 'pntt.fk_pnt_id', '=', 'pnt.id')
+        ->select('pntt.*', 'pnt.*')
+        ->get();
         $language = DB::table('language')->get();
-
         return view('product-notice-type.edit')
-            ->with('name', "update")
-            ->with('menu', "product-notice-type")
-            ->with('contents', $contents)
-            ->with('language', $language);
+        ->with('name', 'update')
+        ->with('menu', 'product-notice')
+        ->with('language', $language)
+        ->with('contents', $contents);
     }
 
     /**
@@ -139,47 +130,42 @@ class ProductNoticeTypeController extends Controller
      */
     public function update(Request $request)
     {
-        $typeId = $request->typeId;
-        $title = $request->title;
-        // $description = $request->description;
-        // $metaTitle = $request->meta_title;
-        // $metaDescription = $request->meta_des;
-        // $metaKeyword = $request->metaKeyword;
+        $validate = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+        if ($validate->fails()) {
+            return redirect()->back()->withErrors($validate->errors());
+        } else {
 
-        $langloop = $request->langloop;
+            $name = $request->name;
+            $langloop = $request->langloop;
+            // return dd($name);
+            DB::table('product_notice_type')->where('id', '=', $request->type_id)->update(array(
+                "color_type" => $request->color_type,
+                "order_seq" => $request->order_seq,
+                "updated_at" => \Carbon\Carbon::now()
+            ));
+            foreach ($langloop as $lang) {
+                $data = DB::table('product_notice_type_translation')->where('fk_pnt_id', '=', $request->type_id)->where('local', $lang)->get();
+                if (count($data) > 0) {
+                    DB::table('product_notice_type_translation')->where('fk_pnt_id', '=', $request->type_id)->where('local', $lang)->update(array(
+                        "title" => $name[$lang]
+                    ));
+                } else {
+                    DB::table('product_notice_type_translation')->insert(
+                        [
+                            "title" => $name[$lang],
+                            "fk_pnt_id" => $request->type_id,
+                            "local" => $lang,
+                        ]
+                    );
+                }
 
-        DB::table('product_notice_type')->where('id', $typeId)->update(
-            [
-                "updated_at" => \Carbon\Carbon::now(),
-            ]
-        );
+            }
 
-        foreach ($langloop as $lang) {
-            DB::table('product_notice_type_translation')->where('fk_pnt_id', $typeId)->where('local', $lang)->update(
-                [
-                    "title" => $title[$lang],
-                    // "description" => $description[$lang],
-                    // "meta_title" => $metaTitle[$lang],
-                    // "meta_description" => $metaDescription[$lang],
-                    // "meta_keywords" => $metaKeyword[$lang],
-                ]
-            );
+
         }
-
         return redirect()->route('product-notice-type.index')->with('flash_message', 'Update Data successfully');
-    }
-
-    public function sort(Request $request)
-    {
-        $array_sort = $request->sort;
-        $i = 1;
-        foreach ($array_sort as $sort) {
-            DB::table('product_notice_type')
-                ->where('id', $sort)
-                ->update(['sort' => $i]);
-            $i++;
-        }
-        return "Sort Data successfully";
     }
 
     /**
@@ -192,7 +178,6 @@ class ProductNoticeTypeController extends Controller
     {
         DB::table('product_notice_type')->where('id', '=', $id)->delete();
         DB::table('product_notice_type_translation')->where('fk_pnt_id', '=', $id)->delete();
-
         return back()->with('flash_message', 'Delete Data successfully');
     }
 }

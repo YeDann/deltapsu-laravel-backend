@@ -28,41 +28,30 @@
                 {{csrf_field()}}
                 <!-- Basic Elements -->
                 <div class="row push">
-                    <div class="col-lg-12">
-                        <div class="block block-rounded block-bordered">
-                            <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
-                                @foreach ($language as $item)
-                                <input type="hidden" name="langloop[]" value="{{$item->name}}">
-                                @if($loop->iteration == 1)
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#btabs-alt-static-{{$item->name}}"
-                                        style="text-transform: capitalize;">{{$item->name}}</a>
-                                </li>
-                                @else
-                                <li class="nav-item">
-                                    <a class="nav-link " href="#btabs-alt-static-{{$item->name}}"
-                                        style="text-transform: capitalize;">{{$item->name}}</a>
-                                </li>
-                                @endif
-                                @endforeach
-                            </ul>
-                        
-                            <div class="block-content tab-content">
-                                @foreach ($language as $item)
-                                <div class="tab-pane {{($loop->iteration == 1)?"active":""}}" id="btabs-alt-static-{{$item->name}}" role="tabpanel">
-                                    <div class="form-group">
-                                        <label for="example-select">Name</label>
-                                        <input type="text" class="form-control" name="title[{{$item->name}}]" placeholder="Type name..." required>
-                                    </div>
+                    <div class="col-lg-4">
+                        <p class="text-muted">
+                            {{-- The most often used inputs you know and love --}}
+                        </p>
+                    </div>
+                    <div class="col-lg-8 col-xl-5">
+                        <div class="form-group">
+                            <label for="example-colorpicker2">Type Color</label>
+                            <div class="js-colorpicker input-group" data-format="hex">
+                                <input type="text" class="form-control" id="example-colorpicker2" name="color_type">
+                                <div class="input-group-append">
+                                    <span class="input-group-text colorpicker-input-addon">
+                                        <i></i>
+                                    </span>
                                 </div>
-                                @endforeach
                             </div>
+                         </div>
+                        <div class="form-group">
+                            <label for="example-select">Name</label>
+                            <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" name="name" placeholder="Type name..." >
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success" type="submit" >Create </button>
-                            <a href="{{route('product-notice-type.index')}}"  class="btn btn-secondary ">
-                                Cancel 
-                            </a>
+                            <a href="{{route('product-notice-type.index')}}" class="btn btn-secondary ">Cancel </a>
                         </div>
                     </div>
                 </div>

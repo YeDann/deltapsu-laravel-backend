@@ -97,6 +97,7 @@ class ProductNoticeController extends Controller
             return redirect()->back()->withErrors($validate->errors());
         } else {
             $title = $request->title;
+            // Use productNoticeType instead of industryKnowHowType
             $productNoticeType = $request->productNoticeType;
             $datePublish = $request->datePublish;
             $datainfo = $request->dateinfo;

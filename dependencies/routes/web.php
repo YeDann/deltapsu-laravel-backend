@@ -93,7 +93,9 @@ Route::group([
             Route::get('/video/{name?}', 'FrontendController@updateVideoDetail')->name('updateVideoDetail');
             Route::get('/events/{name?}', 'FrontendController@updateEventDetail')->name('updateEventDetail');
             Route::get('/technical-articles/{name?}', 'FrontendController@updateTechnicalDetail')->name('updateTechnicalDetail');
-            Route::get('/product-notice/product-notice-detail', 'FrontendController@updateProductNoticelDetail')->name('updateProductNoticelDetail');
+            Route::get('/product-notice/{name?}', 'FrontendController@updateProductNoticeDetail')->name('updateProductNoticeDetail');
+            Route::get('/industry-know-how/{name?}', 'FrontendController@updateIndustryKnowHowDetail')->name('updateIndustryKnowHowDetail');
+            Route::get('/eol/{name?}', 'FrontendController@updateEOLDetail')->name('updateEOLDetail');
             Route::get('/contact/support', 'FrontendController@contactSupport')->name('contactSupport');
             Route::get('/contact/sales-offices', 'FrontendController@contactSalesOffices')->name('contactSalesOffices');
             Route::get('/contact/find-a-distributor', 'FrontendController@contactFindDistributor')->name('contactFindDistributor');

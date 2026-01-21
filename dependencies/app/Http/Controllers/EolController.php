@@ -97,6 +97,7 @@ class EolController extends Controller
             return redirect()->back()->withErrors($validate->errors());
         } else {
             $title = $request->title;
+            // Use eolType instead of industryKnowHowType
             $eolType = $request->eolType;
             $datePublish = $request->datePublish;
             $datainfo = $request->dateinfo;
