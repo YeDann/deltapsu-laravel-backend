@@ -854,7 +854,7 @@
                                 ? $staticContent['product_comparison']
                                 : 'product comparison' }}
                             </a>
-                            <a class="dropdown-item" href="{{route('index', ['page' => 'industry-know-how', 'type' => slugifyHead(isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How'), 'type-id' => isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->id : '' ])}}">
+                            <a class="dropdown-item" href="{{route('index', ['page' => 'industry-know-how'])}}">
                                 {{isset($newsTypes['Industry Know-How'])
                                 ? $newsTypes['Industry Know-How']->typename
                                 : 'Industry Know-How' }} 
