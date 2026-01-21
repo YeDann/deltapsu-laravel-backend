@@ -19,13 +19,13 @@ class ProductNoticeTypeController extends Controller
      */
     public function index()
     {
-        $contents = DB::table('product_notice_type as nt')
-            ->join('product_notice_type_translation as ntt', 'ntt.product_notice_type_id', '=', 'nt.id')
-            ->where('ntt.local', '=', 'en')
-            ->select('nt.*', 'ntt.name')
-            ->orderBy('nt.sort', 'asc')
+        $contents = DB::table('product_notice_type as pnt')
+            ->join('product_notice_type_translation as pntt', 'pntt.fk_pnt_id', '=', 'pnt.id')
+            ->where('pntt.local', '=', 'en')
+            ->select('pnt.*', 'pntt.title as name')
+            ->orderBy('pnt.order_seq', 'asc')
             ->get();
-        
+
         $countContent = count($contents);
 
         return view('product-notice-type.index')
@@ -81,8 +81,8 @@ class ProductNoticeTypeController extends Controller
             foreach ($langloop as $lang) {
                 DB::table('product_notice_type_translation')->insert(
                     [
-                        "product_notice_type_id" => $id,
-                        "name" => isset($title[$lang]) ? $title[$lang] : '',
+                        "fk_pnt_id" => $id,
+                        "title" => isset($title[$lang]) ? $title[$lang] : '',
                         // "description" => $description[$lang],
                         // "meta_title" => $metaTitle[$lang],
                         // "meta_description" => $metaDescription[$lang],
@@ -115,11 +115,11 @@ class ProductNoticeTypeController extends Controller
      */
     public function edit($id)
     {
-        $contents = DB::table('product_notice_type')
-            ->join('product_notice_type_translation', 'product_notice_type.id', '=', 'product_notice_type_translation.product_notice_type_id')
-            ->where('product_notice_type.id', '=', $id)
-            ->select('product_notice_type.*', 'product_notice_type_translation.*')
-            ->orderBy('product_notice_type.updated_at', 'desc')
+        $contents = DB::table('product_notice_type as pnt')
+            ->join('product_notice_type_translation as pntt', 'pnt.id', '=', 'pntt.fk_pnt_id')
+            ->where('pnt.id', '=', $id)
+            ->select('pnt.*', 'pntt.*')
+            ->orderBy('pnt.updated_at', 'desc')
             ->get();
         $language = DB::table('language')->get();
 
@@ -155,9 +155,9 @@ class ProductNoticeTypeController extends Controller
         );
 
         foreach ($langloop as $lang) {
-            DB::table('product_notice_type_translation')->where('product_notice_type_id', $typeId)->where('local', $lang)->update(
+            DB::table('product_notice_type_translation')->where('fk_pnt_id', $typeId)->where('local', $lang)->update(
                 [
-                    "name" => $title[$lang],
+                    "title" => $title[$lang],
                     // "description" => $description[$lang],
                     // "meta_title" => $metaTitle[$lang],
                     // "meta_description" => $metaDescription[$lang],
@@ -191,7 +191,7 @@ class ProductNoticeTypeController extends Controller
     public function destroy($id)
     {
         DB::table('product_notice_type')->where('id', '=', $id)->delete();
-        DB::table('product_notice_type_translation')->where('product_notice_type_id', '=', $id)->delete();
+        DB::table('product_notice_type_translation')->where('fk_pnt_id', '=', $id)->delete();
 
         return back()->with('flash_message', 'Delete Data successfully');
     }

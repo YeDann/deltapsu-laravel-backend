@@ -67,7 +67,7 @@
                                      <input type="hidden" name="langloop[]" value="en">
                                     <div class="form-group">
                                         <label>Title </label>
-                                        <input type="text" class="form-control" name="title[en]" placeholder="Please fill in" >
+                                        <input type="text" class="form-control" name="name[en]" placeholder="Please fill in" >
                                     </div>
                                     {{-- <div class="form-group">
                                         <label>Description</label>
@@ -79,7 +79,7 @@
                                     <input type="hidden" name="langloop[]" value="zh-CN">
                                     <div class="form-group">
                                         <label>Title </label>
-                                        <input type="text" class="form-control" name="title[zh-CN]" placeholder="Please fill in" >
+                                        <input type="text" class="form-control" name="name[zh-CN]" placeholder="Please fill in" >
                                     </div>
                                     {{-- <div class="form-group">
                                         <label>Description</label>
@@ -91,7 +91,7 @@
                                     <input type="hidden" name="langloop[]" value="zh-TW">
                                     <div class="form-group">
                                         <label>Title </label>
-                                        <input type="text" class="form-control" name="title[zh-TW]" placeholder="Please fill in" >
+                                        <input type="text" class="form-control" name="name[zh-TW]" placeholder="Please fill in" >
                                     </div>
                                     {{-- <div class="form-group">
                                         <label>Description</label>

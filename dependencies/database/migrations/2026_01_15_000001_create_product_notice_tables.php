@@ -23,12 +23,12 @@ class CreateProductNoticeTables extends Migration
 
         Schema::create('product_notice_type_translation', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('fk_sct_id');
+            $table->unsignedBigInteger('fk_pnt_id');
             $table->string('title')->nullable();
             $table->string('local')->nullable();
             $table->timestamps();
 
-            $table->foreign('fk_sct_id', 'fk_pnt_id')->references('id')->on('product_notice_type')->onDelete('cascade');
+            $table->foreign('fk_pnt_id')->references('id')->on('product_notice_type')->onDelete('cascade');
         });
 
         Schema::create('product_product_notice_has_categories', function (Blueprint $table) {

@@ -19,18 +19,13 @@ class EolTypeController extends Controller
      */
     public function index()
     {
-        $contents = DB::table('eol_type as nt')
-            ->join('eol_type_translation as ntt', 'ntt.eol_type_id', '=', 'nt.id')
-            ->where('ntt.local', '=', 'en')
-            ->select('nt.*', 'ntt.name')
-            ->orderBy('nt.sort', 'asc')
+        $contents = DB::table('eol_type as et')
+            ->join('eol_type_translation as ett', 'ett.fk_et_id', '=', 'et.id')
+            ->where('ett.local', '=', 'en')
+            ->select('et.*', 'ett.title as name')
+            ->orderBy('et.order_seq', 'asc')
             ->get();
-        // Check if SuccessCaseType used 'order_seq' or 'sort'. 
-        // SuccessCaseTypeController used: ->orderBy('nt.order_seq','asc')
-        // EolTable has both 'order_seq' and 'sort'.
-        // ProductNoticeTypeController used 'sort'. 
-        // I will use 'sort' here as per ProductNoticeTypeController but check consistency.
-        // Actually, let's stick to what I wrote in ProductNoticeTypeController which was accepted.
+
 
         $countContent = count($contents);
 
@@ -63,12 +58,12 @@ class EolTypeController extends Controller
     public function store(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'title' => 'required',
+            'name' => 'required',
         ]);
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
         } else {
-            $title = $request->title;
+            $name = $request->name;
             // $description = $request->description;
             // $metaTitle = $request->meta_title;
             // $metaDescription = $request->meta_des;
@@ -88,8 +83,8 @@ class EolTypeController extends Controller
             foreach ($langloop as $lang) {
                 DB::table('eol_type_translation')->insert(
                     [
-                        "eol_type_id" => $id,
-                        "name" => isset($title[$lang]) ? $title[$lang] : '',
+                        "fk_et_id" => $id,
+                        "title" => isset($name[$lang]) ? $name[$lang] : '',
                         "local" => $lang,
                     ]
                 );
@@ -118,11 +113,11 @@ class EolTypeController extends Controller
      */
     public function edit($id)
     {
-        $contents = DB::table('eol_type')
-            ->join('eol_type_translation', 'eol_type.id', '=', 'eol_type_translation.eol_type_id')
-            ->where('eol_type.id', '=', $id)
-            ->select('eol_type.*', 'eol_type_translation.*')
-            ->orderBy('eol_type.updated_at', 'desc')
+        $contents = DB::table('eol_type as et')
+            ->join('eol_type_translation as ett', 'et.id', '=', 'ett.fk_et_id')
+            ->where('et.id', '=', $id)
+            ->select('et.*', 'ett.*')
+            ->orderBy('et.updated_at', 'desc')
             ->get();
         $language = DB::table('language')->get();
 
@@ -143,7 +138,7 @@ class EolTypeController extends Controller
     public function update(Request $request)
     {
         $typeId = $request->typeId;
-        $title = $request->title;
+        $name = $request->name;
         // $description = $request->description;
         // $metaTitle = $request->meta_title;
         // $metaDescription = $request->meta_des;
@@ -158,9 +153,9 @@ class EolTypeController extends Controller
         );
 
         foreach ($langloop as $lang) {
-            DB::table('eol_type_translation')->where('eol_type_id', $typeId)->where('local', $lang)->update(
+            DB::table('eol_type_translation')->where('fk_et_id', $typeId)->where('local', $lang)->update(
                 [
-                    "name" => $title[$lang],
+                    "title" => $name[$lang],
                 ]
             );
         }
@@ -190,7 +185,7 @@ class EolTypeController extends Controller
     public function destroy($id)
     {
         DB::table('eol_type')->where('id', '=', $id)->delete();
-        DB::table('eol_type_translation')->where('eol_type_id', '=', $id)->delete();
+        DB::table('eol_type_translation')->where('fk_et_id', '=', $id)->delete();
 
         return back()->with('flash_message', 'Delete Data successfully');
     }

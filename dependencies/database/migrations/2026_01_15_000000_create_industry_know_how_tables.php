@@ -23,12 +23,12 @@ class CreateIndustryKnowHowTables extends Migration
 
         Schema::create('industry_know_how_type_translation', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('fk_sct_id');
+            $table->unsignedBigInteger('fk_ikht_id');
             $table->string('title')->nullable();
             $table->string('local')->nullable();
             $table->timestamps();
 
-            $table->foreign('fk_sct_id', 'fk_ikht_id')->references('id')->on('industry_know_how_type')->onDelete('cascade');
+            $table->foreign('fk_ikht_id')->references('id')->on('industry_know_how_type')->onDelete('cascade');
         });
 
         Schema::create('product_industry_know_how_has_categories', function (Blueprint $table) {
