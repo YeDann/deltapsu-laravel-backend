@@ -29,10 +29,9 @@
         height: 73px;
     }
 
-    .card {
-        min-height: 100%;
+    .box-news .card {
+        margin-bottom: 25px !important;
     }
-
     .pro-h-box {
         height: 260px;
     }
@@ -153,7 +152,7 @@
                               ?>
                                 @foreach ($pro_results as $pro)
                                 <div class=" margin-p-left-card col-xl-3 col-lg-4 col-md-4">
-                                    <div class="item card">
+                                    <div class="item card" style="min-height: 100%">
                                         <?php
                                        $color = '';
                                        $name_sta = '';
@@ -355,7 +354,7 @@
                             <div class="d-flex flex-wrap">
                                 @foreach ($pro_results as $pro)
                                 <div class=" margin-p-left-card  col-card-product">
-                                    <div class="item card">
+                                    <div class="item card" style="min-height: 100%">
                                         <?php
                                         $color = '';
                                         $name_sta = '';
@@ -586,8 +585,8 @@
 
                         ?>
                         @foreach ($news as $item)
-                        <div class="col-md-6 col-lg-4 mb-4">
-                            <div class="card">
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="card border-radius-6">
                                 <a href="{{route('updateNewsDetail',['name'=> $item->slug])}}">
                                     <div class="post-image">
                                         <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""
@@ -633,7 +632,7 @@
                     <div id="result3" class="row">
                         @foreach ($events as $item)
                         <div class="col-md-6 col-lg-4">
-                            <div class="card">
+                            <div class="card border-radius-6">
                                 <a href="{{route('updateEventDetail',$item->slug)}}">
                                     <div class="post-image">
                                         <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""
