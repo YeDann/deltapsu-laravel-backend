@@ -1689,7 +1689,7 @@
         var html1 = '';
 
         $.each(productarray, function(index_pro,pro) {
-        html1 += '<tr class="box-cardlist row_table shadow-radius-box" style="display: none;">';
+        html1 += '<tr class="box-cardlist row_table" style="display: none;">';
         html1 += '<td>';
         html1 += '<div class="cardlist-toadd">';
         html1 += '<div class="cardlist-view hover01">';
