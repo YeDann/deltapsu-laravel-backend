@@ -173,6 +173,9 @@
    .text-muted{
      padding: 0 1rem;
    }
+    .box-news .card {
+       margin-bottom: 25px !important;
+    }
 </style>
 
 @endsection
