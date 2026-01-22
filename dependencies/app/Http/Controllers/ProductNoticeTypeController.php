@@ -25,7 +25,6 @@ class ProductNoticeTypeController extends Controller
         ->where('pntt.local', 'en')
         ->orderBy('pnt.order_seq', 'asc')
         ->get();
-        // return dd($contents);
 
         return view('product-notice-type.index')
         ->with('name', 'update')
@@ -93,7 +92,6 @@ class ProductNoticeTypeController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -104,10 +102,6 @@ class ProductNoticeTypeController extends Controller
      */
     public function edit($id)
     {
-        // $contents = DB::table('product_notice_type')
-        // ->where('id','=',$id)
-        // ->select('product_notice_type.*')
-        // ->get();
         $contents = DB::table('product_notice_type as pnt')
         ->where('pnt.id', '=', $id)
         ->Leftjoin('product_notice_type_translation as pntt', 'pntt.fk_pnt_id', '=', 'pnt.id')
@@ -139,7 +133,6 @@ class ProductNoticeTypeController extends Controller
 
             $name = $request->name;
             $langloop = $request->langloop;
-            // return dd($name);
             DB::table('product_notice_type')->where('id', '=', $request->type_id)->update(array(
                 "color_type" => $request->color_type,
                 "order_seq" => $request->order_seq,

@@ -97,7 +97,6 @@ class EolController extends Controller
             return redirect()->back()->withErrors($validate->errors());
         } else {
             $title = $request->title;
-            // Use eolType instead of industryKnowHowType
             $eolType = $request->eolType;
             $datePublish = $request->datePublish;
             $datainfo = $request->dateinfo;
@@ -106,11 +105,9 @@ class EolController extends Controller
             $description = $request->description;
             $metaTitle = $request->meta_title;
             $metaDescription = $request->meta_des;
-            // $metaKeyword = $request->metaKeyword;
 
             $langloop = $request->langloop;
 
-            // Handle Thumbnail
             $thumbName = '';
             if ($request->hasFile("thumb")) {
                 $imageFile = $request->file("thumb");
@@ -119,7 +116,6 @@ class EolController extends Controller
                 $thumbName = preg_replace('/\s+/', '', $thumbName);
             }
 
-            // Handle Filelang (Files per language)
             $fileLangNames = [];
             if ($request->hasFile('Filelang')) {
                 $files = $request->file('Filelang');
@@ -135,7 +131,6 @@ class EolController extends Controller
                 }
             }
 
-            // Slug generation
             $slugTitle = isset($title['en']) ? $title['en'] : (reset($title) ?? '');
             $re1 = str_replace("/", "_", $slugTitle);
             $key = str_replace(" ", "-", $re1);
@@ -169,7 +164,6 @@ class EolController extends Controller
                         "description" => isset($description[$lang]) ? $description[$lang] : '',
                         "meta_title" => isset($metaTitle[$lang]) ? $metaTitle[$lang] : '',
                         "meta_description" => isset($metaDescription[$lang]) ? $metaDescription[$lang] : '',
-                        // "meta_keywords" => $metaKeyword,
                         'file' => isset($fileLangNames[$lang]) ? $fileLangNames[$lang] : '',
                         "local" => $lang,
                     ]
@@ -188,7 +182,6 @@ class EolController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**

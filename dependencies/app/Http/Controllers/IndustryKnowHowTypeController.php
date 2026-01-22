@@ -25,7 +25,6 @@ class IndustryKnowHowTypeController extends Controller
         ->where('ikhtt.local', 'en')
         ->orderBy('ikht.order_seq', 'asc')
         ->get();
-        // return dd($contents);
 
         return view('industry-know-how-type.index')
         ->with('name', 'update')
@@ -93,7 +92,6 @@ class IndustryKnowHowTypeController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -104,10 +102,6 @@ class IndustryKnowHowTypeController extends Controller
      */
     public function edit($id)
     {
-        // $contents = DB::table('industry_know_how_type')
-        // ->where('id','=',$id)
-        // ->select('industry_know_how_type.*')
-        // ->get();
         $contents = DB::table('industry_know_how_type as ikht')
         ->where('ikht.id', '=', $id)
         ->Leftjoin('industry_know_how_type_translation as ikhtt', 'ikhtt.fk_ikht_id', '=', 'ikht.id')
@@ -139,7 +133,6 @@ class IndustryKnowHowTypeController extends Controller
 
             $name = $request->name;
             $langloop = $request->langloop;
-            // return dd($name);
             DB::table('industry_know_how_type')->where('id', '=', $request->type_id)->update(array(
                 "color_type" => $request->color_type,
                 "order_seq" => $request->order_seq,

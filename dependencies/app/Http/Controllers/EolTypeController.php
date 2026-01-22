@@ -25,7 +25,6 @@ class EolTypeController extends Controller
         ->where('ett.local', 'en')
         ->orderBy('et.order_seq', 'asc')
         ->get();
-        // return dd($contents);
 
         return view('eol-type.index')
         ->with('name', 'update')
@@ -104,10 +103,6 @@ class EolTypeController extends Controller
      */
     public function edit($id)
     {
-        // $contents = DB::table('eol_type')
-        // ->where('id','=',$id)
-        // ->select('eol_type.*')
-        // ->get();
         $contents = DB::table('eol_type as et')
         ->where('et.id', '=', $id)
         ->Leftjoin('eol_type_translation as ett', 'ett.fk_et_id', '=', 'et.id')
@@ -139,7 +134,7 @@ class EolTypeController extends Controller
 
             $name = $request->name;
             $langloop = $request->langloop;
-            // return dd($name);
+
             DB::table('eol_type')->where('id', '=', $request->type_id)->update(array(
                 "color_type" => $request->color_type,
                 "order_seq" => $request->order_seq,

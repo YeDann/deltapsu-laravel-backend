@@ -105,11 +105,9 @@ class IndustryKnowHowController extends Controller
             $description = $request->description;
             $metaTitle = $request->meta_title;
             $metaDescription = $request->meta_des;
-            // $metaKeyword = $request->metaKeyword;
 
             $langloop = $request->langloop;
 
-            // Handle Thumbnail
             $thumbName = '';
             if ($request->hasFile("thumb")) {
                 $imageFile = $request->file("thumb");
@@ -118,7 +116,6 @@ class IndustryKnowHowController extends Controller
                 $thumbName = preg_replace('/\s+/', '', $thumbName);
             }
 
-            // Handle Filelang (Files per language)
             $fileLangNames = [];
             if ($request->hasFile('Filelang')) {
                 $files = $request->file('Filelang');
@@ -134,7 +131,6 @@ class IndustryKnowHowController extends Controller
                 }
             }
 
-            // Slug generation
             $slugTitle = isset($title['en']) ? $title['en'] : (reset($title) ?? '');
             $re1 = str_replace("/", "_", $slugTitle);
             $key = str_replace(" ", "-", $re1);
@@ -168,7 +164,6 @@ class IndustryKnowHowController extends Controller
                         "description" => isset($description[$lang]) ? $description[$lang] : '',
                         "meta_title" => isset($metaTitle[$lang]) ? $metaTitle[$lang] : '',
                         "meta_description" => isset($metaDescription[$lang]) ? $metaDescription[$lang] : '',
-                        // "meta_keywords" => $metaKeyword,
                         'file' => isset($fileLangNames[$lang]) ? $fileLangNames[$lang] : '',
                         "local" => $lang,
                     ]
@@ -187,7 +182,6 @@ class IndustryKnowHowController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -310,7 +304,6 @@ class IndustryKnowHowController extends Controller
                     "meta_title" => $meta_title[$lang],
                     "meta_description" => $meta_des[$lang],
                     "description" => $description[$lang],
-                    // "meta_keywords" => $meta_key[$lang],
                     'file' =>  $arrrayName[$lang],
                 ]
             );
@@ -379,8 +372,6 @@ class IndustryKnowHowController extends Controller
                 ->where('contents.translate_id', '=', $item->translate_id)
                 ->where('contents.language', '=', $new_local)
                 ->get();
-
-            // return dd(count($check_local));
 
             if (count($check_local) == 0) {
                 DB::table('contents')->insert(
