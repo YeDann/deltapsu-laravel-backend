@@ -6,7 +6,7 @@ use DB;
 use Illuminate\Http\Request;
 use Validator;
 
-class SuccessCaseController extends Controller
+class EolController extends Controller
 {
     public function __construct()
     {
@@ -19,13 +19,13 @@ class SuccessCaseController extends Controller
      */
     public function index()
     {
-        $contents = DB::table('product_success_case_has_categories as pnc')
+        $contents = DB::table('product_eol_has_categories as pnc')
             ->join('contents as c', 'c.id', '=', 'pnc.content_id')
             ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
-            ->join('success_case_type as nt', 'nt.id', '=', 'pnc.categories_id')
+            ->join('eol_type as et', 'et.id', '=', 'pnc.categories_id')
             ->where('ct.local', '=', 'en')
-            ->where('c.content_type', '=', 'success-case')
-            ->select('c.*', 'ct.*', 'nt.name as cateName')
+            ->where('c.content_type', '=', 'eol')
+            ->select('c.*', 'ct.*', 'et.name as cateName')
             ->orderBy('c.updated_at', 'desc')
             ->distinct()
             ->get();
@@ -34,17 +34,17 @@ class SuccessCaseController extends Controller
 
         $language = DB::table('language')->get();
 
-        return view('success-case.index')
+        return view('eol.index')
             ->with('name', 'update')
-            ->with('menu', 'success-case')
+            ->with('menu', 'eol')
             ->with('contents', $contents)
             ->with('countContent', $countContent)
             ->with('language', $language);
     }
 
-    public function ImportSuccessCaseData($type)
+    public function ImportEolData($type)
     {
-        return redirect()->route('success-case.index')->with('flash_message', 'Insert Data successfully');
+        return redirect()->route('eol.index')->with('flash_message', 'Insert Data successfully');
     }
 
     /**
@@ -54,14 +54,14 @@ class SuccessCaseController extends Controller
      */
     public function create()
     {
-        $successCaseType = DB::table('success_case_type')
+        $eolType = DB::table('eol_type')
             ->get();
         $language = DB::table('language')->get();
-        return view('success-case.create')
+        return view('eol.create')
             ->with('name', "update")
-            ->with('menu', "success-case")
+            ->with('menu', "eol")
             ->with('language', $language)
-            ->with('successCaseType', $successCaseType);
+            ->with('eolType', $eolType);
     }
 
 
@@ -97,19 +97,17 @@ class SuccessCaseController extends Controller
             return redirect()->back()->withErrors($validate->errors());
         } else {
             $title = $request->title;
-            $successCaseType = $request->successCaseType;
+            $eolType = $request->eolType;
             $datePublish = $request->datePublish;
             $datainfo = $request->dateinfo;
-            $successCaseStatus = $request->successCaseStatus;
+            $eolStatus = $request->eolStatus;
             $Content = $request->content;
             $description = $request->description;
             $metaTitle = $request->meta_title;
             $metaDescription = $request->meta_des;
-            // $metaKeyword = $request->metaKeyword;
 
             $langloop = $request->langloop;
 
-            // Handle Thumbnail
             $thumbName = '';
             if ($request->hasFile("thumb")) {
                 $imageFile = $request->file("thumb");
@@ -118,7 +116,6 @@ class SuccessCaseController extends Controller
                 $thumbName = preg_replace('/\s+/', '', $thumbName);
             }
 
-            // Handle Filelang (Files per language)
             $fileLangNames = [];
             if ($request->hasFile('Filelang')) {
                 $files = $request->file('Filelang');
@@ -134,7 +131,6 @@ class SuccessCaseController extends Controller
                 }
             }
 
-            // Slug generation
             $slugTitle = isset($title['en']) ? $title['en'] : (reset($title) ?? '');
             $re1 = str_replace("/", "_", $slugTitle);
             $key = str_replace(" ", "-", $re1);
@@ -143,20 +139,20 @@ class SuccessCaseController extends Controller
 
             $id = DB::table('contents')->insertGetID(
                 [
-                    "content_type" => "success-case",
+                    "content_type" => "eol",
                     "thumb" => $thumbName,
                     "created_at" => \Carbon\Carbon::now(),
                     "updated_at" => \Carbon\Carbon::now(),
                     "date_publish" => $datePublish,
                     "date_info" => $datainfo,
                     "slug" => $slug,
-                    "status" => $successCaseStatus,
+                    "status" => $eolStatus,
                 ]
             );
-            DB::table('product_success_case_has_categories')->insert(
+            DB::table('product_eol_has_categories')->insert(
                 [
                     "content_id" => $id,
-                    "categories_id" => $successCaseType,
+                    "categories_id" => $eolType,
                 ]
             );
             foreach ($langloop as $lang) {
@@ -168,14 +164,13 @@ class SuccessCaseController extends Controller
                         "description" => isset($description[$lang]) ? $description[$lang] : '',
                         "meta_title" => isset($metaTitle[$lang]) ? $metaTitle[$lang] : '',
                         "meta_description" => isset($metaDescription[$lang]) ? $metaDescription[$lang] : '',
-                        // "meta_keywords" => $metaKeyword,
                         'file' => isset($fileLangNames[$lang]) ? $fileLangNames[$lang] : '',
                         "local" => $lang,
                     ]
                 );
             }
 
-            return redirect()->route('success-case.index')->with('flash_message', 'Insert Data successfully');
+            return redirect()->route('eol.index')->with('flash_message', 'Insert Data successfully');
         }
     }
 
@@ -187,7 +182,6 @@ class SuccessCaseController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -199,27 +193,27 @@ class SuccessCaseController extends Controller
     public function edit($id)
     {
 
-        $contents = DB::table('product_success_case_has_categories as pnc')
+        $contents = DB::table('product_eol_has_categories as pnc')
         ->join('contents as c', 'c.id', '=', 'pnc.content_id')
         ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
-        ->join('success_case_type as nt', 'nt.id', '=', 'pnc.categories_id')
-        ->where('c.content_type', '=', 'success-case')
+        ->join('eol_type as et', 'et.id', '=', 'pnc.categories_id')
+        ->where('c.content_type', '=', 'eol')
         ->where('c.id', '=', $id)
-        ->select('c.id as content_id', 'c.*', 'ct.*', 'nt.name as cateName', 'pnc.*')
+        ->select('c.id as content_id', 'c.*', 'ct.*', 'et.name as cateName', 'pnc.*')
         ->orderBy('c.created_at', 'desc')
         ->distinct()
         ->get();
 
         $language = DB::table('language')->get();
-        $successCaseType = DB::table('success_case_type')
+        $eolType = DB::table('eol_type')
             ->get();
 
-        return view('success-case.edit')
+        return view('eol.edit')
             ->with('name', "update")
-            ->with('menu', "success-case")
+            ->with('menu', "eol")
             ->with('contents', $contents)
             ->with('language', $language)
-            ->with('successCaseType', $successCaseType);
+            ->with('eolType', $eolType);
     }
 
     private function UpdateOldfile($loopfile, $loop, $oldfile)
@@ -254,11 +248,11 @@ class SuccessCaseController extends Controller
      */
     public function update(Request $request)
     {
-        $successCaseId = $request->successCaseId;
+        $eolId = $request->eolId;
         $description = $request->description;
         $datePublish = $request->datePublish;
-        $successCaseStatus = $request->successCaseStatus;
-        $successCaseType = $request->successCaseType;
+        $eolStatus = $request->eolStatus;
+        $eolType = $request->eolType;
         $langloop = $request->langloop;
         $oldFile   = $request->oldFile;
         $Filelang  =  $request->Filelang;
@@ -286,24 +280,24 @@ class SuccessCaseController extends Controller
                 unlink($file_pointer);
             }
         }
-        DB::table('contents')->where('id', $successCaseId)->update(
+        DB::table('contents')->where('id', $eolId)->update(
             [
                 "thumb" =>   preg_replace('/\s+/', '', $imageName),
                 "updated_at" => \Carbon\Carbon::now(),
                 "date_publish" => $datePublish,
                 "date_info" => $request->dateinfo,
                 "slug" => $slug,
-                "status" => $successCaseStatus,
+                "status" => $eolStatus,
             ]
         );
-        DB::table('product_success_case_has_categories')->where('content_id', $successCaseId)->update(
+        DB::table('product_eol_has_categories')->where('content_id', $eolId)->update(
             [
-                "categories_id" => $successCaseType,
+                "categories_id" => $eolType,
             ]
         );
         $arrrayName = self::UpdateOldfile($Filelang, $langloop, $oldFile);
         foreach ($langloop as $lang) {
-            DB::table('contents_translations')->where('content_id', $successCaseId)->where('local', $lang)->update(
+            DB::table('contents_translations')->where('content_id', $eolId)->where('local', $lang)->update(
                 [
                     "title" => $title[$lang],
                     "content" => $content[$lang],
@@ -316,7 +310,7 @@ class SuccessCaseController extends Controller
             );
         }
 
-        return redirect()->route('success-case.index')->with('flash_message', 'Update Data successfully');
+        return redirect()->route('eol.index')->with('flash_message', 'Update Data successfully');
     }
 
     /**
@@ -356,20 +350,20 @@ class SuccessCaseController extends Controller
 
         DB::table('contents')->where('id', '=', $id)->delete();
         DB::table('contents_translations')->where('content_id', '=', $id)->delete();
-        DB::table('product_success_case_has_categories')->where('content_id', '=', $id)->delete();
+        DB::table('product_eol_has_categories')->where('content_id', '=', $id)->delete();
 
         return back()->with('flash_message', 'Delete Data successfully');
     }
 
 
-    public function copySuccessCasesingle(Request $request)
+    public function copyEolsingle(Request $request)
     {
 
-        $successCaseId = $request->successCaseId;
+        $eolId = $request->eolId;
         $new_local = $request->language;
 
         $contentEn = DB::table('contents')
-            ->where("contents.translate_id", '=', $successCaseId)
+            ->where("contents.translate_id", '=', $eolId)
             ->select('contents.*')
             ->get();
 
@@ -405,21 +399,21 @@ class SuccessCaseController extends Controller
                 );
             }
         }
-        return redirect()->route('success-case.index')->with('flash_message', 'Copy Data successfully');
+        return redirect()->route('eol.index')->with('flash_message', 'Copy Data successfully');
     }
 
-    public function copySuccessCase(Request $request)
+    public function copyEol(Request $request)
     {
         $new_local = $request->language;
 
         $contentEn = DB::table('contents')
-            ->where('contents.type', '=', 'success-case')
+            ->where('contents.type', '=', 'eol')
             ->select('contents.*')
             ->get();
 
         foreach ($contentEn as $item) {
             $check_local = DB::table('contents')
-                ->where('contents.type', '=', 'success-case')
+                ->where('contents.type', '=', 'eol')
                 ->where('contents.translate_id', '=', $item->translate_id)
                 ->where('contents.language', '=', $new_local)
                 ->get();
@@ -448,9 +442,9 @@ class SuccessCaseController extends Controller
             }
         }
 
-        return redirect()->route('success-case.index')->with('flash_message', 'Copy Data successfully');
+        return redirect()->route('eol.index')->with('flash_message', 'Copy Data successfully');
     }
-    public function removeFileSuccessCaseDoc($name, $id)
+    public function removeFileEolDoc($name, $id)
     {
         $con_trans = DB::table('contents_translations as ct')
         ->where('content_id', $id)

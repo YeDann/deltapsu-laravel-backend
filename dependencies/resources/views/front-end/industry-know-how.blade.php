@@ -173,24 +173,14 @@
    .text-muted{
      padding: 0 1rem;
    }
+
+    .box-news .card {
+       margin-bottom: 25px !important;
+    }
 </style>
 
 @endsection
-@section('meta')
-<title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
-<meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 
-<link rel="canonical" href="{{url()->current()}}" />
-<?php
-  $lang_seo = App::getLocale();
-  if($lang_seo == 'cn'){
-    $lang_seo = 'zh-Hans-CN';
-  }else if($lang_seo == 'tw'){
-    $lang_seo = 'zh-Hans-TW';
-  }
-?>
-<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
-@endsection
 @section('container')
 <div class="padding-top-content">
 </div>
@@ -202,17 +192,23 @@
                     <li class="breadcrumb-item text-breadcrumb-home"><a
                             href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
                     <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
-                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Updates']}}</a>
+                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Technical_Support']}}</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Updates']}}</a></li>
+                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Technical_Support'] ?? 'Technical Support'}}</a></li>
                             <hr>
-                            <li><a href="{{route('index','news')}}">{{$staticContent['Product_News']}}</a></li>
-                            <li><a href="{{route('index','events')}}">{{$staticContent['Events']}}</a></li>
-                            <li><a href="{{route('index','success-case')}}">{{$staticContent['Success_Case']}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'catalogs'])}}">{{$staticContent['catalogs'] ?? 'Catalogs'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'product-documents'])}}">{{$staticContent['Product_Documents'] ?? 'Product Documents'}}</a></li>
+                            <li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison'] ?? 'Product Comparison'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'industry-know-how'])}}">{{$staticContent['Industry_Know_How'] ?? 'Industry Know-How'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'videos'])}}">{{$staticContent['Videos'] ?? 'Videos'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'eol'])}}">{{$staticContent['EOL'] ?? 'EOL'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'faqs'])}}">{{$staticContent['FAQs'] ?? 'FAQs'}}</a></li>
+                            <li><a href="{{route('contactSupport')}}">{{$staticContent['Technical_Service'] ?? 'Technical Service'}}</a></li>
                         </ul>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
-                            href="#">{{$staticContent['Success_Case']}}</a></li>
+                            href="#">{{$staticContent['Industry_Know_How'] ?? 'Industry Know-How'}}</a></li>
                 </ol>
             </nav>
         </div>
@@ -250,7 +246,7 @@ function getDateformat($date){
 ?>
 <section class="box-news">
     <div class="container">
-        <h1 class="text-title-delta ">{{$staticContent['Success_Case']}}</h1>
+        <h1 class="text-title-delta ">{{$staticContent['Industry_Know_How'] ?? 'Industry Know-How'}}</h1>
         <select id="select-news" onchange="selectDatanews();" class="form-control invisible-up-922 mb-4 w-75 m-auto border-radius-6">
             <option value="0" {{$type_id==0 ? 'selected' :''}}>{{$staticContent['All']}}</option>
             @foreach ($news_type as $type)
@@ -262,25 +258,11 @@ function getDateformat($date){
                 <div class="nav nav-tabs d-flex justify-content-center border-b-2px visible-up-922 mb-5" id="nav-tab"
                     role="tablist">
                     <a class="nav-item nav-link font-size-tab  {{$type_id == 0 ? 'active' :''}}"
-                        href="{{route('index','success-case')}}?type=all&type-id=0">{{$staticContent['All']}}</a>
-
-                    @if(App::getLocale() == "jp")
-                    <style>
-                        /*For IE And Lang JP*/
-                        @media all and (-ms-high-contrast: none),
-                        (-ms-high-contrast: active) {
-                            .bg-new-alert {
-                                padding-top: 5px;
-                            }
-                        }
-                    </style>
-                    @endif
+                        href="{{route('index','industry-know-how')}}?type=all&type-id=0">{{$staticContent['All']}}</a>
+                    
                     @foreach ($news_type as $type)
                     <a class="nav-item nav-link font-size-tab position-relative {{$type_id == $type->id ? 'active' :''}}"
-                        href="{{route('index','success-case')}}?type={{preg_replace('/\s+/', '-',strtolower($type->typename))}}&type-id={{$type->id}}">{{$type->typename}}
-                        @if($type->typename == 'Lebensdauer' || $type->typename == 'EOL' ||
-                        $type->typename == "下架产品" || $type->typename == "停產產品"
-                        && $status_eol)<div class="bg-new-alert"><span>N</span></div>@endif
+                        href="{{route('index','industry-know-how')}}?type={{preg_replace('/\s+/', '-',strtolower($type->typename))}}&type-id={{$type->id}}">{{$type->typename}}
                     </a>
                     @endforeach
 
@@ -291,7 +273,7 @@ function getDateformat($date){
                             @foreach ($news as $item)
                             <div class="col-lg-4 col-sm-6">
                                 <div class="card border-radius-6">
-                                    <a href="{{route('updateSuccessCaseDetail',['name'=> $item->slug])}}">
+                                    <a href="{{route('updateIndustryKnowHowDetail',['name'=> $item->slug])}}">
                                         <div class="post-image">
                                             <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""
                                                 class="img-responsive">
@@ -300,7 +282,7 @@ function getDateformat($date){
                                     <div class="news-content">
 
                                         <div class="post-meta">
-                                            <a href="{{route('updateSuccessCaseDetail',['name'=> $item->slug])}}">
+                                            <a href="{{route('updateIndustryKnowHowDetail',['name'=> $item->slug])}}">
                                                 <span class="sub-news" style="color:{{$item->color_type}}">
                                                     {{$item->cateName}}
                                                 </span>
@@ -320,7 +302,7 @@ function getDateformat($date){
                                             </span>
                                         </div>
                                         <h4 class="post-header title-new">
-                                            <a href="{{route('updateSuccessCaseDetail',['name'=> $item->slug])}}">
+                                            <a href="{{route('updateIndustryKnowHowDetail',['name'=> $item->slug])}}">
                                                 {{$item->title}}
                                             </a>
                                         </h4>
@@ -329,7 +311,7 @@ function getDateformat($date){
 
                                     </div>
 
-                                    <a href="{{route('updateSuccessCaseDetail',['name'=> $item->slug])}}"
+                                    <a href="{{route('updateIndustryKnowHowDetail',['name'=> $item->slug])}}"
                                         class="read-more">{{$staticContent['Read_More']}}</a>
                                 </div>
                             </div>
@@ -364,10 +346,10 @@ function getDateformat($date){
             if(find){
              type_name =  find.typename.toLowerCase().replace(/\s+/g, '-');
              type_id =  value_tab;
-             window.location = '{{route('index','success-case')}}?type='+type_name +'&type-id='+type_id ;
+             window.location = '{{route('index','industry-know-how')}}?type='+type_name +'&type-id='+type_id ;
             }
         }else{
-            window.location = "{{route('index','success-case')}}?type=all&type-id=0";
+            window.location = "{{route('index','industry-know-how')}}?type=all&type-id=0";
         }
      }
 </script>

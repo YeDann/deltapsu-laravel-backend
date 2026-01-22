@@ -7,10 +7,10 @@
 <div class="bg-body-light">
     <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Success Case Type</h1>
+            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Product Notice Type</h1>
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">Success Case Type</li>
+                    <li class="breadcrumb-item active" aria-current="page">Product Notice Type</li>
                 </ol>
             </nav>
         </div>
@@ -35,11 +35,10 @@
 
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
-            <h3 class="block-title"><a href="{{route('success-case.index')}}" class="btn btn-info" > <i class="fa fa-chevron-left"></i>  Success Case</a></h3>
+            <h3 class="block-title"><a href="{{route('product-notice.index')}}" class="btn btn-info" > <i class="fa fa-chevron-left"></i>  Product Notice</a></h3>
             <div class="block-options">
                 <div class="block-options-item">
-                    <a href="{{route('success-case-type.create')}}" class="btn btn-success">Create </a>
-
+                    <a href="{{route('product-notice-type.create')}}" class="btn btn-success">Create </a>                                                    
                     
                 </div>
             </div>
@@ -62,9 +61,9 @@
                     <td class="font-w600">{{$item->created_at}}</td>
                     <td class="text-center">
                         <div class="">
-                                <a href="{{route('success-case-type.edit',$item->id)}}" class="btn btn-primary">Edit </a>
-                            <button type="button" class="btn btn-danger" data-toggle="tooltip" id="delbutton"
-                                title="Delete" onclick="deleteSuccessCaseType({{$item->id}})">
+                                <a href="{{route('product-notice-type.edit',$item->id)}}" class="btn btn-primary">Edit </a>
+                                <button type="button" class="btn btn-danger" data-toggle="tooltip" id="delbutton"
+                                title="Delete" onclick="deleteProductNoticeType({{$item->id}})">
                                 Delete
                             </button>
                         </div>
@@ -80,7 +79,7 @@
 @endsection
 @section('js')
 <script>
-    function deleteSuccessCaseType(id) {
+    function deleteProductNoticeType(id) {
         swal({
             title: "Confirm Delete",
             text: "You Are Delete this Data?",
@@ -97,7 +96,7 @@
                     text: 'Candidates are successfully shortlisted!',
                     icon: 'success'
                 }).then(function () {
-                    window.location = "{{ (route('successCaseTypeDestroy')) }}/" + id;
+                    window.location = "{{ (route('productNoticeTypeDestroy')) }}/" + id;
                 });
             }
         });

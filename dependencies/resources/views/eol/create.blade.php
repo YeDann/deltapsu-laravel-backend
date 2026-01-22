@@ -40,10 +40,10 @@
 <div class="bg-body-light">
     <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Success Case</h1>
+            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">EOL</h1>
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('success-case.index')}}">Success Case</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('eol.index')}}">EOL</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Create</li>
                 </ol>
             </nav>
@@ -57,7 +57,7 @@
             <h3 class="block-title">Create Content</h3>
         </div>
         <br>
-        <form id="form-work" class="form-horizontal" role="form" autocomplete="off" action="{{route('success-case.store')}}"
+        <form id="form-work" class="form-horizontal" role="form" autocomplete="off" action="{{route('eol.store')}}"
             method="post" novalidate="novalidate" enctype="multipart/form-data">
             {{csrf_field()}}
             
@@ -117,8 +117,7 @@
                                         <input id="input-metaTitle-{{$item->name}}"
                                             onkeyup="countCharacter('metaTitle-{{$item->name}}')"
                                             type="meta_title[{{$item->name}}]" class="form-control"
-                                            name="meta_title[{{$item->name}}]"
-                                            value="">
+                                            name="meta_title[{{$item->name}}]" value="">
                                         <div class="text-count">Count Character :
                                             <span id="count-metaTitle-{{$item->name}}">
                                                 0</span>
@@ -131,8 +130,7 @@
                                     <div id="item-wrap">
                                         <textarea rows="4" id="input-meta_des-{{$item->name}}"
                                             onkeyup="countCharacter('meta_des-{{$item->name}}')"
-                                            name="meta_des[{{$item->name}}]"
-                                            class="form-control "></textarea>
+                                            name="meta_des[{{$item->name}}]" class="form-control "></textarea>
                                         <div class="text-count"> Count Character :
                                             <span id="count-meta_des-{{$item->name}}">
                                                 0</span>
@@ -148,9 +146,9 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="">Success Case Type</label>
-                        <select name="successCaseType" class="form-control" id="">
-                            @foreach ($successCaseType as $type)
+                        <label for="">EOL Type</label>
+                        <select name="eolType" class="form-control" id="">
+                            @foreach ($eolType as $type)
                             <option value="{{$type->id}}">{{$type->name}}</option>
                             @endforeach
                         </select>
@@ -165,27 +163,26 @@
                         <label for="example-text-input">Date Publish*</label>
                         <input type="text" class="js-datepicker form-control" id="example-datepicker1"
                             name="datePublish" data-week-start="1" data-autoclose="true" data-today-highlight="true"
-                            data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
-                            value="">
+                            data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="">
                     </div>
                     <div class="form-group">
-                        <label class="d-block">Success Case Status</label>
+                        <label class="d-block">EOL Status</label>
                         <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                            <input type="radio" class="custom-control-input" id="status-line-1" name="successCaseStatus"
+                            <input type="radio" class="custom-control-input" id="status-line-1" name="eolStatus"
                                 value="1" checked>
                             <label class="custom-control-label" for="status-line-1">Show</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                            <input type="radio" class="custom-control-input" id="status-line-2" name="successCaseStatus"
+                            <input type="radio" class="custom-control-input" id="status-line-2" name="eolStatus"
                                 value="0">
-                                <label class="custom-control-label" for="status-line-2">Hide</label>
+                            <label class="custom-control-label" for="status-line-2">Hide</label>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="example-text-input">Image-thumbnail</label>
                         <div id="imagePreview">
-                            <img src="https://via.placeholder.com/415x250.png"
-                                class="img-thumbnail imagePreview" alt="">
+                            <img src="https://via.placeholder.com/415x250.png" class="img-thumbnail imagePreview"
+                                alt="">
                         </div><br>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" data-toggle="custom-file-input" id="image"
@@ -197,7 +194,7 @@
                     <div class="form-group text-center">
                         <button type="submit" class="btn btn-success text-uppercase col-2">Create
                         </button>
-                        <a href="{{route('success-case.index')}}" class="btn btn-secondary text-uppercase col-2">Cancel
+                        <a href="{{route('eol.index')}}" class="btn btn-secondary text-uppercase col-2">Cancel
                         </a>
                     </div>
                 </div>
@@ -214,7 +211,6 @@
         var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
         var isSuccess = fileTypes.indexOf(extension) > -1; /*se verifica extensia*/
-
         if (isSuccess) {
             var reader = new FileReader();
 

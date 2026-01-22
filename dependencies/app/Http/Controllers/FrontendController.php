@@ -341,81 +341,6 @@ class FrontendController extends Controller
             ->with('videos', $videos);
         }
 
-        if ('success-case' == $page) {
-            $lang = App::getLocale();
-
-            $news_type = DB::table('success_case_type as nt')
-            ->join('success_case_type_translation as ntt', 'ntt.fk_sct_id', '=', 'nt.id')
-            ->select('nt.*', 'ntt.title as typename')
-            ->where('ntt.local', $lang)
-            ->orderBy('nt.order_seq', 'asc')
-            ->get();
-            $type_id = 0;
-            if (isset($_GET['type-id']) && 0 != $_GET['type-id']) {
-                $type_id = $this->validateInput($_GET['type-id'], 'number', true);
-                $news = DB::table('product_success_case_has_categories as pnc')
-                ->join('contents as c', 'c.id', '=', 'pnc.content_id')
-                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
-                ->join('success_case_type as nt', 'nt.id', '=', 'pnc.categories_id')
-                ->join('success_case_type_translation as ntt', 'ntt.fk_sct_id', '=', 'nt.id')
-                ->where('ct.local', $lang)
-                ->where('ntt.local', $lang)
-                ->where('c.content_type', '=', 'success-case')
-                ->where('nt.id', $type_id)
-                ->where('c.status', 1)
-                ->select('c.*', 'ct.*', 'ntt.title as cateName', 'nt.color_type', 'pnc.categories_id as typeId')
-                ->orderBy('c.date_publish', 'desc')
-                ->distinct()
-                ->paginate(15);
-            } else {
-                $news = DB::table('product_success_case_has_categories as pnc')
-                ->join('contents as c', 'c.id', '=', 'pnc.content_id')
-                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
-                ->join('success_case_type as nt', 'nt.id', '=', 'pnc.categories_id')
-                ->join('success_case_type_translation as ntt', 'ntt.fk_sct_id', '=', 'nt.id')
-                ->where('ct.local', $lang)
-                ->where('ntt.local', $lang)
-                ->where('c.content_type', '=', 'success-case')
-                ->where('c.status', 1)
-                ->select('c.*', 'ct.*', 'ntt.title as cateName', 'nt.color_type', 'pnc.categories_id as typeId')
-                ->orderBy('c.date_publish', 'desc')
-                ->distinct()
-                ->paginate(15);
-            }
-
-            $status = false;
-            $currentdate = date('Y-m-d');
-            if (count($news) > 0) {
-                if (12 == $news[0]->typeId) {
-                    $date1 = $currentdate;
-                    $date2 = $news[0]->date_publish;
-
-                    $diff = abs(strtotime($date2) - strtotime($date1));
-
-                    $years = floor($diff / (365 * 60 * 60 * 24));
-                    $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
-                    $days = floor(($diff - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
-
-                    if ($days > 0 && $days <= 30) {
-                        $status = true;
-                    }
-                }
-            }
-
-            $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 6)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
-
-            return view('front-end.success-case')
-            ->with('metatag', $metatag)
-            ->with('news_type', $news_type)
-            ->with('status_eol', $status)
-            ->with('type_id', $type_id)
-            ->with('news', $news);
-        }
         if ('login' == $page) {
             $sectionId = session('partner_id');
             $metatag = DB::table('meta_tag_page as mtp')
@@ -496,8 +421,99 @@ class FrontendController extends Controller
             ->with('news_type', $news_type)
             ->with('news', $news);
         }
+        if ('industry-know-how' == $page) {
+            $lang = App::getLocale();
+
+            $news_type = DB::table('industry_know_how_type as nt')
+            ->join('industry_know_how_type_translation as ntt', 'ntt.fk_ikht_id', '=', 'nt.id')
+            ->select('nt.*', 'ntt.title as typename')
+            ->where('ntt.local', $lang)
+            ->orderBy('nt.order_seq', 'asc')
+            ->get();
+            $type_id = 0;
+            if (isset($_GET['type-id']) && 0 != $_GET['type-id']) {
+                $type_id = $this->validateInput($_GET['type-id'], 'number', true);
+                $news = DB::table('product_industry_know_how_has_categories as pnc')
+                ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->join('industry_know_how_type as nt', 'nt.id', '=', 'pnc.categories_id')
+                ->join('industry_know_how_type_translation as ntt', 'ntt.fk_ikht_id', '=', 'nt.id')
+                ->where('ct.local', $lang)
+                ->where('ntt.local', $lang)
+                ->where('c.content_type', '=', 'industry-know-how')
+                ->where('nt.id', $type_id)
+                ->where('c.status', 1)
+                ->select('c.*', 'ct.*', 'ntt.title as cateName', 'nt.color_type', 'pnc.categories_id as typeId')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->paginate(15);
+            } else {
+                $news = DB::table('product_industry_know_how_has_categories as pnc')
+                ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->join('industry_know_how_type as nt', 'nt.id', '=', 'pnc.categories_id')
+                ->join('industry_know_how_type_translation as ntt', 'ntt.fk_ikht_id', '=', 'nt.id')
+                ->where('ct.local', $lang)
+                ->where('ntt.local', $lang)
+                ->where('c.content_type', '=', 'industry-know-how')
+                ->where('c.status', 1)
+                ->select('c.*', 'ct.*', 'ntt.title as cateName', 'nt.color_type', 'pnc.categories_id as typeId')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->paginate(15);
+            }
+
+            return view('front-end.industry-know-how')
+            ->with('news_type', $news_type)
+            ->with('type_id', $type_id)
+            ->with('news', $news);
+        }
         if ('product-notice' == $page) {
-            return view('front-end.product-notice');
+            $lang = App::getLocale();
+
+            $news_type = DB::table('product_notice_type as nt')
+            ->join('product_notice_type_translation as ntt', 'ntt.fk_pnt_id', '=', 'nt.id')
+            ->select('nt.*', 'ntt.title as typename')
+            ->where('ntt.local', $lang)
+            ->orderBy('nt.order_seq', 'asc')
+            ->get();
+            $type_id = 0;
+            if (isset($_GET['type-id']) && 0 != $_GET['type-id']) {
+                $type_id = $this->validateInput($_GET['type-id'], 'number', true);
+                $news = DB::table('product_product_notice_has_categories as pnc')
+                ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->join('product_notice_type as nt', 'nt.id', '=', 'pnc.categories_id')
+                ->join('product_notice_type_translation as ntt', 'ntt.fk_pnt_id', '=', 'nt.id')
+                ->where('ct.local', $lang)
+                ->where('ntt.local', $lang)
+                ->where('c.content_type', '=', 'product-notice')
+                ->where('nt.id', $type_id)
+                ->where('c.status', 1)
+                ->select('c.*', 'ct.*', 'ntt.title as cateName', 'nt.color_type', 'pnc.categories_id as typeId')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->paginate(15);
+            } else {
+                $news = DB::table('product_product_notice_has_categories as pnc')
+                ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->join('product_notice_type as nt', 'nt.id', '=', 'pnc.categories_id')
+                ->join('product_notice_type_translation as ntt', 'ntt.fk_pnt_id', '=', 'nt.id')
+                ->where('ct.local', $lang)
+                ->where('ntt.local', $lang)
+                ->where('c.content_type', '=', 'product-notice')
+                ->where('c.status', 1)
+                ->select('c.*', 'ct.*', 'ntt.title as cateName', 'nt.color_type', 'pnc.categories_id as typeId')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->paginate(15);
+            }
+
+            return view('front-end.product-notice')
+            ->with('news_type', $news_type)
+            ->with('type_id', $type_id)
+            ->with('news', $news);
         }
 
         if ('faqs' == $page) {
@@ -666,8 +682,55 @@ class FrontendController extends Controller
         if ('products' == $page) {
             return redirect()->route('productFinder');
         }
-        if ('end-of-life-products' == $page) {
-            return redirect()->route('index', 'news');
+        if ('eol' == $page) {
+            $lang = App::getLocale();
+
+            $news_type = DB::table('eol_type as nt')
+            ->join('eol_type_translation as ntt', 'ntt.fk_et_id', '=', 'nt.id')
+            ->select('nt.*', 'ntt.title as typename')
+            ->where('ntt.local', $lang)
+            ->orderBy('nt.order_seq', 'asc')
+            ->get();
+            $type_id = 0;
+            if (isset($_GET['type-id']) && 0 != $_GET['type-id']) {
+                $type_id = $this->validateInput($_GET['type-id'], 'number', true);
+                $news = DB::table('product_eol_has_categories as pnc')
+                ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->join('eol_type as nt', 'nt.id', '=', 'pnc.categories_id')
+                ->join('eol_type_translation as ntt', 'ntt.fk_et_id', '=', 'nt.id')
+                ->where('ct.local', $lang)
+                ->where('ntt.local', $lang)
+                ->where('c.content_type', '=', 'eol')
+                ->where('nt.id', $type_id)
+                ->where('c.status', 1)
+                ->select('c.*', 'ct.*', 'ntt.title as cateName', 'nt.color_type', 'pnc.categories_id as typeId')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->paginate(15);
+            } else {
+                $news = DB::table('product_eol_has_categories as pnc')
+                ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->join('eol_type as nt', 'nt.id', '=', 'pnc.categories_id')
+                ->join('eol_type_translation as ntt', 'ntt.fk_et_id', '=', 'nt.id')
+                ->where('ct.local', $lang)
+                ->where('ntt.local', $lang)
+                ->where('c.content_type', '=', 'eol')
+                ->where('c.status', 1)
+                ->select('c.*', 'ct.*', 'ntt.title as cateName', 'nt.color_type', 'pnc.categories_id as typeId')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->paginate(15);
+            }
+
+            $status = false;
+
+            return view('front-end.eol')
+            ->with('status_eol', $status)
+            ->with('news_type', $news_type)
+            ->with('type_id', $type_id)
+            ->with('news', $news);
         }
         if ('documents' == $page) {
             return redirect()->route('index', 'product-documents');
@@ -2252,61 +2315,6 @@ class FrontendController extends Controller
           ->with('contents', $contents);
     }
 
-    public function updateSuccessCaseDetail($namePar)
-    {
-        // Get the current URL
-        $currentUrl = url()->current();
-        $lowercaseUrl = strtolower($currentUrl);
-
-        // If the URL is not in lowercase, redirect to the lowercase version
-        if ($currentUrl !== $lowercaseUrl) {
-            return redirect()->to($lowercaseUrl, 301);
-        }
-
-        $lang = App::getLocale();
-
-        $name = $this->validateInput($namePar, 'text', true);
-        $contents = DB::table('product_success_case_has_categories as pnc')
-        ->join('contents as c', 'c.id', '=', 'pnc.content_id')
-        ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
-        ->join('success_case_type as nt', 'nt.id', '=', 'pnc.categories_id')
-        ->join('success_case_type_translation as ntt', 'ntt.fk_sct_id', '=', 'nt.id')
-        ->where('c.slug', $name)
-        ->where('ct.local', '=', $lang)
-        ->where('ntt.local', '=', $lang)
-        ->where('c.content_type', '=', 'success-case')
-        ->select('c.*', 'ct.*', 'pnc.categories_id', 'ntt.title as cateName', 'nt.color_type')
-        ->orderBy('c.created_at', 'desc')
-        ->get();
-
-        if (0 == count($contents)) {
-            return response()->view('errors.404', [], 404);
-        }
-        $otherNews = [];
-
-        if (0 != count($contents)) {
-            $otherNews = DB::table('product_success_case_has_categories as pnc')
-            ->join('contents as c', 'c.id', '=', 'pnc.content_id')
-            ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
-            ->join('success_case_type as nt', 'nt.id', '=', 'pnc.categories_id')
-            ->join('success_case_type_translation as ntt', 'ntt.fk_sct_id', '=', 'nt.id')
-            ->where('ct.local', '=', $lang)
-            ->where('ntt.local', '=', $lang)
-            ->where('c.id', '!=', $contents[0]->id)
-            ->where('pnc.categories_id', $contents[0]->categories_id)
-            ->where('c.content_type', '=', 'success-case')
-            ->select('c.*', 'ct.*', 'pnc.categories_id', 'ntt.title as cateName', 'nt.color_type')
-            ->where('c.status', 1)
-            ->limit(3)
-            ->inRandomOrder()
-            ->get();
-        }
-
-        return view('front-end.success-case-detail')
-          ->with('otherNews', $otherNews)
-          ->with('contents', $contents);
-    }
-
     public function updateVideoDetail($namePar)
     {
         // Get the current URL
@@ -2353,6 +2361,156 @@ class FrontendController extends Controller
         }
 
         return view('front-end.video-detail')
+          ->with('otherNews', $otherNews)
+          ->with('contents', $contents);
+    }
+
+    public function updateProductNoticeDetail($namePar)
+    {
+        // Get the current URL
+        $currentUrl = url()->current();
+        $lowercaseUrl = strtolower($currentUrl);
+        // If the URL is not in lowercase, redirect to the lowercase version
+        if ($currentUrl !== $lowercaseUrl) {
+            return redirect()->to($lowercaseUrl, 301);
+        }
+        $lang = App::getLocale();
+        $name = $this->validateInput($namePar, 'text', true);
+        $contents = DB::table('product_product_notice_has_categories as pnc')
+        ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+        ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+        ->join('product_notice_type as nt', 'nt.id', '=', 'pnc.categories_id')
+        ->join('product_notice_type_translation as ntt', 'ntt.fk_pnt_id', '=', 'nt.id')
+        ->where('c.slug', $name)
+        ->where('ct.local', '=', $lang)
+        ->where('ntt.local', '=', $lang)
+        ->where('c.content_type', '=', 'product-notice')
+        ->select('c.*', 'ct.*', 'pnc.categories_id', 'ntt.title as cateName', 'nt.color_type')
+        ->orderBy('c.created_at', 'desc')
+        ->get();
+        if (0 == count($contents)) {
+            return response()->view('errors.404', [], 404);
+        }
+        $otherNews = [];
+        if (0 != count($contents)) {
+            $otherNews = DB::table('product_product_notice_has_categories as pnc')
+            ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+            ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+            ->join('product_notice_type as nt', 'nt.id', '=', 'pnc.categories_id')
+            ->join('product_notice_type_translation as ntt', 'ntt.fk_pnt_id', '=', 'nt.id')
+            ->where('ct.local', '=', $lang)
+            ->where('ntt.local', '=', $lang)
+            ->where('c.id', '!=', $contents[0]->id)
+            ->where('pnc.categories_id', $contents[0]->categories_id)
+            ->where('c.content_type', '=', 'product-notice')
+            ->select('c.*', 'ct.*', 'pnc.categories_id', 'ntt.title as cateName', 'nt.color_type')
+            ->where('c.status', 1)
+            ->limit(3)
+            ->orderBy('c.date_publish', 'desc')
+            ->get();
+        }
+
+        return view('front-end.product-notice-detail')
+          ->with('otherNews', $otherNews)
+          ->with('contents', $contents);
+    }
+
+    public function updateIndustryKnowHowDetail($namePar)
+    {
+        // Get the current URL
+        $currentUrl = url()->current();
+        $lowercaseUrl = strtolower($currentUrl);
+        // If the URL is not in lowercase, redirect to the lowercase version
+        if ($currentUrl !== $lowercaseUrl) {
+            return redirect()->to($lowercaseUrl, 301);
+        }
+        $lang = App::getLocale();
+        $name = $this->validateInput($namePar, 'text', true);
+        $contents = DB::table('product_industry_know_how_has_categories as pnc')
+        ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+        ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+        ->join('industry_know_how_type as nt', 'nt.id', '=', 'pnc.categories_id')
+        ->join('industry_know_how_type_translation as ntt', 'ntt.fk_ikht_id', '=', 'nt.id')
+        ->where('c.slug', $name)
+        ->where('ct.local', '=', $lang)
+        ->where('ntt.local', '=', $lang)
+        ->where('c.content_type', '=', 'industry-know-how')
+        ->select('c.*', 'ct.*', 'pnc.categories_id', 'ntt.title as cateName', 'nt.color_type')
+        ->orderBy('c.created_at', 'desc')
+        ->get();
+        if (0 == count($contents)) {
+            return response()->view('errors.404', [], 404);
+        }
+        $otherNews = [];
+        if (0 != count($contents)) {
+            $otherNews = DB::table('product_industry_know_how_has_categories as pnc')
+            ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+            ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+            ->join('industry_know_how_type as nt', 'nt.id', '=', 'pnc.categories_id')
+            ->join('industry_know_how_type_translation as ntt', 'ntt.fk_ikht_id', '=', 'nt.id')
+            ->where('ct.local', '=', $lang)
+            ->where('ntt.local', '=', $lang)
+            ->where('c.id', '!=', $contents[0]->id)
+            ->where('pnc.categories_id', $contents[0]->categories_id)
+            ->where('c.content_type', '=', 'industry-know-how')
+            ->select('c.*', 'ct.*', 'pnc.categories_id', 'ntt.title as cateName', 'nt.color_type')
+            ->where('c.status', 1)
+            ->limit(3)
+            ->orderBy('c.date_publish', 'desc')
+            ->get();
+        }
+
+        return view('front-end.industry-know-how-detail')
+          ->with('otherNews', $otherNews)
+          ->with('contents', $contents);
+    }
+
+    public function updateEOLDetail($namePar)
+    {
+        // Get the current URL
+        $currentUrl = url()->current();
+        $lowercaseUrl = strtolower($currentUrl);
+        // If the URL is not in lowercase, redirect to the lowercase version
+        if ($currentUrl !== $lowercaseUrl) {
+            return redirect()->to($lowercaseUrl, 301);
+        }
+        $lang = App::getLocale();
+        $name = $this->validateInput($namePar, 'text', true);
+        $contents = DB::table('product_eol_has_categories as pnc')
+        ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+        ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+        ->join('eol_type as nt', 'nt.id', '=', 'pnc.categories_id')
+        ->join('eol_type_translation as ntt', 'ntt.fk_et_id', '=', 'nt.id')
+        ->where('c.slug', $name)
+        ->where('ct.local', '=', $lang)
+        ->where('ntt.local', '=', $lang)
+        ->where('c.content_type', '=', 'eol')
+        ->select('c.*', 'ct.*', 'pnc.categories_id', 'ntt.title as cateName', 'nt.color_type')
+        ->orderBy('c.created_at', 'desc')
+        ->get();
+        if (0 == count($contents)) {
+            return response()->view('errors.404', [], 404);
+        }
+        $otherNews = [];
+        if (0 != count($contents)) {
+            $otherNews = DB::table('product_eol_has_categories as pnc')
+            ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+            ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+            ->join('eol_type as nt', 'nt.id', '=', 'pnc.categories_id')
+            ->join('eol_type_translation as ntt', 'ntt.fk_et_id', '=', 'nt.id')
+            ->where('ct.local', '=', $lang)
+            ->where('ntt.local', '=', $lang)
+            ->where('c.id', '!=', $contents[0]->id)
+            ->where('pnc.categories_id', $contents[0]->categories_id)
+            ->where('c.content_type', '=', 'eol')
+            ->select('c.*', 'ct.*', 'pnc.categories_id', 'ntt.title as cateName', 'nt.color_type')
+            ->where('c.status', 1)
+            ->limit(3)
+            ->orderBy('c.date_publish', 'desc')
+            ->get();
+        }
+
+        return view('front-end.eol-detail')
           ->with('otherNews', $otherNews)
           ->with('contents', $contents);
     }
@@ -2448,10 +2606,7 @@ class FrontendController extends Controller
             ->with('contents', $contents);
     }
 
-    public function updateProductNoticelDetail()
-    {
-        return view('front-end.product-notice-detail');
-    }
+
 
     public function contactSupport()
     {

@@ -7,10 +7,10 @@
 <div class="bg-body-light">
     <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Success Case Type</h1>
+            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Industry Know-How Type</h1>
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item">Success Case Type</li>
+                    <li class="breadcrumb-item">Industry Know-How Type</li>
                     <li class="breadcrumb-item active" aria-current="page">Edit</li>
                 </ol>
             </nav>
@@ -21,10 +21,10 @@
 <div class="content">
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
-            <h3 class="block-title"><a href="{{route('success-case-type.index')}}" class="btn btn-info" > <i class="fa fa-chevron-left"></i> Success Case Type</a></h3>
+            <h3 class="block-title"><a href="{{route('industry-know-how-type.index')}}" class="btn btn-info" > <i class="fa fa-chevron-left"></i> Industry Know-How Type</a></h3>
         </div>
         <div class="block-content">
-            <form action="{{route('successCaseTypeUpdate')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('industryKnowHowTypeUpdate')}}" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
                 <!-- Basic Elements -->
                 <input type="hidden" name="type_id" value="{{$contents[0]->id}}" > 
@@ -89,7 +89,7 @@
                              </div>
                         <div class="form-group">
                             <button class="btn btn-success" type="submit" >Update</button>
-                            <a href="{{route('success-case-type.index')}}"  class="btn btn-secondary">
+                            <a href="{{route('industry-know-how-type.index')}}"  class="btn btn-secondary">
                                 Cancel
                             </a>
                         </div>

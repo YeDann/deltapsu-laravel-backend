@@ -7,10 +7,10 @@
 <div class="bg-body-light">
     <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Success Case</h1>
+            <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Product Notice</h1>
             <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">Success Case</li>
+                    <li class="breadcrumb-item active" aria-current="page">Product Notice</li>
                 </ol>
             </nav>
         </div>
@@ -35,11 +35,11 @@
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
             <h3 class="block-title">
-                {{-- <form action="{{route('deleteSuccessCase')}}" method="post">
+                {{-- <form action="{{route('deleteProductNotice')}}" method="post">
                     {{csrf_field()}}
                     <button type="submit" class="btn btn-danger">Delete {{$countContent}} </button>
                 </form> --}}
-                <a href="{{route('success-case-type.index')}}" class="btn btn-info">Success Case Type</a>
+                <a href="{{route('product-notice-type.index')}}" class="btn btn-info">Product Notice Type</a>
             </h3>
             <div class="block-options">
                 <div class="block-options-item">
@@ -48,8 +48,8 @@
                         <i class="far fa-clone"></i></button> --}}
                 </div>
                 <div class="block-options-item">
-                    <a href="{{route('success-case.create')}}" class="btn btn-success"><i class="fa fa-plus"></i> Create </a>
-                    {{-- <a href="{{route('ImportNewsData','success-case')}}" class="btn btn-info" > GET Data </a> --}}
+                    <a href="{{route('product-notice.create')}}" class="btn btn-success"><i class="fa fa-plus"></i> Create </a>
+                    {{-- <a href="{{route('ImportNewsData','product-notice')}}" class="btn btn-info" > GET Data </a> --}}
                    
                 </div>
             </div>
@@ -85,9 +85,9 @@
                             {{-- <button class="btn btn-secondary btn-sm"  
                                 data-target="#modal-block-popin-2"  data-toggle="modal" onclick="sendId({{$item->id}})" >Duplicate <i class="far fa-clone"></i> </button>
                                     --}}
-                                    <a href="{{route('success-case.edit',$item->id)}}" class="btn btn-primary">Edit  </a>
+                                    <a href="{{route('product-notice.edit',$item->id)}}" class="btn btn-primary">Edit  </a>
                             <button type="button" class="btn btn-danger" data-toggle="tooltip" id="delbutton"
-                                title="Delete" onclick="deleteSuccessCase({{$item->id}})">
+                                title="Delete" onclick="deleteProductNotice({{$item->id}})">
                                 Delete
                             </button>
                         </div>
@@ -107,7 +107,7 @@
 @endsection
 @section('js')
 <script>
-    function deleteSuccessCase(id) {
+    function deleteProductNotice(id) {
         swal({
             title: "Confirm Delete",
             text: "You Are Delete this Data?",
@@ -124,7 +124,7 @@
                     text: 'Candidates are successfully shortlisted!',
                     icon: 'success'
                 }).then(function () {
-                    window.location = "{{ (route('destroySuccessCase')) }}/" + id;
+                    window.location = "{{ (route('destroyProductNotice')) }}/" + id;
                 });
             }
         });
@@ -132,7 +132,7 @@
 
 
     function sendId(id){
-        $("#successCaseId").val(id)
+        $("#productNoticeId").val(id)
     }
 
 </script>

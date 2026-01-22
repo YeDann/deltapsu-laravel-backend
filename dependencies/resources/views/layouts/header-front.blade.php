@@ -555,7 +555,7 @@
             </a>
             {{-- <a href="/" class="power-supplies-link">{{ $staticContent['Standard_Power_Supplies'] }}</a> --}}
             <a href="/" class="power-supplies-link">
-                {!! preg_replace('/\s+/', '<br>', $staticContent['Standard_Power_Supplies'], 1) !!}
+                {!! preg_replace('/\s+/', '<br>', (isset($staticContent['Standard_Power_Supplies']) ? $staticContent['Standard_Power_Supplies'] : 'Standard Power Supplies'), 1) !!}
             </a>
 
             <div class="nav-search" style="display: flex;gap: 16px;">
@@ -854,7 +854,7 @@
                                 ? $staticContent['product_comparison']
                                 : 'product comparison' }}
                             </a>
-                            <a class="dropdown-item" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How'), 'type-id' => isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->id : '' ])}}">
+                            <a class="dropdown-item" href="{{route('index', ['page' => 'industry-know-how'])}}">
                                 {{isset($newsTypes['Industry Know-How'])
                                 ? $newsTypes['Industry Know-How']->typename
                                 : 'Industry Know-How' }} 
@@ -864,12 +864,12 @@
                                 ? $staticContent['Videos']
                                 : 'Videos' }}
                             </a>
-                            <a class="dropdown-item" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice'), 'type-id' => isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->id : '' ])}}">
+                            <a class="dropdown-item" href="{{route('index', ['page' => 'product-notice'])}}">
                                 {{isset($newsTypes['Product Notice'])
                                 ? $newsTypes['Product Notice']->typename
                                 : 'Product Notice' }} 
                             </a>
-                            <a class="dropdown-item" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['EOL']) ? $newsTypes['EOL']->typename : 'EOL'), 'type-id' => isset($newsTypes['EOL']) ? $newsTypes['EOL']->id : '' ])}}">
+                            <a class="dropdown-item" href="{{route('index', ['page' => 'eol'])}}">
                                 {{isset($newsTypes['EOL'])
                                 ? $newsTypes['EOL']->typename
                                 : 'EOL' }} 
@@ -919,7 +919,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a tabindex="-1" href="{{route('index','success-case')}}">
+                                        <a tabindex="-1" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Success Case']) ? $newsTypes['Success Case']->typename : 'Success Case'), 'type-id' => $newsTypes['Success Case'] ? $newsTypes['Success Case']->id : '' ])}}">
                                             {{ isset($staticContent['Success_Case'])
                                             ? $staticContent['Success_Case'] 
                                             : 'Success Case' }}
@@ -981,7 +981,7 @@
             </a>
 
             <div class="col-nav d-flex">
-                <a href="#" class="power-supplies-link-mobile">{{ $staticContent['Standard_Power_Supplies'] }}</a>
+                <a href="#" class="power-supplies-link-mobile">{{ isset($staticContent['Standard_Power_Supplies']) ? $staticContent['Standard_Power_Supplies'] : 'Standard Power Supplies' }}</a>
             </div>
             <div class="col-nav d-flex justify-content-end" style="gap: 8px;">
                 <div class="navbar-brand-mobile navbar-searchandlang icon-serch" id="btn-search-mobile" data-toggle="dropdown"
@@ -1243,16 +1243,16 @@
                 {{isset($staticContent['product_comparison'])?
                 $staticContent['product_comparison'] :'product comparison' }}</a>
 
-            <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How'), 'type-id' => isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->id : '' ])}}">
+            <a class="text-normal pl-3" href="{{route('index', ['page' => 'industry-know-how'])}}">
                 {{isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How' }}
             </a>
             <a class="text-normal pl-3" href="{{route('index', ['page' => 'videos'])}}">
                 {{isset($staticContent['Videos']) ? $staticContent['Videos'] : 'Videos' }}
             </a>
-            <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice'), 'type-id' => isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->id : '' ])}}">
+            <a class="text-normal pl-3" href="{{route('index', ['page' => 'product-notice'])}}">
                 {{isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice' }}
             </a>
-            <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['EOL']) ? $newsTypes['EOL']->typename : 'EOL'), 'type-id' => isset($newsTypes['EOL']) ? $newsTypes['EOL']->id : '' ])}}">
+            <a class="text-normal pl-3" href="{{route('index', ['page' => 'eol'])}}">
                 {{isset($newsTypes['EOL']) ? $newsTypes['EOL']->typename : 'EOL' }}
             </a>
 
@@ -1313,7 +1313,7 @@
             <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Product News']) ? $newsTypes['Product News']->typename : 'Product News'), 'type-id' => $newsTypes['Product News'] ? $newsTypes['Product News']->id : '' ])}}">
                 {{isset($newsTypes['Product News']) ? $newsTypes['Product News']->typename : 'Product News' }} 
             </a>
-            <a class="text-normal pl-3" href="{{route('index','success-case')}}">{{isset($staticContent['Success_Case'])?
+            <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Success Case']) ? $newsTypes['Success Case']->typename : 'Success Case'), 'type-id' => $newsTypes['Success Case'] ? $newsTypes['Success Case']->id : '' ])}}">{{isset($staticContent['Success_Case'])?
                 $staticContent['Success_Case'] :'Success Case' }}</a>
             <a class="text-normal pl-3" href="{{route('index', ['page' => 'videos'])}}">{{isset($staticContent['Videos'])?
                 $staticContent['Videos'] :'Videos' }}</a>
