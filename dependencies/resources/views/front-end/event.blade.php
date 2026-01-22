@@ -227,7 +227,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-4 pad-ar-24px">
                         <div id="my-calendar"></div>
                         {{-- <div id="dncalendar-container">
                         </div> --}}
