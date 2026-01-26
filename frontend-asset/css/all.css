@@ -371,7 +371,8 @@ h1, .h1 {
   font-size: 2.5rem;
 }
 
-h2, .h2 {
+h2,
+.h2 {
   font-size: 2rem;
 }
 
@@ -383,7 +384,8 @@ h4, .h4 {
   font-size: 1.5rem;
 }
 
-h5, .h5 {
+h5,
+.h5 {
   font-size: 1.25rem;
 }
 
@@ -12858,7 +12860,8 @@ hr {
     visibility: block;
   }
   #slide-banner-mobile .slide-content {
-    height: 349px;
+    height: 307px !important;
+    padding-top: 0 !important;
   }
   .box-events .card {
     height: 289px;
@@ -12878,7 +12881,8 @@ hr {
     visibility: block;
   }
   #slide-banner-mobile .slide-content {
-    height: 396px;
+    height: 307px !important;
+    padding-top: 0 !important;
   }
   .box-events .card {
     height: 312px;
@@ -12898,7 +12902,8 @@ hr {
     visibility: block;
   }
   #slide-banner-mobile .slide-content {
-    height: 544px;
+    height: 307px !important;
+    padding-top: 0 !important;
   }
   .box-events .card {
     height: 355px;
@@ -12918,7 +12923,8 @@ hr {
     visibility: block;
   }
   #slide-banner-mobile .slide-content {
-    height: 624px;
+    height: 307px !important;
+    padding-top: 0 !important;
   }
     .box-events .card {
       height: 355px;
@@ -12941,7 +12947,8 @@ hr {
     visibility: block;
   }
   #slide-banner-mobile .slide-content {
-    height: 717px;
+    height: 307px !important;
+    padding-top: 0 !important;
   }
   .box-events .card {
     height: 307px;
@@ -12955,7 +12962,7 @@ hr {
   #slider,
   .wrap,
   .slide-content {
-    height: 390px;
+    height: 420px;
   }
   .show-more-769{
     display: block;
@@ -12978,7 +12985,7 @@ hr {
   #slider,
   .wrap,
   .slide-content {
-    height: 252px;
+    height: 420px;
   }
   .box-banner{
     margin-top: 64px;
@@ -12996,7 +13003,7 @@ hr {
   #slider,
   .wrap,
   .slide-content {
-    height: 356px;
+    height: 420px;
   }
   .box-banner{
     margin-top: 94px;
@@ -13011,6 +13018,11 @@ hr {
   }
 }
 @media only screen and (min-width: 1440px){
+    #slider,
+    .wrap,
+    .slide-content {
+      height: 420px;
+    }
    .box-banner{
      margin-top: 94px;
    }
