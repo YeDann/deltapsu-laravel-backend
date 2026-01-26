@@ -835,7 +835,7 @@
                     <li class="nav-item dropdown">
                         <a id="nav-uderline" class="nav-link " href="" id="dropdown06" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                            {{ isset($staticContent['Technical_Support']) ? $staticContent['Technical_Support'] : 'Technical Support' }}
+                            {{ isset($staticContent['Technical_Support']) ? $staticContent['Technical_Support'] : 'Tech Support' }}
                             {{-- <i class="zmdi zmdi-chevron-down"></i> --}}
                         </a>
                         <div class="dropdown-menu megamenu sp-dropdown02 s-menu" aria-labelledby="dropdown06">
@@ -887,7 +887,7 @@
                     <li class="nav-item dropdown ">
                         <a id="nav-uderline" class="nav-link" id="dropdown01" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
-                            {{ isset($staticContent['Updates']) ? $staticContent['Updates'] : 'Updates' }}
+                            {{ isset($staticContent['Updates']) ? $staticContent['Updates'] : 'News' }}
                             {{-- <i class="zmdi zmdi-chevron-down"></i> --}}
                         </a>
                         <div class="dropdown-menu s-menu sp-dropdown" role="menu" aria-labelledby="dropdown01">
