@@ -177,7 +177,7 @@
                         <div class="slide-content">
                             @if($banner->title2 != null || $banner->content != null)
                             <div class="container">
-                                <div class="bg-w-banner">
+                                <div class="bg-none-banner">
                                     @if($index == 0)
                                     <h1 class="text-title-banner" style="color:{{ $banner->title_color}}">
                                         <?php

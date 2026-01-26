@@ -10568,6 +10568,10 @@ a.a-link-hover:hover {
       rgba(0, 108, 159, 0.5) 100%
   ); */
 }
+.bg-none-banner {
+  width: 800px;
+  line-height: 36px;
+}
 
 .bg-w-mobile-banner {
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7));
