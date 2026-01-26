@@ -138,6 +138,63 @@
             margin-top: 4px;
         }
     }
+    /* 上方那條漸層小 bar */
+    .widget-bar {
+        width: 80px;
+        height: 5px;
+        overflow: hidden !important;
+        display: block;
+        background-color: rgb(0 135 220 / var(--tw-bg-opacity, 1)) !important;
+        border: 0 solid #e5e7eb;
+    }
+
+    /* lg 版本高度放大 */
+    @media (min-width: 1024px) {
+        .widget-bar {
+            height: 5px;
+        }
+    }
+
+    .widget-bar::before {
+        content: "";
+        display: block;
+        width: 100% !important;
+        height: 5px !important;
+        background-image: linear-gradient(
+            to right,
+            #0087dc 60%,
+            #64d7d7 60%,
+            #64d7d7 80%,
+            #b9eb5f 80%
+        );
+        animation: brand-animation 6s linear infinite;
+        background-color: rgb(0 135 220 / var(--tw-bg-opacity, 1)) !important;
+    }
+
+    @keyframes brand-animation {
+        0%   { transform: translateX(-100%); }
+        20%   { transform: translateX(0%); }
+        80%   { transform: translateX(0%); }
+        100% { transform: translateX(100%); }
+    }
+
+    .widget-bar-static {
+        display: block;
+        width: 20%;
+        height: 5px;
+        background: linear-gradient(
+            to right,
+            #0087dc 60%,
+            #64d7d7 60%,
+            #64d7d7 80%,
+            #b9eb5f 80%
+        );
+    }
+
+    .visible-tablets-up{
+        width: 1180px;
+        margin: 0 auto;
+    }
 </style>
 @endsection
 @section('meta')
@@ -164,8 +221,6 @@
 @section('container')
 <?php $style = 2; ?>
 <!-- banner -->
-
-
 <div class="show-more-769">
     <div class="box-banner">
         <div id="slide-banner" class="owl-carousel owl-theme">
@@ -272,6 +327,7 @@
 
 <div class="visible-tablets-up">
     <div class="box-product-selector container">
+        <div class="widget-bar"></div>
         <h2 class="text-title-delta-home"> {{$staticContent['Product_Selector']}}</h2>
         <div id="product-selector-carousel" class="owl-carousel owl-theme product-selector text-center">
             @foreach($mainCategories as $mainCate)
@@ -297,7 +353,8 @@
 </div>
 <div class="visible-mobile">
     <div class="box-product-selector padd-left-rbox">
-        <h2 class="text-title-delta-home ">{{$staticContent['Product_Selector']}}</h2>
+        <div class="widget-bar"></div>
+        <h2 class="text-title-delta-home">{{$staticContent['Product_Selector']}}</h2>
         <div id="product-selector-carousel-mobile" class="owl-carousel owl-theme product-selector text-center">
             @foreach($mainCategories as $mainCate)
             <div class="product-selector-list">
@@ -326,6 +383,7 @@
 <div class="visible-tablets-up">
     <div class="box-applications">
         <div class="container">
+            <div class="widget-bar"></div>
             <h2 class="text-title-delta-home ">{{$staticContent['Applications']}}</h2>
             <div class="grid-container">
                 @foreach ($applications as $item)
@@ -376,6 +434,7 @@
 <div class="visible-mobile">
     <div class="box-applications-mobile  ">
         <div class="container">
+            <div class="widget-bar"></div>
             <h2 class="text-title-delta-home">{{$staticContent['Applications']}}</h2>
             <div class="grid-container">
                 @foreach ($applications as $item)
@@ -437,10 +496,9 @@ function retextdata($arr ,$unit){
 ?>
 <div class="visible-tablets-up">
     <div class="box-pp">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="text-title-delta-home">{{$staticContent['The_Latest_Series']}}</h2>
-            </div>
+        <div class="container">    
+            <div class="widget-bar"></div>
+            <h2 class="text-title-delta-home">{{$staticContent['The_Latest_Series']}}</h2>
             <div id="producttype" class="owl-carousel owl-theme  ft-products-body">
                 @foreach ($series as $serie)
                 @php
@@ -529,9 +587,8 @@ function retextdata($arr ,$unit){
 <div class="visible-mobile">
     <div class="padd-mobile-slide">
         <div class="">
-            <div class="text-center">
-                <h2 class="text-title-delta-home">{{$staticContent['The_Latest_Series']}}</h2>
-            </div>
+            <div class="widget-bar"></div>
+            <h2 class="text-title-delta-home">{{$staticContent['The_Latest_Series']}}</h2>
             <div id="producttype-mobile" class="owl-carousel owl-theme  ft-products-body">
                 @foreach ($series as $serie)
                 @php
@@ -619,11 +676,12 @@ function retextdata($arr ,$unit){
 </div>
 
 <!-- event -->
-<div class="visible-desk-up">
+<div class="visible-tablets-up">
     <div class="box-events  ">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
+                    <div class="widget-bar-static"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['Upcoming_Event']}}</h2>
                     @if(isset($events[0]))
                     <div class="card border-radius-6">
@@ -663,6 +721,7 @@ function retextdata($arr ,$unit){
                     </div>
                 </div>
                 <div class="col-lg-4">
+                    <div class="widget-bar-static"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
                     <div class="card border-radius-6">
@@ -712,6 +771,7 @@ function retextdata($arr ,$unit){
                     </div>
                 </div>
                 <div class="col-lg-4">
+                    <div class="widget-bar-static"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
                     <div class="card border-radius-6">
                         <a href="{{route('index','faqs')}}">
@@ -750,6 +810,7 @@ function retextdata($arr ,$unit){
         <div class="container">
             <div class="row justify-content-md-center">
                 <div class="col-md-6">
+                    <div class="widget-bar-static"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['Upcoming_Event']}}</h2>
                     @if(isset($events[0]))
                     <div class="card border-radius-6">
@@ -800,6 +861,7 @@ function retextdata($arr ,$unit){
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <div class="widget-bar-static"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
                     <div class="card border-radius-6">
@@ -852,6 +914,7 @@ function retextdata($arr ,$unit){
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <div class="widget-bar-static"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
                     <div class="card border-radius-6">
                         <a href="{{route('index','faqs')}}">
@@ -981,7 +1044,6 @@ function retextdata($arr ,$unit){
 
 @endsection
 @section('js')
-
 <script>
     $(document).ready(function () {
         $('#nav-two').removeClass('scrolled');

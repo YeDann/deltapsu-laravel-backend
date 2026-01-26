@@ -11579,11 +11579,11 @@ a .title-new {
 }
 
 .text-title-delta-home {
-  color: #0087DC;
+  color: black;
   font-weight: bold;
   margin-bottom: 2.5rem;
   margin-top: 2.5rem;
-  text-align: center;
+  text-align: left;
 }
 
 .text-title-subscribe {
