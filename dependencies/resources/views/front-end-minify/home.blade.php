@@ -234,31 +234,31 @@
                             <div class="container">
                                 <div class="bg-none-banner">
                                     @if($index == 0)
-                                    <h1 class="text-title-banner" style="color:{{ $banner->title_color}}">
-                                        <?php
-                                    $str = $banner->title2;
-                                    $st = explode("\n", $str);
-                                    for ($k = 0; $k < count($st); $k++) {
-                                        echo $st[$k] = '<div>'
-                                                . $st[$k]
-                                                . '</div>';
-                                    }
-                                    ?>
-                                    </h1>
+                                        <h1 class="text-title-banner" style="color:{{ $banner->title_color}}">
+                                            <?php
+                                                $str = $banner->title2;
+                                                $st = explode("\n", $str);
+                                                for ($k = 0; $k < count($st); $k++) {
+                                                    echo $st[$k] = '<div>'
+                                                            . $st[$k]
+                                                            . '</div>';
+                                                }
+                                            ?>
+                                        </h1>
                                     @else
-                                    <h2 class="text-title-banner" style="color:{{ $banner->title_color}}">
-                                        <?php
-                                    $str = $banner->title2;
-                                    $st = explode("\n", $str);
-                                    for ($k = 0; $k < count($st); $k++) {
-                                        echo $st[$k] = '<div>'
-                                                . $st[$k]
-                                                . '</div>';
-                                    }
-                                    ?>
-                                    </h2>
+                                        <h2 class="text-title-banner" style="color:{{ $banner->title_color}}">
+                                            <?php
+                                                $str = $banner->title2;
+                                                $st = explode("\n", $str);
+                                                for ($k = 0; $k < count($st); $k++) {
+                                                    echo $st[$k] = '<div>'
+                                                            . $st[$k]
+                                                            . '</div>';
+                                                }
+                                             ?>
+                                        </h2>
                                     @endif
-                                    <div class="text-p-banner my-2" style="color:{{ $banner->content_color}}">
+                                    <div class="text-p-banner" style="color:{{ $banner->content_color}}; margin-top: 20px;">
                                         {!!$banner->content!!}
                                     </div>
                                     @if($banner->btn_status == 1)
@@ -292,9 +292,9 @@
                         class="slide">
                         <div class="slide-content">
                             @if($banner->title2 != null)
-                            <div class="container ">
-                                <div class="">
-                                    <h2 class="text-title-banner" style="color:{{ $banner->title_color}}">
+                            <div class="container">
+                                <div class="bg-none-banner">
+                                    <h2 class="text-title-banner mt-4" style="color:{{ $banner->title_color}}">
                                         <?php
                                         $str = $banner->title;
                                         $st = explode("\n", $str);
@@ -305,6 +305,9 @@
                                         }
                                       ?>
                                     </h2>
+                                    <div class="text-p-banner" style="color:{{ $banner->content_color}}; margin-top: 16px;">
+                                        {!!$banner->content!!}
+                                    </div>
                                     @if($banner->btn_status == 1)
                                     <button
                                         class="btn btn-subscribe mt-3 posit-btn-mobile shadow-radius-box">{{$banner->btn_name}}</button>

@@ -10569,8 +10569,19 @@ a.a-link-hover:hover {
   ); */
 }
 .bg-none-banner {
-  width: 800px;
-  line-height: 36px;
+  line-height: 130%;
+}
+
+@media only screen and (max-width:768px) {
+  .bg-none-banner {
+    width: auto;
+  }
+}
+
+@media only screen and (min-width:769px) {
+  .bg-none-banner {
+    width: 800px
+  }
 }
 
 .bg-w-mobile-banner {
@@ -10942,11 +10953,38 @@ a:hover {
 .text-title-banner {
   color: #0087DC;
   font-weight: bold;
+  overflow-wrap: break-word;
+  line-height: 130%;
+}
+
+@media only screen and (max-width:768px) {
+  .text-title-banner {
+    font-size: 24px;
+  }
+}
+
+@media only screen and (min-width:769px) {
+  .text-title-banner {
+    font-size: 48px;
+  }
 }
 
 .text-p-banner p {
   color: inherit;
 }
+
+@media only screen and (max-width:768px) {
+  .text-p-banner p {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (min-width:769px) {
+  .text-p-banner p {
+    font-size: 18px;
+  }
+}
+
 
 /* bn end */
 
