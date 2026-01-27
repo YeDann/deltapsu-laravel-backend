@@ -1,47 +1,86 @@
 @extends('layouts.front-end')
 @section('css')
 <style>
+    /* =========================================
+       Global / Utility Styles
+       ========================================= */
+    .btn.focus,
+    .btn:focus {
+        outline: 0;
+        box-shadow: unset;
+    }
+    
+    .midle-item {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%)
+    }
+
+    .visible-tablets-up {
+        width: 1180px;
+        margin: 0 auto;
+    }
+
+    .text-title-delta-home {
+        color: black;
+        margin-bottom: 2.5rem;
+        margin-top: 12px;
+        text-align: left;
+    }
+
+    .mr-lr-feture {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    /* =========================================
+       Banner & Slide Section
+       ========================================= */
+    .slide {
+        position: relative;
+    }
+
+    .slide::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0 0 0 / .2) !important;
+        z-index: 1;
+    }
+
+    .slide-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .padd-mobile-slide {
+        background: linear-gradient(to bottom, #fff, transparent, transparent);
+        background-position: top center, bottom center;
+        background-size: 100% 100%;
+        padding-bottom: 2%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .posit-btn-mobile {
+        position: absolute;
+        bottom: 70px;
+        transform: translate(-50%, 50%);
+    }
+
+    .btn-subscribe {
+        z-index: 999;
+    }
+
+    /* =========================================
+       Product Selector Section
+       ========================================= */
     .box-product-selector .container {
         text-align: center;
-    }
-
-    /* .visible-mobile .box-product-selector .container{
-        padding: 16px;
-    } */
-
-    .text-hover {
-        /* display: none; */
-        opacity: 0;
-        line-height: 1;
-        color: #5F5F5F;
-        font-size: 14px;
-
-    }
-
-    .product-selector-list:hover .text-hover,
-    .product-selector-mobile:hover .text-hover {
-        opacity: 1;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-
-
-    .product-selector-list:hover .text-title-dark,
-    .product-selector-mobile:hover .text-title-dark {
-        color: #0087DC !important;
-
-    }
-
-    .product-selector-list:hover,
-    .product-selector-mobile:hover {
-        border-color: #0087DC;
-    }
-
-    .product-selector-list:hover a {
-        text-decoration: none;
     }
 
     .product-selector-list {
@@ -58,87 +97,39 @@
         object-fit: contain;
     }
 
-    .btn.focus,
-    .btn:focus {
-        outline: 0;
-        box-shadow: unset;
+    .product-selector-list:hover,
+    .product-selector-mobile:hover {
+        border-color: #0087DC;
     }
 
-    .ttt {
-        transform: scaleX(0);
+    .product-selector-list:hover a {
+        text-decoration: none;
     }
 
-    #producttype.owl-carousel .owl-stage-outer {}
-
-    .midle-item {
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        transform: translate(0, -50%)
+    .product-selector-list:hover .text-title-dark,
+    .product-selector-mobile:hover .text-title-dark {
+        color: #0087DC !important;
     }
 
-    .in-volt {
-        height: 73px;
+    .text-hover {
+        opacity: 0;
+        line-height: 1;
+        color: #5F5F5F;
+        font-size: 14px;
+    }
+
+    .product-selector-list:hover .text-hover,
+    .product-selector-mobile:hover .text-hover {
+        opacity: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
         overflow: hidden;
     }
 
-    .mr-lr-feture {
-        padding-left: 30px;
-        padding-right: 30px;
-    }
-
-    .posit-btn-mobile {
-        position: absolute;
-        bottom: 70px;
-        transform: translate(-50%, 50%);
-    }
-
-    .padd-mobile-slide {
-        background: linear-gradient(to bottom, #fff, transparent, transparent);
-        background-size: cover;
-        background-position: top center, bottom center;
-        background-size: 100% 100%;
-        padding-bottom: 2%;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    .btn-subscribe {
-        z-index: 999;
-    }
-
-    @media only screen and (min-width:921px) {
-        .text-app-arrow {
-            font-size: 0.75em;
-            color: #0087dc;
-            display: flex;
-            position: absolute;
-            bottom: 20px;
-        }
-
-        .text-app-arrow i {
-            font-size: 14px !important;
-            margin-left: 8px;
-            margin-top: 2px;
-        }
-    }
-
-    @media only screen and (max-width:920px) {
-        .text-app-arrow {
-            font-size: 14px;
-            color: #0087dc;
-            display: flex;
-            position: absolute;
-            bottom: 10px;
-        }
-
-        .text-app-arrow i {
-            font-size: 14px !important;
-            margin-left: 8px;
-            margin-top: 4px;
-        }
-    }
-    /* 上方那條漸層小 bar */
+    /* =========================================
+       Widget Bar Animation
+       ========================================= */
     .widget-bar {
         width: 80px;
         height: 5px;
@@ -147,13 +138,6 @@
         background-color: rgb(0 135 220 / var(--tw-bg-opacity, 1)) !important;
         border: 0 solid #e5e7eb;
         margin-top: 2.5rem;
-    }
-
-    /* lg 版本高度放大 */
-    @media (min-width: 1024px) {
-        .widget-bar {
-            height: 5px;
-        }
     }
 
     .widget-bar::before {
@@ -172,13 +156,6 @@
         background-color: rgb(0 135 220 / var(--tw-bg-opacity, 1)) !important;
     }
 
-    @keyframes brand-animation {
-        0%   { transform: translateX(-100%); }
-        20%   { transform: translateX(0%); }
-        80%   { transform: translateX(0%); }
-        100% { transform: translateX(100%); }
-    }
-
     .widget-bar-static {
         display: block;
         width: 20%;
@@ -193,17 +170,67 @@
         );
     }
 
-    .visible-tablets-up{
-        width: 1180px;
-        margin: 0 auto;
+    @keyframes brand-animation {
+        0%   { transform: translateX(-100%); }
+        20%  { transform: translateX(0%); }
+        80%  { transform: translateX(0%); }
+        100% { transform: translateX(100%); }
     }
 
-    .text-title-delta-home {
-        color: black;
-        margin-bottom: 2.5rem;
-        margin-top: 12px;
-        text-align: left;
+    /* =========================================
+       Media Queries
+       ========================================= */
+    @media (min-width: 1024px) {
+        .widget-bar {
+            height: 5px;
+        }
     }
+
+    @media only screen and (min-width: 921px) {
+        .text-app-arrow {
+            font-size: 0.75em;
+            color: #0087dc;
+            display: flex;
+            position: absolute;
+            bottom: 20px;
+        }
+
+        .text-app-arrow i {
+            font-size: 14px !important;
+            margin-left: 8px;
+            margin-top: 2px;
+        }
+    }
+
+    @media only screen and (max-width: 920px) {
+        .text-app-arrow {
+            font-size: 14px;
+            color: #0087dc;
+            display: flex;
+            position: absolute;
+            bottom: 10px;
+        }
+
+        .text-app-arrow i {
+            font-size: 14px !important;
+            margin-left: 8px;
+            margin-top: 4px;
+        }
+    }
+
+    /* =========================================
+       Other Styles
+       ========================================= */
+    .ttt {
+        transform: scaleX(0);
+    }
+
+    .in-volt {
+        height: 73px;
+        overflow: hidden;
+    }
+
+    /* #producttype.owl-carousel .owl-stage-outer {} */
 </style>
 @endsection
 @section('meta')
