@@ -292,3 +292,10 @@ VALUES
 /* Japan (jp) - 日文 */
 ('Standard_Power_Supplies', 'Standard Power Supplies', 'jp');
 ```
+
+## 16. 調整主分類排序
+
+```sql
+UPDATE `main_pro_categories` SET `order_seq` = '3' WHERE `main_pro_categories`.`main_id` = 5;
+UPDATE `main_pro_categories` SET `order_seq` = '5' WHERE `main_pro_categories`.`main_id` = 3;
+```
