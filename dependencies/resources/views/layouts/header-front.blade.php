@@ -301,7 +301,7 @@
     .power-supplies-link {
         position: absolute;
         left: 226px; /* logo位置 + logo寬度 + 26px間距 */
-        top: 23px;
+        top: 16px;
         color: #444444;
         text-decoration: none;
         font-weight: bold;
@@ -347,6 +347,7 @@
         position: absolute;
         /* left: calc(50% + 75px); logo 中心 + logo 寬度一半 + 一點距離 */
         bottom: 0; /* 貼齊 nav-link-list 底部 */
+        padding-left: 12px;
     }
 
     .power-supplies-link-mobile:hover {
@@ -354,16 +355,22 @@
         text-decoration: none;
     }
 
+    @media (max-width: 1366px) {
+        .mr-center-nav {
+            left: 150px; /* 調整偏移量以適應較小螢幕 */
+        }
+    }
+
     /* Responsive font size for small screens */
     @media (max-width: 375px) {
         .power-supplies-link-mobile {
-            font-size: 8px;
+            font-size: 12px;
         }
     }
 
     @media (max-width: 320px) {
         .power-supplies-link-mobile {
-            font-size: 6px;
+            font-size: 12px;
         }
     }
 
@@ -981,7 +988,9 @@
             </a>
 
             <div class="col-nav d-flex">
-                <a href="#" class="power-supplies-link-mobile">{{ isset($staticContent['Standard_Power_Supplies']) ? $staticContent['Standard_Power_Supplies'] : 'Standard Power Supplies' }}</a>
+                <a href="#" class="power-supplies-link-mobile">
+                    {!! preg_replace('/\s+/', '<br>', (isset($staticContent['Standard_Power_Supplies']) ? $staticContent['Standard_Power_Supplies'] : 'Standard Power Supplies'), 1) !!}
+                </a>
             </div>
             <div class="col-nav d-flex justify-content-end" style="gap: 8px;">
                 <div class="navbar-brand-mobile navbar-searchandlang icon-serch" id="btn-search-mobile" data-toggle="dropdown"
