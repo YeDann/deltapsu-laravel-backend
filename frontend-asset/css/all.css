@@ -11617,11 +11617,11 @@ a .title-new {
 }
 
 .text-title-delta-home {
-  color: black;
+  color: #0087DC;
   font-weight: bold;
   margin-bottom: 2.5rem;
   margin-top: 2.5rem;
-  text-align: left;
+  text-align: center;
 }
 
 .text-title-subscribe {

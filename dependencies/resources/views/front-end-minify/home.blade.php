@@ -146,6 +146,7 @@
         display: block;
         background-color: rgb(0 135 220 / var(--tw-bg-opacity, 1)) !important;
         border: 0 solid #e5e7eb;
+        margin-top: 2.5rem;
     }
 
     /* lg 版本高度放大 */
@@ -182,6 +183,7 @@
         display: block;
         width: 20%;
         height: 5px;
+        margin-top: 2.5rem;
         background: linear-gradient(
             to right,
             #0087dc 60%,
@@ -194,6 +196,13 @@
     .visible-tablets-up{
         width: 1180px;
         margin: 0 auto;
+    }
+
+    .text-title-delta-home {
+        color: black;
+        margin-bottom: 2.5rem;
+        margin-top: 12px;
+        text-align: left;
     }
 </style>
 @endsection
@@ -327,7 +336,6 @@
     </div>
 </div>
 <!-- selecter -->
-
 <div class="visible-tablets-up">
     <div class="box-product-selector container">
         <div class="widget-bar"></div>
