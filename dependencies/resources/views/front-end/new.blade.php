@@ -173,6 +173,9 @@
    .text-muted{
      padding: 0 1rem;
    }
+    .box-news .card {
+       margin-bottom: 25px !important;
+    }
 </style>
 
 @endsection
@@ -300,7 +303,6 @@ function getDateformat($date){
                                         </div>
                                     </a>
                                     <div class="news-content">
-
                                         <div class="post-meta">
                                             <a href="{{route('updateNewsDetail',['name'=> $item->slug])}}">
                                                 <span class="sub-news" style="color:{{$item->color_type}}">

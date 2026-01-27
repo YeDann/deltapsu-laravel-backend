@@ -11639,7 +11639,9 @@ a .title-new {
 
 .btn-boxen:hover {
   text-decoration: none;
-  color: #444444;
+  background-color: #0087DC;
+  color: #fff;
+  border: 1px solid #0087DC;
 }
 
 .box-eventnews .container {
@@ -11790,6 +11792,12 @@ a .title-new {
   border: 2px solid #0087DC;
   border-radius: 5px;
   letter-spacing: 1px;
+}
+
+.btn-border-delta:hover {
+  text-decoration: none;
+  background-color: #0087DC;
+  color: #fff;
 }
 
 .box-newsletter {
@@ -13247,6 +13255,12 @@ hr {
     font-size: 12px;
     color: #0087DC;
     font-weight: bold;
+}
+
+.btn-search-border:hover {
+    background-color: #0087DC;
+    color: #ffffff;
+    text-decoration: none;
 }
 
 .btn-downlode {
