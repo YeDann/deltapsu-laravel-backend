@@ -209,6 +209,7 @@
 }
 .visible-nav-minimize .brand-image {
     height: 36px;
+    width: 100%;
 }
 .burger-img{
     height: 30px;
@@ -310,7 +311,7 @@ body {
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
-    padding: 28px 7px 0px 7px;
+    padding:17px 7px 0px 7px;
     outline: none;
     /* padding-right: 15px;
     padding-left: 15px; */
@@ -647,7 +648,7 @@ body {
     top: -6px;
     right: 0;
     z-index: 5;
-    padding: 36px 15px 0px 15px;
+    padding: 29px 15px 0px 15px;
     cursor: text;
 }
 
