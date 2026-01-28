@@ -9910,8 +9910,8 @@ body {
 
 .nav-here .dropdown-menu {
     width: 100%;
-    transform: translate3d(0px, 43px, 0px) !important;
-    border: unset;
+    transform: translate3d(-27px, 43px, 0px) !important;
+    /* border: unset; */
 }
 
 #dropdown08 i {
