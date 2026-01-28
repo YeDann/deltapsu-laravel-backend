@@ -182,6 +182,31 @@ class ShareData
             ->keyBy('name');
         view()->share('newsTypes', $newsTypes);
 
+        $logo_url = "https://www.deltaww.com";
+
+        // Logo鏈結
+        switch (strtoupper($lang)) {
+            case 'SC':
+                $logo_url = "https://www.delta-china.com.cn/zh-CN/index";
+                break;
+            case 'TC':
+                $logo_url = "https://www.deltaww.com/zh-TW/index";
+                break;
+            case 'DE':
+                $logo_url = "https://www.delta-emea.com/de-DE/index​";
+                break;
+            case 'JR':
+                $logo_url = "https://www.delta-japan.jp/ja-JP/index​";
+                break;
+            case 'TR':
+                $logo_url = "https://www.deltaww.com/en-US/index";
+                break;
+            default:
+                break;
+        }
+
+        view()->share('logoUrl', $logo_url);
+
         return $next($request);
     }
 }

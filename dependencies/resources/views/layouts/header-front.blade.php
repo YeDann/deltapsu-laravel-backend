@@ -362,6 +362,14 @@
     }
 
     /* Responsive font size for small screens */
+    @media (max-width: 455px) {
+        .power-supplies-link-mobile {
+            font-size: 14px;
+            /* bottom: unset; */
+        }
+    }
+
+    /* Responsive font size for small screens */
     @media (max-width: 375px) {
         .power-supplies-link-mobile {
             font-size: 12px;
@@ -555,9 +563,10 @@
         </div>
 
     </div>
+
     <div class="nav-position des-scrolled nav-underline">
         <div class="container nav-here">
-            <a class="navbar-brand" href="https://www.deltaww.com">
+            <a class="navbar-brand" href="{{ $logoUrl }}">
                 <img class="brand-image mt-1" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
             </a>
             {{-- <a href="/" class="power-supplies-link">{{ $staticContent['Standard_Power_Supplies'] }}</a> --}}
@@ -566,7 +575,7 @@
             </a>
 
             <div class="nav-search" style="display: flex;gap: 16px;">
-                <a class="nav-link" id="dropdown08" style="padding-top: 0px;">
+                <a class="nav-link" id="dropdown08" style="padding-top: 1px;">
                     <div class="nav-search-btn"> 
                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21L16.1667 16.1667M18.7778 9.88889C18.7778 14.7981 14.7981 18.7778 9.88889 18.7778C4.97969 18.7778 1 14.7981 1 9.88889C1 4.97969 4.97969 1 9.88889 1C14.7981 1 18.7778 4.97969 18.7778 9.88889Z" stroke="#646464" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                         {{-- {{isset($staticContent['Search'])?$staticContent['Search'] :''}} --}}
@@ -983,7 +992,7 @@
     <div class="nav-mobile scrolled w-100 header-shadow">
         <div class="nav-link-list d-flex">
             
-            <a class="col-nav navbar-brand-mobile d-flex justify-content-center" href="https://www.deltaww.com">
+            <a class="col-nav navbar-brand-mobile d-flex justify-content-center" href="{{ $logoUrl }}">
                 <img class="brand-image" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
             </a>
 
