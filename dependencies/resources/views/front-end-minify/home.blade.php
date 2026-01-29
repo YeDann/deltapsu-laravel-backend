@@ -72,6 +72,12 @@
         transform: translate(-50%, 50%);
     }
 
+    @media only screen and (max-width:768px) {
+        .posit-btn-mobile {
+            display: none;
+        }
+    }
+
     .btn-subscribe {
         z-index: 999;
     }

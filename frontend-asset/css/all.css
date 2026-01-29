@@ -10959,13 +10959,13 @@ a:hover {
 }
 
 @media only screen and (max-width:768px) {
-  .text-title-banner {
+  .bg-none-banner .text-title-banner {
     font-size: 24px;
   }
 }
 
 @media only screen and (min-width:769px) {
-  .text-title-banner {
+  .bg-none-banner .text-title-banner {
     font-size: 48px;
   }
 }
