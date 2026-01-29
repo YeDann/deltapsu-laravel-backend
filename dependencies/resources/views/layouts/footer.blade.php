@@ -169,7 +169,7 @@
                         @endforeach
                         <br> --}}
                         <div class="text-footer-main footer-two">
-                            <h6>{{isset($staticContent['Technical_Support'])?$staticContent['Technical_Support']:"Technical Support"}}</h6>
+                            <h6>{{isset($staticContent['Technical_Support'])?$staticContent['Technical_Support']:"Tech Support"}}</h6>
                         </div>
                         <div class=" ">
                             <a href="{{route('index', 'catalogs')}}">
@@ -247,7 +247,7 @@
                     {{-- News --}}
                     <div class="col-xl-2 col-lg-2">
                         <div class="text-footer-main footer-two">
-                            <h6>{{isset($staticContent['News_Events'])?$staticContent['News_Events']:"News&Events"}}</h6>
+                            <h6>{{isset($staticContent['Updates'])?$staticContent['Updates']:"News"}}</h6>
                         </div>
                         <div class=" ">
                             <a href="{{route('index','news')}}">
@@ -521,7 +521,9 @@
                 {{-- Where_to_Buy --}}
                 <div class="border-b-2px">
                     <a class="" tabindex="-1" href="#foot-nav-link-list7" data-toggle="collapse"
-                        data-target="#foot-nav-link-list7">{{$staticContent['Where_to_Buy']}} <i
+                        data-target="#foot-nav-link-list7">{{isset($staticContent['Where_to_Buy']) 
+                                ? $staticContent['Where_to_Buy'] 
+                                : "Where to Buy"}} <i
                             class="zmdi zmdi-chevron-down"></i></a>
                     <div class="collapse pl-4" id="foot-nav-link-list7"
                         data-parent="#footer-nav-mobile">
