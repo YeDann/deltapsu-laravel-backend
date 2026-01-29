@@ -9565,6 +9565,10 @@ body {
     padding-left: 15px; */
 }
 
+html[html_lang="en"] .navbar-expand-lg .navbar-nav .nav-link {
+    padding: 17px 10px 0px 10px;
+}
+
 .icon-search-nav {
     position: absolute;
     font-size: 14px;
@@ -10959,13 +10963,13 @@ a:hover {
 }
 
 @media only screen and (max-width:768px) {
-  .text-title-banner {
+  .bg-none-banner .text-title-banner {
     font-size: 24px;
   }
 }
 
 @media only screen and (min-width:769px) {
-  .text-title-banner {
+  .bg-none-banner .text-title-banner {
     font-size: 48px;
   }
 }

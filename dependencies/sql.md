@@ -11,7 +11,7 @@ VALUES
 /* English */
 ('Products_Overview', 'Products Overview', 'en'),
 /* Simplified Chinese */
-('Products_Overview', 'CN-商品總覽', 'cn'),
+('Products_Overview', '商品總覽', 'cn'),
 /* Traditional Chinese (Taiwan) */
 ('Products_Overview', '商品總覽', 'tw'),
 /* German (新增) */

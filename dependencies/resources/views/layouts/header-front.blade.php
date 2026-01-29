@@ -333,7 +333,7 @@
     }
 
     html[lang="zh"] .navbar-expand-lg .navbar-nav .nav-link {
-        padding:11px 7px 0px 7px;
+        padding:11px 10px 0px 10px;
     }
 
     html[html_lang="jp"] .navbar-expand-lg .navbar-nav .nav-link {
@@ -373,6 +373,7 @@
         /* left: calc(50% + 75px); logo 中心 + logo 寬度一半 + 一點距離 */
         bottom: 0; /* 貼齊 nav-link-list 底部 */
         padding-left: 12px;
+        line-height: 12px;
     }
 
     .power-supplies-link-mobile:hover {
@@ -386,11 +387,30 @@
         }
     }
 
+    @media (max-width: 1024px) {
+        .power-supplies-link-mobile {
+            padding-left: 0px;
+            margin-left: -80px;
+            bottom: 1px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .power-supplies-link-mobile {
+            padding-left: 0px;
+            margin-left: -35px;
+        }
+    }
+
     /* Responsive font size for small screens */
     @media (max-width: 455px) {
         .power-supplies-link-mobile {
             font-size: 14px;
-            /* bottom: unset; */
+        }
+        .power-supplies-link-mobile {
+            padding-left: 12px;
+            margin-left: 0px;
+            bottom: 2px;
         }
     }
 
@@ -398,12 +418,14 @@
     @media (max-width: 375px) {
         .power-supplies-link-mobile {
             font-size: 12px;
+            bottom: 4px;
         }
     }
 
     @media (max-width: 320px) {
         .power-supplies-link-mobile {
             font-size: 12px;
+            bottom: 6px;
         }
     }
 
