@@ -9565,6 +9565,10 @@ body {
     padding-left: 15px; */
 }
 
+html[html_lang="en"] .navbar-expand-lg .navbar-nav .nav-link {
+    padding: 17px 10px 0px 10px;
+}
+
 .icon-search-nav {
     position: absolute;
     font-size: 14px;
