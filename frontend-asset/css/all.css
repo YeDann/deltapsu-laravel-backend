@@ -9910,8 +9910,8 @@ body {
 
 .nav-here .dropdown-menu {
     width: 100%;
-    transform: translate3d(0px, 43px, 0px) !important;
-    border: unset;
+    transform: translate3d(-27px, 43px, 0px) !important;
+    /* border: unset; */
 }
 
 #dropdown08 i {
@@ -10515,7 +10515,7 @@ a.a-link-hover:hover {
 
 @media (min-width: 1366px){
     .container {
-        max-width: 1280px;
+        max-width: 1180px;
     }
 }
 

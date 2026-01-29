@@ -113,11 +113,11 @@ $langch = str_replace('_', '-', app()->getLocale());
         }
 
         html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
-            padding: 20px 9px;
+            /* padding: 20px 9px; */
         }
 
         html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
-            padding: 20px 9px;
+            /* padding: 20px 9px; */
         }
 
         a#CybotCookiebotDialogPoweredbyCybot,

@@ -554,7 +554,7 @@ function retextdata($arr ,$unit){
                         $urlParams = [$serie->main_cateid, preg_replace('/\s+/', '-', $serie->url_item), $serie->cate_id, preg_replace('/\s+/', '', $serie->slug), $serie->se_id];
                     }
                 @endphp
-                <div class="series-list-home">
+                <div class="series-list-home border-radius-6">
                     <div class="">
                         <div class="d-block ">
                             <div class="m-auto series-img">
@@ -644,7 +644,7 @@ function retextdata($arr ,$unit){
                         $urlParams = [$serie->main_cateid, preg_replace('/\s+/', '-', $serie->url_item), $serie->cate_id, preg_replace('/\s+/', '', $serie->slug), $serie->se_id];
                     }
                 @endphp
-                <div class="series-list-home">
+                <div class="series-list-home border-radius-6">
                     <div class="">
                         <div class="d-block ">
                             <div class="m-auto series-img">

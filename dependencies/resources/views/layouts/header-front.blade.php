@@ -301,13 +301,14 @@
     .power-supplies-link {
         position: absolute;
         left: 226px; /* logo位置 + logo寬度 + 26px間距 */
-        top: 16px;
+        /* top: 16px; */
         color: #444444;
         text-decoration: none;
         font-weight: bold;
         font-size: 18px;
         z-index: 5;
         line-height: 1;
+        padding-top: 30px;
     }
 
     .power-supplies-link:hover {
@@ -315,6 +316,30 @@
         text-decoration: none;
     }
 
+    .power-supplies-link:has(br) {
+        padding-top: 16px;
+    }
+
+    html[html_lang="de"] .power-supplies-link {
+        padding-top: 35px;
+    }
+
+    html[lang="zh"] .power-supplies-link {
+        padding-top: 31px;
+    }
+
+    html[html_lang="jp"] .power-supplies-link {
+        padding-top: 32px;
+    }
+
+    html[lang="zh"] .navbar-expand-lg .navbar-nav .nav-link {
+        padding:11px 7px 0px 7px;
+    }
+
+    html[html_lang="jp"] .navbar-expand-lg .navbar-nav .nav-link {
+        padding:11px 7px 0px 7px;
+    }
+    
     /* Override original mr-center-nav - keep it centered with constraints */
     .mr-center-nav {
         margin: 0 auto !important; /* 保持置中 */
@@ -582,14 +607,40 @@
                         {{-- <i class="fa fa-search"></i> --}}
                     </div>
                 </a>
-                <div class="dropdown">
+                <div class="dropdown" style="cursor: pointer;">
                     <a class="dropdown-toggle cur-lang-new-g" data-toggle="dropdown">
                         {{-- <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 11C21 16.5228 16.5228 21 11 21M21 11C21 5.47715 16.5228 1 11 1M21 11H1M11 21C5.47715 21 1 16.5228 1 11M11 21C13.5013 18.2616 14.9228 14.708 15 11C14.9228 7.29203 13.5013 3.73835 11 1M11 21C8.49872 18.2616 7.07725 14.708 7 11C7.07725 7.29203 8.49872 3.73835 11 1M1 11C1 5.47715 5.47715 1 11 1" stroke="#646464" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg> --}}
                         <img class="img-icon-golang" src="{{asset('frontend-asset/image/icon/Global.svg')}}">
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="https://www.deltapsu.com">Global</a></li>
-                        <li><a href="https://www.deltapsu.cn" target="_blank">China - 简体中文</a></li>
+                        {{-- <li><a href="https://www.deltapsu.com">Global</a></li>
+                        <li><a href="https://www.deltapsu.cn" target="_blank">China - 简体中文</a></li> --}}
+                        @if(isset($language))
+                            @foreach ($language as $item)
+
+                            <?php
+                                $current = null;
+                                foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties) {
+                                    if ($item->name == $localeCode) {
+                                        $current = $localeCode;
+                                        break;
+                                    }
+                                }
+                            ?>
+
+                            <li>
+                                <a href="javascript:void(0);" onclick="clickLangLocationmobile('{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}');">
+                                    @if($current == 'cn')
+                                        简中
+                                    @elseif($current == 'tw')
+                                        繁中
+                                    @else
+                                        {{strtoupper($current) }}
+                                    @endif
+                                </a>
+                            </li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -1124,7 +1175,7 @@
                     <a class="dropdown-toggle cur-lang-new-g" data-toggle="dropdown">
                         <img class="img-icon-golang" src="{{asset('frontend-asset/image/icon/Global.svg')}}">
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu 123">
                         @if(isset($language))
                             @foreach ($language as $item)
 
@@ -1145,7 +1196,7 @@
                                     @elseif($current == 'tw')
                                         繁中
                                     @else
-                                        {{strtoupper($current) }}
+                                        {{ strtoupper($current) }}
                                     @endif
                                 </a>
                             </li>
