@@ -282,15 +282,17 @@ VALUES
 /* English (en) - 原文 */
 ('Standard_Power_Supplies', 'Standard Power Supplies', 'en'),
 /* Traditional Chinese (tw) - 繁體中文 */
-('Standard_Power_Supplies', 'Standard Power Supplies', 'tw'),
+('Standard_Power_Supplies', '標準電源', 'tw'),
 /* Simplified Chinese (cn) - 簡體中文 */
-('Standard_Power_Supplies', 'Standard Power Supplies', 'cn'),
+('Standard_Power_Supplies', '标准电源', 'cn'),
 /* German (de) - 德文 */
-('Standard_Power_Supplies', 'Standard Power Supplies', 'de'),
+('Standard_Power_Supplies', 'Standard-Netzteil', 'de'),
 /* Russian (ru) - 俄文 */
 ('Standard_Power_Supplies', 'Standard Power Supplies', 'ru'),
+/* Turkish (tr) - 土耳其文 */
+('Standard_Power_Supplies', 'Standart Güç Kaynağı', 'tr'),
 /* Japan (jp) - 日文 */
-('Standard_Power_Supplies', 'Standard Power Supplies', 'jp');
+('Standard_Power_Supplies', '標準電源', 'jp');
 ```
 
 ## 16. 調整主分類排序
