@@ -333,7 +333,7 @@
     }
 
     html[lang="zh"] .navbar-expand-lg .navbar-nav .nav-link {
-        padding:11px 10px 0px 10px;
+        padding:11px 12px 0px 12px;
     }
 
     html[html_lang="jp"] .navbar-expand-lg .navbar-nav .nav-link {

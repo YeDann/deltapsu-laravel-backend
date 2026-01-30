@@ -176,6 +176,13 @@
         );
     }
 
+    .non-widget-bar-static {
+        display: block;
+        width: 20%;
+        height: 5px;
+        margin-top: 2.5rem;
+    }
+
     @keyframes brand-animation {
         0%   { transform: translateX(-100%); }
         20%  { transform: translateX(0%); }
@@ -765,7 +772,7 @@ function retextdata($arr ,$unit){
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="widget-bar-static"></div>
+                    <div class="non-widget-bar-static"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
                     <div class="card border-radius-6">
@@ -815,7 +822,7 @@ function retextdata($arr ,$unit){
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="widget-bar-static"></div>
+                    <div class="non-widget-bar-static"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
                     <div class="card border-radius-6">
                         <a href="{{route('index','faqs')}}">
