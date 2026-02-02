@@ -583,7 +583,7 @@
             {{-- <span class="fs-front">|</span> --}}
             @else
             <a class="pad-logout fs-front" href="{{route('index','login')}}">
-                <img src="{{asset('frontend-asset/image/person-login.svg')}}" alt="">{{session('partner_firstname')}}
+                <img src="{{asset('frontend-asset/image/person-login.svg')}}" alt="" style="height: 22px;padding-bottom: 3px;">{{session('partner_firstname')}}
             </a>
             <span class="fs-front">/</span> 
             <a href="{{route('index','logoutfrontend')}}" class="pad-logout fs-front">
