@@ -183,7 +183,7 @@
     }
     @media (max-width: 921px) {
         .m-mobile-2 {
-            margin: 0.5rem !important;
+            margin: 0.5rem 1rem !important;
         }
         .m-mobile-2 h5 {
             font-size: 14px !important;
