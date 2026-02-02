@@ -120,13 +120,9 @@
                 <img src="{{asset('frontend-asset/image/icon/icon-product-doc.svg')}}" alt="">
                 <h4 class=" text-dark">{{$staticContent['Product_Documents']}}</h4>
             </a>
-
         </div>
-
     </div>
 </section>
-
-
 @endsection
 
 

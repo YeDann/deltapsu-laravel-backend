@@ -148,15 +148,15 @@
             </a>  --}}
             @endif
             @foreach ($static_content as $item)
-            @if(session('partner_role') == 2)
-            @if($item->id == 1)
-            <a href="{{route('partnerinfo' ,[$item->id , preg_replace('/[^A-Za-z0-9\-]/', '-',$item->title)])}}"
-                class="marketing-grid-list">
-                <img src="{{config('app.url')}}/medias/static_content/{{$item->icon}}" alt="">
-                <h4 class=" text-dark">{{$item->title}}</h4>
-            </a>
-            @endif
-            @endif
+                @if(session('partner_role') == 2)
+                    @if($item->id == 1)
+                    <a href="{{route('partnerinfo' ,[$item->id , preg_replace('/[^A-Za-z0-9\-]/', '-',$item->title)])}}"
+                        class="marketing-grid-list border-radius-6">
+                        <img src="{{config('app.url')}}/medias/static_content/{{$item->icon}}" alt="">
+                        <h4 class=" text-dark">{{$item->title}}</h4>
+                    </a>
+                    @endif
+                @endif
             @endforeach
         </div>
     </div>
