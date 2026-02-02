@@ -142,6 +142,15 @@
             width: 100% !important;
         }
     }
+
+    @media (max-width: 921px) {
+        .m-mobile-2 {
+            margin: 0.5rem 1rem !important;
+        }
+        .m-mobile-2 h5 {
+            font-size: 14px !important;
+        }
+    }
 </style>
 @endsection
 @section('meta')
@@ -396,7 +405,7 @@
 
               if( cate_doc['id'] == 2 || cate_doc['id'] == 4){
                 html2 += ' <div class="box-for-collap">'
-                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta m-mobile-2"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image'+cate_doc['id']+'">';
                 html2 += '<h5 class="invisible-up-922">'+cate_doc['title']+'</h5>';
@@ -434,7 +443,7 @@
             });
 
             html2 += ' <div class="box-for-collap">'
-                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta m-mobile-2"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image1">';
                 html2 += '<h5 class="invisible-up-922">Manual</h5>';
@@ -467,7 +476,7 @@
                 html2 += ' </div>';
 
             html2 += ' <div class="box-for-collap">'
-                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta m-mobile-2"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image_other">';
                 html2 += '<h5 class="invisible-up-922">Mechanical Drawing & 3D Drawings</h5>';
@@ -518,7 +527,7 @@
                 html2 += ' </div>';
 
                 html2 += ' <div class="box-for-collap">'
-                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta m-mobile-2"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image_cer">';
                 html2 += '<h5 class="invisible-up-922">{{$staticContent['Certificates']}}</h5>';
@@ -546,7 +555,7 @@
                 html2 += ' </div>';
 
                 html2 += ' <div class="box-for-collap">'
-                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta m-mobile-2"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image_gui">';
                 html2 += '<h5 class="invisible-up-922">{{$staticContent['GUI_Software']}}</h5>';
