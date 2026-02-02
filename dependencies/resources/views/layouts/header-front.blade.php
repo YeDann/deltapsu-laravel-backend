@@ -399,6 +399,7 @@
         .power-supplies-link-mobile {
             padding-left: 0px;
             margin-left: -35px;
+            bottom: 6px;
         }
     }
 
@@ -410,7 +411,7 @@
         .power-supplies-link-mobile {
             padding-left: 12px;
             margin-left: 0px;
-            bottom: 2px;
+            bottom: 6px;
         }
     }
 
@@ -418,7 +419,7 @@
     @media (max-width: 375px) {
         .power-supplies-link-mobile {
             font-size: 12px;
-            bottom: 4px;
+            bottom: 5px;
         }
     }
 
