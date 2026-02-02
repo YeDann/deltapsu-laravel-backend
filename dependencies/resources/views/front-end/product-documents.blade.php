@@ -145,6 +145,28 @@
         display: none;
     }
 
+    .box-search-icon {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+
+    .select2-container .select2-selection--single {
+        /* border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px; */
+        border-bottom-right-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+
+    .select2-container {
+        width: 174px !important;
+    }
+
+    @media (min-width: 350px) and (max-width: 768px) {
+        .select2-container {
+            width: 100% !important;
+        }
+    }
+
     .text-tag-link span {
         color: #0087DC;
         font-size: 14px;

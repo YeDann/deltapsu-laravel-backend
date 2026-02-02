@@ -120,6 +120,28 @@
     .select2-container--default .select2-selection--single .select2-selection__arrow b {
         display: none;
     }
+
+    .box-search-icon {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+
+    .select2-container .select2-selection--single {
+        /* border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px; */
+        border-bottom-right-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+
+    .select2-container {
+        width: 174px !important;
+    }
+
+    @media (min-width: 350px) and (max-width: 768px) {
+        .select2-container {
+            width: 100% !important;
+        }
+    }
 </style>
 @endsection
 @section('meta')
@@ -176,7 +198,7 @@
                 <div class="search-filter-action border-2px border-radius-6">
                     <p class="text-sixteen-dark">{{$staticContent['Search_By_Model_Name']}}</p>
                     <div class="box-search-input mr-3">
-                        <div class="box-search-icon" style="border-top-left-radius: 6px;border-bottom-left-radius: 6px;">
+                        <div class="box-search-icon">
                             <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                         </div>
                         <label for="key_mobile" class="searchinput-filters-input">

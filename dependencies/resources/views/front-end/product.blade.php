@@ -129,6 +129,8 @@
         padding: 3px 11px !important;
     }
 
+    
+
     .list-group {
         margin-top: 20px;
     }
@@ -289,9 +291,39 @@
         line-height: 20px;
         font-weight: 300;
         margin-bottom: .25rem;
-     }
-</style>
+    }
+
+    .pad-right-1rem {
+        padding-right: 1rem !important;
+    }
+
+    .js-example-basic-single {
+        width: 100%;
+    }
+    .box-search-icon {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+
+    .select2-container .select2-selection--single {
+        /* border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px; */
+        border-bottom-right-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+
+    .select2-container {
+        width: 174px !important;
+    }
+
+    @media (min-width: 350px) and (max-width: 768px) {
+        .select2-container {
+            width: 100% !important;
+        }
+    }
+
 @endsection
+
 @section('meta')
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
@@ -455,7 +487,7 @@
                     </label>
                 </div> --}}
                 <div class="box-search-input  mr-3">
-                    <div class="box-search-icon" style="border-top-left-radius: 6px;border-bottom-left-radius: 6px;">
+                    <div class="box-search-icon">
                         <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                     </div>
                     <label for="key_mobile" class="searchinput-filters-input">
@@ -575,8 +607,6 @@
                                 <button onclick="onsearchProduct();"
                                     class="btn-filters btn-search">{{$staticContent['Search']}}</button>
                             </div>
-
-
                         </div>
                     </div>
                     <div id="sort-filter-content" class="tap-filter mb-0">
@@ -616,7 +646,7 @@
 <script>
     $('.js-example-basic-single').select2({
         placeholder: '{{$staticContent['Model_Name']}}'
-});
+    });
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -1671,9 +1701,9 @@
         // }else if(type == 3){
         //     $('#dtBasicExample').DataTable({"order": [[ 3, "asc" ]],  paging: false} );
         // }
-        if(type == 1){
+        if (type == 1) {
             $('#sortdata'+id).addClass('pro_asc active');
-        }else{
+        } else {
             $('#sortdata'+id).addClass('pro_desc active');
         }
         $('.countproduct').text(productarray.length);
@@ -1689,131 +1719,132 @@
         var html1 = '';
 
         $.each(productarray, function(index_pro,pro) {
-        html1 += '<tr class="box-cardlist row_table" style="display: none;">';
-        html1 += '<td>';
-        html1 += '<div class="cardlist-toadd">';
-        html1 += '<div class="cardlist-view hover01">';
-        html1 += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
-        if (pro['status_product'] != 1) {
-            html1 += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="text-over-cardlist"> '+ statuspro(pro['status_product'])+'';
-            html1 += '</div>';
-        }
-        html1 += '<figure><img class="img-card-list" alt="'+checkNullImg(pro['alt_img']) +'" src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'"></figure>';
-        html1 += '</div>';
-        html1 += '<div class="cardlist-text">';
-        html1 += '<h5 class="text-title-ft-listv">'+pro['pro_code']+'</h5>';
-        html1 += '</div>';
-        html1 += '</a>';
-        html1 += '<div class="w-100">';
-        html1 += '<div class="boxlist-icon-img">';
-        html1 += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
-        html1 += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
-        html1 += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
-        html1 += '</div>';
-        html1 += '</div>';
-        // html1 += '<div class="w-100">';
-        // html1 += '<div class="btn btn-ft" onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})"> + {{$staticContent['Add_to_Compare']}}</div>';
-        html1 += '</div>';
-        html1 += '</td>';
-        var content =  onlycontent(pro['content']);
-        var arrcon1 = [content[1]['data_1'],content[1]['data_2'],content[1]['data_3'],content[1]['data_4'],content[1]['data_5'],
-                content[1]['data_6'],content[1]['data_7'],content[1]['data_8'],content[1]['data_9'],content[1]['data_10'],content[1]['data_11'],
-                content[1]['data_12']
-            ]
-            var arrcon2 = [content[0]['data_1'],content[0]['data_2'],content[0]['data_3'],content[0]['data_4'],content[0]['data_5'],
-                content[0]['data_6'],content[0]['data_7'],content[0]['data_8'],content[0]['data_9'],content[0]['data_10'],content[0]['data_11'],
-                content[0]['data_12']
-            ]
-            var arrcon3 = [content[2]['data_1'],content[2]['data_2'],content[2]['data_3'],content[2]['data_4'],content[2]['data_5'],
-                content[2]['data_6'],content[2]['data_7'],content[2]['data_8'],content[2]['data_9'],content[2]['data_10'],content[2]['data_11'],
-                content[2]['data_12']
-            ]
-        // html1 += '<td>';
-        // html1 += '<div class="card-btn-a">';
-
-        // html1 += '<div class="card-btn-a-detail">';
-        // html1 += '<a class="link-d-sheet" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank">';
-        // html1 += '<div class="text-name-data">Datasheet</div>';
-        // html1 += '<div class="icon-datasheet">';
-        // html1 += '<i class="icon-facon2 icon-download"></i>';
-        // html1 += '</div>' ;
-        // html1 += '</a>';
-        // html1 += '<div class="btn-enq-d"><a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'">{{$staticContent['Enquiry']}}</a></div>';
-        // html1 += '</div></div>';
-        // html1 += '</td>';
-        html1 += ' <td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon1,content[1]['unit_name'] ,content[1]['status_input'])+'</div></td>';
-        html1 += '<td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon2,content[0]['unit_name'] ,content[0]['status_input'])+'</div></td>';
-        html1 += ' <td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon3,content[2]['unit_name'] ,content[2]['status_input'])+'</div></td>';
-        if(typeof content[3]['value_text']  != 'undefined' && content[3]['value_text'] != null && content[3]['value_text'] !='' && content[3]['value_text'] != 'null'){
-            html1 += ' <td class="text-middle-td">'+ stringfor(content[3]['value_text'])+'</td>';
-        }else if(content[3]['value_text'] != null && content[3]['value_text'] != 'null'){
-            html1 += ' <td class="text-middle-td">'+content[3]['value_text']+'</td>';
-        }else{
-            html1 += ' <td class="text-middle-td">-</td>';
-        }
-        if(url_name == "wireless-charging-system"){
-            html1 += ' <td class="text-middle-td"> <div class="w-td-con-text-editor">'+checkNullTexteditor(pro['short_features'])+'</div></td>';
-        }else{
-            if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 &&pro['dimensionW'] != '' && pro['dimensionD'] != ''){
-                html1 += '<td class="text-middle-td">'+pro['dimensionL']+' x '+pro['dimensionW']+' x '+pro['dimensionD']+' mm ';
-                html1 += '<br>'+mmtonich(pro['dimensionL'])+'” x '+mmtonich(pro['dimensionW'])+'” x '+mmtonich(pro['dimensionD'])+'”</td>';
-            }else{
-                html1 += '<td class="text-middle-td">'+pro['dimensionL']+'</td>';
+            html1 += '<tr class="box-cardlist row_table" style="display: none;">';
+            html1 += '<td class="border-radius-6">';
+            html1 += '<div class="cardlist-toadd">';
+            html1 += '<div class="cardlist-view hover01">';
+            html1 += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
+            if (pro['status_product'] != 1) {
+                html1 += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="text-over-cardlist"> '+ statuspro(pro['status_product'])+'';
+                html1 += '</div>';
             }
-        }
-        html1 += '</tr>';
+            html1 += '<figure><img class="img-card-list" alt="'+checkNullImg(pro['alt_img']) +'" src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'"></figure>';
+            html1 += '</div>';
+            html1 += '<div class="cardlist-text">';
+            html1 += '<h5 class="text-title-ft-listv">'+pro['pro_code']+'</h5>';
+            html1 += '</div>';
+            html1 += '</a>';
+            html1 += '<div class="w-100">';
+            html1 += '<div class="boxlist-icon-img">';
+            html1 += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
+            html1 += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
+            html1 += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
+            html1 += '</div>';
+            html1 += '</div>';
+            // html1 += '<div class="w-100">';
+            // html1 += '<div class="btn btn-ft" onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})"> + {{$staticContent['Add_to_Compare']}}</div>';
+            html1 += '</div>';
+            html1 += '</td>';
+            var content = onlycontent(pro['content']);
+            var arrcon1 = [content[1]['data_1'],content[1]['data_2'],content[1]['data_3'],content[1]['data_4'],content[1]['data_5'],
+                    content[1]['data_6'],content[1]['data_7'],content[1]['data_8'],content[1]['data_9'],content[1]['data_10'],content[1]['data_11'],
+                    content[1]['data_12']
+                ]
+                var arrcon2 = [content[0]['data_1'],content[0]['data_2'],content[0]['data_3'],content[0]['data_4'],content[0]['data_5'],
+                    content[0]['data_6'],content[0]['data_7'],content[0]['data_8'],content[0]['data_9'],content[0]['data_10'],content[0]['data_11'],
+                    content[0]['data_12']
+                ]
+                var arrcon3 = [content[2]['data_1'],content[2]['data_2'],content[2]['data_3'],content[2]['data_4'],content[2]['data_5'],
+                    content[2]['data_6'],content[2]['data_7'],content[2]['data_8'],content[2]['data_9'],content[2]['data_10'],content[2]['data_11'],
+                    content[2]['data_12']
+                ]
+            // html1 += '<td>';
+            // html1 += '<div class="card-btn-a">';
 
+            // html1 += '<div class="card-btn-a-detail">';
+            // html1 += '<a class="link-d-sheet" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank">';
+            // html1 += '<div class="text-name-data">Datasheet</div>';
+            // html1 += '<div class="icon-datasheet">';
+            // html1 += '<i class="icon-facon2 icon-download"></i>';
+            // html1 += '</div>' ;
+            // html1 += '</a>';
+            // html1 += '<div class="btn-enq-d"><a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'">{{$staticContent['Enquiry']}}</a></div>';
+            // html1 += '</div></div>';
+            // html1 += '</td>';
+            html1 += '<td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon1,content[1]['unit_name'] ,content[1]['status_input'])+'</div></td>';
+            html1 += '<td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon2,content[0]['unit_name'] ,content[0]['status_input'])+'</div></td>';
+            html1 += '<td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon3,content[2]['unit_name'] ,content[2]['status_input'])+'</div></td>';
+
+            if (typeof content[3]['value_text'] != 'undefined' && content[3]['value_text'] != null && content[3]['value_text'] !='' && content[3]['value_text'] != 'null') {
+                html1 += ' <td class="text-middle-td">'+ stringfor(content[3]['value_text'])+'</td>';
+            } else if(content[3]['value_text'] != null && content[3]['value_text'] != 'null') {
+                html1 += ' <td class="text-middle-td">'+content[3]['value_text']+'</td>';
+            } else {
+                html1 += ' <td class="text-middle-td">-</td>';
+            }
+            if (url_name == "wireless-charging-system") {
+                html1 += ' <td class="text-middle-td border-radius-6 pad-right-1rem"> <div class="w-td-con-text-editor">'+checkNullTexteditor(pro['short_features'])+'</div></td>';
+            } else {
+                if (pro['dimensionL'] != null && pro['dimensionL'].length < 7 &&pro['dimensionW'] != '' && pro['dimensionD'] != '') {
+                    html1 += '<td class="text-middle-td border-radius-6 pad-right-1rem">'+pro['dimensionL']+' x '+pro['dimensionW']+' x '+pro['dimensionD']+' mm ';
+                    html1 += '<br>'+mmtonich(pro['dimensionL'])+'” x '+mmtonich(pro['dimensionW'])+'” x '+mmtonich(pro['dimensionD'])+'”</td>';
+                } else {
+                    html1 += '<td class="text-middle-td border-radius-6 pad-right-1rem">'+pro['dimensionL']+'</td>';
+                }
+            }
+            html1 += '</tr>';
         });
 
         $('#listcardList').html(html1);
     }
-    function productKey(key){
-            var newkey = key.replace(/[/]/g,'@');
-            return newkey;
-    }
-    function checkNullTexteditor(data){
-            if(data){
-               return data;
-            }else{
-                return '';
-            }
-     }
-    function checkNullShow(dataarr,unit,status){
 
+    function productKey(key) {
+        var newkey = key.replace(/[/]/g,'@');
+        return newkey;
+    }
+
+    function checkNullTexteditor(data){
+        if (data) {
+            return data;
+        } else {
+            return '';
+        }
+    }
+
+    function checkNullShow(dataarr, unit, status) {
         var string = '';
         var arrstri = [];
-       if(status == 1 || status == 2){
-        $.each(dataarr, function(index,data){
-            if(data != null && data != ''){
-              arrstri.push(data+unit);
-            }
-        });
-        string = arrstri.join(', ');
-       }else if(status == 3){
-        string = dataarr[0]+'-'+dataarr[1]+unit;
-       }
-       if(string == ''){
-        string = '-';
-       }
-    //    console.log(string);
-         return  string;
+        if (status == 1 || status == 2) {
+            $.each(dataarr, function(index,data){
+                if(data != null && data != ''){
+                arrstri.push(data+unit);
+                }
+            });
+            string = arrstri.join(', ');
+        } else if(status == 3) {
+            string = dataarr[0]+'-'+dataarr[1]+unit;
+        }
+        if (string == '') {
+            string = '-';
+        }
+        return  string;
     }
-    function stringfor(str){
+
+    function stringfor(str) {
         var arrStr = str.split(/\s/g);
         var strfor = '';
         $.each(arrStr, function(index,data){
             if(data.length != 0){
                 if(data.length < 9 ){
-                strfor += data.replace("<br>", "");
-                strfor += ' ';
-
-             }else{
-                strfor += data.replace("<br>", "");
-                strfor += '<br>';
-             }
+                    strfor += data.replace("<br>", "");
+                    strfor += ' ';
+                } else {
+                    strfor += data.replace("<br>", "");
+                    strfor += '<br>';
+                }
             }
-            });
-            return strfor;
+        });
+        return strfor;
     }
     function stringSpacefor(str){
         var arrStr = str.split(' ');

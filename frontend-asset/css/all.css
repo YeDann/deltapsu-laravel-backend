@@ -9451,6 +9451,13 @@ html[html_lang="ru"] label {
     height: 36px;
     width: 100%;
 }
+
+@media (max-width: 768px) {
+    .visible-nav-minimize .brand-image {
+        height: 32px;
+    }
+}
+
 .burger-img{
     height: 30px;
 }
@@ -15721,6 +15728,10 @@ e.search-filter-action {
     color: #ffffff;
     width: 160px;
     height: 32px;
+}
+
+.btn-search:hover {
+  background-color: #1E50C8;
 }
 
 .btn-box-clear-filer {
