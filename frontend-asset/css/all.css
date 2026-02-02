@@ -13343,6 +13343,10 @@ hr {
     cursor: pointer;
 }
 
+.btn-downlode:hover {
+    background-color: #1E50C8;
+}
+
 .resources-download {
     padding: 12px 0;
     border-bottom: 2px solid #E3EFF8;
