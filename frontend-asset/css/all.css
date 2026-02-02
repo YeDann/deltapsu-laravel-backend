@@ -9569,6 +9569,10 @@ html[html_lang="en"] .navbar-expand-lg .navbar-nav .nav-link {
     padding: 17px 12px 0px 12px;
 }
 
+html[html_lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
+    padding: 17px 12px 0px 12px;
+}
+
 .icon-search-nav {
     position: absolute;
     font-size: 14px;
@@ -16349,7 +16353,7 @@ e.search-filter-action {
     height: 362px;
     position: relative;
     flex: 0 0 0 23%;
-    width: 23%;
+    width: 22.9%;
     margin:12px;
 
 }
