@@ -337,6 +337,15 @@
   }
   $url_name = isset($subCategories[0]) ? $subCategories[0]->url_item  : null;
   $categories_id = isset($subCategories[0]) ? $subCategories[0]->sub_pro_id  : null;
+  // 定義 $subCate 變數供 JavaScript 使用
+  $subCate = isset($subCategories[0]) ? $subCategories[0] : null;
+  
+  // 建立分類 ID 到 url_item 的對應表
+  $cateUrlMap = [];
+  foreach($subCategories as $subCategory) {
+      $cateUrlMap[$subCategory->sub_pro_id] = $subCategory->url_item;
+  }
+  $cateUrlMapJson = json_encode($cateUrlMap);
 ?>
 <link rel="canonical" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$url_name}}/{{$categories_id}}" />
 <link rel="alternate" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$url_name}}/{{$categories_id}}"
@@ -404,15 +413,14 @@
     </div>
 </div>
 <div class="products-index-banner-tablet-down visible-mobile-only">
-    @foreach ($subCategories as $subCate)
     <div class="banner-type-product-all-tablet-down"
         style="background-image: url('{{asset('frontend-asset/image/Categories@2x.png')}}');">
         <div class="container">
             <div class="py-xl-5 py-2 text-center">
-                <p class="text-delta text-bold mt-5">{{$subCate->name}}</p>
-                @if(isset($subCate->file))
-                <a href="{{config('app.url')}}/medias/categories/{{$subCate->file}}"
-                    download="{{$staticContent['Download_selection_guide']}}_{{$subCate->name}}"><img
+                <p class="text-delta text-bold mt-5">{{$mainCategory->name}}</p>
+                @if(isset($mainCategory->file))
+                <a href="{{config('app.url')}}/medias/categories/{{$mainCategory->file}}"
+                    download="{{$staticContent['Download_selection_guide']}}_{{$mainCategory->name}}"><img
                         class="align-baseline mr-1" src="{{asset('frontend-asset/image/icon/download-icon.svg')}}"
                         alt="">
                     {{$staticContent['Download_selection_guide']}}
@@ -420,17 +428,16 @@
                 @else
                 @endif
             </div>
-            <div class="">
-                @if(isset($subCate->image))
+            <div class="text-center">
+                @if(isset($mainCategory->banner))
                 <img class="m-auto img-res-prolis" style=""
-                    src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
+                    src="{{config('app.url')}}/medias/categories/{{$mainCategory->banner}}" alt="">
                 @else
                 <img class="m-auto  img-res-prolis" style="" src="{{asset('frontend-asset/image/blank.png')}}" alt="">
                 @endif
             </div>
         </div>
     </div>
-    @endforeach
 </div>
 <div class="bg-menu-filler visible-upper-mobile">
     <div class="container">
@@ -960,6 +967,16 @@
         }
     }
 
+    // 分類對應表
+    var cateUrlMap = {!! $cateUrlMapJson !!};
+
+    function getCateUrlById(cateIds) {
+        if (cateIds && cateIds.length > 0) {
+            return cateUrlMap[cateIds[0]] || null;
+        }
+        return null;
+    }
+    
     function loadData(products ,product_has_property){
         var productarray = [];
         $.each(products, function(index,value){
@@ -1251,74 +1268,74 @@
       $('#key_destop').val("");
       $('#key_mobile').val("");
     }
-    function loaddatafilterTypeText(arr_filterall){
-       var filterIn = [];
+    function loaddatafilterTypeText(arr_filterall) {
+        var filterIn = [];
         checktypegroupText = arr_inputtxt.every(
-                 function(val, i, arr){
-                    return  val.type === arr[0].type
-                 }
-            );
-    if(arr_inputtxt.length > 0){
-        if(checktypegroupText){
-            $.each(arr_filterall, function(index,value){
-            arr_filterall[index]['contentFilter'].filter(function(data) {
-                arr_inputtxt.forEach(function(element) {
-                        if(data.type_id == element['type']){
-                            if(data.value_text == null){
-                                data.value_text = '';
-                            }
-                            if(element['value_text'] == null){
-                                data.value_text = '';
-                            }
-                            if(data.value_text.trim() == element['value_text'].trim()){
-                                var  index = filterIn.findIndex(
-                                    function(x){
-                                        return x.pro_code === value.pro_code;
-                                    })
-                                if(index == -1){
-                                    filterIn.push(value);
+            function(val, i, arr){
+                return  val.type === arr[0].type
+            }
+        );
+        if(arr_inputtxt.length > 0){
+            if(checktypegroupText){
+                $.each(arr_filterall, function(index,value){
+                arr_filterall[index]['contentFilter'].filter(function(data) {
+                    arr_inputtxt.forEach(function(element) {
+                            if(data.type_id == element['type']){
+                                if(data.value_text == null){
+                                    data.value_text = '';
                                 }
-                            }
-                    }
+                                if(element['value_text'] == null){
+                                    data.value_text = '';
+                                }
+                                if(data.value_text.trim() == element['value_text'].trim()){
+                                    var  index = filterIn.findIndex(
+                                        function(x){
+                                            return x.pro_code === value.pro_code;
+                                        })
+                                    if(index == -1){
+                                        filterIn.push(value);
+                                    }
+                                }
+                        }
+                    });
                 });
             });
-        });
-      }else{
-        $.each(arr_filterall, function(index,value){
-            var checkarr = [];
-            arr_filterall[index]['contentFilter'].filter(function(data) {
-                arr_inputtxt.forEach(function(element) {
-                        if(data.type_id == element['type']){
-                            if(data.value_text == null){
-                                data.value_text = '';
-                            }
-                            if(element['value_text'] == null){
-                                data.value_text = '';
-                            }
-                            if(data.value_text.trim() == element['value_text'].trim()){
-                                checkarr.push(data.type_id);
-                            }
-                    }
+        }else{
+            $.each(arr_filterall, function(index,value){
+                var checkarr = [];
+                arr_filterall[index]['contentFilter'].filter(function(data) {
+                    arr_inputtxt.forEach(function(element) {
+                            if(data.type_id == element['type']){
+                                if(data.value_text == null){
+                                    data.value_text = '';
+                                }
+                                if(element['value_text'] == null){
+                                    data.value_text = '';
+                                }
+                                if(data.value_text.trim() == element['value_text'].trim()){
+                                    checkarr.push(data.type_id);
+                                }
+                        }
+                    });
                 });
-            });
-            var con = checkmethod(arr_inputtxt);
-           var uniqueMatches = checkarr.filter(function(v, i, a) { return a.indexOf(v) === i; }).length;
-           if(uniqueMatches >= con){
-            var  index = filterIn.findIndex(
-                     function(x){
-                    return x.pro_code === value.pro_code;
-                     })
-                    if(index == -1){
-                     filterIn.push(value);
+                var con = checkmethod(arr_inputtxt);
+                var uniqueMatches = checkarr.filter(function(v, i, a) { return a.indexOf(v) === i; }).length;
+                if(uniqueMatches >= con){
+                    var  index = filterIn.findIndex(
+                        function(x){
+                        return x.pro_code === value.pro_code;
+                        })
+                        if(index == -1){
+                        filterIn.push(value);
+                    }
                 }
-           }
 
-        });
-      }
-    }else{
-        filterIn = arr_filterall;
-    }
-      return filterIn;
+            });
+        }
+        }else{
+            filterIn = arr_filterall;
+        }
+        return filterIn;
     }
     function loadSegment(arrFilterInput){
         var profilter = [];
@@ -1444,7 +1461,6 @@
      * @param {Array} productarray 產品陣列
      */
     function onclickGridView(productarray) {
-
         $('#current_list_item').val(1);
         var html = '';
         html += '<div class="GridView visible-upper-mobile" id="GridView">';
@@ -1455,7 +1471,7 @@
         html += '<div id="cardGridList" class="row">';
         $.each(productarray, function(index_pro,pro){
         html += '<div class=" col-xl-3 col-lg-4 col-md-4">';
-        html += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
+        html += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'">';
         html += '<div class=" margin-p-left-card item card moreBox"  style="display: none;">';
         if(pro['status_product'] != 1){
         html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
@@ -1559,7 +1575,7 @@
         $.each(productarray, function(index_pro,pro) {
             html += '<div class="margin-p-left-card column-grid-card-mobile moreBox_mobile"  style="display: none;">';
             html += '<div class="item card shadow-radius-box">';
-            html += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
+            html += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'">';
             if (pro['status_product'] != 1) {
                 html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
             }
@@ -1724,7 +1740,7 @@
             html1 += '<td class="border-radius-6">';
             html1 += '<div class="cardlist-toadd">';
             html1 += '<div class="cardlist-view hover01">';
-            html1 += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
+            html1 += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'">';
             if (pro['status_product'] != 1) {
                 html1 += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="text-over-cardlist"> '+ statuspro(pro['status_product'])+'';
                 html1 += '</div>';
