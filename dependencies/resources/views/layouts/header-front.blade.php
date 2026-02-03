@@ -731,28 +731,28 @@
                                     @foreach ($navcategories2 as $subCate)
                                         {{-- 根據 main_cateid 判斷要顯示哪種類型的圖片 (image_type1, image_type2, image_type3 或 image) --}}
                                         {{-- onmouseover="bigImg(...)" 用於滑鼠懸停時切換右側預覽圖 --}}
-                                        @php($navcategories2Href = route('productList' ,[$subCate->main_cateid, slugifyHead($subCate->url_item),$subCate->sub_pro_id]))
+                                        @php($navcategories2Href = route('productList' ,[$subCate->main_cateid, slugifyHead($subCate->url_item), $subCate->sub_pro_id]))
                                         @if($subCate->main_cateid == 1)
                                         <li>
-                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}',2)"
+                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}', 2)"
                                                 href="{{$navcategories2Href}}">{{$subCate->name}}
                                             </a>
                                         </li>
                                         @elseif($subCate->main_cateid == 2)
                                         <li>
-                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type2}}',2)"
+                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type2}}', 2)"
                                                 href="{{$navcategories2Href}}">{{$subCate->name}}
                                             </a>
                                         </li>
                                         @elseif($subCate->main_cateid == 3)
                                         <li>
-                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}',2)"
+                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}', 2)"
                                                 href="{{$navcategories2Href}}">{{$subCate->name}}
                                             </a>
                                         </li>
                                         @else
                                         <li>
-                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}',2)"
+                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}', 2)"
                                                 href="{{$navcategories2Href}}">{{$subCate->name}}
                                             </a>
                                         </li>
@@ -1234,37 +1234,64 @@
         <div id="btn-sidenav1" class="btn-sidenav pad-ar-24px">
             <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav1')"><i
                     class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Products']) ?
-                $staticContent['Products'] :
-                'Products' }}</a>
+                $staticContent['Products'] : 'Products' }}</a>
 
             <a class="text-normal pl-3" href="{{ route('allproduct') }}">
                 {{ isset($staticContent['Products_Overview']) ? $staticContent['Products_Overview'] : 'Products Overview' }}
             </a>
 
-            <a class="text-normal pl-3" href="#" onclick="toggle_visibility('btn-sidenav-sub1')">{{
-                isset($staticContent['Industrial_Power'])? $staticContent['Industrial_Power'] : 'Industrial Power' }}<i
-                    class="zmdi zmdi-chevron-right"></i></a>
-            <a class="text-normal pl-3" href="#"
+            <a class="text-normal pl-3" href="{{ (isset($navcategories2) && count($navcategories2) > 0) ? route('productList', [$navcategories2->first()->main_cateid]) : '#' }}">
+                {{ isset($staticContent['Industrial_Power']) ? $staticContent['Industrial_Power'] : 'Industrial Power' }}
+                <span class="sidenav-toggle"
+                        onclick="toggle_only(event, 'btn-sidenav-sub1')">
+                    <i class="zmdi zmdi-chevron-right"></i>
+                </span>
+            </a>
+
+            <a class="text-normal pl-3" href="{{ (isset($navcategories1) && count($navcategories1) > 0) ? route('productList', [$navcategories1->first()->main_cateid]) : '#' }}">
+                {{ isset($staticContent['Medical_Power']) ? $staticContent['Medical_Power'] : 'Medical Power' }}
+                <span class="sidenav-toggle"
+                        onclick="toggle_only(event, 'btn-sidenav-sub2')">
+                    <i class="zmdi zmdi-chevron-right"></i>
+                </span>
+            </a>
+            
+            {{-- <a class="text-normal pl-3" href="#"
                 onclick="toggle_visibility('btn-sidenav-sub2')">{{isset($staticContent['Medical_Power']) ?
-                $staticContent['Medical_Power'] :'Medical Power' }}<i class="zmdi zmdi-chevron-right"></i></a>
+                $staticContent['Medical_Power'] : 'Medical Power' }}<i class="zmdi zmdi-chevron-right"></i></a> --}}
             <a class="text-normal pl-3"
-                href="{{route('configurableproduct')}}">{{isset($staticContent['Configurable_Power'])?
-                $staticContent['Configurable_Power'] :'Configurable Power' }}</a>
+                href="{{route('configurableproduct')}}">{{isset($staticContent['Configurable_Power']) ?
+                $staticContent['Configurable_Power'] : 'Configurable Power' }}</a>
 
             @if(isset($navcategories4) && count($navcategories4) > 0 )
-            <a class="text-normal pl-3" href="#"
-                onclick="toggle_visibility('btn-sidenav-sub4')">{{isset($staticContent['wireless_charging'])?
-                $staticContent['wireless_charging'] :'Industrial Battery Charging' }}<i
-                    class="zmdi zmdi-chevron-right"></i></a>
+            <a class="text-normal pl-3" href="{{ route('productList', [$navcategories4->first()->main_cateid]) }}">
+                {{ isset($staticContent['wireless_charging']) ? $staticContent['wireless_charging'] : 'Industrial Battery Charging' }}
+                <span class="sidenav-toggle"
+                        onclick="toggle_only(event, 'btn-sidenav-sub4')">
+                    <i class="zmdi zmdi-chevron-right"></i>
+                </span>
+            </a>
+            {{-- <a class="text-normal pl-3" href="#"
+                onclick="toggle_visibility('btn-sidenav-sub4')">{{isset($staticContent['wireless_charging']) ?
+                $staticContent['wireless_charging'] : 'Industrial Battery Charging' }}
+                <i class="zmdi zmdi-chevron-right"></i></a> --}}
             @endif
 
-            <a class="text-normal pl-3" href="#"
-                onclick="toggle_visibility('btn-sidenav-sub3')">{{isset($staticContent['LED_Power'])?
-                $staticContent['LED_Power'] : 'LED Driver' }}<i class="zmdi zmdi-chevron-right"></i></a>
+            <a class="text-normal pl-3" href="{{ (isset($navcategories3) && count($navcategories3) > 0) ? route('productList', [$navcategories3->first()->main_cateid]) : '#' }}">
+                {{ isset($staticContent['LED_Power']) ? $staticContent['LED_Power'] : 'LED Driver' }}
+                <span class="sidenav-toggle"
+                        onclick="toggle_only(event, 'btn-sidenav-sub3')">
+                    <i class="zmdi zmdi-chevron-right"></i>
+                </span>
+            </a>
+
+            {{-- <a class="text-normal pl-3" href="#"
+                onclick="toggle_visibility('btn-sidenav-sub3')">{{isset($staticContent['LED_Power']) ?
+                $staticContent['LED_Power'] : 'LED Driver' }}<i class="zmdi zmdi-chevron-right"></i></a> --}}
         </div>
         <div id="btn-sidenav-sub1" class="btn-sidenav  pad-ar-24px">
-            <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub1')"><i
-                    class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Industrial_Power'])?
+            <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub1')">
+                <i class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Industrial_Power']) ?
                 $staticContent['Industrial_Power'] : 'Industrial Power'}}</a>
             @if(isset($navcategories2))
             @foreach ($navcategories2 as $subCate)

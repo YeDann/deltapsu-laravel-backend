@@ -532,20 +532,26 @@ if (!Array.prototype.findIndex) {
     <script>
         $('.btn-sidenav').css('visibility','hidden');
 
-         function toggle_visibility(id) {
-            var e = document.getElementById(id);
+          function toggle_visibility(id) {
+              var e = document.getElementById(id);
 
-            if(e.style.visibility == 'visible'){
+              if(e.style.visibility == 'visible'){
 
-                //  e.style.display = 'none';
-                $('#in-sidenav').css('visibility','visible');
-                e.style.visibility = 'hidden';
+                  //  e.style.display = 'none';
+                  $('#in-sidenav').css('visibility','visible');
+                  e.style.visibility = 'hidden';
 
-           } else{
-                e.style.visibility = 'visible';
-                $('#in-sidenav').css('visibility','hidden');
+            } else{
+                  e.style.visibility = 'visible';
+                  $('#in-sidenav').css('visibility','hidden');
+            }
           }
-         }
+
+          function toggle_only(e, id) {
+            e.preventDefault();   // 阻止 a 導頁
+            e.stopPropagation();  // 阻止事件往 a 冒泡
+            toggle_visibility(id);
+          }
          /*  function openNav(e){
               e.toggle(function(){document.getElementById("Sidenav").style.width = "100%";
             document.getElementById('bg-backslidenav').style.display="block";},function(){document.getElementById("Sidenav").style.width = "0";
@@ -738,7 +744,6 @@ if (!Array.prototype.findIndex) {
           }else if(id == 'sub4'){
             $('.imageNav4').attr('src' ,"{{asset('frontend-asset/image/battery_charging_new.webp')}}");
           }
-
 
           $('.sub-menu').removeClass('active')
           $('#'+id).addClass('active');
