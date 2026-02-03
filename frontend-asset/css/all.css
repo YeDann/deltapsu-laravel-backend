@@ -11244,6 +11244,7 @@ a:hover {
 .btn-ft:hover {
   color: #ffffff;
   text-decoration: none;
+  background-color: #0087DC;
 }
 
 #producttype-mobile .btn-ft,
