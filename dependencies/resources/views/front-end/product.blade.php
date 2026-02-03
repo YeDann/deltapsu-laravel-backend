@@ -1574,7 +1574,7 @@
         html += '<div id="cardGridList" class="d-flex flex-wrap">';
         $.each(productarray, function(index_pro,pro) {
             html += '<div class="margin-p-left-card column-grid-card-mobile moreBox_mobile"  style="display: none;">';
-            html += '<div class="item card shadow-radius-box">';
+            html += '<div class="item card border-radius-6">';
             html += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'">';
             if (pro['status_product'] != 1) {
                 html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
