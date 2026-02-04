@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App;
 use DB;
-use Illuminate\Http\Request;
-use Validator;
 use File;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Concerns\FromArray;
+use Maatwebsite\Excel\Concerns\WithCustomCsvSettings;
 use Maatwebsite\Excel\Excel as ExcelFormat;
-use Illuminate\Support\Facades\Hash;
+use Validator;
+
 class ImportController extends Controller
 {
     /**
@@ -146,7 +148,243 @@ class ImportController extends Controller
       ->with('menu', "products")
       ->with('name', "product");
     }
-   public function getExportProduct()
+
+    public function getExportProduct()
+    {
+        // 1) 產品＋翻譯一次抓好
+        $products = DB::table('products as p')
+            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+            ->where('pt.local', 'en')
+            ->select('p.*', 'pt.*')
+            ->orderBy('pt.showstatus', 'desc')
+            ->orderBy('p.created_at', 'desc')
+            ->get();
+
+        if ($products->isEmpty()) {
+            // 沒資料就只 export header（看你需求，也可以直接 return 404）
+            $docCate = DB::table('products_documents_categories as doc_cate')
+                ->orderBy('doc_cate.title', 'asc')
+                ->pluck('doc_cate.title')
+                ->toArray();
+
+            $header = array_merge([
+                "pro_code",
+                "pro_categories 1",
+                "pro_categories 2",
+                "series",
+                "dimensionL",
+                "dimensionW",
+                "dimensionD",
+                "unit_weight",
+                "Status",
+                "Show ManaulPage",
+                'Highlights & Features',
+                "Industrial Power",
+                "Medical Power",
+                "Lighting & Signage",
+            ], $docCate);
+
+            return Excel::download(
+                new class([$header]) implements FromArray, WithCustomCsvSettings {
+                    protected array $data;
+
+                    public function __construct(array $data)
+                    {
+                        $this->data = $data;
+                    }
+
+                    public function array(): array
+                    {
+                        return $this->data;
+                    }
+
+                    public function getCsvSettings(): array
+                    {
+                        return [
+                            'use_bom'  => true,
+                            'encoding' => 'UTF-8',  // Excel + BOM 通常就能正常顯示
+                            'delimiter' => ',',
+                        ];
+                    }
+                },
+                'products.csv',
+                ExcelFormat::CSV
+            );
+        }
+
+        // 2) 一次把會用到的 id 收集起來
+        $productIds        = $products->pluck('pro_id')->unique()->values();
+        $seriesIds         = $products->pluck('series_id')->filter()->unique()->values();
+        $proCategoryIds    = $products->pluck('pro_categories_id')->filter()->unique()->values();
+
+        // 3) 文件分類標題（header 用）
+        $docCate = DB::table('products_documents_categories as doc_cate')
+            ->orderBy('doc_cate.title', 'asc')
+            ->pluck('doc_cate.title')
+            ->toArray();
+
+        // 4) 預先載入系列翻譯
+        $seriesTranslations = DB::table('series_translations')
+            ->whereIn('series_id', $seriesIds)
+            ->where('local', 'en')
+            ->select('series_id', 'title')
+            ->get()
+            ->groupBy('series_id');
+
+        // 5) 預先載入「子類別是否存在」用來填 $arrNotfound
+        $existSubCategoryIds = DB::table('sub_pro_categories as sc')
+            ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
+            ->whereIn('sc.sub_pro_id', $proCategoryIds)
+            ->where('sct.local', 'en')
+            ->pluck('sc.sub_pro_id')
+            ->unique()
+            ->flip(); // 變成 [sub_pro_id => 0]
+
+        // 6) 預先載入 product_has_categories → 產品對應的分類名稱
+        $productCategories = DB::table('product_has_categories as pc')
+            ->leftJoin('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'pc.categories_id')
+            ->whereIn('pc.product_id', $productIds)
+            ->where('spt.local', 'en')
+            ->select('pc.product_id', 'spt.name')
+            ->orderBy('pc.product_id')
+            ->get()
+            ->groupBy('product_id')
+            ->map(function ($items) {
+                // 重新 index，讓 [0], [1] 好取
+                return $items->values();
+            });
+
+        // 7) 預先載入證書（一次取出 certificate_id in [1,2,3]）
+        $needCertIds = [1, 2, 3];
+        $certs = DB::table('certificate_product')
+            ->whereIn('product_id', $productIds)
+            ->whereIn('certificate_id', $needCertIds)
+            ->select('product_id', 'certificate_id')
+            ->get();
+
+        // 轉成 [product_id => [cert_id => true]]
+        $certMap = [];
+        foreach ($certs as $cert) {
+            $pid = $cert->product_id;
+            $cid = $cert->certificate_id;
+            $certMap[$pid][$cid] = true;
+        }
+
+        // 7.5) 預先載入所有產品的文件資料
+        $documentsMap = $this->getAllProductDocuments($productIds->toArray(), $docCate);
+
+        $arrNotfound = [];
+
+        // 8) 組 header
+        $header = array_merge([
+            "pro_code",
+            "pro_categories 1",
+            "pro_categories 2",
+            "series",
+            "dimensionL",
+            "dimensionW",
+            "dimensionD",
+            "unit_weight",
+            "Status",
+            "Show ManaulPage",
+            'Highlights & Features',
+            "Industrial Power",   // cert_id = 1?
+            "Medical Power",      // cert_id = 2?
+            "Lighting & Signage", // cert_id = 3?
+        ], $docCate);
+
+        $exportData = [];
+        $exportData[] = $header;
+
+        // 9) 逐筆產品組資料
+        foreach ($products as $pro) {
+            // 9-1) 檢查分類是否存在
+            if (!isset($existSubCategoryIds[$pro->pro_categories_id])) {
+                $arrNotfound[] = $pro->pro_categories_id;
+            }
+
+            // 9-2) 系列
+            $seriesTitle = '';
+            if ($pro->series_id && isset($seriesTranslations[$pro->series_id])) {
+                $seriesTitle = $seriesTranslations[$pro->series_id]->first()->title ?? '';
+            }
+
+            // 9-3) 產品分類（最多兩個）
+            $cats = $productCategories[$pro->pro_id] ?? collect();
+            $cats = $cats->values(); // 確保 index 0,1
+
+            $proCat1 = $cats->get(0)->name ?? '';
+            $proCat2 = $cats->get(1)->name ?? '';
+
+            // 9-4) 證書 Y / N
+            $productCerts = $certMap[$pro->pro_id] ?? [];
+            $cer1 = !empty($productCerts[1]) ? 'Y' : 'N';
+            $cer2 = !empty($productCerts[2]) ? 'Y' : 'N';
+            $cer3 = !empty($productCerts[3]) ? 'Y' : 'N';
+
+            $row = [
+                $pro->pro_code,
+                $proCat1,
+                $proCat2,
+                $seriesTitle,
+                $pro->dimensionL,
+                $pro->dimensionW,
+                $pro->dimensionD,
+                $pro->unit_weight,
+                (int)$pro->enable_pro === 1 ? 'Yes' : 'No',
+                (int)$pro->manaul_page === 1 ? 'Yes' : 'No',
+                strip_tags($pro->content_1),
+                $cer1,
+                $cer2,
+                $cer3,
+            ];
+
+            // 9-5) 產品文件（使用預載入的資料）
+            $documents = [];
+            foreach ($docCate as $cate) {
+                $documents[] = $documentsMap[$pro->pro_id][$cate] ?? '';
+            }
+
+            $exportData[] = array_merge($row, $documents);
+        }
+
+        // dd($products);
+
+        // TODO: 如果你真的需要 $arrNotfound，可以丟 log，看哪幾個 category 找不到
+        // if (!empty($arrNotfound)) {
+        //     \Log::warning('Category not found for ids: ' . implode(',', array_unique($arrNotfound)));
+        // }
+
+        // 10) 匿名 Export class + 正確的 CSV 設定方式
+        return Excel::download(
+            new class($exportData) implements FromArray, WithCustomCsvSettings {
+                protected array $data;
+
+                public function __construct(array $data)
+                {
+                    $this->data = $data;
+                }
+
+                public function array(): array
+                {
+                    return $this->data;
+                }
+
+                public function getCsvSettings(): array
+                {
+                    return [
+                        'use_bom'  => true,
+                        'encoding' => 'UTF-16LE',
+                        'delimiter' => ',',
+                    ];
+                }
+            },
+            'products.csv',
+            ExcelFormat::CSV
+        );
+    }
+
+    public function getExportProduct2()
     {
         $products = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -257,19 +495,19 @@ class ImportController extends Controller
 
         // Export using new Laravel Excel syntax
         return Excel::download(
-        new class($exportData) implements FromArray {
-        protected $data;
+          new class($exportData) implements FromArray {
+            protected $data;
 
-        public function __construct(array $data) {
-            $this->data = $data;
-        }
+            public function __construct(array $data) {
+                $this->data = $data;
+            }
 
-        public function array(): array {
-            return $this->data;
-        }
+            public function array(): array {
+                return $this->data;
+            }
 
-        // ✅ UTF-8 BOM settings for Excel
-        public function getCsvSettings(): array
+            // ✅ UTF-8 BOM settings for Excel
+            public function getCsvSettings(): array
                 {
                     return [
                         'use_bom' => true,
@@ -282,13 +520,13 @@ class ImportController extends Controller
             ExcelFormat::CSV,
             [
                 'use_bom' => true,  // must have for Excel in Windows
-                 'encoding' => 'UTF-16LE',
-             ]
-           );
+                'encoding' => 'UTF-16LE',
+            ]
+          );
         }
     }
 
-   public function getExportProductImage()
+    public function getExportProductImage()
     {
         $products = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -524,7 +762,65 @@ class ImportController extends Controller
       // }
     }
 
-    function getProductDocument($cates ,$pro_id){
+    function getProductDocument(array $cates, $pro_id)
+    {
+        $appUrl = config('app.url');
+
+        // 先把這個 product 相關、且分類在 $cates 之內的文件全部抓出來（一次 query）
+        $documents = DB::table('product_has_documents as phd')
+            ->join('products as p', 'p.pro_id', '=', 'phd.product_id')
+            ->join('product_ducuments as pd', 'phd.document_id', '=', 'pd.doc_id')
+            ->join('product_ducument_translations as pdt', 'pdt.doc_fk_id', '=', 'pd.doc_id')
+            ->join('products_documents_categories as pdc', 'pdc.id', '=', 'pd.cate_id')
+            ->join('pro_ducuments_cate_translations as pdct', 'pdct.doc_cate_id', '=', 'pdc.id')
+            ->where('pdt.local', 'en')
+            ->where('pdct.local', 'en')
+            ->whereNotNull('pdt.file')
+            ->where('pdt.file', '!=', '')
+            ->where('p.pro_id', $pro_id)
+            ->whereIn('pdc.title', $cates) // 一次把所有需要的分類抓出來
+            ->select(
+                'p.pro_code',
+                'pd.doc_id',
+                'phd.product_id',
+                'pdct.lable',
+                'pdc.slug',
+                'pdt.name',
+                'pdc.title as catename',
+                'pd.created_at',
+                'pdc.main_cate_id',
+                'pdt.file',
+                'pd.cate_id'
+            )
+            ->orderBy('pdc.title', 'asc')
+            ->get();
+
+        // 先把查出來的文件用「分類 title」做 map，之後要找就 O(1) 拿
+        // 如果同一個分類有多筆文件，你可以決定要取第一筆或最後一筆
+        $docByCategory = [];
+        foreach ($documents as $doc) {
+            $cateTitle = $doc->catename; // = pdc.title
+            // 若同分類只要一筆，保留第一筆即可；如果要最新的，可以在 SQL 多加 orderBy created_at desc
+            if (!isset($docByCategory[$cateTitle])) {
+                $docByCategory[$cateTitle] = $doc;
+            }
+        }
+
+        // 依照傳進來的 $cates 順序組輸出陣列
+        $arr_doc = [];
+        foreach ($cates as $cate) {
+            if (isset($docByCategory[$cate])) {
+                $doc = $docByCategory[$cate];
+                $arr_doc[] = $appUrl . '/products/download/' . $doc->slug . '/' . $doc->pro_code;
+            } else {
+                $arr_doc[] = '';
+            }
+        }
+
+        return $arr_doc;
+    }
+
+    function getProductDocument2($cates ,$pro_id){
       $appUrl = config('app.url');
       $arr_doc = [];
       foreach ($cates as $cate) {
@@ -549,7 +845,6 @@ class ImportController extends Controller
             array_push($arr_doc, '');
           }
       }
-    // return dd($arr_doc,$cates);
       return $arr_doc;
     }
     public function getExportProductProperty(){
@@ -970,6 +1265,33 @@ public function checkLang($lang ,$id){
      }else{
          return $returnlang;
      }
+}
+
+public function getAllProductDocuments(array $productIds, array $docCate): array
+{
+    $allDocuments = DB::table('product_has_documents as phd')
+        ->join('products as p', 'p.pro_id', '=', 'phd.product_id')
+        ->join('product_ducuments as pd', 'phd.document_id', '=', 'pd.doc_id')
+        ->join('product_ducument_translations as pdt', 'pdt.doc_fk_id', '=', 'pd.doc_id')
+        ->join('products_documents_categories as pdc', 'pdc.id', '=', 'pd.cate_id')
+        ->join('pro_ducuments_cate_translations as pdct', 'pdct.doc_cate_id', '=', 'pdc.id')
+        ->where('pdt.local', 'en')
+        ->where('pdct.local', 'en')
+        ->where('pdt.file', '!=', '')
+        ->where('pdt.file', '!=', null)
+        ->whereIn('p.pro_id', $productIds)
+        ->whereIn('pdc.title', $docCate)
+        ->select('p.pro_id as product_id', 'p.pro_code', 'pdc.slug', 'pdc.title as catename')
+        ->distinct()
+        ->get();
+
+    $documentsMap = [];
+    $appUrl = config('app.url');
+    foreach ($allDocuments as $doc) {
+        $url = $appUrl . '/products/download/' . $doc->slug . '/' . $doc->pro_code;
+        $documentsMap[$doc->product_id][$doc->catename] = $url;
+    }
+    return $documentsMap;
 }
 
 
