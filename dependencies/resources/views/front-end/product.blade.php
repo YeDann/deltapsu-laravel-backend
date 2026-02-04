@@ -828,31 +828,31 @@
     function loadAddContent(){
         var arr = [];
         var arrproid = [];
-       $.each(filter_pro, function(index,element){
-             if(element['field_id'] != 'series01' && element['field_id'] != 'status02' && element['field_id'] != 'safety03' && element['field_id'] != 'certifi04' && element['field_id'] != 'mode_series' ){
-                arr.push(element['field_id']);
-             }
-         });
-         $.each(products, function(index,pro){
+        $.each(filter_pro, function(index,element){
+            if(element['field_id'] != 'series01' && element['field_id'] != 'status02' && element['field_id'] != 'safety03' && element['field_id'] != 'certifi04' && element['field_id'] != 'mode_series' ){
+            arr.push(element['field_id']);
+            }
+        });
+        $.each(products, function(index,pro){
             arrproid.push(pro['pro_id']);
-         });
+        });
         $.ajax({
-           url: "{{route('loadPropoperty')}}",
-           data: {
-          'data': arr,
-          'proid':arrproid
-           },
-           type: 'POST',
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           success: function (res) {
-            pro_perti =  res['data'];
-           },
-           async: false,
-           });
-
+            url: "{{route('loadPropoperty')}}",
+            data: {
+                'data': arr,
+                'proid':arrproid
+            },
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (res) {
+                pro_perti =  res['data'];
+            },
+            async: false,
+        });
     }
+
     function loadPopUpfilter(){
         var html1 = '';
         var html2 = '';

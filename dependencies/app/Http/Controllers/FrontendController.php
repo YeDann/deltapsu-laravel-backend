@@ -1133,15 +1133,38 @@ class FrontendController extends Controller
 
         $subCategoryIds = $categoriesHasMainPro->pluck('cate_id');
 
+        // 根據主分類ID決定對應的認證類型
+        $certificateMapping = [
+            1 => [2], // Medical Power -> Medical (certificate_id = 2)
+            2 => [1], // Industrial Power -> Industrial (certificate_id = 1)
+            3 => [3], // LED Driver -> Lighting & Signage (certificate_id = 3)
+            4 => [4], // Industrial Battery Charging -> Industrial Battery Charging (certificate_id = 4)
+            5 => [1, 2, 3, 4], // Configurable Power -> 可能適用於多種應用領域
+        ];
+
         // 根據 子商品分類，取得 商品資料
         $searchProQuery = DB::table('product_has_categories as phc')
+            ->join('categories_has_main_pro as chmp', function($join) use ($mainCateId) {
+                $join->on('chmp.cate_id', '=', 'phc.categories_id')
+                     ->where('chmp.main_cateid', '=', $mainCateId);
+            })
             ->join('products as p', 'p.pro_id', '=', 'phc.product_id') // join 商品
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id') // join 商品翻譯
             ->join('series as s', 's.se_id', '=', 'p.series_id'); // join 系列
 
+        // 加入認證類型篩選，確保商品屬於對應的應用領域
+        if (isset($certificateMapping[$mainCateId])) {
+            $searchProQuery = $searchProQuery->whereExists(function ($query) use ($certificateMapping, $mainCateId) {
+                $query->select(DB::raw(1))
+                      ->from('certificate_product as cp')
+                      ->whereColumn('cp.product_id', 'p.pro_id')
+                      ->whereIn('cp.certificate_id', $certificateMapping[$mainCateId]);
+            });
+        }
+
         // 不是 LED 主分類，則加入 子商品分類 篩選條件
         if ($mainCateId !== 3) {
-            $searchProQuery = $searchProQuery->whereIn('phc.categories_id', $subCategoryIds); // main_cate 底下的子分類
+            $searchProQuery = $searchProQuery->whereIn('phc.categories_id', $subCategoryIds);
         } else {
             // LED 主分類，加入 可選型號 篩選條件
             $searchProQuery = $searchProQuery->whereNotNull('s.mode_series');
@@ -1185,7 +1208,7 @@ class FrontendController extends Controller
         $arrproid = [];
         $productsArr = [];
         $productCodeArr = [];
-        
+
         foreach ($searchProGroupByPrdId as $prdId => $products) {
             // 取得 商品屬性資料
             $productHasPrm = $productHasPrmGroupByPrdId->get($prdId, collect());
