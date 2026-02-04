@@ -1071,7 +1071,7 @@
             </a>
 
             <div class="col-nav d-flex">
-                <a href="#" class="power-supplies-link-mobile">
+                <a href="/" class="power-supplies-link-mobile">
                     {!! preg_replace('/\s+/', '<br>', (isset($staticContent['Standard_Power_Supplies']) ? $staticContent['Standard_Power_Supplies'] : 'Standard Power Supplies'), 1) !!}
                 </a>
             </div>
