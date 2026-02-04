@@ -270,6 +270,9 @@ class ImportController extends Controller
             $certMap[$pid][$cid] = true;
         }
 
+        // 7.5) 預先載入所有產品的文件資料
+        $documentsMap = $this->getAllProductDocuments($productIds->toArray(), $docCate);
+
         $arrNotfound = [];
 
         // 8) 組 header
@@ -336,8 +339,11 @@ class ImportController extends Controller
                 $cer3,
             ];
 
-            // 9-5) 產品文件（這裡沿用你原本的邏輯）
-            $documents = self::getProductDocument($docCate, $pro->pro_id);
+            // 9-5) 產品文件（使用預載入的資料）
+            $documents = [];
+            foreach ($docCate as $cate) {
+                $documents[] = $documentsMap[$pro->pro_id][$cate] ?? '';
+            }
 
             $exportData[] = array_merge($row, $documents);
         }
@@ -1259,6 +1265,33 @@ public function checkLang($lang ,$id){
      }else{
          return $returnlang;
      }
+}
+
+public function getAllProductDocuments(array $productIds, array $docCate): array
+{
+    $allDocuments = DB::table('product_has_documents as phd')
+        ->join('products as p', 'p.pro_id', '=', 'phd.product_id')
+        ->join('product_ducuments as pd', 'phd.document_id', '=', 'pd.doc_id')
+        ->join('product_ducument_translations as pdt', 'pdt.doc_fk_id', '=', 'pd.doc_id')
+        ->join('products_documents_categories as pdc', 'pdc.id', '=', 'pd.cate_id')
+        ->join('pro_ducuments_cate_translations as pdct', 'pdct.doc_cate_id', '=', 'pdc.id')
+        ->where('pdt.local', 'en')
+        ->where('pdct.local', 'en')
+        ->where('pdt.file', '!=', '')
+        ->where('pdt.file', '!=', null)
+        ->whereIn('p.pro_id', $productIds)
+        ->whereIn('pdc.title', $docCate)
+        ->select('p.pro_id as product_id', 'p.pro_code', 'pdc.slug', 'pdc.title as catename')
+        ->distinct()
+        ->get();
+
+    $documentsMap = [];
+    $appUrl = config('app.url');
+    foreach ($allDocuments as $doc) {
+        $url = $appUrl . '/products/download/' . $doc->slug . '/' . $doc->pro_code;
+        $documentsMap[$doc->product_id][$doc->catename] = $url;
+    }
+    return $documentsMap;
 }
 
 
