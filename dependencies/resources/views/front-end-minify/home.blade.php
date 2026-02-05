@@ -29,6 +29,12 @@
         text-align: left;
     }
 
+    @media only screen and (max-width: 768px) {
+        .text-title-delta-home {
+            font-size: 24px;
+        }
+    }
+
     .mr-lr-feture {
         padding-left: 30px;
         padding-right: 30px;
