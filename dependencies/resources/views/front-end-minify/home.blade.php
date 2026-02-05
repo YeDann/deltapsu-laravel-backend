@@ -250,6 +250,16 @@
     }
 
     /* #producttype.owl-carousel .owl-stage-outer {} */
+
+    @media (min-width: 767px) {
+        #slider,
+        .wrap,
+        .slide-content,
+        .slide {
+            height: calc(100vh - 260px) !important;
+            max-height: 420px !important;
+        }
+    }
 </style>
 @endsection
 @section('meta')
