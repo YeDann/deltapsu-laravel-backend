@@ -251,7 +251,7 @@
 
     /* #producttype.owl-carousel .owl-stage-outer {} */
 
-    @media (min-width: 769px) {
+    @media (min-width: 767px) {
         #slider,
         .wrap,
         .slide-content,
