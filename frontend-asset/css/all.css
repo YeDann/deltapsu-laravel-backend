@@ -13342,7 +13342,7 @@ hr {
     height: 40px;
     width: 160px;
     border-radius: 5px;
-    border: 2px solid #0087DC;
+    border: unset;
     background-color: #0087DC;
     font-size: 12px;
     color: #ffffff;
