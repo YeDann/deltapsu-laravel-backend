@@ -389,17 +389,30 @@
 
     @media (max-width: 1024px) {
         .power-supplies-link-mobile {
-            padding-left: 0px;
             margin-left: -80px;
+            bottom: 1px;
+        }
+    }
+
+    @media (max-width: 1000px) {
+        .power-supplies-link-mobile {
+            margin-left: -50px;
             bottom: 1px;
         }
     }
 
     @media (max-width: 768px) {
         .power-supplies-link-mobile {
-            padding-left: 0px;
             margin-left: -35px;
-            bottom: 6px;
+            bottom: 5px;
+        }
+    }
+
+    @media (max-width: 650px) {
+        .power-supplies-link-mobile {
+            padding-left: 0px;
+            margin-left: -5px;
+            bottom: 5px;
         }
     }
 
