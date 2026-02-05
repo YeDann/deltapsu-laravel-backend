@@ -92,6 +92,15 @@
     .datasheet-select {
         padding: 24px 12px;
     }
+
+    @media (max-width: 921px) {
+        .m-mobile-2 {
+            margin: 0.5rem 1rem !important;
+        }
+        .m-mobile-2 h5 {
+            font-size: 14px !important;
+        }
+    }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 <?php $imgDown = asset('frontend-asset/image/arrow-down.svg') ?>
@@ -424,8 +433,8 @@
         function loadDocument(_documents, _documents_cate,model_id , lang){
             var html2 = "";
 
-                html2 += ' <div class="box-for-collap p-2">'
-                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += ' <div class="box-for-collap">'
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta m-mobile-2"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image1">';
                 html2 += '<h5 class="invisible-up-922">Manual</h5>';
@@ -468,8 +477,8 @@
 
             $.each(_documents_cate, function(index,cate_doc){
                 if(cate_doc['id'] == 2){
-                html2 += ' <div class="box-for-collap p-2">'
-                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += ' <div class="box-for-collap">'
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta m-mobile-2"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image'+cate_doc['id']+'">';
                 html2 += '<h5 class="invisible-up-922">'+cate_doc['title']+'</h5>';
