@@ -12190,11 +12190,15 @@ a .title-new {
 .box-events .card .post-image {
   height: 300px;
   overflow: hidden;
+  max-width: 100%;
 }
 
 .box-events .card .post-image img {
   transition: .5s;
   max-width: 100% ;
+  /* 置中 */
+  display: block;
+  margin: 0 auto;
 }
 
 .box-events .card:hover .post-image::after {
@@ -13155,7 +13159,7 @@ hr {
 
 .box-news .card {
     position: relative;
-    height: 333px;
+    /* height: 333px; */
     overflow: hidden;
     border: unset;
     border-radius: unset;
@@ -13175,6 +13179,8 @@ hr {
 .box-news .card .post-image img {
     transition: .5s;
     max-width: 100%;
+    display: block;
+    margin: 0 auto;
 }
 
 .box-news .card:hover .post-image::after {
@@ -13336,7 +13342,7 @@ hr {
     height: 40px;
     width: 160px;
     border-radius: 5px;
-    border: 2px solid #0087DC;
+    border: unset;
     background-color: #0087DC;
     font-size: 12px;
     color: #ffffff;
