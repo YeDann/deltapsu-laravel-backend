@@ -98,6 +98,10 @@ ul > li{
 .enquiry-bg{
   background-color: rgb(120,120,120) !important;
 }
+.enquiry-bg:hover{
+    background-color: #0087dc !important;
+    cursor: pointer;
+}
 .wizard > .actions a, .wizard > .actions a:hover, .wizard > .actions a:active{
     color: #fff;
     border-radius: 5px;
@@ -109,6 +113,12 @@ ul > li{
     font-weight: bold;
     text-align: center;
     padding: 0.75em 1em;
+}
+
+.wizard > .actions a:hover {
+    background-color: #1E50C8;
+    text-decoration: none;
+    cursor: pointer;
 }
 .wizard > .content > .body label {
 
