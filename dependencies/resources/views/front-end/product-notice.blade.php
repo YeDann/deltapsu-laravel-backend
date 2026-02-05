@@ -287,9 +287,15 @@ function getDateformat($date){
                     @foreach ($news_type as $type)
                     <a class="nav-item nav-link font-size-tab position-relative {{$type_id == $type->id ? 'active' :''}}"
                         href="{{route('index', ['page' => 'product-notice'])}}?type={{preg_replace('/\s+/', '-',strtolower($type->typename))}}&type-id={{$type->id}}">{{$type->typename}}
-                        @if(($type->typename == 'Lebensdauer' || $type->typename == 'EOL' ||
-                        $type->typename == "下架产品" || $type->typename == "停產產品")
-                        && isset($status_eol) && $status_eol)<div class="bg-new-alert"><span>N</span></div>@endif
+                        @if((
+                            $type->typename == 'Lebensdauer' 
+                            || $type->typename == "下架产品" 
+                            || $type->typename == "停產產品")
+                            && isset($status_eol) 
+                            && $status_eol
+                        )
+                            <div class="bg-new-alert"><span>N</span></div>
+                        @endif
                     </a>
                     @endforeach
 
