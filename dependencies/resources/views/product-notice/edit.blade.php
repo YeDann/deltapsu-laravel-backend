@@ -142,7 +142,7 @@
                                             value="{{isset($current->meta_title) ? $current->meta_title :''}}">
                                         <div class="text-count">Count Character :
                                             <span id="count-metaTitle-{{$item->name}}">
-                                                {{strlen($current->meta_title)}}</span>
+                                                {{isset($current->meta_title) ? strlen($current->meta_title) : ''}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +156,7 @@
                                             class="form-control ">{{isset($current->meta_description) ? $current->meta_description :''}}</textarea>
                                         <div class="text-count"> Count Character :
                                             <span id="count-meta_des-{{$item->name}}">
-                                                {{strlen($current->meta_description)}}</span>
+                                                {{isset($current->meta_description) ? strlen($current->meta_description) : ''}}</span>
                                         </div>
                                     </div>
                                 </div>
