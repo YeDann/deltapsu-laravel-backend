@@ -120,7 +120,7 @@
                                     <input type="hidden" name="oldFile[{{$item->name}}]"
                                         value="{{isset($current->file) ? $current->file :''}}">
                                     @if(isset($current->file))
-                                    <a href="{{route('removeFileSuccessCaseDoc',[$item->name,$contents[0]->id])}}"
+                                    <a href="{{route('removeFileVideoDoc',[$item->name,$contents[0]->id])}}"
                                         target="_blank" class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
                                     @endif
                                 </div>
@@ -144,7 +144,7 @@
                                             value="{{isset($current->meta_title) ? $current->meta_title :''}}">
                                         <div class="text-count">Count Character :
                                             <span id="count-metaTitle-{{$item->name}}">
-                                                {{strlen($current->meta_title)}}</span>
+                                                {{isset($current->meta_title) ? strlen($current->meta_title) : ''}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@
                                             class="form-control ">{{isset($current->meta_description) ? $current->meta_description :''}}</textarea>
                                         <div class="text-count"> Count Character :
                                             <span id="count-meta_des-{{$item->name}}">
-                                                {{strlen($current->meta_description)}}</span>
+                                                {{isset($current->meta_description) ? strlen($current->meta_description) : ''}}</span>
                                         </div>
                                     </div>
                                 </div>
