@@ -281,7 +281,7 @@
                 <div class="col-lg-4 col-sm-6 col-md-6 mb-3">
                     <div class="card border-radius-6">
                         <a href="{{route('updateEventDetail',$item->slug )}}">
-                            <div class="post-image">
+                            <div class="post-image height-320">
                                 <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""
                                     class="img-responsive">
                             </div>

@@ -9523,7 +9523,7 @@ body {
 }
 
 .link-nav-first {
-    color: #444444;
+    color: #000000;
     padding-bottom: 0;
     padding-top: 0;
     padding-left: 0;
@@ -9602,7 +9602,7 @@ html[html_lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
 }
 
 .navbar-light .navbar-nav .nav-link {
-    color: #444444
+    color: #000000
 }
 
 .chang-lang-nav {
@@ -12189,9 +12189,13 @@ a .title-new {
 }
 
 .box-events .card .post-image {
-  height: 300px;
+  height: 318px;
   overflow: hidden;
   max-width: 100%;
+}
+
+.height-320 {
+  height: 320px !important;
 }
 
 .box-events .card .post-image img {
@@ -13167,7 +13171,7 @@ hr {
 }
 
 .box-news .card .post-image {
-    height: 300px;
+    height: 320px;
     overflow: hidden;
     max-width: 100%;
 }

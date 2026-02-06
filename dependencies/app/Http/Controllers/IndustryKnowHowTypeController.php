@@ -134,6 +134,7 @@ class IndustryKnowHowTypeController extends Controller
             $name = $request->name;
             $langloop = $request->langloop;
             DB::table('industry_know_how_type')->where('id', '=', $request->type_id)->update(array(
+                "name" => $name['en'] ?? $name[array_key_first($name)],
                 "color_type" => $request->color_type,
                 "order_seq" => $request->order_seq,
                 "updated_at" => \Carbon\Carbon::now()
