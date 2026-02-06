@@ -748,7 +748,7 @@ function retextdata($arr ,$unit){
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
-                    <div class="widget-bar-static"></div>
+                    <div class="widget-bar"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['Upcoming_Event']}}</h2>
                     @if(isset($events[0]))
                     <div class="card border-radius-6">
@@ -877,7 +877,7 @@ function retextdata($arr ,$unit){
         <div class="container">
             <div class="row justify-content-md-center">
                 <div class="col-md-6">
-                    <div class="widget-bar-static"></div>
+                    <div class="widget-bar"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['Upcoming_Event']}}</h2>
                     @if(isset($events[0]))
                     <div class="card border-radius-6">
@@ -928,7 +928,7 @@ function retextdata($arr ,$unit){
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="widget-bar-static"></div>
+                    <div class="widget-bar"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
                     <div class="card border-radius-6">
@@ -981,7 +981,7 @@ function retextdata($arr ,$unit){
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="widget-bar-static"></div>
+                    <div class="widget-bar"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
                     <div class="card border-radius-6">
                         <a href="{{route('index','faqs')}}">

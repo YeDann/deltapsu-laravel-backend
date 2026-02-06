@@ -12103,7 +12103,7 @@ a .title-new {
 
 .box-events .card {
   position: relative;
-  height: 333px;
+  height: 318px;
   overflow: hidden;
   border: unset;
   border-radius: unset;
@@ -12114,7 +12114,7 @@ a .title-new {
 }
 
 .box-events .card .post-image {
-  height: 300px;
+  height: 318px;
   overflow: hidden;
 }
 
@@ -13084,7 +13084,7 @@ hr {
 }
 
 .box-news .card .post-image {
-    height: 300px;
+    height: 320px;
     overflow: hidden;
     max-width: 100%;
 }

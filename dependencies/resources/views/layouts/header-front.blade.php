@@ -302,7 +302,7 @@
         position: absolute;
         left: 226px; /* logo位置 + logo寬度 + 26px間距 */
         /* top: 16px; */
-        color: #444444;
+        color: #000000;
         text-decoration: none;
         font-weight: bold;
         font-size: 18px;
