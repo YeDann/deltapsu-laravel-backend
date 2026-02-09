@@ -1455,8 +1455,6 @@
             </a>
             <a class="text-normal pl-3" href="{{route('index', ['page' => 'news', 'type' => slugifyHead(isset($newsTypes['Success Case']) ? $newsTypes['Success Case']->typename : 'Success Case'), 'type-id' => $newsTypes['Success Case'] ? $newsTypes['Success Case']->id : '' ])}}">{{isset($staticContent['Success_Case'])?
                 $staticContent['Success_Case'] :'Success Case' }}</a>
-            <a class="text-normal pl-3" href="{{route('index', ['page' => 'videos'])}}">{{isset($staticContent['Videos'])?
-                $staticContent['Videos'] :'Videos' }}</a>
         </div>
 
         {{-- WHERE TO BUY --}}
