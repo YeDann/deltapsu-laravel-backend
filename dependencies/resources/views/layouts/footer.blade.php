@@ -496,13 +496,13 @@
 
                 {{-- News and Events --}}
                 <div class="border-b-2px">
-                    <a class="" tabindex="-1" href="#foot-nav-link-list5" data-toggle="collapse"
-                        data-target="#foot-nav-link-list5">{{$staticContent['Updates']}}<i
+                    <a class="" tabindex="-1" href="#foot-nav-link-list6" data-toggle="collapse"
+                        data-target="#foot-nav-link-list6">{{$staticContent['Updates']}}<i
                             class="zmdi zmdi-chevron-down"></i></a>
-                    <div class="collapse pl-4" id="foot-nav-link-list5"
+                    <div class="collapse pl-4" id="foot-nav-link-list6"
                         data-parent="#footer-nav-mobile">
-                        <a class="text-normal " href="{{route('index','news')}}">{{$staticContent['Product_News']}}</a>
-                        <a class="text-normal " href="{{route('index','events')}}">{{$staticContent['Events']}}</a>
+                        <a class="text-normal " href="{{route('index', 'news')}}">{{$staticContent['Product_News']}}</a>
+                        <a class="text-normal " href="{{route('index', 'events')}}">{{$staticContent['Events']}}</a>
                     </div>
                 </div>
 
