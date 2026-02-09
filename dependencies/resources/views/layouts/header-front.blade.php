@@ -426,6 +426,11 @@
             margin-left: 0px;
             bottom: 6px;
         }
+
+        html[lang="ja"] .power-supplies-link-mobile,
+        html[lang="zh"] .power-supplies-link-mobile {
+            bottom: 8px;
+        }
     }
 
     /* Responsive font size for small screens */
