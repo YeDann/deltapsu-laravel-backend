@@ -194,10 +194,10 @@ class ShareData
                 $logo_url = "https://www.deltaww.com/zh-TW/index";
                 break;
             case 'DE':
-                $logo_url = "https://www.delta-emea.com/de-DE/index​";
+                $logo_url = "https://www.delta-emea.com/de-DE/index";
                 break;
             case 'JR':
-                $logo_url = "https://www.delta-japan.jp/ja-JP/index​";
+                $logo_url = "https://www.delta-japan.jp/ja-JP/index";
                 break;
             case 'TR':
                 $logo_url = "https://www.deltaww.com/en-US/index";
