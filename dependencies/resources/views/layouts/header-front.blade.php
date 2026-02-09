@@ -958,8 +958,8 @@
                                 : 'product comparison' }}
                             </a>
                             <a class="dropdown-item" href="{{route('index', ['page' => 'industry-know-how'])}}">
-                                {{isset($newsTypes['Industry Know-How'])
-                                ? $newsTypes['Industry Know-How']->typename
+                                {{isset($staticContent['Industry_Know_How'])
+                                ? $staticContent['Industry_Know_How']
                                 : 'Industry Know-How' }} 
                             </a>
                             <a class="dropdown-item" href="{{route('index', ['page' => 'videos'])}}">
@@ -968,13 +968,13 @@
                                 : 'Videos' }}
                             </a>
                             <a class="dropdown-item" href="{{route('index', ['page' => 'product-notice'])}}">
-                                {{isset($newsTypes['Product Notice'])
-                                ? $newsTypes['Product Notice']->typename
+                                {{isset($staticContent['Product_Notice'])
+                                ? $staticContent['Product_Notice']
                                 : 'Product Notice' }} 
                             </a>
                             <a class="dropdown-item" href="{{route('index', ['page' => 'eol'])}}">
-                                {{isset($newsTypes['EOL'])
-                                ? $newsTypes['EOL']->typename
+                                {{isset($staticContent['EOL'])
+                                ? $staticContent['EOL']
                                 : 'EOL' }} 
                             </a>
                             <a class="dropdown-item" href="{{route('index','faqs')}}">
@@ -1374,16 +1374,16 @@
                 $staticContent['product_comparison'] :'product comparison' }}</a>
 
             <a class="text-normal pl-3" href="{{route('index', ['page' => 'industry-know-how'])}}">
-                {{isset($newsTypes['Industry Know-How']) ? $newsTypes['Industry Know-How']->typename : 'Industry Know-How' }}
+                {{isset($staticContent['Industry_Know_How']) ? $staticContent['Industry_Know_How'] : 'Industry Know-How' }}
             </a>
             <a class="text-normal pl-3" href="{{route('index', ['page' => 'videos'])}}">
                 {{isset($staticContent['Videos']) ? $staticContent['Videos'] : 'Videos' }}
             </a>
             <a class="text-normal pl-3" href="{{route('index', ['page' => 'product-notice'])}}">
-                {{isset($newsTypes['Product Notice']) ? $newsTypes['Product Notice']->typename : 'Product Notice' }}
+                {{isset($staticContent['Product_Notice']) ? $staticContent['Product_Notice'] : 'Product Notice' }}
             </a>
             <a class="text-normal pl-3" href="{{route('index', ['page' => 'eol'])}}">
-                {{isset($newsTypes['EOL']) ? $newsTypes['EOL']->typename : 'EOL' }}
+                {{isset($staticContent['EOL']) ? $staticContent['EOL'] : 'EOL' }}
             </a>
 
             <a class="text-normal pl-3" href="{{route('index','faqs')}}">{{isset($staticContent['FAQs'])?

@@ -196,8 +196,8 @@
                         <div class=" ">
                             <a href="{{route('index', ['page' => 'industry-know-how'])}}">
                                 <p class="text-pro-link">
-                                    {{isset($staticContent['Industry Know-How']) 
-                                    ? $newsTypes['Industry Know-How']->typename
+                                    {{isset($staticContent['Industry_Know_How']) 
+                                    ? $staticContent['Industry_Know_How']
                                     : "Industry Know-How" }}</p>
                             </a>
                         </div>
@@ -212,16 +212,16 @@
                         <div class=" ">
                             <a href="{{route('index', ['page' => 'product-notice'])}}">
                                 <p class="text-pro-link">
-                                    {{isset($newsTypes['Product Notice'])
-                                    ? $newsTypes['Product Notice']->typename
+                                    {{isset($staticContent['Product_Notice'])
+                                    ? $staticContent['Product_Notice']
                                     : 'Product Notice' }} </p>
                             </a>
                         </div>
                         <div class=" ">
                             <a href="{{route('index', ['page' => 'eol'])}}">
                                 <p class="text-pro-link">
-                                    {{isset($newsTypes['EOL'])
-                                    ? $newsTypes['EOL']->typename
+                                    {{isset($staticContent['EOL'])
+                                    ? $staticContent['EOL']
                                     : 'EOL' }} </p>
                             </a>
                         </div>
@@ -468,15 +468,15 @@
                         <a class="text-normal " href="{{route('index','catalogs')}}">{{$staticContent['catalogs']}}</a>
                         <a class="text-normal " href="{{route('index','product-documents')}}">{{$staticContent['Product_Documents']}}</a>
                         <a class="text-normal " href="{{route('productCoparison')}}">{{$staticContent['product_comparison']}}</a>
-                        <a class="text-normal " href="{{route('index', ['page' => 'industry-know-how'])}}">{{isset($newsTypes['Industry Know-How'])
-                                ? $newsTypes['Industry Know-How']->typename
+                        <a class="text-normal " href="{{route('index', ['page' => 'industry-know-how'])}}">{{isset($staticContent['Industry_Know_How'])
+                                ? $staticContent['Industry_Know_How']
                                 : 'Industry Know-How' }} </a>
                         <a class="text-normal " href="{{route('index', ['page' => 'videos'])}}">{{$staticContent['Videos']}}</a>
-                        <a class="text-normal " href="{{route('index', ['page' => 'product-notice'])}}">{{isset($newsTypes['Product Notice'])
-                                ? $newsTypes['Product Notice']->typename
+                        <a class="text-normal " href="{{route('index', ['page' => 'product-notice'])}}">{{isset($staticContent['Product_Notice'])
+                                ? $staticContent['Product_Notice']
                                 : 'Product Notice' }} </a>
-                        <a class="text-normal " href="{{route('index', ['page' => 'eol'])}}">{{isset($newsTypes['EOL'])
-                                ? $newsTypes['EOL']->typename
+                        <a class="text-normal " href="{{route('index', ['page' => 'eol'])}}">{{isset($staticContent['EOL'])
+                                ? $staticContent['EOL']
                                 : 'EOL' }} </a>
                         <a class="text-normal " href="{{route('index','faqs')}}">{{$staticContent['FAQs']}}</a>
                         <a class="text-normal " href="{{route('contactSupport')}}">{{$staticContent['Technical_Service']}}</a>

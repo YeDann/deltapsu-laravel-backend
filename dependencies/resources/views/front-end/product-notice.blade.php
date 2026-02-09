@@ -214,14 +214,14 @@
                             <li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison'] ?? 'Product Comparison'}}</a></li>
                             <li><a href="{{route('index', ['page' => 'industry-know-how'])}}">{{$staticContent['Industry_Know_How'] ?? 'Industry Know-How'}}</a></li>
                             <li><a href="{{route('index', ['page' => 'videos'])}}">{{$staticContent['Videos'] ?? 'Videos'}}</a></li>
-                            <li><a href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product_Notice'] ?? 'Product Notice'}}</a></li>
                             <li><a href="{{route('index', ['page' => 'eol'])}}">{{$staticContent['EOL'] ?? 'EOL'}}</a></li>
                             <li><a href="{{route('index', ['page' => 'faqs'])}}">{{$staticContent['FAQs'] ?? 'FAQs'}}</a></li>
                             <li><a href="{{route('contactSupport')}}">{{$staticContent['Technical_Service'] ?? 'Technical Service'}}</a></li>
                         </ul>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
-                            href="#">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</a></li>
+                            href="#">{{$staticContent['Product_Notice'] ?? 'Product Notice'}}</a></li>
                 </ol>
             </nav>
         </div>
@@ -259,7 +259,7 @@ function getDateformat($date){
 ?>
 <section class="box-news">
     <div class="container">
-        <h1 class="text-title-delta ">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</h1>
+        <h1 class="text-title-delta ">{{$staticContent['Product_Notice'] ?? 'Product Notice'}}</h1>
         <select id="select-product-notice" onchange="selectDataProductNotice();" class="form-control invisible-up-922 mb-4 w-75 m-auto border-radius-6">
             <option value="0" {{$type_id==0 ? 'selected' :''}}>{{$staticContent['All']}}</option>
             @foreach ($news_type as $type)

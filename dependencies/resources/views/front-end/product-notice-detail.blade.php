@@ -56,11 +56,11 @@
                             <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Technical_Support']}}</a></li>
                             <hr>
                             <li><a href="{{route('index', ['page' => 'videos'])}}">{{$staticContent['Videos'] ?? 'Videos'}}</a></li>
-                             <li><a href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</a></li>
+                             <li><a href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product_Notice'] ?? 'Product Notice'}}</a></li>
                         </ul>
                     </li>
                     <li class="breadcrumb-item text-breadcrumb-home"><a
-                            href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</a></li>
+                            href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product_Notice'] ?? 'Product Notice'}}</a></li>
                     <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
                             href="#">{{isset($contents[0]->title)? $contents[0]->title :''}}</a></li>
                 </ol>
