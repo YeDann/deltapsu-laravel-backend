@@ -267,8 +267,8 @@
                     {{-- Where to buy --}}
                     <div class="col-xl-2 col-lg-2">
                         <div class="text-footer-main ">
-                            <h6>{{isset($staticContent['where_to_buy']) 
-                                ? $staticContent['where_to_buy'] 
+                            <h6>{{isset($staticContent['Where_to_Buy']) 
+                                ? $staticContent['Where_to_Buy'] 
                                 : "Where to Buy"}}</h6>
                         </div>
                         <div class=" ">
