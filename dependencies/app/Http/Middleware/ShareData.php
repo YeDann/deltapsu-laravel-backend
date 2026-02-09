@@ -191,6 +191,7 @@ class ShareData
             case 'CN':
                 $logo_url = "https://www.delta-china.com.cn/zh-CN/index";
                 break;
+            case 'TW':
             case 'TC':
                 $logo_url = "https://www.deltaww.com/zh-TW/index";
                 break;
