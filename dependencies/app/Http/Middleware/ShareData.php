@@ -188,7 +188,8 @@ class ShareData
         // Logo鏈結
         switch (strtoupper($lang)) {
             case 'SC':
-                $logo_url = "https://www.deltaww.com/zh-TW/index";
+            case 'CN':
+                $logo_url = "https://www.delta-china.com.cn/zh-CN/index";
                 break;
             case 'TC':
                 $logo_url = "https://www.deltaww.com/zh-TW/index";
