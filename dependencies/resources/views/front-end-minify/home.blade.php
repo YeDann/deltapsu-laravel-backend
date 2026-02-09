@@ -420,8 +420,8 @@
 </div>
 <div class="visible-mobile">
     <div class="box-product-selector padd-left-rbox">
-        <div class="widget-bar"></div>
-        <h2 class="text-title-delta-home">{{$staticContent['Product_Selector']}}</h2>
+        <div class="widget-bar" style="margin-left: -15px;"></div>
+        <h2 class="text-title-delta-home" style="margin-left: -15px;">{{$staticContent['Product_Selector']}}</h2>
         <div id="product-selector-carousel-mobile" class="owl-carousel owl-theme product-selector text-center">
             @foreach($mainCategories as $mainCate)
             <div class="product-selector-list">
