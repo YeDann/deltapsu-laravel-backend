@@ -27,7 +27,6 @@
 }
 .card-btn-a-detail{
     position: relative;
-
 }
 
 .text-name-data{
@@ -1771,7 +1770,38 @@ e.search-filter-action {
         margin:12px 0px;
     }
 }
-.padd-left-rbox{
+
+.padd-left-rbox {
     padding-left: 30px;
     padding-right: 30px;
 }
+
+.shadow-radius-box{
+    border-radius: 6px;
+    box-shadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.1), -2px 2px 7px 2px rgba(0, 0, 0, 0.1), 4px 4px 7px 2px rgba(0, 0, 0, 0.1);
+}
+
+.visible-mobile-only .margin-p-left-card .shadow-radius-box{
+    border-radius: 6px;
+    box-shadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.1), -2px 2px 7px 2px rgba(0, 0, 0, 0.1), 4px 4px 7px 2px rgba(0, 0, 0, 0.1);
+}
+
+.border-radius-6 {
+    border-radius: 6px !important;
+}
+
+.rounded-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden; /* 這個一定要配合，圓角才會切到內容 */
+}
+
+.shadow-radius-box td:first-child {
+    border-radius: 6px !important;
+}
+
+.shadow-radius-box td:last-child {
+    border-radius: 6px !important;
+}
+

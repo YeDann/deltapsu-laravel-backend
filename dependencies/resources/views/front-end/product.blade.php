@@ -27,7 +27,7 @@
     .form-control:focus {
         color: #495057;
         background-color: #fff;
-        border-color: #80bdff;
+        border-color: #0087DC;
         outline: unset;
         box-shadow: unset;
     }
@@ -128,6 +128,8 @@
     .table th {
         padding: 3px 11px !important;
     }
+
+    
 
     .list-group {
         margin-top: 20px;
@@ -289,9 +291,40 @@
         line-height: 20px;
         font-weight: 300;
         margin-bottom: .25rem;
-     }
+    }
+
+    .pad-right-1rem {
+        padding-right: 1rem !important;
+    }
+
+    .js-example-basic-single {
+        width: 100%;
+    }
+    .box-search-icon {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+
+    .select2-container .select2-selection--single {
+        /* border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px; */
+        border-bottom-right-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+
+    .select2-container {
+        width: 174px !important;
+    }
+
+    @media (min-width: 350px) and (max-width: 768px) {
+        .select2-container {
+            width: 100% !important;
+        }
+    }
 </style>
+
 @endsection
+
 @section('meta')
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
@@ -302,8 +335,17 @@
   }else if($lang_seo == 'tw'){
     $lang_seo = 'zh-Hans-TW';
   }
-  $url_name = $subCategories[0]->url_item ? $subCategories[0]->url_item  : null;
-  $categories_id = $subCategories[0]->sub_pro_id ? $subCategories[0]->sub_pro_id  : null;
+  $url_name = isset($subCategories[0]) ? $subCategories[0]->url_item  : null;
+  $categories_id = isset($subCategories[0]) ? $subCategories[0]->sub_pro_id  : null;
+  // 定義 $subCate 變數供 JavaScript 使用
+  $subCate = isset($subCategories[0]) ? $subCategories[0] : null;
+  
+  // 建立分類 ID 到 url_item 的對應表
+  $cateUrlMap = [];
+  foreach($subCategories as $subCategory) {
+      $cateUrlMap[$subCategory->sub_pro_id] = $subCategory->url_item;
+  }
+  $cateUrlMapJson = json_encode($cateUrlMap);
 ?>
 <link rel="canonical" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$url_name}}/{{$categories_id}}" />
 <link rel="alternate" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$url_name}}/{{$categories_id}}"
@@ -334,19 +376,18 @@
         style="background-image: url('{{asset('frontend-asset/image/Categories@2x.png')}}');">
         {{-- style="background-color: #818181;background-image: url('');" --}}
         <div class="container">
-            @foreach ($subCategories as $subCate)
             <div class="row">
                 <div class="col-lg-6">
                     <div class="box-banner-pro-type-all">
                         <div class="text-middle">
-                            <h1 class="text-title-banner">{{$subCate->name}}</h1>
-                            <div class="text-p-banner my-2">{!!$subCate->content!!}</div>
-                            @if(isset($subCate->file))
+                            <h1 class="text-title-banner">{{ $mainCategory->name }}</h1>
+                            <div class="text-p-banner my-2">{!! $mainCategory->content !!}</div>
+                            @if(isset($mainCategory->file))
                             <a class="text-color-delta text-bold"
-                                href="{{config('app.url')}}/medias/categories/{{$subCate->file}}" target="_blank"><img
+                                href="{{ config('app.url') }}/medias/categories/{{ $mainCategory->file }}" target="_blank"><img
                                     class="align-baseline mr-2"
-                                    src="{{asset('frontend-asset/image/icon/download-icon.svg')}}" alt="">
-                                {{$staticContent['Download_selection_guide']}}
+                                    src="{{ asset('frontend-asset/image/icon/download-icon.svg') }}" alt="">
+                                {{ $staticContent['Download_selection_guide'] }}
                             </a>
                             @else
                             {{-- <a class="text-color-delta text-bold" href="#"><img class="align-baseline mr-1"
@@ -360,28 +401,26 @@
                 </div>
                 <div class="col-lg-6 banner-products-pic ">
                     {{-- <img src="{{asset('frontend-asset/image/DIN RAIL POWER SUPPLY@2x.png')}}" alt=""> --}}
-                    @if(isset($subCate->image))
-                    <img class="img-fluid middle-img" src="{{config('app.url')}}/medias/categories/{{$subCate->image}}"
-                        alt="">
+                    @if(isset($mainCategory->banner))
+                    <img class="img-fluid middle-img" src="{{ config('app.url') }}/medias/categories/{{ $mainCategory->banner }}"
+                        alt="Main Category Banner">
                     @else
-                    <img class="img-fluid middle-img" src="{{asset('frontend-asset/image/blank.png')}}" alt="">
+                    <img class="img-fluid middle-img" src="{{ asset('frontend-asset/image/blank.png') }}" alt="">
                     @endif
                 </div>
             </div>
-            @endforeach
         </div>
     </div>
 </div>
 <div class="products-index-banner-tablet-down visible-mobile-only">
-    @foreach ($subCategories as $subCate)
     <div class="banner-type-product-all-tablet-down"
         style="background-image: url('{{asset('frontend-asset/image/Categories@2x.png')}}');">
         <div class="container">
             <div class="py-xl-5 py-2 text-center">
-                <p class="text-delta text-bold mt-5">{{$subCate->name}}</p>
-                @if(isset($subCate->file))
-                <a href="{{config('app.url')}}/medias/categories/{{$subCate->file}}"
-                    download="{{$staticContent['Download_selection_guide']}}_{{$subCate->name}}"><img
+                <p class="text-delta text-bold mt-5">{{$mainCategory->name}}</p>
+                @if(isset($mainCategory->file))
+                <a href="{{config('app.url')}}/medias/categories/{{$mainCategory->file}}"
+                    download="{{$staticContent['Download_selection_guide']}}_{{$mainCategory->name}}"><img
                         class="align-baseline mr-1" src="{{asset('frontend-asset/image/icon/download-icon.svg')}}"
                         alt="">
                     {{$staticContent['Download_selection_guide']}}
@@ -389,17 +428,16 @@
                 @else
                 @endif
             </div>
-            <div class="">
-                @if(isset($subCate->image))
+            <div class="text-center">
+                @if(isset($mainCategory->banner))
                 <img class="m-auto img-res-prolis" style=""
-                    src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
+                    src="{{config('app.url')}}/medias/categories/{{$mainCategory->banner}}" alt="">
                 @else
                 <img class="m-auto  img-res-prolis" style="" src="{{asset('frontend-asset/image/blank.png')}}" alt="">
                 @endif
             </div>
         </div>
     </div>
-    @endforeach
 </div>
 <div class="bg-menu-filler visible-upper-mobile">
     <div class="container">
@@ -430,7 +468,7 @@
                         {{$staticContent['Sort_by']}} :
                     </div>
                     <div class="input-label">
-                        <select id="selectSortDestop" onchange="onselectSortDestop();" class="form-control ">
+                        <select id="selectSortDestop" onchange="onselectSortDestop();" class="form-control border-radius-6">
                             <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
                             <option value="2">{{$staticContent['Output_Voltage_low_to_high']}}</option>
                             <option value="3">{{$staticContent['Output_Current _low_to_high']}}</option>
@@ -487,7 +525,7 @@
                 <div class="d-flex">
                     <p class="text-white my-auto mr-2 text-card-detial text-bold">{{$staticContent['Sort_by']}}:</p>
                     <div class="input-label my-auto">
-                        <select onchange="onselectSort();" class="form-control selectSort">
+                        <select onchange="onselectSort();" class="form-control selectSort border-radius-6">
                             <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
                             <option value="2">{{$staticContent['Output_Voltage_low_to_high']}}</option>
                             <option value="3">{{$staticContent['Output_Current _low_to_high']}}</option>
@@ -555,10 +593,10 @@
             <div class="list-group panel">
                 <div id="accordion" class="accordion visible-upper-mobile">
                     <div class="search-filter">
-                        <div class="search-filter-action border-2px">
+                        <div class="search-filter-action border-2px border-radius-6">
                             <p class="text-sixteen-dark">{{$staticContent['Search_By_Model_Name']}}</p>
                             <div class="box-search-input  mr-3">
-                                <div class="box-search-icon">
+                                <div class="box-search-icon" style="border-top-left-radius: 6px;border-bottom-left-radius: 6px;">
                                     <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                                 </div>
                                 <label for="key_destop" class="searchinput-filters-input">
@@ -577,12 +615,9 @@
                                 <button onclick="onsearchProduct();"
                                     class="btn-filters btn-search">{{$staticContent['Search']}}</button>
                             </div>
-
-
                         </div>
                     </div>
                     <div id="sort-filter-content" class="tap-filter mb-0">
-
 
                     </div>
 
@@ -619,7 +654,7 @@
 <script>
     $('.js-example-basic-single').select2({
         placeholder: '{{$staticContent['Model_Name']}}'
-});
+    });
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -634,6 +669,63 @@
     });
 </script>
 <script type="text/javascript">
+    /**
+     * 
+     * 1. 初始化與篩選邏輯
+     *    # popcheckSerries()
+     *      功能：初始化系列篩選的勾選狀態。
+     *      邏輯：如果有傳入 series_id，則自動勾選該系列並展開側邊欄；否則僅展開側邊欄但不預設勾選任何系列。
+     *    # filterBaseData()
+     *      功能：根據勾選的系列篩選產品。
+     *      邏輯：如果有勾選系列，則過濾出屬於該系列的產品；否則顯示所有產品。
+     *    # fillerData()
+     *      功能：執行所有篩選條件並更新產品列表。
+     *      邏輯：綜合處理系列、屬性、認證、狀態等多重篩選條件，並更新 productFilter 陣列。
+     *    # series_filter(type, value)
+     *      功能：處理系列篩選的勾選與取消勾選。
+     *      邏輯：將選中的系列 ID 加入或移出 ser_arr，並呼叫 fillerData() 重新篩選。
+     * 2. 視圖切換
+     *    # onclickListView(productarray, type, id)
+     *      功能：切換至列表視圖 (List View)。
+     *      參數：productarray (產品資料), type (排序類型), id (排序欄位 ID)。
+     *    # onclickGridView(productarray)
+     *      功能：切換至網格視圖 (Grid View)。
+     *      參數：productarray (產品資料)。
+     *    # onclickshow(id)
+     *      功能：切換側邊欄 (篩選器) 的顯示與隱藏。
+     *      參數：id (1: 隱藏, 2: 顯示)。
+     * 3. 搜尋功能
+     *    # onsearchProduct()
+     *      功能：桌面版搜尋產品。
+     *      邏輯：根據桌面版輸入框的關鍵字篩選產品，並重置其他篩選條件。
+     *    # onsearchProductMobile()
+     *      功能：手機版搜尋產品。
+     *      邏輯：根據手機版輸入框的關鍵字篩選產品，並同步關鍵字到桌面版輸入框。
+     * 4. 排序功能
+     *    # sortModelName(array_value)：依型號名稱排序 (A-Z)。
+     *    # sortModelNameZA(array_value)：依型號名稱排序 (Z-A)。
+     *    # sortOutputLH(array_value, type)：依輸出規格排序 (數值小到大)。
+     *    # sortOutputHL(array_value, type)：依輸出規格排序 (數值大到小)。
+     *    # sortInputLH(array_value, type)：依輸入規格排序 (數值小到大)。
+     *    # sortInputHL(array_value, type)：依輸入規格排序 (數值大到小)。
+     *    # diminsionLH(array_value)：依尺寸排序 (小到大)。
+     *    # diminsionHL(array_value)：依尺寸排序 (大到小)。
+     *    # sortDateModify(array_value)：依更新日期排序 (新到舊)。
+     *    # onselectSortArr(re_arr)：對搜尋結果進行排序並顯示。
+     * 5. 滑桿與數值處理
+     *    # createSlider()
+     *      功能：建立手機版數值滑桿 (Slider)。
+     *      邏輯：使用 noUiSlider 套件建立雙向滑桿，用於數值範圍篩選。
+     *    # createSliderDestop()
+     *      功能：建立桌面版數值滑桿。
+     *      邏輯：同上，但針對桌面版介面。
+     *    # findDataRage(arrRage, type)
+     *      功能：根據滑桿數值範圍篩選產品。
+     *      參數：arrRage (數值範圍 [min, max]), type (規格類型 ID)。
+     *    # getMinMaxValueById(id)
+     *      功能：取得指定規格類型的最大最小值。
+     *      用途：用於設定滑桿的初始範圍。
+     **/
     /* filter */
     function checkboxaddremove(i){
         if ($('.checkfilter' + i).is(':checked')) {
@@ -644,28 +736,35 @@
                     $("." + inputValue).hide();
             }
     }
+    /**
+     * 切換側邊欄顯示/隱藏
+     * @param {Number} id 狀態ID (1: 隱藏, 2: 顯示)
+     */
     function onclickshow(id) {
         var element = document.getElementById("contentProList");
-        if ($("#sidebar").hasClass("show") == true) {
-            $(element).toggleClass("col-xl-9 col-lg-12 col-md-12 pl-lg-0");
-        } else {
-            $(element).toggleClass("col-md-12 col-xl-9 col-lg-12");
-        }
+        
         if (id == 2) {
+            // Show Sidebar
+            $(element).removeClass("col-md-12").addClass("col-xl-9 col-lg-12 pl-lg-0");
+            
+            if (!$("#sidebar").hasClass("show")) {
+                $("#sidebar").addClass("show");
+            }
 
-            var html = '';
-            html =
-                '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(1);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> {{$staticContent['hide_filters']}}</a>';
+            var html = '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(1);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> {{$staticContent['hide_filters']}}</a>';
             document.getElementById("showfiler").innerHTML = html;
 
         } else {
+            // Hide Sidebar
+            $(element).removeClass("col-xl-9 col-lg-12 pl-lg-0").addClass("col-md-12");
+            
+            if ($("#sidebar").hasClass("show")) {
+                $("#sidebar").removeClass("show");
+            }
 
-            var html = '';
-            html =
-                '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(2);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> {{$staticContent['Show_Filters']}}</a>';
+            var html = '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(2);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> {{$staticContent['Show_Filters']}}</a>';
             document.getElementById("showfiler").innerHTML = html;
         }
-
     }
 
     var products = <?= json_encode($products);?>;
@@ -673,18 +772,21 @@
     var filter_pro = <?= json_encode($filter_pro);?>;
     var domainUrl = '{{config('app.url')}}';
     var series_id = '{{$se_id}}';
+    var categoriesHasMainPro =  <?= json_encode($categoriesHasMainPro);?>;
     var series =  <?= json_encode($series);?>;
+    var modeSeries = <?= json_encode($modeSeries);?>;
     var section =  <?= json_encode($section);?>;
-    var unit_dimension =  <?= json_encode($subCategories[0]->unit_dimension);?>;
-    var unit_dimension_1 =  <?= json_encode($subCategories[0]->unit_dimension_1);?>;
     var documents_cate =  <?= json_encode($documents_cate);?>;
     var certi_products =  <?= json_encode($certi_products);?>;
     var defaultfilters =  <?= json_encode($defaultfilters);?>;
     var catename = <?= json_encode($catename);?>;
     var cateid = <?= json_encode($cateid);?>;
+    var main_cate_id = <?= json_encode($main_cate_id);?>;
     var url_name =  <?= json_encode($url_name);?>;
     var pro_perti = [];
     var ser_arr = [];
+    var mode_series_arr = [];
+    var pro_type_arr = [];
     var productFilter = [];
     var productTextSearch = [];
     var fildnumber = [];
@@ -710,6 +812,11 @@
             //  $(".moreBox_mobile").slice(0, 12).show();
             //  $(".row_table").slice(0, 6).show();
         }else{
+            // 桌面版預設開啟 Sidebar
+            if (!$("#sidebar").hasClass("show")) {
+                 $("#sidebar").addClass("show");
+                 onclickshow(2);
+            }
             fillerData();
             // FristloadData();
         }
@@ -721,32 +828,31 @@
     function loadAddContent(){
         var arr = [];
         var arrproid = [];
-       $.each(filter_pro, function(index,element){
-             if(element['field_id'] != 'series01' && element['field_id'] != 'status02' && element['field_id'] != 'safety03' && element['field_id'] != 'certifi04'  ){
-                arr.push(element['field_id']);
-             }
-         });
-         $.each(products, function(index,pro){
+        $.each(filter_pro, function(index,element){
+            if(element['field_id'] != 'series01' && element['field_id'] != 'status02' && element['field_id'] != 'safety03' && element['field_id'] != 'certifi04' && element['field_id'] != 'mode_series' ){
+            arr.push(element['field_id']);
+            }
+        });
+        $.each(products, function(index,pro){
             arrproid.push(pro['pro_id']);
-         });
+        });
         $.ajax({
-           url: "{{route('loadPropoperty')}}",
-           data: {
-          'data': arr,
-          'proid':arrproid
-           },
-           type: 'POST',
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           success: function (res) {
-            pro_perti =  res['data'];
-            //console.log(res['data']);
-           },
-           async: false,
-           });
-
+            url: "{{route('loadPropoperty')}}",
+            data: {
+                'data': arr,
+                'proid':arrproid
+            },
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (res) {
+                pro_perti =  res['data'];
+            },
+            async: false,
+        });
     }
+
     function loadPopUpfilter(){
         var html1 = '';
         var html2 = '';
@@ -767,15 +873,6 @@
                 }
 
             }
-        // if(fil_con['field_id'] == 'series01' || fil_con['field_id'] == 'status02'  || fil_con['field_id'] == 'certifi04' || fil_con['field_id'] == 'safety03'  ){
-        //     html2  += ' <input type="checkbox"  id="checkpop'+fil_con['field_id']+'" value="'+fil_con['field_id']+'"';
-        //     html2  += 'class="inp-cbx checkfilter'+fil_con['field_id']+'" style="display: none;">';
-        //     html2  += '<label class="cbx" for="checkpop'+fil_con['field_id']+'"><span>';
-        //     html2  += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
-        //     html2  += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
-        //     html2  += '</svg></span><span>'+fil_con['title']+'</span></label>';
-        // }
-
         });
         $('#popUp_filter1').html(html2);
         getappendhtml();
@@ -793,7 +890,7 @@
             html2  += '</svg></span><span>'+fil_con['title']+'</span></label>';
             $('#settingFilter'+fil_con['section_id']).append(html2);
 
-        if(fil_con['field_id'] == 'series01' || fil_con['field_id'] == 'status02'  || fil_con['field_id'] == 'certifi04' || fil_con['field_id'] == 'safety03'  ){
+        if(fil_con['field_id'] == 'series01' || fil_con['field_id'] == 'status02'  || fil_con['field_id'] == 'certifi04' || fil_con['field_id'] == 'safety03' || fil_con['field_id'] == 'mode_series' ){
            var html1 = '';
             html1  += ' <input type="checkbox"  id="checkpop'+fil_con['field_id']+'" value="'+fil_con['field_id']+'"';
             html1  += 'class="inp-cbx checkfilter'+fil_con['field_id']+'" style="display: none;">';
@@ -820,9 +917,23 @@
         $.each(defaultfilters, function(index,defaultfil){
             defultfilter.push(defaultfil['filter_id']);
         });
-    function setDefultShow(){
 
-        // var defultfilter = ['series01','status02','safety03' ,'certifi04' ,3 ,4, 8 ,31 ];
+        // Force default filters based on main_cate_id (Mutually Exclusive)
+        // Note: Total products (160) vs Filtered Sum (124) discrepancy:
+        // Products with mode_series values NOT in [1, 2, 3] (or null) will not be counted 
+        // in the hardcoded filter options, but will appear in the "All" list.
+        if(main_cate_id == 3){
+            // For Adapter category (ID 3), force 'mode_series'
+            if(defultfilter.indexOf('mode_series') == -1){
+                defultfilter.push('mode_series');
+            }
+        } else {
+            // For other categories, force 'product_type'
+            if(defultfilter.indexOf('product_type') == -1){
+                defultfilter.push('product_type');
+            }
+        }
+    function setDefultShow(){
         $.each(defultfilter, function(index,defilId){
            $("#checkpop"+defilId).prop("checked" ,true);
            checkboxaddremove(defilId);
@@ -840,24 +951,32 @@
 
     });
     $('.btn-done').click(function () {
-     $.each(filter_pro, function(index_con,fil_con){
-     checkboxaddremove(fil_con['field_id']);
-    });
-
+        $.each(filter_pro, function(index_con,fil_con){
+            checkboxaddremove(fil_con['field_id']);
+        });
     });
     function checkboxaddremove(i){
-
         if ($('.checkfilter'+i).is(':checked')) {
-                    var inputValue = $('.checkfilter' + i).attr("value");
-                    $(".fliter_head"+inputValue).show();
-                    $(".fliter_head_mobile"+inputValue).show();
-                } else {
-                    var inputValue = $('.checkfilter' + i).attr("value");
-                    $(".fliter_head"+inputValue).hide();
-                    $(".fliter_head_mobile"+inputValue).hide();
-            }
+            var inputValue = $('.checkfilter' + i).attr("value");
+            $(".fliter_head"+inputValue).show();
+            $(".fliter_head_mobile"+inputValue).show();
+        } else {
+            var inputValue = $('.checkfilter' + i).attr("value");
+            $(".fliter_head"+inputValue).hide();
+            $(".fliter_head_mobile"+inputValue).hide();
+        }
     }
 
+    // 分類對應表
+    var cateUrlMap = {!! $cateUrlMapJson !!};
+
+    function getCateUrlById(cateIds) {
+        if (cateIds && cateIds.length > 0) {
+            return cateUrlMap[cateIds[0]] || null;
+        }
+        return null;
+    }
+    
     function loadData(products ,product_has_property){
         var productarray = [];
         $.each(products, function(index,value){
@@ -947,18 +1066,31 @@
       }
 
     }
+    /**
+     * 執行所有篩選條件並更新產品列表
+     * 包含系列、屬性、認證、狀態等篩選
+     */
     function fillerData(){
+       // 初始化產品篩選陣列
        productFilter = [];
+       // 設定篩選模式為預設 (0)
        $('#current_method').val(0);
-       filterAllSeries();
+       
+       // 1. 執行基礎篩選 (系列 Series)
+       filterBaseData();
+       
       var arr_filterall = [];
+        
+        // 檢查是否所有篩選條件都屬於同一屬性類型
         checktypegroup = arr_type_an_val.every(
-                 function(val, i, arr){
-                    return  val.type === arr[0].type
-                 }
-            );
+            function(val, i, arr){
+               return  val.type === arr[0].type
+            }
+        );
 
         if(checktypegroup){
+            // 情況 A：單一屬性類型篩選 (例如僅篩選 Output Voltage)
+            // 邏輯：只要符合該類型中的任一條件即可 (OR 邏輯)
 
             $.each(productFilter, function(index,value){
             productFilter[index]['contentFilter'].filter(function(data) {
@@ -1012,11 +1144,13 @@
                             }
                           }
                    }
-            });
+                });
             });
           });
 
         }else{
+            // 情況 B：多重屬性類型篩選 (例如同時篩選 Output Voltage 與 Input Voltage)
+            // 邏輯：必須同時符合所有不同類型的條件 (AND 邏輯)
 
             $.each(productFilter, function(index,value){
                 var arrcheck = [];
@@ -1060,7 +1194,7 @@
                                     && data10 == datacom10
                                     && data11 == datacom11
                                     && data12 == datacom12){
-                                    arrcheck.push(true);
+                                    arrcheck.push(data.type_id);
                                 }
                             }
 
@@ -1068,7 +1202,8 @@
 
                 });
                 var con = checkmethod(arr_type_an_val);
-                if(arrcheck.length >= con){
+                var uniqueMatches = arrcheck.filter(function(v, i, a) { return a.indexOf(v) === i; }).length;
+                if(uniqueMatches >= con){
                     var  index = arr_filterall.findIndex( function(x){
                     return  x.pro_code === value.pro_code;
                     })
@@ -1080,25 +1215,33 @@
 
         }
 
+        // 2. 文字屬性篩選 (Input Text Filter)
         var resultinputtext = [];
         if(arr_type_an_val.length > 0){
+            // 若已有數值篩選結果，則基於該結果進行文字篩選
             resultinputtext  = loaddatafilterTypeText(arr_filterall);
         }else{
+            // 否則基於基礎篩選結果進行文字篩選
             resultinputtext  = loaddatafilterTypeText(productFilter);
         }
 
+        // 3. 安全認證篩選 (Safety/Certificate Filter)
         var resultCertificate = [];
         if(arr_safety.length > 0){
           resultCertificate = loadfilterCertificate(resultinputtext);
         }else{
           resultCertificate = resultinputtext;
         }
+        
+        // 4. 應用領域篩選 (Segment/Application Filter)
         var resultSegment = [];
         if(arr_cer.length > 0){
            resultSegment =  loadSegment(resultCertificate);
         }else{
           resultSegment = resultCertificate;
         }
+        
+        // 5. 產品狀態篩選 (Status Filter: New, EOL, etc.)
         var resultstatus = [];
         if(arr_status.length > 0){
             resultstatus =  filterStatusAll(resultSegment);
@@ -1107,87 +1250,92 @@
         }
 
 
-
+    // 最終篩選結果彙整
     var summaryResult = resultstatus;
+    
+    // 若有啟用任何篩選條件，更新 UI 顯示篩選後的結果
     if(arr_status.length > 0 ||  arr_cer.length > 0 ||  arr_safety.length > 0 || arr_type_an_val.length > 0 || arr_inputtxt.length > 0 ){
-        listItemFiler(summaryResult);
-        findresultfeildbypro(summaryResult);
-        productFilter = summaryResult;
+        listItemFiler(summaryResult); // 更新列表視圖
+        findresultfeildbypro(summaryResult); // 更新篩選器計數
+        productFilter = summaryResult; // 更新全域變數
      }else{
+        // 若無額外篩選條件，顯示基礎篩選結果
         listItemFiler(productFilter);
         findresultfeildbypro(productFilter);
      }
 
+      // 清空搜尋框內容
       $('#key_destop').val("");
       $('#key_mobile').val("");
     }
-    function loaddatafilterTypeText(arr_filterall){
-       var filterIn = [];
+    function loaddatafilterTypeText(arr_filterall) {
+        var filterIn = [];
         checktypegroupText = arr_inputtxt.every(
-                 function(val, i, arr){
-                    return  val.type === arr[0].type
-                 }
-            );
-    if(arr_inputtxt.length > 0){
-        if(checktypegroupText){
-            $.each(arr_filterall, function(index,value){
-            arr_filterall[index]['contentFilter'].filter(function(data) {
-                arr_inputtxt.forEach(function(element) {
-                        if(data.type_id == element['type']){
-                            if(data.value_text == null){
-                                data.value_text = '';
-                            }
-                            if(element['value_text'] == null){
-                                data.value_text = '';
-                            }
-                            if(data.value_text.trim() == element['value_text'].trim()){
-                                var  index = filterIn.findIndex(
-                                    function(x){
-                                        return x.pro_code === value.pro_code;
-                                    })
-                                if(index == -1){
-                                    filterIn.push(value);
+            function(val, i, arr){
+                return  val.type === arr[0].type
+            }
+        );
+        if(arr_inputtxt.length > 0){
+            if(checktypegroupText){
+                $.each(arr_filterall, function(index,value){
+                arr_filterall[index]['contentFilter'].filter(function(data) {
+                    arr_inputtxt.forEach(function(element) {
+                            if(data.type_id == element['type']){
+                                if(data.value_text == null){
+                                    data.value_text = '';
                                 }
-                            }
-                    }
+                                if(element['value_text'] == null){
+                                    data.value_text = '';
+                                }
+                                if(data.value_text.trim() == element['value_text'].trim()){
+                                    var  index = filterIn.findIndex(
+                                        function(x){
+                                            return x.pro_code === value.pro_code;
+                                        })
+                                    if(index == -1){
+                                        filterIn.push(value);
+                                    }
+                                }
+                        }
+                    });
                 });
             });
-        });
-      }else{
-        $.each(arr_filterall, function(index,value){
-            var checkarr = [];
-            arr_filterall[index]['contentFilter'].filter(function(data) {
-                arr_inputtxt.forEach(function(element) {
-                        if(data.type_id == element['type']){
-                            if(data.value_text == null){
-                                data.value_text = '';
-                            }
-                            if(element['value_text'] == null){
-                                data.value_text = '';
-                            }
-                            if(data.value_text.trim() == element['value_text'].trim()){
-                                checkarr.push(true);
-                            }
-                    }
+        }else{
+            $.each(arr_filterall, function(index,value){
+                var checkarr = [];
+                arr_filterall[index]['contentFilter'].filter(function(data) {
+                    arr_inputtxt.forEach(function(element) {
+                            if(data.type_id == element['type']){
+                                if(data.value_text == null){
+                                    data.value_text = '';
+                                }
+                                if(element['value_text'] == null){
+                                    data.value_text = '';
+                                }
+                                if(data.value_text.trim() == element['value_text'].trim()){
+                                    checkarr.push(data.type_id);
+                                }
+                        }
+                    });
                 });
-            });
-            var con = checkmethod(arr_inputtxt);
-           if(checkarr.length >= con){
-            var  index = filterIn.findIndex(
-                     function(x){
-                    return x.pro_code === value.pro_code;
-                     })
-                    if(index == -1){
-                     filterIn.push(value);
+                var con = checkmethod(arr_inputtxt);
+                var uniqueMatches = checkarr.filter(function(v, i, a) { return a.indexOf(v) === i; }).length;
+                if(uniqueMatches >= con){
+                    var  index = filterIn.findIndex(
+                        function(x){
+                        return x.pro_code === value.pro_code;
+                        })
+                        if(index == -1){
+                        filterIn.push(value);
+                    }
                 }
-           }
 
-        });
-      }
-    }else{
-        filterIn = arr_filterall;
-    }
-      return filterIn;
+            });
+        }
+        }else{
+            filterIn = arr_filterall;
+        }
+        return filterIn;
     }
     function loadSegment(arrFilterInput){
         var profilter = [];
@@ -1201,17 +1349,6 @@
                     }
                 });
                 });
-                // if(arr_cer.length > 1){
-                //         var lookup = arr_seg.reduce(function(a,e) {
-                //         a[e.product_id] = ++a[e.product_id] || 0;
-                //         return a;
-                //         }, {});
-                //         profilter =  arr_seg.filter(function(e) {
-                //            return lookup[e.product_id];
-                //         });
-                //     }else{
-
-                //     }
                 profilter =  arr_seg;
                 profilter.forEach(function(element) {
                     arrFilterInput.filter(function(data) {
@@ -1319,8 +1456,11 @@
             var newkey = key.replace(/[/]/g,'@');
            return newkey;
     }
+    /**
+     * 切換至網格視圖
+     * @param {Array} productarray 產品陣列
+     */
     function onclickGridView(productarray) {
-
         $('#current_list_item').val(1);
         var html = '';
         html += '<div class="GridView visible-upper-mobile" id="GridView">';
@@ -1331,7 +1471,7 @@
         html += '<div id="cardGridList" class="row">';
         $.each(productarray, function(index_pro,pro){
         html += '<div class=" col-xl-3 col-lg-4 col-md-4">';
-        html += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
+        html += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'">';
         html += '<div class=" margin-p-left-card item card moreBox"  style="display: none;">';
         if(pro['status_product'] != 1){
         html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
@@ -1391,7 +1531,7 @@
         html += '<div class="text-editor-card mt-2"> '+checkNullTexteditor(pro['short_features']) +'</div>';
         }else{
         html += '<div class="dimension">';
-        html += '<h6 class="text-title-ft-sub text-one">{{$staticContent['Dimensions']}} ('+unit_dimension_1+' x W x '+unit_dimension+') </h6>';
+        html += '<h6 class="text-title-ft-sub text-one">{{$staticContent['Dimensions']}}</h6>';
         if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 && ['dimensionW'] != '' && pro['dimensionD'] != ''){
         html += '<p class="text-ft-sub text-one">'+pro['dimensionL']+'x'+pro['dimensionW']+'x'+pro['dimensionD']+' mm</p>';
         html += '<p class="text-ft-sub text-one">'+mmtonich(pro['dimensionL'])+'”x'+mmtonich(pro['dimensionW'])+'”x'+mmtonich(pro['dimensionD'])+'”</p>';
@@ -1432,99 +1572,97 @@
         html += '<div class="GridView visible-mobile-only" id="GridView">';
         html += '<div class="margin-top-card ">';
         html += '<div id="cardGridList" class="d-flex flex-wrap">';
-        $.each(productarray, function(index_pro,pro){
-        html += '<div class="margin-p-left-card column-grid-card-mobile moreBox_mobile"  style="display: none;">';
-        html += '<div class="item card">';
-        html += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
-            if(pro['status_product'] != 1){
-        html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
+        $.each(productarray, function(index_pro,pro) {
+            html += '<div class="margin-p-left-card column-grid-card-mobile moreBox_mobile"  style="display: none;">';
+            html += '<div class="item card border-radius-6">';
+            html += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'">';
+            if (pro['status_product'] != 1) {
+                html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
             }
-        html += '<div class="card-body ft-products-item hover01"><figure><img src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'" class="product-cat mb-2" style="width:70%;"></figure>';
-        html += '<div class="">';
-        html += '<h6 class="text-title-ft">'+pro['pro_code']+'</h6>';
-        html += '</a>';
-        html += '<div class="d-flex flex-wrap" >';
-        html += '<div class="mr-5">';
-        html += '<div class="out-volt mt-1">';
-        var content = onlycontent(pro['content']);
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Voltage']}}</p>';
-            var arrcon1 = [content[1]['data_1'],content[1]['data_2'],content[1]['data_3'],content[1]['data_4'],content[1]['data_5'],
-            content[1]['data_6'],content[1]['data_7'],content[1]['data_8'],content[1]['data_9'],content[1]['data_10'],content[1]['data_11'],
-            content[1]['data_12']
-            ]
-            var arrcon2 = [content[2]['data_1'],content[2]['data_2'],content[2]['data_3'],content[2]['data_4'],content[2]['data_5'],
-            content[2]['data_6'],content[2]['data_7'],content[2]['data_8'],content[2]['data_9'],content[2]['data_10'],content[2]['data_11'],
-            content[2]['data_12']
-            ]
-            var arrcon3 = [content[0]['data_1'],content[0]['data_2'],content[0]['data_3'],content[0]['data_4'],content[0]['data_5'],
-            content[0]['data_6'],content[0]['data_7'],content[0]['data_8'],content[0]['data_9'],content[0]['data_10'],content[0]['data_11'],
-            content[0]['data_12']
-            ]
+            html += '<div class="card-body ft-products-item hover01"><figure><img src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'" class="product-cat mb-2" style="width:70%;"></figure>';
+            html += '<div class="">';
+            html += '<h6 class="text-title-ft">'+pro['pro_code']+'</h6>';
+            html += '</a>';
+            html += '<div class="d-flex flex-wrap" >';
+            html += '<div class="mr-5">';
+            html += '<div class="out-volt mt-1">';
+            var content = onlycontent(pro['content']);
+            html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Voltage']}}</p>';
+                var arrcon1 = [
+                    content[1]['data_1'],content[1]['data_2'],content[1]['data_3'],content[1]['data_4'],content[1]['data_5'],
+                    content[1]['data_6'],content[1]['data_7'],content[1]['data_8'],content[1]['data_9'],content[1]['data_10'],content[1]['data_11'],
+                    content[1]['data_12']
+                ]
+                var arrcon2 = [
+                    content[2]['data_1'],content[2]['data_2'],content[2]['data_3'],content[2]['data_4'],content[2]['data_5'],
+                    content[2]['data_6'],content[2]['data_7'],content[2]['data_8'],content[2]['data_9'],content[2]['data_10'],content[2]['data_11'],
+                    content[2]['data_12']
+                ]
+                var arrcon3 = [
+                    content[0]['data_1'],content[0]['data_2'],content[0]['data_3'],content[0]['data_4'],content[0]['data_5'],
+                    content[0]['data_6'],content[0]['data_7'],content[0]['data_8'],content[0]['data_9'],content[0]['data_10'],content[0]['data_11'],
+                    content[0]['data_12']
+                ]
 
-        html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon1,content[1]['unit_name'],content[1]['status_input']).substr(0, 19)+'</div>';
+            html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon1,content[1]['unit_name'],content[1]['status_input']).substr(0, 19)+'</div>';
+            html += '</div>';
+            html += '<div class="out-power mt-2">';
+            html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Power']}}</p>';
+            html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon2,content[2]['unit_name'],content[2]['status_input']).substr(0, 19)+'</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="">';
+            html += '<div class="out-current mt-2">';
+            html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Current']}}</p>';
+            html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon3,content[0]['unit_name'],content[0]['status_input']).substr(0, 19)+'</div>';
+            html += '</div>';
+            html += '<div class="in-volt mt-2">';
+            html += '<p class="text-title-ft-sub text-two">{{$staticContent['Input_Voltage']}}</p>';
+            if (content[3]['value_text'] != null && content[3]['value_text'] != 'null') {
+                html += '<div class="text-ft-sub text-two">'+content[3]['value_text'].substr(0, 18)+'</div>';
+            } else {
+                html += '<div class="text-ft-sub text-two">-</div>';
+            }
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
 
-        html += '</div>';
-        html += '<div class="out-power mt-2">';
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Power']}}</p>';
-        html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon2,content[2]['unit_name'],content[2]['status_input']).substr(0, 19)+'</div>';
-        html += '</div>';
-        html += '</div>';
-        html += '<div class="">';
-        html += '<div class="out-current mt-2">';
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Output_Current']}}</p>';
-        html += '<div class="text-ft-sub text-two">'+checkNullShow(arrcon3,content[0]['unit_name'],content[0]['status_input']).substr(0, 19)+'</div>';
+            if (url_name == "wireless-charging-system") {
+                html += '<p class="text-title-ft-sub text-two">{{$staticContent['product_highLights']}}</p>';
+                html += '<div class="text-editor-card mt-2"> '+checkNullTexteditor(pro['short_features']) +'</div>';
+            } else {
+                html += '<div class="dimension mt-2">';
+                html += '<p class="text-title-ft-sub text-two">{{$staticContent['Dimensions']}}</p>';
+                if (pro['dimensionL'] != null && pro['dimensionL'].length < 7 && pro['dimensionW'] != '' && pro['dimensionD'] != '') {
+                    html += '<p class="text-ft-sub text-two">'+pro['dimensionL']+'x'+pro['dimensionW']+'x'+pro['dimensionD']+' mm</p>';
+                    html += '<p class="text-ft-sub text-two">'+mmtonich(pro['dimensionL'])+'”x'+mmtonich(pro['dimensionW'])+'”x'+mmtonich(pro['dimensionD'])+'”</p>';
+                } else if(pro['dimensionL'] != null) {
+                    html += '<p class="text-ft-sub text-two">'+pro['dimensionL'].substr(0, 14)+'</p>';
+                } else {
+                    html += '<p class="text-ft-sub text-two">-</p>';
+                }
+                html += '</div>';
+            }
 
-        html += '</div>';
-        html += '<div class="in-volt mt-2">';
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Input_Voltage']}}</p>';
-        if(content[3]['value_text'] != null && content[3]['value_text'] != 'null'){
-        html += '<div class="text-ft-sub text-two">'+content[3]['value_text'].substr(0, 18)+'</div>';
-        }else{
-        html += '<div class="text-ft-sub text-two">-</div>';
-        }
-        html += '</div>';
-        html += '</div>';
-        html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '<div class="w-100">';
+            html += '<div class="boxlist-icon-img pd-mobile">';
+            html += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
+            html += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
+            html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+        });
 
-        if(url_name == "wireless-charging-system"){
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['product_highLights']}}</p>';
-        html += '<div class="text-editor-card mt-2"> '+checkNullTexteditor(pro['short_features']) +'</div>';
-        }else{
-
-        html += '<div class="dimension mt-2">';
-        html += '<p class="text-title-ft-sub text-two">{{$staticContent['Dimensions']}} ('+unit_dimension_1+' X W X '+unit_dimension+')</p>';
-        if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 && pro['dimensionW'] != '' && pro['dimensionD'] != ''){
-        html += '<p class="text-ft-sub text-two">'+pro['dimensionL']+'x'+pro['dimensionW']+'x'+pro['dimensionD']+' mm</p>';
-        html += '<p class="text-ft-sub text-two">'+mmtonich(pro['dimensionL'])+'”x'+mmtonich(pro['dimensionW'])+'”x'+mmtonich(pro['dimensionD'])+'”</p>';
-        }else if(pro['dimensionL'] != null){
-        html += '<p class="text-ft-sub text-two">'+pro['dimensionL'].substr(0, 14)+'</p>';
-        }else{
-        html += '<p class="text-ft-sub text-two">-</p>';
-        }
-        html += '</div>';
-        }
-
-
-        html += '</div>';
-        html += '</div>';
-        html += '<div class="w-100">';
-        html += '<div class="boxlist-icon-img pd-mobile">';
-        html += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
-        html += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
-        html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
-        html += '</div>';
-        html += '</div>';
-        html += '</div>';
-        html += '</div>';
-       });
         html += '</div>';
         html += '</div>';
         html += ' <div class="text-center my-3" id="loadMore_mobile" style="" onclick="loadeMoreMobile(event,4)">';
         html += '<a href="#"  class="btn btn-boxen"> {{$staticContent['See_More']}} </a>';
         html += '</div>';
         html += '</div>';
-
-
 
         $('#contentProList').html(html);
         $(document).ready(function () {
@@ -1534,9 +1672,13 @@
         });
     }
 
-
+    /**
+     * 切換至列表視圖
+     * @param {Array} productarray 產品陣列
+     * @param {Number} type 排序類型
+     * @param {Number} id 排序欄位ID
+     */
     function onclickListView(productarray ,type ,id) {
-
         var html1 = '';
         html1 += '<div class="ListView visible-upper-mobile" id="ListView">';
         html1 += '<div class="count-products">';
@@ -1551,9 +1693,9 @@
         html1 += '<th id="sortdata4" class=" header-font-table w-tabfix w-120"  onclick="selectTable(4)">{{$staticContent['Output_Power']}} </th>';
         html1 += '<th id="sortdata5" class=" header-font-table w-tabfix"  onclick="selectTable(5)">{{$staticContent['Input_Voltage']}}</th>';
         if(url_name == "wireless-charging-system"){
-        html1 += '<th  class="header-font-table" >{{$staticContent['product_highLights']}}</th>';
+            html1 += '<th  class="header-font-table" >{{$staticContent['product_highLights']}}</th>';
         }else{
-        html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['Dimensions']}} <br>('+unit_dimension_1+' x W x '+unit_dimension+')</th>';
+            html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['Dimensions']}}</th>';
         }
 
         html1 += '</tr>';
@@ -1576,9 +1718,9 @@
         // }else if(type == 3){
         //     $('#dtBasicExample').DataTable({"order": [[ 3, "asc" ]],  paging: false} );
         // }
-        if(type == 1){
+        if (type == 1) {
             $('#sortdata'+id).addClass('pro_asc active');
-        }else{
+        } else {
             $('#sortdata'+id).addClass('pro_desc active');
         }
         $('.countproduct').text(productarray.length);
@@ -1586,145 +1728,140 @@
             $('.icon-list img').addClass('bord-icon');
             $('.icon-grid img').removeClass('bord-icon');
             $('#contentProList').addClass('space-listviews');
-
         });
     }
 
-    function listviewCard(productarray) {
-
+    function listviewCard(productarray)
+    {
         var html1 = '';
-        //console.log(productarray ,"productarray to card")
 
-        $.each(productarray, function(index_pro,pro){
-        html1 += '<tr class="box-cardlist row_table" style="display: none;">';
-        html1 += '<td>';
-        html1 += '<div class="cardlist-toadd">';
-        html1 += '<div class="cardlist-view hover01">';
-        html1 += '<a href="{{route('productsDetailsByType')}}/{{ preg_replace('/\s+/', '-', $subCate->url_item)}}/'+viewKey(pro['pro_code']) +'">';
-            if(pro['status_product'] != 1){
-        html1 += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="text-over-cardlist"> '+ statuspro(pro['status_product'])+'';
-        html1 += '</div>';
+        $.each(productarray, function(index_pro,pro) {
+            html1 += '<tr class="box-cardlist row_table" style="display: none;">';
+            html1 += '<td class="border-radius-6">';
+            html1 += '<div class="cardlist-toadd">';
+            html1 += '<div class="cardlist-view hover01">';
+            html1 += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'">';
+            if (pro['status_product'] != 1) {
+                html1 += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="text-over-cardlist"> '+ statuspro(pro['status_product'])+'';
+                html1 += '</div>';
             }
-        html1 += '<figure><img class="img-card-list" alt="'+checkNullImg(pro['alt_img']) +'" src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'"></figure>';
-        html1 += '</div>';
-        html1 += '<div class="cardlist-text">';
-        html1 += '<h5 class="text-title-ft-listv">'+pro['pro_code']+'</h5>';
-        html1 += '</div>';
-        html1 += '</a>';
-        html1 += '<div class="w-100">';
-        html1 += '<div class="boxlist-icon-img">';
-        html1 += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
-        html1 += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
-        html1 += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
-        html1 += '</div>';
-        html1 += '</div>';
-        // html1 += '<div class="w-100">';
-        // html1 += '<div class="btn btn-ft" onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})"> + {{$staticContent['Add_to_Compare']}}</div>';
-        html1 += '</div>';
-        html1 += '</td>';
-        var content =  onlycontent(pro['content']);
-         var arrcon1 = [content[1]['data_1'],content[1]['data_2'],content[1]['data_3'],content[1]['data_4'],content[1]['data_5'],
-            content[1]['data_6'],content[1]['data_7'],content[1]['data_8'],content[1]['data_9'],content[1]['data_10'],content[1]['data_11'],
-            content[1]['data_12']
-            ]
-            var arrcon2 = [content[0]['data_1'],content[0]['data_2'],content[0]['data_3'],content[0]['data_4'],content[0]['data_5'],
-            content[0]['data_6'],content[0]['data_7'],content[0]['data_8'],content[0]['data_9'],content[0]['data_10'],content[0]['data_11'],
-            content[0]['data_12']
-            ]
-            var arrcon3 = [content[2]['data_1'],content[2]['data_2'],content[2]['data_3'],content[2]['data_4'],content[2]['data_5'],
-            content[2]['data_6'],content[2]['data_7'],content[2]['data_8'],content[2]['data_9'],content[2]['data_10'],content[2]['data_11'],
-            content[2]['data_12']
-            ]
-        // html1 += '<td>';
-        // html1 += '<div class="card-btn-a">';
+            html1 += '<figure><img class="img-card-list" alt="'+checkNullImg(pro['alt_img']) +'" src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'"></figure>';
+            html1 += '</div>';
+            html1 += '<div class="cardlist-text">';
+            html1 += '<h5 class="text-title-ft-listv">'+pro['pro_code']+'</h5>';
+            html1 += '</div>';
+            html1 += '</a>';
+            html1 += '<div class="w-100">';
+            html1 += '<div class="boxlist-icon-img">';
+            html1 += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
+            html1 += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
+            html1 += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
+            html1 += '</div>';
+            html1 += '</div>';
+            // html1 += '<div class="w-100">';
+            // html1 += '<div class="btn btn-ft" onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})"> + {{$staticContent['Add_to_Compare']}}</div>';
+            html1 += '</div>';
+            html1 += '</td>';
+            var content = onlycontent(pro['content']);
+            var arrcon1 = [content[1]['data_1'],content[1]['data_2'],content[1]['data_3'],content[1]['data_4'],content[1]['data_5'],
+                    content[1]['data_6'],content[1]['data_7'],content[1]['data_8'],content[1]['data_9'],content[1]['data_10'],content[1]['data_11'],
+                    content[1]['data_12']
+                ]
+                var arrcon2 = [content[0]['data_1'],content[0]['data_2'],content[0]['data_3'],content[0]['data_4'],content[0]['data_5'],
+                    content[0]['data_6'],content[0]['data_7'],content[0]['data_8'],content[0]['data_9'],content[0]['data_10'],content[0]['data_11'],
+                    content[0]['data_12']
+                ]
+                var arrcon3 = [content[2]['data_1'],content[2]['data_2'],content[2]['data_3'],content[2]['data_4'],content[2]['data_5'],
+                    content[2]['data_6'],content[2]['data_7'],content[2]['data_8'],content[2]['data_9'],content[2]['data_10'],content[2]['data_11'],
+                    content[2]['data_12']
+                ]
+            // html1 += '<td>';
+            // html1 += '<div class="card-btn-a">';
 
-        // html1 += '<div class="card-btn-a-detail">';
-        // html1 += '<a class="link-d-sheet" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank">';
-        // html1 += '<div class="text-name-data">Datasheet</div>';
-        // html1 += '<div class="icon-datasheet">';
-        // html1 += '<i class="icon-facon2 icon-download"></i>';
-        // html1 += '</div>' ;
-        // html1 += '</a>';
-        // html1 += '<div class="btn-enq-d"><a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'">{{$staticContent['Enquiry']}}</a></div>';
-        // html1 += '</div></div>';
-        // html1 += '</td>';
-        html1 += ' <td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon1,content[1]['unit_name'] ,content[1]['status_input'])+'</div></td>';
-        html1 += '<td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon2,content[0]['unit_name'] ,content[0]['status_input'])+'</div></td>';
-        html1 += ' <td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon3,content[2]['unit_name'] ,content[2]['status_input'])+'</div></td>';
-        if(typeof content[3]['value_text']  != 'undefined' && content[3]['value_text'] != null && content[3]['value_text'] !='' && content[3]['value_text'] != 'null'){
-         html1 += ' <td class="text-middle-td">'+ stringfor(content[3]['value_text'])+'</td>';
-        }else if(content[3]['value_text'] != null && content[3]['value_text'] != 'null'){
-         html1 += ' <td class="text-middle-td">'+content[3]['value_text']+'</td>';
-        }else{
-         html1 += ' <td class="text-middle-td">-</td>';
-        }
-        if(url_name == "wireless-charging-system"){
-            html1 += ' <td class="text-middle-td"> <div class="w-td-con-text-editor">'+checkNullTexteditor(pro['short_features'])+'</div></td>';
-        }else{
-            if(pro['dimensionL'] != null && pro['dimensionL'].length < 7 &&pro['dimensionW'] != '' && pro['dimensionD'] != ''){
-            html1 += '<td class="text-middle-td">'+pro['dimensionL']+' x '+pro['dimensionW']+' x '+pro['dimensionD']+' mm ';
-            html1 += '<br>'+mmtonich(pro['dimensionL'])+'” x '+mmtonich(pro['dimensionW'])+'” x '+mmtonich(pro['dimensionD'])+'”</td>';
-            }else{
-            html1 += '<td class="text-middle-td">'+pro['dimensionL']+'</td>';
+            // html1 += '<div class="card-btn-a-detail">';
+            // html1 += '<a class="link-d-sheet" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank">';
+            // html1 += '<div class="text-name-data">Datasheet</div>';
+            // html1 += '<div class="icon-datasheet">';
+            // html1 += '<i class="icon-facon2 icon-download"></i>';
+            // html1 += '</div>' ;
+            // html1 += '</a>';
+            // html1 += '<div class="btn-enq-d"><a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'">{{$staticContent['Enquiry']}}</a></div>';
+            // html1 += '</div></div>';
+            // html1 += '</td>';
+            html1 += '<td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon1,content[1]['unit_name'] ,content[1]['status_input'])+'</div></td>';
+            html1 += '<td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon2,content[0]['unit_name'] ,content[0]['status_input'])+'</div></td>';
+            html1 += '<td class="text-middle-td"> <div class="w-td-con">'+checkNullShow(arrcon3,content[2]['unit_name'] ,content[2]['status_input'])+'</div></td>';
+
+            if (typeof content[3]['value_text'] != 'undefined' && content[3]['value_text'] != null && content[3]['value_text'] !='' && content[3]['value_text'] != 'null') {
+                html1 += ' <td class="text-middle-td">'+ stringfor(content[3]['value_text'])+'</td>';
+            } else if(content[3]['value_text'] != null && content[3]['value_text'] != 'null') {
+                html1 += ' <td class="text-middle-td">'+content[3]['value_text']+'</td>';
+            } else {
+                html1 += ' <td class="text-middle-td">-</td>';
             }
-        }
-
-
-        html1 += '</tr>';
-
-       });
-
+            if (url_name == "wireless-charging-system") {
+                html1 += ' <td class="text-middle-td border-radius-6 pad-right-1rem"> <div class="w-td-con-text-editor">'+checkNullTexteditor(pro['short_features'])+'</div></td>';
+            } else {
+                if (pro['dimensionL'] != null && pro['dimensionL'].length < 7 &&pro['dimensionW'] != '' && pro['dimensionD'] != '') {
+                    html1 += '<td class="text-middle-td border-radius-6 pad-right-1rem">'+pro['dimensionL']+' x '+pro['dimensionW']+' x '+pro['dimensionD']+' mm ';
+                    html1 += '<br>'+mmtonich(pro['dimensionL'])+'” x '+mmtonich(pro['dimensionW'])+'” x '+mmtonich(pro['dimensionD'])+'”</td>';
+                } else {
+                    html1 += '<td class="text-middle-td border-radius-6 pad-right-1rem">'+pro['dimensionL']+'</td>';
+                }
+            }
+            html1 += '</tr>';
+        });
 
         $('#listcardList').html(html1);
+    }
 
+    function productKey(key) {
+        var newkey = key.replace(/[/]/g,'@');
+        return newkey;
     }
-    function productKey(key){
-            var newkey = key.replace(/[/]/g,'@');
-            return newkey;
-    }
+
     function checkNullTexteditor(data){
-            if(data){
-               return data;
-            }else{
-                return '';
-            }
-     }
-    function checkNullShow(dataarr,unit,status){
+        if (data) {
+            return data;
+        } else {
+            return '';
+        }
+    }
 
+    function checkNullShow(dataarr, unit, status) {
         var string = '';
         var arrstri = [];
-       if(status == 1 || status == 2){
-        $.each(dataarr, function(index,data){
-            if(data != null && data != ''){
-              arrstri.push(data+unit);
-            }
-        });
-        string = arrstri.join(', ');
-       }else if(status == 3){
-        string = dataarr[0]+'-'+dataarr[1]+unit;
-       }
-       if(string == ''){
-        string = '-';
-       }
-    //    console.log(string);
-         return  string;
+        if (status == 1 || status == 2) {
+            $.each(dataarr, function(index,data){
+                if(data != null && data != ''){
+                arrstri.push(data+unit);
+                }
+            });
+            string = arrstri.join(', ');
+        } else if(status == 3) {
+            string = dataarr[0]+'-'+dataarr[1]+unit;
+        }
+        if (string == '') {
+            string = '-';
+        }
+        return  string;
     }
-    function stringfor(str){
+
+    function stringfor(str) {
         var arrStr = str.split(/\s/g);
         var strfor = '';
         $.each(arrStr, function(index,data){
             if(data.length != 0){
                 if(data.length < 9 ){
-                strfor += data.replace("<br>", "");
-                strfor += ' ';
-
-             }else{
-                strfor += data.replace("<br>", "");
-                strfor += '<br>';
-             }
+                    strfor += data.replace("<br>", "");
+                    strfor += ' ';
+                } else {
+                    strfor += data.replace("<br>", "");
+                    strfor += '<br>';
+                }
             }
-            });
-            return strfor;
+        });
+        return strfor;
     }
     function stringSpacefor(str){
         var arrStr = str.split(' ');
@@ -1853,7 +1990,6 @@
 
 
     function  filtercontent(){
-
        var property_load = [];
        property_load = pro_perti;
        var doc_safety = documents_cate;
@@ -1874,9 +2010,51 @@
             html3 += fil_con['title'];
             html3 += '</a>';
             html3 += '</div>';
-            html3 += '<div id="collapse-fliter_'+fil_con['field_id']+'" class="card-body-filter collapse '+(fil_con['field_id']== 'series01'?'show':'') +'" >';
+            // 預設展開 product_type 的 accordion
+            html3 += '<div id="collapse-fliter_'+fil_con['field_id']+'" class="card-body-filter collapse '+(fil_con['field_id']== 'product_type' || fil_con['field_id']== 'mode_series'?'show':'') +'" >';
             html3 += '<form id="form-'+fil_con['field_id']+'" class="'+fil_con['field_id']+'">';
             html3 += '<div class="scrollbar dataserchfilter'+fil_con['field_id']+'" id="style-1">';
+
+            // 新增 product type 的 filter 區塊
+            if(fil_con['field_id'] == 'product_type'){
+                $.each(categoriesHasMainPro, function(index_category,category){
+                    html3 += '<div onchange="product_type_filter('+"'"+fil_con['field_id']+"'"+','+category['cate_id']+');" class="box-input-checkbox">';
+                    html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+category['cate_id']+'" type="checkbox" style="display: none;" >';
+                    html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+category['cate_id']+'"><span>';
+                    html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+                    html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+                    html3 += '</svg></span><span>'+category['name']+'</span></label>';
+                    html3 += '</div>' ;
+                  });
+            }
+            if(fil_con['field_id'] == 'mode_series'){
+                // Hardcoded Mode Series options as requested
+                var hardcodedModeSeries = [
+                    {id: 1, title: 'CC + CV Mode'},
+                    {id: 2, title: 'CC Mode'},
+                    {id: 3, title: 'CV Mode'}
+                ];
+                $.each(hardcodedModeSeries, function(index_mode, mode){
+                    html3 += '<div onchange="mode_series_filter('+"'"+fil_con['field_id']+"'"+','+mode['id']+');" class="box-input-checkbox">';
+                    html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+mode['id']+'" type="checkbox" style="display: none;" >';
+                    html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+mode['id']+'"><span>';
+                    html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+                    html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+                    html3 += '</svg></span><span>'+mode['title']+'</span></label>';
+                    html3 += '</div>' ;
+                  });
+             }
+            if(fil_con['field_id'] == 'series01'){
+                $.each(series, function(index_serie,serie){
+                    html3 += '<div onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="box-input-checkbox">';
+                    html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+serie['se_id']+'" type="checkbox" style="display: none;" >';
+                    html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+serie['se_id']+'"><span>';
+                    html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+                    html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+                    html3 += '</svg></span><span>'+serie['title']+'</span></label>';
+                    html3 += '</div>' ;
+                  });
+             }
             if(fil_con['field_id'] == 'series01'){
                 $.each(series, function(index_serie,serie){
                     html3 += '<div onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="box-input-checkbox">';
@@ -2008,7 +2186,7 @@
             html3 += '</div>';
             html3 += '<button onclick="resetformById('+"'"+fil_con['field_id']+"'"+');" class="btn-reset" type="button">{{$staticContent['Clear']}}</button>';
             html3 +=  '</form>';
-            if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['type'] == 'number'  ){
+            if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['field_id'] != 'mode_series' && fil_con['type'] == 'number'  ){
             html3 +=  '<div class="slidebar-value-box mb-4 mt-4">';
             html3 +=  '<div   id="slidebar-value-box_des'+fil_con['field_id']+'"class="slider noUi-target noUi-ltr noUi-horizontal type'+fil_con['field_id']+'"  ></div>';
             html3 +=  ' <div class="value-form-bar-box">';
@@ -2021,9 +2199,15 @@
         });
         $('#sort-filter-content').html(html3);
         createSliderDestop();
+        popcheckProductType();
         popcheckSerries();
+        popcheckModeSeries();
 
     }
+    /**
+     * 渲染手機版篩選器內容
+     * Render mobile filter content
+     */
     function  filtercontentMobile(){
        var property_load = [];
        var doc_safety = [{id:2,name:'ABS'}, {id:3,name:'ATEX'},{id:4,name:'BSMI'}];
@@ -2040,9 +2224,44 @@
             html3 += fil_con['title'];
             html3 += '</a>';
             html3 += '</div>';
-            html3 += '<div id="collapse-fliter_'+fil_con['field_id']+'_mobile" class="card-body-filter collapse '+(fil_con['field_id']== 'series01'?'show':'') +'">';
+            // 預設展開 product_type 的 accordion
+            html3 += '<div id="collapse-fliter_'+fil_con['field_id']+'_mobile" class="card-body-filter collapse '+(fil_con['field_id']== 'product_type' || fil_con['field_id']== 'mode_series'?'show':'') +'">';
             html3 += '<form id="form-mobile'+fil_con['field_id']+'" class="'+fil_con['field_id']+'_mobile">';
             html3 += '<div class="scrollbar dataserchfiltermobile'+fil_con['field_id']+'" id="style-1">';
+
+            // 產品類型 (Product Type)
+            if(fil_con['field_id'] == 'product_type'){
+                $.each(categoriesHasMainPro, function(index_category,category){
+                    html3 += '<div class="box-input-checkbox">';
+                    html3 += '<input onchange="product_type_filter('+"'"+fil_con['field_id']+"'"+','+category['cate_id']+');" class="inp-cbx" id="cx-'+fil_con['field_id']+category['cate_id']+'_mobile" type="checkbox" style="display: none;" >';
+                    html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+category['cate_id']+'_mobile"><span>';
+                    html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+                    html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+                    html3 += '</svg></span><span>'+category['name']+'</span></label>';
+                    html3 += '</div>' ;
+                  });
+            }
+
+            // Mode Series
+            if(fil_con['field_id'] == 'mode_series'){
+                // Hardcoded Mode Series options as requested
+                var hardcodedModeSeries = [
+                    {id: 1, title: 'CC + CV Mode'},
+                    {id: 2, title: 'CC Mode'},
+                    {id: 3, title: 'CV Mode'}
+                ];
+                $.each(hardcodedModeSeries, function(index_mode, mode){
+                    html3 += '<div class="box-input-checkbox">';
+                    html3 += '<input onchange="mode_series_filter('+"'"+fil_con['field_id']+"'"+','+mode['id']+');" class="inp-cbx" id="cx-'+fil_con['field_id']+mode['id']+'_mobile" type="checkbox" style="display: none;" >';
+                    html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+mode['id']+'_mobile"><span>';
+                    html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+                    html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+                    html3 += '</svg></span><span>'+mode['title']+'</span></label>';
+                    html3 += '</div>' ;
+                  });
+            }
+
+            // 系列 (Series)
             if(fil_con['field_id'] == 'series01'){
                 $.each(series, function(index_serie,serie){
                     html3 += '<div class="box-input-checkbox">';
@@ -2054,6 +2273,7 @@
                     html3 += '</div>' ;
                   });
              }
+             // 狀態 (Status: NEW, NRND, EOL)
              if(fil_con['field_id'] == 'status02'){
                 $.each(status, function(index_status,sta){
                     html3 += '<div class="box-input-checkbox">';
@@ -2065,6 +2285,7 @@
                     html3 += '</div>' ;
                   });
              }
+             // 安規 (Safety: ABS, ATEX, BSMI)
              if(fil_con['field_id'] == 'safety03'){
                 $.each(doc_safety, function(id_doc,safety){
                     html3 += '<div class="box-input-checkbox">';
@@ -2077,6 +2298,7 @@
                   });
              }
 
+             // 應用領域/證書 (Certificates/Applications)
              if(fil_con['field_id'] == 'certifi04'){
                 $.each(certificates, function(index_cer,certi){
                     html3 += '<div class="box-input-checkbox">';
@@ -2088,6 +2310,7 @@
                     html3 += '</div>' ;
                   });
              }
+             // 其他動態屬性 (Other dynamic properties)
              if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03'  ){
                var property =  property_load.sort(function(a, b) {
                     if(a.data_1 < b.data_1){
@@ -2177,7 +2400,7 @@
             html3 += '</div>';
             html3 += '<button onclick="resetformById('+"'"+fil_con['field_id']+"'"+');" class="btn-reset" type="button">CLEAR</button>';
             html3 +=  '</form>';
-            if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['type'] == 'number'  ){
+            if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['field_id'] != 'mode_series' && fil_con['type'] == 'number'  ){
             html3 +=  '<div class="slidebar-value-box mb-4 mt-4">';
             html3 +=  '<div  id="slidebar-value-box'+fil_con['field_id']+'"class="slider noUi-target noUi-ltr noUi-horizontal slider'+fil_con['field_id']+'"  ></div>';
             html3 +=  ' <div  class="value-form-bar-box">';
@@ -2187,34 +2410,71 @@
             html3 +=  '</div>';
             }
             html3 +=  '</div></div>';
-
-            // createSlider('slidebar-value-box'+fil_con['field_id']);
         });
         $('#sort-filter-content_mobile').html(html3);
-         createSlider();
-
-
+        createSlider();
+        popcheckProductType();
+        popcheckModeSeries();
     }
 
 
+    /**
+     * 初始化系列篩選勾選狀態
+     * 如果有傳入 series_id，則勾選該系列並展開側邊欄
+     * 否則展開側邊欄但不預設勾選任何系列
+     */
     function popcheckSerries(){
         if(series_id){
             $("#cx-series01"+series_id).prop("checked" ,true);
             $("#cx-series01"+series_id+"_mobile").prop("checked" ,true);
-            $("#sidebar").addClass("show");
+            
+            // 展開 Series Accordion
+            $("#collapse-fliter_series01").addClass("show");
+            $("#collapse-fliter_series01_mobile").addClass("show");
+            
             onclickshow(2);
             ser_arr.push({{$se_id}});
-        }else{
-            $.each(series, function(index,val){
-            ser_arr.push(val['se_id']);
-            $("#cx-series01"+val['se_id']).prop("checked" ,true);
-            $("#cx-series01"+val['se_id']+"_mobile").prop("checked" ,true);
-            });
-           $("#sidebar").addClass("show");
-            onclickshow(2);
         }
     }
 
+    /**
+     * 初始化 Product Type 篩選
+     * 如果有 cateid (URL 參數)，則自動勾選並展開
+     * 如果沒有參數，且 series 也沒展開，則預設展開側邊欄
+     */
+    function popcheckProductType(){
+        if(cateid && main_cate_id != 3){
+            $("#cx-product_type"+cateid).prop("checked" ,true);
+            $("#cx-product_type"+cateid+"_mobile").prop("checked" ,true);
+            
+            onclickshow(2);
+            
+            if(pro_type_arr.indexOf(cateid) == -1){
+                pro_type_arr.push(cateid);
+            }
+        }
+    }
+
+    /**
+     * 初始化 Mode Series 篩選
+     * 如果有 cateid (URL 參數) 且 main_cate_id 為 3，則自動勾選並展開
+     */
+    function popcheckModeSeries(){
+        if(cateid && main_cate_id == 3){
+            $("#cx-mode_series"+cateid).prop("checked" ,true);
+            $("#cx-mode_series"+cateid+"_mobile").prop("checked" ,true);
+            
+            // Expand the accordion
+            $("#collapse-fliter_mode_series").addClass("show");
+            $("#collapse-fliter_mode_series_mobile").addClass("show");
+            
+            onclickshow(2);
+            
+            if(mode_series_arr.indexOf(cateid) == -1){
+                mode_series_arr.push(cateid);
+            }
+        }
+    }
 
     function containsObject(obj, list) {
      var  index = list.findIndex(
@@ -2245,61 +2505,160 @@
     }
 
 
-    function series_filter(type,value){
-       if(ser_arr.indexOf(value) == -1){
-           ser_arr.push(value);
-       }else{
-        var index_se = ser_arr.indexOf(value);
-            if (index_se > -1) {
-                ser_arr.splice(index_se, 1);
+    /**
+     * 處理系列篩選的勾選/取消勾選
+     * @param {String} type 類型
+     * @param {Number} value 系列ID
+     */
+    function product_type_filter(type,value){
+        // 強制轉為數字，避免字串與數字比對問題
+        var val = parseInt(value);
+        var index_se = -1;
+        
+        // 使用寬鬆比對查找索引
+        $.each(pro_type_arr, function(i, v){
+            if(v == val){
+                index_se = i;
+                return false;
             }
+        });
+
+        if(index_se == -1){
+            pro_type_arr.push(val);
+        }else{
+            pro_type_arr.splice(index_se, 1);
+        }
+       fillerData();
+    }
+
+    function series_filter(type,value){
+        var val = parseInt(value);
+        var index_se = -1;
+        
+        $.each(ser_arr, function(i, v){
+            if(v == val){
+                index_se = i;
+                return false;
+            }
+        });
+
+       if(index_se == -1){
+           ser_arr.push(val);
+       }else{
+            ser_arr.splice(index_se, 1);
        }
        fillerData();
     }
-    function filterAllSeries(){
 
+    function mode_series_filter(type,value){
+        var val = parseInt(value);
+        var index_se = -1;
+        
+        $.each(mode_series_arr, function(i, v){
+            if(v == val){
+                index_se = i;
+                return false;
+            }
+        });
+
+       if(index_se == -1){
+           mode_series_arr.push(val);
+       }else{
+            mode_series_arr.splice(index_se, 1);
+       }
+       fillerData();
+    }
+    /**
+     * 根據勾選的系列與產品類型篩選產品，並組裝產品資料
+     * 如果 ser_arr 為空，則顯示所有系列
+     * 如果 pro_type_arr 為空，則顯示所有產品類型
+     */
+    function filterBaseData(){
         var eachpro = [];
         $.each(products, function(index,value){
-         var productObj = {};
-         var productObj2 = {};
-         $.each(ser_arr, function(index_ser,value_ser){
-           if(value_ser == value['series_id']){
-            productObj['pro_id'] = value['pro_id'];
-            productObj['pro_code'] = value['pro_code'];
-            productObj['series_id'] = value['series_id'];
-            productObj['status_product'] = value['status_product'];
-            productObj['certificate'] = value['certificate'];
-            productObj['updated_at'] = value['updated_at'];
-            productObj['picture'] = value['picture'];
-            productObj['dimensionL'] = value['dimensionL'];
-            productObj['dimensionW'] = value['dimensionW'];
-            productObj['dimensionD'] = value['dimensionD'];
-            productObj['short_features'] = value['short_features'];
-            productObj['alt_img'] = value['alt_img'];
-            productObj['content'] = [];
-            productObj['contentFilter'] = [];
-            $.each(product_has_property, function(index2,value2){
-                if(value['pro_id'] == value2['product_id']){
-                    productObj['content'].push(value2);
-                }
-              });
-              $.each(pro_perti, function(index3,value3){
-                if(value['pro_id'] == value3['product_id']){
-                    productObj['contentFilter'].push(value3);
-                }
+            var productObj = {};
+            var productObj2 = {};
+            var is_match = false;
+            var is_match_type = false;
+            var is_match_mode = false;
 
+            // 確認 商品的 series 是否再篩選條件中
+            if(ser_arr.length > 0){
+                $.each(ser_arr, function(index_ser,value_ser){
+                    if(value_ser == value['series_id']){
+                        is_match = true;
+                    }
+                });
+            }else{
+                // 沒有任何勾選，預設選全部
+                is_match = true;
+            }
 
-              });
-            productFilter.push(productObj);
+            // 確認 商品的 product_type（sub_category） 是否再篩選條件中
+            if(pro_type_arr.length > 0){
+                $.each(pro_type_arr, function(index_type,value_type){
+                    // 檢查 cate_ids 是否包含該分類
+                    if(value['cate_ids']){
+                        $.each(value['cate_ids'], function(i, id){
+                            if(id == value_type){
+                                is_match_type = true;
+                            }
+                        });
+                    }
+                    
+                    // 檢查 cate_id 是否匹配 (相容舊資料)
+                    if(value['cate_id'] == value_type){
+                        is_match_type = true;
+                    }
+                });
+            }else{
+                // 沒有任何勾選，預設選全部
+                is_match_type = true;
+            }
 
-          }
+            // 確認 商品的 mode_series 是否再篩選條件中
+            if(mode_series_arr.length > 0){
+                $.each(mode_series_arr, function(index_mode,value_mode){
+                    if(value_mode == value['mode_series']){
+                        is_match_mode = true;
+                    }
+                });
+            }else{
+                // 沒有任何勾選，預設選全部
+                is_match_mode = true;
+            }
 
-         });
-
-      });
-
-    //  findresultfeildbypro(productFilter);
-
+            if(is_match && is_match_type && is_match_mode){
+                productObj['pro_id'] = value['pro_id'];
+                productObj['pro_code'] = value['pro_code'];
+                productObj['cate_id'] = value['cate_id'];
+                productObj['cate_ids'] = value['cate_ids'];
+                productObj['series_id'] = value['series_id'];
+                productObj['mode_series'] = value['mode_series'];
+                productObj['status_product'] = value['status_product'];
+                productObj['certificate'] = value['certificate'];
+                productObj['updated_at'] = value['updated_at'];
+                productObj['picture'] = value['picture'];
+                productObj['dimensionL'] = value['dimensionL'];
+                productObj['dimensionW'] = value['dimensionW'];
+                productObj['dimensionD'] = value['dimensionD'];
+                productObj['short_features'] = value['short_features'];
+                productObj['alt_img'] = value['alt_img'];
+                productObj['content'] = [];
+                productObj['contentFilter'] = [];
+                $.each(product_has_property, function(index2,value2){
+                    if(value['pro_id'] == value2['product_id']){
+                        productObj['content'].push(value2);
+                    }
+                });
+                $.each(pro_perti, function(index3,value3){
+                    if(value['pro_id'] == value3['product_id']){
+                        productObj['contentFilter'].push(value3);
+                    }
+                });
+                productFilter.push(productObj);
+            }
+        });   
     }
 
 
@@ -2908,6 +3267,10 @@
       }
       $('.countproduct').text(showarr.length);
     }
+    /**
+     * 清除所有篩選條件
+     * 重置所有表單並重新載入資料
+     */
     function resetAllTab(){
         ser_arr = [];
         arr_status = [];
@@ -2915,6 +3278,8 @@
         arr_inputtxt = [];
         arr_type_an_val = [];
         arr_value1 = [];
+        pro_type_arr = [];
+        mode_series_arr = [];
         $.each(filter_pro, function(index_con,fil_con){
               $('#collapse-fliter_'+fil_con['field_id']).removeClass('show');
               $('#form-'+fil_con['field_id'] )[0].reset();
@@ -2928,6 +3293,10 @@
         $('#form-mobile'+id)[0].reset();
         if(id == 'series01'){
             ser_arr = [];
+        }else if(id == 'product_type'){
+            pro_type_arr = [];
+        }else if(id == 'mode_series'){
+            mode_series_arr = [];
         }else if(id == 'status02'){
             arr_status = [];
         }else if(id == 'certifi04'){
@@ -3030,6 +3399,9 @@
 
     }
 
+    /**
+     * 依型號名稱排序 (A-Z)
+     */
     function sortModelName(array_value){
         var arr = [];
          arr = array_value.sort(
@@ -3038,6 +3410,9 @@
              });
         return arr;
     }
+    /**
+     * 依型號名稱排序 (Z-A)
+     */
     function sortModelNameZA(array_value){
         var arr = [];
          arr = array_value.sort(
@@ -3049,6 +3424,9 @@
         return arr;
     }
 
+    /**
+     * 依尺寸排序 (小到大)
+     */
     function diminsionLH(array_value){
 
         var arr = [];
@@ -3058,6 +3436,9 @@
              });
         return arr;
     }
+    /**
+     * 依尺寸排序 (大到小)
+     */
     function diminsionHL(array_value){
         var arr = [];
          arr = array_value.sort(
@@ -3068,6 +3449,9 @@
         return arr;
     }
 
+    /**
+     * 依更新日期排序
+     */
     function sortDateModify(array_value){
         var arr = [];
         arr = array_value.sort(
@@ -3076,6 +3460,11 @@
              });
         return arr;
     }
+    /**
+     * 依輸出規格排序 (小到大)
+     * @param {Array} array_value 產品陣列
+     * @param {Number} type 規格類型ID
+     */
     function sortOutputLH(array_value ,type){
         var value_data = [];
         var arr_sort = [];
@@ -3114,6 +3503,11 @@
         return arr_sort;
     }
 
+    /**
+     * 依輸出規格排序 (大到小)
+     * @param {Array} array_value 產品陣列
+     * @param {Number} type 規格類型ID
+     */
     function sortOutputHL(array_value ,type){
         var value_data = [];
         var arr_sort = [];
@@ -3152,6 +3546,11 @@
         return arr_sort;
     }
 
+    /**
+     * 依輸入規格排序 (大到小)
+     * @param {Array} array_value 產品陣列
+     * @param {Number} type 規格類型ID
+     */
     function sortInputHL(array_value ,type){
         var value_data = [];
         var arr_sort = [];
@@ -3190,6 +3589,11 @@
         return arr_sort;
     }
 
+    /**
+     * 依輸入規格排序 (小到大)
+     * @param {Array} array_value 產品陣列
+     * @param {Number} type 規格類型ID
+     */
     function sortInputLH(array_value ,type){
        var value_data = [];
         var arr_sort = [];
@@ -3228,6 +3632,11 @@
         return arr_sort;
     }
 
+    /**
+     * 取得指定規格類型的最大最小值
+     * @param {Number} id 規格類型ID
+     * @returns {Object} 包含 min 和 max 的物件
+     */
     function getMinMaxValueById(id){
         var value_data = [];
         pro_perti.filter(function(data) {
@@ -3257,6 +3666,10 @@
        };
     }
 
+     /**
+      * 桌面版搜尋產品
+      * 根據輸入的關鍵字篩選產品
+      */
      function  onsearchProduct(){
         var re_arr = [];
             ser_arr = [];
@@ -3319,6 +3732,10 @@
            $('#current_method').val(1);
 
      }
+     /**
+      * 手機版搜尋產品
+      * 根據輸入的關鍵字篩選產品
+      */
      function onsearchProductMobile(){
         var re_arr = [];
         $.each(filter_pro, function(index_con,fil_con){
@@ -3374,6 +3791,10 @@
            $('#current_method').val(2);
      }
 
+     /**
+      * 對搜尋結果進行排序並顯示
+      * @param {Array} re_arr 搜尋結果陣列
+      */
      function onselectSortArr(re_arr){
         var arr_val = re_arr;
         var arr_result = [];
@@ -3419,9 +3840,12 @@
 
     /* slidebar */
 
+    /**
+     * 建立手機版數值滑桿
+     */
     function createSlider(){
         $.each(fildnumberMobile, function(index_con,fil_con){
-        if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03'  ){
+        if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['field_id'] != 'mode_series' ){
             var data = 'slidebar-value-box'+fil_con['field_id'];
             var valuemin ='slider-limit-value-min'+fil_con['field_id'];
             var valuemax ='slider-limit-value-max'+fil_con['field_id'];
@@ -3451,10 +3875,13 @@
         });
     }
 
+    /**
+     * 建立桌面版數值滑桿
+     */
     function createSliderDestop(){
          $.each(fildnumber, function(index_con,fil_con){
         var data = getMinMaxValueById(fil_con['field_id']);
-        if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03'  ){
+        if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['field_id'] != 'mode_series' ){
             var data_des = 'slidebar-value-box_des'+fil_con['field_id'];
             var valuemindes ='slider-limit-value-min_des'+fil_con['field_id'];
             var valuemaxdes ='slider-limit-value-max_des'+fil_con['field_id'];
@@ -3484,6 +3911,11 @@
     });
 
     }
+    /**
+     * 根據滑桿數值範圍篩選產品
+     * @param {Array} arrRage 數值範圍 [min, max]
+     * @param {Number} type 規格類型ID
+     */
     function findDataRage(arrRage ,type){
 
         var pro_arr = [];
@@ -3557,46 +3989,44 @@
 </script>
 <script>
     function loadeMore(event,i){
-    if ($(".moreBox:hidden").length != 0) {
-      $("#loadMore").show();
+        if ($(".moreBox:hidden").length != 0) {
+        $("#loadMore").show();
+        }
+        event.preventDefault();
+
+        $(".moreBox:hidden").slice(0, 4).slideDown();
+        if ($(".moreBox:hidden").length == 0) {
+            $("#loadMore").fadeOut('hide');
+        }
     }
-      event.preventDefault();
+    function loadeMoreMobile(event,i){
+        if ($(".moreBox_mobile:hidden").length != 0) {
+        $("#loadMore_mobile").show();
+        }
+        event.preventDefault();
 
-      $(".moreBox:hidden").slice(0, 4).slideDown();
-      if ($(".moreBox:hidden").length == 0) {
-        $("#loadMore").fadeOut('hide');
-      }
-  }
-  function loadeMoreMobile(event,i){
-    if ($(".moreBox_mobile:hidden").length != 0) {
-      $("#loadMore_mobile").show();
+        $(".moreBox_mobile:hidden").slice(0, 4).slideDown();
+        if ($(".moreBox_mobile:hidden").length == 0) {
+            $("#loadMore_mobile").fadeOut('hide');
+        }
     }
-      event.preventDefault();
+    function loadlistview(event ,i){
+        if ($(".row_table:hidden").length != 0) {
+        $("#loadlistview").show();
+        }
+        event.preventDefault();
 
-      $(".moreBox_mobile:hidden").slice(0, 4).slideDown();
-      if ($(".moreBox_mobile:hidden").length == 0) {
-        $("#loadMore_mobile").fadeOut('hide');
-      }
-  }
-  function loadlistview(event ,i){
-    if ($(".row_table:hidden").length != 0) {
-      $("#loadlistview").show();
+        $(".row_table:hidden").slice(0, 4).slideDown();
+        if ($(".row_table:hidden").length == 0) {
+            $("#loadlistview").fadeOut('hide');
+        }
     }
-      event.preventDefault();
 
-      $(".row_table:hidden").slice(0, 4).slideDown();
-      if ($(".row_table:hidden").length == 0) {
-        $("#loadlistview").fadeOut('hide');
-      }
-  }
-
-  $(window).resize(function() {
-   if($(window).width() <= 786){
-    $('#current_list_item').val(1);
-    fillerData();
-   }
- });
-
+    $(window).resize(function() {
+        if($(window).width() <= 786){
+            $('#current_list_item').val(1);
+            fillerData();
+        }
+    });
 </script>
-
 @endsection

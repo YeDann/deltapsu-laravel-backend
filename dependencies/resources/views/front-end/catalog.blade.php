@@ -64,15 +64,25 @@
                     <li class="breadcrumb-item text-breadcrumb-home"><a
                             href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
                     <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
-                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['nav_dowloads']}}</a>
+                                data-toggle="dropdown" id="tools-dropdown"> {{$staticContent['Technical_Support']}}</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['nav_dowloads']}}</a>
+                            <li>
+                                <a href="#" class="text-bold">
+                                    {{ isset($staticContent['Technical_Support'])
+                                        ? $staticContent['Technical_Support']
+                                        : 'Technical Support' }}
+                                </a>
                             </li>
                             <hr>
-                            <li><a href="{{route('index','catalogs')}}">{{$staticContent['catalogs']}}</a></li>
-                            <li><a
-                                    href="{{route('index','product-documents')}}">{{$staticContent['Product_Documents']}}</a>
-                            </li>
+                            <li><a href="{{route('index', ['page' => 'catalogs'])}}">{{$staticContent['catalogs'] ?? 'Catalogs'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'product-documents'])}}">{{$staticContent['Product_Documents'] ?? 'Product Documents'}}</a></li>
+                            <li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison'] ?? 'Product Comparison'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'industry-know-how'])}}">{{$staticContent['Industry_Know_How'] ?? 'Industry Know-How'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'videos'])}}">{{$staticContent['Videos'] ?? 'Videos'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'eol'])}}">{{$staticContent['EOL'] ?? 'EOL'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'faqs'])}}">{{$staticContent['FAQs'] ?? 'FAQs'}}</a></li>
+                            <li><a href="{{route('contactSupport')}}">{{$staticContent['Technical_Service'] ?? 'Technical Service'}}</a></li>
                         </ul>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
@@ -145,11 +155,11 @@ function getDateformat($date){
                         <form onsubmit="searchmarketingbycate(event, {{$cate->cate_id}})">
                             <div class="search-space d-flex justify-content-center w-100">
                                 <div class="box-search-input mr-3">
-                                    <div class="box-search-icon">
+                                    <div class="box-search-icon" style="border-top-left-radius: 6px;border-bottom-left-radius: 6px;">
                                         <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                                     </div>
                                     <label for="searchinput" class="searchinput-filters-input">
-                                        <input type="text" name="modelname" id="modelname-{{$cate->cate_id}}"
+                                        <input type="text" name="modelname" id="modelname-{{$cate->cate_id}}" style="border-top-right-radius: 6px;border-bottom-right-radius: 6px;"
                                             placeholder="{{$staticContent['Search_By_Name']}}">
                                     </label>
                                 </div>

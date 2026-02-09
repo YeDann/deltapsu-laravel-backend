@@ -21,7 +21,7 @@
         background-position: right 50%;
         background-repeat: no-repeat;
         background-image: url('{{$imgDown}}');
-        font-size: 16px;
+        font-size: 16px !important;
     }
 
     .form-control:disabled,
@@ -36,7 +36,7 @@
     .form-control:focus {
         color: #495057;
         background-color: #fff;
-        border-color: #80bdff;
+        border-color: #0087DC;
         outline: unset;
         box-shadow: unset;
     }
@@ -157,22 +157,29 @@
                     <li class="breadcrumb-item text-breadcrumb-home"><a
                             href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
                     <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
-                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Supports']}}</a>
+                                data-toggle="dropdown" id="tools-dropdown"> {{$staticContent['Technical_Support']}}</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Supports']}}</a>
+                            <li>
+                                <a href="#" class="text-bold">
+                                    {{ isset($staticContent['Technical_Support'])
+                                        ? $staticContent['Technical_Support']
+                                        : 'Technical Support' }}
+                                </a>
                             </li>
                             <hr>
-                            <li><a href="{{route('contactSupport')}}">{{$staticContent['contact_us']}}</a></li>
-                            <li><a href="{{route('contactSalesOffices')}}">{{$staticContent['sales_offices']}}</a></li>
-                            <li><a
-                                    href="{{route('contactFindDistributor')}}">{{$staticContent['find_a_distributor']}}</a>
-                            </li>
-                            <li><a href="{{route('index','faqs')}}">{{$staticContent['FAQs']}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'catalogs'])}}">{{$staticContent['catalogs'] ?? 'Catalogs'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'product-documents'])}}">{{$staticContent['Product_Documents'] ?? 'Product Documents'}}</a></li>
+                            <li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison'] ?? 'Product Comparison'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'industry-know-how'])}}">{{$staticContent['Industry_Know_How'] ?? 'Industry Know-How'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'videos'])}}">{{$staticContent['Videos'] ?? 'Videos'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'eol'])}}">{{$staticContent['EOL'] ?? 'EOL'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'faqs'])}}">{{$staticContent['FAQs'] ?? 'FAQs'}}</a></li>
+                            <li><a href="{{route('contactSupport')}}">{{$staticContent['Technical_Service'] ?? 'Technical Service'}}</a></li>
                         </ul>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
                             href="#">{{$staticContent['contact_us']}}</a></li>
-
                 </ol>
             </nav>
         </div>
@@ -194,14 +201,12 @@
 
         <form id="submitSupport" onsubmit="return validateForm(this)" action="{{route('SubmitContact')}}" method="POST">
             {{csrf_field()}}
-
-
             <div class="add-space-mobile">
                 <div class="row">
                     <label class="col-12 text-title-detail-dark">{{$staticContent['Subject']}}<span
                             class="red">*</span></label>
                     <div class="col-12 w-100 mb-4">
-                        <select id="subjectType" name="subject" class="form-control" required>
+                        <select id="subjectType" name="subject" class="form-control border-radius-6" required>
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Subject']}}</option>
                             <option value="0" {{isset($contactlink) && $contactlink=='Sale-Enquiries' ?'selected':'' }}>
                                 Sales Inquiry</option>
@@ -217,13 +222,13 @@
                     <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
                         <label class="text-title-detail-dark">{{$staticContent['Name']}}<span
                                 class="red">*</span></label>
-                        <input type="text" class="form-control" name="name" pattern="[A-Za-zก-๏\s]+" required="required"
+                        <input type="text" class="form-control border-radius-6" name="name" pattern="[A-Za-zก-๏\s]+" required="required"
                             placeholder="Name">
                     </div>
                     <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
                         <label class="text-title-detail-dark">{{$staticContent['Email_Address']}}<span
                                 class="red">*</span></label>
-                        <input type="email" class="form-control" name="email" title="Incorrect Format Email"
+                        <input type="email" class="form-control border-radius-6" name="email" title="Incorrect Format Email"
                             placeholder="Email Address" required>
                     </div>
 
@@ -233,13 +238,13 @@
                     <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
                         <label class="text-title-detail-dark">{{$staticContent['Company']}}<span
                                 class="red">*</span></label>
-                        <input type="text" class="form-control" name="company" pattern="[A-Za-zก-๏\s().]+"
+                        <input type="text" class="form-control border-radius-6" name="company" pattern="[A-Za-zก-๏\s().]+"
                             required="required" placeholder="Company">
                     </div>
                     <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
                         <label class="text-title-detail-dark">{{$staticContent['Product_Type']}}<span
                                 class="red">*</span></label>
-                        <select id="type_id" name="type_id" class="form-control" onchange="selectType();" required>
+                        <select id="type_id" name="type_id" class="form-control border-radius-6" onchange="selectType();" required>
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Type']}}</option>
                             @foreach ($subCategories as $sub)
                             @if(in_array($sub->sub_pro_id, $arr_settype))
@@ -256,7 +261,7 @@
                     <div class="col-lg-6 col-md-12  select input-label w-100 mb-4">
                         <label class="text-title-detail-dark">{{$staticContent['Country']}}<span
                                 class="red">*</span></label>
-                        <select name="country" class="form-control required" onchange="selectCountry();"
+                        <select name="country" class="form-control required border-radius-6" onchange="selectCountry();"
                             id="countryemailId" required>
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Country']}}</option>
                             @foreach ($countryemails as $email)
@@ -268,7 +273,7 @@
                         <label class="text-title-detail-dark">{{$staticContent['Model']}}
                             {{-- <span class="red">*</span> --}}
                         </label>
-                        <select id="model_id" name="model_name" class="form-control" disabled>
+                        <select id="model_id" name="model_name" class="form-control border-radius-6" disabled>
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Model']}}</option>
                         </select>
                     </div>
@@ -278,14 +283,14 @@
                     <div class="col-lg-6 col-md-12 select02 input-label w-100 mb-4" id="box_state_con">
                         <label class="text-title-detail-dark">{{$staticContent['City_State']}} <span id="r_q_contry"
                                 class="red"></span></label>
-                        <select name="state" class="form-control" id="stateId">
+                        <select name="state" class="form-control border-radius-6" id="stateId">
                             <option value="" data-color="red">{{$staticContent['Select']}}
                                 {{$staticContent['City_State']}}</option>
                         </select>
                     </div>
                     <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
                         <label class="text-title-detail-dark">{{$staticContent['Phone_Number']}}</label>
-                        <input type="tel" class="form-control tel-not-req" name="tel" pattern="^[0-9-+\s()]*$"
+                        <input type="tel" class="form-control tel-not-req border-radius-6" name="tel" pattern="^[0-9-+\s()]*$"
                             maxlength="13" title="Incorrect Format Number only and Special Charecter +,-"
                             placeholder="{{$staticContent['Phone_Number']}}">
                     </div>
@@ -295,7 +300,7 @@
                         <label class="text-title-detail-dark mt-4">{{$staticContent['Message']}}<span
                                 class="red">*</span></label>
                         <div class="input-label">
-                            <textarea name="message" id="message" class="w-100" required="required"
+                            <textarea name="message" id="message" class="w-100 border-radius-6" required="required"
                                 rows="10"></textarea>
                             <label for="message">{{$staticContent['Message']}}</label>
                         </div>

@@ -244,6 +244,161 @@
 
     }
 </style>
+
+
+
+<style>
+    /* 整個 widget 區塊在頁面底部看起來要有呼吸感 */
+.widget-section {
+  margin-top: 0px;
+}
+
+/* 背景圖：全寬、置中、cover */
+.widget-bg {
+  position: relative;
+  background-image: url('/path/to/your/abstract-image.jpg'); /* 換成你的圖 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px 20px; /* 上下留空間 */
+}
+
+/* 如果想要一層淡霧感，可以開啟這段 */
+/*
+.widget-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(2px);
+}
+*/
+
+/* 中央對齊卡片容器 */
+.widget-inner {
+  position: relative;      /* 抵銷 ::before 的 absolute */
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  gap: 32px;
+}
+
+/* 單一 Widget：置中一張卡片 */
+.widget-inner--single {
+  justify-content: center;
+}
+
+/* 雙 Widget：兩張卡片橫排 */
+.widget-inner--double {
+  justify-content: center;
+}
+
+/* 白色卡片本體 */
+.widget-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 32px 40px;
+  box-shadow: 0px 2px 7px 2px rgba(0,0,0,0.16)!important;
+  max-width: 360px;
+}
+
+/* 上方那條漸層小 bar */
+.widget-bar {
+  width: 80px;
+  height: 5px;            /* ⭐ 這裡也要高度 */
+  overflow: hidden !important;
+  display: block;
+  background-color: rgb(0 135 220 / var(--tw-bg-opacity, 1)) !important;
+  border: 0 solid #e5e7eb;
+}
+
+/* lg 版本高度放大 */
+@media (min-width: 1024px) {
+  .widget-bar {
+    height: 5px;
+  }
+}
+
+.widget-bar::before {
+  content: "";
+  display: block;
+  width: 100% !important;
+  height: 5px !important;
+  background-image: linear-gradient(
+    to right,
+    #0087dc 60%,
+    #64d7d7 60%,
+    #64d7d7 80%,
+    #b9eb5f 80%
+  );
+  animation: brand-animation 6s linear infinite;
+  background-color: rgb(0 135 220 / var(--tw-bg-opacity, 1)) !important;
+}
+
+@keyframes brand-animation {
+  0%   { transform: translateX(-100%); }
+  20%   { transform: translateX(0%); }
+  80%   { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 標題 */
+.widget-title {
+  font-size: 28px;
+  margin: 12px 0 12px 0;
+  color: #111827;
+}
+
+/* 描述文字 */
+.widget-text {
+  margin: 0 0 24px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+/* CTA 按鈕 */
+.widget-btn {
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 4px;
+  background-color: #0087DC;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: box-shadow 0.15s ease, transform 0.15s ease,
+              background-color 0.15s ease;
+}
+
+.widget-btn:hover {
+  background-color: #1E50C8;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  transform: translateY(-1px);
+}
+
+/* RWD：手機直向時把兩張卡片疊起來 */
+@media (max-width: 768px) {
+  .widget-bg {
+    padding: 48px 16px;
+  }
+
+  .widget-inner {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .widget-card {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .widget-title {
+    font-size: 24px;
+  }
+}
+
+</style>
 @endsection
 @section('meta')
 <?php
@@ -390,11 +545,11 @@
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page">
                         <a
-                            href="{{ route('productList',[preg_replace('/\s+/', '-',  $product[0]['url_item']),$product[0]['cate_id']])}}">{{$product[0]['cate_name']}}</a>
+                            href="{{ route('productList',[$current_main_cate_id, preg_replace('/\s+/', '-',  $product[0]['url_item']),$product[0]['cate_id']])}}">{{$product[0]['cate_name']}}</a>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page">
                         <a
-                            href="{{ route('productList',[preg_replace('/\s+/', '-', $product[0]['url_item']),$product[0]['cate_id'],$product[0]['serie_name'],$product[0]['serie_id']])}}">{{$product[0]['serie_name']}}
+                            href="{{ route('productList',[$current_main_cate_id, preg_replace('/\s+/', '-', $product[0]['url_item']),$product[0]['cate_id'],$product[0]['serie_name'],$product[0]['serie_id']])}}">{{$product[0]['serie_name']}}
                             {{$staticContent['Series']}}</a>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb-ative" aria-current="page">
@@ -429,7 +584,7 @@
                     </li> --}}
                     <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page">
                         <a
-                            href="{{ route('productList',[preg_replace('/\s+/', '-', $product[0]['url_item']),$product[0]['cate_id'],$product[0]['serie_name'],$product[0]['serie_id']])}}">{{$product[0]['serie_name']}}
+                            href="{{ route('productList',[$current_main_cate_id, preg_replace('/\s+/', '-', $product[0]['url_item']),$product[0]['cate_id'],$product[0]['serie_name'],$product[0]['serie_id']])}}">{{$product[0]['serie_name']}}
                             {{$staticContent['Series']}}</a>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb-ative" aria-current="page">
@@ -669,14 +824,13 @@
                                 !!}
                             </div>
 
-                            {{-- <h5 class="text-color-delta mt-2">Optional Models </h5> --}}
                             @if(count($optional_pro) > 0)
                             <div id="box-optional-model" class="box-optional-model">
                                 <div class="box-optional-model-list collapsed" data-toggle="collapse"
                                     data-target="#collapse-box-optional-model" aria-expanded="true"
                                     aria-controls="collapse-box-optional-model" href="#collapse-box-optional-model">
                                     <a class="card-title text-sixteen-dark">
-                                      {{$staticContent['optional_models']}}
+                                        {{ isset($staticContent['optional_models']) ? $staticContent['optional_models'] : 'Optional Models' }}
                                     </a>
                                 </div>
                                 <div id="collapse-box-optional-model" aria-labelledby="collapse-box-optional-model"
@@ -686,7 +840,9 @@
                                         <thead class="thead-gray">
                                             <tr>
                                                 <th class="text-center" style="width: 40%">{{$staticContent['Model']}}</th>
-                                                <th class="text-center">{{$staticContent['description']}}</th>
+                                                <th class="text-center">
+                                                    {{ isset($staticContent['description']) ? $staticContent['description'] : 'Description' }}
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -830,7 +986,6 @@
     </div>
 </div>
 <div class="invisible-up-922">
-
     <div class="box-detail my-5">
         <div class="container">
             <div class="product-show-box w-100">
@@ -1028,7 +1183,7 @@
                                 data-target="#collapse-box-optional-model-mobile" aria-expanded="true"
                                 aria-controls="collapse-box-optional-model" href="#collapse-box-optional-model-mobile">
                                 <a class="card-title text-sixteen-dark">
-                                    {{$staticContent['optional_models']}}
+                                    {{ isset($staticContent['optional_models']) ? $staticContent['optional_models'] : 'Optional Models' }}
                                 </a>
                             </div>
                             <div id="collapse-box-optional-model-mobile" aria-labelledby="collapse-box-optional-model"
@@ -1038,7 +1193,9 @@
                                     <thead class="thead-gray">
                                         <tr>
                                             <th class="text-center" style="width: 40%">  {{$staticContent['Model']}}</th>
-                                            <th class="text-center">  {{$staticContent['description']}}</th>
+                                            <th class="text-center">  
+                                                {{ isset($staticContent['description']) ? $staticContent['description'] : 'Description' }}
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1444,14 +1601,62 @@
 </div>
 <div class="box-lookingfor py-5"
     style="background: url('{{asset('frontend-asset/image/product-detail/Help.jpg')}}') no-repeat; background-position: top center; background-size: cover; ">
-    <div class="d-flex">
+
+    <!-- 單一 Widget -->
+    {{-- <section class="widget-section">
+        <div class="widget-bg">
+            <div class="widget-inner widget-inner--single">
+                <article class="widget-card">
+                    <span class="widget-bar"></span>
+                    <h1 class="widget-title">Contact Us</h1>
+                    <p class="widget-text">
+                        Submit your inquiry and we will reach out to you.
+                    </p>
+                    <a href="/contact" class="widget-btn">Inquire</a>
+                </article>
+            </div>
+        </div>
+    </section> --}}
+
+    <!-- 雙 Widget -->
+    <section class="widget-section">
+        <div class="widget-bg">
+            <div class="widget-inner widget-inner--double">
+                <article class="widget-card">
+                    <div class="widget-bar"></div>
+                    <h1 class="widget-title">{{ $staticContent['Looking_for_support_for_this'] }}</h1>
+                    <p class="widget-text"></p> 
+                    <a href="{{ route('contactSupport') }}">
+                        <button class="btn btn-subscribe">
+                            {{isset($staticContent['Get_Support'])?$staticContent['Get_Support']:"Get Support"}}
+                        </button>
+                    </a>
+                </article>
+
+                <article class="widget-card">
+                    <div class="widget-bar"></div>
+                    <h1 class="widget-title">{{ isset($staticContent['Subscribe_to_our_newsletter']) ?
+                            $staticContent['Subscribe_to_our_newsletter'] : "Subscribe to our newsletter" }}</h1>
+                    <p class="widget-text"></p>
+
+                    <a href="javascript:void(0);">
+                        <button class="btn btn-subscribe" onclick="resetfield();" data-toggle="modal" data-target="#subscribe-modal">
+                            {{isset($staticContent['Subscribe'])?$staticContent['Subscribe']:"Subscribe"}}
+                        </button>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    {{-- <div class="d-flex">
         <div class="box-lookingfor-content text-center">
             <h2 class="text-white visible-up-922">{{$staticContent['Looking_for_support_for_this']}}</h2>
             <h3 class="text-white invisible-up-922">{{$staticContent['Looking_for_support_for_this']}}</h3>
             <a href="{{route('contactSupport')}}"><button
                     class="btn-addcompare mt-3">{{$staticContent['Get_Support']}}</button></a>
         </div>
-    </div>
+    </div> --}}
 </div>
 <div class="">
     <div class="box-related-products">

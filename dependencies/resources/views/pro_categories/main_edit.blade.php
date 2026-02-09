@@ -28,12 +28,7 @@
                 {{csrf_field()}}
                 <!-- Basic Elements -->
                 <div class="row push">
-                    <div class="col-lg-4">
-                        <p class="text-muted">
-                            {{-- The most often used inputs you know and love --}}
-                        </p>
-                    </div>
-                    <div class="col-lg-8 col-xl-5">
+                    <div class="col-lg-12">
                         <div class="block block-rounded block-bordered">
                             <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
                                 @foreach ($mainCategories as $item)
@@ -62,6 +57,31 @@
                                             class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                             name="name[{{$item->local}}]" value="{{$item->name}}" placeholder="Enter name...">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="example-select">Overview</label>
+                                        <textarea rows="4" class="form-control"
+                                            name="content[{{$item->local}}]">{{isset($item->content) ? $item->content :''}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-select">File</label>
+                                        <input type="hidden" name="oldfile[{{$item->local}}]" 
+                                            value="{{isset($item->file) ? $item->file :''}}">
+                                        @if($item->file && $item->file != '')
+                                        <a target="_blank"
+                                            href="{{config('app.url')}}/medias/categories/{{$item->file}}">{{$item->file}}</a>
+                                        <a href="{{route('removefileMainCategoriesDoc',[$mainId,$item->local])}}"
+                                            onclick="return confirm('Are you sure?');">
+                                            <button type="button" class="btn btn-sm btn-danger"
+                                                style="margin: 10px 0px 10px 10px;"><i class="fa fa-trash"></i></button>
+                                        </a>
+                                        @endif
+                                        <br>
+                                        <div class="custom-file " style="width:100%;">
+                                            <input type="file" class="custom-file-input file_input"
+                                                name="fileGU[{{$item->local}}]" data-toggle="custom-file-input">
+                                            <label class="custom-file-label" for="fileImage">Choose file</label>
+                                        </div>
+                                    </div>
                                 </div>
                                 @else
                                 <div class="tab-pane" id="btabs-alt-static-{{$item->local}}" role="tabpanel">
@@ -71,17 +91,92 @@
                                             class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
                                             name="name[{{$item->local}}]" value="{{$item->name}}" placeholder="Enter name...">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="example-select">Overview</label>
+                                        <textarea rows="4" class="form-control"
+                                            name="content[{{$item->local}}]">{{isset($item->content) ? $item->content :''}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-select">File</label>
+                                        <input type="hidden" name="oldfile[{{$item->local}}]" 
+                                            value="{{isset($item->file) ? $item->file :''}}">
+                                        @if($item->file && $item->file != '')
+                                        <a target="_blank"
+                                            href="{{config('app.url')}}/medias/categories/{{$item->file}}">{{$item->file}}</a>
+                                        <a href="{{route('removefileMainCategoriesDoc',[$mainId,$item->local])}}"
+                                            onclick="return confirm('Are you sure?');">
+                                            <button type="button" class="btn btn-sm btn-danger"
+                                                style="margin: 10px 0px 10px 10px;"><i class="fa fa-trash"></i> </button>
+                                        </a>
+                                        @endif
+                                        <br>
+                                        <div class="custom-file " style="width:100%;">
+                                            <input type="file" class="custom-file-input file_input"
+                                                name="fileGU[{{$item->local}}]" data-toggle="custom-file-input">
+                                            <label class="custom-file-label" for="fileImage">Choose file</label>
+                                        </div>
+                                    </div>
                                 </div>
                                 @endif
                                 @endforeach
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="text-center form-group">
-                                <button class="btn btn-info" type="submit">Update </button>
-                                <a href="{{route('mainprotype.index')}}" class="btn btn-secondary">
-                                    Cancel
-                                </a>
-                            </div>
+                    <div class="col-lg-12" style="margin-bottom: 20px">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-vcenter">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="width: 10px;">
+                                            File Type
+                                        </th>
+                                        <th class="text-center" style="width: 400px;">
+                                            Old Image
+                                        </th>
+
+                                        <th style="width: 300px;">Preview</th>
+                                        <th style="width: 300px;">Update File <span class="req-fed">* File Max Size 2
+                                                MB</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            Banner
+                                        </td>
+                                        <td class="">
+                                            <img src="{{ config('app.url') }}/medias/categories/{{ $mainCategory->banner }}"
+                                                class="img-thumbnail res-image" alt="">
+                                            <input type="hidden" name="oldbanner" value="{{ $mainCategory->banner}}">
+                                        </td>
+                                        <td class="">
+                                            <img src="https://via.placeholder.com/375x184.png"
+                                                class="img-thumbnail bannerPreview res-image" alt="">
+                                        </td>
+
+                                        <td class="">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input"
+                                                    data-toggle="custom-file-input" id="banner" name="banner"
+                                                    value=" " accept="image/*">
+                                                <label id="label1" class="custom-file-label" for="banner">Choose
+                                                    file</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="text-center form-group">
+                            <button class="btn btn-info" type="submit">Update </button>
+                            <a href="{{route('mainprotype.index')}}" class="btn btn-secondary">
+                                Cancel
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -91,5 +186,33 @@
 </div>
 @endsection
 @section('js')
+<script>
+var previewImage = function (input, block) {
+    var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp'];
+    var extension = input.files[0].name.split('.').pop().toLowerCase();
+    var isSuccess = fileTypes.indexOf(extension) > -1;
+    if (isSuccess) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            block.attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        alert('File type is not accepted! Please use: jpg, jpeg, png, gif, svg, webp');
+    }
+};
 
+$(document).on('change', '#banner', function () {
+    if (this.files[0]) {
+        var FileSize = this.files[0].size / 1024 / 1024; // in MB
+        if (FileSize > 2) {
+            alert("File size exceeds 2 MB!");
+            this.value = "";
+            $(this).siblings('label').text('Choose file');
+        } else {
+            previewImage(this, $('.bannerPreview'));
+        }
+    }
+});
+</script>
 @endsection

@@ -1,47 +1,98 @@
 @extends('layouts.front-end')
 @section('css')
 <style>
+    /* =========================================
+       Global / Utility Styles
+       ========================================= */
+    .btn.focus,
+    .btn:focus {
+        outline: 0;
+        box-shadow: unset;
+    }
+    
+    .midle-item {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%)
+    }
+
+    .visible-tablets-up {
+        width: 1180px;
+        margin: 0 auto;
+    }
+
+    .text-title-delta-home {
+        color: black;
+        margin-bottom: 2.5rem;
+        margin-top: 12px;
+        text-align: left;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .text-title-delta-home {
+            font-size: 24px;
+        }
+    }
+
+    .mr-lr-feture {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    /* =========================================
+       Banner & Slide Section
+       ========================================= */
+    .slide {
+        position: relative;
+    }
+
+    .slide::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0 0 0 / .2) !important;
+        z-index: 1;
+    }
+
+    .slide-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .padd-mobile-slide {
+        background: linear-gradient(to bottom, #fff, transparent, transparent);
+        background-position: top center, bottom center;
+        background-size: 100% 100%;
+        padding-bottom: 2%;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .posit-btn-mobile {
+        position: absolute;
+        bottom: 70px;
+        transform: translate(-50%, 50%);
+    }
+
+    @media only screen and (max-width:768px) {
+        .posit-btn-mobile {
+            display: none;
+        }
+    }
+
+    .btn-subscribe {
+        z-index: 999;
+    }
+
+    /* =========================================
+       Product Selector Section
+       ========================================= */
     .box-product-selector .container {
         text-align: center;
-
-    }
-
-    /* .visible-mobile .box-product-selector .container{
-        padding: 16px;
-    } */
-    .text-hover {
-        /* display: none; */
-        opacity: 0;
-        line-height: 1;
-        color: #5F5F5F;
-        font-size: 14px;
-
-    }
-
-    .product-selector-list:hover .text-hover,
-    .product-selector-mobile:hover .text-hover {
-        opacity: 1;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-
-
-    .product-selector-list:hover .text-title-dark,
-    .product-selector-mobile:hover .text-title-dark {
-        color: #0087DC !important;
-
-    }
-
-    .product-selector-list:hover,
-    .product-selector-mobile:hover {
-        border-color: #0087DC;
-    }
-
-    .product-selector-list:hover a {
-        text-decoration: none;
     }
 
     .product-selector-list {
@@ -54,60 +105,107 @@
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 1rem;
+        max-height: 85px;
+        object-fit: contain;
     }
 
-
-
-    .btn.focus,
-    .btn:focus {
-        outline: 0;
-        box-shadow: unset;
+    .product-selector-list:hover,
+    .product-selector-mobile:hover {
+        border-color: #0087DC;
     }
 
-    .ttt {
-        transform: scaleX(0);
+    .product-selector-list:hover a {
+        text-decoration: none;
     }
 
-    #producttype.owl-carousel .owl-stage-outer {}
-
-    .midle-item {
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        transform: translate(0, -50%)
+    .product-selector-list:hover .text-title-dark,
+    .product-selector-mobile:hover .text-title-dark {
+        color: #0087DC !important;
     }
 
-    .in-volt {
-        height: 73px;
+    .text-hover {
+        opacity: 0;
+        line-height: 1;
+        color: #5F5F5F;
+        font-size: 14px;
+    }
+
+    .product-selector-list:hover .text-hover,
+    .product-selector-mobile:hover .text-hover {
+        opacity: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
         overflow: hidden;
     }
 
-    .mr-lr-feture {
-        padding-left: 30px;
-        padding-right: 30px;
+    /* =========================================
+       Widget Bar Animation
+       ========================================= */
+    .widget-bar {
+        width: 80px;
+        height: 5px;
+        overflow: hidden !important;
+        display: block;
+        background-color: rgb(0 135 220 / var(--tw-bg-opacity, 1)) !important;
+        border: 0 solid #e5e7eb;
+        margin-top: 2.5rem;
     }
 
-    .posit-btn-mobile {
-        position: absolute;
-        bottom: 70px;
-        transform: translate(-50%, 50%);
+    .widget-bar::before {
+        content: "";
+        display: block;
+        width: 100% !important;
+        height: 5px !important;
+        background-image: linear-gradient(
+            to right,
+            #0087dc 60%,
+            #64d7d7 60%,
+            #64d7d7 80%,
+            #b9eb5f 80%
+        );
+        animation: brand-animation 6s linear infinite;
+        background-color: rgb(0 135 220 / var(--tw-bg-opacity, 1)) !important;
     }
 
-    .padd-mobile-slide {
-        background: linear-gradient(to bottom, #fff, transparent, transparent);
-        background-size: cover;
-        background-position: top center, bottom center;
-        background-size: 100% 100%;
-        padding-bottom: 2%;
-        padding-left: 20px;
-        padding-right: 20px;
+    .widget-bar-static {
+        display: block;
+        width: 20%;
+        height: 5px;
+        margin-top: 2.5rem;
+        background: linear-gradient(
+            to right,
+            #0087dc 60%,
+            #64d7d7 60%,
+            #64d7d7 80%,
+            #b9eb5f 80%
+        );
     }
 
-    .btn-subscribe {
-        z-index: 999;
+    .non-widget-bar-static {
+        display: block;
+        width: 20%;
+        height: 5px;
+        margin-top: 2.5rem;
     }
 
-    @media only screen and (min-width:921px) {
+    @keyframes brand-animation {
+        0%   { transform: translateX(-100%); }
+        20%  { transform: translateX(0%); }
+        80%  { transform: translateX(0%); }
+        100% { transform: translateX(100%); }
+    }
+
+    /* =========================================
+       Media Queries
+       ========================================= */
+    @media (min-width: 1024px) {
+        .widget-bar {
+            height: 5px;
+        }
+    }
+
+    @media only screen and (min-width: 921px) {
         .text-app-arrow {
             font-size: 0.75em;
             color: #0087dc;
@@ -123,7 +221,7 @@
         }
     }
 
-    @media only screen and (max-width:920px) {
+    @media only screen and (max-width: 920px) {
         .text-app-arrow {
             font-size: 14px;
             color: #0087dc;
@@ -136,6 +234,30 @@
             font-size: 14px !important;
             margin-left: 8px;
             margin-top: 4px;
+        }
+    }
+
+    /* =========================================
+       Other Styles
+       ========================================= */
+    .ttt {
+        transform: scaleX(0);
+    }
+
+    .in-volt {
+        height: 73px;
+        overflow: hidden;
+    }
+
+    /* #producttype.owl-carousel .owl-stage-outer {} */
+
+    @media (min-width: 767px) {
+        #slider,
+        .wrap,
+        .slide-content,
+        .slide {
+            height: calc(100vh - 260px) !important;
+            max-height: 420px !important;
         }
     }
 </style>
@@ -164,8 +286,6 @@
 @section('container')
 <?php $style = 2; ?>
 <!-- banner -->
-
-
 <div class="show-more-769">
     <div class="box-banner">
         <div id="slide-banner" class="owl-carousel owl-theme">
@@ -177,37 +297,37 @@
                         <div class="slide-content">
                             @if($banner->title2 != null || $banner->content != null)
                             <div class="container">
-                                <div class="bg-w-banner">
+                                <div class="bg-none-banner">
                                     @if($index == 0)
-                                    <h1 class="text-title-banner" style="color:{{ $banner->title_color}}">
-                                        <?php
-                                    $str = $banner->title2;
-                                    $st = explode("\n", $str);
-                                    for ($k = 0; $k < count($st); $k++) {
-                                        echo $st[$k] = '<div>'
-                                                . $st[$k]
-                                                . '</div>';
-                                    }
-                                    ?>
-                                    </h1>
+                                        <h1 class="text-title-banner" style="color:{{ $banner->title_color}}">
+                                            <?php
+                                                $str = $banner->title2;
+                                                $st = explode("\n", $str);
+                                                for ($k = 0; $k < count($st); $k++) {
+                                                    echo $st[$k] = '<div>'
+                                                            . $st[$k]
+                                                            . '</div>';
+                                                }
+                                            ?>
+                                        </h1>
                                     @else
-                                    <h2 class="text-title-banner" style="color:{{ $banner->title_color}}">
-                                        <?php
-                                    $str = $banner->title2;
-                                    $st = explode("\n", $str);
-                                    for ($k = 0; $k < count($st); $k++) {
-                                        echo $st[$k] = '<div>'
-                                                . $st[$k]
-                                                . '</div>';
-                                    }
-                                    ?>
-                                    </h2>
+                                        <h2 class="text-title-banner" style="color:{{ $banner->title_color}}">
+                                            <?php
+                                                $str = $banner->title2;
+                                                $st = explode("\n", $str);
+                                                for ($k = 0; $k < count($st); $k++) {
+                                                    echo $st[$k] = '<div>'
+                                                            . $st[$k]
+                                                            . '</div>';
+                                                }
+                                             ?>
+                                        </h2>
                                     @endif
-                                    <div class="text-p-banner my-2" style="color:{{ $banner->content_color}}">
+                                    <div class="text-p-banner" style="color:{{ $banner->content_color}}; margin-top: 20px;">
                                         {!!$banner->content!!}
                                     </div>
                                     @if($banner->btn_status == 1)
-                                    <button class="btn btn-subscribe">{{$banner->btn_name}}</button>
+                                    <button class="btn btn-subscribe shadow-radius-box">{{$banner->btn_name}}</button>
 
                                     @endif
                                 </div>
@@ -231,16 +351,15 @@
     <div class="box-banner">
         <div id="slide-banner-mobile" class="owl-carousel owl-theme ">
             @foreach ($banners as $index => $banner)
-
             <div class="item banner-item ">
                 <a href="{{$banner->btn_link}}">
                     <div loading="lazy" data-src="{{config('app.url')}}/medias/banners/{{$banner->image}}"
                         class="slide">
                         <div class="slide-content">
                             @if($banner->title2 != null)
-                            <div class="container ">
-                                <div class="">
-                                    <h2 class="text-title-banner" style="color:{{ $banner->title_color}}">
+                            <div class="container">
+                                <div class="bg-none-banner">
+                                    <h2 class="text-title-banner mt-4" style="color:{{ $banner->title_color}}">
                                         <?php
                                         $str = $banner->title;
                                         $st = explode("\n", $str);
@@ -251,9 +370,12 @@
                                         }
                                       ?>
                                     </h2>
+                                    <div class="text-p-banner" style="color:{{ $banner->content_color}}; margin-top: 16px;">
+                                        {!!$banner->content!!}
+                                    </div>
                                     @if($banner->btn_status == 1)
                                     <button
-                                        class="btn btn-subscribe mt-3 posit-btn-mobile">{{$banner->btn_name}}</button>
+                                        class="btn btn-subscribe mt-3 posit-btn-mobile shadow-radius-box">{{$banner->btn_name}}</button>
                                     @endif
                                 </div>
                             </div>
@@ -270,29 +392,27 @@
     </div>
 </div>
 <!-- selecter -->
-
 <div class="visible-tablets-up">
-    <div class="box-product-selector container ">
+    <div class="box-product-selector container">
+        <div class="widget-bar"></div>
         <h2 class="text-title-delta-home"> {{$staticContent['Product_Selector']}}</h2>
         <div id="product-selector-carousel" class="owl-carousel owl-theme product-selector text-center">
-            @foreach($subCategories as $sub)
-            <div class="product-selector-list border-2px d-flex align-items-center">
+            @foreach($mainCategories as $mainCate)
+            <div class="product-selector-list border-2px d-flex align-items-center border-radius-6">
                 <div class="m-auto">
-                    <a href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
-                        @if($sub->image != null)
-                        <img data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy"
-                            class="lazyload" alt="{{$sub->image}}">
+                    <a href="{{ route('productList',[$mainCate->main_id])}}">
+                        @if($mainCate->banner != null)
+                        <img data-src="{{config('app.url')}}/medias/categories/{{$mainCate->banner}}" loading="lazy"
+                            class="lazyload" alt="{{$mainCate->banner}}">
                         @else
                         <img data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy" class="lazyload"
                             alt="blank.png">
                         @endif
                         <div style="height: 50px; " class="d-flex">
-                            <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$sub->name}}</h4>
+                            <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$mainCate->name}}</h4>
                         </div>
                     </a>
-
                 </div>
-
             </div>
             @endforeach
         </div>
@@ -300,24 +420,23 @@
 </div>
 <div class="visible-mobile">
     <div class="box-product-selector padd-left-rbox">
-        <h2 class="text-title-delta-home ">{{$staticContent['Product_Selector']}}</h2>
+        <div class="widget-bar"></div>
+        <h2 class="text-title-delta-home">{{$staticContent['Product_Selector']}}</h2>
         <div id="product-selector-carousel-mobile" class="owl-carousel owl-theme product-selector text-center">
-            @foreach($subCategories as $sub)
-            <div class="product-selector-list ">
-                <div class="border-2px d-flex h-100 p-1 align-items-center"
-                    style="    box-shadow: 0px 4px 5px 2px rgba(0, 0, 0, 0.09);">
+            @foreach($mainCategories as $mainCate)
+            <div class="product-selector-list">
+                <div class="border-2px d-flex h-100 p-1 align-items-center border-radius-6">
                     <div class="m-auto">
-                        <a
-                            href="{{ route('productList',[preg_replace('/\s+/', '-', $sub->url_item),$sub->sub_pro_id])}}">
-                            @if($sub->image != null)
-                            <img data-src="{{config('app.url')}}/medias/categories/{{$sub->image}}" loading="lazy"
-                                class="lazyload" alt="{{$sub->image}}">
+                        <a href="{{ route('productList',[$mainCate->main_id])}}">
+                            @if($mainCate->banner != null)
+                            <img data-src="{{config('app.url')}}/medias/categories/{{$mainCate->banner}}" loading="lazy"
+                                class="lazyload" alt="{{$mainCate->banner}}">
                             @else
                             <img data-src="{{asset('frontend-asset/image/blank.png')}}" loading="lazy" class="lazyload"
                                 alt="blank.png">
                             @endif
                             <div style="height: 50px;" class="d-flex">
-                                <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$sub->name}}</h4>
+                                <h4 class="text-title-dark mx-auto fix-text-width-product-selector">{{$mainCate->name}}</h4>
                             </div>
                         </a>
                     </div>
@@ -331,15 +450,15 @@
 <div class="visible-tablets-up">
     <div class="box-applications">
         <div class="container">
+            <div class="widget-bar"></div>
             <h2 class="text-title-delta-home ">{{$staticContent['Applications']}}</h2>
             <div class="grid-container">
                 @foreach ($applications as $item)
-                <a href="{{route('appDetail' ,[ 'name' => $item->slug_app , 'id' => $item->applica_id])}}" class=""
+                <a href="{{ route('appDetail', ['name' => $item->slug_app, 'id' => $item->applica_id]) }}" class="hover-border-blue"
                     style="">
-                    <div class="grid-item ">
-                        <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy"
-                            class="grid-sub-pic">
-
+                    <div class="grid-item">
+                        <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy" 
+                            class="grid-sub-pic" style="border-radius: 6px 0 0 6px">
                         </div>
                         <div class="grid-sub-text">
                             <img src="{{config('app.url')}}/medias/categories/{{$item->color_icon}}" alt="">
@@ -382,14 +501,15 @@
 <div class="visible-mobile">
     <div class="box-applications-mobile  ">
         <div class="container">
+            <div class="widget-bar"></div>
             <h2 class="text-title-delta-home">{{$staticContent['Applications']}}</h2>
             <div class="grid-container">
                 @foreach ($applications as $item)
                 <a href="{{route('appDetail' ,[ 'name' => $item->slug_app, 'id' => $item->applica_id])}}"
                     class="blogBox-mb moreBox-mb" style="display: none;">
-                    <div class="grid-item ">
+                    <div class="grid-item">
                         <div data-src="{{config('app.url')}}/medias/categories/{{$item->thumbnail}}" loading="lazy"
-                            class="grid-sub-pic">
+                            class="grid-sub-pic" style="border-radius: 6px 0 0 6px">
                         </div>
                         <div class="grid-sub-text">
                             <img class="lazyload"
@@ -443,13 +563,27 @@ function retextdata($arr ,$unit){
 ?>
 <div class="visible-tablets-up">
     <div class="box-pp">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="text-title-delta-home">{{$staticContent['The_Latest_Series']}}</h2>
-            </div>
+        <div class="container">    
+            <div class="widget-bar"></div>
+            <h2 class="text-title-delta-home">{{$staticContent['The_Latest_Series']}}</h2>
             <div id="producttype" class="owl-carousel owl-theme  ft-products-body">
                 @foreach ($series as $serie)
-                <div class="series-list-home">
+                @php
+                    $urlParams = [];
+                    if($serie->main_cateid == 3){
+                        $modeId = $serie->mode_series;
+                        $urlText = 'cc-cv-mode';
+                        if($modeId == 2){
+                            $urlText = 'cc-mode';
+                        }elseif($modeId == 3){
+                            $urlText = 'cv-mode';
+                        }
+                        $urlParams = [$serie->main_cateid, $urlText, $modeId, preg_replace('/\s+/', '', $serie->slug), $serie->se_id];
+                    } else {
+                        $urlParams = [$serie->main_cateid, preg_replace('/\s+/', '-', $serie->url_item), $serie->cate_id, preg_replace('/\s+/', '', $serie->slug), $serie->se_id];
+                    }
+                @endphp
+                <div class="series-list-home border-radius-6">
                     <div class="">
                         <div class="d-block ">
                             <div class="m-auto series-img">
@@ -457,7 +591,7 @@ function retextdata($arr ,$unit){
                                 <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                     @else
                                     <a style="color:inherit;" class=""
-                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',$urlParams)}}">
                                         @endif
                                         @if(isset($serie->image))
                                         <img data-src="{{config('app.url')}}/medias/categories/{{$serie->image}}"
@@ -475,7 +609,7 @@ function retextdata($arr ,$unit){
                                 <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                     @else
                                     <a style="color:inherit;" class="m-auto"
-                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',$urlParams)}}">
                                         @endif
                                         <h3 class="text-dark  m-0">{{$serie->title}}</h3>
                                     </a>
@@ -484,7 +618,7 @@ function retextdata($arr ,$unit){
                             <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                 @else
                                 <a style="color:inherit;" class="m-auto"
-                                    href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                    href="{{ route('productList',$urlParams)}}">
                                     @endif
                                     <div class="series-text-detail">
                                         {!! $serie->overview_content !!}
@@ -520,12 +654,26 @@ function retextdata($arr ,$unit){
 <div class="visible-mobile">
     <div class="padd-mobile-slide">
         <div class="">
-            <div class="text-center">
-                <h2 class="text-title-delta-home">{{$staticContent['The_Latest_Series']}}</h2>
-            </div>
+            <div class="widget-bar"></div>
+            <h2 class="text-title-delta-home">{{$staticContent['The_Latest_Series']}}</h2>
             <div id="producttype-mobile" class="owl-carousel owl-theme  ft-products-body">
                 @foreach ($series as $serie)
-                <div class="series-list-home">
+                @php
+                    $urlParams = [];
+                    if($serie->main_cateid == 3){
+                        $modeId = $serie->mode_series;
+                        $urlText = 'cc-cv-mode';
+                        if($modeId == 2){
+                            $urlText = 'cc-mode';
+                        }elseif($modeId == 3){
+                            $urlText = 'cv-mode';
+                        }
+                        $urlParams = [$serie->main_cateid, $urlText, $modeId, preg_replace('/\s+/', '', $serie->slug), $serie->se_id];
+                    } else {
+                        $urlParams = [$serie->main_cateid, preg_replace('/\s+/', '-', $serie->url_item), $serie->cate_id, preg_replace('/\s+/', '', $serie->slug), $serie->se_id];
+                    }
+                @endphp
+                <div class="series-list-home border-radius-6">
                     <div class="">
                         <div class="d-block ">
                             <div class="m-auto series-img">
@@ -533,7 +681,7 @@ function retextdata($arr ,$unit){
                                 <a class="color:inherit;" href="{{route('configurableProductDetail')}}">
                                     @else
                                     <a style="color:inherit;" class=""
-                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',$urlParams)}}">
                                         @endif
                                         @if(isset($serie->image))
                                         <img data-src="{{config('app.url')}}/medias/categories/{{$serie->image}}"
@@ -551,7 +699,7 @@ function retextdata($arr ,$unit){
                                 <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                     @else
                                     <a style="color:inherit;" class="m-auto"
-                                        href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                        href="{{ route('productList',$urlParams)}}">
                                         @endif
                                         <h3 class="text-dark  m-0">{{$serie->title}}</h3>
                                     </a>
@@ -560,7 +708,7 @@ function retextdata($arr ,$unit){
                             <a style="color:inherit;" class="m-auto" href="{{route('configurableProductDetail')}}">
                                 @else
                                 <a style="color:inherit;" class="m-auto"
-                                    href="{{ route('productList',[preg_replace('/\s+/', '-', $serie->url_item),$serie->cate_id,preg_replace('/\s+/', '', $serie->slug),$serie->se_id])}}">
+                                    href="{{ route('productList',$urlParams)}}">
                                     @endif
                                     <div class="series-text-detail">
                                         {!! $serie->overview_content !!}
@@ -595,14 +743,15 @@ function retextdata($arr ,$unit){
 </div>
 
 <!-- event -->
-<div class="visible-desk-up">
+<div class="visible-tablets-up">
     <div class="box-events  ">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
+                    <div class="widget-bar"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['Upcoming_Event']}}</h2>
                     @if(isset($events[0]))
-                    <div class="card">
+                    <div class="card border-radius-6">
                         <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
                             <div class="post-image">
                                 <img data-src="{{config('app.url')}}/uploads_delta/{{$events[0]['thumb']}}"
@@ -610,8 +759,6 @@ function retextdata($arr ,$unit){
                             </div>
                         </a>
                         <div class="news-content w-100">
-
-
                             <div class="post-meta">
                                 <span class="author text-uppercase">
                                     <i class="zmdi zmdi-calendar-alt"></i>
@@ -641,9 +788,10 @@ function retextdata($arr ,$unit){
                     </div>
                 </div>
                 <div class="col-lg-4">
+                    <div class="non-widget-bar-static"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
-                    <div class="card">
+                    <div class="card border-radius-6">
                         <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
                             <div class="post-image">
                                 <img data-src="{{config('app.url')}}/uploads_delta/{{$news[0]['thumb']}}" loading="lazy"
@@ -690,9 +838,9 @@ function retextdata($arr ,$unit){
                     </div>
                 </div>
                 <div class="col-lg-4">
+                    <div class="non-widget-bar-static"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
-
-                    <div class="card">
+                    <div class="card border-radius-6">
                         <a href="{{route('index','faqs')}}">
                             <div class="post-image w-100">
 
@@ -729,9 +877,10 @@ function retextdata($arr ,$unit){
         <div class="container">
             <div class="row justify-content-md-center">
                 <div class="col-md-6">
+                    <div class="widget-bar"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['Upcoming_Event']}}</h2>
                     @if(isset($events[0]))
-                    <div class="card">
+                    <div class="card border-radius-6">
                         <a href="{{route('updateEventDetail',$events[0]['slug'])}}">
                             <div class="post-image">
                                 @if(isset($events[0]['thumb']))
@@ -779,9 +928,10 @@ function retextdata($arr ,$unit){
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <div class="widget-bar"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
-                    <div class="card">
+                    <div class="card border-radius-6">
                         <a href="{{route('updateNewsDetail',$news[0]['slug'])}}">
                             <div class="post-image">
                                 @if(isset($news[0]['thumb']))
@@ -831,8 +981,9 @@ function retextdata($arr ,$unit){
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <div class="widget-bar"></div>
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
-                    <div class="card">
+                    <div class="card border-radius-6">
                         <a href="{{route('index','faqs')}}">
                             <div class="post-image w-100">
                                 <img src="{{config('app.url')}}/medias/static_content/{{$faqbanner->destop_image}}"
@@ -929,7 +1080,7 @@ function retextdata($arr ,$unit){
                     {!! $static_content->content !!}
                 </div>
                 <a href="{{route('index','product-documents')}}">
-                    <button class="btn btn-subscribe" href="">{{$staticContent['Learn_More']}}</button>
+                    <button class="btn btn-subscribe shadow-radius-box" href="">{{$staticContent['Learn_More']}}</button>
                 </a>
             </div>
 
@@ -950,7 +1101,7 @@ function retextdata($arr ,$unit){
                     {!! $static_content->content !!}
                 </div>
                 <a href="{{route('index','product-documents')}}">
-                    <button class="btn btn-subscribe" href="">{{$staticContent['Learn_More']}}</button>
+                    <button class="btn btn-subscribe shadow-radius-box" href="">{{$staticContent['Learn_More']}}</button>
                 </a>
             </div>
         </div>
@@ -960,7 +1111,6 @@ function retextdata($arr ,$unit){
 
 @endsection
 @section('js')
-
 <script>
     $(document).ready(function () {
         $('#nav-two').removeClass('scrolled');
@@ -1130,27 +1280,28 @@ function retextdata($arr ,$unit){
             autoplayHoverPause:true
 
         });
+        const mainCateCount = {{ count($mainCategories) }};
         $("#product-selector-carousel").owlCarousel({
-            loop: true,
+            loop: false,
             margin: 10,
             dotsEach: 3,
             nav: true,
+            center: mainCateCount == 1,
             responsive: {
                 0: {
-                    items: 2
-
+                    items: 2,
                 },
                 600: {
-                    items: 3
+                    items: 3,
                 },
                 992: {
-                    items: 4
+                    items: 4,
                 },
                 1200: {
-                    items: 6
+                    items: 5,
                 },
                 1400: {
-                    items: 6
+                    items: 5,
                 }
             },
             navText: ['<i class="zmdi zmdi-chevron-left" aria-hidden="true"></i>',

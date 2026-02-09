@@ -57,17 +57,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if(isset($subCategories) and !empty($subCategories))
-                    @foreach ($subCategories as $item)
-                    <tr class="odd order-list" data-id="{{$item->sub_pro_id}}">
+                    @if(isset($mainCategories) and !empty($mainCategories))
+                    @foreach ($mainCategories as $item)
+                    <tr class="odd order-list" data-id="{{$item->main_id}}">
                     <td class="text-center">{{$loop->iteration}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->name}}</td>
                     <td class="text-center">
-                        {{-- <a href="{{route('set' ,$item->sub_pro_id)}}" class="btn btn-primary">Show</a> --}}
                         <div class="custom-control custom-switch custom-control-lg mb-2">
-                                <input type="checkbox" class="custom-control-input" id="statusCate{{$item->sub_pro_id}}" onchange="checkdata({{$item->sub_pro_id}});"  {{($item->status== 1)?'checked':''}}>
-                        <label class="custom-control-label" id="lablestatusCate{{$item->sub_pro_id}}" for="statusCate{{$item->sub_pro_id}}">{{$item->status == 1?'Show':'Hide'}}</label>
-                            </div>
+                            <input type="checkbox" class="custom-control-input" id="statusCate{{$item->main_id}}" onchange="checkdata({{$item->main_id}});"  {{($item->active== 1)?'checked':''}}>
+                            <label class="custom-control-label" id="lablestatusCate{{$item->main_id}}" for="statusCate{{$item->main_id}}">{{$item->active == 1?'Show':'Hide'}}</label>
+                        </div>
                     </td>
                     </tr>
                     @endforeach
@@ -119,8 +118,6 @@
           $( "#sortable" ).disableSelection();
         } );
 
-
-      
         var orderdata;
         $('tbody').sortable({
 

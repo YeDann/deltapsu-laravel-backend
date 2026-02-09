@@ -145,6 +145,28 @@
         display: none;
     }
 
+    .box-search-icon {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+
+    .select2-container .select2-selection--single {
+        /* border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px; */
+        border-bottom-right-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+
+    .select2-container {
+        width: 174px !important;
+    }
+
+    @media (min-width: 350px) and (max-width: 768px) {
+        .select2-container {
+            width: 100% !important;
+        }
+    }
+
     .text-tag-link span {
         color: #0087DC;
         font-size: 14px;
@@ -158,6 +180,14 @@
 
     .product-document-type {
         background-color: #fff;
+    }
+    @media (max-width: 921px) {
+        .m-mobile-2 {
+            margin: 0.5rem 1rem !important;
+        }
+        .m-mobile-2 h5 {
+            font-size: 14px !important;
+        }
     }
 </style>
 @endsection
@@ -186,16 +216,25 @@
                     <li class="breadcrumb-item text-breadcrumb-home"><a
                             href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
                     <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
-                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['nav_dowloads']}}</a>
+                                data-toggle="dropdown" id="tools-dropdown"> {{$staticContent['Technical_Support']}}</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['nav_dowloads']}}</a>
+                            <li>
+                                <a href="#" class="text-bold">
+                                    {{ isset($staticContent['Technical_Support'])
+                                        ? $staticContent['Technical_Support']
+                                        : 'Technical Support' }}
+                                </a>
                             </li>
                             <hr>
-                            <li><a href="{{route('index','catalogs')}}">{{$staticContent['catalogs']}}</a></li>
-                            <li><a
-                                    href="{{route('index','product-documents')}}">{{$staticContent['Product_Documents']}}</a>
-                            </li>
-
+                            <li><a href="{{route('index', ['page' => 'catalogs'])}}">{{$staticContent['catalogs'] ?? 'Catalogs'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'product-documents'])}}">{{$staticContent['Product_Documents'] ?? 'Product Documents'}}</a></li>
+                            <li><a href="{{route('productCoparison')}}">{{$staticContent['product_comparison'] ?? 'Product Comparison'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'industry-know-how'])}}">{{$staticContent['Industry_Know_How'] ?? 'Industry Know-How'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'videos'])}}">{{$staticContent['Videos'] ?? 'Videos'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'eol'])}}">{{$staticContent['EOL'] ?? 'EOL'}}</a></li>
+                            <li><a href="{{route('index', ['page' => 'faqs'])}}">{{$staticContent['FAQs'] ?? 'FAQs'}}</a></li>
+                            <li><a href="{{route('contactSupport')}}">{{$staticContent['Technical_Service'] ?? 'Technical Service'}}</a></li>
                         </ul>
                     </li>
                     <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
@@ -214,14 +253,13 @@
             $metatag[0]->h1 :''}}</h4>
         <div class="row">
             <div class="col-xl-3 col-lg-4  col-md-12 mb-4 padding-mobile">
-                <div class="search-filter-action border-2px">
+                <div class="search-filter-action border-2px border-radius-6">
                     <p class="text-sixteen-dark">{{$staticContent['Search_By_Model_Name']}}</p>
-                    <div class="box-search-input  mr-3">
-                        <div class="box-search-icon">
+                    <div class="box-search-input mr-3">
+                        <div class="box-search-icon" style="border-top-left-radius: 6px;border-bottom-left-radius: 6px;">
                             <img src="{{asset('frontend-asset/image/search-filters-icon.svg')}}" alt="">
                         </div>
                         <label for="key_mobile" class="searchinput-filters-input">
-
                             <select id="key_model_input" class="js-example-basic-single form-control">
                                 <option></option>
                                 <!-- @foreach ($products as $pro)
@@ -264,10 +302,10 @@
 
                 </div> --}}
                 <h5 class="text-center pad-12px">{{$staticContent['Or']}}</h5>
-                <div class="datasheet-select border-2px">
+                <div class="datasheet-select border-2px border-radius-6">
                     <p class="text-dark text-bold mr-b-1">{{$staticContent['Type']}}</p>
 
-                    <select id="type_id" onchange="selectType();" class="form-control">
+                    <select id="type_id" onchange="selectType();" class="form-control border-radius-6">
                         @foreach ($subCategories as $sub)
                         @if($loop->iteration == 1)
                         <option value="{{$sub->sub_pro_id}}" selected>{{$sub->name}}</option>
@@ -279,32 +317,29 @@
 
                     <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Series']}}</p>
 
-                    <select id="serie_id" onchange="onSelectSeries();" class="form-control">
+                    <select id="serie_id" onchange="onSelectSeries();" class="form-control border-radius-6">
                         <option value="0">{{$staticContent['Please_Select']}}*</option>
                     </select>
 
                     <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Model']}}</p>
 
-                    <select id="model_id" onchange="onSelectProduct();" class="form-control">
+                    <select id="model_id" onchange="onSelectProduct();" class="form-control border-radius-6">
                         <option value="0">{{$staticContent['Please_Select']}}*</option>
                     </select>
 
                 </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-12">
-                <div class="image-datasheet mb-2" id="content_pro">
+                <div class="image-datasheet mb-2 border-radius-6" id="content_pro">
                 </div>
                 <div>
                     <h6 class="text-title-ft-sub mt-2">Tags</h6>
                     <div class="content_tags_pro" id="content_tags_pro">
-
                     </div>
-
                 </div>
             </div>
 
-
-            <div class="col-xl-6 col-lg-5 col-md-12 pl-2 collapse-padding-mobile">
+            <div class="col-xl-6 col-lg-5 col-md-12 pl-2 collapse-padding-mobile border-radius-6">
                 <div class="invisible-up-922 text-center">
                     <h3 class="text-color-delta text-bold my-5">{{$staticContent['Downloads']}}</h3>
                 </div>
@@ -340,32 +375,28 @@
         $(document).ready(function () {
             selectType();
             data_product = mergeDataPro();
-
         });
         function mergeDataPro(){
             var newproduct = [];
             var chproduct = [];
             var html = '';
-            $.each(products, function(index,pro){
-                if(!chproduct.includes(pro['pro_code'].toLowerCase().replace(/\s/g, ''))){
+            $.each(products, function(index,pro) {
+                if(!chproduct.includes(pro['pro_code'].toLowerCase().replace(/\s/g, ''))) {
                     newproduct.push(pro['pro_code'])
                     chproduct.push(pro['pro_code'].toLowerCase().replace(/\s/g, ''))
-               }
+                }
             });
 
-            $.each(tags_data, function(idx,tag){
-                 if(!chproduct.includes(tag['tag'].toLowerCase().replace(/\s/g, ''))){
-
+            $.each(tags_data, function(idx,tag) {
+                if(!chproduct.includes(tag['tag'].toLowerCase().replace(/\s/g, ''))) {
                     newproduct.push(tag['tag'])
                     chproduct.push(tag['tag'].toLowerCase().replace(/\s/g, ''))
-                 }
-
+                }
             });
 
             html += '<option></option>';
             $.each(newproduct, function(index,item){
-                    html += '<option value="'+item +'">'+item+'</option>';
-
+                html += '<option value="'+item +'">'+item+'</option>';
             });
             $('#key_model_input').html(html);
             return newproduct;
@@ -490,7 +521,6 @@
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            },
            success: function (res) {
-              //console.log(res['data']);
               var key = $('#key_model_input').val();
 
               var html = '';
@@ -563,7 +593,7 @@
             $.each(_documents_cate, function(index,cate_doc){
              if( cate_doc['id'] == 2){
                 html2 += ' <div class="box-for-collap">'
-                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta m-mobile-2"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image'+cate_doc['id']+'">';
                 html2 += '<h5 class="invisible-up-922">'+cate_doc['lable']+'</h5>';
@@ -599,7 +629,7 @@
 
 
                 html2 += ' <div class="box-for-collap">'
-                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta m-mobile-2"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image1">';
                 html2 += '<h5 class="invisible-up-922">'+searchName(1,_documents_cate) +'</h5>';
@@ -654,7 +684,7 @@
 
 
                 html2 += ' <div class="box-for-collap">'
-                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta m-mobile-2"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image_other">';
                 html2 += '<h5 class="invisible-up-922">{{$staticContent['Mechanical_Drawing_&_3D_Drawings']}}</h5>';
@@ -702,7 +732,7 @@
                 html2 += ' </div>';
 
                 html2 += ' <div class="box-for-collap">'
-                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta m-mobile-2"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image_cer">';
                 html2 += '<h5 class="invisible-up-922">{{$staticContent['Certificates']}}</h5>';
@@ -730,7 +760,7 @@
                 html2 += ' </div>';
 
                 html2 += ' <div class="box-for-collap">'
-                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta m-mobile-2"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-image_gui">';
                 html2 += '<h5 class="invisible-up-922">{{$staticContent['GUI_Software']}}</h5>';
@@ -757,7 +787,7 @@
                 html2 += ' </div>';
 
                 html2 += ' <div class="box-for-collap">'
-                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta"';
+                html2 += '<div class="product-docment-list collapsed  hide-box text-colour-delta m-mobile-2"';
                 html2 += 'data-toggle="collapse" data-parent="#product-document-type"';
                 html2 += '  href="#collapse-imagepro">';
                 html2 += '<h5 class="invisible-up-922">{{$staticContent['Image']}}</h5>';

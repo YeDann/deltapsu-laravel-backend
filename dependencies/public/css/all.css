@@ -10504,7 +10504,7 @@ a.a-link-hover:hover {
 
 @media (min-width: 1366px){
     .container {
-        max-width: 1280px;
+        max-width: 1180px;
     }
 }
 
@@ -11176,6 +11176,7 @@ a:hover {
 .btn-ft:hover {
   color: #ffffff;
   text-decoration: none;
+  background-color: #0087DC;
 }
 
 #producttype-mobile .btn-ft,
@@ -12102,7 +12103,7 @@ a .title-new {
 
 .box-events .card {
   position: relative;
-  height: 333px;
+  height: 318px;
   overflow: hidden;
   border: unset;
   border-radius: unset;
@@ -12113,7 +12114,7 @@ a .title-new {
 }
 
 .box-events .card .post-image {
-  height: 300px;
+  height: 318px;
   overflow: hidden;
 }
 
@@ -13083,7 +13084,7 @@ hr {
 }
 
 .box-news .card .post-image {
-    height: 300px;
+    height: 320px;
     overflow: hidden;
     max-width: 100%;
 }

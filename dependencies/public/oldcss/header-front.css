@@ -9,6 +9,11 @@
   position: relative;
 }
 
+.img-btn-icon-pro:hover{
+    background-color: #0087DC;
+    cursor: pointer;
+}
+
 .pd-mobile{
     padding: 10px 13px;
 }
@@ -18,7 +23,6 @@
 }
 .img-btn-icon-pro span {
     display: none;
-    
 }
 .img-btn-icon-pro:hover span {
     padding: 5px;

@@ -118,7 +118,7 @@
                                                 value="{{isset($current->title) ? $current->title :''}}">
                                             <div class="text-count">Count Character :
                                                 <span id="count-metaTitle-{{$item->name}}">
-                                                    {{strlen($current->meta_title)}}</span>
+                                                    {{isset($current->meta_title) ? strlen($current->meta_title) : ''}}</span>
                                             </div>
                                         </div>
                                     </div>

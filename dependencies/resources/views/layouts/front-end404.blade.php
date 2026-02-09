@@ -67,7 +67,7 @@ $langch = str_replace('_', '-', app()->getLocale());
         .form-control:focus {
             color: #495057;
             background-color: #fff;
-            border-color: #80bdff;
+            border-color: #0087DC;
             outline: none;
             box-shadow: none;
         }
@@ -95,7 +95,7 @@ $langch = str_replace('_', '-', app()->getLocale());
         .form-control:focus {
             color: #495057;
             background-color: #fff;
-            border-color: #80bdff;
+            border-color: #0087DC;
             outline: none;
             box-shadow: none;
         }
@@ -113,11 +113,11 @@ $langch = str_replace('_', '-', app()->getLocale());
         }
 
         html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
-            padding: 20px 9px;
+            /* padding: 20px 9px; */
         }
 
         html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
-            padding: 20px 9px;
+            /* padding: 20px 9px; */
         }
 
         a#CybotCookiebotDialogPoweredbyCybot,

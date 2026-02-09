@@ -1,209 +1,199 @@
 @extends('layouts.front-end')
 @section('css')
 <style>
-    
-    .box-news .container{
-      
-        padding: 100px 0;
-    }
-    .box-news-detail{
-        border: 2px solid #E3EFF8;
-        padding: 24px;
-    }
-    hr{
+    hr {
         border-top: 2px solid #E3EFF8;
     }
-    
+
+    .content img {
+        max-width: 100%;
+    }
+
+    .content b {
+        font-weight: bold;
+    }
+
+    .content table img {
+        max-width: none;
+    }
 </style>
 @endsection
+@section('meta')
+<title>{{isset($contents[0]->meta_title)? $contents[0]->meta_title :''}}</title>
+<meta name="description"
+    content="{!! trim(iconv_substr(strip_tags(isset($contents[0]->meta_description)? $contents[0]->meta_description:''),0,155,'UTF-8')) !!}">
 
+<meta property="og:title" content="{{isset($contents[0]->meta_title)? $contents[0]->meta_title :''}}" />
+<meta property="og:description"
+    content="{!! trim(iconv_substr(strip_tags(isset($contents[0]->meta_description)? $contents[0]->meta_description:''),0,155,'UTF-8')) !!}" />
+<meta property="og:image"
+    content="{{config('app.url')}}/uploads_delta/{{isset($contents[0]->thumb) ? $contents[0]->thumb :''}}" />
+<link rel="canonical" href="{{url()->current()}}" />
+<?php 
+  $lang_seo = App::getLocale();
+  if($lang_seo == 'cn'){
+    $lang_seo = 'zh-Hans-CN';
+  }else if($lang_seo == 'tw'){
+    $lang_seo = 'zh-Hans-TW';
+  }
+?>
+<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
+@endsection
 @section('container')
+
 <div class="padding-top-content">
 </div>
-<div class="products-index-nav">
+<div class="products-index-nav visible-up-922">
     <div class="bg-bredcrumb">
         <div class="container">
             <nav aria-label="breadcrumb" id="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item text-breadcrumb-home"><a href="{{route('index','home')}}">HOME</a></li>
-                    {{-- <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a
-                            href="#" data-toggle="dropdown" id="tools-dropdown">UPDATES</a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" id="tools-dropdown" class="text-bold">UPDATES</a></li>
-                                <hr>
-                                <li><a href="{{route('index','news')}}">NEWS</a></li>
-                                <li><a href="{{route('index','events')}}">EVENTS & CALENDAR</a></li>
-                                <li><a href="{{route('index','technical-articles')}}">TECHNICAL ARTICLES</a></li>
-                                <li><a href="{{route('index','product-notice')}}">PRODUCT NOTICE</a></li>
-                              </ul>   
-                    </li> --}}
-                    <li class="breadcrumb-item active text-breadcrumb-home" aria-current="page"><a href="{{route('index','product-notice')}}">PRODUCT NOTICE</a></li>
-                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a href="#">PRODUCT NOTICE DETAILS</a></li>
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index','home')}}">{{$staticContent['Home']}}</a></li>
+                    <li class="breadcrumb-item text-breadcrumb-home dropdown"><a href="#"
+                            data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Technical_Support']}}</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Technical_Support']}}</a></li>
+                            <hr>
+                            <li><a href="{{route('index', ['page' => 'videos'])}}">{{$staticContent['Videos'] ?? 'Videos'}}</a></li>
+                             <li><a href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</a></li>
+                        </ul>
+                    </li>
+                    <li class="breadcrumb-item text-breadcrumb-home"><a
+                            href="{{route('index', ['page' => 'product-notice'])}}">{{$staticContent['Product Notice'] ?? 'Product Notice'}}</a></li>
+                    <li class="breadcrumb-item active text-breadcrumb" aria-current="page"><a
+                            href="#">{{isset($contents[0]->title)? $contents[0]->title :''}}</a></li>
                 </ol>
             </nav>
         </div>
     </div>
 </div>
-<section class="box-news ">
+<div class="padding-top-content-breadcrumb visible-up-922"></div>
+<section>
     <div class="container">
-        <div class="box-news-detail">
-            <h3 class="text-dark">DELTA NEWEST ADT SERIES 60W AC/DC IT ADAPTER</h3>
-            <hr size="2">
-            <div class="post-meta">
-                <span class="sub-news new">
-                    <a href="#">
-                        NEW PRODUCTS
-                    </a>
-                </span>
-                <img class="line-symbol"src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
-                    <span class="date">
-                        <a href="#">
-                            Oct 19, 2019
-                        </a>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-news-detail border-radius-6">
+                    <h1 class="text-dark">{{isset($contents[0]->title)? $contents[0]->title :''}}</h1>
+                
+                    <hr>
+
+                    <div class="post-meta">
+                        <span class="sub-news new"
+                            style="color:{{isset($contents[0]->color_type)? $contents[0]->color_type:'' }}">
+                            {{isset($contents[0]->cateName)? $contents[0]->cateName:'' }}
                         </span>
-            </div>
-            <div class="content">
-                <div class="img-content">
-                    <img src="{{asset('/frontend-asset/image/Group 866-1@2x.png')}}" alt="" class="img-fluid col-6">
-                </div>
-                <br>
-                <p>Beijing, China, October 17-19, 2018 – Delta joined China Wind Power 2018 (CWP 2018), one of China’s most influential trade events in the wind industry.
-                    <br><br>
+                        <?php
+                        function getDateformat($date){
+                            $eng_month_arr = array(
+                                "0" => "",
+                                "1" => "Jan",
+                                "2" => "Feb",
+                                "3" => "Mar",
+                                "4" => "Apr",
+                                "5" => "May",
+                                "6" => "Jun",
+                                "7" => "Jul",
+                                "8" => "Aug",
+                                "9" => "Sep",
+                                "10" => "Oct",
+                                "11" => "Nov",
+                                "12" => "Dec"
+                            );
+                            $publicDate = date_create($date);
+                            $pDate = explode("-", $publicDate->format('Y-n-d'));
+                            $datearray = [
+                                'm' =>  $eng_month_arr[$pDate[1]],
+                                'd'=>  $pDate[2],
+                                'y' => $pDate[0]
+                            ];
+                            return  $datearray;
+                        }
+                        ?>
+                        <img class="line-symbol " src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
+                        <span class="date">
+                            <?php
+                                    if(isset($contents[0]->date_info)){
+                                    $datenew = getDateformat($contents[0]->date_info);
+                                    echo $datenew['m'].' '.$datenew['d'] .' '.$datenew['y'];
+                                    }else{
+                                        echo '';
+                                    }
+                                    ?>
+                        </span>
+                    </div>
+
+                    <div class="content">
+                        {!! isset($contents[0]->content)? $contents[0]->content :'' !!}
+                    </div>
+                    
+                    <div class="">
+                        @if(isset($contents[0]->file) && $contents[0]->file != '')
+                        <a target="_blank" href="{{config('app.url')}}/uploads_delta/{{$contents[0]->file}}">
+                            <button class="btn btn-subscribe">Download PDF</button>
+                        </a>
+                        @endif
+                    </div>
                 
-                    At CWP 2018, Delta showcased its industrial power supplies suitable for wind turbine systems. The highlighted products included the CliQ M series of DIN Rail Power Supply which Delta presented alongside its industrial automation products as a total system solution for wind turbines. In addition, Delta displayed its wide range of industrial power supplies for other applications that include its panel mount power supplies and LED drivers.
-                <br><br>    
-                    To find out about our next event, please visit. http://www.deltapsu.com/events</p>
-                <div class="img-content row">
-                    <div class="col-6">
-                        <img src="{{asset('/frontend-asset/image/federico-beccari-ahi73ZN5P0Y-unsplash@2x.png')}}" alt="" class="img-fluid">
-                    </div>
-                    <div class="col-6">
-                        <img src="{{asset('/frontend-asset/image/israel-palacio-ImcUkZ72oUs-unsplash@2x.png')}}" alt="" class="img-fluid">
-                    </div> 
                 </div>
-                <br>
-                <p>Ligula dapibus </p>
-                    <p>Beijing, China, October 17-19, 2018 – Delta joined China Wind Power 2018 (CWP 2018), one of China’s most influential trade events in the wind industry.
-                    <br><br>
-                    At CWP 2018, Delta showcased its industrial power supplies suitable for wind turbine systems. The highlighted products included the CliQ M series of DIN Rail Power Supply which Delta presented alongside its industrial automation products as a total system solution for wind turbines. In addition, Delta displayed its wide range of industrial power supplies for other applications that include its panel mount power supplies and LED drivers.
-                    <br><br>    
-                    To find out about our next event, please visit. http://www.deltapsu.com/events</p>
-                
-                    <p>Etiam convallis elementum sapien, a aliquam turpis aliquam vitae. Praesent sollicitudin felis vel mi facilisis posuere. Nulla ultrices facilisis justo, non varius nisl semper vel. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at ante mattis, condimentum velit et, dignissim nunc. Integer quis tincidunt purus. Duis dignissim mauris vel elit commodo, eu hendrerit leo ultrices.
-                    <br><br>    
-                        Nulla vehicula vestibulum purus at rutrum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur dignissim massa nec libero scelerisque rutrum. Curabitur ac purus id elit hendrerit lacinia. Nullam sit amet sem efficitur, porta diam in, convallis tortor.</p>
             </div>
-            
-        </div>
-        <h3 class="text-center text-drak pad-title">RELATED ARTICLES</h3>
-        <div class="grid-news">
-                <div class="grid-list-news">
-                    <div class="card">
-                        <div class="post-image">
-                            <img src="{{asset('/frontend-asset/image/latest-news-img.png')}}" alt=""
-                                class="img-responsive">
-                        </div>
-                        <div class="news-content">
-                            <div class="post-meta">
-                                <span class="sub-news company">
-                                    <a href="#">
-                                        COMPANY
-                                    </a>
-                                </span>
-                            <img class="line-symbol"src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
-                                <span class="date">
-                                    <a href="#">
-                                         Oct 19, 2019
-                                    </a>
-                                </span>
-                            </div>
-                            <h2 class="post-header title-new">
-                                    The New PJL Open Frame 
-                                    Power Supply for Lighting 
-                                    Applications
-                            </h2>
-                            <p>Delta provides compact size and cost effective adapter. The wide operating temperature
-                                range allows it for Industrial applications requiring high reliability and performance
-                            </p>
-                            
-                        </div>
-                        <a href="#"class="read-more">READ MORE</a>
-                    </div>
-                </div>                          
-                <div class="grid-list-news">
-                    <div class="card">
-                        <div class="post-image">
-                            <img src="{{asset('/frontend-asset/image/new product.png')}}" alt=""
-                                class="img-responsive">
-                        </div>
-                        <div class="news-content">
-                            <div class="post-meta">
-                                <span class="sub-news new">
-                                    <a href="#">
-                                        NEW PRODUCTS
-                                    </a>
-                                </span>
-                            <img class="line-symbol"src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
-                                <span class="date">
-                                    <a href="#">
-                                         Oct 19, 2019
-                                    </a>
-                                </span>
-                            </div>
-                            <h2 class="post-header title-new">
-                                    The New PJL Open Frame 
-                                    Power Supply for Lighting 
-                                    Applications
-                            </h2>
-                            <p>Delta provides compact size and cost effective adapter. The wide operating temperature
-                                range allows it for Industrial applications requiring high reliability and performance
-                            </p>
-                            
-                        </div>
-                        <a href="#"class="read-more">READ MORE</a>
-                    </div>
-                </div>
-                <div class="grid-list-news">
-                    <div class="card">
-                        <div class="post-image">
-                            <img src="{{asset('/frontend-asset/image/other.png')}}" alt=""
-                                class="img-responsive">
-                        </div>
-                        <div class="news-content">
-                            <div class="post-meta">
-                                <span class="sub-news other">
-                                    <a href="#">
-                                       OTHER
-                                    </a>
-                                </span>
-                            <img class="line-symbol"src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
-                                <span class="date">
-                                    <a href="#">
-                                         Oct 19, 2019
-                                    </a>
-                                </span>
-                            </div>
-                            <h2 class="post-header title-new">
-                                    The New PJL Open Frame 
-                                    Power Supply for Lighting 
-                                    Applications
-                            </h2>
-                            <p>Delta provides compact size and cost effective adapter. The wide operating temperature
-                                range allows it for Industrial applications requiring high reliability and performance
-                            </p>
-                            
-                        </div>
-                        <a href="#"class="read-more">READ MORE</a>
-                    </div>
-                </div>
         </div>
     </div>
 </section>
 
+<section class="box-news my-5">
+    <div class="container">
+        @if(count($otherNews) > 0)
+        <h3 class="text-center text-drak margin-title"> {{isset($staticContent['Related_Product_Notice']) ? $staticContent['Related_Product_Notice'] : 'Related Product Notice'}}</h3>
+        @endif
+        <div class="row">
+            @foreach ($otherNews as $item)
+            <div class="col-lg-4 col-sm-6">
+                <div class="card border-radius-6">
+                    <a href="{{route('updateProductNoticeDetail',['name'=> $item->slug])}}">
+                        <div class="post-image">
+                            <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""
+                                class="img-responsive">
+                        </div>
+                    </a>
+                    <div class="news-content">
 
-@endsection
+                        <div class="post-meta">
+                            <a href="{{route('updateProductNoticeDetail',['name'=> $item->slug])}}">
+                                <span class="sub-news" style="color:{{$item->color_type}}">
+                                    {{$item->cateName}}
+                                </span>
+                            </a>
+                            <img class="line-symbol" src="{{asset('/frontend-asset/image/line-symbol.svg')}}" alt="">
+                            <span class="date text-uppercase">
+                                <?php
+                                     if(isset($item->date_info)){
+                                       $datenew2 = getDateformat($item->date_info);
+                                       echo $datenew2['m'].' '.$datenew2['d'] .' '.$datenew2['y'];
+                                     }else{
+                                         echo '';
+                                     }
+         
+                                     ?>
+                            </span>
+                        </div>
+                        <h4 class="post-header title-new">
+                            <a href="{{route('updateProductNoticeDetail',['name'=> $item->slug])}}">
+                                {{$item->title}}
+                            </a>
+                        </h4>
+                        <p>{!! iconv_substr(strip_tags($item->content),0,90,'UTF-8') !!} ...
+                        </p>
 
+                    </div>
 
-@section('js')
+                    <a href="{{route('updateProductNoticeDetail',['name'=> $item->slug])}}"
+                        class="read-more">{{$staticContent['Read_More']}}</a>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
 
 @endsection

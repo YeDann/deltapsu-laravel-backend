@@ -115,13 +115,13 @@
     <div class="container">
         <div class="marketing-grid">
             @if(session('partner_role') == 1)
-            <a href="{{route('marketingResourcesDownloads')}}" class="marketing-grid-list">
+            <a href="{{route('marketingResourcesDownloads')}}" class="marketing-grid-list border-radius-6">
                 <img src="{{asset('frontend-asset/image/icon/icon-download.svg')}}" alt="">
                 <h4 class=" text-dark">{{$staticContent['Marketing_Resources_Downloads']}}</h4>
             </a>
             @endif
             @if(session('partner_role') == 2)
-            <a href="{{route('marketingResourcesDownloads')}}" class="marketing-grid-list">
+            <a href="{{route('marketingResourcesDownloads')}}" class="marketing-grid-list border-radius-6">
                 <img src="{{asset('frontend-asset/image/icon/icon-download.svg')}}" alt="">
                 <h4 class=" text-dark">{{$staticContent['Marketing_Resources_Downloads']}}</h4>
             </a>
@@ -133,11 +133,11 @@
                 <img src="{{asset('frontend-asset/image/icon/icon-stories.svg')}}" alt="">
                 <h4 class=" text-dark">{{$staticContent['Success_Stories']}}</h4>
             </a> --}}
-            <a href="{{route('saleKit')}}" class="marketing-grid-list">
+            <a href="{{route('saleKit')}}" class="marketing-grid-list border-radius-6">
                 <img src="{{asset('frontend-asset/image/icon/icon-kit.svg')}}" alt="">
                 <h4 class=" text-dark">{{$staticContent['Sales_kit']}}</h4>
             </a>
-            <a href="{{route('productCrossReference')}}" class="marketing-grid-list">
+            <a href="{{route('productCrossReference')}}" class="marketing-grid-list border-radius-6">
                 <img src="{{asset('frontend-asset/image/icon/icon-reference.svg')}}" alt="">
                 <h4 class=" text-dark">{{$staticContent['Product_Cross_Reference']}}</h4>
             </a>
@@ -148,15 +148,15 @@
             </a>  --}}
             @endif
             @foreach ($static_content as $item)
-            @if(session('partner_role') == 2)
-            @if($item->id == 1)
-            <a href="{{route('partnerinfo' ,[$item->id , preg_replace('/[^A-Za-z0-9\-]/', '-',$item->title)])}}"
-                class="marketing-grid-list">
-                <img src="{{config('app.url')}}/medias/static_content/{{$item->icon}}" alt="">
-                <h4 class=" text-dark">{{$item->title}}</h4>
-            </a>
-            @endif
-            @endif
+                @if(session('partner_role') == 2)
+                    @if($item->id == 1)
+                    <a href="{{route('partnerinfo' ,[$item->id , preg_replace('/[^A-Za-z0-9\-]/', '-',$item->title)])}}"
+                        class="marketing-grid-list border-radius-6">
+                        <img src="{{config('app.url')}}/medias/static_content/{{$item->icon}}" alt="">
+                        <h4 class=" text-dark">{{$item->title}}</h4>
+                    </a>
+                    @endif
+                @endif
             @endforeach
         </div>
     </div>

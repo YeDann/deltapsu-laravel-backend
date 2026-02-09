@@ -56,13 +56,13 @@
                 <div class="center">
                     <div id="requestemail" class="col-sm-6 w-100 mx-auto mb-3">
                         <label class="text-title-detail-dark">{{$staticContent['Email_Address']}}*</label>
-                        <input type="email" class="input-login" name="email" id="inputEmail"
+                        <input type="email" class="input-login border-radius-6" name="email" id="inputEmail"
                             placeholder="{{$staticContent['Email_Address']}}" autocomplete="off" required>
                     </div>
 
                     <div id="requestpassword" class="col-sm-6 w-100 mx-auto mb-3">
                         <label class="text-title-detail-dark">{{$staticContent['Password']}}*</label>
-                        <input type="password" class="input-login" name="password" id="inputPassword" pattern="{8,}"
+                        <input type="password" class="input-login border-radius-6" name="password" id="inputPassword" pattern="{8,}"
                             title="Must at least 8 or more characters" autocomplete="off" placeholder="{{$staticContent['Password']}}"
                             required>
                     </div>

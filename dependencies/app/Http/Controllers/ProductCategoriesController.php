@@ -12,6 +12,7 @@ class ProductCategoriesController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,13 +22,11 @@ class ProductCategoriesController extends Controller
     {
         $language = DB::table('language')->get();
         $mainCategories = DB::table('main_pro_categories as mp')
-        ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
-        ->where('mpt.local', '=', 'en')
-        ->select('mp.*', 'mpt.*')
-        ->orderBy('mp.created_at', 'desc')
-        ->get();
-
-        // return dd($mainCategories);
+            ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
+            ->where('mpt.local', '=', 'en')
+            ->select('mp.*', 'mpt.*')
+            ->orderBy('mp.created_at', 'desc')
+            ->get();
 
         return view('pro_categories.main_index')
             ->with('name', 'product')
@@ -43,7 +42,6 @@ class ProductCategoriesController extends Controller
      */
     public function create()
     {
-        // return dd('55');
         $language = DB::table('language')->get();
 
         return view('pro_categories.main_create')
@@ -61,39 +59,56 @@ class ProductCategoriesController extends Controller
     public function store(Request $request)
     {
         $name = $request->name;
+        $content = $request->content;
         $langs = $request->lang_loop;
+        $fileGU = $request->file('fileGU');
 
         $validate = Validator::make($request->all(), [
             'name' => 'required',
         ]);
-        // return dd($validate->fails());
-        if ($validate->fails()) {
 
+        if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
         } else {
+            // Handle banner image upload
+            $bannerName = null;
+            if ($request->hasFile('banner')) {
+                $bannerImage = $request->file('banner');
+                $bannerName = uniqid() . "." . $bannerImage->getClientOriginalExtension();
+                $bannerImage->move(base_path('/../medias/categories'), preg_replace('/\s+/', '', $bannerName));
+            }
 
             $id = DB::table('main_pro_categories')->insertGetID(
                 [
+                    "banner" => $bannerName,
                     "created_at" => \Carbon\Carbon::now(),
                     "updated_at" => \Carbon\Carbon::now(),
                 ]
             );
 
-                foreach($langs as $lang){
-                    $main_pro_categories = DB::table('main_pro_categories_translations')->insert(
-                        [
-                            "main_pro_id" => $id,
-                            "name" => $name,
-                            "local" => $lang,
-                        ]
-                    );
-
+            // Handle multi-language data with separate files per language
+            foreach($langs as $lang){
+                $filename = '';
+                // Handle file upload for each language
+                if ($fileGU && isset($fileGU[$lang]) && $fileGU[$lang] != null) {
+                    $file = $fileGU[$lang];
+                    $filename = preg_replace('/\s+/', '', uniqid() . "." . $file->getClientOriginalExtension());
+                    $file->move(base_path('/../medias/categories'), $filename);
                 }
-                return redirect()->route('mainprotype.index')->with('flash_message', 'Insert Data successfully');
 
+                $main_pro_categories = DB::table('main_pro_categories_translations')->insert(
+                    [
+                        "main_pro_id" => $id,
+                        "name" => ($name && isset($name[$lang])) ? $name[$lang] : '',
+                        "content" => ($content && isset($content[$lang])) ? $content[$lang] : '',
+                        "file" => $filename,
+                        "local" => $lang,
+                    ]
+                );
+            }
+
+            return redirect()->route('mainprotype.index')->with('flash_message', 'Insert Data successfully');
         }
-
-
     }
 
 
@@ -105,18 +120,21 @@ class ProductCategoriesController extends Controller
      */
     public function edit($id)
     {
-
-         $mainCategories = DB::table('main_pro_categories as mp')
+        $mainCategories = DB::table('main_pro_categories as mp')
             ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
             ->where('mp.main_id', '=',$id)
             ->select('mp.*', 'mpt.*')
             ->get();
-
+        $mainCategory =  DB::table('main_pro_categories as mp')
+            ->where('mp.main_id', '=',$id)
+            ->select('mp.*')
+            ->first();
 
         return view('pro_categories.main_edit')
             ->with('name', 'product')
             ->with('menu', 'mainCategories')
             ->with('mainId', $id)
+            ->with('mainCategory', $mainCategory)
             ->with('mainCategories', $mainCategories);
     }
 
@@ -130,19 +148,66 @@ class ProductCategoriesController extends Controller
     public function update(Request $request)
     {
         $name = $request->name;
+        $content = $request->content;
         $langs = $request->lang_loop;
         $mainId = $request->mainId;
+        $oldfile = $request->oldfile;
+        $fileGU = $request->file('fileGU');
+        
+        // Get current banner filename for potential deletion
+        $currentData = DB::table('main_pro_categories')->where('main_id', $mainId)->first();
+        $currentBanner = $currentData ? $currentData->banner : null;
+        // Handle banner image upload
+        $bannerName = $currentBanner; // Keep current banner if no new upload
+        if ($request->hasFile('banner')) {
+            $bannerImage = $request->file('banner');
+            $bannerName = uniqid() . "." . $bannerImage->getClientOriginalExtension();
+            $bannerImage->move(base_path('/../medias/categories'), preg_replace('/\s+/', '', $bannerName));
+            
+            // Delete old banner file if exists
+            if ($currentBanner) {
+                $file_pointer = base_path('/../medias/categories/') . $currentBanner;
+                if (file_exists($file_pointer)) {
+                    unlink($file_pointer);
+                }
+            }
+        }
+
+        // Handle multi-language file uploads
+        $arrayfileName = [];
+        foreach($langs as $lang) {
+            $arrayfileName[$lang] = isset($oldfile[$lang]) ? $oldfile[$lang] : '';
+            
+            if ($fileGU && isset($fileGU[$lang]) && $fileGU[$lang] != null) {
+                $file = $fileGU[$lang];
+                $filename = preg_replace('/\s+/', '', uniqid() . "." . $file->getClientOriginalExtension());
+                $file->move(base_path('/../medias/categories'), $filename);
+                
+                // Delete old file if exists
+                if (isset($oldfile[$lang]) && $oldfile[$lang]) {
+                    $file_pointer = base_path('/../medias/categories/') . $oldfile[$lang];
+                    if (file_exists($file_pointer)) {
+                        unlink($file_pointer);
+                    }
+                }
+                
+                $arrayfileName[$lang] = $filename;
+            }
+        }
 
         DB::table('main_pro_categories')
-        ->where('main_id','=',$mainId)
-        ->update(array(
-            "updated_at" => \Carbon\Carbon::now()
-        ));
+            ->where('main_id','=',$mainId)
+            ->update(array(
+                "banner" => $bannerName,
+                "updated_at" => \Carbon\Carbon::now()
+            ));
         foreach($langs as $lang){
             DB::table('main_pro_categories_translations')->where('main_pro_id', "=", $mainId)
-            ->where('local',$lang)->update(array(
-               "name" => $name[$lang]
-            ));
+                ->where('local',$lang)->update(array(
+                    "name" => ($name && isset($name[$lang])) ? $name[$lang] : '',
+                    "content" => ($content && isset($content[$lang])) ? $content[$lang] : '',
+                    "file" => isset($arrayfileName[$lang]) ? $arrayfileName[$lang] : ''
+                ));
         }
         return redirect()->route('mainprotype.index')->with('flash_message', 'Update Data successfully');
     }
@@ -156,7 +221,16 @@ class ProductCategoriesController extends Controller
 
     {
         $id = $request->itemId;
-        // return dd($id);
+        
+        // Get banner filename before deletion
+        $currentData = DB::table('main_pro_categories')->where('main_id', $id)->first();
+        if ($currentData && $currentData->banner) {
+            $file_pointer = base_path('/../medias/categories/') . $currentData->banner;
+            if (file_exists($file_pointer)) {
+                unlink($file_pointer);
+            }
+        }
+        
         DB::table('main_pro_categories')->where('main_id', '=', $id)->delete();
         DB::table('main_pro_categories_translations')->where('main_pro_id', '=', $id)->delete();
 
@@ -164,59 +238,59 @@ class ProductCategoriesController extends Controller
     }
 
 
-    public function subCatories(){
-
-
+    public function subCatories()
+    {
         $subCategories = DB::table('sub_pro_categories as sp')
-        ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
-        ->where('spt.local', '=', 'en')
-        ->select('sp.*', 'spt.*')
-        ->orderBy('sp.created_at', 'desc')
-        ->get();
+            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
+            ->where('spt.local', '=', 'en')
+            ->select('sp.*', 'spt.*')
+            ->orderBy('sp.created_at', 'desc')
+            ->get();
 
-            return view('pro_categories.sub_index')
-                ->with('name', 'product')
-                ->with('menu', 'subCategories')
-                ->with('subCategories', $subCategories);
+        return view('pro_categories.sub_index')
+            ->with('name', 'product')
+            ->with('menu', 'subCategories')
+            ->with('subCategories', $subCategories);
 
     }
-    public function createSubCategories(){
-
+    public function createSubCategories()
+    {
         $language = DB::table('language')->get();
 
         $mainCategories = DB::table('main_pro_categories as mp')
-        ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
-        ->where('mpt.local', '=', 'en')
-        ->select('mp.*', 'mpt.*')
-        ->orderBy('mp.created_at', 'desc')
-        ->get();
+            ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
+            ->where('mpt.local', '=', 'en')
+            ->select('mp.*', 'mpt.*')
+            ->orderBy('mp.created_at', 'desc')
+            ->get();
+
         return view('pro_categories.sub_create')
-        ->with('name', 'product')
-        ->with('mainCategories',$mainCategories)
-        ->with('menu', 'subCategories')
-        ->with('language', $language);
+            ->with('name', 'product')
+            ->with('mainCategories',$mainCategories)
+            ->with('menu', 'subCategories')
+            ->with('language', $language);
     }
-    private function savearrayfile($loopfile ,$loop){
-         $arrayfileName = [];
-            foreach($loop as $lang){
-                $emptyornot = isset($loopfile[$lang]);
-                if($emptyornot){
+    private function savearrayfile($loopfile ,$loop)
+    {
+        $arrayfileName = [];
+        foreach($loop as $lang)
+        {
+            $emptyornot = isset($loopfile[$lang]);
+            if($emptyornot){
                 $fileName[$lang] = preg_replace('/\s+/', '', uniqid().$loopfile[$lang]->getClientOriginalName());
                 $loopfile[$lang]->move(base_path('/../medias/categories'),$fileName[$lang]);
 
                 $arrayfileName[$lang] = $fileName[$lang];
-                }else{
-                 $fileName[$lang] = '';
-                 $arrayfileName[$lang] = $fileName[$lang];
-                }
+            }else{
+                $fileName[$lang] = '';
+                $arrayfileName[$lang] = $fileName[$lang];
             }
+        }
         return $arrayfileName;
     }
 
-
-
-    public function storeSubCategories(Request $request){
-
+    public function storeSubCategories(Request $request)
+    {
         $name = $request->name;
         $langs = $request->lang_loop;
         $main_id = $request->main_categories;
@@ -226,7 +300,6 @@ class ProductCategoriesController extends Controller
         $thumbnailOpt = $request->thumbnailOpt;
         $typeImage  = $request->typeImage;
         $arrayfileName = self::savearrayfile($thumbnailOpt ,$typeImage);
-        // return dd($arrayfileName['type2']);
 
         $re1 = str_replace("/","_",$name);
         $key = str_replace(" ","-",$re1);
@@ -243,7 +316,7 @@ class ProductCategoriesController extends Controller
         $validate = Validator::make($request->all(), [
             'name' => 'required',
         ]);
-        // return dd($validate->fails());
+
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
         } else {
@@ -267,7 +340,6 @@ class ProductCategoriesController extends Controller
                 );
 
             }else{
-
                 $id = DB::table('sub_pro_categories')->insertGetID(
                     [
                         "unit_dimension" => $request->unit_dimension,
@@ -277,8 +349,6 @@ class ProductCategoriesController extends Controller
                         'warranty_file'=>$warranty_file,
                     ]
                 );
-
-
             }
             foreach($main_id as $main){
                 DB::table('categories_has_main_pro')->insert(
@@ -295,125 +365,124 @@ class ProductCategoriesController extends Controller
                 $filename = preg_replace('/\s+/', '', self::fileformat($file));
                 $file->move(base_path('/../medias/categories'),$filename);
             }
-                foreach($langs as $lang){
-                    $main_pro_categories = DB::table('sub_pro_categories_translation')->insert(
-                        [
-                            "sub_pro_id" => $id,
-                            "name" => $name,
-                            "content" => $content,
-                            "contenttype1" => $request->contentAddType1,
-                            "contenttype2" => $request->contentAddType2,
-                            "contenttype3" => $request->contentAddType3,
-                            "contenttype4" => $request->contentAddType4,
-                            "file" => $filename,
-                            "local" => $lang,
-                        ]
-                    );
-                }
 
+            foreach($langs as $lang){
+                $main_pro_categories = DB::table('sub_pro_categories_translation')->insert(
+                    [
+                        "sub_pro_id" => $id,
+                        "name" => $name,
+                        "content" => $content,
+                        "contenttype1" => $request->contentAddType1,
+                        "contenttype2" => $request->contentAddType2,
+                        "contenttype3" => $request->contentAddType3,
+                        "contenttype4" => $request->contentAddType4,
+                        "file" => $filename,
+                        "local" => $lang,
+                    ]
+                );
+            }
 
-                return redirect()->route('subCategories')->with('flash_message', 'Insert Data successfully');
+            return redirect()->route('subCategories')->with('flash_message', 'Insert Data successfully');
         }
     }
 
-    public function editSubCategories($id){
-
+    public function editSubCategories($id)
+    {
         $language = DB::table('language')->get();
 
         $subCategories = DB::table('sub_pro_categories as sc')
-        ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
-        ->where('sc.sub_pro_id', $id)
-        ->select('sc.*', 'sct.*')
-        ->orderBy('sc.created_at', 'desc')
-        ->get();
+            ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
+            ->where('sc.sub_pro_id', $id)
+            ->select('sc.*', 'sct.*')
+            ->orderBy('sc.created_at', 'desc')
+            ->get();
         $arrayIncate = [];
         $mainInCate = DB::table('categories_has_main_pro as chp')
-        ->rightjoin('main_pro_categories as mp', 'mp.main_id', '=', 'chp.main_cateid')
-        ->rightjoin('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
-        ->where('mpt.local', '=', 'en')
-        ->where('chp.cate_id', $id)
-        ->select('mp.*', 'mpt.*')
-        ->orderBy('mp.created_at', 'desc')
-        ->get();
+            ->rightjoin('main_pro_categories as mp', 'mp.main_id', '=', 'chp.main_cateid')
+            ->rightjoin('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
+            ->where('mpt.local', '=', 'en')
+            ->where('chp.cate_id', $id)
+            ->select('mp.*', 'mpt.*')
+            ->orderBy('mp.created_at', 'desc')
+            ->get();
 
         foreach($mainInCate as $data){
             array_push($arrayIncate, $data->main_id);
         }
         $orderCate = DB::table('categories_has_main_pro as chp')
-        ->where('chp.cate_id', $id)
-        ->select('chp.*')
-        ->get();
+            ->where('chp.cate_id', $id)
+            ->select('chp.*')
+            ->get();
 
         $mainCategories = DB::table('main_pro_categories as mp')
-        ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
-        ->where('mpt.local', '=', 'en')
-        ->whereNotIn('mp.main_id' ,$arrayIncate)
-        ->select('mp.*', 'mpt.*')
-        ->orderBy('mp.created_at', 'desc')
-        ->get();
-
-
-
+            ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
+            ->where('mpt.local', '=', 'en')
+            ->whereNotIn('mp.main_id' ,$arrayIncate)
+            ->select('mp.*', 'mpt.*')
+            ->orderBy('mp.created_at', 'desc')
+            ->get();
 
         return view('pro_categories.sub_edit')
-        ->with('name', 'product')
-        ->with('subid', $id)
-        ->with('orderCate',$orderCate)
-        ->with('subCategories',$subCategories)
-        ->with('mainCategories',$mainCategories)
-        ->with('mainInCate',$mainInCate)
-        ->with('menu', 'subCategories')
-        ->with('language', $language);
-
+            ->with('name', 'product')
+            ->with('subid', $id)
+            ->with('orderCate',$orderCate)
+            ->with('subCategories',$subCategories)
+            ->with('mainCategories',$mainCategories)
+            ->with('mainInCate',$mainInCate)
+            ->with('menu', 'subCategories')
+            ->with('language', $language);
     }
-    private function fileformat($file){
+
+    private function fileformat($file)
+    {
         $string = '';
-    if(isset($file) && is_file($file)){
-      $filename = str_replace('.'.$file->getClientOriginalExtension(),"",$file->getClientOriginalName());
-      $string   =  $filename.uniqid().'.'.$file->getClientOriginalExtension();
+            if(isset($file) && is_file($file)){
+            $filename = str_replace('.'.$file->getClientOriginalExtension(),"",$file->getClientOriginalName());
+            $string   =  $filename.uniqid().'.'.$file->getClientOriginalExtension();
+        }
+        return $string;
     }
-    return $string;
-  }
-    private function UpdateOldfile($loopfile ,$loop ,$oldfile){
 
+    private function UpdateOldfile($loopfile ,$loop ,$oldfile)
+    {
         $arrayfileName = [];
-           foreach($loop as $lang){
-               $emptyornot = isset($loopfile[$lang]);
-               if($emptyornot){
-                    $fileName[$lang] = preg_replace('/\s+/', '', self::fileformat($loopfile[$lang]));
-                    $loopfile[$lang]->move(base_path('/../medias/categories'),$fileName[$lang]);
-                    $arrayfileName[$lang] = $fileName[$lang];
+        foreach($loop as $lang){
+            $emptyornot = isset($loopfile[$lang]);
+            if($emptyornot){
+                $fileName[$lang] = preg_replace('/\s+/', '', self::fileformat($loopfile[$lang]));
+                $loopfile[$lang]->move(base_path('/../medias/categories'),$fileName[$lang]);
+                $arrayfileName[$lang] = $fileName[$lang];
 
-                    if(isset($oldfile[$lang])){
-                            $file_pointer = base_path('/../medias/categories/').$oldfile[$lang];
-                            if (file_exists($file_pointer)) {
-                                unlink($file_pointer);
-                            }
-                        }
-               }else{
+                if (isset($oldfile[$lang])) {
+                    $file_pointer = base_path('/../medias/categories/').$oldfile[$lang];
+                    if (file_exists($file_pointer)) {
+                        unlink($file_pointer);
+                    }
+                }
+            }else{
                 $arrayfileName[$lang] = $oldfile[$lang];
-               }
-           }
+            }
+        }
        return $arrayfileName;
    }
 
    private function updatesiglefile($oldfilename ,$file){
-       $file_pointer = base_path('/../medias/categories/').$oldfilename;
-       if (file_exists($file_pointer) && $oldfilename != null) {
-           unlink($file_pointer);
-           $filename = preg_replace('/\s+/', '', uniqid().$file->getClientOriginalName());
-           $file->move(base_path('/../medias/categories'),$filename);
-           $Newfilename = $filename;
-       }else {
-           $filename = preg_replace('/\s+/', '', uniqid().$file->getClientOriginalName());
-           $file->move(base_path('/../medias/categories'),$filename);
-           $Newfilename = $filename;
-       }
-         return $Newfilename;
+        $file_pointer = base_path('/../medias/categories/').$oldfilename;
+        if (file_exists($file_pointer) && $oldfilename != null) {
+            unlink($file_pointer);
+            $filename = preg_replace('/\s+/', '', uniqid().$file->getClientOriginalName());
+            $file->move(base_path('/../medias/categories'),$filename);
+            $Newfilename = $filename;
+        }else {
+            $filename = preg_replace('/\s+/', '', uniqid().$file->getClientOriginalName());
+            $file->move(base_path('/../medias/categories'),$filename);
+            $Newfilename = $filename;
+        }
+        return $Newfilename;
    }
 
-    public function UpdateSubCategories(Request $request){
-
+    public function UpdateSubCategories(Request $request)
+    {
         $name = $request->name;
         $langs = $request->lang_loop;
         $main_id = $request->main_categories;
@@ -465,27 +534,27 @@ class ProductCategoriesController extends Controller
             return redirect()->back()->withErrors($validate->errors());
         } else {
             if ($request->hasFile('thumbnail')) {
-                $thumbnailName =  self::updatesiglefile($oldfileimage ,$request->File('thumbnail'));
+                $thumbnailName = self::updatesiglefile($oldfileimage ,$request->File('thumbnail'));
                 DB::table('sub_pro_categories')->where('sub_pro_id' ,$subid)->update(
                     [
-                        'image' =>$thumbnailName,
-                        'image_type1' =>$arrayfileName['type1'],
-                        'image_type2' =>$arrayfileName['type2'],
-                        'image_type3' =>$arrayfileName['type3'],
+                        'image' => $thumbnailName,
+                        'image_type1' => $arrayfileName['type1'],
+                        'image_type2' => $arrayfileName['type2'],
+                        'image_type3' => $arrayfileName['type3'],
                         "unit_dimension" => $request->unit_dimension,
                         'url_item' => $url_string,
-                        'warranty_file'=>$warranty_file,
+                        'warranty_file' => $warranty_file,
                         "updated_at" => \Carbon\Carbon::now(),
                     ]
                 );
-            }else{
+            } else {
                 DB::table('sub_pro_categories')->where('sub_pro_id' ,$subid)->update(
                     [
-                        'image_type1' =>$arrayfileName['type1'],
-                        'image_type2' =>$arrayfileName['type2'],
-                        'image_type3' =>$arrayfileName['type3'],
+                        'image_type1' => $arrayfileName['type1'],
+                        'image_type2' => $arrayfileName['type2'],
+                        'image_type3' => $arrayfileName['type3'],
                         "unit_dimension" => $request->unit_dimension,
-                        'warranty_file'=>$warranty_file,
+                        'warranty_file' => $warranty_file,
                         'url_item' => $url_item,
                         "updated_at" => \Carbon\Carbon::now(),
                     ]
@@ -493,12 +562,12 @@ class ProductCategoriesController extends Controller
             }
 
 
-            if(isset($main_id)){
+            if (isset($main_id)) {
                 DB::table('categories_has_main_pro')->where('cate_id', '=', $subid)->delete();
-                foreach($main_id as $main){
+                foreach($main_id as $main) {
                     DB::table('categories_has_main_pro')->insert(
                         [
-                            "cate_id" =>  $subid,
+                            "cate_id" => $subid,
                             "main_cateid" => $main,
                             "order_seq" => isset($orderCate[$main]) ? $orderCate[$main] : 0,
                         ]
@@ -507,31 +576,31 @@ class ProductCategoriesController extends Controller
             }
 
             $arrayfileName = self::UpdateOldfile($fileGU ,$langs ,$oldfile);
-              $arraySucess = [];
-                foreach($langs as $lang){
-                   $data =  DB::table('sub_pro_categories_translation')->where('local' ,$lang)->where('sub_pro_id' ,$subid)->select('*')->get();
-                   $data_con  = count($data);
-                   if($data_con == 1){
+            $arraySucess = [];
+            foreach($langs as $lang){
+                $data = DB::table('sub_pro_categories_translation')->where('local' ,$lang)->where('sub_pro_id' ,$subid)->select('*')->get();
+                $data_con = count($data);
+                if ($data_con == 1) {
                     DB::table('sub_pro_categories_translation')
-                    ->where('local' ,$lang)
-                    ->where('sub_pro_id' ,$subid)->update(
-                        [
-                            "name" => $name[$lang],
-                            "content" => $content[$lang],
-                            "contenttype1" => $contentAddType1[$lang],
-                            "contenttype2" => $contentAddType2[$lang],
-                            "contenttype3" => $contentAddType3[$lang],
-                            "contenttype4" => $contentAddType4[$lang],
-                            "file" => $arrayfileName[$lang],
-                            "content1" => isset($content1[$lang]) ?  $content1[$lang] :null,
-                            "content2" => isset($content2[$lang]) ? $content2[$lang] : null ,
-                            "safety_cer" => isset($safety_cer[$lang]) ? $safety_cer[$lang] :null ,
-                            "highlight" => isset($features[$lang]) ? $features[$lang] : null ,
-                            "dimension" => isset($dimensions[$lang]) ? $dimensions[$lang] : null ,
-                            "unit_wight" => isset($unit[$lang]) ? $unit[$lang] : null,
-                        ]
-                    );
-                   }else{
+                        ->where('local' ,$lang)
+                        ->where('sub_pro_id' ,$subid)->update(
+                            [
+                                "name" => $name[$lang],
+                                "content" => $content[$lang],
+                                "contenttype1" => $contentAddType1[$lang],
+                                "contenttype2" => $contentAddType2[$lang],
+                                "contenttype3" => $contentAddType3[$lang],
+                                "contenttype4" => $contentAddType4[$lang],
+                                "file" => $arrayfileName[$lang],
+                                "content1" => isset($content1[$lang]) ?  $content1[$lang] :null,
+                                "content2" => isset($content2[$lang]) ? $content2[$lang] : null ,
+                                "safety_cer" => isset($safety_cer[$lang]) ? $safety_cer[$lang] :null ,
+                                "highlight" => isset($features[$lang]) ? $features[$lang] : null ,
+                                "dimension" => isset($dimensions[$lang]) ? $dimensions[$lang] : null ,
+                                "unit_wight" => isset($unit[$lang]) ? $unit[$lang] : null,
+                            ]
+                        );
+                }else{
                     DB::table('sub_pro_categories_translation')->insert(
                         [
 
@@ -552,11 +621,8 @@ class ProductCategoriesController extends Controller
                             "local" => $lang,
                         ]
                     );
-
-                   }
-
                 }
-
+            }
 
             return redirect()->route('subCategories')->with('flash_message', 'Update Data successfully');
         }
@@ -1165,6 +1231,21 @@ class ProductCategoriesController extends Controller
             ]
         );
         return redirect()->route('editSubCategories',$id)->with('flash_message', 'Delete File successfully');
+
+
+    }
+
+    public function removefileMainCategoriesDoc($id,$lang){
+
+        DB::table('main_pro_categories_translations')
+        ->where('local' ,$lang)
+        ->where('main_pro_id' ,$id)->update(
+            [
+
+                "file" => null,
+            ]
+        );
+        return redirect()->route('mainprotype.edit',$id)->with('flash_message', 'Delete File successfully');
 
 
     }

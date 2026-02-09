@@ -34,7 +34,7 @@
     font-size: 0.865em !important;
 }
 #navbar {
-    height: 74px;
+    height: 70px;
 }
 .dropdown-item.active, .dropdown-item:active{
     background-color: #fff;
@@ -201,14 +201,15 @@
 }
 
 .brand-image {
-    height: 40px;
+    height: 56px;
 }
 .brand-image-search{
     height: 21px;
     margin-top: 5px;
 }
 .visible-nav-minimize .brand-image {
-    height: 36px;
+    height: 32px;
+    width: 100%;
 }
 .burger-img{
     height: 30px;
@@ -243,7 +244,7 @@ body {
 .nav-link {
     font-family: 'DeltaSans';
     font-weight: 600;
-    font-size: 16px;
+    font-size: 18px;
     padding: 5px 4px 0px 4px;
 }
 
@@ -274,13 +275,13 @@ body {
 }
 
 .link-nav-first {
-    color: #444444;
+    color: #000000;
     padding-bottom: 0;
     padding-top: 0;
     padding-left: 0;
     padding-right: 10px;
     cursor: pointer;
-    font-weight: bold;
+    /* font-weight: bold; */
     font-size: 16px;
 }
 
@@ -299,7 +300,7 @@ body {
 
 .nav-position {
     position: fixed;
-    top: 30px;
+    top: 35px;
     right: 0;
     left: 0;
     z-index: 1030;
@@ -310,7 +311,7 @@ body {
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
-    padding: 20px 15px;
+    padding:17px 7px 0px 7px;
     outline: none;
     /* padding-right: 15px;
     padding-left: 15px; */
@@ -647,12 +648,12 @@ body {
     top: -6px;
     right: 0;
     z-index: 5;
-    padding: 22px 15px;
+    padding: 29px 15px 0px 15px;
     cursor: text;
 }
 
 .nav-search-btn {
-    border-bottom: 2px solid #444444;
+    /* border-bottom: 2px solid #444444; */
     color: #222222;
     word-spacing: 30px;
     font-style: italic;
@@ -661,8 +662,8 @@ body {
 
 .nav-here .dropdown-menu {
     width: 100%;
-    transform: translate3d(0px, 86px, 0px) !important;
-    border: unset;
+    transform: translate3d(-27px, 43px, 0px) !important;
+    /* border: unset; */
 }
 
 #dropdown08 i {
@@ -722,7 +723,7 @@ body {
 
 .search-box-mobile {
     position: absolute;
-    top: 64px;
+    top: 72px;
     left: 0;
     right: 0;
     z-index: 4;

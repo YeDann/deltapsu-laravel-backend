@@ -116,14 +116,13 @@
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
 <div class="box-events my-5 ">
     <div class="container">
-        <div class="box-news-detail">
+        <div class="box-news-detail border-radius-6">
             <h1 class="text-dark">
                 {{isset($contents[0]->title)? $contents[0]->title:'' }}
             </h1>
             <hr size="2">
             <?php
-            function getDateformat($date){
-                   
+                function getDateformat($date) {
                    $eng_month_arr = array(
                        "0" => "",
                        "1" => "Jan",
@@ -149,9 +148,7 @@
                    ];
                    return  $datearray;
             }
-           
-            
-            ?>
+        ?>
             <div class="content row">
                 <div class="col-lg-6 image-event  order-lg-1">
                     <img class="w-100"
@@ -213,9 +210,9 @@
         <div class="row">
             @foreach ($otherNews as $item)
             <div class="col-lg-4 col-sm-6">
-                <div class="card">
+                <div class="card border-radius-6">
                     <a href="{{route('updateEventDetail',$item->slug)}}">
-                        <div class="post-image">
+                        <div class="post-image height-320">
                             <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""
                                 class="img-responsive">
                         </div>
@@ -233,7 +230,6 @@
                                         echo '';
                                     }
                                  ?>
-
                             </span>
                             <span class="locations ">
                                 <i class="zmdi zmdi-pin"></i> {{$item->location}}
@@ -244,9 +240,7 @@
                                 {{$item->title}}
                             </h3>
                         </a>
-                        <p> {!! iconv_substr(strip_tags($item->content),0,90,'UTF-8') !!} ...
-                        </p>
-
+                        <p>{!! iconv_substr(strip_tags($item->content),0,90,'UTF-8') !!} ...</p>
                     </div>
                     <a href="{{route('updateEventDetail',$item->slug)}} "
                         class="read-more">{{$staticContent['Read_More']}}</a>

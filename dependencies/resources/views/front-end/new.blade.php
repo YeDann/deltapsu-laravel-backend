@@ -173,6 +173,9 @@
    .text-muted{
      padding: 0 1rem;
    }
+    .box-news .card {
+       margin-bottom: 25px !important;
+    }
 </style>
 
 @endsection
@@ -253,7 +256,7 @@ function getDateformat($date){
 <section class="box-news">
     <div class="container">
         <h1 class="text-title-delta ">{{$staticContent['Product_News']}}</h1>
-        <select id="select-news" onchange="selectDatanews();" class="form-control invisible-up-922 mb-4 w-75 m-auto">
+        <select id="select-news" onchange="selectDatanews();" class="form-control invisible-up-922 mb-4 w-75 m-auto border-radius-6">
             <option value="0" {{$type_id==0 ? 'selected' :''}}>{{$staticContent['All']}}</option>
             @foreach ($news_type as $type)
             <option value="{{$type->id}}" {{$type_id==$type->id ? 'selected' :''}} >{{$type->typename}}</option>
@@ -280,9 +283,14 @@ function getDateformat($date){
                     @foreach ($news_type as $type)
                     <a class="nav-item nav-link font-size-tab position-relative {{$type_id == $type->id ? 'active' :''}}"
                         href="{{route('index','news')}}?type={{preg_replace('/\s+/', '-',strtolower($type->typename))}}&type-id={{$type->id}}">{{$type->typename}}
-                        @if($type->typename == 'Lebensdauer' || $type->typename == 'EOL' ||
-                        $type->typename == "下架产品" || $type->typename == "停產產品"
-                        && $status_eol)<div class="bg-new-alert"><span>N</span></div>@endif
+                        @if(
+                            $type->typename == 'Lebensdauer' 
+                            || $type->typename == "下架产品" 
+                            || $type->typename == "停產產品"
+                            && $status_eol
+                        )
+                            <div class="bg-new-alert"><span>N</span></div>
+                        @endif
                     </a>
                     @endforeach
 
@@ -292,7 +300,7 @@ function getDateformat($date){
                         <div class="row">
                             @foreach ($news as $item)
                             <div class="col-lg-4 col-sm-6">
-                                <div class="card">
+                                <div class="card border-radius-6">
                                     <a href="{{route('updateNewsDetail',['name'=> $item->slug])}}">
                                         <div class="post-image">
                                             <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt=""
@@ -300,7 +308,6 @@ function getDateformat($date){
                                         </div>
                                     </a>
                                     <div class="news-content">
-
                                         <div class="post-meta">
                                             <a href="{{route('updateNewsDetail',['name'=> $item->slug])}}">
                                                 <span class="sub-news" style="color:{{$item->color_type}}">

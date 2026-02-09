@@ -59,7 +59,7 @@
 <section class="box-news ">
     <div class="container">
         <h1 class="text-title-delta ">{{$staticContent['Technical_Articles']}}</h1>
-        <select id="select-news" onchange="selectDatanews();" class="form-control invisible-up-922 mb-4">
+        <select id="select-news" onchange="selectDatanews();" class="form-control invisible-up-922 mb-4 border-radius-6">
             <option value="0">{{$staticContent['All']}}</option>
             @foreach ($news_type as $type)
             <option value="{{$type->id}}">{{$type->name}}</option>

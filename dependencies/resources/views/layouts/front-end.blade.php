@@ -68,7 +68,7 @@ $langch = str_replace('_', '-', app()->getLocale());
         .form-control:focus {
             color: #495057;
             background-color: #fff;
-            border-color: #80bdff;
+            border-color: #0087DC;
             outline: none;
             box-shadow: none;
         }
@@ -96,11 +96,10 @@ $langch = str_replace('_', '-', app()->getLocale());
         .form-control:focus {
             color: #495057;
             background-color: #fff;
-            border-color: #80bdff;
+            border-color: #0087DC;
             outline: none;
             box-shadow: none;
         }
-
 
         .color-yellow {
             background-color: #252A2C;
@@ -114,11 +113,11 @@ $langch = str_replace('_', '-', app()->getLocale());
         }
 
         html[lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
-            padding: 20px 9px;
+            /* padding: 20px 9px; */
         }
 
         html[lang="ru"] .navbar-expand-lg .navbar-nav .nav-link {
-            padding: 20px 9px;
+            /* padding: 20px 9px; */
         }
 
         a#CybotCookiebotDialogPoweredbyCybot,
@@ -480,17 +479,6 @@ if (!Array.prototype.findIndex) {
                     e.stopPropagation();
                 });
             });
-
-             $(document).ready(function() {
-                $('.sp-dropdown a.sub-menu').on("click", function(e) {
-
-                  $('ul.drp-subthree').css( "display","none" )
-                  $(this).next('ul').toggle();
-                  e.stopPropagation();
-                  e.preventDefault();
-
-                });
-            });
     </script>
 
     <script>
@@ -544,20 +532,26 @@ if (!Array.prototype.findIndex) {
     <script>
         $('.btn-sidenav').css('visibility','hidden');
 
-         function toggle_visibility(id) {
-            var e = document.getElementById(id);
+          function toggle_visibility(id) {
+              var e = document.getElementById(id);
 
-            if(e.style.visibility == 'visible'){
+              if(e.style.visibility == 'visible'){
 
-                //  e.style.display = 'none';
-                $('#in-sidenav').css('visibility','visible');
-                e.style.visibility = 'hidden';
+                  //  e.style.display = 'none';
+                  $('#in-sidenav').css('visibility','visible');
+                  e.style.visibility = 'hidden';
 
-           } else{
-                e.style.visibility = 'visible';
-                $('#in-sidenav').css('visibility','hidden');
+            } else{
+                  e.style.visibility = 'visible';
+                  $('#in-sidenav').css('visibility','hidden');
+            }
           }
-         }
+
+          function toggle_only(e, id) {
+            e.preventDefault();   // 阻止 a 導頁
+            e.stopPropagation();  // 阻止事件往 a 冒泡
+            toggle_visibility(id);
+          }
          /*  function openNav(e){
               e.toggle(function(){document.getElementById("Sidenav").style.width = "100%";
             document.getElementById('bg-backslidenav').style.display="block";},function(){document.getElementById("Sidenav").style.width = "0";
@@ -603,6 +597,7 @@ if (!Array.prototype.findIndex) {
            var e = document.getElementById('in-sidenav');
            if(e.style.visibility == 'hidden'){
            $('#in-sidenav').css('visibility','visible');
+            $('#search-box-mobile').hide();
             document.getElementById("Sidenav").classList.add("show");
             document.getElementById('bg-backslidenav').style.display="block";
             $('.menu-buger').addClass('active');
@@ -734,12 +729,11 @@ if (!Array.prototype.findIndex) {
       } */
         function bigImg(image ,id){
           // console.log(image);
-           if(image != ''){
+          if(image != ''){
             $('.imageNav'+id).attr('src' ,'{{config('app.url')}}/medias/categories/'+image);
-           }else {
+          }else {
             $('.imageNav'+id).attr('src' ,'{{asset('frontend-asset/image/blank.png')}}');
-
-           }
+          }
         }
         function mainCate(id){
           // console.log(id);
@@ -750,7 +744,6 @@ if (!Array.prototype.findIndex) {
           }else if(id == 'sub4'){
             $('.imageNav4').attr('src' ,"{{asset('frontend-asset/image/battery_charging_new.webp')}}");
           }
-
 
           $('.sub-menu').removeClass('active')
           $('#'+id).addClass('active');
@@ -770,6 +763,9 @@ if (!Array.prototype.findIndex) {
           // console.log(nameArr ,link );
           // setlocaltion(nameArr[1] , nameArr[0]);
         }
+        function clickLangLocationmobile(link) {
+          window.location = link;
+        }
         function setlocaltion(lang ,link){
           // console.log(lang);
           // if(lang == 'jp'){
@@ -782,20 +778,19 @@ if (!Array.prototype.findIndex) {
           //   window.cwcCookieBanner.setLang('en')
           // }
           $.ajax({
-           url: "{{route('setlocaltion')}}",
-           data: {
-          'lang': lang,
-           },
-           type: 'POST',
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           success: function (res) {
-            //  console.log(res);
-             window.location = link;
-           }
+            url: "{{route('setlocaltion')}}",
+            data: {
+              'lang': lang,
+            },
+            type: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (res) {
+              //  console.log(res);
+              window.location = link;
+            }
           });
-
         }
 
     </script>
@@ -889,7 +884,6 @@ if (!Array.prototype.findIndex) {
               $('.sp-dropdown').removeClass('show');
               $('.sub-menu').removeClass('active');
               $('#sub1').removeClass('show');
-              $('.drp-subthree').css('display','none');
         })
 
     </script>
@@ -964,7 +958,6 @@ if (!Array.prototype.findIndex) {
             var browVersion = navigator.sayswho.split(" ");
 
            var browVer = parseInt(browVersion[1])
-                //  console.log(browVersion[0]);
                if(browVersion[0] != 'Chrome' && browVersion[0] != 'Firefox' && browVersion[0] != 'Safari'){
                 document.getElementById("alert-browser-check").style.display ="block";
                }
