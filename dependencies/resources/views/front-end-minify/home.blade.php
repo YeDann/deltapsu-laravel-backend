@@ -654,8 +654,8 @@ function retextdata($arr ,$unit){
 <div class="visible-mobile">
     <div class="padd-mobile-slide">
         <div class="">
-            <div class="widget-bar"></div>
-            <h2 class="text-title-delta-home">{{$staticContent['The_Latest_Series']}}</h2>
+            <div class="widget-bar" style="margin-left: -5px;"></div>
+            <h2 class="text-title-delta-home" style="margin-left: -5px;">{{$staticContent['The_Latest_Series']}}</h2>
             <div id="producttype-mobile" class="owl-carousel owl-theme  ft-products-body">
                 @foreach ($series as $serie)
                 @php
