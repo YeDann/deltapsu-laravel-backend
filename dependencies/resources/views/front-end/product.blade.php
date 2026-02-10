@@ -1990,15 +1990,15 @@
 
 
     function  filtercontent(){
-       var property_load = [];
-       property_load = pro_perti;
-       var doc_safety = documents_cate;
+        var property_load = [];
+        property_load = pro_perti;
+        var doc_safety = documents_cate;
         var status = [ {id:2,name:'New'}, {id:3,name:'NRND'},{id:4,name:'EOL'}];
         var certificates = [
-         {id:1,name:'{{$staticContent['Industrial_filter']}}'},
-         {id:2,name:'{{$staticContent['Medical_filter']}}'},
-         {id:3,name:'{{$staticContent['Lighting_Signage_filter']}}'},
-         {id:4,name:'{{$staticContent['wireless_charging']}}'}
+            {id:1,name:'{{$staticContent['Industrial_filter']}}'},
+            {id:2,name:'{{$staticContent['Medical_filter']}}'},
+            {id:3,name:'{{$staticContent['Lighting_Signage_filter']}}'},
+            {id:4,name:'{{$staticContent['wireless_charging']}}'}
         ];
         var data_1 = [];
         var data_text = [];
@@ -2025,7 +2025,7 @@
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span>'+category['name']+'</span></label>';
                     html3 += '</div>' ;
-                  });
+                });
             }
             if(fil_con['field_id'] == 'mode_series'){
                 // Hardcoded Mode Series options as requested
@@ -2042,10 +2042,10 @@
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span>'+mode['title']+'</span></label>';
                     html3 += '</div>' ;
-                  });
-             }
+                });
+            }
             if(fil_con['field_id'] == 'series01'){
-                $.each(series, function(index_serie,serie){
+                $.each(series, function(index_serie,serie) {
                     html3 += '<div onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="box-input-checkbox">';
                     html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+serie['se_id']+'" type="checkbox" style="display: none;" >';
                     html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+serie['se_id']+'"><span>';
@@ -2053,20 +2053,9 @@
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span>'+serie['title']+'</span></label>';
                     html3 += '</div>' ;
-                  });
-             }
-            if(fil_con['field_id'] == 'series01'){
-                $.each(series, function(index_serie,serie){
-                    html3 += '<div onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="box-input-checkbox">';
-                    html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+serie['se_id']+'" type="checkbox" style="display: none;" >';
-                    html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+serie['se_id']+'"><span>';
-                    html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
-                    html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
-                    html3 += '</svg></span><span>'+serie['title']+'</span></label>';
-                    html3 += '</div>' ;
-                  });
-             }
-             if(fil_con['field_id'] == 'status02'){
+                });
+            }
+            if(fil_con['field_id'] == 'status02'){
                 $.each(status, function(index_status,sta){
                     html3 += '<div onchange="filterstatus('+"'"+fil_con['field_id']+"'"+','+sta['id']+');" class="box-input-checkbox">';
                     html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+index_status+'" type="checkbox" style="display: none;" />';
@@ -2075,9 +2064,9 @@
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span class="">'+sta['name']+'</span></label>';
                     html3 += '</div>' ;
-                  });
-             }
-             if(fil_con['field_id'] == 'safety03'){
+                });
+            }
+            if(fil_con['field_id'] == 'safety03'){
                 $.each(doc_safety, function(id_doc,safety){
                     html3 += '<div onchange="filtersafety('+"'"+fil_con['field_id']+"'"+','+safety['id']+');" class="box-input-checkbox">';
                     html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+id_doc+'" type="checkbox" style="display: none;" />';
@@ -2086,7 +2075,7 @@
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span class="">'+safety['title']+'</span></label>';
                     html3 += '</div>' ;
-                  });
+                });
              }
              if(fil_con['field_id'] == 'certifi04'){
                 $.each(certificates, function(index_cer,certi){
@@ -2097,21 +2086,20 @@
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span>'+certi['name']+'</span></label>';
                     html3 += '</div>' ;
-                  });
+                });
              }
              if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03'  ){
                var property =  property_load.sort(
-                   function(a, b){
-                       if(a.data_1 < b.data_1){
-                           if(a.data_2 &&  b.data_2 &&  a.data_2 < b.data_2 ){
+                    function(a, b){
+                        if(a.data_1 < b.data_1){
+                            if(a.data_2 &&  b.data_2 &&  a.data_2 < b.data_2 ){
+                                return -1;
+                            }
                             return -1;
-                           }
-                            return -1;
-                       }else{
-                        return 1;
-                       }
+                        }else{
+                            return 1;
+                        }
                     });
-
 
                 $.each(property, function(index_per,ppt){
 
@@ -2120,22 +2108,21 @@
                     var text = null;
                     if(ppt['value_text'] != null && typeof ppt['value_text']  != 'undefined'){
                         text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
-
                     }
 
                     var dataarr = [
-                                ppt['data_1'],
-                                ppt['data_2'],
-                                ppt['data_3'],
-                                ppt['data_4'],
-                                ppt['data_5'],
-                                ppt['data_6'],
-                                ppt['data_7'],
-                                ppt['data_8'],
-                                ppt['data_9'],
-                                ppt['data_10'],
-                                ppt['data_11'],
-                                ppt['data_12'],
+                        ppt['data_1'],
+                        ppt['data_2'],
+                        ppt['data_3'],
+                        ppt['data_4'],
+                        ppt['data_5'],
+                        ppt['data_6'],
+                        ppt['data_7'],
+                        ppt['data_8'],
+                        ppt['data_9'],
+                        ppt['data_10'],
+                        ppt['data_11'],
+                        ppt['data_12'],
                     ];
 
                     object = {
@@ -2145,15 +2132,16 @@
                        'status_input':ppt['status_input'],
                        'text':text,
                     }
-                    if(ppt['type_value'] == 'number' && ppt['data_1'] != null){
-                      objectFiled = {
-                        'field_id':fil_con['field_id'],
-                        'type_box':ppt['status_input'],
-                      }
-                      var  index_fi = fildnumber.findIndex(
-                         function(x) {
-                         return  x.field_id === fil_con['field_id'];
-                         })
+                    if (ppt['type_value'] == 'number' && ppt['data_1'] != null) {
+                        objectFiled = {
+                            'field_id':fil_con['field_id'],
+                            'type_box':ppt['status_input'],
+                        }
+                        var  index_fi = fildnumber.findIndex(
+                            function(x) {
+                                return  x.field_id === fil_con['field_id'];
+                            }
+                        )
                         if(index_fi == -1){
                             fildnumber.push(objectFiled);
                         }
