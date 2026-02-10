@@ -382,7 +382,7 @@
                         <div class="text-middle">
                             <h1 class="text-title-banner">{{ $mainCategory->name }}</h1>
                             <div class="text-p-banner my-2">{!! $mainCategory->content !!}</div>
-                            @if(isset($mainCategory->file))
+                            @if(isset($mainCategory->file) && $mainCategory->file)
                             <a class="text-color-delta text-bold"
                                 href="{{ config('app.url') }}/medias/categories/{{ $mainCategory->file }}" target="_blank"><img
                                     class="align-baseline mr-2"
