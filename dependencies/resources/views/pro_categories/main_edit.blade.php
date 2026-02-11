@@ -62,26 +62,6 @@
                                         <textarea rows="4" class="form-control"
                                             name="content[{{$item->local}}]">{{isset($item->content) ? $item->content :''}}</textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="example-select">File</label>
-                                        <input type="hidden" name="oldfile[{{$item->local}}]" 
-                                            value="{{isset($item->file) ? $item->file :''}}">
-                                        @if($item->file && $item->file != '')
-                                        <a target="_blank"
-                                            href="{{config('app.url')}}/medias/categories/{{$item->file}}">{{$item->file}}</a>
-                                        <a href="{{route('removefileMainCategoriesDoc',[$mainId,$item->local])}}"
-                                            onclick="return confirm('Are you sure?');">
-                                            <button type="button" class="btn btn-sm btn-danger"
-                                                style="margin: 10px 0px 10px 10px;"><i class="fa fa-trash"></i></button>
-                                        </a>
-                                        @endif
-                                        <br>
-                                        <div class="custom-file " style="width:100%;">
-                                            <input type="file" class="custom-file-input file_input"
-                                                name="fileGU[{{$item->local}}]" data-toggle="custom-file-input">
-                                            <label class="custom-file-label" for="fileImage">Choose file</label>
-                                        </div>
-                                    </div>
                                 </div>
                                 @else
                                 <div class="tab-pane" id="btabs-alt-static-{{$item->local}}" role="tabpanel">
@@ -96,26 +76,6 @@
                                         <textarea rows="4" class="form-control"
                                             name="content[{{$item->local}}]">{{isset($item->content) ? $item->content :''}}</textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="example-select">File</label>
-                                        <input type="hidden" name="oldfile[{{$item->local}}]" 
-                                            value="{{isset($item->file) ? $item->file :''}}">
-                                        @if($item->file && $item->file != '')
-                                        <a target="_blank"
-                                            href="{{config('app.url')}}/medias/categories/{{$item->file}}">{{$item->file}}</a>
-                                        <a href="{{route('removefileMainCategoriesDoc',[$mainId,$item->local])}}"
-                                            onclick="return confirm('Are you sure?');">
-                                            <button type="button" class="btn btn-sm btn-danger"
-                                                style="margin: 10px 0px 10px 10px;"><i class="fa fa-trash"></i> </button>
-                                        </a>
-                                        @endif
-                                        <br>
-                                        <div class="custom-file " style="width:100%;">
-                                            <input type="file" class="custom-file-input file_input"
-                                                name="fileGU[{{$item->local}}]" data-toggle="custom-file-input">
-                                            <label class="custom-file-label" for="fileImage">Choose file</label>
-                                        </div>
-                                    </div>
                                 </div>
                                 @endif
                                 @endforeach
@@ -124,6 +84,27 @@
                     </div>
 
                     <div class="col-lg-12" style="margin-bottom: 20px">
+                        <div>
+                            <div class="form-group">
+                                <label for="example-select">File</label>
+                                <input type="hidden" name="oldfile" value="{{isset($mainCategory->file) ? $mainCategory->file :''}}">
+                                @if($mainCategory->file && $mainCategory->file != '')
+                                    <a target="_blank"
+                                        href="{{config('app.url')}}/medias/categories/{{$mainCategory->file}}">{{$mainCategory->file}}</a>
+                                    <a href="{{route('removefileMainCategoriesDoc',[$mainId])}}"
+                                        onclick="return confirm('Are you sure?');">
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                            style="margin: 10px 0px 10px 10px;"><i class="fa fa-trash"></i></button>
+                                    </a>
+                                @endif
+                                <br>
+                                <div class="custom-file " style="width:100%;">
+                                    <input type="file" class="custom-file-input file_input"
+                                        name="fileGU" data-toggle="custom-file-input">
+                                    <label class="custom-file-label" for="fileImage">Choose file</label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-vcenter">
                                 <thead>
