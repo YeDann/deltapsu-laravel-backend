@@ -62,7 +62,7 @@
 </style>
 @endsection
 @section('meta')
-<title>{{isset($contents[0]->title)? $contents[0]->title .' | '.$staticContent['Events&Calendar'].' | '.'DeltaPSU' :''}}
+<title>{{isset($contents[0]->title) ? $contents[0]->title .' | '.$staticContent['Events&Calendar'].' | '.'PSU.deltaww.com' :''}}
 </title>
 <meta name="description"
     content="{!! trim(iconv_substr(strip_tags(isset($contents[0]->meta_description)? $contents[0]->meta_description:''),0,90,'UTF-8')) !!}">
