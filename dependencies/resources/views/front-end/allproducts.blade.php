@@ -344,50 +344,54 @@
                             <div class="col-lg-6 product-type-boxitem-sub-banner-pic ">
                                 @if($subCate->sub_pro_id == 7)
                                 <a class="d-flex w-100" href="{{route('configurableProductDetail')}}">
+                                @else
+                                <a class="d-flex w-100" style="color:inherit"
+                                    href="{{ route('productList',[$mainCate->main_id,preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
+                                @endif
+
+                                @if($mainCate->main_id == 1)
+                                    @if(isset($subCate->image_type1))
+                                    <img class="img-fluid max-h"
+                                        src="{{config('app.url')}}/medias/categories/{{$subCate->image_type1}}" alt="image">
                                     @else
-                                    <a class="d-flex w-100" style="color:inherit"
-                                        href="{{ route('productList',[$mainCate->main_id,preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id])}}">
-                                        @endif
+                                    <img class="img-fluid max-h"
+                                        src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="image">
+                                    @endif
+                                @elseif($mainCate->main_id == 2)
+                                    @if(isset($subCate->image_type2))
+                                    <img class="img-fluid max-h"
+                                        src="{{config('app.url')}}/medias/categories/{{$subCate->image_type2}}" alt="image">
+                                    @else
+                                    <img class="img-fluid max-h"
+                                        src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="image">
+                                    @endif
+                                @elseif($mainCate->main_id == 3)
+                                    @if(isset($subCate->image_type3))
+                                    <img class="img-fluid max-h"
+                                        src="{{config('app.url')}}/medias/categories/{{$subCate->image_type3}}" alt="image">
+                                    @else
+                                    <img class="img-fluid max-h"
+                                        src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="image">
+                                    @endif
+                                @elseif($mainCate->main_id == 4)
+                                    @if(isset($subCate->image_type4))
+                                    <img class="img-fluid max-h"
+                                        src="{{config('app.url')}}/medias/categories/{{$subCate->image_type4}}" alt="image">
+                                    @else
+                                    <img class="img-fluid max-h"
+                                        src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="image">
+                                    @endif
+                                @elseif($mainCate->main_id == 5)
+                                    @if(isset($subCate->image_type5))
+                                    <img class="img-fluid max-h"
+                                        src="{{config('app.url')}}/medias/categories/{{$subCate->image_type5}}" alt="image">
+                                    @else
+                                    <img class="img-fluid max-h"
+                                        src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="image">
+                                    @endif
+                                @endif
 
-                                        @if($mainCate->main_id == 1)
-                                        @if(isset($subCate->image_type1))
-                                        <img class="img-fluid max-h"
-                                            src="{{config('app.url')}}/medias/categories/{{$subCate->image_type1}}"
-                                            alt="">
-                                        @else
-                                        <img class="img-fluid max-h"
-                                            src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
-                                        @endif
-                                        @elseif($mainCate->main_id == 2)
-                                        @if(isset($subCate->image_type2))
-                                        <img class="img-fluid max-h"
-                                            src="{{config('app.url')}}/medias/categories/{{$subCate->image_type2}}"
-                                            alt="">
-                                        @else
-                                        <img class="img-fluid max-h"
-                                            src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
-                                        @endif
-                                        @elseif($mainCate->main_id == 3)
-                                        @if(isset($subCate->image_type3))
-                                        <img class="img-fluid max-h"
-                                            src="{{config('app.url')}}/medias/categories/{{$subCate->image_type3}}"
-                                            alt="">
-                                        @else
-                                        <img class="img-fluid max-h"
-                                            src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
-                                        @endif
-                                        @elseif($mainCate->main_id == 4)
-                                        @if(isset($subCate->image_type4))
-                                        <img class="img-fluid max-h"
-                                            src="{{config('app.url')}}/medias/categories/{{$subCate->image_type4}}"
-                                            alt="">
-                                        @else
-                                        <img class="img-fluid max-h"
-                                            src="{{config('app.url')}}/medias/categories/{{$subCate->image}}" alt="">
-                                        @endif
-                                        @endif
-
-                                    </a>
+                                </a>
                             </div>
                         </div>
                     </div>
