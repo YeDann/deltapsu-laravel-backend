@@ -86,26 +86,43 @@ class ProductCategoriesController extends Controller
                 ]
             );
 
-            // Handle multi-language data with separate files per language
-            foreach($langs as $lang){
+            // Handle multi-language data (STORE): en is the only default.
+            // If en is uploaded -> ALL languages use en file.
+            $defaultFileName = '';
+
+            // 1) 먼저處理 en 檔案（避免 langs 順序問題）
+            $enFile = ($fileGU && isset($fileGU['en']) && $fileGU['en'] !== null) ? $fileGU['en'] : null;
+
+            if ($enFile) {
+                $defaultFileName = preg_replace('/\s+/', '', uniqid() . "." . $enFile->getClientOriginalExtension());
+                $enFile->move(base_path('/../medias/categories'), $defaultFileName);
+            }
+
+            // 2) 再逐語系寫入資料
+            foreach ($langs as $lang) {
                 $filename = '';
-                // Handle file upload for each language
-                if ($fileGU && isset($fileGU[$lang]) && $fileGU[$lang] != null) {
-                    $file = $fileGU[$lang];
-                    $filename = preg_replace('/\s+/', '', uniqid() . "." . $file->getClientOriginalExtension());
-                    $file->move(base_path('/../medias/categories'), $filename);
+
+                if ($defaultFileName !== '') {
+                    // en 有上傳：全語系強制同檔
+                    $filename = $defaultFileName;
+                } else {
+                    // en 沒上傳：各語系可獨立上傳，否則就空
+                    if ($fileGU && isset($fileGU[$lang]) && $fileGU[$lang] !== null) {
+                        $file = $fileGU[$lang];
+                        $filename = preg_replace('/\s+/', '', uniqid() . "." . $file->getClientOriginalExtension());
+                        $file->move(base_path('/../medias/categories'), $filename);
+                    }
                 }
 
-                $main_pro_categories = DB::table('main_pro_categories_translations')->insert(
-                    [
-                        "main_pro_id" => $id,
-                        "name" => ($name && isset($name[$lang])) ? $name[$lang] : '',
-                        "content" => ($content && isset($content[$lang])) ? $content[$lang] : '',
-                        "file" => $filename,
-                        "local" => $lang,
-                    ]
-                );
+                DB::table('main_pro_categories_translations')->insert([
+                    "main_pro_id" => $id,
+                    "name"    => ($name[$lang] ?? ''),
+                    "content" => ($content[$lang] ?? ''),
+                    "file"    => $filename,
+                    "local"   => $lang,
+                ]);
             }
+
 
             return redirect()->route('mainprotype.index')->with('flash_message', 'Insert Data successfully');
         }
@@ -175,23 +192,36 @@ class ProductCategoriesController extends Controller
 
         // Handle multi-language file uploads
         $arrayfileName = [];
-        foreach($langs as $lang) {
-            $arrayfileName[$lang] = isset($oldfile[$lang]) ? $oldfile[$lang] : '';
-            
-            if ($fileGU && isset($fileGU[$lang]) && $fileGU[$lang] != null) {
-                $file = $fileGU[$lang];
-                $filename = preg_replace('/\s+/', '', uniqid() . "." . $file->getClientOriginalExtension());
-                $file->move(base_path('/../medias/categories'), $filename);
-                
-                // Delete old file if exists
-                if (isset($oldfile[$lang]) && $oldfile[$lang]) {
-                    $file_pointer = base_path('/../medias/categories/') . $oldfile[$lang];
-                    if (file_exists($file_pointer)) {
-                        unlink($file_pointer);
-                    }
+        $defaultFileName = $oldfile['en'] ?? '';
+
+        // 1) 先看這次 en 有沒有上傳（有的話先存起來，取得新 default）
+        $enFile = ($fileGU && isset($fileGU['en']) && $fileGU['en'] !== null) ? $fileGU['en'] : null;
+
+        if ($enFile) {
+            $filename = preg_replace('/\s+/', '', uniqid() . "." . $enFile->getClientOriginalExtension());
+            $enFile->move(base_path('/../medias/categories'), $filename);
+            $defaultFileName = $filename;
+
+            // 2) en 更新 -> 強制全部語系都用新的 en 檔名
+            foreach ($langs as $lang) {
+                $arrayfileName[$lang] = $defaultFileName;
+            }
+        } else {
+            // 3) en 沒更新 -> 其他語系可各自更新；沒更新就用自己的舊檔，若自己沒舊檔才 fallback en 舊檔
+            foreach ($langs as $lang) {
+                $old = $oldfile[$lang] ?? '';
+                $arrayfileName[$lang] = $old;
+
+                if ($fileGU && isset($fileGU[$lang]) && $fileGU[$lang] !== null) {
+                    $file = $fileGU[$lang];
+                    $filename = preg_replace('/\s+/', '', uniqid() . "." . $file->getClientOriginalExtension());
+                    $file->move(base_path('/../medias/categories'), $filename);
+
+                    $arrayfileName[$lang] = $filename;
+                } else if ($arrayfileName[$lang] === '' && $defaultFileName !== '') {
+                    // 該語系沒檔 -> fallback 用 en 舊檔
+                    $arrayfileName[$lang] = $defaultFileName;
                 }
-                
-                $arrayfileName[$lang] = $filename;
             }
         }
 
