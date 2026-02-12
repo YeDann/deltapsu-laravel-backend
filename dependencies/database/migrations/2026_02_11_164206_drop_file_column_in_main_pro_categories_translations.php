@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        // 取得 main_pro_categories_translations 中 file 欄位不為 null 的資料，並且 local 為 'en'
+        // 取得 main_pro_categories_translations 中 file 欄位不為 null 且不為空字串的資料
         $mainTransDataHasFile = DB::table('main_pro_categories_translations')->whereNotNull('file')->where('file', '<>', '')->get();
 
+        // 刪除 main_pro_categories_translations 中的 file 欄位，並將 file 欄位的值移動到 main_pro_categories 中對應的 main_id 的 file 欄位
         foreach($mainTransDataHasFile as $mainTrans) {
             $fileName = $mainTrans->file;
             
