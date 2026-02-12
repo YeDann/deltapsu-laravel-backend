@@ -981,23 +981,23 @@ class FrontendController extends Controller
         $lang = App::getLocale();
 
         $status1_last = DB::table('least_products as lp')
-        ->join('least_products_translation as lpt', 'lp.id', '=', 'lpt.last_id')
-        ->Leftjoin('products as p', 'p.pro_id', '=', 'lp.product_id')
-        ->Leftjoin('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-        ->Leftjoin('sub_pro_categories_translation as subt', 'phc.categories_id', '=', 'subt.sub_pro_id')
-        ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
-        ->select('lp.*', 'lpt.*', 'p.pro_code', 'sp.url_item', 'p.picture', 'subt.name as catename')
-        ->where('lp.status', 1)
-        ->where('lpt.local', $lang)
-        ->where('subt.local', $lang)
-        ->get();
+            ->join('least_products_translation as lpt', 'lp.id', '=', 'lpt.last_id')
+            ->Leftjoin('products as p', 'p.pro_id', '=', 'lp.product_id')
+            ->Leftjoin('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+            ->Leftjoin('sub_pro_categories_translation as subt', 'phc.categories_id', '=', 'subt.sub_pro_id')
+            ->join('sub_pro_categories as sp', 'sp.sub_pro_id', '=', 'phc.categories_id')
+            ->select('lp.*', 'lpt.*', 'p.pro_code', 'sp.url_item', 'p.picture', 'subt.name as catename')
+            ->where('lp.status', 1)
+            ->where('lpt.local', $lang)
+            ->where('subt.local', $lang)
+            ->get();
 
         $status2_last = DB::table('least_products as lp')
-        ->join('least_products_translation as lpt', 'lp.id', '=', 'lpt.last_id')
-        ->select('lp.*', 'lpt.*')
-        ->where('lp.status', 2)
-        ->where('lpt.local', $lang)
-        ->get();
+            ->join('least_products_translation as lpt', 'lp.id', '=', 'lpt.last_id')
+            ->select('lp.*', 'lpt.*')
+            ->where('lp.status', 2)
+            ->where('lpt.local', $lang)
+            ->get();
 
         $mainCategories = DB::table('main_pro_categories as mp')
             ->join('main_pro_categories_translations as mpt', 'mpt.main_pro_id', '=', 'mp.main_id')
@@ -1005,6 +1005,8 @@ class FrontendController extends Controller
             ->select('mp.*', 'mpt.*')
             ->orderBy('mp.order_seq', 'asc')
             ->get();
+
+        // dd($mainCategories);
         
         $subCategories = DB::table('categories_has_main_pro as chmp')
             ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
@@ -1015,42 +1017,43 @@ class FrontendController extends Controller
             ->get();
 
         $series = DB::table('series_has_pro_categories as sc')
-        ->join('series as s', 'sc.se_id', '=', 's.se_id')
-        ->join('series_translations as st', 'st.series_id', '=', 's.se_id')
-        ->where('st.local', $lang)
-        ->where('s.status', 1)
-        ->select('s.*', 'st.*', 'sc.*')
-        ->orderBy('order_seq', 'asc')
-        ->get();
+            ->join('series as s', 'sc.se_id', '=', 's.se_id')
+            ->join('series_translations as st', 'st.series_id', '=', 's.se_id')
+            ->where('st.local', $lang)
+            ->where('s.status', 1)
+            ->select('s.*', 'st.*', 'sc.*')
+            ->orderBy('order_seq', 'asc')
+            ->get();
 
         $series_has_application = DB::table('series_has_application as shp')
-        ->join('application as app', 'app.id', '=', 'shp.app_id')
-        ->join('application_translation as appt', 'appt.app_id', '=', 'app.id')
-        ->where('appt.local', 'en')
-        ->select('shp.app_id', 'app.*', 'appt.name', 'shp.se_id')
-        ->get();
+            ->join('application as app', 'app.id', '=', 'shp.app_id')
+            ->join('application_translation as appt', 'appt.app_id', '=', 'app.id')
+            ->where('appt.local', 'en')
+            ->select('shp.app_id', 'app.*', 'appt.name', 'shp.se_id')
+            ->get();
 
         $modeSeries = DB::table('mode_series as ms')
-        ->select('ms.*')
-        ->get();
+            ->select('ms.*')
+            ->get();
+
         $metatag = DB::table('meta_tag_page as mtp')
-                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 2)
-                ->where('mtpt.local', $lang)
-                ->select('mtp.*', 'mtpt.*')
-                ->get();
+            ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+            ->where('mtp.id', 2)
+            ->where('mtpt.local', $lang)
+            ->select('mtp.*', 'mtpt.*')
+            ->get();
 
         return view('front-end.allproducts')
-        ->with('metatag', $metatag)
-        ->with('modeSeries', $modeSeries)
-        ->with('mainCategories', $mainCategories)
-        ->with('subCategories', $subCategories)
-        ->with('cateid', 0)
-        ->with('mainId', 0)
-        ->with('series', $series)
-        ->with('series_has_application', $series_has_application)
-        ->with('last_products', $status1_last)
-        ->with('last_products_2', $status2_last);
+            ->with('metatag', $metatag)
+            ->with('modeSeries', $modeSeries)
+            ->with('mainCategories', $mainCategories)
+            ->with('subCategories', $subCategories)
+            ->with('cateid', 0)
+            ->with('mainId', 0)
+            ->with('series', $series)
+            ->with('series_has_application', $series_has_application)
+            ->with('last_products', $status1_last)
+            ->with('last_products_2', $status2_last);
     }
 
     public function productBySeries($se_par_name, $se_parid)
