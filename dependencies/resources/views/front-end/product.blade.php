@@ -797,6 +797,14 @@
     var arr_value1 = [];
 
     $(document).ready(function () {
+        // 初始化 URL 參數到篩選陣列
+        if (cateid && main_cate_id != 3) {
+            pro_type_arr.push(parseInt(cateid));
+        }
+        if (cateid && main_cate_id == 3) {
+            mode_series_arr.push(parseInt(cateid));
+        }
+        
         loadAddContent();
         filtercontentMobile();
         filtercontent();
@@ -2042,8 +2050,6 @@
             if(fil_con['field_id'] == 'series01'){
                 // 根據目前選中的主分類篩選 series
                 var filteredSeries = series;
-                // console.log(filteredSeries)
-                // console.log(main_cate_id)
                 if (main_cate_id && main_cate_id !== 0) {
                     filteredSeries = series.filter(function(serie) {
                         // 首先根據主分類篩選
@@ -2071,7 +2077,7 @@
                 });
                 filteredSeries = uniqueSeries;
                 
-                // console.log(filteredSeries)
+                console.log(filteredSeries)
 
                 $.each(filteredSeries, function(index_serie,serie) {
                     html3 += '<div onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="box-input-checkbox">';
@@ -2559,18 +2565,27 @@
         var val = parseInt(value);
         var index_se = -1;
         
-        // 使用寬鬆比對查找索引
+        console.log('product_type_filter:', 'value:', value, 'val:', val, 'pro_type_arr before:', pro_type_arr);
+        
+        // 檢查是否存在（用寬鬆比較）
+        var exists = false;
         $.each(pro_type_arr, function(i, v){
             if(v == val){
-                index_se = i;
+                exists = true;
                 return false;
             }
         });
 
-        if(index_se == -1){
+        if(exists){
+            // 如果存在，移除所有相同的值（數字和字串版本）
+            pro_type_arr = pro_type_arr.filter(function(v) {
+                return v != val && v != value;
+            });
+            console.log('移除後:', pro_type_arr);
+        } else {
+            // 如果不存在，添加（只添加數字版本）
             pro_type_arr.push(val);
-        }else{
-            pro_type_arr.splice(index_se, 1);
+            console.log('添加後:', pro_type_arr);
         }
        
        fillerData();
@@ -2585,6 +2600,8 @@
      * 更新 series 選項（桌面版和手機版）
      */
     function updateSeriesOptions() {
+        console.log('updateSeriesOptions 被呼叫, pro_type_arr:', pro_type_arr);
+        
         // 桌面版 - 更新 series 選項
         var filteredSeries = series;
         if (main_cate_id && main_cate_id !== 0) {
@@ -2602,6 +2619,7 @@
                 return true;
             });
         }
+        console.log('updateSeriesOptions 篩選結果:', filteredSeries.length, 'series');
         
         // 根據 se_id 去重
         var uniqueSeries = [];
@@ -3397,6 +3415,10 @@
               $('#form-mobile'+fil_con['field_id'] )[0].reset();
         });
         $('#collapse-fliter_series01').addClass('show');
+        
+        // 更新 series 選項
+        updateSeriesOptions();
+        
         fillerData();
     }
     function resetformById(id){
@@ -3406,6 +3428,8 @@
             ser_arr = [];
         }else if(id == 'product_type'){
             pro_type_arr = [];
+            // 更新 series 選項
+            updateSeriesOptions();
         }else if(id == 'mode_series'){
             mode_series_arr = [];
         }else if(id == 'status02'){
