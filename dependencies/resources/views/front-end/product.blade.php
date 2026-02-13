@@ -1867,33 +1867,30 @@
         var arrStr = str.split(' ');
         var strfor = '';
         $.each(arrStr, function(index,data){
-              strfor += data;
-              strfor += '<br>';
-
-
-            });
-            return strfor;
+            strfor += data;
+            strfor += '<br>';
+        });
+        return strfor;
     }
-     var arr_select = [];
+    var arr_select = [];
     function selectTable(id){
-               $('.w-tabfix').removeClass('pro_asc active');
-               $('.w-tabfix').removeClass('pro_desc active');
-              var index = arr_select.indexOf(id);
-            if (index == -1) {
-                $('#sortdata'+id).addClass('pro_asc active');
-                arr_select.push(id);
-                orderTable(id,1);
-            }else{
-                orderTable(id,2);
-                arr_select.splice(index, 1);
-              $('#sortdata'+id).addClass('pro_desc active');
-
-            }
+        $('.w-tabfix').removeClass('pro_asc active');
+        $('.w-tabfix').removeClass('pro_desc active');
+        var index = arr_select.indexOf(id);
+        if (index == -1) {
+            $('#sortdata'+id).addClass('pro_asc active');
+            arr_select.push(id);
+            orderTable(id,1);
+        }else{
+            orderTable(id,2);
+            arr_select.splice(index, 1);
+            $('#sortdata'+id).addClass('pro_desc active');
+        }
     }
     function orderTable(id ,type){
         var arr_val = productFilter;
         var arr_result = [];
-       if(type == 1){
+        if(type == 1){
             if(id == 1){
             arr_result = sortModelName(arr_val);
             }else if(id == 2){
@@ -1907,7 +1904,7 @@
             }else if(id == 6){
                 arr_result = diminsionLH(arr_val);
             }
-       }else{
+        }else{
             if(id == 1){
             arr_result = sortModelNameZA(arr_val);
             }else if(id == 2){
@@ -1921,20 +1918,18 @@
             }else if(id == 6){
                 arr_result = diminsionHL(arr_val);
             }
-       }
+        }
 
-       var current_list =  $('#current_list_item').val();
-      if(current_list == 0){
-        onclickListView(arr_result ,type ,id);
-      }else{
-        onclickGridView(arr_result);
-      }
+        var current_list =  $('#current_list_item').val();
+        if(current_list == 0){
+            onclickListView(arr_result ,type ,id);
+        }else{
+            onclickGridView(arr_result);
+        }
         $(".moreBox").slice(0, 8).show();
         $(".moreBox_mobile").slice(0, 8).show();
         $(".row_table").slice(0, 8).show();
         $('.countproduct').text(arr_result.length);
-
-
     }
 
     function df(value ,unit){
@@ -1989,7 +1984,7 @@
     }
 
 
-    function  filtercontent(){
+    function filtercontent(){
         var property_load = [];
         property_load = pro_perti;
         var doc_safety = documents_cate;
@@ -2003,7 +1998,7 @@
         var data_1 = [];
         var data_text = [];
         var html3 = '';
-        $.each(filter_pro, function(index_con,fil_con){
+        $.each(filter_pro, function(index_con, fil_con){
             html3 += '<div class="fliter_head'+fil_con['field_id']+'"><div class="card-header-filter collapsed" data-toggle="collapse"';
             html3 += 'href="#collapse-fliter_'+fil_con['field_id']+'">';
             html3 += '<a class="card-title text-sixteen-dark">';
@@ -2045,7 +2040,40 @@
                 });
             }
             if(fil_con['field_id'] == 'series01'){
-                $.each(series, function(index_serie,serie) {
+                // 根據目前選中的主分類篩選 series
+                var filteredSeries = series;
+                // console.log(filteredSeries)
+                // console.log(main_cate_id)
+                if (main_cate_id && main_cate_id !== 0) {
+                    filteredSeries = series.filter(function(serie) {
+                        // 首先根據主分類篩選
+                        if (serie.main_cate != main_cate_id) {
+                            return false;
+                        }
+                        
+                        // 如果有選中的 product type，也要根據 pro_categories_id 篩選
+                        if (pro_type_arr.length > 0) {
+                            return pro_type_arr.indexOf(serie.pro_categories_id) !== -1;
+                        }
+                        
+                        return true;
+                    });
+                }
+                
+                // 根據 se_id 去重
+                var uniqueSeries = [];
+                var seenIds = [];
+                filteredSeries.forEach(function(serie) {
+                    if (seenIds.indexOf(serie.se_id) === -1) {
+                        seenIds.push(serie.se_id);
+                        uniqueSeries.push(serie);
+                    }
+                });
+                filteredSeries = uniqueSeries;
+                
+                // console.log(filteredSeries)
+
+                $.each(filteredSeries, function(index_serie,serie) {
                     html3 += '<div onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="box-input-checkbox">';
                     html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+serie['se_id']+'" type="checkbox" style="display: none;" >';
                     html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+serie['se_id']+'"><span>';
@@ -2076,8 +2104,8 @@
                     html3 += '</svg></span><span class="">'+safety['title']+'</span></label>';
                     html3 += '</div>' ;
                 });
-             }
-             if(fil_con['field_id'] == 'certifi04'){
+            }
+            if(fil_con['field_id'] == 'certifi04'){
                 $.each(certificates, function(index_cer,certi){
                     html3 += '<div onchange="filterCerti('+"'"+fil_con['field_id']+"'"+','+certi['id']+');" class="box-input-checkbox">';
                     html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+index_cer+'" type="checkbox" style="display: none;" />';
@@ -2087,9 +2115,9 @@
                     html3 += '</svg></span><span>'+certi['name']+'</span></label>';
                     html3 += '</div>' ;
                 });
-             }
-             if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03'  ){
-               var property =  property_load.sort(
+            }
+            if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03'  ){
+                var property =  property_load.sort(
                     function(a, b){
                         if(a.data_1 < b.data_1){
                             if(a.data_2 &&  b.data_2 &&  a.data_2 < b.data_2 ){
@@ -2102,86 +2130,85 @@
                     });
 
                 $.each(property, function(index_per,ppt){
-
-                  if(fil_con['field_id'] == ppt['type_id']){
-                    var object  = {};
-                    var text = null;
-                    if(ppt['value_text'] != null && typeof ppt['value_text']  != 'undefined'){
-                        text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
-                    }
-
-                    var dataarr = [
-                        ppt['data_1'],
-                        ppt['data_2'],
-                        ppt['data_3'],
-                        ppt['data_4'],
-                        ppt['data_5'],
-                        ppt['data_6'],
-                        ppt['data_7'],
-                        ppt['data_8'],
-                        ppt['data_9'],
-                        ppt['data_10'],
-                        ppt['data_11'],
-                        ppt['data_12'],
-                    ];
-
-                    object = {
-                       'id':index_per,
-                       'type':fil_con['field_id'],
-                       'data':checkNull(dataarr,ppt['unit_name'],ppt['status_input']),
-                       'status_input':ppt['status_input'],
-                       'text':text,
-                    }
-                    if (ppt['type_value'] == 'number' && ppt['data_1'] != null) {
-                        objectFiled = {
-                            'field_id':fil_con['field_id'],
-                            'type_box':ppt['status_input'],
+                    if (fil_con['field_id'] == ppt['type_id']) {
+                        var object  = {};
+                        var text = null;
+                        if (ppt['value_text'] != null && typeof ppt['value_text']  != 'undefined') {
+                            text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
                         }
-                        var  index_fi = fildnumber.findIndex(
-                            function(x) {
-                                return  x.field_id === fil_con['field_id'];
+
+                        var dataarr = [
+                            ppt['data_1'],
+                            ppt['data_2'],
+                            ppt['data_3'],
+                            ppt['data_4'],
+                            ppt['data_5'],
+                            ppt['data_6'],
+                            ppt['data_7'],
+                            ppt['data_8'],
+                            ppt['data_9'],
+                            ppt['data_10'],
+                            ppt['data_11'],
+                            ppt['data_12'],
+                        ];
+
+                        object = {
+                            'id':index_per,
+                            'type':fil_con['field_id'],
+                            'data':checkNull(dataarr,ppt['unit_name'],ppt['status_input']),
+                            'status_input':ppt['status_input'],
+                            'text':text,
+                        }
+                        if (ppt['type_value'] == 'number' && ppt['data_1'] != null) {
+                            objectFiled = {
+                                'field_id':fil_con['field_id'],
+                                'type_box':ppt['status_input'],
                             }
-                        )
-                        if(index_fi == -1){
-                            fildnumber.push(objectFiled);
-                        }
-                        if(containsObject(object, data_1)){
-                            data_1.push(object);
-                            html3 += '<div onchange="fillerNumber('+"'"+fil_con['field_id']+"'"+','+ppt['data_1']+','+ppt['data_2']+','+ppt['data_3'] +','+ppt['data_4'] +','+ppt['data_5']+');" class="box-input-checkbox">';
-                            html3 += '<input  class="inp-cbx" id="cx-normalnum'+fil_con['field_id']+index_per+'" type="checkbox" style="display: none;" />';
-                            html3 += '<label class="cbx" for="cx-normalnum'+fil_con['field_id']+index_per+'"><span>';
-                            html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
-                            html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
-                            html3 += '</svg></span ><span class="'+ppt['product_id']+'">'+ checkNull(dataarr,ppt['unit_name'],ppt['status_input']) +'</span></label>';
-                            html3 += '</div>' ;
-                        }
-                    }else if(ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != '' && typeof ppt['value_text']  != 'undefined'){
-                        if(containsObjectText(object, data_text)){
-                            data_text.push(object);
-                            html3 += '<div onchange="fillerInputText('+"'"+fil_con['field_id']+"'"+','+"'"+ppt['value_text']+"'"+');" class="box-input-checkbox">';
-                            html3 += '<input   class="inp-cbx" id="cx-normaltext'+fil_con['field_id']+index_per+'" type="checkbox" style="display: none;" />';
-                            html3 += '<label class="cbx" for="cx-normaltext'+fil_con['field_id']+index_per+'"><span>';
-                            html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
-                            html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
-                            html3 += '</svg></span><span>'+ppt['value_text'] +'</span></label>';
-                            html3 += '</div>' ;
+                            var index_fi = fildnumber.findIndex(
+                                function(x) {
+                                    return  x.field_id === fil_con['field_id'];
+                                }
+                            )
+                            if(index_fi == -1){
+                                fildnumber.push(objectFiled);
+                            }
+                            if(containsObject(object, data_1)){
+                                data_1.push(object);
+                                html3 += '<div onchange="fillerNumber('+"'"+fil_con['field_id']+"'"+','+ppt['data_1']+','+ppt['data_2']+','+ppt['data_3'] +','+ppt['data_4'] +','+ppt['data_5']+');" class="box-input-checkbox">';
+                                html3 += '<input  class="inp-cbx" id="cx-normalnum'+fil_con['field_id']+index_per+'" type="checkbox" style="display: none;" />';
+                                html3 += '<label class="cbx" for="cx-normalnum'+fil_con['field_id']+index_per+'"><span>';
+                                html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+                                html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+                                html3 += '</svg></span ><span class="'+ppt['product_id']+'">'+ checkNull(dataarr,ppt['unit_name'],ppt['status_input']) +'</span></label>';
+                                html3 += '</div>' ;
+                            }
+                        }else if(ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != '' && typeof ppt['value_text']  != 'undefined'){
+                            if(containsObjectText(object, data_text)){
+                                data_text.push(object);
+                                html3 += '<div onchange="fillerInputText('+"'"+fil_con['field_id']+"'"+','+"'"+ppt['value_text']+"'"+');" class="box-input-checkbox">';
+                                html3 += '<input   class="inp-cbx" id="cx-normaltext'+fil_con['field_id']+index_per+'" type="checkbox" style="display: none;" />';
+                                html3 += '<label class="cbx" for="cx-normaltext'+fil_con['field_id']+index_per+'"><span>';
+                                html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+                                html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+                                html3 += '</svg></span><span>'+ppt['value_text'] +'</span></label>';
+                                html3 += '</div>' ;
+                            }
                         }
                     }
-                }
                 });
-             }
+            }
 
             html3 += '</div>';
             html3 += '<button onclick="resetformById('+"'"+fil_con['field_id']+"'"+');" class="btn-reset" type="button">{{$staticContent['Clear']}}</button>';
             html3 +=  '</form>';
             if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['field_id'] != 'mode_series' && fil_con['type'] == 'number'  ){
-            html3 +=  '<div class="slidebar-value-box mb-4 mt-4">';
-            html3 +=  '<div   id="slidebar-value-box_des'+fil_con['field_id']+'"class="slider noUi-target noUi-ltr noUi-horizontal type'+fil_con['field_id']+'"  ></div>';
-            html3 +=  ' <div class="value-form-bar-box">';
-            html3 +=  '<span class="value-form-bar value-form-bar-min" id="slider-limit-value-min_des'+fil_con['field_id']+'"></span>';
-            html3 +=  ' <span class="value-form-bar value-form-bar-max"id="slider-limit-value-max_des'+fil_con['field_id']+'"></span>';
-            html3 +=  '</div>';
-            html3 +=  '</div>';
+                html3 +=  '<div class="slidebar-value-box mb-4 mt-4">';
+                html3 +=  '<div   id="slidebar-value-box_des'+fil_con['field_id']+'"class="slider noUi-target noUi-ltr noUi-horizontal type'+fil_con['field_id']+'"  ></div>';
+                html3 +=  ' <div class="value-form-bar-box">';
+                html3 +=  '<span class="value-form-bar value-form-bar-min" id="slider-limit-value-min_des'+fil_con['field_id']+'"></span>';
+                html3 +=  ' <span class="value-form-bar value-form-bar-max"id="slider-limit-value-max_des'+fil_con['field_id']+'"></span>';
+                html3 +=  '</div>';
+                html3 +=  '</div>';
             }
             html3 +=  '</div></div>';
         });
@@ -2251,7 +2278,36 @@
 
             // 系列 (Series)
             if(fil_con['field_id'] == 'series01'){
-                $.each(series, function(index_serie,serie){
+                // 根據目前選中的主分類篩選 series (手機版)
+                var filteredSeries = series;
+                if (main_cate_id && main_cate_id !== 0) {
+                    filteredSeries = series.filter(function(serie) {
+                        // 首先根據主分類篩選
+                        if (serie.main_cate != main_cate_id) {
+                            return false;
+                        }
+                        
+                        // 如果有選中的 product type，也要根據 pro_categories_id 篩選
+                        if (pro_type_arr.length > 0) {
+                            return pro_type_arr.indexOf(serie.pro_categories_id) !== -1;
+                        }
+                        
+                        return true;
+                    });
+                }
+                
+                // 根據 se_id 去重
+                var uniqueSeries = [];
+                var seenIds = [];
+                filteredSeries.forEach(function(serie) {
+                    if (seenIds.indexOf(serie.se_id) === -1) {
+                        seenIds.push(serie.se_id);
+                        uniqueSeries.push(serie);
+                    }
+                });
+                filteredSeries = uniqueSeries;
+                
+                $.each(filteredSeries, function(index_serie,serie){
                     html3 += '<div class="box-input-checkbox">';
                     html3 += '<input onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="inp-cbx" id="cx-'+fil_con['field_id']+serie['se_id']+'_mobile" type="checkbox" style="display: none;" >';
                     html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+serie['se_id']+'_mobile"><span>';
@@ -2516,7 +2572,74 @@
         }else{
             pro_type_arr.splice(index_se, 1);
         }
+       
        fillerData();
+       
+       // 延遲更新 series 選項，避免影響 product type 勾選
+       setTimeout(function() {
+           updateSeriesOptions();
+       }, 10);
+    }
+
+    /**
+     * 更新 series 選項（桌面版和手機版）
+     */
+    function updateSeriesOptions() {
+        // 桌面版 - 更新 series 選項
+        var filteredSeries = series;
+        if (main_cate_id && main_cate_id !== 0) {
+            filteredSeries = series.filter(function(serie) {
+                // 首先根據主分類篩選
+                if (serie.main_cate != main_cate_id) {
+                    return false;
+                }
+                
+                // 如果有選中的 product type，也要根據 pro_categories_id 篩選
+                if (pro_type_arr.length > 0) {
+                    return pro_type_arr.indexOf(serie.pro_categories_id) !== -1;
+                }
+                
+                return true;
+            });
+        }
+        
+        // 根據 se_id 去重
+        var uniqueSeries = [];
+        var seenIds = [];
+        filteredSeries.forEach(function(serie) {
+            if (seenIds.indexOf(serie.se_id) === -1) {
+                seenIds.push(serie.se_id);
+                uniqueSeries.push(serie);
+            }
+        });
+        
+        // 更新桌面版 HTML
+        var html = '';
+        $.each(uniqueSeries, function(index_serie,serie) {
+            var isChecked = ser_arr.indexOf(serie.se_id) !== -1 ? 'checked' : '';
+            html += '<div onchange="series_filter(\'series01\','+serie['se_id']+');" class="box-input-checkbox">';
+            html += '<input class="inp-cbx" id="cx-series01'+serie['se_id']+'" type="checkbox" style="display: none;" '+isChecked+'>';
+            html += '<label class="cbx" for="cx-series01'+serie['se_id']+'"><span>';
+            html += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+            html += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+            html += '</svg></span><span>'+serie['title']+'</span></label>';
+            html += '</div>';
+        });
+        $('.dataserchfilterseries01').html(html);
+        
+        // 更新手機版 HTML
+        var htmlMobile = '';
+        $.each(uniqueSeries, function(index_serie,serie) {
+            var isChecked = ser_arr.indexOf(serie.se_id) !== -1 ? 'checked' : '';
+            htmlMobile += '<div class="box-input-checkbox">';
+            htmlMobile += '<input onchange="series_filter(\'series01\','+serie['se_id']+');" class="inp-cbx" id="cx-series01'+serie['se_id']+'_mobile" type="checkbox" style="display: none;" '+isChecked+'>';
+            htmlMobile += '<label class="cbx" for="cx-series01'+serie['se_id']+'_mobile"><span>';
+            htmlMobile += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+            htmlMobile += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+            htmlMobile += '</svg></span><span>'+serie['title']+'</span></label>';
+            htmlMobile += '</div>';
+        });
+        $('.dataserchfiltermobileseries01').html(htmlMobile);
     }
 
     function series_filter(type,value){

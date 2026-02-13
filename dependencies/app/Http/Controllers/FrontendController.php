@@ -1358,11 +1358,9 @@ class FrontendController extends Controller
         $series = DB::table('series_has_pro_categories as sc')
             ->join('series as s', 'sc.se_id', '=', 's.se_id')
             ->join('series_translations as st', 'st.series_id', '=', 's.se_id')
-            ->whereIn('sc.pro_categories_id', $subCategoriesIds)
             ->where('st.local', $lang)
             ->where('s.status', 1)
-            ->select('s.se_id', 'st.title', 's.mode_series')
-            ->distinct()
+            ->select('s.se_id', 'st.title', 's.mode_series', 'sc.main_cate', 'sc.pro_categories_id')
             ->orderBy('st.title', 'asc')
             ->get();
 
