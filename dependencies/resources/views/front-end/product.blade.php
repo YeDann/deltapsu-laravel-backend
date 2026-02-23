@@ -2057,9 +2057,16 @@
                             return false;
                         }
                         
-                        // 如果有選中的 product type，也要根據 pro_categories_id 篩選
-                        if (pro_type_arr.length > 0) {
-                            return pro_type_arr.indexOf(serie.pro_categories_id) !== -1;
+                        // LED Driver (main_cate_id = 3) 使用 mode_series 篩選
+                        if (main_cate_id == 3) {
+                            if (mode_series_arr.length > 0) {
+                                return mode_series_arr.indexOf(serie.mode_series) !== -1;
+                            }
+                        } else {
+                            // 其他分類使用 product type 篩選
+                            if (pro_type_arr.length > 0) {
+                                return pro_type_arr.indexOf(serie.pro_categories_id) !== -1;
+                            }
                         }
                         
                         return true;
@@ -2077,7 +2084,6 @@
                 });
                 filteredSeries = uniqueSeries;
                 
-                console.log(filteredSeries)
 
                 $.each(filteredSeries, function(index_serie,serie) {
                     html3 += '<div onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="box-input-checkbox">';
@@ -2293,9 +2299,16 @@
                             return false;
                         }
                         
-                        // 如果有選中的 product type，也要根據 pro_categories_id 篩選
-                        if (pro_type_arr.length > 0) {
-                            return pro_type_arr.indexOf(serie.pro_categories_id) !== -1;
+                        // LED Driver (main_cate_id = 3) 使用 mode_series 篩選
+                        if (main_cate_id == 3) {
+                            if (mode_series_arr.length > 0) {
+                                return mode_series_arr.indexOf(serie.mode_series) !== -1;
+                            }
+                        } else {
+                            // 其他分類使用 product type 篩選
+                            if (pro_type_arr.length > 0) {
+                                return pro_type_arr.indexOf(serie.pro_categories_id) !== -1;
+                            }
                         }
                         
                         return true;
@@ -2565,7 +2578,6 @@
         var val = parseInt(value);
         var index_se = -1;
         
-        console.log('product_type_filter:', 'value:', value, 'val:', val, 'pro_type_arr before:', pro_type_arr);
         
         // 檢查是否存在（用寬鬆比較）
         var exists = false;
@@ -2581,11 +2593,9 @@
             pro_type_arr = pro_type_arr.filter(function(v) {
                 return v != val && v != value;
             });
-            console.log('移除後:', pro_type_arr);
         } else {
             // 如果不存在，添加（只添加數字版本）
             pro_type_arr.push(val);
-            console.log('添加後:', pro_type_arr);
         }
        
        fillerData();
@@ -2600,7 +2610,6 @@
      * 更新 series 選項（桌面版和手機版）
      */
     function updateSeriesOptions() {
-        console.log('updateSeriesOptions 被呼叫, pro_type_arr:', pro_type_arr);
         
         // 桌面版 - 更新 series 選項
         var filteredSeries = series;
@@ -2611,15 +2620,21 @@
                     return false;
                 }
                 
-                // 如果有選中的 product type，也要根據 pro_categories_id 篩選
-                if (pro_type_arr.length > 0) {
-                    return pro_type_arr.indexOf(serie.pro_categories_id) !== -1;
+                // LED Driver (main_cate_id = 3) 使用 mode_series 篩選
+                if (main_cate_id == 3) {
+                    if (mode_series_arr.length > 0) {
+                        return mode_series_arr.indexOf(serie.mode_series) !== -1;
+                    }
+                } else {
+                    // 其他分類使用 product type 篩選
+                    if (pro_type_arr.length > 0) {
+                        return pro_type_arr.indexOf(serie.pro_categories_id) !== -1;
+                    }
                 }
                 
                 return true;
             });
         }
-        console.log('updateSeriesOptions 篩選結果:', filteredSeries.length, 'series');
         
         // 根據 se_id 去重
         var uniqueSeries = [];
@@ -2696,6 +2711,11 @@
             mode_series_arr.splice(index_se, 1);
        }
        fillerData();
+       
+       // 延遲更新 series 選項，避免影響 mode_series 勾選
+       setTimeout(function() {
+           updateSeriesOptions();
+       }, 10);
     }
     /**
      * 根據勾選的系列與產品類型篩選產品，並組裝產品資料

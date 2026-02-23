@@ -1159,9 +1159,9 @@ class FrontendController extends Controller
         if (isset($certificateMapping[$mainCateId])) {
             $searchProQuery = $searchProQuery->whereExists(function ($query) use ($certificateMapping, $mainCateId) {
                 $query->select(DB::raw(1))
-                      ->from('certificate_product as cp')
-                      ->whereColumn('cp.product_id', 'p.pro_id')
-                      ->whereIn('cp.certificate_id', $certificateMapping[$mainCateId]);
+                    ->from('certificate_product as cp')
+                    ->whereColumn('cp.product_id', 'p.pro_id')
+                    ->whereIn('cp.certificate_id', $certificateMapping[$mainCateId]);
             });
         }
 
@@ -1211,8 +1211,8 @@ class FrontendController extends Controller
         $arrproid = [];
         $productsArr = [];
         $productCodeArr = [];
-
         foreach ($searchProGroupByPrdId as $prdId => $products) {
+
             // 取得 商品屬性資料
             $productHasPrm = $productHasPrmGroupByPrdId->get($prdId, collect());
 
