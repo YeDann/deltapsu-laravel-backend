@@ -22,6 +22,12 @@
         margin: 0 auto;
     }
 
+    @media only screen and (max-width:1180px) {
+        .visible-tablets-up {
+            width: 100%;
+        }
+    }
+
     .text-title-delta-home {
         color: black;
         margin-bottom: 2.5rem;
