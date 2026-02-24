@@ -565,7 +565,7 @@
         </div>
         <div class="footer-mobile">
             <div class="container text-center">
-                Copyright © {{ date('Y') }} DeltaPSU. All Rights Reserved.
+                Copyright © {{ date('Y') }} Delta. All Rights Reserved.
             </div>
         </div>
     </div>
