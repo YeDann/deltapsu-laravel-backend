@@ -10977,6 +10977,8 @@ a:hover {
 @media only screen and (max-width:768px) {
   .bg-none-banner .text-title-banner {
     font-size: 24px;
+    text-align: center;
+    margin-top: -130px !important;
   }
 }
 
@@ -10993,6 +10995,7 @@ a:hover {
 @media only screen and (max-width:768px) {
   .text-p-banner p {
     font-size: 16px;
+    display: none;
   }
 }
 
@@ -13560,7 +13563,7 @@ hr {
     }
     #slide-banner-mobile .slide-content {
       align-content: center;
-      text-align: left;
+      text-align: center;
     }
 }
 @media (max-width:500px){
