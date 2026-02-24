@@ -797,7 +797,7 @@ class FrontendController extends Controller
                 ->select('pdc.*', 'pdct.lable')
                 ->orderBy('pdc.title', 'asc')
                 ->get();
-            // return dd( $documents_cate);
+
             $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id', 22)
@@ -845,8 +845,7 @@ class FrontendController extends Controller
 
             return redirect()->route('contactSupport');
         }
-        // return dd('ddd');
-        //return redirect()->route('index','home');
+
         return response()->view('errors.404', [], 404);
     }
 
@@ -4587,14 +4586,14 @@ class FrontendController extends Controller
     public function LinktoEnquiry($type, $type_name, $pro_code)
     {
         $strmodel = str_replace('@', '/', $pro_code);
-        // return dd($strmodel);
+
         session(['enquireModel' => $strmodel]);
         session(['enquireModelType' => $type]);
         session(['enquireModelTypeName' => $type_name]);
         session(['enquireType' => 0]);
         session(['enquireStatus' => 1]);
         session(['enquireData' => null]);
-
+        dd('in');
         return redirect()->route('contactSupport');
     }
 
