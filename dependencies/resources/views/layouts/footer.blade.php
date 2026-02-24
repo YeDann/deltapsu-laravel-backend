@@ -353,7 +353,7 @@
     </div>
     <div class="footer-nav">
         <div class="container">
-            <ul>Copyright © {{ date('Y') }} DeltaPSU. All Rights Reserved.</ul>
+            <ul>Copyright © {{ date('Y') }} Delta. All Rights Reserved.</ul>
             {{-- <ul>Designed by Degito</ul> --}}
         </div>
     </div>
