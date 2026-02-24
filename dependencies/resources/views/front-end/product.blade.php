@@ -790,6 +790,35 @@
     var subCategories = <?= json_encode($subCategories);?>;
     var pro_perti = [];
     
+    // 從產品資料獲取分類 ID 的函數
+    function getProductCategoryId(product) {
+        // 如果產品有分類資訊，取第一個分類
+        if (product && product.cate_ids && product.cate_ids.length > 0) {
+            return product.cate_ids[0];
+        }
+        
+        // 回退到原來的邏輯
+        return cateid || 0;
+    }
+    
+    // 產品比較函數，通過產品 ID 查找產品資料
+    function addToComparison(productId) {
+        console.log('addToComparison 被呼叫，productId:', productId);
+        console.log('products 陣列長度:', products.length);
+        
+        // 在全域產品陣列中找到對應的產品
+        var product = products.find(function(p) {
+            return p.pro_id == productId;
+        });
+        
+        console.log('找到的產品:', product);
+        
+        var categoryId = getProductCategoryId(product);
+        console.log('取得的分類 ID:', categoryId);
+        
+        showNavCoparison(productId, categoryId);
+    }
+    
     // 生成詢價連結的函數，從產品分類資料獲取資訊
     function generateEnquiryLink(proCode, product) {
         var typeId = '';
@@ -1601,7 +1630,7 @@
         html += '<div class="w-100">';
         html += '<div class="boxlist-icon-img">';
         html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></a>';
-        html += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
+        html += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
         html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
         html += '</div>';
         html += '</div>';
@@ -1699,7 +1728,7 @@
             html += '<div class="w-100">';
             html += '<div class="boxlist-icon-img pd-mobile">';
             html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
-            html += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
+            html += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
             html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
             html += '</div>';
             html += '</div>';
@@ -1804,7 +1833,7 @@
             html1 += '<div class="w-100">';
             html1 += '<div class="boxlist-icon-img">';
             html1 += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
-            html1 += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
+            html1 += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
             html1 += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
             html1 += '</div>';
             html1 += '</div>';

@@ -2004,10 +2004,10 @@ class FrontendController extends Controller
             session(['section_Cateid' => $cateid]);
 
             return response()->json([
-            'section' => $sess_arr,
-            'data' => $dataFirst,
-            'message' => 'The selected model has been added to the Comparison list.',
-        ], 200);
+                'section' => $sess_arr,
+                'data' => $dataFirst,
+                'message' => 'The selected model has been added to the Comparison list.',
+            ], 200);
         }
         $oldpro = DB::table('products as p')
            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -2019,6 +2019,7 @@ class FrontendController extends Controller
            ->select('p.*', 'pt.*', 'phc.categories_id as pro_categories_id')
            ->orderBy('p.created_at', 'desc')
            ->get();
+
         if ((!in_array($data_id, $sess_arr)) && isset($oldpro[0]->pro_categories_id) && $Newsproduct->pro_categories_id == $oldpro[0]->pro_categories_id) {
             if (count($sess_arr) < 3) {
                 array_push($sess_arr, $data_id);
@@ -2060,11 +2061,11 @@ class FrontendController extends Controller
                         ->get();
 
             return response()->json([
-                            'section' => $sess_arr,
-                            'data' => $data,
-                            'cateid' => $cateid,
-                            'message' => 'Only 3 models can be added to the Comparison list.',
-                        ], 200);
+                        'section' => $sess_arr,
+                        'data' => $data,
+                        'cateid' => $cateid,
+                        'message' => 'Only 3 models can be added to the Comparison list.',
+                    ], 200);
         } elseif (in_array($data_id, $sess_arr)) {
             $data = DB::table('products as p')
                         ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -2103,11 +2104,11 @@ class FrontendController extends Controller
                     ->get();
 
         return response()->json([
-                        'section' => $sess_arr,
-                        'data' => $data,
-                        'cateid' => $catesection,
-                        'message' => 'Please select the model in the same category',
-                     ], 200);
+                    'section' => $sess_arr,
+                    'data' => $data,
+                    'cateid' => $catesection,
+                    'message' => 'Please select the model in the same category',
+                ], 200);
     }
 
     public function RemovedataInSection(Request $request)
