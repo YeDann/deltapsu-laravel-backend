@@ -180,7 +180,7 @@
     <div class="padding-top-content">
     </div>
     <div class="box-banner">
-        <div id="slide-banner-mobile" class="owl-carousel owl-theme ">
+        <div id="slide-banner-mobile" class="owl-carousel owl-theme">
             @foreach ($banners as $banner)
             <div class="item banner-item ">
                 <a href="{{$banner->btn_link}}">

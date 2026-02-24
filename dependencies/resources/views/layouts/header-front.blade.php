@@ -392,12 +392,39 @@
             margin-left: -80px;
             bottom: 1px;
         }
+
+        /* .justify-content-left-1024 {
+            justify-content: left !important;
+        } */
+        .nav-div-header {
+            max-width: 960px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* .visible-nav-minimize .brand-image{
+            width: auto;
+        } */
     }
 
     @media (max-width: 1000px) {
         .power-supplies-link-mobile {
             margin-left: -50px;
             bottom: 1px;
+        }
+
+        /* .visible-nav-minimize .brand-image{
+            width: 100%;
+        } */
+
+        /* .justify-content-left-1024 {
+            justify-content: left !important;
+        } */
+    }
+
+    @media (min-width: 768px) and (max-width: 992px) {
+        .nav-div-header {
+            max-width: 720px;
         }
     }
 
@@ -1085,9 +1112,9 @@
 <div class="visible-nav-minimize">
     <div class="header-color-bar-mobile"></div>
     <div class="nav-mobile scrolled w-100 header-shadow">
-        <div class="nav-link-list d-flex">
+        <div class="nav-link-list d-flex nav-div-header">
             
-            <a class="col-nav navbar-brand-mobile d-flex justify-content-center" href="{{ $logoUrl }}">
+            <a class="col-nav navbar-brand-mobile d-flex justify-content-center justify-content-left-1024" href="{{ $logoUrl }}">
                 <img class="brand-image" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
             </a>
 
