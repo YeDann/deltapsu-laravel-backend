@@ -316,6 +316,10 @@
         width: 174px !important;
     }
 
+    .break-word {
+        word-break: break-word;
+    }
+
     @media (min-width: 350px) and (max-width: 768px) {
         .select2-container {
             width: 100% !important;
@@ -1810,11 +1814,11 @@
             if (url_name == "wireless-charging-system") {
                 html1 += ' <td class="text-middle-td border-radius-6 pad-right-1rem"> <div class="w-td-con-text-editor">'+checkNullTexteditor(pro['short_features'])+'</div></td>';
             } else {
-                if (pro['dimensionL'] != null && pro['dimensionL'].length < 7 &&pro['dimensionW'] != '' && pro['dimensionD'] != '') {
-                    html1 += '<td class="text-middle-td border-radius-6 pad-right-1rem">'+pro['dimensionL']+' x '+pro['dimensionW']+' x '+pro['dimensionD']+' mm ';
+                if (pro['dimensionL'] != null && pro['dimensionL'].length < 7 && pro['dimensionW'] != '' && pro['dimensionD'] != '') {
+                    html1 += '<td class="text-middle-td border-radius-6 pad-right-1rem break-word">'+pro['dimensionL']+' x '+pro['dimensionW']+' x '+pro['dimensionD']+' mm ';
                     html1 += '<br>'+mmtonich(pro['dimensionL'])+'” x '+mmtonich(pro['dimensionW'])+'” x '+mmtonich(pro['dimensionD'])+'”</td>';
                 } else {
-                    html1 += '<td class="text-middle-td border-radius-6 pad-right-1rem">'+pro['dimensionL']+'</td>';
+                    html1 += '<td class="text-middle-td border-radius-6 pad-right-1rem break-word">'+pro['dimensionL']+'</td>';
                 }
             }
             html1 += '</tr>';
