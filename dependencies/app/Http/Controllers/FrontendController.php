@@ -4593,7 +4593,7 @@ class FrontendController extends Controller
         session(['enquireType' => 0]);
         session(['enquireStatus' => 1]);
         session(['enquireData' => null]);
-        dd('in');
+
         return redirect()->route('contactSupport');
     }
 

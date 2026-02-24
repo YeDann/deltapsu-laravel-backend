@@ -787,7 +787,45 @@
     var cateid = <?= json_encode($cateid);?>;
     var main_cate_id = <?= json_encode($main_cate_id);?>;
     var url_name =  <?= json_encode($url_name);?>;
+    var subCategories = <?= json_encode($subCategories);?>;
     var pro_perti = [];
+    
+    // 生成詢價連結的函數，從產品分類資料獲取資訊
+    function generateEnquiryLink(proCode, product) {
+        var typeId = '';
+        var typeName = '';
+        
+        // 如果有產品物件且包含分類資訊，從產品資料中取得
+        if (product && product.cate_ids && product.cate_ids.length > 0) {
+            // 取得產品的第一個分類 ID
+            typeId = product.cate_ids[0];
+            
+            // 在子分類資料中找到對應的 url_item
+            var subCat = subCategories.find(function(cat) {
+                return cat.sub_pro_id == typeId;
+            });
+            
+            if (subCat) {
+                typeName = subCat.url_item || '';
+            }
+        }
+        
+        // 如果從產品資料中找不到，回退到原來的邏輯
+        if (!typeId && cateid) {
+            typeId = cateid;
+        }
+        if (!typeName && catename) {
+            typeName = catename;
+        }
+        
+        var productCode = productKey(proCode);
+        
+        // 構建 URL 路徑部分，然後與 route 基礎 URL 結合
+        var pathPart = '/' + typeId + '/' + typeName + '/' + productCode;
+        pathPart = pathPart.replace(/\/+/g, '/'); // 去除多餘斜線
+        
+        return '{{route('LinktoEnquiry')}}' + pathPart;
+    }
     var ser_arr = [];
     var mode_series_arr = [];
     var pro_type_arr = [];
@@ -1562,7 +1600,7 @@
 
         html += '<div class="w-100">';
         html += '<div class="boxlist-icon-img">';
-        html += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></a>';
+        html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></a>';
         html += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
         html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
         html += '</div>';
@@ -1660,7 +1698,7 @@
             html += '</div>';
             html += '<div class="w-100">';
             html += '<div class="boxlist-icon-img pd-mobile">';
-            html += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
+            html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
             html += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
             html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
             html += '</div>';
@@ -1765,7 +1803,7 @@
             html1 += '</a>';
             html1 += '<div class="w-100">';
             html1 += '<div class="boxlist-icon-img">';
-            html1 += '<a href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
+            html1 += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
             html1 += '<button onclick="showNavCoparison('+pro['pro_id']+' ,{{$cateid}})" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
             html1 += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
             html1 += '</div>';
