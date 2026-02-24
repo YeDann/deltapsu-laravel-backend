@@ -136,6 +136,15 @@ margin-bottom: 0em;
     border-radius: 5px;
     color: #444444 !important;
 }
+.btn-previous-border:hover::before {
+    color: #fff;
+}
+.btn-previous-border:hover {
+    text-decoration: none;
+    background-color: #0087DC;
+    color: #fff;
+    border: 2px solid #0087DC;
+}
 .btn-previous-border::before{
     font-family: FontAwesome;
     content: "\f104";
