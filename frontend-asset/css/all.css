@@ -15770,6 +15770,13 @@ e.search-filter-action {
     height: 32px;
 }
 
+.btn-addremove-filer:hover {
+  text-decoration: none;
+  background-color: #0087DC;
+  color: #fff;
+  border: 2px solid #0087DC;
+}
+
 .btn-clear-filer {
     background-color: transparent;
     /* border: 2px solid #444444; */
