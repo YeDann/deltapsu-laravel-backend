@@ -320,6 +320,10 @@
         word-break: break-word !important;
     }
 
+    .break-word > .w-td-con-text-editor {
+        word-break: break-word !important;
+    }
+
     @media (min-width: 350px) and (max-width: 768px) {
         .select2-container {
             width: 100% !important;
