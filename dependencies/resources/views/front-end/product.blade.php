@@ -1879,7 +1879,7 @@
                 html1 += ' <td class="text-middle-td">-</td>';
             }
             if (url_name == "wireless-charging-system") {
-                html1 += ' <td class="text-middle-td border-radius-6 pad-right-1rem"> <div class="w-td-con-text-editor">'+checkNullTexteditor(pro['short_features'])+'</div></td>';
+                html1 += ' <td class="text-middle-td border-radius-6 pad-right-1rem break-word"> <div class="w-td-con-text-editor">'+checkNullTexteditor(pro['short_features'])+'</div></td>';
             } else {
                 if (pro['dimensionL'] != null && pro['dimensionL'].length < 7 && pro['dimensionW'] != '' && pro['dimensionD'] != '') {
                     html1 += '<td class="text-middle-td border-radius-6 pad-right-1rem break-word">'+pro['dimensionL']+' x '+pro['dimensionW']+' x '+pro['dimensionD']+' mm ';
