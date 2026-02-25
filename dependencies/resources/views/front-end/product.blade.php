@@ -355,9 +355,15 @@
   }
   $cateUrlMapJson = json_encode($cateUrlMap);
 ?>
-<link rel="canonical" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$url_name}}/{{$categories_id}}" />
-<link rel="alternate" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$url_name}}/{{$categories_id}}"
+@if(isset($catename) && $catename && isset($cateid) && $cateid)
+<link rel="canonical" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$main_cate_id}}/{{$catename}}/{{$cateid}}" />
+<link rel="alternate" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$main_cate_id}}/{{$catename}}/{{$cateid}}"
     hreflang="{{$lang_seo}}" />
+@else
+<link rel="canonical" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$main_cate_id}}" />
+<link rel="alternate" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$main_cate_id}}"
+    hreflang="{{$lang_seo}}" />
+@endif
 @endsection
 @section('container')
 <div class="padding-top-content">
