@@ -388,5 +388,3 @@ function getDateformat($date){
 </script>
 
 @endsection
-
-```
