@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App;
 use DB;
 use Illuminate\Http\Request;
 use Validator;
@@ -112,35 +113,22 @@ class ProductNoticeController extends Controller
             $productNoticeStatus = $request->productNoticeStatus;
             $Content = $request->content;
             $description = $request->description;
-            $metaTitle = $request->meta_title;
-            $metaDescription = $request->meta_des;
+            $metaTitle = $request->metaTitle;
+            $metaDescription = $request->metaDescription;
             $langloop = $request->langloop;
 
+            // Handle file uploads
+            $arrayfileName = [];
+            if ($request->hasFile('file')) {
+                $arrayfileName = $this->SaveimageArray($request->file, $request->namefile);
+            }
+
             $thumbName = '';
-            if ($request->hasFile("thumb")) {
-                $imageFile = $request->file("thumb");
-                $thumbName = uniqid().$imageFile->getClientOriginalName();
-                $imageFile->move(base_path('/../uploads_delta'), preg_replace('/\s+/', '', $thumbName));
-                $thumbName = preg_replace('/\s+/', '', $thumbName);
+            if (isset($arrayfileName['thumbnail'])) {
+                $thumbName = $arrayfileName['thumbnail'];
             }
 
-            $fileLangNames = [];
-            if ($request->hasFile('Filelang')) {
-                $files = $request->file('Filelang');
-                foreach ($langloop as $lang) {
-                    if (isset($files[$lang])) {
-                        $f = $files[$lang];
-                        $fName = preg_replace('/\s+/', '', uniqid().$f->getClientOriginalName());
-                        $f->move(base_path('/../uploads_delta'), $fName);
-                        $fileLangNames[$lang] = $fName;
-                    } else {
-                        $fileLangNames[$lang] = '';
-                    }
-                }
-            }
-
-            $slugTitle = isset($title['en']) ? $title['en'] : (reset($title) ?? '');
-            $re1 = str_replace("/", "_", $slugTitle);
+            $re1 = str_replace("/", "_", $title);
             $key = str_replace(" ", "-", $re1);
             $key2 = $this->clean($key);
             $slug  =  $key2;
@@ -163,16 +151,23 @@ class ProductNoticeController extends Controller
                     "categories_id" => $productNoticeType,
                 ]
             );
+            // 取得英文內容作為預設內容
+            $defaultTitle = $title ?? '';
+            $defaultContent = $Content ?? '';
+            $defaultDescription = $description ?? '';
+            $defaultMetaTitle = $metaTitle ?? '';
+            $defaultMetaDescription = $metaDescription ?? '';
+            
             foreach ($langloop as $lang) {
                 DB::table('contents_translations')->insert(
                     [
                         "content_id" => $id,
-                        "title" => isset($title[$lang]) ? $title[$lang] : '',
-                        "content" => isset($Content[$lang]) ? $Content[$lang] : '',
-                        "description" => isset($description[$lang]) ? $description[$lang] : '',
-                        "meta_title" => isset($metaTitle[$lang]) ? $metaTitle[$lang] : '',
-                        "meta_description" => isset($metaDescription[$lang]) ? $metaDescription[$lang] : '',
-                        'file' => isset($fileLangNames[$lang]) ? $fileLangNames[$lang] : '',
+                        "title" => $defaultTitle,
+                        "content" => $defaultContent,
+                        "description" => $defaultDescription,
+                        "meta_title" => $defaultMetaTitle,
+                        "meta_description" => $defaultMetaDescription,
+                        'file' => isset($arrayfileName['newsfile']) ? $arrayfileName['newsfile'] : '',
                         "local" => $lang,
                     ]
                 );
@@ -272,7 +267,7 @@ class ProductNoticeController extends Controller
         $oldfilethumb = $request->oldfilethumb;
         $imageName  = $oldfilethumb;
 
-        $slugTitle = isset($title['en']) ? $title['en'] : (reset($title) ?? '');
+        $slugTitle = $title['en'];
         $re1 = str_replace("/", "_", $slugTitle);
         $key = str_replace(" ", "-", $re1);
         $key2 = $this->clean($key);

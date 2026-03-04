@@ -101,38 +101,18 @@ class IndustryKnowHowController extends Controller
             $datePublish = $request->datePublish;
             $datainfo = $request->dateinfo;
             $industryKnowHowStatus = $request->industryKnowHowStatus;
-            $Content = $request->content;
+            $content = $request->content;
             $description = $request->description;
-            $metaTitle = $request->meta_title;
-            $metaDescription = $request->meta_des;
+            $metaTitle = $request->metaTitle;
+            $metaDescription = $request->metaDescription;
+
+            $filename = $request->namefile;
+            $file = $request->file;
+            $arrFileName = Self::SaveimageArray($file , $filename);
 
             $langloop = $request->langloop;
 
-            $thumbName = '';
-            if ($request->hasFile("thumb")) {
-                $imageFile = $request->file("thumb");
-                $thumbName = uniqid().$imageFile->getClientOriginalName();
-                $imageFile->move(base_path('/../uploads_delta'), preg_replace('/\s+/', '', $thumbName));
-                $thumbName = preg_replace('/\s+/', '', $thumbName);
-            }
-
-            $fileLangNames = [];
-            if ($request->hasFile('Filelang')) {
-                $files = $request->file('Filelang');
-                foreach ($langloop as $lang) {
-                    if (isset($files[$lang])) {
-                        $f = $files[$lang];
-                        $fName = preg_replace('/\s+/', '', uniqid().$f->getClientOriginalName());
-                        $f->move(base_path('/../uploads_delta'), $fName);
-                        $fileLangNames[$lang] = $fName;
-                    } else {
-                        $fileLangNames[$lang] = '';
-                    }
-                }
-            }
-
-            $slugTitle = isset($title['en']) ? $title['en'] : (reset($title) ?? '');
-            $re1 = str_replace("/", "_", $slugTitle);
+            $re1 = str_replace("/", "_", $title);
             $key = str_replace(" ", "-", $re1);
             $key2 = $this->clean($key);
             $slug  =  $key2;
@@ -140,7 +120,7 @@ class IndustryKnowHowController extends Controller
             $id = DB::table('contents')->insertGetID(
                 [
                     "content_type" => "industry-know-how",
-                    "thumb" => $thumbName,
+                    "thumb" => $arrFileName['thumbnail'],
                     "created_at" => \Carbon\Carbon::now(),
                     "updated_at" => \Carbon\Carbon::now(),
                     "date_publish" => $datePublish,
@@ -155,16 +135,17 @@ class IndustryKnowHowController extends Controller
                     "categories_id" => $industryKnowHowType,
                 ]
             );
+
             foreach ($langloop as $lang) {
                 DB::table('contents_translations')->insert(
                     [
                         "content_id" => $id,
-                        "title" => isset($title[$lang]) ? $title[$lang] : '',
-                        "content" => isset($Content[$lang]) ? $Content[$lang] : '',
-                        "description" => isset($description[$lang]) ? $description[$lang] : '',
-                        "meta_title" => isset($metaTitle[$lang]) ? $metaTitle[$lang] : '',
-                        "meta_description" => isset($metaDescription[$lang]) ? $metaDescription[$lang] : '',
-                        'file' => isset($fileLangNames[$lang]) ? $fileLangNames[$lang] : '',
+                        "title" => $title,
+                        "content" => $content,
+                        "description" => $description,
+                        "meta_title" => $metaTitle,
+                        "meta_description" => $metaDescription,
+                        'file' => $arrFileName['industryknowhowfile'],
                         "local" => $lang,
                     ]
                 );
@@ -194,15 +175,15 @@ class IndustryKnowHowController extends Controller
     {
 
         $contents = DB::table('product_industry_know_how_has_categories as pnc')
-        ->join('contents as c', 'c.id', '=', 'pnc.content_id')
-        ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
-        ->join('industry_know_how_type as ikht', 'ikht.id', '=', 'pnc.categories_id')
-        ->where('c.content_type', '=', 'industry-know-how')
-        ->where('c.id', '=', $id)
-        ->select('c.id as content_id', 'c.*', 'ct.*', 'ikht.name as cateName', 'pnc.*')
-        ->orderBy('c.created_at', 'desc')
-        ->distinct()
-        ->get();
+            ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+            ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+            ->join('industry_know_how_type as ikht', 'ikht.id', '=', 'pnc.categories_id')
+            ->where('c.content_type', '=', 'industry-know-how')
+            ->where('c.id', '=', $id)
+            ->select('c.id as content_id', 'c.*', 'ct.*', 'ikht.name as cateName', 'pnc.*')
+            ->orderBy('c.created_at', 'desc')
+            ->distinct()
+            ->get();
 
         $language = DB::table('language')->get();
         $industryKnowHowType = DB::table('industry_know_how_type')
@@ -264,7 +245,7 @@ class IndustryKnowHowController extends Controller
         $oldfilethumb = $request->oldfilethumb;
         $imageName  = $oldfilethumb;
 
-        $slugTitle = isset($title['en']) ? $title['en'] : (reset($title) ?? '');
+        $slugTitle = $title['en'];
         $re1 = str_replace("/", "_", $slugTitle);
         $key = str_replace(" ", "-", $re1);
         $key2 = $this->clean($key);
@@ -320,11 +301,10 @@ class IndustryKnowHowController extends Controller
      */
     public function destroy($id)
     {
-
         $con_trans = DB::table('contents_translations as ct')
-        ->where('content_id', $id)
-        ->select('ct.file')
-        ->get();
+            ->where('content_id', $id)
+            ->select('ct.file')
+            ->get();
 
         foreach ($con_trans as $cot) {
             if ($cot->file != null && $cot->file != '') {
@@ -337,9 +317,9 @@ class IndustryKnowHowController extends Controller
         }
 
         $con = DB::table('contents')
-        ->where('id', $id)
-        ->select('contents.thumb')
-        ->first();
+            ->where('id', $id)
+            ->select('contents.thumb')
+            ->first();
         if ($con->thumb != null && $con->thumb != '') {
             $file_pointer2 = base_path('/../uploads_delta').$con->thumb;
             if (file_exists($file_pointer2) && isset($con->thumb)) {
@@ -469,5 +449,11 @@ class IndustryKnowHowController extends Controller
             return back()->with('error_message', 'Can Not Detete File');
         }
 
+    }
+
+    protected function clean($string)
+    {
+        $string = str_replace(' ', '-', $string);
+        return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
     }
 }

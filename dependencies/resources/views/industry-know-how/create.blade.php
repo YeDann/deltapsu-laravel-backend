@@ -1,9 +1,18 @@
 @extends('layouts.admin')
 @section('style')
+{{--
+<link rel="stylesheet" href="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.css')}}">
+<link rel="stylesheet" href="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.css')}}">
+<link rel="stylesheet"
+    href="{{asset('backend-asset/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}"> --}}
 
 <style>
     #test-label {
         height: 100px !important;
+    }
+
+    .img-thumbnail {
+        width: 50%;
     }
 
     #item-wrap {
@@ -51,165 +60,150 @@
     </div>
 </div>
 <!-- Content -->
-<div class="content">
+<div class="content mb-5">
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
             <h3 class="block-title">Create Content</h3>
         </div>
-        <br>
-        <form id="form-work" class="form-horizontal" role="form" autocomplete="off" action="{{route('industry-know-how.store')}}"
-            method="post" novalidate="novalidate" enctype="multipart/form-data">
-            {{csrf_field()}}
+        <div class="block-content mb-5">
+            <form action="{{route('industry-know-how.store')}}" method="POST" enctype="multipart/form-data">
+                {{csrf_field()}}
+                <!-- Basic Elements -->
             
-            <div class="row pl-4 pr-4">
-                <div class="col-md-12">
-                    <div class="block block-rounded block-bordered">
-                        <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
-                            @foreach ($language as $item)
-                            <input type="hidden" name="langloop[]" value="{{$item->name}}">
-                            @if($loop->iteration == 1)
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#btabs-alt-static-{{$item->name}}"
-                                    style="text-transform: capitalize;">{{$item->name}}</a>
-                            </li>
-                            @else
-                            <li class="nav-item">
-                                <a class="nav-link " href="#btabs-alt-static-{{$item->name}}"
-                                    style="text-transform: capitalize;">{{$item->name}}</a>
-                            </li>
-                            @endif
-                            @endforeach
-                        </ul>
-                        <div class="block-content tab-content">
-                            @foreach ($language as $item)
-                            
-                            <div class="tab-pane {{($loop->iteration == 1)?" active":""}}"
-                                id="btabs-alt-static-{{$item->name}}" role="tabpanel">
-                                <div class="form-group">
-                                    <label for="">Title</label>
-                                    <input type="text" class="form-control" name="title[{{$item->name}}]"
-                                        value="" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Excerpt</label>
-                                    <textarea rows="4" name="description[{{$item->name}}]"
-                                        class="jsnotenew form-control"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Content</label>
-                                    <textarea name="content[{{$item->name}}]"
-                                        class="jsnotenew form-control"></textarea>
-                                </div>
-
-                                <div class="form-group w-50">
-                                    <label>File <span class="req-fed">* Max File Size 20 MB</span></label>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" name="Filelang[{{$item->name}}]"
-                                            data-toggle="custom-file-input" id="file_input">
-                                        <label class="custom-file-label" for="file_input">Choose file</label>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="form-group">
-                                    <label for="">Meta - Title </label>
-                                    <span>Recommended 30-60 Character</span>
-                                    <div id="item-wrap">
-                                        <input id="input-metaTitle-{{$item->name}}"
-                                            onkeyup="countCharacter('metaTitle-{{$item->name}}')"
-                                            type="meta_title[{{$item->name}}]" class="form-control"
-                                            name="meta_title[{{$item->name}}]"
-                                            value="">
-                                        <div class="text-count">Count Character :
-                                            <span id="count-metaTitle-{{$item->name}}">
-                                                0</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Meta - Description</label>
-                                    <span>Recommended 70-155 Character</span>
-                                    <div id="item-wrap">
-                                        <textarea rows="4" id="input-meta_des-{{$item->name}}"
-                                            onkeyup="countCharacter('meta_des-{{$item->name}}')"
-                                            name="meta_des[{{$item->name}}]"
-                                            class="form-control "></textarea>
-                                        <div class="text-count"> Count Character :
-                                            <span id="count-meta_des-{{$item->name}}">
-                                                0</span>
-                                        </div>
-                                    </div>
-                                </div>
-
+            @foreach($language as $item)
+                <input type="hidden" name="langloop[]" value="{{$item->name}}">
+                @endforeach
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-xl-8">
+                        <div class="form-group ">
+                            <label for="example-select">Title<span class="req-fed">*</span></label>
+                            <input type="text" class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}"
+                                name="title" placeholder="Title..." required>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="example-text-input">Image thumbnail <span class="req-fed">* Max File Size 2
+                                    MB</span></label>
+                            <div id="imagePreview">
+                                <img src="https://via.placeholder.com/415x250.png" class="img-thumbnail imagePreview"
+                                    alt="">
+                            </div><br>
+                            <div class="custom-file " style="width: 50%;">
+                                <input type="file"
+                                    class="custom-file-input {{ $errors->has('thumbnail') ? 'is-invalid' : '' }}"
+                                    data-toggle="custom-file-input" id="thumbnail" name="file[thumbnail]"
+                                    accept="image/*">
+                                <label class="custom-file-label" id="label2" for="fileImage">Choose file</label>
+                                <input type="hidden" name="namefile[thumbnail]" value="thumbnail">
                             </div>
-
-                            @endforeach
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="">Industry Know-How Type</label>
-                        <select name="industryKnowHowType" class="form-control" id="">
-                            @foreach ($industryKnowHowType as $type)
-                            <option value="{{$type->id}}">{{$type->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="example-text-input">Date info*</label>
-                        <input type="text" class="js-datepicker form-control" id="example-datepicker1" name="dateinfo"
-                            data-week-start="1" data-autoclose="true" data-today-highlight="true"
-                            data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="">
-                    </div>
-                    <div class="form-group">
-                        <label for="example-text-input">Date Publish*</label>
-                        <input type="text" class="js-datepicker form-control" id="example-datepicker1"
-                            name="datePublish" data-week-start="1" data-autoclose="true" data-today-highlight="true"
-                            data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd"
-                            value="">
-                    </div>
-                    <div class="form-group">
-                        <label class="d-block">Industry Know-How Status</label>
-                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                            <input type="radio" class="custom-control-input" id="status-line-1" name="industryKnowHowStatus"
-                                value="1" checked>
-                            <label class="custom-control-label" for="status-line-1">Show</label>
+                        <hr>
+                        
+                        <div class="form-group w-50">
+                            <label for="">Industry Know-How Type</label>
+                            <select name="industryKnowHowType" class="form-control" id="" required>
+                                @foreach ($industryKnowHowType as $type)
+                                <option value="{{$type->id}}">{{$type->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                            <input type="radio" class="custom-control-input" id="status-line-2" name="industryKnowHowStatus"
-                                value="0">
+                        <div class="form-group w-50">
+                            <label for="example-text-input">Date info<span class="req-fed">*</span></label>
+                            <input type="text" class="js-datepicker form-control" id="example-datepicker1" name="dateinfo"
+                                data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                                data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" value="" required>
+                        </div>
+                        <div class="form-group w-50">
+                            <label for="example-text-input">Date Publish<span class="req-fed">*</span></label>
+                            <input type="text"
+                                class="js-datepicker form-control {{ $errors->has('datePublish') ? 'is-invalid' : '' }}"
+                                name="datePublish" data-week-start="1" data-autoclose="true" data-today-highlight="true"
+                                data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" name="datePublish" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="d-block">Industry Know-How Status</label>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-line-1" name="industryKnowHowStatus"
+                                    value="1" checked>
+                                <label class="custom-control-label" for="status-line-1">Show</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline custom-control-primary">
+                                <input type="radio" class="custom-control-input" id="status-line-2" name="industryKnowHowStatus"
+                                    value="0">
                                 <label class="custom-control-label" for="status-line-2">Hide</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="example-text-input">Image-thumbnail</label>
-                        <div id="imagePreview">
-                            <img src="https://via.placeholder.com/415x250.png"
-                                class="img-thumbnail imagePreview" alt="">
-                        </div><br>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" data-toggle="custom-file-input" id="image"
-                                name="thumb">
-                            <label class="custom-file-label" for="fileImage">Choose file</label>
+                        <hr>
+                        <div class="form-group">
+                            <label for="">Excerpt</label>
+                            <textarea rows="4" name="description" class="jsnotenew form-control"></textarea>
                         </div>
-                    </div>
-
-                    <div class="form-group text-center">
-                        <button type="submit" class="btn btn-success text-uppercase col-2">Create
-                        </button>
-                        <a href="{{route('industry-know-how.index')}}" class="btn btn-secondary text-uppercase col-2">Cancel
-                        </a>
+                        <div class="form-group">
+                            <label for="">Content</label>
+                            <textarea name="content" class="jsnotenew form-control"></textarea>
+                        </div>
+                        <div class="form-group w-50">
+                            <label>File <span class="req-fed">* Max File Size 20 MB</span></label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="file[industryknowhowfile]"
+                                    data-toggle="custom-file-input" id="file_input">
+                                <label class="custom-file-label" for="file_input">Choose file</label>
+                                <input type="hidden" name="namefile[industryknowhowfile]" value="industryknowhowfile">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="">Meta - Title</label>
+                            <span>Recommended 30-60 Character</span>
+                            <div id="item-wrap">
+                                <input id="input-metaTitle-en" onkeyup="countCharacter('metaTitle-en')" type="text"
+                                    class="form-control" name="metaTitle" value="">
+                                <div class="text-count">Count Character :
+                                    <span id="count-metaTitle-en">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Meta - Description</label>
+                            <span>Recommended 70-155 Character</span>
+                            <div id="item-wrap">
+                                <textarea rows="4" id="input-metaDescription-en"
+                                    onkeyup="countCharacter('metaDescription-en')" name="metaDescription"
+                                    class="form-control"></textarea>
+                                <div class="text-count">Count Character :
+                                    <span id="count-metaDescription-en">
+                                        0</span>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div class="form-group">
+                            <label for="">Meta - Keywords</label>
+                            <textarea name="metaKeyword" class="form-control "></textarea>
+                        </div> --}}
+                        <div class="form-group">
+                            <button class="btn btn-success col-md-2" type="submit">Create
+                            </button>
+                            <a href="{{route('industry-know-how.index')}}" class="btn btn-secondary col-md-2">
+                                Cancel
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+
+            </form>
+        </div>
     </div>
-</div>
 </div>
 @endsection
 @section('js')
-
+{{-- <script src="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.min.js')}}"></script>
+<script src="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.js')}}"></script>
+<script src="{{asset('backend-asset/js/plugins/ckeditor/ckeditor.js')}}"></script>
+<script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script> --}}
 <script>
+    // jQuery(function () {
+    //     Dashmix.helpers(['datepicker', 'summernote', 'simplemde', 'ckeditor']);
+    // });
+
     var previewImage = function (input, block) {
         var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
@@ -225,10 +219,11 @@
         } else {
             alert('File Type is not accepted!');
         }
+
     };
 
-   
-    $(document).on('change', '#image', function () {
+    
+    $(document).on('change', '#thumbnail', function () {
         var FileSize = this.files[0].size / 1024 / 1024; // in MB
         if (FileSize > 2) {
             alert("File size exceeds 2 MB!");
@@ -240,8 +235,7 @@
 
 });
 
-
-$(document).on('change', '.custom-file-input', function () {
+$(document).on('change', '#file_input', function () {
         // alert(this.files[0].size);
         var FileSize = this.files[0].size / 1024 / 1024; // in MB
         if (FileSize > 20) {

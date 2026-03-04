@@ -1,9 +1,18 @@
 @extends('layouts.admin')
 @section('style')
+{{--
+<link rel="stylesheet" href="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.css')}}">
+<link rel="stylesheet" href="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.css')}}">
+<link rel="stylesheet"
+    href="{{asset('backend-asset/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}"> --}}
 
 <style>
     #test-label {
         height: 100px !important;
+    }
+
+    .img-thumbnail {
+        width: 50%;
     }
 
     #item-wrap {
@@ -139,8 +148,8 @@
                                     <div id="item-wrap">
                                         <input id="input-metaTitle-{{$item->name}}"
                                             onkeyup="countCharacter('metaTitle-{{$item->name}}')"
-                                            type="meta_title[{{$item->name}}]" class="form-control"
-                                            name="meta_title[{{$item->name}}]"
+                                            type="text" class="form-control"
+                                            name="metaTitle[{{$item->name}}]"
                                             value="{{isset($current->meta_title) ? $current->meta_title :''}}">
                                         <div class="text-count">Count Character :
                                             <span id="count-metaTitle-{{$item->name}}">
@@ -152,12 +161,12 @@
                                     <label for="">Meta - Description</label>
                                     <span>Recommended 70-155 Character</span>
                                     <div id="item-wrap">
-                                        <textarea rows="4" id="input-meta_des-{{$item->name}}"
-                                            onkeyup="countCharacter('meta_des-{{$item->name}}')"
-                                            name="meta_des[{{$item->name}}]"
+                                        <textarea rows="4" id="input-metaDescription-{{$item->name}}"
+                                            onkeyup="countCharacter('metaDescription-{{$item->name}}')"
+                                            name="metaDescription[{{$item->name}}]"
                                             class="form-control ">{{isset($current->meta_description) ? $current->meta_description :''}}</textarea>
                                         <div class="text-count"> Count Character :
-                                            <span id="count-meta_des-{{$item->name}}">
+                                            <span id="count-metaDescription-{{$item->name}}">
                                                 {{isset($current->meta_description) ? strlen($current->meta_description) : ''}}</span>
                                         </div>
                                     </div>
