@@ -33,6 +33,7 @@
         margin-bottom: 2.5rem;
         margin-top: 12px;
         text-align: left;
+        font-size: 32px;
     }
 
     @media only screen and (max-width: 768px) {

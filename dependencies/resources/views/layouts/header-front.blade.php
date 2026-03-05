@@ -346,6 +346,7 @@
         width: fit-content !important; /* 只佔用需要的寬度 */
         position: relative !important;
         left: 200px; /* 稍微向右偏移，平衡logo和Power Supplies的空間 */
+        padding-bottom: 24px;
     }
 
     /* Make search icon larger and align automatically */
