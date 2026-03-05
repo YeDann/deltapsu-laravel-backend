@@ -103,7 +103,7 @@
                                                 value="{{isset($current->h1)?$current->h1 :''}}">
                                             <div class="text-count">Count Character :
                                                 <span id="count-h1-{{$item->name}}">
-                                                    {{strlen($current->h1)}}</span>
+                                                    {{isset($current->h1)?$current->h1 :''}}</span>
                                             </div>
                                         </div>
                                     </div>

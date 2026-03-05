@@ -176,6 +176,7 @@
 </style>
 
 @endsection
+
 @section('meta')
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
@@ -191,6 +192,7 @@
 ?>
 <link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
+
 @section('container')
 <div class="padding-top-content">
 </div>

@@ -279,8 +279,7 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-    
-            $contents = DB::table('product_news_has_categories as pnc')
+        $contents = DB::table('product_news_has_categories as pnc')
             ->join('contents as c' ,'c.id' ,'=','pnc.content_id')
             ->join('contents_translations as ct' ,'ct.content_id' ,'=','c.id')
             ->join('news_type as nt' ,'nt.id' ,'=','pnc.categories_id')
@@ -291,7 +290,6 @@ class NewsController extends Controller
             ->distinct()
             ->get();
 
-            // return  dd( $contents);
         $language = DB::table('language')->get();
         $newsType = DB::table('news_type')
             ->get();
@@ -532,32 +530,33 @@ class NewsController extends Controller
 
         return redirect()->route('news.index')->with('flash_message', 'Copy Data successfully');
     }
-   Public function removeFileNewsDoc($name , $id){
+
+    public function removeFileNewsDoc($name , $id)
+    {
         $con_trans = DB::table('contents_translations as ct')
-        ->where('content_id' ,$id)
-        ->select('ct.file')
-        ->get();
+            ->where('content_id' ,$id)
+            ->select('ct.file')
+            ->get();
       
-         if(isset($con_trans[0]->file) && $con_trans[0]->file != '' && count($con_trans) > 0){
-          DB::table('contents_translations')->where('content_id',$id)->update(
-            [
-                'file' => '',
-            ]
-           );
+        if (isset($con_trans[0]->file) && $con_trans[0]->file != '' && count($con_trans) > 0) {
+            DB::table('contents_translations')->where('content_id', $id)->update(
+                [
+                    'file' => '',
+                ]
+            );
 
-           foreach($con_trans  as $cot){
-            if($cot->file != null && $cot->file != '' ){
-               $file_pointer = base_path('/../uploads_delta/').$cot->file;
-               if (file_exists($file_pointer) && isset($cot->file)) {
-                   unlink($file_pointer);
-               }
-        
+            foreach($con_trans  as $cot){
+                if ($cot->file != null && $cot->file != '' ) {
+                    $file_pointer = base_path('/../uploads_delta/').$cot->file;
+                    if (file_exists($file_pointer) && isset($cot->file)) {
+                        unlink($file_pointer);
+                    }
+                }
             }
-           }
-           return back()->with('flash_message', 'Delete File successfully');
-     }else{
-           return back()->with('error_message', 'Can Not Detete File');
-     }
+            return back()->with('flash_message', 'Delete File successfully');
+        } else {
+            return back()->with('error_message', 'Can Not Detete File');
+        }
 
-   }
+    }
 }

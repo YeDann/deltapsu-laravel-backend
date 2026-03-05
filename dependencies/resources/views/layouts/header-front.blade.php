@@ -570,9 +570,16 @@
         margin-top: -2px;
     }
 
-    html[lang="zh"] .img-icon-golang,
-    html[lang="ja"] .img-icon-golang {
+    html[html_lang="tw"] .img-icon-golang {
+        margin-top: -5px;
+    }
+
+    html[html_lang="cn"] .img-icon-golang {
         margin-top: -4px;
+    }
+
+    html[html_lang="jp"] .img-icon-golang {
+        margin-top: -5px;
     }
 
     .f-size-enquiry {

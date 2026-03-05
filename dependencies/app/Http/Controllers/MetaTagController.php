@@ -63,7 +63,7 @@ class MetaTagController extends Controller
         ->with('menu', 'metatags');
     }
     public function store(Request $request){
-       DB::table('meta_tag_page')->insert(
+       $metaId = DB::table('meta_tag_page')->insertGetId(
         [
             "page" => $request->page,
             "meta_title" => $request->metaTitle,
@@ -71,6 +71,19 @@ class MetaTagController extends Controller
             "meta_key" => $request->metaKeyword,
         ]
       );
+      
+      // 為所有語言創建翻譯記錄
+      $languages = DB::table('language')->get();
+      foreach($languages as $lang) {
+          DB::table('meta_tag_page_translations')->insert([
+              'meta_id' => $metaId,
+              'title' => $request->metaTitle,
+              'description' => $request->metaDescription,
+              'h1' => '', // 預設為空
+              'local' => $lang->name
+          ]);
+      }
+      
       return redirect()->route('metaTags')->with('flash_message', 'Insert Data successfully');
     }
     public function update(Request $request){

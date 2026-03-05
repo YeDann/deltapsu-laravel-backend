@@ -118,7 +118,7 @@
                                     <input type="hidden" name="oldFile[{{$item->name}}]"
                                         value="{{isset($current->file) ? $current->file :''}}">
                                     @if(isset($current->file))
-                                    <a href="{{route('removeFileIndustryKnowHowDoc',[$item->name,$contents[0]->id])}}"
+                                    <a href="{{route('removeFileIndustryKnowHowDoc',[$item->name, $contents[0]->content_id])}}"
                                         target="_blank" class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
                                     @endif
                                 </div>
