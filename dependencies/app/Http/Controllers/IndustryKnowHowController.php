@@ -173,14 +173,13 @@ class IndustryKnowHowController extends Controller
      */
     public function edit($id)
     {
-
         $contents = DB::table('product_industry_know_how_has_categories as pnc')
             ->join('contents as c', 'c.id', '=', 'pnc.content_id')
             ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
             ->join('industry_know_how_type as ikht', 'ikht.id', '=', 'pnc.categories_id')
             ->where('c.content_type', '=', 'industry-know-how')
             ->where('c.id', '=', $id)
-            ->select('c.id as content_id', 'c.*', 'ct.*', 'ikht.name as cateName', 'pnc.*')
+            ->select('c.*', 'ct.*', 'ikht.name as cateName', 'pnc.categories_id')
             ->orderBy('c.created_at', 'desc')
             ->distinct()
             ->get();
@@ -421,34 +420,34 @@ class IndustryKnowHowController extends Controller
 
         return redirect()->route('industry-know-how.index')->with('flash_message', 'Copy Data successfully');
     }
+
     public function removeFileIndustryKnowHowDoc($name, $id)
     {
         $con_trans = DB::table('contents_translations as ct')
-        ->where('content_id', $id)
-        ->select('ct.file')
-        ->get();
+            ->where('content_id', $id)
+            ->where('local', $name)
+            ->select('ct.file')
+            ->first();
 
-        if (isset($con_trans[0]->file) && $con_trans[0]->file != '' && count($con_trans) > 0) {
-            DB::table('contents_translations')->where('content_id', $id)->update(
-                [
-                  'file' => '',
-            ]
-            );
-
-            foreach ($con_trans as $cot) {
-                if ($cot->file != null && $cot->file != '') {
-                    $file_pointer = base_path('/../uploads_delta/').$cot->file;
-                    if (file_exists($file_pointer) && isset($cot->file)) {
-                        unlink($file_pointer);
-                    }
-
-                }
+        if (isset($con_trans->file) && $con_trans->file != '') {
+            // Delete the file from filesystem
+            $file_pointer = base_path('/../uploads_delta/').$con_trans->file;
+            if (file_exists($file_pointer)) {
+                unlink($file_pointer);
             }
+
+            // Update database to remove file reference for this specific language
+            DB::table('contents_translations')
+                ->where('content_id', $id)
+                ->where('local', $name)
+                ->update([
+                    'file' => '',
+                ]);
+
             return back()->with('flash_message', 'Delete File successfully');
         } else {
-            return back()->with('error_message', 'Can Not Detete File');
+            return back()->with('error_message', 'Can Not Delete File');
         }
-
     }
 
     protected function clean($string)
