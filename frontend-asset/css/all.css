@@ -12008,7 +12008,8 @@ a .title-new {
 
 .text-pro-link {
   font-family: 'DeltaSans';
-  color: #5F5F5F;
+  /* color: #5F5F5F; */
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1)) !important;
   font-size: 12px;
   line-height: 16px;
 }
@@ -12022,7 +12023,8 @@ a .title-new {
 }
 
 .bg-footer {
-  background-color: #F0F5FA;
+  /* background-color: #F0F5FA; */
+  background-color: rgb(65 65 65 / var(--tw-bg-opacity, 1)) !important;
 }
 
 .padding-top-bottom {
@@ -12038,7 +12040,8 @@ a .title-new {
   height: 40px;
   border-radius: 50px;
   background-color: #454545;
-  color: #FFFFFF;
+  /* color: #FFFFFF; */
+  color: rgb(200 200 200 / var(--tw-text-opacity, 1)) !important;
   margin-right: .5rem;
   position: relative;
 }
@@ -12082,8 +12085,14 @@ a .title-new {
 }
 
 .text-footer-main {
-  color: #0087DC;
+  /* color: #0087DC; */
+  color: rgb(150 150 150 / var(--tw-text-opacity, 1)) !important;
   font-weight: bold;
+  margin-bottom: 16px !important;
+  border: 0 solid #e5e7eb;
+  border-bottom-width: 1px !important;
+  border-style: solid !important;
+  border-color: rgb(150 150 150 / var(--tw-border-opacity, 1)) !important;
 }
 
 .footer-mobile {
@@ -12126,9 +12135,10 @@ a .title-new {
 
 .footer-nav {
   height: 30px;
-  background-color: #252A2C;
+  /* background-color: #252A2C; */
   color: #B4B4B4;
   font-size: 14px;
+  background-color: rgb(65 65 65 / var(--tw-bg-opacity, 1)) !important;
 }
 
 .footer-nav ul {

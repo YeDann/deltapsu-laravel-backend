@@ -1403,7 +1403,8 @@ a .title-new {
 
 .text-pro-link {
   font-family: 'DeltaSans';
-  color: #5F5F5F;
+  /* color: #5F5F5F; */
+  color: rgb(150 150 150 / var(--tw-text-opacity, 1)) !important;
   font-size: 12px;
   line-height: 16px;
 }
