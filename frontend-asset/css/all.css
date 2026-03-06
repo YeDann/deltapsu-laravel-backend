@@ -11813,7 +11813,9 @@ a .title-new {
     color: #444444;
   }
 
-
+  .box-product-document-mobile {
+    height: auto;
+  }
 }
 
 @media (min-width:900px) {

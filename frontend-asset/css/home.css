@@ -1220,7 +1220,9 @@ a .title-new {
     color: #444444;
   }
 
-
+  .box-product-document-mobile {
+    height: auto;
+  }
 }
 
 @media (min-width:900px) {
@@ -1232,7 +1234,6 @@ a .title-new {
     width: 50%;
     bottom: 0;
   }
- 
 }
 
 .btn-subscribe {
