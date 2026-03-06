@@ -1,4 +1,17 @@
 User-agent: *
-Disallow:
+Disallow: /*/searchAll/
+Disallow: /*/login
+Disallow: /*partners/
+Disallow: /*/tools/comparison
+
+Allow: /*/products/
+Allow: /*/product/
+Allow: /*/news/
+Allow: /*/industry-know-how/
+Allow: /*/videos/
+Allow: /*/catalogs
+Allow: /*/product-documents/
+Allow: /*/product-notice/
+Allow: /*/eol/
 
 Sitemap: https://psu.deltaww.com/sitemap.xml
