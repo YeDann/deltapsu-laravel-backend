@@ -27,14 +27,11 @@
         overflow: hidden;
     }
 
-
-
     .product-selector-list:hover .text-title-dark,
     .product-selector-mobile:hover .text-title-dark {
         color: #0087DC !important;
 
     }
-
     .product-selector-list:hover,
     .product-selector-mobile:hover {
         border-color: #0087DC;
@@ -55,8 +52,6 @@
         margin-right: auto;
         margin-bottom: 1rem;
     }
-
-
 
     .btn.focus,
     .btn:focus {
@@ -105,6 +100,11 @@
 
     .btn-subscribe {
         z-index: 999;
+    }
+
+    .btn-boxen {
+        height: 46px;
+        font-size: 18px;
     }
 </style>
 @endsection

@@ -1,3 +1,18 @@
+{{-- Footer Style --}}
+<style>
+    .box-newsletter .text-title-banner {
+        font-size: 24px;
+    }
+    
+    .box-newsletter .text-be-first {
+        font-size: 18px;
+    }
+
+    .box-newsletter .btn-subscribe {
+        font-size: 18px;
+        height: 48px;
+    }
+</style>
 <div class="visible-desk-up visible-tablets-large">
     <div class="box-newsletter">
         <div class="container">
@@ -5,20 +20,20 @@
                 <div class="col-md-12">
                     <div class="padding-new-sub text-center">
                         <h2 class="text-title-banner text-center">
-                            {{isset($staticContent['Subscribe_to_our_newsletter'])?
-                            $staticContent['Subscribe_to_our_newsletter']:"Subscribe to our newsletter" }}
+                            {{ isset($staticContent['Subscribe_to_our_newsletter']) ?
+                                $staticContent['Subscribe_to_our_newsletter'] : "Subscribe to our newsletter" }}
                         </h2>
                         <div class="text-be-first">
-                            {{isset($staticContent['Be_the_first_to_hear']) ? $staticContent['Be_the_first_to_hear']:"Be
-                            the first to hear about new events, news and products!" }}
+                            {{ isset($staticContent['Be_the_first_to_hear']) ? $staticContent['Be_the_first_to_hear'] : 
+                                "Be the first to hear about new events, news and products!" }}
                         </div>
                         <div class="box-input-sub">
                             <label for="inp" class="inp">
                                 <input type="text" id="inp3" placeholder="&nbsp;" data-toggle="modal"
                                     data-target="#subscribe-modal">
                                 <span class="label">
-                                    {{isset($staticContent['Enter_email_address'])?$staticContent['Enter_email_address']
-                                    :"Enter email address" }}
+                                    {{ isset($staticContent['Enter_email_address']) ? $staticContent['Enter_email_address']
+                                        : "Enter email address" }}
                                 </span>
                                 <span class="border"></span>
                             </label>
