@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://www.deltapsu.com/sitemap.xml
+Sitemap: https://psu.deltaww.com/sitemap.xml
