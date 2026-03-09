@@ -2716,15 +2716,16 @@ class FrontendController extends Controller
             ->where('type_id', 1)
             ->where('ct.local', '=', $lang)
             ->orderBy('c.order_seq', 'asc')
-            ->select('c.*', 'ct.*')
+            ->select('c.id', 'c.order_seq', 'ct.name')
             ->get();
 
         $offices = DB::table('office as f')
             ->join('office_translations as oft', 'f.id', '=', 'oft.fk_office_id')
             ->where('f.type_id', 1)
             ->where('oft.local', '=', $lang)
-            ->select('f.*', 'oft.*')
             ->where('f.status', 1)
+            ->select('f.id', 'f.continent_id', 'f.lat', 'f.lon', 'f.status', 'oft.title', 'oft.sub_title', 'oft.content')
+            ->distinct()
             ->get();
 
         $metatag = DB::table('meta_tag_page as mtp')
