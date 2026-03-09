@@ -884,7 +884,7 @@ function retextdata($arr ,$unit){
             data-src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}" alt="">
         <div class="container">
             <div class="box-product-document-all">
-                <h2 class="text-title-banner">{{$static_content->title}}</h2>
+                <h2 class="text-title-banner">{{$static_content->title}}</h2> 
                 <div class="text-be-first">
                     {!! $static_content->content !!}
                 </div>

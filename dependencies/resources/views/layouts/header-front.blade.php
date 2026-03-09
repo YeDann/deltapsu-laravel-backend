@@ -390,13 +390,14 @@
 
     @media (max-width: 1024px) {
         .power-supplies-link-mobile {
-            margin-left: -80px;
+            margin-left: -164px;
             bottom: 1px;
         }
 
-        /* .justify-content-left-1024 {
+        .justify-content-left-1024 {
             justify-content: left !important;
-        } */
+        }
+
         .nav-div-header {
             max-width: 960px;
             margin-left: auto;
@@ -410,7 +411,7 @@
 
     @media (max-width: 1000px) {
         .power-supplies-link-mobile {
-            margin-left: -50px;
+            margin-left: -84px;
             bottom: 1px;
         }
 
@@ -431,7 +432,7 @@
 
     @media (max-width: 768px) {
         .power-supplies-link-mobile {
-            margin-left: -35px;
+            margin-left: -97px;
             bottom: 5px;
         }
     }
@@ -448,8 +449,6 @@
     @media (max-width: 455px) {
         .power-supplies-link-mobile {
             font-size: 14px;
-        }
-        .power-supplies-link-mobile {
             padding-left: 12px;
             margin-left: 0px;
             bottom: 6px;

@@ -9449,7 +9449,7 @@ html[html_lang="ru"] label {
 }
 .visible-nav-minimize .brand-image {
     height: 36px;
-    width: 100%;
+    /* width: 100%; */
 }
 
 @media (max-width: 768px) {
