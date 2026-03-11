@@ -11812,10 +11812,6 @@ a .title-new {
     font-weight: bold;
     color: #444444;
   }
-
-  .box-product-document-mobile {
-    height: auto;
-  }
 }
 
 @media (min-width:900px) {
@@ -12010,7 +12006,7 @@ a .title-new {
   font-family: 'DeltaSans';
   /* color: #5F5F5F; */
   color: rgb(255 255 255 / var(--tw-text-opacity, 1)) !important;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 16px;
 }
 
@@ -12093,6 +12089,10 @@ a .title-new {
   border-bottom-width: 1px !important;
   border-style: solid !important;
   border-color: rgb(150 150 150 / var(--tw-border-opacity, 1)) !important;
+}
+
+.text-footer-main h6 {
+  font-size: 16px;
 }
 
 .footer-mobile {
