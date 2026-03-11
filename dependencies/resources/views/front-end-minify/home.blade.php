@@ -263,7 +263,7 @@
     }
 
     .box-product-document .text-title-banner {
-        font-size: 22px;
+        font-size: 24px;
     }
     
     .box-product-document .text-be-first {
