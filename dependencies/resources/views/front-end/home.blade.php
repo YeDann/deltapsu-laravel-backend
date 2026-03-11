@@ -714,7 +714,7 @@ function retextdata($arr ,$unit){
                     </div>
                     @endif
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','events')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','events')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -766,7 +766,7 @@ function retextdata($arr ,$unit){
                     </div>
                     @endif
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','news')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','news')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -797,7 +797,7 @@ function retextdata($arr ,$unit){
                         <a href="{{route('index','faqs')}}" class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','faqs')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','faqs')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
 

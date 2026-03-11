@@ -10097,7 +10097,7 @@ html[html_lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
     justify-content: space-between;
     padding: 12px 0;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: normal;
     color: #444444;
 }
 
@@ -10160,14 +10160,14 @@ a.a-link-hover:hover {
 }
 
 .subscribe-moblie {
-    background-color: #D6E9F6;
+    background-color: #c8c8c8;
 }
 
 .btn-subscribe-mobile {
     font-family: 'DeltaSans';
     font-size: 12px;
     color: #ffffff;
-    font-weight: bold;
+    font-weight: normal;
     background-color: #252A2C;
     height: 40;
     width: 160;
@@ -10627,7 +10627,7 @@ a.a-link-hover:hover {
   content: "\f139";
   font-family: 'FontAwesome';
   font-size: 52px;
-  color: #444444;
+  color: #c8c8c8;
   cursor: pointer;
 }
 
@@ -11236,7 +11236,7 @@ a:hover {
   font-family: 'DeltaSans';
   font-size: 12px;
   color: #ffffff;
-  font-weight: bold;
+  font-weight: normal;
   background-color: rgb(120,120, 120);
   padding: 9px 20px;
   /* padding: 10px 15px; */
@@ -11698,7 +11698,7 @@ a .title-new {
   height: 40px;
   width: 160px;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: normal;
   color: #444444;
 }
 
@@ -11745,6 +11745,10 @@ a .title-new {
   background-color: #f0f6fb;
 }
 
+.box-product-document {
+  background-color: #f0f0f0;
+}
+
 .box-product-document .container,
 .box-need-compare-product .container {
   display: flex;
@@ -11762,6 +11766,7 @@ a .title-new {
   height: 500px;
   display: flex;
   overflow-y: hidden;
+  background-color: #f0f0f0;
 }
 
 .box-product-document-mobile .container {
@@ -11830,7 +11835,7 @@ a .title-new {
   font-family: 'DeltaSans';
   font-size: 14px;
   color: #ffffff;
-  font-weight: bold;
+  /* font-weight: bold; */
   background-color: #0087DC;
   height: 40px;
   min-width: 160px;
@@ -11849,7 +11854,7 @@ a .title-new {
   font-family: 'DeltaSans';
   font-size: 12px;
   color: #0087DC;
-  font-weight: bold;
+  font-weight: normal;
   height: 40;
   min-width: 160px;
   border: 2px solid #0087DC;
@@ -11864,7 +11869,7 @@ a .title-new {
 }
 
 .box-newsletter {
-  background-color: #d5e9f5;
+  background-color: #c8c8c8;
 }
 
 .padding-new-sub {
@@ -12035,7 +12040,7 @@ a .title-new {
   width: 40px;
   height: 40px;
   border-radius: 50px;
-  background-color: #454545;
+  /* background-color: #454545; */
   /* color: #FFFFFF; */
   color: rgb(200 200 200 / var(--tw-text-opacity, 1)) !important;
   margin-right: .5rem;
@@ -13351,7 +13356,7 @@ hr {
     background-color: #ffffff;
     font-size: 12px;
     color: #0087DC;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .btn-search-border:hover {
@@ -13368,7 +13373,7 @@ hr {
     background-color: #0087DC;
     font-size: 12px;
     color: #ffffff;
-    font-weight: bold;
+    font-weight: normal;
     cursor: pointer;
 }
 
@@ -13643,7 +13648,7 @@ hr {
     border: 2px solid transparent;
     border-radius: 4px;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: normal;
     color: #ffffff;
     width: 160px;
     height: 32px;
@@ -13654,7 +13659,7 @@ hr {
     border: 2px solid transparent;
     
     font-size: 12px;
-    font-weight: bold;
+    font-weight: normal;
     color: #ffffff;
     width: 100%;
     height: 32px;
@@ -13692,7 +13697,7 @@ hr {
 .btn-forget,.btn-forget-mobile{
     font-size: 12px;
     color: #5F5F5F;
-    font-weight: bold;
+    font-weight: normal;
     cursor: pointer;
 }
 .btn-forget-mobile{
@@ -13803,7 +13808,7 @@ hr {
     border-radius: 4px;
     border: 2px solid transparent;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: normal;
     color: #ffffff;
     cursor: pointer;
 }
@@ -13814,7 +13819,7 @@ hr {
     border-radius: 4px;
     border: 2px solid transparent;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: normal;
     color: #ffffff;
     cursor: pointer;
     background-color: #0087DC;
@@ -14178,7 +14183,7 @@ table.model-num tbody td:last-child {
         border-radius: 4px;
         border: 2px solid transparent;
         font-size: 12px;
-        font-weight: bold;
+        font-weight: normal;
         color: #ffffff;
         cursor: pointer;
     }
@@ -14760,7 +14765,7 @@ table.model-num tbody td:last-child {
     border-radius: 4px;
     border: 2px solid transparent;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: normal;
     color: #ffffff;
     cursor: pointer;
 }
@@ -15191,7 +15196,7 @@ a:hover{
     background-color: transparent;
     color: #ffffff;
     padding: .375rem 0px;
-    font-weight: bold;
+    font-weight: normal;
     font-size: 16px;
     text-align: center
 }
@@ -15216,7 +15221,7 @@ input:checked+label {
     background: unset;
     text-decoration: underline;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .grid-icon {
@@ -15762,7 +15767,7 @@ e.search-filter-action {
     border: 2px solid transparent;
     border-radius: 4px;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: normal;
     color: #ffffff;
     width: 160px;
     height: 32px;
@@ -15781,7 +15786,7 @@ e.search-filter-action {
     border: 2px solid transparent;
     border-radius: 4px;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: normal;
     color: #ffffff;
     width: 160px;
     height: 32px;
@@ -15792,7 +15797,7 @@ e.search-filter-action {
     border: 2px solid #444444;
     border-radius: 4px;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: normal;
     width: 160px;
     height: 32px;
 }
@@ -15810,7 +15815,7 @@ e.search-filter-action {
     border: none;
     text-decoration: underline;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: normal;
     width: 160px;
     height: 32px;
 }

@@ -12,6 +12,10 @@
         font-size: 18px;
         height: 48px;
     }
+
+    .subscribe-bottom-line {
+        border-bottom: 1px solid #f0f0f0 !important;
+    }
 </style>
 <div class="visible-desk-up visible-tablets-large">
     <div class="box-newsletter">
@@ -29,8 +33,7 @@
                         </div>
                         <div class="box-input-sub">
                             <label for="inp" class="inp">
-                                <input type="text" id="inp3" placeholder="&nbsp;" data-toggle="modal"
-                                    data-target="#subscribe-modal">
+                                <input type="text" id="inp3" class="subscribe-bottom-line" placeholder="&nbsp;" data-toggle="modal" data-target="#subscribe-modal">
                                 <span class="label">
                                     {{ isset($staticContent['Enter_email_address']) ? $staticContent['Enter_email_address']
                                         : "Enter email address" }}

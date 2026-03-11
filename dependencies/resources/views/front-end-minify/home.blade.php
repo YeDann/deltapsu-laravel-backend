@@ -519,7 +519,7 @@
             </div>
         </div>
         <div class="text-center mr-24px" id="loadMore-application" style="">
-            <a href="#" class="btn btn-boxen">{{$staticContent['See_More']}}</a>
+            <a href="#" class="btn btn-subscribe">{{$staticContent['See_More']}}</a>
         </div>
     </div>
 </div>
@@ -568,7 +568,7 @@
             </div>
         </div>
         <div class="text-center mr-24px" id="loadMore-application-mobile" style="">
-            <a href="#" class="btn btn-boxen">{{$staticContent['See_More']}}</a>
+            <a href="#" class="btn btn-subscribe">{{$staticContent['See_More']}}</a>
         </div>
     </div>
 </div>
@@ -951,7 +951,7 @@ function retextdata($arr ,$unit){
                     </div>
                     @endif
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','events')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','events')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -1004,7 +1004,7 @@ function retextdata($arr ,$unit){
                     </div>
                     @endif
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','news')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','news')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -1036,7 +1036,7 @@ function retextdata($arr ,$unit){
                         <a href="{{route('index','faqs')}}" class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','faqs')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','faqs')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
 
@@ -1120,8 +1120,8 @@ function retextdata($arr ,$unit){
 
 {{-- Product Documents --}}
 <div class="visible-nav-minimize">
-    <div class="box-product-document-mobile"
-        style=" background: url('{{asset('frontend-asset/image/Docdownload-BG.webp')}}');">
+    <div class="box-product-document-mobile">
+        {{-- style=" background: url('{{asset('frontend-asset/image/Docdownload-BG.webp')}}');"     --}}
         <img class="image-doc lazyload" loading="lazy"
             data-src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}" alt="">
         <div class="container">
