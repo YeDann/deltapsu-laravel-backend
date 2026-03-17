@@ -567,7 +567,7 @@
 
     .img-icon-golang {
         height: 22px;
-        margin-top: -2px;
+        margin-top: -4px;
     }
 
     html[html_lang="tw"] .img-icon-golang {
