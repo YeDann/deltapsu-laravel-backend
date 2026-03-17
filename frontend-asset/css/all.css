@@ -10173,7 +10173,6 @@ a.a-link-hover:hover {
     width: 160;
     border: 2px solid transparent;
     border-radius: 5px;
-    letter-spacing: 1px;
 }
 
 .nav-comparison {
@@ -11841,7 +11840,6 @@ a .title-new {
   min-width: 160px;
   border: 2px solid transparent;
   border-radius: 5px;
-  letter-spacing: 1px;
   cursor: pointer;
 }
 
@@ -11859,7 +11857,6 @@ a .title-new {
   min-width: 160px;
   border: 2px solid #0087DC;
   border-radius: 5px;
-  letter-spacing: 1px;
 }
 
 .btn-border-delta:hover {
