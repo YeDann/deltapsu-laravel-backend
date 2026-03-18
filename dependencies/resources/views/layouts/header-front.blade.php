@@ -234,7 +234,7 @@
             content: "\f139";
             font-family: 'FontAwesome';
             font-size: 38px;
-            color: #444444;
+            color: #969696;
             cursor: pointer;
         }
 

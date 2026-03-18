@@ -16,6 +16,12 @@
     .subscribe-bottom-line {
         border-bottom: 1px solid #f0f0f0 !important;
     }
+
+    .subscribe-moblie > .container > .btn-subscribe {
+        margin: auto;
+        height: 48px;
+        font-size: 18px;
+    }
 </style>
 <div class="visible-desk-up visible-tablets-large">
     <div class="box-newsletter">
@@ -31,6 +37,7 @@
                             {{ isset($staticContent['Be_the_first_to_hear']) ? $staticContent['Be_the_first_to_hear'] : 
                                 "Be the first to hear about new events, news and products!" }}
                         </div>
+                        
                         <div class="box-input-sub">
                             <label for="inp" class="inp">
                                 <input type="text" id="inp3" class="subscribe-bottom-line" placeholder="&nbsp;" data-toggle="modal" data-target="#subscribe-modal">
@@ -379,7 +386,6 @@
 </div>
 <div class="visible-touch">
     <div class="subscribe-moblie pad-24px">
-
         <div class="container text-center">
             <div class="text-title-subscribe">
                 <h4>{{$staticContent['Subscribe_to_our_newsletter']}} </h4>
@@ -391,14 +397,14 @@
             <div class="box-input-sub">
                 <label for="inp" class="inp">
                     <input type="text" id="inp" placeholder="&nbsp;" data-toggle="modal"
-                        data-target="#subscribe-modal">
+                        data-target="#subscribe-modal" class="subscribe-bottom-line">
                     <span class="label text-center">{{$staticContent['Enter_email_address']}}</span>
                     <span class="border"></span>
                 </label>
-
             </div>
+
             <button class="btn btn-subscribe" onclick="resetfield();" data-toggle="modal"
-                data-target="#subscribe-modal"> {{$staticContent['Subscribe']}}</button>
+                    data-target="#subscribe-modal"> {{$staticContent['Subscribe']}}</button>
         </div>
     </div>
     <div class="bg-footer-mobile">

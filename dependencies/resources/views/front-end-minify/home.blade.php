@@ -256,7 +256,8 @@
         overflow: hidden;
     }
 
-    .box-btn-boxen > .btn-subscribe {
+    .box-btn-boxen > .btn-subscribe,
+    .box-product-document-all > a > .btn-subscribe {
         margin: auto;
         height: 48px;
         font-size: 18px;
