@@ -13,15 +13,6 @@
 <meta name="description"
     content="Delta’s MEG-A Series provides flexible and configurable power supplies for various industrial and medical applications.">
 <link rel="canonical" href="{{url()->current()}}" />
-<?php
-  $lang_seo = App::getLocale();
-  if($lang_seo == 'cn'){
-    $lang_seo = 'zh-Hans-CN';
-  }else if($lang_seo == 'tw'){
-    $lang_seo = 'zh-Hans-TW';
-  }
-?>
-<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
 @section('container')
 <div class="padding-top-content">

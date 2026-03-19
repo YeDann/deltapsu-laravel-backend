@@ -113,15 +113,6 @@
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 <link rel="canonical" href="{{ config('app.url') }}/{{App::getLocale()}}" />
-<?php
-  $lang_seo = App::getLocale();
-  if($lang_seo == 'cn'){
-    $lang_seo = 'zh-Hans-CN';
-  }else if($lang_seo == 'tw'){
-    $lang_seo = 'zh-Hans-TW';
-  }
-?>
-<link rel="alternate" href="{{ config('app.url') }}/{{App::getLocale()}}" hreflang="{{$lang_seo}}" />
 @endsection
 <?php
     function setTextpro($pro){

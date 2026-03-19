@@ -337,12 +337,6 @@
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 <?php
-  $lang_seo = App::getLocale();
-  if($lang_seo == 'cn'){
-    $lang_seo = 'zh-Hans-CN';
-  }else if($lang_seo == 'tw'){
-    $lang_seo = 'zh-Hans-TW';
-  }
   $url_name = isset($subCategories[0]) ? $subCategories[0]->url_item  : null;
   $categories_id = isset($subCategories[0]) ? $subCategories[0]->sub_pro_id  : null;
   // 定義 $subCate 變數供 JavaScript 使用
@@ -357,12 +351,8 @@
 ?>
 @if(isset($catename) && $catename && isset($cateid) && $cateid)
 <link rel="canonical" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$main_cate_id}}/{{$catename}}/{{$cateid}}" />
-<link rel="alternate" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$main_cate_id}}/{{$catename}}/{{$cateid}}"
-    hreflang="{{$lang_seo}}" />
 @else
 <link rel="canonical" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$main_cate_id}}" />
-<link rel="alternate" href="{{ config('app.url') }}/{{App::getLocale()}}/product/{{$main_cate_id}}"
-    hreflang="{{$lang_seo}}" />
 @endif
 @endsection
 @section('container')
