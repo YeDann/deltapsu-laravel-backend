@@ -13,6 +13,11 @@ $langch = str_replace('_', '-', app()->getLocale());
   $lanngCookie = $langch;
  }
 
+// 調用 ShareData 中間件邏輯來設定所有共享變數
+$shareData = new \App\Http\Middleware\ShareData();
+$request = request();
+$shareData->handle($request, function ($req) { return $req; });
+
 ?>
 
 <html html_lang="{{ str_replace('_', '-', app()->getLocale()) }}" Lang="{{$lanngCookie}}">

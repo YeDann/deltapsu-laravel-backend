@@ -102,62 +102,29 @@ class VideoController extends Controller
             $datePublish = $request->datePublish;
             $datainfo = $request->dateinfo;
             $videoStatus = $request->videoStatus;
-            $Content = $request->content;
+            $content = $request->content;
             $description = $request->description;
-            $metaTitle = $request->meta_title;
-            $metaDescription = $request->meta_des;
+            $metaTitle = $request->metaTitle;
+            $metaDescription = $request->metaDescription;
 
+            $filename = $request->namefile;
+            $file  = $request->file;
+            $arrFileName =  Self::SaveimageArray($file , $filename);
             $langloop = $request->langloop;
 
-            // Handle Thumbnail
-            $thumbName = '';
-            if ($request->hasFile("thumb")) {
-                $imageFile = $request->file("thumb");
-                $thumbName = uniqid().$imageFile->getClientOriginalName();
-                $imageFile->move(base_path('/../uploads_delta'), preg_replace('/\s+/', '', $thumbName));
-                $thumbName = preg_replace('/\s+/', '', $thumbName);
-            }
-
-            // Handle main file upload
-            $fileName = '';
-            if ($request->hasFile("file")) {
-                $fileUpload = $request->file("file");
-                $fileName = preg_replace('/\s+/', '', uniqid().$fileUpload->getClientOriginalName());
-                $fileUpload->move(base_path('/../uploads_delta'), $fileName);
-            }
-
-            // Handle Filelang (Files per language)
-            $fileLangNames = [];
-            if ($request->hasFile('Filelang')) {
-                $files = $request->file('Filelang');
-                foreach ($langloop as $lang) {
-                    if (isset($files[$lang])) {
-                        $f = $files[$lang];
-                        $fName = preg_replace('/\s+/', '', uniqid().$f->getClientOriginalName());
-                        $f->move(base_path('/../uploads_delta'), $fName);
-                        $fileLangNames[$lang] = $fName;
-                    } else {
-                        $fileLangNames[$lang] = '';
-                    }
-                }
-            }
-
-            // Slug generation
-            $slugTitle = isset($title['en']) ? $title['en'] : (reset($title) ?? '');
-            $re1 = str_replace("/", "_", $slugTitle);
-            $key = str_replace(" ", "-", $re1);
+            $re1 = str_replace("/","_",$title);
+            $key = str_replace(" ","-",$re1);
             $key2 = $this->clean($key);
             $slug  =  $key2;
 
             $id = DB::table('contents')->insertGetID(
                 [
                     "content_type" => "video",
-                    "thumb" => $thumbName,
-                    "file" => $fileName,
+                    "thumb" => $arrFileName['thumbnail'],
                     "created_at" => \Carbon\Carbon::now(),
                     "updated_at" => \Carbon\Carbon::now(),
                     "date_publish" => $datePublish,
-                    "date_info" => $datainfo,
+                    "date_info" => $request->dateinfo,
                     "slug" => $slug,
                     "status" => $videoStatus,
                 ]
@@ -169,17 +136,18 @@ class VideoController extends Controller
                     "video_link" => $videoLink, // Save YouTube link
                 ]
             );
-            foreach ($langloop as $lang) {
+            foreach($langloop as $lang){
                 DB::table('contents_translations')->insert(
                     [
-                        "content_id" => $id,
-                        "title" => isset($title[$lang]) ? $title[$lang] : '',
-                        "content" => isset($Content[$lang]) ? $Content[$lang] : '',
-                        "description" => isset($description[$lang]) ? $description[$lang] : '',
-                        "meta_title" => isset($metaTitle[$lang]) ? $metaTitle[$lang] : '',
-                        "meta_description" => isset($metaDescription[$lang]) ? $metaDescription[$lang] : '',
-                        'file' => isset($fileLangNames[$lang]) ? $fileLangNames[$lang] : '',
-                        "local" => $lang,
+                        "content_id" =>$id,
+                        "title" => $title,
+                        "content" => $content,
+                        "description"=>$request->description,
+                        "meta_title" => $metaTitle,
+                        "meta_description" => $metaDescription,
+                        // "meta_keywords" => $metaKeyword,
+                        'file' => isset($arrFileName['newsfile']) ? $arrFileName['newsfile'] : '',
+                        "local"=>$lang,
                     ]
                 );
             }
@@ -245,14 +213,14 @@ class VideoController extends Controller
 
             $title = $request->title;
             $videoType = $request->videoType;
-            $videoLink = $request->video_link; // New field for YouTube link
+            $videoLink = $request->video_link;
             $datePublish = $request->datePublish;
             $datainfo = $request->dateinfo;
             $videoStatus = $request->videoStatus;
-            $Content = $request->content;
+            $content = $request->content;
             $description = $request->description;
-            $metaTitle = $request->meta_title;
-            $metaDescription = $request->meta_des;
+            $metaTitle = $request->metaTitle;
+            $metaDescription = $request->metaDescription;
             $langloop = $request->langloop;
             $videoId = $request->videoId;
             $oldThumb = $request->oldThumb;
@@ -275,36 +243,29 @@ class VideoController extends Controller
                 }
             }
 
-            // Handle main file upload
-            $oldMainFile = $request->oldMainFile;
-            $fileName = $oldMainFile;
-            if ($request->hasFile("file")) {
-                $fileUpload = $request->file("file");
-                $fileName = preg_replace('/\s+/', '', uniqid().$fileUpload->getClientOriginalName());
-                $fileUpload->move(base_path('/../uploads_delta'), $fileName);
-                
-                // Delete old main file
-                if ($oldMainFile) {
-                    $file_pointer = base_path('/../uploads_delta/').$oldMainFile;
-                    if (file_exists($file_pointer)) {
-                        unlink($file_pointer);
-                    }
-                }
+            // Handle Filelang (Files per language) - get current files first
+            $currentFiles = [];
+            foreach ($langloop as $lang) {
+                $current = DB::table('contents_translations')
+                    ->where('content_id', $videoId)
+                    ->where('local', $lang)
+                    ->first();
+                $currentFiles[$lang] = $current ? $current->file : '';
             }
 
-            // Handle Filelang (Files per language)
             $fileLangNames = [];
             foreach ($langloop as $lang) {
-                $fileLangNames[$lang] = isset($oldfile[$lang]) ? $oldfile[$lang] : '';
+                // Keep existing file by default
+                $fileLangNames[$lang] = $currentFiles[$lang];
                 
                 if ($request->hasFile('Filelang') && isset($request->file('Filelang')[$lang])) {
                     $f = $request->file('Filelang')[$lang];
                     $fName = preg_replace('/\s+/', '', uniqid().$f->getClientOriginalName());
                     $f->move(base_path('/../uploads_delta'), $fName);
                     
-                    // Delete old file
-                    if (isset($oldfile[$lang]) && $oldfile[$lang]) {
-                        $file_pointer = base_path('/../uploads_delta/').$oldfile[$lang];
+                    // Delete old file only if there was one
+                    if ($currentFiles[$lang]) {
+                        $file_pointer = base_path('/../uploads_delta/').$currentFiles[$lang];
                         if (file_exists($file_pointer)) {
                             unlink($file_pointer);
                         }
@@ -315,7 +276,7 @@ class VideoController extends Controller
             }
 
             // Slug generation
-            $slugTitle = isset($title['en']) ? $title['en'] : (reset($title) ?? '');
+            $slugTitle = $title['en'];
             $re1 = str_replace("/", "_", $slugTitle);
             $key = str_replace(" ", "-", $re1);
             $key2 = $this->clean($key);
@@ -323,7 +284,6 @@ class VideoController extends Controller
 
             DB::table('contents')->where('id', $videoId)->update([
                 "thumb" => $thumbName,
-                "file" => $fileName,
                 "updated_at" => \Carbon\Carbon::now(),
                 "date_publish" => $datePublish,
                 "date_info" => $datainfo,
@@ -335,7 +295,7 @@ class VideoController extends Controller
                 ->where('content_id', $videoId)
                 ->update([
                     "categories_id" => $videoType,
-                    "video_link" => $videoLink, // Update YouTube link
+                    "video_link" => $videoLink,
                 ]);
 
             foreach ($langloop as $lang) {
@@ -350,7 +310,7 @@ class VideoController extends Controller
                         ->where('local', $lang)
                         ->update([
                             "title" => isset($title[$lang]) ? $title[$lang] : '',
-                            "content" => isset($Content[$lang]) ? $Content[$lang] : '',
+                            "content" => isset($content[$lang]) ? $content[$lang] : '',
                             "description" => isset($description[$lang]) ? $description[$lang] : '',
                             "meta_title" => isset($metaTitle[$lang]) ? $metaTitle[$lang] : '',
                             "meta_description" => isset($metaDescription[$lang]) ? $metaDescription[$lang] : '',
@@ -360,7 +320,7 @@ class VideoController extends Controller
                     DB::table('contents_translations')->insert([
                         "content_id" => $videoId,
                         "title" => isset($title[$lang]) ? $title[$lang] : '',
-                        "content" => isset($Content[$lang]) ? $Content[$lang] : '',
+                        "content" => isset($content[$lang]) ? $content[$lang] : '',
                         "description" => isset($description[$lang]) ? $description[$lang] : '',
                         "meta_title" => isset($metaTitle[$lang]) ? $metaTitle[$lang] : '',
                         "meta_description" => isset($metaDescription[$lang]) ? $metaDescription[$lang] : '',
@@ -452,12 +412,30 @@ class VideoController extends Controller
 
     public function removeFileVideoDoc($name, $id)
     {
-        DB::table('contents_translations')
-            ->where('local', $name)
+        $con_trans = DB::table('contents_translations as ct')
             ->where('content_id', $id)
-            ->update([
-                "file" => null,
-            ]);
-        return redirect()->route('video.edit', $id)->with('flash_message', 'Delete File successfully');
+            ->where('local', $name)
+            ->select('ct.file')
+            ->first();
+
+        if (isset($con_trans->file) && $con_trans->file != '') {
+            // Delete the file from filesystem
+            $file_pointer = base_path('/../uploads_delta/').$con_trans->file;
+            if (file_exists($file_pointer)) {
+                unlink($file_pointer);
+            }
+
+            // Update database to remove file reference for this specific language
+            DB::table('contents_translations')
+                ->where('content_id', $id)
+                ->where('local', $name)
+                ->update([
+                    'file' => '',
+                ]);
+
+            return back()->with('flash_message', 'Delete File successfully');
+        } else {
+            return back()->with('error_message', 'Can Not Delete File');
+        }
     }
 }

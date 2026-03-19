@@ -338,36 +338,36 @@ class PartnerController extends Controller
             return redirect()->route('storyImage',$story_id)->with('flash_message', 'No image');
         }
     }
-     public function ExportPartner()
+
+    public function ExportPartner()
     {
         $users = DB::table('partner')
-        ->select('partner.*')
-        ->get();
-
+            ->select('partner.*')
+            ->get();
 
         if ($users->isEmpty()) {
-             return redirect()->route('partner.index')->with('flash_message', 'No Data');
+            return redirect()->route('partner.index')->with('flash_message', 'No Data');
         }
 
         // Transform data for export
-        $exportData = $users->map(function ($users, $index) {
-              if($user->role == 1){
-                     $role = 'Distributor';
-              }else{
-                     $role = 'FES';
-              }
+        $exportData = $users->map(function ($user, $index) {
+            if($user->role == 1){
+                $role = 'Distributor';
+            }else{
+                $role = 'FES';
+            }
             return [
                 'no' => $index + 1,
-                'firstname' => $users->firstname,
-                'lastname' => $users->lastname,
-                'email' => $users->email,
-                'position' => $users->position,
-                'companyName' => $users->companyName,
-                'phone' => $users->phone,
-                'fax' => $users->fax,
+                'firstname' => $user->firstname,
+                'lastname' => $user->lastname,
+                'email' => $user->email,
+                'position' => $user->position,
+                'companyName' => $user->companyName,
+                'phone' => $user->phone,
+                'fax' => $user->fax,
+                'country' => $user->country,
                 'role' =>  $role,
-                'created_at'=>$user->created_at
-
+                'created_at' => $user->created_at
             ];
         })->toArray();
 
@@ -384,11 +384,12 @@ class PartnerController extends Controller
                 {
                     return $this->data;
                 }
+
                 public function getCsvSettings(): array
                 {
                     return [
                         'use_bom' => true,
-                         'encoding' => 'UTF-16LE',
+                        'encoding' => 'UTF-16LE',
                         'delimiter' => ',',
                     ];
                 }
@@ -411,10 +412,10 @@ class PartnerController extends Controller
                 }
             },
             'partner.csv',
-           ExcelFormat::CSV,
+            ExcelFormat::CSV,
             [
                 'use_bom' => true,  // must have for Excel in Windows
-                 'encoding' => 'UTF-16LE',
+                'encoding' => 'UTF-16LE',
             ]
         );
     }

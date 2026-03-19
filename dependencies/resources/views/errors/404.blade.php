@@ -10,17 +10,16 @@
        margin-bottom: 50px;
     }
     .btn-page-eror {
-    font-family: 'DeltaSans';
-    font-size: 14px;
-    color: #ffffff !important;
-    font-weight: bold;
-    background-color: #0087DC;
-    height: 40px;
-    min-width: 180px;
-    border: 2px solid transparent;
-    border-radius: 5px;
-    letter-spacing: 1px;
-}
+        font-family: 'DeltaSans';
+        font-size: 14px;
+        color: #ffffff !important;
+        font-weight: bold;
+        background-color: #0087DC;
+        height: 40px;
+        min-width: 180px;
+        border: 2px solid transparent;
+        border-radius: 5px;
+    }
 </style>
 @endsection
 @section('container')

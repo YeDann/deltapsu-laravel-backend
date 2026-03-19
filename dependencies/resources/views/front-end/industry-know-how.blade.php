@@ -178,7 +178,12 @@
        margin-bottom: 25px !important;
     }
 </style>
+@endsection
 
+@section('meta')
+<title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
+<meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
+<link rel="canonical" href="{{url()->current()}}" />
 @endsection
 
 @section('container')

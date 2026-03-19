@@ -28,6 +28,10 @@ $langch = str_replace('_', '-', app()->getLocale());
     <meta name="robots" content="index, follow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('meta')
+    
+    <!-- Hreflang tags for all languages -->
+    @include('components.hreflang')
+    
     <!-- Bootstrap CSS -->
 
     <link rel="stylesheet" type="text/css" href="{{asset('/frontend-asset/css/all.css')}}">

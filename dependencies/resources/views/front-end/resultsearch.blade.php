@@ -11,7 +11,6 @@
         font-weight: bold;
         cursor: pointer;
         font-size: 14px;
-        letter-spacing: 1px;
     }
 
     .f-btn {

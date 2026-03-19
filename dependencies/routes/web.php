@@ -47,6 +47,10 @@ Route::group([
             Route::get('/products_search/search', 'FrontendController@resultSearch')->name('resultSearch');
             Route::get('/product/index/{cate_name?}/{cate_id?}/{mainId?}', 'FrontendController@allproductsByType')->name('allproductsByType');
             Route::get('/product/all-product-categories', 'FrontendController@allproduct')->name('allproduct');
+            // 舊版商品頁面重定向到新版 (302 redirect) - 必須在 productList 路由之前，排除 "index" 和 "all-product-categories"
+            Route::get('/product/{main_cate}/{cate_id}', 'FrontendController@redirectOldProductUrl')
+                ->where(['main_cate' => '^(?!index$|all-product-categories$)[a-zA-Z0-9\-_]+$', 'cate_id' => '[0-9]+'])
+                ->name('redirectOldProductUrl');
             Route::get('/product/{main_cate}/{cate_name?}/{cate_id?}/{se_name?}/{se_id?}', 'FrontendController@productList')->name('productList');
             Route::get('/productBySeries/{name?}/{series?}', 'FrontendController@productBySeries')->name('productBySeries');
             Route::get('/products/download/{cate_name?}/{modelname?}', 'FrontendController@downloadFIle')->name('downloadFIle');

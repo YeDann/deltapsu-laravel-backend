@@ -289,56 +289,56 @@ class FrontendController extends Controller
             $lang = App::getLocale();
 
             $video_type = DB::table('video_type as vt')
-            ->join('video_type_translation as vtt', 'vtt.fk_vt_id', '=', 'vt.id')
-            ->select('vt.*', 'vtt.title as typename')
-            ->where('vtt.local', $lang)
-            ->orderBy('vt.order_seq', 'asc')
-            ->get();
+                ->join('video_type_translation as vtt', 'vtt.fk_vt_id', '=', 'vt.id')
+                ->select('vt.*', 'vtt.title as typename')
+                ->where('vtt.local', $lang)
+                ->orderBy('vt.order_seq', 'asc')
+                ->get();
             $type_id = 0;
             if (isset($_GET['type-id']) && 0 != $_GET['type-id']) {
                 $type_id = $this->validateInput($_GET['type-id'], 'number', true);
                 $videos = DB::table('product_video_has_categories as pvc')
-                ->join('contents as c', 'c.id', '=', 'pvc.content_id')
-                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
-                ->join('video_type as vt', 'vt.id', '=', 'pvc.categories_id')
-                ->join('video_type_translation as vtt', 'vtt.fk_vt_id', '=', 'vt.id')
-                ->where('ct.local', $lang)
-                ->where('vtt.local', $lang)
-                ->where('c.content_type', '=', 'video')
-                ->where('vt.id', $type_id)
-                ->where('c.status', 1)
-                ->select('c.*', 'ct.*', 'vtt.title as cateName', 'vt.color_type', 'pvc.categories_id as typeId', 'pvc.video_link')
-                ->orderBy('c.date_publish', 'desc')
-                ->distinct()
-                ->paginate(15);
+                    ->join('contents as c', 'c.id', '=', 'pvc.content_id')
+                    ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                    ->join('video_type as vt', 'vt.id', '=', 'pvc.categories_id')
+                    ->join('video_type_translation as vtt', 'vtt.fk_vt_id', '=', 'vt.id')
+                    ->where('ct.local', $lang)
+                    ->where('vtt.local', $lang)
+                    ->where('c.content_type', '=', 'video')
+                    ->where('vt.id', $type_id)
+                    ->where('c.status', 1)
+                    ->select('c.*', 'ct.*', 'vtt.title as cateName', 'vt.color_type', 'pvc.categories_id as typeId', 'pvc.video_link')
+                    ->orderBy('c.date_publish', 'desc')
+                    ->distinct()
+                    ->paginate(15);
             } else {
                 $videos = DB::table('product_video_has_categories as pvc')
-                ->join('contents as c', 'c.id', '=', 'pvc.content_id')
-                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
-                ->join('video_type as vt', 'vt.id', '=', 'pvc.categories_id')
-                ->join('video_type_translation as vtt', 'vtt.fk_vt_id', '=', 'vt.id')
-                ->where('ct.local', $lang)
-                ->where('vtt.local', $lang)
-                ->where('c.content_type', '=', 'video')
-                ->where('c.status', 1)
-                ->select('c.*', 'ct.*', 'vtt.title as cateName', 'vt.color_type', 'pvc.categories_id as typeId', 'pvc.video_link')
-                ->orderBy('c.date_publish', 'desc')
-                ->distinct()
-                ->paginate(15);
+                    ->join('contents as c', 'c.id', '=', 'pvc.content_id')
+                    ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                    ->join('video_type as vt', 'vt.id', '=', 'pvc.categories_id')
+                    ->join('video_type_translation as vtt', 'vtt.fk_vt_id', '=', 'vt.id')
+                    ->where('ct.local', $lang)
+                    ->where('vtt.local', $lang)
+                    ->where('c.content_type', '=', 'video')
+                    ->where('c.status', 1)
+                    ->select('c.*', 'ct.*', 'vtt.title as cateName', 'vt.color_type', 'pvc.categories_id as typeId', 'pvc.video_link')
+                    ->orderBy('c.date_publish', 'desc')
+                    ->distinct()
+                    ->paginate(15);
             }
 
             $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
-                ->where('mtp.id', 7) // Video meta tag page id
+                ->where('mtp.id', 32)
                 ->where('mtpt.local', $lang)
                 ->select('mtp.*', 'mtpt.*')
                 ->get();
 
             return view('front-end.video')
-            ->with('metatag', $metatag)
-            ->with('video_type', $video_type)
-            ->with('type_id', $type_id)
-            ->with('videos', $videos);
+                ->with('metatag', $metatag)
+                ->with('video_type', $video_type)
+                ->with('type_id', $type_id)
+                ->with('videos', $videos);
         }
 
         if ('login' == $page) {
@@ -370,22 +370,22 @@ class FrontendController extends Controller
             // return dd('de');
             $lang = App::getLocale();
             $events = DB::table('contents as c')
-            ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
-            ->where('ct.local', $lang)
-            ->where('c.content_type', '=', 'event')
-            ->where('c.status', 1)
-            ->select('c.*', 'ct.*')
-            ->orderBy('c.date_publish', 'desc')
-            ->get();
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'event')
+                ->where('c.status', 1)
+                ->select('c.*', 'ct.*')
+                ->orderBy('c.date_publish', 'desc')
+                ->get();
 
             $events2 = DB::table('contents as c')
-            ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
-            ->where('ct.local', $lang)
-            ->where('c.content_type', '=', 'event')
-            ->where('c.status', 1)
-            ->select('c.*', 'ct.*')
-            ->orderBy('c.date_publish', 'asc')
-            ->get();
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'event')
+                ->where('c.status', 1)
+                ->select('c.*', 'ct.*')
+                ->orderBy('c.date_publish', 'asc')
+                ->get();
             $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id', 7)
@@ -393,7 +393,10 @@ class FrontendController extends Controller
                 ->select('mtp.*', 'mtpt.*')
                 ->get();
 
-            return view('front-end.event')->with('events2', $events2)->with('events', $events)->with('metatag', $metatag);
+            return view('front-end.event')
+                ->with('events2', $events2)
+                ->with('events', $events)
+                ->with('metatag', $metatag);
         }
         if ('technical-articles' == $page) {
             return redirect()->route('index', 'home');
@@ -425,58 +428,66 @@ class FrontendController extends Controller
             $lang = App::getLocale();
 
             $news_type = DB::table('industry_know_how_type as nt')
-            ->join('industry_know_how_type_translation as ntt', 'ntt.fk_ikht_id', '=', 'nt.id')
-            ->select('nt.*', 'ntt.title as typename')
-            ->where('ntt.local', $lang)
-            ->orderBy('nt.order_seq', 'asc')
-            ->get();
+                ->join('industry_know_how_type_translation as ntt', 'ntt.fk_ikht_id', '=', 'nt.id')
+                ->select('nt.*', 'ntt.title as typename')
+                ->where('ntt.local', $lang)
+                ->orderBy('nt.order_seq', 'asc')
+                ->get();
             $type_id = 0;
             if (isset($_GET['type-id']) && 0 != $_GET['type-id']) {
                 $type_id = $this->validateInput($_GET['type-id'], 'number', true);
                 $news = DB::table('product_industry_know_how_has_categories as pnc')
-                ->join('contents as c', 'c.id', '=', 'pnc.content_id')
-                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
-                ->join('industry_know_how_type as nt', 'nt.id', '=', 'pnc.categories_id')
-                ->join('industry_know_how_type_translation as ntt', 'ntt.fk_ikht_id', '=', 'nt.id')
-                ->where('ct.local', $lang)
-                ->where('ntt.local', $lang)
-                ->where('c.content_type', '=', 'industry-know-how')
-                ->where('nt.id', $type_id)
-                ->where('c.status', 1)
-                ->select('c.*', 'ct.*', 'ntt.title as cateName', 'nt.color_type', 'pnc.categories_id as typeId')
-                ->orderBy('c.date_publish', 'desc')
-                ->distinct()
-                ->paginate(15);
+                    ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+                    ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                    ->join('industry_know_how_type as nt', 'nt.id', '=', 'pnc.categories_id')
+                    ->join('industry_know_how_type_translation as ntt', 'ntt.fk_ikht_id', '=', 'nt.id')
+                    ->where('ct.local', $lang)
+                    ->where('ntt.local', $lang)
+                    ->where('c.content_type', '=', 'industry-know-how')
+                    ->where('nt.id', $type_id)
+                    ->where('c.status', 1)
+                    ->select('c.*', 'ct.*', 'ntt.title as cateName', 'nt.color_type', 'pnc.categories_id as typeId')
+                    ->orderBy('c.date_publish', 'desc')
+                    ->distinct()
+                    ->paginate(15);
             } else {
                 $news = DB::table('product_industry_know_how_has_categories as pnc')
-                ->join('contents as c', 'c.id', '=', 'pnc.content_id')
-                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
-                ->join('industry_know_how_type as nt', 'nt.id', '=', 'pnc.categories_id')
-                ->join('industry_know_how_type_translation as ntt', 'ntt.fk_ikht_id', '=', 'nt.id')
-                ->where('ct.local', $lang)
-                ->where('ntt.local', $lang)
-                ->where('c.content_type', '=', 'industry-know-how')
-                ->where('c.status', 1)
-                ->select('c.*', 'ct.*', 'ntt.title as cateName', 'nt.color_type', 'pnc.categories_id as typeId')
-                ->orderBy('c.date_publish', 'desc')
-                ->distinct()
-                ->paginate(15);
+                    ->join('contents as c', 'c.id', '=', 'pnc.content_id')
+                    ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                    ->join('industry_know_how_type as nt', 'nt.id', '=', 'pnc.categories_id')
+                    ->join('industry_know_how_type_translation as ntt', 'ntt.fk_ikht_id', '=', 'nt.id')
+                    ->where('ct.local', $lang)
+                    ->where('ntt.local', $lang)
+                    ->where('c.content_type', '=', 'industry-know-how')
+                    ->where('c.status', 1)
+                    ->select('c.*', 'ct.*', 'ntt.title as cateName', 'nt.color_type', 'pnc.categories_id as typeId')
+                    ->orderBy('c.date_publish', 'desc')
+                    ->distinct()
+                    ->paginate(15);
             }
 
+            $metatag = DB::table('meta_tag_page as mtp')
+                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+                ->where('mtp.id', 31)
+                ->where('mtpt.local', $lang)
+                ->select('mtp.*', 'mtpt.*')
+                ->get();
+
             return view('front-end.industry-know-how')
-            ->with('news_type', $news_type)
-            ->with('type_id', $type_id)
-            ->with('news', $news);
+                ->with('metatag', $metatag)
+                ->with('news_type', $news_type)
+                ->with('type_id', $type_id)
+                ->with('news', $news);
         }
         if ('product-notice' == $page) {
             $lang = App::getLocale();
 
             $news_type = DB::table('product_notice_type as nt')
-            ->join('product_notice_type_translation as ntt', 'ntt.fk_pnt_id', '=', 'nt.id')
-            ->select('nt.*', 'ntt.title as typename')
-            ->where('ntt.local', $lang)
-            ->orderBy('nt.order_seq', 'asc')
-            ->get();
+                ->join('product_notice_type_translation as ntt', 'ntt.fk_pnt_id', '=', 'nt.id')
+                ->select('nt.*', 'ntt.title as typename')
+                ->where('ntt.local', $lang)
+                ->orderBy('nt.order_seq', 'asc')
+                ->get();
             $type_id = 0;
             if (isset($_GET['type-id']) && 0 != $_GET['type-id']) {
                 $type_id = $this->validateInput($_GET['type-id'], 'number', true);
@@ -510,12 +521,19 @@ class FrontendController extends Controller
                 ->paginate(15);
             }
 
-            return view('front-end.product-notice')
-            ->with('news_type', $news_type)
-            ->with('type_id', $type_id)
-            ->with('news', $news);
-        }
+            $metatag = DB::table('meta_tag_page as mtp')
+                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+                ->where('mtp.id', 30)
+                ->where('mtpt.local', $lang)
+                ->select('mtp.*', 'mtpt.*')
+                ->get();
 
+            return view('front-end.product-notice')
+                ->with('metatag', $metatag)
+                ->with('news_type', $news_type)
+                ->with('type_id', $type_id)
+                ->with('news', $news);
+        }
         if ('faqs' == $page) {
             $lang = App::getLocale();
             $faq_categories = DB::table('faq_categories as fc')
@@ -543,7 +561,6 @@ class FrontendController extends Controller
                 ->with('faqs', $faqs)
                 ->with('faq_categories', $faq_categories);
         }
-
         if ('product-documents' == $page) {
             $lang = App::getLocale();
             $subCategories = DB::table('sub_pro_categories as sc')
@@ -686,11 +703,11 @@ class FrontendController extends Controller
             $lang = App::getLocale();
 
             $news_type = DB::table('eol_type as nt')
-            ->join('eol_type_translation as ntt', 'ntt.fk_et_id', '=', 'nt.id')
-            ->select('nt.*', 'ntt.title as typename')
-            ->where('ntt.local', $lang)
-            ->orderBy('nt.order_seq', 'asc')
-            ->get();
+                ->join('eol_type_translation as ntt', 'ntt.fk_et_id', '=', 'nt.id')
+                ->select('nt.*', 'ntt.title as typename')
+                ->where('ntt.local', $lang)
+                ->orderBy('nt.order_seq', 'asc')
+                ->get();
             $type_id = 0;
             if (isset($_GET['type-id']) && 0 != $_GET['type-id']) {
                 $type_id = $this->validateInput($_GET['type-id'], 'number', true);
@@ -726,11 +743,19 @@ class FrontendController extends Controller
 
             $status = false;
 
+            $metatag = DB::table('meta_tag_page as mtp')
+                ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
+                ->where('mtp.id', 33)
+                ->where('mtpt.local', $lang)
+                ->select('mtp.*', 'mtpt.*')
+                ->get();
+
             return view('front-end.eol')
-            ->with('status_eol', $status)
-            ->with('news_type', $news_type)
-            ->with('type_id', $type_id)
-            ->with('news', $news);
+                ->with('status_eol', $status)
+                ->with('news_type', $news_type)
+                ->with('type_id', $type_id)
+                ->with('news', $news)
+                ->with('metatag', $metatag);
         }
         if ('documents' == $page) {
             return redirect()->route('index', 'product-documents');
@@ -797,7 +822,7 @@ class FrontendController extends Controller
                 ->select('pdc.*', 'pdct.lable')
                 ->orderBy('pdc.title', 'asc')
                 ->get();
-            // return dd( $documents_cate);
+
             $metatag = DB::table('meta_tag_page as mtp')
                 ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
                 ->where('mtp.id', 22)
@@ -842,11 +867,8 @@ class FrontendController extends Controller
             }
 
             return redirect()->route('contactSupport');
-
-            return redirect()->route('contactSupport');
         }
-        // return dd('ddd');
-        //return redirect()->route('index','home');
+
         return response()->view('errors.404', [], 404);
     }
 
@@ -1159,9 +1181,9 @@ class FrontendController extends Controller
         if (isset($certificateMapping[$mainCateId])) {
             $searchProQuery = $searchProQuery->whereExists(function ($query) use ($certificateMapping, $mainCateId) {
                 $query->select(DB::raw(1))
-                      ->from('certificate_product as cp')
-                      ->whereColumn('cp.product_id', 'p.pro_id')
-                      ->whereIn('cp.certificate_id', $certificateMapping[$mainCateId]);
+                    ->from('certificate_product as cp')
+                    ->whereColumn('cp.product_id', 'p.pro_id')
+                    ->whereIn('cp.certificate_id', $certificateMapping[$mainCateId]);
             });
         }
 
@@ -1211,8 +1233,8 @@ class FrontendController extends Controller
         $arrproid = [];
         $productsArr = [];
         $productCodeArr = [];
-
         foreach ($searchProGroupByPrdId as $prdId => $products) {
+
             // 取得 商品屬性資料
             $productHasPrm = $productHasPrmGroupByPrdId->get($prdId, collect());
 
@@ -1358,11 +1380,9 @@ class FrontendController extends Controller
         $series = DB::table('series_has_pro_categories as sc')
             ->join('series as s', 'sc.se_id', '=', 's.se_id')
             ->join('series_translations as st', 'st.series_id', '=', 's.se_id')
-            ->whereIn('sc.pro_categories_id', $subCategoriesIds)
             ->where('st.local', $lang)
             ->where('s.status', 1)
-            ->select('s.se_id', 'st.title', 's.mode_series')
-            ->distinct()
+            ->select('s.se_id', 'st.title', 's.mode_series', 'sc.main_cate', 'sc.pro_categories_id')
             ->orderBy('st.title', 'asc')
             ->get();
 
@@ -2007,10 +2027,10 @@ class FrontendController extends Controller
             session(['section_Cateid' => $cateid]);
 
             return response()->json([
-            'section' => $sess_arr,
-            'data' => $dataFirst,
-            'message' => 'The selected model has been added to the Comparison list.',
-        ], 200);
+                'section' => $sess_arr,
+                'data' => $dataFirst,
+                'message' => 'The selected model has been added to the Comparison list.',
+            ], 200);
         }
         $oldpro = DB::table('products as p')
            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -2022,6 +2042,7 @@ class FrontendController extends Controller
            ->select('p.*', 'pt.*', 'phc.categories_id as pro_categories_id')
            ->orderBy('p.created_at', 'desc')
            ->get();
+
         if ((!in_array($data_id, $sess_arr)) && isset($oldpro[0]->pro_categories_id) && $Newsproduct->pro_categories_id == $oldpro[0]->pro_categories_id) {
             if (count($sess_arr) < 3) {
                 array_push($sess_arr, $data_id);
@@ -2063,11 +2084,11 @@ class FrontendController extends Controller
                         ->get();
 
             return response()->json([
-                            'section' => $sess_arr,
-                            'data' => $data,
-                            'cateid' => $cateid,
-                            'message' => 'Only 3 models can be added to the Comparison list.',
-                        ], 200);
+                        'section' => $sess_arr,
+                        'data' => $data,
+                        'cateid' => $cateid,
+                        'message' => 'Only 3 models can be added to the Comparison list.',
+                    ], 200);
         } elseif (in_array($data_id, $sess_arr)) {
             $data = DB::table('products as p')
                         ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -2106,11 +2127,11 @@ class FrontendController extends Controller
                     ->get();
 
         return response()->json([
-                        'section' => $sess_arr,
-                        'data' => $data,
-                        'cateid' => $catesection,
-                        'message' => 'Please select the model in the same category',
-                     ], 200);
+                    'section' => $sess_arr,
+                    'data' => $data,
+                    'cateid' => $catesection,
+                    'message' => 'Please select the model in the same category',
+                ], 200);
     }
 
     public function RemovedataInSection(Request $request)
@@ -2695,15 +2716,16 @@ class FrontendController extends Controller
             ->where('type_id', 1)
             ->where('ct.local', '=', $lang)
             ->orderBy('c.order_seq', 'asc')
-            ->select('c.*', 'ct.*')
+            ->select('c.id', 'c.order_seq', 'ct.name')
             ->get();
 
         $offices = DB::table('office as f')
             ->join('office_translations as oft', 'f.id', '=', 'oft.fk_office_id')
             ->where('f.type_id', 1)
             ->where('oft.local', '=', $lang)
-            ->select('f.*', 'oft.*')
             ->where('f.status', 1)
+            ->select('f.id', 'f.continent_id', 'f.lat', 'f.lon', 'f.status', 'oft.title', 'oft.sub_title', 'oft.content')
+            ->distinct()
             ->get();
 
         $metatag = DB::table('meta_tag_page as mtp')
@@ -2748,6 +2770,31 @@ class FrontendController extends Controller
             ->with('metatag', $metatag)
             ->with('offices', $offices)
             ->with('continents', $continents);
+    }
+
+    public function redirectOldProductUrl($main_cate, $cate_id)
+    {
+        $lang = app()->getLocale();
+        
+        // 根據 subcategory ID 找到對應的 main_cateid，優先選擇 main_cateid = 2 (Industrial Power)
+        $categoryInfo = DB::table('sub_pro_categories as spc')
+            ->join('categories_has_main_pro as chmp', 'spc.sub_pro_id', '=', 'chmp.cate_id')
+            ->where('spc.sub_pro_id', $cate_id)
+            ->select('chmp.main_cateid as main_cate_id', 'spc.sub_pro_id as category_id')
+            ->orderByRaw('CASE WHEN chmp.main_cateid = 2 THEN 0 ELSE chmp.main_cateid END')
+            ->first();
+
+        if (!$categoryInfo) {
+            // 如果找不到對應的商品分類，直接返回 404
+            return response()->view('errors.404', [], 404);
+        }
+        
+        $main_cate_id = $categoryInfo->main_cate_id;
+        
+        // 建構新的 URL 格式：/{lang}/product/{main_cate_id}/{main_cate}/{cate_id}
+        $newUrl = "/{$lang}/product/{$main_cate_id}/{$main_cate}/{$cate_id}";
+        
+        return redirect($newUrl, 301);
     }
 
     public function termsOfUse()
@@ -4589,7 +4636,7 @@ class FrontendController extends Controller
     public function LinktoEnquiry($type, $type_name, $pro_code)
     {
         $strmodel = str_replace('@', '/', $pro_code);
-        // return dd($strmodel);
+
         session(['enquireModel' => $strmodel]);
         session(['enquireModelType' => $type]);
         session(['enquireModelTypeName' => $type_name]);
