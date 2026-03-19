@@ -22,11 +22,18 @@
         margin: 0 auto;
     }
 
+    @media only screen and (max-width:1180px) {
+        .visible-tablets-up {
+            width: 100%;
+        }
+    }
+
     .text-title-delta-home {
         color: black;
         margin-bottom: 2.5rem;
         margin-top: 12px;
         text-align: left;
+        font-size: 32px;
     }
 
     @media only screen and (max-width: 768px) {
@@ -249,7 +256,25 @@
         overflow: hidden;
     }
 
-    /* #producttype.owl-carousel .owl-stage-outer {} */
+    .box-btn-boxen > .btn-subscribe,
+    .box-product-document-all > a > .btn-subscribe {
+        margin: auto;
+        height: 48px;
+        font-size: 18px;
+    }
+
+    .box-product-document .text-title-banner {
+        font-size: 24px;
+    }
+    
+    .box-product-document .text-be-first {
+        font-size: 18px;
+    }
+
+    .box-product-document .btn-subscribe {
+        font-size: 18px;
+        height: 48px;
+    }
 
     @media (min-width: 767px) {
         #slider,
@@ -266,15 +291,6 @@
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 <link rel="canonical" href="{{ config('app.url') }}/{{App::getLocale()}}" />
-<?php
-  $lang_seo = App::getLocale();
-  if($lang_seo == 'cn'){
-    $lang_seo = 'zh-Hans-CN';
-  }else if($lang_seo == 'tw'){
-    $lang_seo = 'zh-Hans-TW';
-  }
-?>
-<link rel="alternate" href="{{ config('app.url') }}/{{App::getLocale()}}" hreflang="{{$lang_seo}}" />
 @endsection
 <?php
     function setTextpro($pro){
@@ -349,7 +365,7 @@
     <div class="padding-top-content">
     </div>
     <div class="box-banner">
-        <div id="slide-banner-mobile" class="owl-carousel owl-theme ">
+        <div id="slide-banner-mobile" class="owl-carousel owl-theme">
             @foreach ($banners as $index => $banner)
             <div class="item banner-item ">
                 <a href="{{$banner->btn_link}}">
@@ -391,6 +407,7 @@
         <h4 class="text-center">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
     </div>
 </div>
+
 <!-- selecter -->
 <div class="visible-tablets-up">
     <div class="box-product-selector container">
@@ -494,7 +511,7 @@
             </div>
         </div>
         <div class="text-center mr-24px" id="loadMore-application" style="">
-            <a href="#" class="btn btn-boxen">{{$staticContent['See_More']}}</a>
+            <a href="#" class="btn btn-subscribe">{{$staticContent['See_More']}}</a>
         </div>
     </div>
 </div>
@@ -543,10 +560,11 @@
             </div>
         </div>
         <div class="text-center mr-24px" id="loadMore-application-mobile" style="">
-            <a href="#" class="btn btn-boxen">{{$staticContent['See_More']}}</a>
+            <a href="#" class="btn btn-subscribe">{{$staticContent['See_More']}}</a>
         </div>
     </div>
 </div>
+
 <!-- feature -->
 <?php
 function retextdata($arr ,$unit){
@@ -559,7 +577,6 @@ function retextdata($arr ,$unit){
                    }
        return $arr_data;
 }
-
 ?>
 <div class="visible-tablets-up">
     <div class="box-pp">
@@ -784,11 +801,12 @@ function retextdata($arr ,$unit){
                     </div>
                     @endif
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','events')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','events')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="non-widget-bar-static"></div>
+                    <div class="widget-bar"></div>
+                    {{-- <div class="non-widget-bar-static"></div> --}}
                     <h2 class="text-title-delta-home">{{$staticContent['Latest_News']}}</h2>
                     @if(isset($news[0]))
                     <div class="card border-radius-6">
@@ -834,11 +852,12 @@ function retextdata($arr ,$unit){
                     </div>
                     @endif
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','news')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','news')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <div class="non-widget-bar-static"></div>
+                    <div class="widget-bar"></div>
+                    {{-- <div class="non-widget-bar-static"></div> --}}
                     <h2 class="text-title-delta-home">{{$staticContent['FAQs']}}</h2>
                     <div class="card border-radius-6">
                         <a href="{{route('index','faqs')}}">
@@ -865,7 +884,7 @@ function retextdata($arr ,$unit){
                         <a href="{{route('index','faqs')}}" class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','faqs')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','faqs')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
             </div>
@@ -924,7 +943,7 @@ function retextdata($arr ,$unit){
                     </div>
                     @endif
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','events')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','events')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -977,7 +996,7 @@ function retextdata($arr ,$unit){
                     </div>
                     @endif
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','news')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','news')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -1009,7 +1028,7 @@ function retextdata($arr ,$unit){
                         <a href="{{route('index','faqs')}}" class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','faqs')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','faqs')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
 
@@ -1070,28 +1089,31 @@ function retextdata($arr ,$unit){
     </div>
 
 </div>
-<!-- box-product-document -->
+
+{{-- Product Documents --}}
 <div class="visible-desk-up">
     <div class="box-product-document">
         <div class="container">
             <div class="box-product-document-all midle-item">
-                <h3 class="text-title-banner">{{$static_content->title}}</h3>
+                <h3 class="text-title-banner">{{ $static_content->title }}</h3>
                 <div class="text-be-first">
                     {!! $static_content->content !!}
                 </div>
                 <a href="{{route('index','product-documents')}}">
-                    <button class="btn btn-subscribe shadow-radius-box" href="">{{$staticContent['Learn_More']}}</button>
+                    <button class="btn btn-subscribe shadow-radius-box" >{{ $staticContent['Learn_More'] }}</button>
                 </a>
             </div>
 
-            <img loading="lazy" data-src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}"
+            <img loading="lazy" data-src="{{config('app.url')}}/medias/static_content/{{ $static_content->destop_image }}"
                 class="image-doc lazyload" alt="">
         </div>
     </div>
 </div>
+
+{{-- Product Documents --}}
 <div class="visible-nav-minimize">
-    <div class="box-product-document-mobile"
-        style=" background: url('{{asset('frontend-asset/image/Docdownload-BG.webp')}}');">
+    <div class="box-product-document-mobile">
+        {{-- style=" background: url('{{asset('frontend-asset/image/Docdownload-BG.webp')}}');"     --}}
         <img class="image-doc lazyload" loading="lazy"
             data-src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}" alt="">
         <div class="container">
@@ -1101,7 +1123,7 @@ function retextdata($arr ,$unit){
                     {!! $static_content->content !!}
                 </div>
                 <a href="{{route('index','product-documents')}}">
-                    <button class="btn btn-subscribe shadow-radius-box" href="">{{$staticContent['Learn_More']}}</button>
+                    <button class="btn btn-subscribe shadow-radius-box">{{$staticContent['Learn_More']}}</button>
                 </a>
             </div>
         </div>

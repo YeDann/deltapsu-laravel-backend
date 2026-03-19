@@ -27,14 +27,11 @@
         overflow: hidden;
     }
 
-
-
     .product-selector-list:hover .text-title-dark,
     .product-selector-mobile:hover .text-title-dark {
         color: #0087DC !important;
 
     }
-
     .product-selector-list:hover,
     .product-selector-mobile:hover {
         border-color: #0087DC;
@@ -55,8 +52,6 @@
         margin-right: auto;
         margin-bottom: 1rem;
     }
-
-
 
     .btn.focus,
     .btn:focus {
@@ -106,6 +101,11 @@
     .btn-subscribe {
         z-index: 999;
     }
+
+    .btn-boxen {
+        height: 46px;
+        font-size: 18px;
+    }
 </style>
 @endsection
 
@@ -113,15 +113,6 @@
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 <link rel="canonical" href="{{ config('app.url') }}/{{App::getLocale()}}" />
-<?php
-  $lang_seo = App::getLocale();
-  if($lang_seo == 'cn'){
-    $lang_seo = 'zh-Hans-CN';
-  }else if($lang_seo == 'tw'){
-    $lang_seo = 'zh-Hans-TW';
-  }
-?>
-<link rel="alternate" href="{{ config('app.url') }}/{{App::getLocale()}}" hreflang="{{$lang_seo}}" />
 @endsection
 <?php
     function setTextpro($pro){
@@ -180,7 +171,7 @@
     <div class="padding-top-content">
     </div>
     <div class="box-banner">
-        <div id="slide-banner-mobile" class="owl-carousel owl-theme ">
+        <div id="slide-banner-mobile" class="owl-carousel owl-theme">
             @foreach ($banners as $banner)
             <div class="item banner-item ">
                 <a href="{{$banner->btn_link}}">
@@ -714,7 +705,7 @@ function retextdata($arr ,$unit){
                     </div>
                     @endif
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','events')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','events')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -766,7 +757,7 @@ function retextdata($arr ,$unit){
                     </div>
                     @endif
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','news')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','news')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -797,7 +788,7 @@ function retextdata($arr ,$unit){
                         <a href="{{route('index','faqs')}}" class="read-more">{{$staticContent['Read_More']}}</a>
                     </div>
                     <div class="box-btn-boxen">
-                        <a class="btn btn-boxen" href="{{route('index','faqs')}}">{{$staticContent['See_All']}}</a>
+                        <a class="btn btn-subscribe" href="{{route('index','faqs')}}">{{$staticContent['See_All']}}</a>
                     </div>
                 </div>
 
@@ -884,7 +875,7 @@ function retextdata($arr ,$unit){
             data-src="{{config('app.url')}}/medias/static_content/{{$static_content->destop_image}}" alt="">
         <div class="container">
             <div class="box-product-document-all">
-                <h2 class="text-title-banner">{{$static_content->title}}</h2>
+                <h2 class="text-title-banner">{{$static_content->title}}</h2> 
                 <div class="text-be-first">
                     {!! $static_content->content !!}
                 </div>

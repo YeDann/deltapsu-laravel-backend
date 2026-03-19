@@ -153,6 +153,17 @@ margin-bottom: 0em;
     /* font-size: 24px; */
     color: #444444;
 }
+
+.btn-previous-border:hover::before {
+    color: #fff;
+}
+.btn-previous-border:hover {
+    text-decoration: none;
+    background-color: #0087DC!important;
+    color: #fff!important;
+    border: 2px solid #0087DC!important;
+}
+
 .btn-enquiry{
     background-color: rgb(120,120,120);
     color: #fff;

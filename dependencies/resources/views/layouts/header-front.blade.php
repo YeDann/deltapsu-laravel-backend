@@ -234,7 +234,7 @@
             content: "\f139";
             font-family: 'FontAwesome';
             font-size: 38px;
-            color: #444444;
+            color: #969696;
             cursor: pointer;
         }
 
@@ -346,6 +346,7 @@
         width: fit-content !important; /* 只佔用需要的寬度 */
         position: relative !important;
         left: 200px; /* 稍微向右偏移，平衡logo和Power Supplies的空間 */
+        padding-bottom: 24px;
     }
 
     /* Make search icon larger and align automatically */
@@ -389,21 +390,49 @@
 
     @media (max-width: 1024px) {
         .power-supplies-link-mobile {
-            margin-left: -80px;
+            margin-left: -164px;
             bottom: 1px;
         }
+
+        .justify-content-left-1024 {
+            justify-content: left !important;
+        }
+
+        .nav-div-header {
+            max-width: 960px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* .visible-nav-minimize .brand-image{
+            width: auto;
+        } */
     }
 
     @media (max-width: 1000px) {
         .power-supplies-link-mobile {
-            margin-left: -50px;
+            margin-left: -84px;
             bottom: 1px;
+        }
+
+        /* .visible-nav-minimize .brand-image{
+            width: 100%;
+        } */
+
+        /* .justify-content-left-1024 {
+            justify-content: left !important;
+        } */
+    }
+
+    @media (min-width: 768px) and (max-width: 992px) {
+        .nav-div-header {
+            max-width: 720px;
         }
     }
 
     @media (max-width: 768px) {
         .power-supplies-link-mobile {
-            margin-left: -35px;
+            margin-left: -97px;
             bottom: 5px;
         }
     }
@@ -420,8 +449,6 @@
     @media (max-width: 455px) {
         .power-supplies-link-mobile {
             font-size: 14px;
-        }
-        .power-supplies-link-mobile {
             padding-left: 12px;
             margin-left: 0px;
             bottom: 6px;
@@ -540,12 +567,19 @@
 
     .img-icon-golang {
         height: 22px;
-        margin-top: -2px;
+        margin-top: -4px;
     }
 
-    html[lang="zh"] .img-icon-golang,
-    html[lang="ja"] .img-icon-golang {
+    html[html_lang="tw"] .img-icon-golang {
+        margin-top: -5px;
+    }
+
+    html[html_lang="cn"] .img-icon-golang {
         margin-top: -4px;
+    }
+
+    html[html_lang="jp"] .img-icon-golang {
+        margin-top: -5px;
     }
 
     .f-size-enquiry {
@@ -1085,9 +1119,9 @@
 <div class="visible-nav-minimize">
     <div class="header-color-bar-mobile"></div>
     <div class="nav-mobile scrolled w-100 header-shadow">
-        <div class="nav-link-list d-flex">
+        <div class="nav-link-list d-flex nav-div-header">
             
-            <a class="col-nav navbar-brand-mobile d-flex justify-content-center" href="{{ $logoUrl }}">
+            <a class="col-nav navbar-brand-mobile d-flex justify-content-center justify-content-left-1024" href="{{ $logoUrl }}">
                 <img class="brand-image" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
             </a>
 

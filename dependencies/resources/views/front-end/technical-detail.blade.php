@@ -16,15 +16,6 @@
 <meta name="description"
     content="{!! iconv_substr(strip_tags(isset($contents[0]->content)? $contents[0]->content:''),0,90,'UTF-8') !!}">
 <link rel="canonical" href="{{url()->current()}}" />
-<?php 
-  $lang_seo = App::getLocale();
-  if($lang_seo == 'cn'){
-    $lang_seo = 'zh-Hans-CN';
-  }else if($lang_seo == 'tw'){
-    $lang_seo = 'zh-Hans-TW';
-  }
-?>
-<link rel="alternate" href="{{url()->current()}}" hreflang="{{$lang_seo}}" />
 @endsection
 @section('container')
 <div class="padding-top-content">
