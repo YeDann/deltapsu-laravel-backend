@@ -256,7 +256,6 @@
 /* 背景圖：全寬、置中、cover */
 .widget-bg {
   position: relative;
-  background-image: url('/path/to/your/abstract-image.jpg'); /* 換成你的圖 */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

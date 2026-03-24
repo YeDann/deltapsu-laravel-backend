@@ -2798,6 +2798,31 @@ class FrontendController extends Controller
         return redirect($newUrl, 301);
     }
 
+    public function redirectOldProductDetailUrl($main_cate, $cate_id, $se_name, $se_id)
+    {
+        $lang = app()->getLocale();
+        
+        // 根據 subcategory ID 找到對應的 main_cateid，優先選擇 main_cateid = 2 (Industrial Power)
+        $categoryInfo = DB::table('sub_pro_categories as spc')
+            ->join('categories_has_main_pro as chmp', 'spc.sub_pro_id', '=', 'chmp.cate_id')
+            ->where('spc.sub_pro_id', $cate_id)
+            ->select('chmp.main_cateid as main_cate_id', 'spc.sub_pro_id as category_id')
+            ->orderByRaw('CASE WHEN chmp.main_cateid = 2 THEN 0 ELSE chmp.main_cateid END')
+            ->first();
+
+        if (!$categoryInfo) {
+            // 如果找不到對應的商品分類，直接返回 404
+            return response()->view('errors.404', [], 404);
+        }
+        
+        $main_cate_id = $categoryInfo->main_cate_id;
+        
+        // 建構新的 URL 格式：/{lang}/product/{main_cate_id}/{main_cate}/{cate_id}/{se_name}/{se_id}
+        $newUrl = "/{$lang}/product/{$main_cate_id}/{$main_cate}/{$cate_id}/{$se_name}/{$se_id}";
+        
+        return redirect($newUrl, 301);
+    }
+
     public function termsOfUse()
     {
         $lang = App::getLocale();
