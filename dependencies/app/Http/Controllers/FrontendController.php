@@ -1197,7 +1197,7 @@ class FrontendController extends Controller
 
         $searchProGroupByPrdId = $searchProQuery->where('p.enable_pro', 1) // 篩選 啟用的商品
             ->select('p.*', 'pt.*', 'phc.categories_id as cate_id', 's.mode_series')
-            ->orderBy('p.pro_code', 'asc')
+            ->orderBy('p.pro_code', 'asc') // 狀態相同時按產品代碼排序
             ->get()
             ->groupBy('pro_id');
 
@@ -1316,6 +1316,7 @@ class FrontendController extends Controller
             ->select('shf.sub_pro_id', 'shf.field_id', 'shpt.title', 'pf.type', 'pf.section_id')
             ->get()
             ->unique('field_id');
+
         // 放在最前面
         if ($mainCateId == 3) {
             $filterPro = $filterPro->prepend([
@@ -1334,7 +1335,7 @@ class FrontendController extends Controller
                 "section_id" => null,
             ]);
         }
-
+        
         // 取得 商品欄位資料
         $pdField = DB::table('product_field as pf')
             ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
