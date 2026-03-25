@@ -3422,6 +3422,14 @@ class FrontendController extends Controller
                         END",
                         ['%' . $cleanQueryString . '%']
                     )
+                    ->orderByRaw('CASE 
+                        WHEN p.status_product = 2 THEN 1 
+                        WHEN p.status_product = 1 OR p.status_product IS NULL OR p.status_product NOT IN (2,3,4) THEN 2 
+                        WHEN p.status_product = 3 THEN 3 
+                        WHEN p.status_product = 4 THEN 4 
+                        ELSE 5 
+                        END')
+                    ->orderBy('p.pro_code', 'asc')
                     ->limit($limit_product);
 
         $products = $query->get();
