@@ -37,14 +37,16 @@ class GenerateRedirectMap extends Command
         }
         
         $this->info("Parsing CSV file...");
-        $redirectMap = $this->parseCsvFile($csvPath);
+        $redirectMaps = $this->parseCsvFile($csvPath);
         
         $this->info("Generating PHP array file...");
-        $phpContent = "<?php\n\n// Auto-generated redirect map from CSV\n// Generated at: " . date('Y-m-d H:i:s') . "\n\nreturn " . var_export($redirectMap, true) . ";\n";
+        $phpContent = "<?php\n\n// Auto-generated redirect map from CSV\n// Generated at: " . date('Y-m-d H:i:s') . "\n\nreturn " . var_export($redirectMaps, true) . ";\n";
         
         File::put($phpPath, $phpContent);
         
-        $this->info("Generated {$phpPath} with " . count($redirectMap) . " redirects");
+        $total301 = count($redirectMaps['301']);
+        $total410 = count($redirectMaps['410']);
+        $this->info("Generated {$phpPath} with {$total301} 301 redirects and {$total410} 410 Gone responses");
         $this->info("File size: " . $this->humanFilesize(File::size($phpPath)));
         
         return Command::SUCCESS;
@@ -52,7 +54,11 @@ class GenerateRedirectMap extends Command
     
     private function parseCsvFile($csvPath)
     {
-        $redirectMap = [];
+        $redirectMaps = [
+            '301' => [],
+            '410' => []
+        ];
+        
         $handle = fopen($csvPath, 'r');
         $lineNumber = 0;
         
@@ -63,20 +69,27 @@ class GenerateRedirectMap extends Command
                 continue;
             }
             
-            if (isset($data[1]) && isset($data[2]) && 
-                strpos($data[1], 'Set 301 redirect to new link') !== false) {
-                
-                $sourceUrl = trim($data[0]);
-                $targetUrl = trim($data[2]);
-                
+            $sourceUrl = trim($data[0] ?? '');
+            $instruction = trim($data[1] ?? '');
+            $targetUrl = trim($data[2] ?? '');
+            
+            // 處理 301 重定向
+            if (strpos($instruction, 'Set 301 redirect to new link') !== false) {
                 if (!empty($sourceUrl) && !empty($targetUrl)) {
-                    $redirectMap[$sourceUrl] = $targetUrl;
+                    $redirectMaps['301'][$sourceUrl] = $targetUrl;
+                }
+            }
+            
+            // 處理 410 Gone
+            if (strpos($instruction, 'Set 410') !== false && strpos($instruction, 'Gone') !== false) {
+                if (!empty($sourceUrl)) {
+                    $redirectMaps['410'][$sourceUrl] = true;
                 }
             }
         }
         
         fclose($handle);
-        return $redirectMap;
+        return $redirectMaps;
     }
     
     private function humanFilesize($size, $precision = 2) {

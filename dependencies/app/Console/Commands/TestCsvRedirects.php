@@ -28,32 +28,44 @@ class TestCsvRedirects extends Command
      */
     public function handle()
     {
-        $csvPath = storage_path('app/psu.deltaww.csv');
+        $phpPath = storage_path('app/redirect_map.php');
         
-        if (!File::exists($csvPath)) {
-            $this->error("CSV file not found: {$csvPath}");
+        if (!File::exists($phpPath)) {
+            $this->error("PHP redirect map file not found: {$phpPath}");
             return Command::FAILURE;
         }
         
-        $redirectMap = $this->parseCsvFile($csvPath);
-        $this->info("Loaded " . count($redirectMap) . " redirect mappings");
+        $redirectMaps = include $phpPath;
+        $total301 = count($redirectMaps['301']);
+        $total410 = count($redirectMaps['410']);
+        $this->info("Loaded {$total301} 301 redirects and {$total410} 410 Gone responses");
         
         // 如果提供了URL參數，檢查特定URL
         if ($url = $this->option('url')) {
-            if (isset($redirectMap[$url])) {
-                $this->line("✓ {$url} -> {$redirectMap[$url]}");
+            if (isset($redirectMaps['301'][$url])) {
+                $this->line("✓ 301 Redirect: {$url} -> {$redirectMaps['301'][$url]}");
+            } elseif (isset($redirectMaps['410'][$url])) {
+                $this->line("✓ 410 Gone: {$url}");
             } else {
                 $this->line("✗ No redirect found for: {$url}");
             }
             return Command::SUCCESS;
         }
         
-        // 顯示前10個重定向映射作為示例
-        $this->info("First 10 redirect mappings:");
+        // 顯示前10個301重定向映射作為示例
+        $this->info("First 10 301 redirect mappings:");
         $count = 0;
-        foreach ($redirectMap as $source => $target) {
+        foreach ($redirectMaps['301'] as $source => $target) {
             $this->line("  {$source} -> {$target}");
             if (++$count >= 10) break;
+        }
+        
+        // 顯示前5個410響應作為示例
+        $this->info("First 5 410 Gone responses:");
+        $count = 0;
+        foreach ($redirectMaps['410'] as $source => $value) {
+            $this->line("  {$source} -> 410 Gone");
+            if (++$count >= 5) break;
         }
         
         return Command::SUCCESS;
