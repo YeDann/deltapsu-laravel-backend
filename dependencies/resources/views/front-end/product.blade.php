@@ -473,7 +473,7 @@
                     </div>
                     <div class="input-label">
                         <select id="selectSortDestop" onchange="onselectSortDestop();" class="form-control border-radius-6">
-                            <option value="1">Product Status (New → No status → NRND → EOL)</option>
+                            <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
                             <option value="2">{{$staticContent['Output_Voltage_low_to_high']}}</option>
                             <option value="3">{{$staticContent['Output_Current _low_to_high']}}</option>
                             <option value="4">{{$staticContent['Output_Power_low_to_high']}}</option>
@@ -530,7 +530,7 @@
                     <p class="text-white my-auto mr-2 text-card-detial text-bold">{{$staticContent['Sort_by']}}:</p>
                     <div class="input-label my-auto">
                         <select onchange="onselectSort();" class="form-control selectSort border-radius-6">
-                            <option value="1">Product Status (New → No status → NRND → EOL)</option>
+                            <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
                             <option value="2">{{$staticContent['Output_Voltage_low_to_high']}}</option>
                             <option value="3">{{$staticContent['Output_Current _low_to_high']}}</option>
                             <option value="4">{{$staticContent['Output_Power_low_to_high']}}</option>
