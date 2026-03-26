@@ -893,16 +893,16 @@
                     fillerData();
                 }, 100); // 延遲執行避免與異步恢復衝突
             }
-            // var arraydata =  loadData(products,product_has_property);
-            //  onclickGridView(arraydata);
-            //  $(".moreBox").slice(0, 12).show();
-            //  $(".moreBox_mobile").slice(0, 12).show();
-            //  $(".row_table").slice(0, 6).show();
+            // var arraydata = loadData(products,product_has_property);
+            // onclickGridView(arraydata);
+            // $(".moreBox").slice(0, 12).show();
+            // $(".moreBox_mobile").slice(0, 12).show();
+            // $(".row_table").slice(0, 6).show();
         }else{
             // 桌面版預設開啟 Sidebar
             if (!$("#sidebar").hasClass("show")) {
-                 $("#sidebar").addClass("show");
-                 onclickshow(2);
+                $("#sidebar").addClass("show");
+                onclickshow(2);
             }
             // 如果沒有恢復篩選，則執行初始 fillerData
             if (!hasRestoredFilters) {
@@ -913,7 +913,7 @@
             // FristloadData();
         }
         $.each(filter_pro, function(index_con,fil_con){
-          checkboxaddremove(fil_con['field_id']);
+            checkboxaddremove(fil_con['field_id']);
        });
 
     });
