@@ -805,6 +805,23 @@
 
                         </div>
                     </div>
+                    @if(isset($product[0]['part_numbers']) && count($product[0]['part_numbers']) > 0)
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <h5 class="text-color-delta mb-2">Part Number</h5>
+                            <table class="table table-bordered">
+                                <tbody>
+                                    @foreach($product[0]['part_numbers'] as $pn)
+                                    <tr>
+                                        <td style="width: 40%">{{ $pn->no }}</td>
+                                        <td>{{ $pn->text }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    @endif
                     <div class="row  mt-3">
                         <div class="col-8">
                             <h5 class="text-color-delta mb-2">{{$staticContent['Highlights_Features']}}</h5>
@@ -1045,6 +1062,27 @@
                 @endforeach
             </div>
 
+            @if(isset($product[0]['part_numbers']) && count($product[0]['part_numbers']) > 0)
+            <div class="box-detail">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="text-color-delta mb-2">Part Number</h5>
+                            <table class="table table-bordered">
+                                <tbody>
+                                    @foreach($product[0]['part_numbers'] as $pn)
+                                    <tr>
+                                        <td style="width: 40%">{{ $pn->no }}</td>
+                                        <td>{{ $pn->text }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
             <div class="box-detail">
                 <div class="container">
                     <div class="row">
@@ -1055,6 +1093,7 @@
                                 str_replace("/uploads_delta",config('app.url')."/uploads_delta",$product[0]['content_1'])
                                 !!}
                             </div>
+
                             {{-- <ul style="padding: 0 18px;" class="text-one">
                                 <li>Full corrosion resistant Aluminium chassis</li>
                                 <li>Long minimum buffering time of 250ms @ 24V/20A</li>

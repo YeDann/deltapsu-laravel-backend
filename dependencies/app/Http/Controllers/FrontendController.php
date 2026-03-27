@@ -1676,6 +1676,11 @@ class FrontendController extends Controller
             ->orderBy('ph.type_id', 'asc')
             ->select('pht.value_text', 'ph.*', 'pft.field_name as fieldCate', 'pf.unit_name')
             ->get();
+        $partNumbers = DB::table('product_part_numbers')
+            ->where('product_id', $pro->pro_id)
+            ->orderBy('order', 'asc')
+            ->get();
+
         $data[0] = [
             'pro_id' => $pro->pro_id,
             'pro_code' => $pro->pro_code,
@@ -1698,6 +1703,7 @@ class FrontendController extends Controller
             'dimensionL' => $pro->dimensionL,
             'dimensionW' => $pro->dimensionW,
             'dimensionD' => $pro->dimensionD,
+            'part_numbers' => $partNumbers,
         ];
 
         $product_related = DB::table('product_related as pr')
