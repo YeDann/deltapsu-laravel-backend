@@ -194,11 +194,10 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-       
-         
         $validate = Validator::make($request->all(), [
             'title' => 'required',
         ]);
+
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
         } else {
@@ -220,43 +219,41 @@ class NewsController extends Controller
             $key2 = $this->clean($key);
             $slug  =  $key2;
 
-                    $id = DB::table('contents')->insertGetID(
-                        [
-                            "content_type" => "news",
-                            "thumb" => $arrFileName['thumbnail'],
-                            "created_at" => \Carbon\Carbon::now(),
-                            "updated_at" => \Carbon\Carbon::now(),
-                            "date_publish" => $datePublish,
-                            "date_info" => $request->dateinfo,
-                            "slug" => $slug,
-                            "status" => $newsStatus,
-                        ]
-                    );
-                    DB::table('product_news_has_categories')->insert(
-                        [
-                            "content_id" => $id,
-                            "categories_id" => $newsType,
-                        ]
-                    );
-                    foreach($langloop as $lang){
-                        DB::table('contents_translations')->insert(
-                            [
-                                "content_id" =>$id,
-                                "title" => $title,
-                                "content" => $Content,
-                                "description"=>$request->description,
-                                "meta_title" => $metaTitle,
-                                "meta_description" => $metaDescription,
-                                // "meta_keywords" => $metaKeyword,
-                                'file' => $arrFileName['newsfile'],
-                                "local"=>$lang,
-                            ]
-                        );
-                    }
-                 
-                    return redirect()->route('news.index')->with('flash_message', 'Insert Data successfully');
-                
+            $id = DB::table('contents')->insertGetID(
+                [
+                    "content_type" => "news",
+                    "thumb" => $arrFileName['thumbnail'],
+                    "created_at" => \Carbon\Carbon::now(),
+                    "updated_at" => \Carbon\Carbon::now(),
+                    "date_publish" => $datePublish,
+                    "date_info" => $request->dateinfo,
+                    "slug" => $slug,
+                    "status" => $newsStatus,
+                ]
+            );
+            DB::table('product_news_has_categories')->insert(
+                [
+                    "content_id" => $id,
+                    "categories_id" => $newsType,
+                ]
+            );
+            foreach($langloop as $lang){
+                DB::table('contents_translations')->insert(
+                [
+                        "content_id" =>$id,
+                        "title" => $title,
+                        "content" => $Content,
+                        "description"=>$request->description,
+                        "meta_title" => $metaTitle,
+                        "meta_description" => $metaDescription,
+                        // "meta_keywords" => $metaKeyword,
+                        'file' => $arrFileName['newsfile'],
+                        "local"=>$lang,
+                    ]
+                );
+            }
             
+            return redirect()->route('news.index')->with('flash_message', 'Insert Data successfully');
         }
     }
 
