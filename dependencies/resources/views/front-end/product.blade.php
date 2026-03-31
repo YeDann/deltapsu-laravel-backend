@@ -962,6 +962,86 @@
                 mode_series_arr = savedFilters.mode_series_arr;
                 needsUpdate = true;
             }
+
+            // status filter (arr_status)
+            if (savedFilters.arr_status && savedFilters.arr_status.length > 0) {
+                arr_status = savedFilters.arr_status;
+                needsUpdate = true;
+                $("#collapse-fliter_status02").addClass('show');
+                // status hardcoded: [{id:2}, {id:3}, {id:4}] → idx 0,1,2
+                var statusDef = [2, 3, 4];
+                savedFilters.arr_status.forEach(function(statusId) {
+                    var idx = statusDef.indexOf(statusId);
+                    if (idx !== -1) {
+                        $("#cx-status02" + idx).prop("checked", true);
+                        $("#cx-status02" + idx + "_mobile").prop("checked", true);
+                    }
+                });
+            }
+
+            // safety filter (arr_safety)
+            if (savedFilters.arr_safety && savedFilters.arr_safety.length > 0) {
+                arr_safety = savedFilters.arr_safety;
+                needsUpdate = true;
+                $("#collapse-fliter_safety03").addClass('show');
+                savedFilters.arr_safety.forEach(function(safetyId) {
+                    var idx = -1;
+                    $.each(documents_cate, function(i, s) {
+                        if (s.id == safetyId) { idx = i; return false; }
+                    });
+                    if (idx !== -1) {
+                        $("#cx-safety03" + idx).prop("checked", true);
+                        $("#cx-safety03" + idx + "_mobile").prop("checked", true);
+                    }
+                });
+            }
+
+            // application/certificate filter (arr_cer)
+            if (savedFilters.arr_cer && savedFilters.arr_cer.length > 0) {
+                arr_cer = savedFilters.arr_cer;
+                needsUpdate = true;
+                $("#collapse-fliter_certifi04").addClass('show');
+                // certificates: [{id:1},{id:2},{id:3},{id:4}] → idx = id - 1
+                savedFilters.arr_cer.forEach(function(cerId) {
+                    var idx = cerId - 1;
+                    if (idx >= 0) {
+                        $("#cx-certifi04" + idx).prop("checked", true);
+                        $("#cx-certifi04" + idx + "_mobile").prop("checked", true);
+                    }
+                });
+            }
+
+            // spec number filter (arr_type_an_val)
+            if (savedFilters.arr_type_an_val && savedFilters.arr_type_an_val.length > 0) {
+                arr_type_an_val = savedFilters.arr_type_an_val;
+                needsUpdate = true;
+                savedFilters.arr_type_an_val.forEach(function(saved) {
+                    $("#collapse-fliter_" + saved.type).addClass('show');
+                    $.each(pro_perti, function(index_per, ppt) {
+                        if (ppt.type_id == saved.type && ppt.data_1 == saved.value1 && ppt.data_2 == saved.value2) {
+                            $("#cx-normalnum" + saved.type + index_per).prop("checked", true);
+                            $("#cx-normalnumber" + saved.type + index_per + "_mobile").prop("checked", true);
+                            return false;
+                        }
+                    });
+                });
+            }
+
+            // spec text filter (arr_inputtxt)
+            if (savedFilters.arr_inputtxt && savedFilters.arr_inputtxt.length > 0) {
+                arr_inputtxt = savedFilters.arr_inputtxt;
+                needsUpdate = true;
+                savedFilters.arr_inputtxt.forEach(function(saved) {
+                    $("#collapse-fliter_" + saved.type).addClass('show');
+                    $.each(pro_perti, function(index_per, ppt) {
+                        if (ppt.type_id == saved.type && ppt.value_text == saved.value_text) {
+                            $("#cx-normaltext" + saved.type + index_per).prop("checked", true);
+                            $("#cx-" + saved.type + index_per + "_mobile").prop("checked", true);
+                            return false;
+                        }
+                    });
+                });
+            }
         } catch (e) {
             console.log('localStorage 讀取失敗:', e);
         }
@@ -1004,9 +1084,26 @@
             console.log('步驟3: 最終狀態 - mode_series_arr:', mode_series_arr);
             
             // 步驟3: 如果有任何篩選條件，執行篩選
-            if (pro_type_arr.length > 0 || ser_arr.length > 0 || mode_series_arr.length > 0) {
+            if (pro_type_arr.length > 0 || ser_arr.length > 0 || mode_series_arr.length > 0
+                || arr_status.length > 0 || arr_safety.length > 0 || arr_cer.length > 0
+                || arr_type_an_val.length > 0 || arr_inputtxt.length > 0
+                || (savedFilters.arr_slider && savedFilters.arr_slider.length > 0)) {
                 console.log('步驟3: 執行 fillerData()');
                 fillerData();
+            }
+
+            // 步驟4: slider 在 fillerData() 之後還原，讓 findDataRage() 正確過濾
+            if (savedFilters.arr_slider && savedFilters.arr_slider.length > 0) {
+                savedFilters.arr_slider.forEach(function(saved) {
+                    var sliderDes = document.getElementById('slidebar-value-box_des' + saved.field_id);
+                    if (sliderDes && sliderDes.noUiSlider) {
+                        sliderDes.noUiSlider.set([saved.min, saved.max]);
+                    }
+                    var sliderMobile = document.getElementById('slidebar-value-box' + saved.field_id);
+                    if (sliderMobile && sliderMobile.noUiSlider) {
+                        sliderMobile.noUiSlider.set([saved.min, saved.max]);
+                    }
+                });
             }
             
             console.log('=== checkAndRestoreFilters 完成 ===');
@@ -1019,11 +1116,90 @@
         }, 50); // 給 updateSeriesOptions() 時間完成
         
         console.log('=== checkAndRestoreFilters 結束（異步執行中）===');
-        
+
         // 返回是否需要更新，讓調用者決定是否執行 fillerData
         return needsUpdate;
     }
-    
+
+    /**
+     * 將 slider 篩選套用到指定陣列（不影響 productFilter）
+     */
+    function applySliderFilters(arr) {
+        var result = arr;
+        $.each(fildnumber, function(index_con, fil_con) {
+            var field_id = fil_con['field_id'];
+            if (field_id == 'series01' || field_id == 'status02' || field_id == 'certifi04' || field_id == 'safety03' || field_id == 'mode_series') return;
+            var sliderEl = document.getElementById('slidebar-value-box_des' + field_id);
+            if (!sliderEl || !sliderEl.noUiSlider) return;
+            var values = sliderEl.noUiSlider.get();
+            var options = sliderEl.noUiSlider.options;
+            var rangeMin = options.range['min'][0];
+            var rangeMax = options.range['max'][0];
+            var movedMin = Math.abs(parseFloat(values[0]) - rangeMin) > 1;
+            var movedMax = Math.abs(parseFloat(values[1]) - rangeMax) > 1;
+            if (!movedMin && !movedMax) return;
+            var arrRage = values;
+            var filtered = [];
+            $.each(result, function(index, value) {
+                value['contentFilter'].filter(function(data) {
+                    if (data['type_id'] == field_id) {
+                        if (data['data_1'] && data['data_2'] == null) {
+                            if (data['data_1'] >= arrRage[0] && data['data_1'] <= arrRage[1]) {
+                                var idx = filtered.findIndex(function(x) { return x.pro_code === value['pro_code']; });
+                                if (idx == -1) filtered.push(value);
+                            }
+                        } else if (data['data_1'] != null && data['data_2'] != null) {
+                            if (data['data_1'] >= arrRage[0] && data['data_2'] <= arrRage[1]) {
+                                var idx = filtered.findIndex(function(x) { return x.pro_code === value['pro_code']; });
+                                if (idx == -1) filtered.push(value);
+                            }
+                        }
+                    }
+                });
+            });
+            result = filtered;
+        });
+        return result;
+    }
+
+    function saveFiltersToLocalStorage() {
+        try {
+            var arr_slider = [];
+            $.each(fildnumber, function(index_con, fil_con) {
+                var sliderEl = document.getElementById('slidebar-value-box_des' + fil_con['field_id']);
+                if (sliderEl && sliderEl.noUiSlider) {
+                    var values = sliderEl.noUiSlider.get();
+                    var options = sliderEl.noUiSlider.options;
+                    var rangeMin = options.range['min'][0];
+                    var rangeMax = options.range['max'][0];
+                    var movedMin = Math.abs(parseFloat(values[0]) - rangeMin) > 1;
+                    var movedMax = Math.abs(parseFloat(values[1]) - rangeMax) > 1;
+                    if (movedMin || movedMax) {
+                        arr_slider.push({
+                            field_id: fil_con['field_id'],
+                            min: values[0],
+                            max: values[1]
+                        });
+                    }
+                }
+            });
+            var filtersToSave = {
+                pro_type_arr: pro_type_arr,
+                ser_arr: ser_arr,
+                mode_series_arr: mode_series_arr,
+                arr_status: arr_status,
+                arr_safety: arr_safety,
+                arr_cer: arr_cer,
+                arr_type_an_val: arr_type_an_val,
+                arr_inputtxt: arr_inputtxt,
+                arr_slider: arr_slider
+            };
+            localStorage.setItem('productFilters', JSON.stringify(filtersToSave));
+        } catch (e) {
+            console.log('localStorage 保存失敗:', e);
+        }
+    }
+
     function loadAddContent(){
         var arr = [];
         var arrproid = [];
@@ -1459,17 +1635,22 @@
 
     // 最終篩選結果彙整
     var summaryResult = resultstatus;
-    
+
+    // 套用 slider 篩選（不影響 productFilter，保留 checkbox-only 基底）
+    var sliderResult = applySliderFilters(summaryResult);
+    var hasCheckboxFilter = arr_status.length > 0 || arr_cer.length > 0 || arr_safety.length > 0 || arr_type_an_val.length > 0 || arr_inputtxt.length > 0;
+    var hasSliderFilter = sliderResult.length !== summaryResult.length;
+
     // 若有啟用任何篩選條件，更新 UI 顯示篩選後的結果
-    if(arr_status.length > 0 ||  arr_cer.length > 0 ||  arr_safety.length > 0 || arr_type_an_val.length > 0 || arr_inputtxt.length > 0 ){
-        listItemFiler(summaryResult); // 更新列表視圖
-        findresultfeildbypro(summaryResult); // 更新篩選器計數
-        productFilter = summaryResult; // 更新全域變數
-     }else{
+    if (hasCheckboxFilter || hasSliderFilter) {
+        listItemFiler(sliderResult); // 更新列表視圖
+        findresultfeildbypro(sliderResult); // 更新篩選器計數
+        productFilter = summaryResult; // 保留 checkbox-only 結果供 findDataRage() 使用
+    } else {
         // 若無額外篩選條件，顯示基礎篩選結果
         listItemFiler(productFilter);
         findresultfeildbypro(productFilter);
-     }
+    }
 
       // 清空搜尋框內容
       $('#key_destop').val("");
@@ -1678,7 +1859,7 @@
         html += '<div id="cardGridList" class="row">';
         $.each(productarray, function(index_pro,pro){
         html += '<div class=" col-xl-3 col-lg-4 col-md-4">';
-        html += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'">';
+        html += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'" onclick="saveFiltersToLocalStorage()">';
         html += '<div class=" margin-p-left-card item card moreBox"  style="display: none;">';
         if(pro['status_product'] != 1){
         html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
@@ -1782,7 +1963,7 @@
         $.each(productarray, function(index_pro,pro) {
             html += '<div class="margin-p-left-card column-grid-card-mobile moreBox_mobile"  style="display: none;">';
             html += '<div class="item card border-radius-6">';
-            html += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'">';
+            html += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'" onclick="saveFiltersToLocalStorage()">';
             if (pro['status_product'] != 1) {
                 html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
             }
@@ -1947,7 +2128,7 @@
             html1 += '<td class="border-radius-6">';
             html1 += '<div class="cardlist-toadd">';
             html1 += '<div class="cardlist-view hover01">';
-            html1 += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'">';
+            html1 += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'" onclick="saveFiltersToLocalStorage()">';
             if (pro['status_product'] != 1) {
                 html1 += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="text-over-cardlist"> '+ statuspro(pro['status_product'])+'';
                 html1 += '</div>';
@@ -2430,6 +2611,7 @@
         popcheckModeSeries();
 
     }
+
     /**
      * 渲染手機版篩選器內容
      * Render mobile filter content
@@ -2557,7 +2739,7 @@
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span class="">'+safety['name']+'</span></label>';
                     html3 += '</div>' ;
-                  });
+                });
              }
 
              // 應用領域/證書 (Certificates/Applications)
@@ -2572,92 +2754,89 @@
                     html3 += '</div>' ;
                   });
              }
-             // 其他動態屬性 (Other dynamic properties)
-             if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03'  ){
-               var property =  property_load.sort(function(a, b) {
-                    if(a.data_1 < b.data_1){
-                           if(a.data_2 &&  b.data_2 &&  a.data_2 < b.data_2 ){
+            // 其他動態屬性 (Other dynamic properties)
+            if(fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03'  ){
+                var property =  property_load.sort(function(a, b) {
+                    if (a.data_1 < b.data_1) {
+                        if (a.data_2 &&  b.data_2 &&  a.data_2 < b.data_2 ) {
                             return -1;
-                           }
-                            return -1;
-                       }else{
+                        }
+                        return -1;
+                    } else {
                         return 1;
-                       }
-               });
-
-                $.each(property, function(index_per,ppt){
-                  if(fil_con['field_id'] == ppt['type_id']){
-                    var object  = {};
-                    var text = null;
-                    if(ppt['value_text'] != null && typeof ppt['value_text']  != 'undefined'){
-                        text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
                     }
-
-                    var dataarr = [
-                                ppt['data_1'],
-                                ppt['data_2'],
-                                ppt['data_3'],
-                                ppt['data_4'],
-                                ppt['data_5'],
-                                ppt['data_6'],
-                                ppt['data_7'],
-                                ppt['data_8'],
-                                ppt['data_9'],
-                                ppt['data_10'],
-                                ppt['data_11'],
-                                ppt['data_12'],
-                    ];
-                    object = {
-                       'id':index_per,
-                       'type':fil_con['field_id'],
-                       'data':checkNull(dataarr,ppt['unit_name'],ppt['status_input']),
-                       'status_input':ppt['status_input'],
-                       'text':text,
-                    }
-
-                    if(ppt['type_value'] == 'number' && ppt['data_1'] != null){
-                        objectFiled = {
-                        'field_id':fil_con['field_id'],
-                        'type_box':ppt['status_input'],
-                      }
-                      var  index_fi = fildnumberMobile.findIndex(function(x){
-                          return x.field_id === fil_con['field_id'];
-                      })
-                        if(index_fi == -1){
-                            fildnumberMobile.push(objectFiled);
-                        }
-                        if(containsObject(object, data_1)){
-                            data_1.push(object);
-                            html3 += '<div class="box-input-checkbox ">';
-                            html3 += '<input onchange="fillerNumber('+"'"+fil_con['field_id']+"'"+','
-                            +ppt['data_1']+','+ppt['data_2']+','+ppt['data_3'] +','+ppt['data_4'] +','+ppt['data_5']+','+ppt['data_6']+','+ppt['data_7']
-                            +','+ppt['data_8']+','+ppt['data_9']+','+ppt['data_10']+','+ppt['data_11']+','+ppt['data_12']+
-                            ');" class="inp-cbx" id="cx-normalnumber'+fil_con['field_id']+index_per+'_mobile" type="checkbox" style="display: none;" />';
-                            html3 += '<label class="cbx" for="cx-normalnumber'+fil_con['field_id']+index_per+'_mobile"><span>';
-                            html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
-                            html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
-                            html3 += '</svg></span ><span class="'+ppt['product_id']+'">'+ checkNull(dataarr,ppt['unit_name'],ppt['status_input']) +'</span></label>';
-                            html3 += '</div>' ;
-
-                        }
-                    }else if(ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != '' && typeof ppt['value_text']  != 'undefined'){
-                        if(containsObjectText(object, data_text)){
-                            data_text.push(object);
-                            html3 += '<div class="box-input-checkbox">';
-                            html3 += '<input  onchange="fillerInputText('+"'"+fil_con['field_id']+"'"+','+"'"+ppt['value_text']+"'"+');" class="inp-cbx" id="cx-'+fil_con['field_id']+index_per+'_mobile" type="checkbox" style="display: none;" />';
-                            html3 += '<label class="cbx" for="cx-normaltext'+fil_con['field_id']+index_per+'_mobile"><span>';
-                            html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
-                            html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
-                            html3 += '</svg></span><span>'+ppt['value_text']+'</span></label>';
-                            html3 += '</div>' ;
-                        }
-                    }
-
-                    }
-
                 });
 
-             }
+                $.each(property, function(index_per,ppt) {
+                    if (fil_con['field_id'] == ppt['type_id']) {
+                        var object  = {};
+                        var text = null;
+                        if(ppt['value_text'] != null && typeof ppt['value_text']  != 'undefined'){
+                            text = ppt['value_text'].replace(/\s/g, '').toLowerCase().replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '').trim();
+                        }
+
+                        var dataarr = [
+                            ppt['data_1'],
+                            ppt['data_2'],
+                            ppt['data_3'],
+                            ppt['data_4'],
+                            ppt['data_5'],
+                            ppt['data_6'],
+                            ppt['data_7'],
+                            ppt['data_8'],
+                            ppt['data_9'],
+                            ppt['data_10'],
+                            ppt['data_11'],
+                            ppt['data_12'],
+                        ];
+
+                        object = {
+                            'id':index_per,
+                            'type':fil_con['field_id'],
+                            'data':checkNull(dataarr,ppt['unit_name'],ppt['status_input']),
+                            'status_input':ppt['status_input'],
+                            'text':text,
+                        }
+
+                        if(ppt['type_value'] == 'number' && ppt['data_1'] != null){
+                            objectFiled = {
+                                'field_id':fil_con['field_id'],
+                                'type_box':ppt['status_input'],
+                            }
+                            var  index_fi = fildnumberMobile.findIndex(function(x){
+                                return x.field_id === fil_con['field_id'];
+                            })
+                            if(index_fi == -1){
+                                fildnumberMobile.push(objectFiled);
+                            }
+                            if(containsObject(object, data_1)){
+                                data_1.push(object);
+                                html3 += '<div class="box-input-checkbox ">';
+                                html3 += '<input onchange="fillerNumber('+"'"+fil_con['field_id']+"'"+','
+                                +ppt['data_1']+','+ppt['data_2']+','+ppt['data_3'] +','+ppt['data_4'] +','+ppt['data_5']+','+ppt['data_6']+','+ppt['data_7']
+                                +','+ppt['data_8']+','+ppt['data_9']+','+ppt['data_10']+','+ppt['data_11']+','+ppt['data_12']+
+                                ');" class="inp-cbx" id="cx-normalnumber'+fil_con['field_id']+index_per+'_mobile" type="checkbox" style="display: none;" />';
+                                html3 += '<label class="cbx" for="cx-normalnumber'+fil_con['field_id']+index_per+'_mobile"><span>';
+                                html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+                                html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+                                html3 += '</svg></span ><span class="'+ppt['product_id']+'">'+ checkNull(dataarr,ppt['unit_name'],ppt['status_input']) +'</span></label>';
+                                html3 += '</div>' ;
+                            }
+                        }else if(ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != '' && typeof ppt['value_text']  != 'undefined'){
+                            if(containsObjectText(object, data_text)){
+                                data_text.push(object);
+                                html3 += '<div class="box-input-checkbox">';
+                                html3 += '<input  onchange="fillerInputText('+"'"+fil_con['field_id']+"'"+','+"'"+ppt['value_text']+"'"+');" class="inp-cbx" id="cx-'+fil_con['field_id']+index_per+'_mobile" type="checkbox" style="display: none;" />';
+                                html3 += '<label class="cbx" for="cx-normaltext'+fil_con['field_id']+index_per+'_mobile"><span>';
+                                html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
+                                html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
+                                html3 += '</svg></span><span>'+ppt['value_text']+'</span></label>';
+                                html3 += '</div>' ;
+                            }
+                        }
+                    }
+                });
+            }
 
             html3 += '</div>';
             html3 += '<button onclick="resetformById('+"'"+fil_con['field_id']+"'"+');" class="btn-reset" type="button">CLEAR</button>';
@@ -2678,7 +2857,6 @@
         popcheckProductType();
         popcheckModeSeries();
     }
-
 
     /**
      * 初始化系列篩選勾選狀態
@@ -2739,40 +2917,36 @@
     }
 
     function containsObject(obj, list) {
-     var  index = list.findIndex(
-        //  x => x.data === obj['data'] && x.type === obj['type']
+        var  index = list.findIndex(function(x){
+            return x.data === obj['data'] && x.type === obj['type'] && x.status_input === obj['status_input'];
+        })
 
-         function(x){
-           return x.data === obj['data'] && x.type === obj['type'] && x.status_input === obj['status_input'];
-         })
-
-         if(index == -1){
+        if(index == -1){
             return true;
-         }else{
+        }else{
             return false;
-         }
+        }
     }
+
     function containsObjectText(obj, list){
-        // var  index = list.findIndex(x => x.text === obj['text'] && x.type === obj['type'] )
-        var  index = list.findIndex(
-         function(x){
+        var  index = list.findIndex(function(x){
            return x.text === obj['text'] && x.type === obj['type'];
-         })
+        })
 
-         if(index == -1){
+        if(index == -1){
             return true;
-         }else{
+        }else{
             return false;
-         }
+        }
     }
-
 
     /**
      * 處理系列篩選的勾選/取消勾選
      * @param {String} type 類型
      * @param {Number} value 系列ID
      */
-    function product_type_filter(type,value){
+    function product_type_filter(type,value)
+    {
         // 強制轉為數字，避免字串與數字比對問題
         var val = parseInt(value);
         var index_se = -1;
@@ -2787,7 +2961,7 @@
             }
         });
 
-        if(exists){
+        if (exists) {
             // 如果存在，移除所有相同的值（數字和字串版本）
             pro_type_arr = pro_type_arr.filter(function(v) {
                 return v != val && v != value;
@@ -2797,25 +2971,13 @@
             pro_type_arr.push(val);
         }
        
-       // 保存篩選狀態到 localStorage
-       try {
-           var filtersToSave = {
-               pro_type_arr: pro_type_arr,
-               ser_arr: ser_arr,
-               mode_series_arr: mode_series_arr
-           };
-           localStorage.setItem('productFilters', JSON.stringify(filtersToSave));
-           console.log('Product type 篩選狀態已保存到 localStorage:', filtersToSave);
-       } catch (e) {
-           console.log('localStorage 保存失敗:', e);
-       }
+        
+        fillerData();
        
-       fillerData();
-       
-       // 延遲更新 series 選項，避免影響 product type 勾選
-       setTimeout(function() {
-           updateSeriesOptions();
-       }, 10);
+        // 延遲更新 series 選項，避免影響 product type 勾選
+        setTimeout(function() {
+            updateSeriesOptions();
+        }, 10);
     }
 
     /**
@@ -2870,6 +3032,7 @@
             html += '</svg></span><span>'+serie['title']+'</span></label>';
             html += '</div>';
         });
+
         $('.dataserchfilterseries01').html(html);
         
         // 更新手機版 HTML
@@ -2914,21 +3077,9 @@
         
         console.log('調用後 ser_arr:', ser_arr);
        
-        // 保存篩選狀態到 localStorage
-        try {
-            var filtersToSave = {
-                pro_type_arr: pro_type_arr,
-                ser_arr: ser_arr,
-                mode_series_arr: mode_series_arr
-            };
-            localStorage.setItem('productFilters', JSON.stringify(filtersToSave));
-            console.log('篩選狀態已保存到 localStorage:', filtersToSave);
-        } catch (e) {
-            console.log('localStorage 保存失敗:', e);
-        }
        
-       console.log('=== series_filter 結束，執行 fillerData ===');
-       fillerData();
+        console.log('=== series_filter 結束，執行 fillerData ===');
+        fillerData();
     }
 
     function mode_series_filter(type,value){
@@ -2948,7 +3099,7 @@
             mode_series_arr.splice(index_se, 1);
         }
         fillerData();
-       
+
         // 延遲更新 series 選項，避免影響 mode_series 勾選
         setTimeout(function() {
             updateSeriesOptions();
@@ -2966,6 +3117,11 @@
         console.log('pro_type_arr:', pro_type_arr);
         console.log('ser_arr:', ser_arr);
         console.log('mode_series_arr:', mode_series_arr);
+        console.log('arr_status:', arr_status);
+        console.log('arr_safety:', arr_safety);
+        console.log('arr_cer:', arr_cer);
+        console.log('arr_type_an_val:', arr_type_an_val);
+        console.log('arr_inputtxt:', arr_inputtxt);
         
         var eachpro = [];
         var matchedCount = 0;
@@ -3055,13 +3211,7 @@
             }
         });
         
-        console.log('=== filterBaseData 結束 ===');
-        console.log('檢查了', products.length, '個商品');
-        console.log('匹配的商品數量:', matchedCount);
-        console.log('productFilter 長度:', productFilter.length);
-        if (productFilter.length > 0) {
-            console.log('前3個匹配的商品:', productFilter.slice(0, 3).map(p => p.pro_code));
-        }
+        console.log('=== filterBaseData 結束，base filter 後商品數:', matchedCount, '/ 總商品數:', products.length);
     }
 
     var arr_status = [];
@@ -3082,14 +3232,14 @@
     function filtersafety(type ,value){
         if(arr_safety.indexOf(value) == -1){
             arr_safety.push(value);
-       }else{
-        var index = arr_safety.indexOf(value);
+        }else{
+            var index = arr_safety.indexOf(value);
             if (index > -1) {
                 arr_safety.splice(index, 1);
             }
-       }
-       fillerData();
-    //    filerallDoc();
+        }
+        fillerData();
+        // filerallDoc();
     }
     function filerallDoc(){
         var arr_pro_doc = [];
@@ -3186,7 +3336,8 @@
         }
         fillerData();
     }
-    function filerallCer(){
+
+    function filerallCer() {
         var arr_filter_ser = [];
         var arr_seg  = [];
         var profilter  = [];
@@ -3229,16 +3380,14 @@
             });
         });
 
-
-
         if(arr_cer.length == 0){
             arr_filter_ser = [];
             arr_filter_ser = productFilter;
         }
-       listItemFiler(arr_filter_ser);
+        listItemFiler(arr_filter_ser);
     }
 
-    function fillerNumber(type ,value1 , value2,value3, value4 ,value5 ,value6 ,value7 ,value8,value9,value10,value11,value12){
+    function fillerNumber(type, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12) {
         stateType = type;
         var obj = {
             'type':type,
@@ -3254,12 +3403,10 @@
             'value10':value10,
             'value11':value11,
             'value12':value12,
-
         }
-       var  index = arr_type_an_val.findIndex(
-           function(x){
-            //    return  x.value1 === value1;
-               return parseInt(x.type) ===  parseInt(type)
+
+        var index = arr_type_an_val.findIndex(function(x){
+            return parseInt(x.type) === parseInt(type)
                && x.value1 === value1
                &&  x.value2 === value2
                &&  x.value3 === value3
@@ -3273,19 +3420,19 @@
                &&  x.value11 === value11
                &&  x.value12 === value12
                 && x.value1 === value1 ;
-           })
-             if(index == -1){
+            })
+
+            if(index == -1){
                 arr_type_an_val.push(obj);
-             }else{
-                if (index > -1) {
-                    arr_type_an_val.splice(index, 1);
-                 }
-             }
+            }else{
+            if (index > -1) {
+                arr_type_an_val.splice(index, 1);
+            }
+        }
 
-            fillerData();
-
-
+        fillerData();
     }
+
     function checkmethod(arr){
         var arrcont = [];
         arr.forEach(function(element) {
@@ -3653,6 +3800,7 @@
     function listItemFiler(arr){
         var current_list =  $('#current_list_item').val();
         var showarr =  onFilterSetSor(arr);
+        console.log('最終顯示商品數量:', showarr.length, '(排序前:', arr.length, ')');
       if(current_list == 0){
         onclickListView(showarr ,1 ,1);
       }else{
