@@ -13,7 +13,7 @@ class RegenerateSlugSeeder extends Seeder
      */
     public function run()
     {
-        $types = ['event', 'eol', 'video', 'industry-know-how'];
+        $types = ['eol', 'video', 'industry-know-how'];
 
         foreach ($types as $type) {
             $contents = DB::table('contents as c')
