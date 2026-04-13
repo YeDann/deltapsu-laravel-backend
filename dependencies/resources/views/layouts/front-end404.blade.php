@@ -771,6 +771,9 @@ if (!Array.prototype.findIndex) {
           // console.log(nameArr ,link );
           // setlocaltion(nameArr[1] , nameArr[0]);
         }
+        function clickLangLocationmobile(link) {
+          window.location = link;
+        }
         function setlocaltion(lang ,link){
           // console.log(lang);
           // if(lang == 'jp'){

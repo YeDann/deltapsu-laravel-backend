@@ -333,6 +333,23 @@ class ProductsController extends Controller
 
             }
 
+            // Save Part Numbers
+            $partNumberNos = $request->input('partNumber.no', []);
+            $partNumberTexts = $request->input('partNumber.text', []);
+            foreach ($partNumberNos as $index => $no) {
+                $text = $partNumberTexts[$index] ?? '';
+                if (!empty($no) || !empty($text)) {
+                    DB::table('product_part_numbers')->insert([
+                        'product_id' => $id,
+                        'no'         => $no,
+                        'text'       => $text,
+                        'order'      => $index,
+                        'created_at' => \Carbon\Carbon::now(),
+                        'updated_at' => \Carbon\Carbon::now(),
+                    ]);
+                }
+            }
+
             return redirect()->route('products.index')->with('flash_message', 'Insert Data successfully');
         }
 
@@ -466,6 +483,11 @@ class ProductsController extends Controller
             array_push($proInarr, $pro->pro_code);
         }
 
+        $partNumbers = DB::table('product_part_numbers')
+            ->where('product_id', $id)
+            ->orderBy('order', 'asc')
+            ->get();
+
         return view('product.edit')
             ->with('arrProCateName', $arrProCateName)
             ->with('arrProcate', $arrProcate)
@@ -483,6 +505,7 @@ class ProductsController extends Controller
             ->with('section', $section)
             ->with('subCategories', $subCategories)
             ->with('products', $products)
+            ->with('partNumbers', $partNumbers)
             ->with('menu', "products")
             ->with('name', "product");
     }
@@ -739,6 +762,24 @@ class ProductsController extends Controller
                         "local" => 'en',
                     ]
                 );
+            }
+
+            // Update Part Numbers (delete then re-insert)
+            DB::table('product_part_numbers')->where('product_id', $pro_id)->delete();
+            $partNumberNos = $request->input('partNumber.no', []);
+            $partNumberTexts = $request->input('partNumber.text', []);
+            foreach ($partNumberNos as $index => $no) {
+                $text = $partNumberTexts[$index] ?? '';
+                if (!empty($no) || !empty($text)) {
+                    DB::table('product_part_numbers')->insert([
+                        'product_id' => $pro_id,
+                        'no'         => $no,
+                        'text'       => $text,
+                        'order'      => $index,
+                        'created_at' => \Carbon\Carbon::now(),
+                        'updated_at' => \Carbon\Carbon::now(),
+                    ]);
+                }
             }
 
             return redirect()->route('products.index')->with('flash_message', 'Update Data successfully');

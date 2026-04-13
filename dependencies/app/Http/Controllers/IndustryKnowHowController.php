@@ -219,6 +219,7 @@ class IndustryKnowHowController extends Controller
         }
         return $arrayfileName;
     }
+
     /**
      * Update the specified resource in storage.
      *
@@ -450,9 +451,4 @@ class IndustryKnowHowController extends Controller
         }
     }
 
-    protected function clean($string)
-    {
-        $string = str_replace(' ', '-', $string);
-        return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
-    }
 }

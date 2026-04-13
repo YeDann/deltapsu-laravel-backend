@@ -1197,7 +1197,7 @@ class FrontendController extends Controller
 
         $searchProGroupByPrdId = $searchProQuery->where('p.enable_pro', 1) // 篩選 啟用的商品
             ->select('p.*', 'pt.*', 'phc.categories_id as cate_id', 's.mode_series')
-            ->orderBy('p.pro_code', 'asc')
+            ->orderBy('p.pro_code', 'asc') // 狀態相同時按產品代碼排序
             ->get()
             ->groupBy('pro_id');
 
@@ -1316,6 +1316,7 @@ class FrontendController extends Controller
             ->select('shf.sub_pro_id', 'shf.field_id', 'shpt.title', 'pf.type', 'pf.section_id')
             ->get()
             ->unique('field_id');
+
         // 放在最前面
         if ($mainCateId == 3) {
             $filterPro = $filterPro->prepend([
@@ -1334,7 +1335,7 @@ class FrontendController extends Controller
                 "section_id" => null,
             ]);
         }
-
+        
         // 取得 商品欄位資料
         $pdField = DB::table('product_field as pf')
             ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
@@ -1675,6 +1676,11 @@ class FrontendController extends Controller
             ->orderBy('ph.type_id', 'asc')
             ->select('pht.value_text', 'ph.*', 'pft.field_name as fieldCate', 'pf.unit_name')
             ->get();
+        $partNumbers = DB::table('product_part_numbers')
+            ->where('product_id', $pro->pro_id)
+            ->orderBy('order', 'asc')
+            ->get();
+
         $data[0] = [
             'pro_id' => $pro->pro_id,
             'pro_code' => $pro->pro_code,
@@ -1697,6 +1703,7 @@ class FrontendController extends Controller
             'dimensionL' => $pro->dimensionL,
             'dimensionW' => $pro->dimensionW,
             'dimensionD' => $pro->dimensionD,
+            'part_numbers' => $partNumbers,
         ];
 
         $product_related = DB::table('product_related as pr')
@@ -2797,6 +2804,31 @@ class FrontendController extends Controller
         return redirect($newUrl, 301);
     }
 
+    public function redirectOldProductDetailUrl($main_cate, $cate_id, $se_name, $se_id)
+    {
+        $lang = app()->getLocale();
+        
+        // 根據 subcategory ID 找到對應的 main_cateid，優先選擇 main_cateid = 2 (Industrial Power)
+        $categoryInfo = DB::table('sub_pro_categories as spc')
+            ->join('categories_has_main_pro as chmp', 'spc.sub_pro_id', '=', 'chmp.cate_id')
+            ->where('spc.sub_pro_id', $cate_id)
+            ->select('chmp.main_cateid as main_cate_id', 'spc.sub_pro_id as category_id')
+            ->orderByRaw('CASE WHEN chmp.main_cateid = 2 THEN 0 ELSE chmp.main_cateid END')
+            ->first();
+
+        if (!$categoryInfo) {
+            // 如果找不到對應的商品分類，直接返回 404
+            return response()->view('errors.404', [], 404);
+        }
+        
+        $main_cate_id = $categoryInfo->main_cate_id;
+        
+        // 建構新的 URL 格式：/{lang}/product/{main_cate_id}/{main_cate}/{cate_id}/{se_name}/{se_id}
+        $newUrl = "/{$lang}/product/{$main_cate_id}/{$main_cate}/{$cate_id}/{$se_name}/{$se_id}";
+        
+        return redirect($newUrl, 301);
+    }
+
     public function termsOfUse()
     {
         $lang = App::getLocale();
@@ -3396,6 +3428,14 @@ class FrontendController extends Controller
                         END",
                         ['%' . $cleanQueryString . '%']
                     )
+                    ->orderByRaw('CASE 
+                        WHEN p.status_product = 2 THEN 1 
+                        WHEN p.status_product = 1 OR p.status_product IS NULL OR p.status_product NOT IN (2,3,4) THEN 2 
+                        WHEN p.status_product = 3 THEN 3 
+                        WHEN p.status_product = 4 THEN 4 
+                        ELSE 5 
+                        END')
+                    ->orderBy('p.pro_code', 'asc')
                     ->limit($limit_product);
 
         $products = $query->get();
