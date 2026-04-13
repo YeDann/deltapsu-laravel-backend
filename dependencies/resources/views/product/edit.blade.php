@@ -242,6 +242,27 @@
                                 name="unitWeight" placeholder="Enter ...">
                         </div>
                         <div class="form-group">
+                            <label class="d-block">Part Number</label>
+                            <div id="part-number-list">
+                                @if(isset($partNumbers) && count($partNumbers) > 0)
+                                    @foreach($partNumbers as $i => $pn)
+                                    <div class="part-number-row d-flex mb-2" data-index="{{ $i }}">
+                                        <input type="text" class="form-control mr-2" name="partNumber[no][{{ $i }}]" value="{{ $pn->no }}" placeholder="No">
+                                        <input type="text" class="form-control mr-2" name="partNumber[text][{{ $i }}]" value="{{ $pn->text }}" placeholder="Text">
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="removePartNumber(this)">-</button>
+                                    </div>
+                                    @endforeach
+                                @else
+                                    <div class="part-number-row d-flex mb-2" data-index="0">
+                                        <input type="text" class="form-control mr-2" name="partNumber[no][0]" placeholder="No">
+                                        <input type="text" class="form-control mr-2" name="partNumber[text][0]" placeholder="Text">
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="removePartNumber(this)">-</button>
+                                    </div>
+                                @endif
+                            </div>
+                            <button type="button" class="btn btn-secondary btn-sm mt-2" onclick="addPartNumber()">+ Add</button>
+                        </div>
+                        <div class="form-group">
                             <label class="d-block">Status <span class="req-fed">*</span></label>
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
                                 <input type="radio" class="custom-control-input" id="status_none" name="status_pro"
@@ -1079,6 +1100,27 @@
            var str = $('#input-'+id).val();
           $('#count-'+id).text(str.length);
       }
+
+    function addPartNumber() {
+        var list = $('#part-number-list');
+        var index = list.find('.part-number-row').length;
+        var html = '<div class="part-number-row d-flex mb-2" data-index="' + index + '">'
+            + '<input type="text" class="form-control mr-2" name="partNumber[no][' + index + ']" placeholder="No">'
+            + '<input type="text" class="form-control mr-2" name="partNumber[text][' + index + ']" placeholder="Text">'
+            + '<button type="button" class="btn btn-danger btn-sm" onclick="removePartNumber(this)">-</button>'
+            + '</div>';
+        list.append(html);
+    }
+
+    function removePartNumber(btn) {
+        $(btn).closest('.part-number-row').remove();
+        // Re-index
+        $('#part-number-list .part-number-row').each(function(i) {
+            $(this).attr('data-index', i);
+            $(this).find('input[placeholder="No"]').attr('name', 'partNumber[no][' + i + ']');
+            $(this).find('input[placeholder="Text"]').attr('name', 'partNumber[text][' + i + ']');
+        });
+    }
 
 </script>
 

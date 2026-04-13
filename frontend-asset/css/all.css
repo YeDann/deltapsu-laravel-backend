@@ -8980,7 +8980,7 @@ a.text-dark:hover, a.text-dark:focus {
 @font-face {
     font-family: 'Inter';
     src: url('../fonts/Inter-Regular.woff2') format('woff2'),
-        url('../fontNews/Inter-Regular.woff') format('woff');
+        url('../fonts/Inter-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -14824,7 +14824,7 @@ input[type=text], input[type=email]{
     z-index: 2;
 }
 .h-rvolt{
-    height: 73px;
+    height: 90px;
 }
 
 .text-breadcrumb-home a,
