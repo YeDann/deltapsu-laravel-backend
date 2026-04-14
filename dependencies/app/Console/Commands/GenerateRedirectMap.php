@@ -69,10 +69,10 @@ class GenerateRedirectMap extends Command
                 continue;
             }
             
-            $sourceUrl = trim($data[0] ?? '');
+            $sourceUrl = str_replace('psu.deltaww.com/index.php/', 'psu.deltaww.com/', trim($data[0] ?? ''));
             $instruction = trim($data[1] ?? '');
-            $targetUrl = trim($data[2] ?? '');
-            
+            $targetUrl = str_replace('psu.deltaww.com/index.php/', 'psu.deltaww.com/', trim($data[2] ?? ''));
+
             // 處理 301 重定向
             if (strpos($instruction, 'Set 301 redirect to new link') !== false) {
                 if (!empty($sourceUrl) && !empty($targetUrl)) {
