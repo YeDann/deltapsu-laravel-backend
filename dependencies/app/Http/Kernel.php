@@ -15,11 +15,11 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \App\Http\Middleware\CheckForMaintenanceMode::class,
+        \App\Http\Middleware\TrustProxies::class,
         \App\Http\Middleware\CsvRedirectMiddleware::class, // CSV重定向中間件 - 必須在早期執行
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \App\Http\Middleware\TrustProxies::class,
        \App\Http\Middleware\SanitizeUrl::class,
         \App\Http\Middleware\ModifyRedirects::class,
         \App\Http\Middleware\ContentSecurityPolicy::class,

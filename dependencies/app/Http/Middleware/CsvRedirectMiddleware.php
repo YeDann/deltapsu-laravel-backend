@@ -12,7 +12,7 @@ class CsvRedirectMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        // 獲取當前完整URL，並移除 /index.php 前綴（相容舊版 URL 格式）
+        // 獲取當前完整URL，normalize scheme 與 /index.php 前綴
         $currentUrl = str_replace('psu.deltaww.com/index.php/', 'psu.deltaww.com/', $request->fullUrl());
         
         // 從緩存或文件中獲取重定向映射
