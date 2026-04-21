@@ -3510,6 +3510,7 @@ class FrontendController extends Controller
                 ];
         })->filter()->values();
 
+
         $news = DB::table('product_news_has_categories as pnc')
             ->join('contents as c', 'c.id', '=', 'pnc.content_id')
             ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
@@ -3547,6 +3548,54 @@ class FrontendController extends Controller
                 ->where('c.status', 1)
                 ->where('c.content_type', '=', 'blog')
                 ->select('c.*', 'ct.*', 'tyt.name as cateName', 'anc.categories_id as typeId')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
+        $videos = DB::table('contents as c')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'video')
+                ->where('c.status', 1)
+                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->select('c.*', 'ct.*')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
+        $industryKnowHow = DB::table('contents as c')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'industry-know-how')
+                ->where('c.status', 1)
+                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->select('c.*', 'ct.*')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
+        $productNotices = DB::table('contents as c')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'product-notice')
+                ->where('c.status', 1)
+                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->select('c.*', 'ct.*')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
+        $eols = DB::table('contents as c')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'eol')
+                ->where('c.status', 1)
+                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->select('c.*', 'ct.*')
                 ->orderBy('c.date_publish', 'desc')
                 ->distinct()
                 ->limit($limit_other)
@@ -3659,6 +3708,10 @@ class FrontendController extends Controller
             ->with('news', $news)
             ->with('events', $events)
             ->with('articles', $articles)
+            ->with('videos', $videos)
+            ->with('industryKnowHow', $industryKnowHow)
+            ->with('productNotices', $productNotices)
+            ->with('eols', $eols)
             ->with('offices', $offices)
             ->with('distributor', $distributor)
             ->with('continents_office', $continents_office)
