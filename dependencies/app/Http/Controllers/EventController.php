@@ -176,7 +176,7 @@ class EventController extends Controller
                                 "meta_title" => isset($metaTitle) ? $metaTitle :null ,
                                 "location" =>$request->location,
                                 "meta_description" => $metaDescription,
-                                // "meta_keywords" => $metaKeyword,
+                                "head" => $request->head,
                                 "local"=>$lang,
                             ]
                         );
@@ -288,7 +288,7 @@ class EventController extends Controller
                     "location"=>$location[$lang],
                     "meta_title" => isset($meta_title[$lang]) ? $meta_title[$lang] :null ,
                     "meta_description" => $meta_des[$lang],
-                    // "meta_keywords" => $meta_key[$lang]
+                    "head" => $request->head[$lang] ?? '',
                 ]
             );
         }

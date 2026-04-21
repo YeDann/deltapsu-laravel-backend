@@ -145,8 +145,8 @@ class VideoController extends Controller
                         "description"=>$request->description,
                         "meta_title" => $metaTitle,
                         "meta_description" => $metaDescription,
-                        // "meta_keywords" => $metaKeyword,
                         'file' => isset($arrFileName['newsfile']) ? $arrFileName['newsfile'] : '',
+                        "head" => $request->head,
                         "local"=>$lang,
                     ]
                 );
@@ -315,6 +315,7 @@ class VideoController extends Controller
                             "meta_title" => isset($metaTitle[$lang]) ? $metaTitle[$lang] : '',
                             "meta_description" => isset($metaDescription[$lang]) ? $metaDescription[$lang] : '',
                             'file' => $fileLangNames[$lang],
+                            "head" => $request->head[$lang] ?? '',
                         ]);
                 } else {
                     DB::table('contents_translations')->insert([
@@ -325,6 +326,7 @@ class VideoController extends Controller
                         "meta_title" => isset($metaTitle[$lang]) ? $metaTitle[$lang] : '',
                         "meta_description" => isset($metaDescription[$lang]) ? $metaDescription[$lang] : '',
                         'file' => $fileLangNames[$lang],
+                        "head" => $request->head[$lang] ?? '',
                         "local" => $lang,
                     ]);
                 }

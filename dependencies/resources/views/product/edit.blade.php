@@ -392,6 +392,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label>Head (Custom HTML)</label>
+                                        <small class="text-muted d-block mb-1">輸入自訂 &lt;meta&gt;、&lt;link&gt;、&lt;script&gt; 等 HTML，將插入前台該頁面的 &lt;head&gt; 區塊。</small>
+                                        <textarea name="head[{{$item->local}}]" rows="6" class="form-control" style="font-family:monospace;">{{$item->head ?? ''}}</textarea>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="d-block">Show/hide language</label>
                                         <div
                                             class="custom-control custom-radio custom-control-inline custom-control-primary">
@@ -442,6 +447,11 @@
                                                     0</span>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Head (Custom HTML)</label>
+                                        <small class="text-muted d-block mb-1">輸入自訂 &lt;meta&gt;、&lt;link&gt;、&lt;script&gt; 等 HTML，將插入前台該頁面的 &lt;head&gt; 區塊。</small>
+                                        <textarea name="head[{{$item->local}}]" rows="6" class="form-control" style="font-family:monospace;">{{$item->head ?? ''}}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label class="d-block">show/hide language</label>

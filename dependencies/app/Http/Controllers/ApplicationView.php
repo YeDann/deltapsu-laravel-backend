@@ -164,6 +164,7 @@ class ApplicationView extends Controller
                     'meta_description' => $meta_description,
                     'meta_title' =>$meta_metaTitle,
                     "overview_text" => $overview_text,
+                    "head" => $request->head,
                     "local" => $lang
                 ]
             );
@@ -290,7 +291,7 @@ class ApplicationView extends Controller
                     'h1' => $h1_title[$lang],
                     "content_2"=> isset($content_2[$lang])? $content_2[$lang] :$content_2['en'],
                     "overview_text" => $overview_text[$lang],
-                    
+                    "head" => $request->head[$lang] ?? '',
                 ]
             );
            }else{
@@ -305,6 +306,7 @@ class ApplicationView extends Controller
                         'h1' => $h1_title[$lang],
                         "content_2"=> isset($content_2[$lang])? $content_2[$lang] :$content_2['en'],
                         "overview_text" => $overview_text[$lang],
+                        "head" => $request->head[$lang] ?? '',
                         "lang"=>$lang
                         
                     ]

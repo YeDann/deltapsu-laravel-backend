@@ -234,6 +234,7 @@ class ProductsController extends Controller
                         "short_features" => $short_features,
                         "meta_description" => $meta_description,
                         "showstatus" => $status,
+                        "head" => $request->head,
                         "local" => $lang,
                     ]
                 );
@@ -680,6 +681,7 @@ class ProductsController extends Controller
                         "meta_description" => $meta_description[$lang],
                         "short_features" => $short_features[$lang],
                         "showstatus" => $status[$lang],
+                        "head" => $request->head[$lang] ?? '',
 
                     ]
                 );

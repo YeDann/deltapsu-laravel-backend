@@ -168,6 +168,7 @@ class ProductNoticeController extends Controller
                         "meta_title" => $defaultMetaTitle,
                         "meta_description" => $defaultMetaDescription,
                         'file' => isset($arrayfileName['newsfile']) ? $arrayfileName['newsfile'] : '',
+                        "head" => $request->head,
                         "local" => $lang,
                     ]
                 );
@@ -308,6 +309,7 @@ class ProductNoticeController extends Controller
                     "meta_description" => $meta_des[$lang],
                     "description" => $description[$lang],
                     'file' =>  $arrrayName[$lang],
+                    "head" => $request->head[$lang] ?? '',
                 ]
             );
         }

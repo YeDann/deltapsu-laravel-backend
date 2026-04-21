@@ -43,6 +43,7 @@ $langch = str_replace('_', '-', app()->getLocale());
         href="{{asset('/backend-asset/js/plugins/dropzone/dist/min/dropzone.min.css')}}">
 
     @yield('css')
+    {!! $head ?? '' !!}
     <?php $imgDown = asset('frontend-asset/image/arrow-down.svg') ?>
     <style>
         /* select */
@@ -309,7 +310,9 @@ $langch = str_replace('_', '-', app()->getLocale());
     ]
   }
     </script>
+    {{-- @dd($head) --}}
 
+    
 
 </head>
 

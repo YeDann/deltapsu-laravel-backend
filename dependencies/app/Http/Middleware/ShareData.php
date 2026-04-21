@@ -209,6 +209,7 @@ class ShareData
         }
 
         view()->share('logoUrl', $logo_url);
+        view()->share('head', '');
 
         return $next($request);
     }
