@@ -72,10 +72,8 @@
     <div class="container">
         <h1 class="text-title-delta visible-tablets-up">{{$staticContent['Search_Results']}}</h1>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['Search_Results']}}</h3>
-        {{-- 分類選單（保留備用，未來可取代 Tab）
         <div class="d-flex align-items-center mb-4" style="gap:12px;">
             <select id="search-category-filter" class="form-control" style="max-width:280px;">
-                <option value="all">All Categories</option>
                 <option value="nav-products">{{$staticContent['Products']}} ({{count($pro_results)}})</option>
                 <option value="nav-news">{{$staticContent['Product_News']}} ({{count($news)}})</option>
                 <option value="nav-events">{{$staticContent['Events']}} ({{count($events)}})</option>
@@ -89,20 +87,8 @@
                 <option value="nav-contact-info">{{$staticContent['contact_Info']}} ({{count($distributor)+count($offices)}})</option>
             </select>
         </div>
-        --}}
-        <select id="select-search-results" class="form-control mb-4">
-            <option value="0">{{$staticContent['Products']}} ({{count($pro_results)}})</option>
-            <option value="1">{{$staticContent['Product_News']}} ({{count($news)}})</option>
-            <option value="2">{{$staticContent['Events']}} ({{count($events)}})</option>
-            <option value="7">{{$staticContent['Applications']}} ({{count($applications)}})</option>
-            <option value="8">Industry Know-How ({{count($industryKnowHow)}})</option>
-            <option value="9">Video ({{count($videos)}})</option>
-            <option value="10">Product Notice ({{count($productNotices)}})</option>
-            <option value="11">EOL ({{count($eols)}})</option>
-            <option value="4">{{$staticContent['FAQs']}} ({{count($faqs)}})</option>
-            <option value="5">{{$staticContent['Marketing_Resources']}} ({{count($margeting)}})</option>
-            <option value="6">{{$staticContent['contact_Info']}} ({{count($distributor)+count($offices)}})</option>
-        </select>
+        {{-- mobile select & nav-tabs 已由上方下拉選單取代 --}}
+        {{-- <select id="select-search-results" class="form-control mb-4">...</select> --}}
         <?php
         function checkProcode($code){
           $string =  str_replace("/", "@",$code);
@@ -110,22 +96,9 @@
         }
        ?>
         <div class="bar-product-type">
-            <nav id="bar-search-results-page-nav">
-                <div class="nav nav-tabs mb-4" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-tab0" data-val="0" data-toggle="tab" href="#nav-products" role="tab" aria-selected="true">{{$staticContent['Products']}} ({{count($pro_results)}})</a>
-                    <a class="nav-item nav-link" id="nav-tab1" data-val="1" data-toggle="tab" href="#nav-news" role="tab" aria-selected="false">{{$staticContent['Product_News']}} ({{count($news)}})</a>
-                    <a class="nav-item nav-link" id="nav-tab2" data-val="2" data-toggle="tab" href="#nav-events" role="tab" aria-selected="false">{{$staticContent['Events']}} ({{count($events)}})</a>
-                    <a class="nav-item nav-link" id="nav-tab7" data-val="7" data-toggle="tab" href="#nav-applications" role="tab" aria-selected="false">{{$staticContent['Applications']}} ({{count($applications)}})</a>
-                    <a class="nav-item nav-link" id="nav-tab8" data-val="8" data-toggle="tab" href="#nav-industry-know-how" role="tab" aria-selected="false">Industry Know-How ({{count($industryKnowHow)}})</a>
-                    <a class="nav-item nav-link" id="nav-tab9" data-val="9" data-toggle="tab" href="#nav-videos" role="tab" aria-selected="false">Video ({{count($videos)}})</a>
-                    <a class="nav-item nav-link" id="nav-tab10" data-val="10" data-toggle="tab" href="#nav-product-notices" role="tab" aria-selected="false">Product Notice ({{count($productNotices)}})</a>
-                    <div style="flex-basis:100%;height:0;"></div>
-                    <a class="nav-item nav-link" id="nav-tab11" data-val="11" data-toggle="tab" href="#nav-eols" role="tab" aria-selected="false">EOL ({{count($eols)}})</a>
-                    <a class="nav-item nav-link" id="nav-tab4" data-val="4" data-toggle="tab" href="#nav-faqs" role="tab" aria-selected="false">{{$staticContent['FAQs']}} ({{count($faqs)}})</a>
-                    <a class="nav-item nav-link" id="nav-tab5" data-val="5" data-toggle="tab" href="#nav-marketing-resources" role="tab" aria-selected="false">{{$staticContent['Marketing_Resources']}} ({{count($margeting)}})</a>
-                    <a class="nav-item nav-link" id="nav-tab6" data-val="6" data-toggle="tab" href="#nav-contact-info" role="tab" aria-selected="false">{{$staticContent['contact_Info']}} ({{count($distributor)+count($offices)}})</a>
-                </div>
-            </nav>
+            {{-- nav-tabs 保留備用
+            <nav id="bar-search-results-page-nav">...</nav>
+            --}}
             <div class="tab-content mb-5" id="nav-tabContent">
                 <div class="tab-pane fade show active bar-product-type-list" id="nav-products" role="tabpanel">
                     <div id="result1" class="w-100">
@@ -1097,28 +1070,14 @@
     }
 </script>
 <script>
-    // Tab ↔ mobile select sync
-    $('#nav-tab a').click(function(){
-        var id = $(this).data('val');
-        $("#select-search-results option[value="+id+"]").prop('selected', true);
-    });
-    $('#select-search-results').on('change', function(e) {
-        var data = $(this).val();
-        $('#nav-tab'+data).click();
-    });
-
-    {{-- 備用：分類選單 JS（配合 #search-category-filter 使用）
     function filterSearchSections(val) {
-        if (val === 'all') {
-            $('.tab-pane').addClass('show active');
-        } else {
-            $('.tab-pane').removeClass('show active');
-            $('#' + val).addClass('show active');
-        }
+        $('.tab-pane').removeClass('show active');
+        $('#' + val).addClass('show active');
     }
     $('#search-category-filter').on('change', function() {
         filterSearchSections($(this).val());
     });
-    --}}
+    // 預設顯示第一個選項
+    filterSearchSections($('#search-category-filter').val());
 </script>
 @endsection
