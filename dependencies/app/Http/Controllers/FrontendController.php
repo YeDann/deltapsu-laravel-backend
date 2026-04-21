@@ -1752,13 +1752,13 @@ class FrontendController extends Controller
         $data_other = [];
         $data_check_poOther = [];
         $j = 0;
-        foreach ($product_related as $pro) {
+        foreach ($product_related as $prod) {
             $arraysub = [];
             $arraysub = DB::table('product_has_property as ph')
                 ->join('product_has_property_translation as pht', 'ph.per_id', '=', 'pht.per_fk_id')
                 ->join('product_field as pf', 'pf.id', '=', 'ph.type_id')
                 ->join('product_field_translation as pft', 'ph.type_id', '=', 'pft.product_field_id')
-                ->where('ph.product_id', $pro->pro_id)
+                ->where('ph.product_id', $prod->pro_id)
                 ->where('pht.local', 'en')
                 ->where('pft.local', $lang)
                 ->whereIn('ph.type_id', [3, 4, 8, 31])
@@ -1766,23 +1766,23 @@ class FrontendController extends Controller
                 ->select('pht.value_text', 'ph.*', 'pft.field_name as fieldCate', 'pf.unit_name')
                 ->get();
 
-            if (!in_array($pro->pro_id, $data_check_poOther) && self::checkContentPro($pro->pro_id)) {
+            if (!in_array($prod->pro_id, $data_check_poOther) && self::checkContentPro($prod->pro_id)) {
                 array_push($data_check_poOther, $pro->pro_id);
                 $data_other[$j] = [
-                    'pro_id' => $pro->pro_id,
-                    'pro_code' => $pro->pro_code,
-                    'catename' => $pro->catename,
-                    'cate_id' => $pro->pro_categories_id,
-                    'picture' => $pro->picture,
-                    'unit_dimension_1' => $pro->unit_dimension_1,
-                    'unit_dimension' => $pro->unit_dimension,
-                    'status_product' => $pro->status_product,
+                    'pro_id' => $prod->pro_id,
+                    'pro_code' => $prod->pro_code,
+                    'catename' => $prod->catename,
+                    'cate_id' => $prod->pro_categories_id,
+                    'picture' => $prod->picture,
+                    'unit_dimension_1' => $prod->unit_dimension_1,
+                    'unit_dimension' => $prod->unit_dimension,
+                    'status_product' => $prod->status_product,
                     'content' => $arraysub,
-                    'alt_img' => $pro->alt_img,
-                    'url_item' => $pro->url_item,
-                    'dimensionL' => $pro->dimensionL,
-                    'dimensionW' => $pro->dimensionW,
-                    'dimensionD' => $pro->dimensionD,
+                    'alt_img' => $prod->alt_img,
+                    'url_item' => $prod->url_item,
+                    'dimensionL' => $prod->dimensionL,
+                    'dimensionW' => $prod->dimensionW,
+                    'dimensionD' => $prod->dimensionD,
                 ];
             }
 
