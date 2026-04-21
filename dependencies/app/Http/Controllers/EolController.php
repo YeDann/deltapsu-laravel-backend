@@ -143,6 +143,7 @@ class EolController extends Controller
                         "meta_title" => $metaTitle,
                         "meta_description" => $metaDescription,
                         'file' => $arrFileName['eolfile'],
+                        "head" => $request->head,
                         "local"=>$lang,
                     ]
                 );
@@ -282,8 +283,8 @@ class EolController extends Controller
                     "meta_title" => $meta_title[$lang],
                     "meta_description" => $meta_des[$lang],
                     "description" => $description[$lang],
-                    // "meta_keywords" => $meta_key[$lang],
                     'file' =>  $arrrayName[$lang],
+                    "head" => $request->head[$lang] ?? '',
                 ]
             );
         }

@@ -900,11 +900,19 @@ class FrontendController extends Controller
                 ->select('mtp.*', 'mtpt.*')
                 ->get();
 
+        $mainCategory = DB::table('main_pro_categories as mpc')
+            ->join('main_pro_categories_translations as mpct', 'mpc.main_id', '=', 'mpct.main_pro_id')
+            ->where('mpc.main_id', 5)
+            ->where('mpct.local', $lang)
+            ->select('mpc.*', 'mpct.*')
+            ->first();
+
         return view('front-end.configurableproduct')
             ->with('metatag', $metatag)
             ->with('model', $model)
             ->with('connectors_images', $connectors_images)
-            ->with('model_alldata', $model_alldata);
+            ->with('model_alldata', $model_alldata)
+            ->with('head', $mainCategory->head ?? '');
     }
 
     public function allproductsByType($cate_parname, $cate_par_id = 0, $main_pId)
@@ -1418,7 +1426,8 @@ class FrontendController extends Controller
                 ->with('se_name', $seName)
                 ->with('series', $series)
                 ->with('modeSeries', $modeSeries)
-                ->with('se_id', $seId);
+                ->with('se_id', $seId)
+                ->with('head', $mainCategory->head ?? '');
         }
 
         return response()->view('errors.404', [], 404);
@@ -1811,7 +1820,8 @@ class FrontendController extends Controller
             ->with('product_has_property', $product_has_property)
             ->with('external_link', $external_link)
             ->with('ec_link', $ec_link)
-            ->with('product', $data);
+            ->with('product', $data)
+            ->with('head', $pro->head ?? '');
     }
 
     public function resultSearch()
@@ -2251,6 +2261,7 @@ class FrontendController extends Controller
             'apt.overview_text',
             'apt.meta_title',
             'apt.meta_description',
+            'apt.head',
             'h1'
         )
         ->orderBy('ap.order_seq', 'asc')
@@ -2288,7 +2299,8 @@ class FrontendController extends Controller
             ->with('image', $image)
             ->with('otherapp', $otherapp)
             ->with('relatedApp', $relatedApp)
-            ->with('application', $application);
+            ->with('application', $application)
+            ->with('head', $application->head ?? '');
         }
 
         return response()->view('errors.404', [], 404);
@@ -2374,7 +2386,8 @@ class FrontendController extends Controller
         //return dd($contents);
         return view('front-end.news-detail')
           ->with('otherNews', $otherNews)
-          ->with('contents', $contents);
+          ->with('contents', $contents)
+          ->with('head', isset($contents[0]) ? ($contents[0]->head ?? '') : '');
     }
 
     public function updateVideoDetail($namePar)
@@ -2424,7 +2437,8 @@ class FrontendController extends Controller
 
         return view('front-end.video-detail')
           ->with('otherNews', $otherNews)
-          ->with('contents', $contents);
+          ->with('contents', $contents)
+          ->with('head', isset($contents[0]) ? ($contents[0]->head ?? '') : '');
     }
 
     public function updateProductNoticeDetail($namePar)
@@ -2474,7 +2488,8 @@ class FrontendController extends Controller
 
         return view('front-end.product-notice-detail')
           ->with('otherNews', $otherNews)
-          ->with('contents', $contents);
+          ->with('contents', $contents)
+          ->with('head', isset($contents[0]) ? ($contents[0]->head ?? '') : '');
     }
 
     public function updateIndustryKnowHowDetail($namePar)
@@ -2524,7 +2539,8 @@ class FrontendController extends Controller
 
         return view('front-end.industry-know-how-detail')
           ->with('otherNews', $otherNews)
-          ->with('contents', $contents);
+          ->with('contents', $contents)
+          ->with('head', isset($contents[0]) ? ($contents[0]->head ?? '') : '');
     }
 
     public function updateEOLDetail($namePar)
@@ -2574,7 +2590,8 @@ class FrontendController extends Controller
 
         return view('front-end.eol-detail')
           ->with('otherNews', $otherNews)
-          ->with('contents', $contents);
+          ->with('contents', $contents)
+          ->with('head', isset($contents[0]) ? ($contents[0]->head ?? '') : '');
     }
 
     public function updateEventDetail($namePar)
@@ -2622,7 +2639,8 @@ class FrontendController extends Controller
         // }
         return view('front-end.event-detail')
         ->with('otherNews', $otherNews)
-        ->with('contents', $contents);
+        ->with('contents', $contents)
+        ->with('head', isset($contents[0]) ? ($contents[0]->head ?? '') : '');
     }
 
     public function updateTechnicalDetail($namePar)

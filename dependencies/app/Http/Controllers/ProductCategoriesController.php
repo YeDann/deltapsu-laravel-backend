@@ -119,6 +119,7 @@ class ProductCategoriesController extends Controller
                     "name"    => ($name[$lang] ?? ''),
                     "content" => ($content[$lang] ?? ''),
                     "file"    => $filename,
+                    "head"    => ($request->head[$lang] ?? ''),
                     "local"   => $lang,
                 ]);
             }
@@ -236,7 +237,8 @@ class ProductCategoriesController extends Controller
                 ->where('local',$lang)->update(array(
                     "name" => ($name && isset($name[$lang])) ? $name[$lang] : '',
                     "content" => ($content && isset($content[$lang])) ? $content[$lang] : '',
-                    "file" => isset($arrayfileName[$lang]) ? $arrayfileName[$lang] : ''
+                    "file" => isset($arrayfileName[$lang]) ? $arrayfileName[$lang] : '',
+                    "head" => $request->head[$lang] ?? '',
                 ));
         }
         return redirect()->route('mainprotype.index')->with('flash_message', 'Update Data successfully');
