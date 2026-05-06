@@ -136,7 +136,12 @@ Route::group([
             Route::post('/searchDocByModelId', 'FrontendController@searchDocByModelId')->name('searchDocByModelId');
             Route::post('/searchDocManualByModelId', 'FrontendController@searchDocManualByModelId')->name('searchDocManualByModelId');
             Route::post('/searchLoginDocByModelId', 'FrontendController@searchLoginDocByModelId')->name('searchLoginDocByModelId');
+
+            Route::get('/landing/din-rail-infinity-ready', 'FrontendController@dinRailLandingPage')->name('dinRailLandingPage');
         });
+
+Route::post('/landing/subscribe', 'FrontendController@landingSubscribe')->name('landingSubscribe');
+Route::post('/landing/contact', 'FrontendController@landingContact')->name('landingContact');
 
 Route::prefix('/backend')->group(function () {
     Auth::routes();
