@@ -4314,6 +4314,7 @@ class FrontendController extends Controller
                                 'email' => trim($strmlo),
                                 'name' => $name,
                                 'accept' => $accept,
+                                'source' => 'web',
                                 'created_at' => \Carbon\Carbon::now(),
                             ]
                 );
@@ -6123,6 +6124,7 @@ class FrontendController extends Controller
                            'email' => $strmlo,
                            'name' => $request->name,
                            'accept' => 1,
+                           'source' => 'web',
                            'created_at' => \Carbon\Carbon::now(),
                        ]
                         );
@@ -6197,5 +6199,118 @@ class FrontendController extends Controller
         $_modelOptional = $queryModelOP->first();
 
         return $_modelOptional;
+    }
+
+    public function dinRailLandingPage()
+    {
+        $localeMap = [
+            'en' => 'en',
+            'tw' => 'zh-TW',
+            'cn' => 'zh-CN',
+            'jp' => 'ja',
+        ];
+
+        $locale   = App::getLocale();
+        $htmlLang = $localeMap[$locale] ?? 'en';
+
+        $langUrls = [
+            'en'    => '/en/landing/din-rail-infinity-ready',
+            'zh-TW' => '/tw/landing/din-rail-infinity-ready',
+            'zh-CN' => '/cn/landing/din-rail-infinity-ready',
+            'ja'    => '/jp/landing/din-rail-infinity-ready',
+        ];
+
+        return view('front-end.landing-din-rail-infinity-ready', compact('htmlLang', 'langUrls'));
+    }
+
+    public function landingSubscribe(Request $request)
+    {
+        $email   = $this->validateInput($request->email, 'text', true);
+        $name    = $this->validateInput($request->name, 'text', true);
+        $country = $this->validateInput($request->country, 'text', true);
+        $strmlo  = strtolower(trim($email));
+
+        if (!filter_var($strmlo, FILTER_VALIDATE_EMAIL) || !$name || !$country) {
+            return response()->json(['status' => 'error', 'message' => 'Missing required fields']);
+        }
+
+        try {
+            $alreadysub = DB::table('subscribes')->where('email', $strmlo)->count();
+
+            if ($alreadysub > 0) {
+                return response()->json(['status' => 'already']);
+            }
+
+            DB::table('subscribes')->insert([
+                'email'        => $strmlo,
+                'name'         => $name,
+                'country_name' => $country,
+                'accept'       => 1,
+                'source'       => 'din-rail',
+                'created_at'   => \Carbon\Carbon::now(),
+            ]);
+
+            try {
+                $mailchimdata = Mailchimp::getLists();
+                Mailchimp::subscribe($mailchimdata[0]['id'], $strmlo, ['NAME' => $name, 'COUNTRY' => $country], true);
+            } catch (\Exception $mailEx) {
+                \Log::error('[landingSubscribe] Mailchimp error: ' . $mailEx->getMessage());
+            }
+
+            return response()->json(['status' => 'success']);
+        } catch (\Exception $e) {
+            \Log::error('[landingSubscribe] ' . $e->getMessage());
+            return response()->json(['status' => 'error', 'message' => 'Server error']);
+        }
+    }
+
+    public function landingContact(Request $request)
+    {
+        $email   = $this->validateInput($request->input('cf-email'), 'text', true);
+        $name    = $this->validateInput($request->input('cf-name'), 'text', true);
+        $company = $this->validateInput($request->input('cf-company'), 'text', true);
+        $country = $this->validateInput($request->input('cf-country'), 'text', true);
+
+        if (!$email || !$name || !$company || !$country || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return response()->json(['status' => 'error', 'message' => 'Missing required fields']);
+        }
+
+        $series  = $this->validateInput($request->input('cf-product'), 'text', true) ?: null;
+        $tel     = $this->validateInput($request->input('cf-phone'), 'text', true) ?: null;
+        $message = $this->validateInput($request->input('contact-message'), 'text', true) ?: null;
+
+        try {
+            DB::table('contacts')->insert([
+                'name'       => $name,
+                'email'      => strtolower(trim($email)),
+                'company'    => $company,
+                'country'    => $country,
+                'tel'        => $tel,
+                'series'     => $series,
+                'message'    => $message,
+                'subject'    => 'DIN Rail Inquiry',
+                'created_at' => \Carbon\Carbon::now(),
+            ]);
+
+            $mailData = [
+                'name'          => $name,
+                'email'         => strtolower(trim($email)),
+                'company'       => $company,
+                'country'       => $country,
+                'tel'           => $tel,
+                'message'       => $message,
+                'subject'       => 'DIN Rail Inquiry',
+                'type_name'     => '',
+                'enquireStatus' => 0,
+            ];
+
+            $recipient = config('mail.from.address');
+            Mail::to($recipient)->send(new Contact($mailData, ''));
+
+            return response()->json(['status' => 'success']);
+        } catch (\Exception $e) {
+            \Log::error('[landingContact] ' . $e->getMessage());
+            return response()->json(['status' => 'error', 'message' => 'Server error']);
+        }
     }
 }
