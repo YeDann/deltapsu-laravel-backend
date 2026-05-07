@@ -217,16 +217,44 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 #din-eco .bento-grid-horiz .feature-card.pos-5,
 #din-eco .bento-grid-horiz .feature-card.pos-6 {
   display: flex !important; flex-direction: column !important;
-  padding: clamp(10px,1.8vw,22px) clamp(10px,1.5vw,20px) !important;
-  gap: 0 !important; overflow: hidden !important;
+  align-items: center !important; justify-content: flex-end !important;
+  text-align: center !important;
+  padding: clamp(12px,2vw,28px) clamp(10px,1.5vw,20px) !important;
+  gap: clamp(6px,0.8vw,10px) !important; overflow: hidden !important;
+}
+/* Icon zone */
+#din-pro .bento-grid-horiz .feature-card.pos-2 .icon-wrap,
+#din-pro .bento-grid-horiz .feature-card.pos-3 .icon-wrap,
+#din-pro .bento-grid-horiz .feature-card.pos-4 .icon-wrap,
+#din-pro .bento-grid-horiz .feature-card.pos-5 .icon-wrap,
+#din-eco .bento-grid-horiz .feature-card.pos-2 .icon-wrap,
+#din-eco .bento-grid-horiz .feature-card.pos-3 .icon-wrap,
+#din-eco .bento-grid-horiz .feature-card.pos-5 .icon-wrap,
+#din-eco .bento-grid-horiz .feature-card.pos-6 .icon-wrap {
+  flex: 1 1 auto; width: 100%; display: flex; align-items: center; justify-content: center;
+}
+/* Desc fixed min-height */
+#din-pro .bento-grid-horiz .feature-card.pos-2 p,
+#din-pro .bento-grid-horiz .feature-card.pos-3 p,
+#din-pro .bento-grid-horiz .feature-card.pos-4 p,
+#din-pro .bento-grid-horiz .feature-card.pos-5 p,
+#din-eco .bento-grid-horiz .feature-card.pos-2 p,
+#din-eco .bento-grid-horiz .feature-card.pos-3 p,
+#din-eco .bento-grid-horiz .feature-card.pos-5 p,
+#din-eco .bento-grid-horiz .feature-card.pos-6 p {
+  min-height: 2.6em !important;
 }
 
-/* Card text fluid scaling */
-.feature-card .card-header, .pos1-subtitle, .temp-label {
-  font-size: clamp(1rem,9cqw,1.45rem) !important; margin: 0 0 4px 0 !important;
+/* ── ALL TITLES unified ── */
+.feature-card .card-header,
+.pos1-subtitle,
+.temp-label {
+  font-size: clamp(0.88rem,1.3vw,1.25rem) !important;
+  font-weight: 700 !important; line-height: 1.2 !important; margin: 0 !important;
 }
 .feature-card p, .temp-range, .pos1-label {
-  font-size: clamp(0.82rem,6.5cqw,1.05rem) !important; line-height: 1.3 !important;
+  font-size: clamp(0.72rem,0.85vw,0.95rem) !important; line-height: 1.3 !important;
+  color: rgba(255,255,255,0.80) !important;
   display: -webkit-box !important; -webkit-line-clamp: 3 !important;
   -webkit-box-orient: vertical !important; overflow: hidden !important; margin: 0 !important;
 }
@@ -237,25 +265,50 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 #din-pro .feature-card.pos-4 img, #din-pro .feature-card.pos-5 img,
 #din-eco .feature-card.pos-2 img, #din-eco .feature-card.pos-3 img,
 #din-eco .feature-card.pos-5 img, #din-eco .feature-card.pos-6 img {
-  width: clamp(36px,6vw,100px) !important; height: clamp(36px,6vw,100px) !important;
-  object-fit: contain !important; margin-bottom: clamp(6px,0.8vw,10px) !important;
+  width: clamp(48px,7.5vw,110px) !important; height: clamp(48px,7.5vw,110px) !important;
+  object-fit: contain !important; display: block !important; flex-shrink: 0 !important;
 }
 
 /* =============================================
    POS-1 CARD
    ============================================= */
-.pos1-icon { width: clamp(44px,5.5vw,130px); height: clamp(44px,5.5vw,130px); object-fit: contain; display: block; flex-shrink: 1; max-width: 100%; }
-.pos1-big-num { font-size: clamp(1.4rem,4.5vw,4.2rem); font-weight: 800; line-height: 1; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pos1-subtitle { font-size: clamp(0.9rem,1.4vw,1.5rem); font-weight: 700; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pos1-label { font-size: clamp(0.72rem,0.85vw,0.95rem); color: #fff; margin-bottom: 3px; letter-spacing: 0.8px; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pos1-note { font-size: clamp(0.6rem,0.65vw,0.72rem); color: rgba(255,255,255,0.55); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pos1-icon { width: clamp(44px,5.5vw,110px); height: clamp(44px,5.5vw,110px); object-fit: contain; display: block; flex-shrink: 0; max-width: 100%; }
+.pos1-big-num { font-size: clamp(1.4rem,4.5vw,4.2rem); font-weight: 800; line-height: 1.1; margin: 0; padding-top: clamp(2px,0.3vw,5px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pos1-subtitle { font-size: clamp(0.9rem,1.4vw,1.5rem); font-weight: 700; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pos1-label { font-size: clamp(0.72rem,0.85vw,0.95rem); color: #fff; margin: 0; letter-spacing: 0.8px; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pos1-note { font-size: clamp(0.6rem,0.65vw,0.72rem); color: rgba(255,255,255,0.55); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Extra gap between label and big num in icon-wrap */
+#din-pro .feature-card.pos-1 .icon-wrap .pos1-label,
+#din-eco .feature-card.pos-1 .icon-wrap .pos1-label {
+  margin-bottom: clamp(6px,0.8vw,12px) !important;
+}
 
-/* ECO "3 Phase" — match 95% size */
-#din-eco .feature-card.pos-1 .pos1-big-num { font-size: clamp(1.2rem,3.5vw,3.5rem) !important; white-space: nowrap !important; }
-@media (max-width: 1280px) { #din-eco .feature-card.pos-1 .pos1-big-num { font-size: clamp(1rem,2.8vw,2.8rem) !important; } }
-@media (max-width: 1100px) { #din-eco .feature-card.pos-1 .pos1-big-num { font-size: clamp(0.9rem,2.4vw,2.2rem) !important; } }
-/* PRO "150%" — match temp card size */
-#din-pro .feature-card.pos-1 .pos1-big-num { font-size: clamp(1rem,3vw,3rem) !important; }
+/* ECO "3 Phase" */
+#din-eco .feature-card.pos-1 .pos1-big-num { font-size: clamp(1rem,2.6vw,2.6rem) !important; white-space: nowrap !important; }
+@media (max-width: 1280px) { #din-eco .feature-card.pos-1 .pos1-big-num { font-size: clamp(0.9rem,2.2vw,2.2rem) !important; } }
+@media (max-width: 1100px) { #din-eco .feature-card.pos-1 .pos1-big-num { font-size: clamp(0.8rem,2vw,2rem) !important; } }
+/* PRO "150%" */
+#din-pro .feature-card.pos-1 .pos1-big-num { font-size: clamp(1rem,2.6vw,2.6rem) !important; }
+/* Peak Power title unified */
+#din-pro .feature-card.pos-1 .pos1-subtitle,
+#din-eco .feature-card.pos-1 .pos1-subtitle {
+  font-size: clamp(0.88rem,1.3vw,1.25rem) !important; font-weight: 700 !important; margin: 0 !important;
+}
+/* pos-1 text column flex */
+#din-pro .feature-card.pos-1 > div:last-child,
+#din-eco .feature-card.pos-1 > div:last-child {
+  justify-content: flex-end !important; align-items: flex-start !important;
+  align-self: stretch !important; gap: clamp(6px,0.8vw,10px) !important;
+}
+/* pos-1 icon-wrap takes remaining space */
+#din-pro .feature-card.pos-1 > div:last-child .icon-wrap,
+#din-eco .feature-card.pos-1 > div:last-child .icon-wrap {
+  flex: 1 1 auto; display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+}
+/* pos-1 desc fixed min-height */
+#din-pro .feature-card.pos-1 > div:last-child .pos1-label:last-child {
+  min-height: 2.6em !important;
+}
 
 /* =============================================
    TEMPERATURE CARD
@@ -266,13 +319,29 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
   justify-content: center !important; overflow: hidden !important; min-height: 0 !important;
   height: 100% !important; flex-wrap: nowrap !important;
 }
-.temp-icon-wrap { flex-shrink: 1; display: flex; align-items: center; justify-content: center; min-width: 0; }
+.temp-icon-wrap { flex-shrink: 0; display: flex; align-items: center; justify-content: center; min-width: 0; }
 .temp-icon { width: clamp(36px,5vw,100px); height: clamp(36px,5vw,100px); object-fit: contain; flex-shrink: 1; display: block; }
-.temp-text-wrap { min-width: 0; min-height: 0; flex-shrink: 1; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: clamp(2px,0.4vw,6px); }
-.temp-label { font-size: clamp(0.72rem,0.85vw,0.95rem); color: #fff; font-weight: 600; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.temp-big-num { font-size: clamp(1rem,3vw,3rem); font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; }
-.temp-to { font-size: clamp(0.5rem,1vw,1.1rem); font-weight: 400; color: #ffffff !important; }
-.temp-range { font-size: clamp(0.6rem,0.75vw,0.88rem); color: #fff; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.temp-text-wrap { min-width: 0; min-height: 0; flex-shrink: 1; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: clamp(2px,0.4vw,6px); align-items: flex-start !important; text-align: left !important; }
+.temp-label { font-size: clamp(0.88rem,1.3vw,1.25rem) !important; color: #fff; font-weight: 700 !important; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.temp-big-num { font-size: clamp(1rem,2.6vw,2.6rem) !important; font-weight: 800 !important; line-height: 1.1; white-space: nowrap; overflow: hidden; }
+.temp-to { font-size: clamp(0.7rem,1.2vw,1.2rem); font-weight: 400; color: #ffffff !important; }
+.temp-range { font-size: clamp(0.72rem,6cqw,0.92rem); color: rgba(255,255,255,0.80); letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* PRO pos-6 temp number grid */
+#din-pro .feature-card.pos-6 .temp-big-num {
+  display: inline-grid !important; grid-template-columns: 0.6em auto !important;
+  align-items: baseline !important; color: #05a3f7 !important;
+}
+#din-pro .feature-card.pos-6 .temp-big-num .temp-sign { color: #05a3f7 !important; display: block !important; text-align: center !important; }
+#din-pro .feature-card.pos-6 .temp-big-num .temp-digits { color: #05a3f7 !important; display: block !important; }
+#din-pro .feature-card.pos-6 .temp-big-num .temp-to { color: #fff !important; font-size: 0.45em !important; margin-left: 0.3em !important; }
+/* ECO pos-4 temp number grid */
+#din-eco .feature-card.pos-4 .temp-big-num {
+  display: inline-grid !important; grid-template-columns: 0.6em auto !important;
+  align-items: baseline !important; color: #00F1CD !important;
+}
+#din-eco .feature-card.pos-4 .temp-big-num .temp-sign { color: #00F1CD !important; display: block !important; text-align: center !important; }
+#din-eco .feature-card.pos-4 .temp-big-num .temp-digits { color: #00F1CD !important; display: block !important; }
+#din-eco .feature-card.pos-4 .temp-big-num .temp-to { color: #fff !important; font-size: 0.45em !important; margin-left: 0.3em !important; }
 
 /* =============================================
    SOLUTION CARDS
@@ -613,6 +682,13 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
   #din-pro .bento-grid-horiz > .pos-1, #din-eco .bento-grid-horiz > .pos-1 { grid-column: 1 / -1 !important; }
   #din-pro .bento-grid-horiz > .pos-6, #din-eco .bento-grid-horiz > .pos-4 { grid-column: 1 / -1 !important; }
   #din-pro .feature-card.pos-1, #din-eco .feature-card.pos-1 { flex-direction: column !important; align-items: center !important; text-align: center !important; padding: 16px 12px !important; gap: 10px !important; }
+  #din-pro .feature-card.pos-1 > div:last-child,
+  #din-eco .feature-card.pos-1 > div:last-child { align-items: center !important; text-align: center !important; width: 100% !important; justify-content: center !important; gap: 0 !important; }
+  #din-pro .feature-card.pos-1 .pos1-subtitle,
+  #din-eco .feature-card.pos-1 .pos1-subtitle { margin: 0 !important; }
+  /* Temp card: keep left-aligned on mobile */
+  #din-pro .feature-card.pos-6 .temp-text-wrap,
+  #din-eco .feature-card.pos-4 .temp-text-wrap { align-items: flex-start !important; text-align: left !important; }
   #din-pro .feature-card.pos-6, #din-eco .feature-card.pos-4 { flex-direction: row !important; align-items: center !important; justify-content: center !important; gap: 10px !important; padding: 14px 10px !important; }
   #din-pro .bento-grid-horiz .feature-card, #din-eco .bento-grid-horiz .feature-card { padding: clamp(8px,2.5vw,16px) !important; align-items: center !important; text-align: center !important; }
   .pos1-big-num { font-size: 2rem !important; }
@@ -746,7 +822,8 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 <body>
 <style type="text/css">#overview-main-title { font-size: clamp(1.9rem,3.5vw,5rem) !important; }
 /* 85~305V in pos-3: fit within small card */
-#din-pro .feature-card.pos-3 .pos1-big-num { font-size: clamp(1.2rem,2.8vw,2.8rem) !important; white-space: nowrap; }
+#din-pro .feature-card.pos-3 .pos1-big-num { font-size: clamp(1rem,2.6vw,2.6rem) !important; white-space: nowrap !important; overflow: visible !important; text-overflow: unset !important; }
+#din-pro .bento-grid-horiz .feature-card.pos-3 .icon-wrap { overflow: visible !important; width: 100% !important; }
 @media (max-width: 900px) { #din-pro .feature-card.pos-3 .pos1-big-num { font-size: clamp(1rem,4vw,2rem) !important; } }
 @media (max-width: 768px) { #din-pro .feature-card.pos-3 .pos1-big-num { font-size: clamp(1rem,5vw,1.8rem) !important; } }
 /* Cert cards: logo scales with viewport, text never overflows */
@@ -1155,19 +1232,22 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="feature-card pro-theme pos-1 pro-card-bg reveal-up delay-100" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;box-sizing:border-box;">
 <div style="flex-shrink:1;display:flex;align-items:center;justify-content:center;"><img alt="Peak Power" class="pos1-icon" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271512230807.png" /></div>
 
-<div style="position:relative;z-index:1;min-width:0;overflow:hidden;">
+<div style="position:relative;z-index:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:0;align-self:stretch;">
+<div class="icon-wrap" style="flex:1 1 auto;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;flex-shrink:0;gap:clamp(4px,0.5vw,8px);padding-bottom:0;">
 <div class="pos1-label" data-i18n="pro.peakLabel">Maximum achievable</div>
 
-<div class="pos1-big-num" style="color:#05a3f7;">150%</div>
+<div class="pos1-big-num" style="color:#05a3f7;margin:0;">150%</div>
+</div>
 
-<div class="pos1-subtitle" data-i18n="pro.peakTitle" style="color:#fff;">Peak Power</div>
+<div class="pos1-subtitle" data-i18n="pro.peakTitle" style="color:#fff;margin:0;">Peak Power</div>
 
-<div class="pos1-label" data-i18n="pro.peakDesc">Starting capability</div>
+<div class="pos1-label" data-i18n="pro.peakDesc" style="min-height:2.6em;margin:0;">Starting capability</div>
 </div>
 </div>
 <!-- pos-2: EMS Immunity -->
 
-<div class="feature-card pro-theme pos-2 pro-card-bg reveal-up delay-200" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;"><img alt="EMS Immunity" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271512423557.png" />
+<div class="feature-card pro-theme pos-2 pro-card-bg reveal-up delay-200" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;">
+<div class="icon-wrap"><img alt="EMS Immunity" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271512423557.png" /></div>
 <div class="card-header" data-i18n="pro.universalInput" style="color:#fff;font-weight:700;">EMS Immunity</div>
 
 <p data-i18n="pro.universalInputDesc" style="color:#fff;">Certified IEC 61000-4-6, 20Vrms</p>
@@ -1175,7 +1255,9 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <!-- pos-3: Semi F47 -->
 
 <div class="feature-card pro-theme pos-3 pro-card-bg reveal-up delay-300" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;">
-<div class="pos1-big-num" data-i18n="pro.semiF47Value" style="color:#05a3f7;margin-bottom:8px;">85~305V</div>
+<div class="icon-wrap">
+<div class="pos1-big-num" data-i18n="pro.semiF47Value" style="color:#05a3f7;margin-bottom:0;">85~305V</div>
+</div>
 
 <div class="card-header" data-i18n="pro.semiF47" style="color:#fff;font-weight:700;margin:0 0 8px 0;">Wide AC Input</div>
 
@@ -1183,14 +1265,16 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 </div>
 <!-- pos-4: Current Sharing -->
 
-<div class="feature-card pro-theme pos-4 pro-card-bg reveal-up delay-100" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;"><img alt="Current Sharing" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271515414462.png" />
+<div class="feature-card pro-theme pos-4 pro-card-bg reveal-up delay-100" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;">
+<div class="icon-wrap"><img alt="Current Sharing" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271515414462.png" /></div>
 <div class="card-header" data-i18n="pro.currentSharing" style="color:#fff;font-weight:700;">Current Sharing</div>
 
 <p data-i18n="pro.currentSharingDesc" style="color:#fff;">Parallel operation support (960W)</p>
 </div>
 <!-- pos-5: PCBA Coating -->
 
-<div class="feature-card pro-theme pos-5 pro-card-bg reveal-up delay-200" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;"><img alt="PCBA Coating" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271515562129.png" />
+<div class="feature-card pro-theme pos-5 pro-card-bg reveal-up delay-200" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;">
+<div class="icon-wrap"><img alt="PCBA Coating" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271515562129.png" /></div>
 <div class="card-header" data-i18n="pro.pcbaCoating" style="color:#fff;font-weight:700;">PCBA Coating</div>
 
 <p data-i18n="pro.pcbaCoatingDesc" style="color:#fff;">Industrial-grade protection</p>
@@ -1203,8 +1287,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="temp-text-wrap">
 <div class="temp-label" data-i18n="pro.extremeTemp">Extreme Temperature</div>
 
-<div class="temp-big-num" style="color:#05a3f7;">-40&deg;C <span class="temp-to" style="color:#fff!important;">to</span><br />
-+80&deg;C</div>
+<div class="temp-big-num"><span class="temp-sign">-</span><span class="temp-digits">40&deg;C <span class="temp-to">to</span></span><span class="temp-sign">+</span><span class="temp-digits">80&deg;C</span></div>
 
 <div class="temp-range" data-i18n="common.opRange">Operating range</div>
 </div>
@@ -1251,32 +1334,32 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="feature-card eco-theme pos-1 eco-card-bg reveal-up delay-100" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;box-sizing:border-box;">
 <div style="flex-shrink:1;display:flex;align-items:center;justify-content:center;"><img alt="3 Phase" class="pos1-icon" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271517399744.png" /></div>
 
-<div style="position:relative;z-index:1;min-width:0;overflow:hidden;">
-<div class="pos1-label" data-i18n="eco.inputRange">Input range</div>
+<div style="position:relative;z-index:1;min-width:0;overflow:hidden;display:flex;flex-direction:column;gap:0;">
+<div class="pos1-label" data-i18n="eco.inputRange" style="margin-bottom:0.1em;">Input range</div>
 
-<div class="pos1-big-num" data-i18n="eco.phase" style="color:#00F1CD;">3 Phase</div>
+<div class="pos1-big-num" data-i18n="eco.phase" style="color:#00F1CD;margin-top:-0.1em;">3 Phase</div>
 
 <div class="pos1-subtitle" data-i18n="eco.wideInput" style="color:#fff;">Wide Input</div>
 
-<div class="pos1-label" data-i18n="eco.acSupport">340~600V AC support</div>
-
-<div class="pos1-note" data-i18n="eco.acSupportNote">(3EN series supports up to 575V)</div>
+<span data-i18n="eco.acSupport" style="display:block;font-size:clamp(0.72rem,0.85vw,0.95rem);color:rgba(255,255,255,0.80);line-height:1.3;font-weight:400;">340~600V AC support</span>
+<span data-i18n="eco.acSupportNote" style="display:block;font-size:clamp(0.72rem,0.85vw,0.95rem);color:rgba(255,255,255,0.80);line-height:1.3;font-weight:400;margin-top:-0.3em;">(3EN series supports up to 575V)</span>
 </div>
 </div>
 <!-- pos-2: High Efficiency -->
 
 <div class="feature-card eco-theme pos-2 eco-card-bg reveal-up delay-200" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;">
 <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-<div data-i18n="eco.effLabel" style="font-size:0.88rem;color:#fff;margin-bottom:16px;font-weight:400;">Up to</div>
+<div class="pos1-label" data-i18n="eco.effLabel" style="color:#fff;margin-bottom:0.4em;">Up to</div>
 
-<div data-i18n="eco.effValue" style="font-size:clamp(1.4rem,3.5vw,3.5rem);font-weight:800;line-height:1;color:#00c9b0;margin-bottom:8px;">95%</div>
+<div data-i18n="eco.effValue" style="font-size:clamp(1.4rem,3.5vw,3.5rem);font-weight:800;line-height:1;color:#00c9b0;margin-top:0.3em;margin-bottom:0.3em;">95%</div>
 
-<div data-i18n="eco.effTitle" style="font-size:1.3rem;font-weight:700;color:#fff;">High Efficiency</div>
+<div data-i18n="eco.effTitle" style="font-size:clamp(0.88rem,1.3vw,1.25rem);font-weight:700;color:#fff;margin-top:0;">High Efficiency</div>
 </div>
 </div>
 <!-- pos-3: Slim & Compact -->
 
-<div class="feature-card eco-theme pos-3 eco-card-bg reveal-up delay-300" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;"><img alt="Slim Design" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603301414447676.png" />
+<div class="feature-card eco-theme pos-3 eco-card-bg reveal-up delay-300" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;">
+<div class="icon-wrap"><img alt="Slim Design" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603301414447676.png" /></div>
 <div class="card-header" data-i18n="eco.slim" style="color:#fff;font-weight:700;">Slim &amp; Compact</div>
 
 <p data-i18n="eco.slimDesc" style="color:#fff;">Space-saving for distribution panel</p>
@@ -1289,22 +1372,23 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="temp-text-wrap">
 <div class="temp-label" data-i18n="eco.wideTemp">Extreme Temperature</div>
 
-<div class="temp-big-num" style="color:#00F1CD;">-40&deg;C <span class="temp-to" style="color:#fff!important;">to</span><br />
-+70&deg;C</div>
+<div class="temp-big-num"><span class="temp-sign">-</span><span class="temp-digits">40&deg;C <span class="temp-to">to</span></span><span class="temp-sign">+</span><span class="temp-digits">70&deg;C</span></div>
 
 <div class="temp-range" data-i18n="common.opRange">Operating range</div>
 </div>
 </div>
 <!-- pos-5: Global Certified -->
 
-<div class="feature-card eco-theme pos-5 eco-card-bg reveal-up delay-200" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;"><img alt="Global Certified" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271518124579.png" />
+<div class="feature-card eco-theme pos-5 eco-card-bg reveal-up delay-200" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;">
+<div class="icon-wrap"><img alt="Global Certified" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271518124579.png" /></div>
 <div class="card-header" data-i18n="eco.certified" style="color:#fff;font-weight:700;">Global Certified</div>
 
 <p data-i18n="eco.certifiedDesc" style="color:#fff;">IEC/EN/UL 62368-1/61010-1</p>
 </div>
 <!-- pos-6: Surge Protection -->
 
-<div class="feature-card eco-theme pos-6 eco-card-bg reveal-up delay-300" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;"><img alt="Surge Protection" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271518259233.png" />
+<div class="feature-card eco-theme pos-6 eco-card-bg reveal-up delay-300" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;">
+<div class="icon-wrap"><img alt="Surge Protection" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271518259233.png" /></div>
 <div class="card-header" data-i18n="eco.surge" style="color:#fff;font-weight:700;">Surge Protection</div>
 
 <p data-i18n="eco.surgeDesc" style="color:#fff;">4KV / 2KV surge immunity</p>
