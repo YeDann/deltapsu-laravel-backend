@@ -6313,4 +6313,83 @@ class FrontendController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Server error']);
         }
     }
+
+    public function landingSkitRequest(Request $request)
+    {
+        $name        = $this->validateInput($request->input('name'), 'text', true);
+        $email       = $this->validateInput($request->input('email'), 'text', true);
+        $company     = $this->validateInput($request->input('company'), 'text', true);
+        $application = $this->validateInput($request->input('application'), 'text', true);
+
+        if (!$name || !$email || !$company || !$application) {
+            return response()->json(['status' => 'error', 'message' => 'Missing required fields'], 422);
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid email'], 422);
+        }
+
+        $fileMap = [
+            'sol.cobotArm'      => 'Sales_kit_for_Cobot(EN)_20260504.pdf',
+            'sol.dataCenter'    => 'Sales_kit_for_Data_Center(EN)_20260504.pdf',
+            'sol.evCharger'     => 'Sales_kit_for_EV_Charger(EN)_20260504.pdf',
+            'sol.greenEnergy'   => 'Sales_kit_for_Green_Energy(EN)_20260504.pdf',
+            'sol.processAuto'   => 'Sales_kit_for_Process_Automation(EN)_20260504.pdf',
+            'sol.semiconductor' => 'Sales_Kit_for_Semi-com(EN)_20260504.pdf',
+        ];
+
+        if (!array_key_exists($application, $fileMap)) {
+            return response()->json(['status' => 'error', 'message' => 'Invalid application'], 422);
+        }
+
+        $phone  = $this->validateInput($request->input('phone'), 'text', true) ?: null;
+        $locale = $this->validateInput($request->input('locale'), 'text', true) ?: 'en';
+
+        try {
+            DB::table('landing_saleskit_requests')->insert([
+                'name'        => $name,
+                'email'       => strtolower(trim($email)),
+                'company'     => $company,
+                'phone'       => $phone,
+                'locale'      => $locale,
+                'application' => $application,
+                'created_at'  => \Carbon\Carbon::now(),
+            ]);
+
+            return response()->json([
+                'status'       => 'success',
+                'download_url' => route('landingSkitDownload', ['application' => $application]),
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('[landingSkitRequest] ' . $e->getMessage());
+            return response()->json(['status' => 'error', 'message' => 'Server error'], 500);
+        }
+    }
+
+    public function landingSkitDownload($application)
+    {
+        $fileMap = [
+            'sol.cobotArm'      => 'Sales_kit_for_Cobot(EN)_20260504.pdf',
+            'sol.dataCenter'    => 'Sales_kit_for_Data_Center(EN)_20260504.pdf',
+            'sol.evCharger'     => 'Sales_kit_for_EV_Charger(EN)_20260504.pdf',
+            'sol.greenEnergy'   => 'Sales_kit_for_Green_Energy(EN)_20260504.pdf',
+            'sol.processAuto'   => 'Sales_kit_for_Process_Automation(EN)_20260504.pdf',
+            'sol.semiconductor' => 'Sales_Kit_for_Semi-com(EN)_20260504.pdf',
+        ];
+
+        if (!isset($fileMap[$application])) {
+            abort(404);
+        }
+
+        $path = public_path('downloads/saleskit/' . $fileMap[$application]);
+
+        if (!file_exists($path)) {
+            abort(404);
+        }
+
+        return response()->file($path, [
+            'Content-Type'        => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="' . $fileMap[$application] . '"',
+        ]);
+    }
 }

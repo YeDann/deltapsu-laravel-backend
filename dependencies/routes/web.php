@@ -142,6 +142,8 @@ Route::group([
 
 Route::post('/landing/subscribe', 'FrontendController@landingSubscribe')->name('landingSubscribe');
 Route::post('/landing/contact', 'FrontendController@landingContact')->name('landingContact');
+Route::post('/landing/saleskit-request', 'FrontendController@landingSkitRequest')->name('landingSkitRequest');
+Route::get('/landing/saleskit-download/{application}', 'FrontendController@landingSkitDownload')->name('landingSkitDownload');
 
 Route::prefix('/backend')->group(function () {
     Auth::routes();
@@ -555,6 +557,8 @@ Route::prefix('/backend')->group(function () {
     Route::get('getExportProductImage', 'ImportController@getExportProductImage')->name('getExportProductImage');
     Route::get('subscribers/index', 'SubscribeController@index')->name('subscribers_index');
     Route::get('exportSubscribes', 'SubscribeController@exportSubscribes')->name('exportSubscribes');
+    Route::get('saleskit-requests/index', 'SaleskitRequestController@index')->name('saleskit_requests_index');
+    Route::get('saleskit-requests/export', 'SaleskitRequestController@export')->name('saleskit_requests_export');
     Route::get('ExportPartner', 'PartnerController@ExportPartner')->name('ExportPartner');
 
     Route::get('metaTags', 'MetaTagController@index')->name('metaTags');

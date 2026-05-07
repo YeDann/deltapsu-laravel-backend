@@ -38,18 +38,22 @@
 - **THEN** 頁面以英文顯示
 
 ### Requirement: 語系切換器導向對應 URL
-使用者點選頁面內建語系切換器的語言選項時，瀏覽器必須導向 `/{locale}/landing/din-rail-infinity-ready`，而不是在頁面內直接切換內容。
+語系切換 SHALL 原地更新頁面內容，並用 `history.pushState` 同步網址列為對應語系 URL，不重載頁面。`window._locale` 同步更新供後續 API 呼叫使用。
 
-#### Scenario: 從英文切換到繁中
-- **WHEN** 使用者在 `/en/landing/din-rail-infinity-ready` 點選語系切換器中的「繁體中文」
-- **THEN** 瀏覽器導向 `/tw/landing/din-rail-infinity-ready`
+#### Scenario: 切換語系後內容立即更新
+- **WHEN** 使用者點選語系切換器中的「繁體中文」
+- **THEN** 頁面所有 `[data-i18n]` 元素立即切換為繁體中文，無頁面重載
 
-#### Scenario: 從繁中切換到英文
-- **WHEN** 使用者在 `/tw/landing/din-rail-infinity-ready` 點選語系切換器中的「English」
-- **THEN** 瀏覽器導向 `/en/landing/din-rail-infinity-ready`
+#### Scenario: 切換語系後網址更新
+- **WHEN** 使用者在 `/en/landing/din-rail-infinity-ready` 點選「繁體中文」
+- **THEN** 網址列更新為 `/tw/landing/din-rail-infinity-ready`，無頁面重載
+
+#### Scenario: 切換後 saleskit API 帶正確語系
+- **WHEN** 使用者切換至日文後送出 saleskit 表單
+- **THEN** API 的 locale 欄位為 `jp`，而非原始載入語系
 
 ### Requirement: 頁面視覺與互動功能完整保留
-所有動畫、滾動效果、影片背景、瓦數篩選、產品卡片、Modal、側邊導覽列、行動版底部導覽列，必須與原始 `delta-zh-TW.html` 完全相同。
+所有動畫、滾動效果、影片背景、瓦數篩選、產品卡片、Modal、側邊導覽列、行動版底部導覽列，必須與原始 `delta-zh-TW.html` 完全相同。`#promo-mini-btn` SHALL 為錨點連結，點擊後捲動至 `#contact` section。
 
 #### Scenario: GSAP 滾動動畫正常觸發
 - **WHEN** 使用者向下滾動頁面
@@ -58,3 +62,7 @@
 #### Scenario: 瓦數篩選器正常運作
 - **WHEN** 使用者點選 DIN Pro 或 DIN Eco 區塊的瓦數篩選按鈕
 - **THEN** 只顯示符合該瓦數的產品卡片
+
+#### Scenario: 點擊 promo-mini-btn 捲動至 contact
+- **WHEN** 使用者點擊右下角的 `#promo-mini-btn`
+- **THEN** 頁面平滑捲動至 `id="contact"` 的 section

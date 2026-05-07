@@ -738,7 +738,7 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 #offices-dialog .o-hq { color: #fff; font-size: 10px; }
 #offices-dialog .o-entry { margin-bottom: 8px; }
 </style>
-<script>window._serverLang = '{{ $htmlLang }}'; window._csrfToken = '{{ csrf_token() }}';</script>
+<script>window._serverLang = '{{ $htmlLang }}'; window._csrfToken = '{{ csrf_token() }}'; window._locale = '{{ App::getLocale() }}';</script>
 </head>
 
 
@@ -1891,6 +1891,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 <div style="margin-bottom:20px;"><label data-i18n="saleskit.company" style="display:block;color:#aaa;margin-bottom:8px;font-size:0.9rem;">Company *</label><input data-i18n-placeholder="saleskit.companyPlaceholder" id="saleskit-company" placeholder="Your company name" required="" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,242,255,0.3);border-radius:8px;color:#fff;font-size:1rem;" type="text" /><span id="saleskit-company-err" style="color:#ff4444;font-size:0.8rem;margin-top:4px;display:none;"></span></div>
 
 <div style="margin-bottom:30px;"><label data-i18n="saleskit.phone" style="display:block;color:#aaa;margin-bottom:8px;font-size:0.9rem;">Phone</label><input data-i18n-placeholder="saleskit.phonePlaceholder" id="saleskit-phone" placeholder="Optional" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,242,255,0.3);border-radius:8px;color:#fff;font-size:1rem;" type="tel" /></div>
+<div style="margin-bottom:20px;display:flex;align-items:flex-start;gap:10px;"><input id="saleskit-privacy" style="margin-top:3px;flex-shrink:0;accent-color:#05a3f7;width:16px;height:16px;cursor:pointer;" type="checkbox" /><label data-i18n="saleskit.privacyAgree" for="saleskit-privacy" id="saleskit-privacy-label" style="color:#aaa;font-size:0.85rem;cursor:pointer;line-height:1.4;">I have read and agree to the Privacy Policy.</label></div>
+<span id="saleskit-privacy-err" style="color:#ff4444;font-size:0.8rem;margin-top:-12px;margin-bottom:12px;display:none;"></span>
 <button class="btn-cyber" data-i18n="saleskit.download" id="download-btn" style="width:100%;min-height:50px;" type="submit">DOWNLOAD SALES KIT</button></form>
 </div>
 </div>
@@ -1922,12 +1924,12 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 </div>
 <!-- ===== PROMO MODAL ===== -->
 
-<div id="promo-overlay" onclick="closePromoModal()">
+{{-- <div id="promo-overlay" onclick="closePromoModal()">
 <div id="promo-dialog" onclick="event.stopPropagation()"><button id="promo-close" onclick="closePromoModal()" type="button">&times;</button>
 
 <div id="promo-img-wrap"><img alt="Promotion" fetchpriority="high" id="promo-img" loading="eager" src="https://filecenter.deltaww.com/about/images/about-202604291009473100.jpg" /></div>
 </div>
-</div>
+</div> --}}
 <!-- ===== GLOBAL OFFICES MODAL ===== -->
 
 <div id="offices-modal" onclick="document.getElementById('offices-modal').classList.remove('is-open')">
@@ -2060,7 +2062,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 </div>
 </div>
 </div>
-<a class="scroll-top-btn" href="#intro"><svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24"><path d="M18 15l-6-6-6 6"></path></svg></a><button id="promo-mini-btn" onclick="document.getElementById('promo-overlay').classList.add('is-open')" title="View Promotion" type="button"><svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect height="5" width="20" x="2" y="7"></rect><line x1="12" x2="12" y1="22" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg></button></div>
+<a class="scroll-top-btn" href="#intro"><svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24"><path d="M18 15l-6-6-6 6"></path></svg></a><a href="#contact" id="promo-mini-btn" title="Get Info"><svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect height="5" width="20" x="2" y="7"></rect><line x1="12" x2="12" y1="22" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg></a></div>
 
 
 
@@ -2349,8 +2351,10 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       var lang = document.documentElement.getAttribute('lang') || 'en';
+      var t = window._translations && window._translations[lang] ? window._translations[lang] : {};
       var msgRequired = lang === 'zh-TW' ? '此欄位為必填' : lang === 'zh-CN' ? '此栏位为必填项' : lang === 'ja' ? 'この項目は必須です' : 'This field is required';
       var msgEmail = lang === 'zh-TW' ? '請輸入有效的電子郵件' : lang === 'zh-CN' ? '请输入有效的电子邮件' : lang === 'ja' ? '有効なメールアドレスを入力してください' : 'Please enter a valid email address';
+      var msgPrivacy = t['saleskit.privacyRequired'] || 'Please agree to the Privacy Policy.';
       var name = document.getElementById('saleskit-name').value.trim();
       var email = document.getElementById('saleskit-email').value.trim();
       var company = document.getElementById('saleskit-company').value.trim();
@@ -2364,30 +2368,46 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
         var el = document.getElementById(f.id), err = document.getElementById(f.errId);
         el.style.borderColor = ''; if (err) { err.textContent = ''; err.style.display = 'none'; }
       });
+      var privacyErr = document.getElementById('saleskit-privacy-err');
+      if (privacyErr) { privacyErr.textContent = ''; privacyErr.style.display = 'none'; }
       fields.forEach(function(f) {
         var el = document.getElementById(f.id), err = document.getElementById(f.errId);
         if (!f.val) { el.style.borderColor = '#ff4444'; if (err) { err.textContent = msgRequired; err.style.display = 'block'; } if (valid) el.focus(); valid = false; }
         else if (f.isEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.val)) { el.style.borderColor = '#ff4444'; if (err) { err.textContent = msgEmail; err.style.display = 'block'; } if (valid) el.focus(); valid = false; }
       });
+      var privacyChecked = document.getElementById('saleskit-privacy') && document.getElementById('saleskit-privacy').checked;
+      if (!privacyChecked) { if (privacyErr) { privacyErr.textContent = msgPrivacy; privacyErr.style.display = 'block'; } valid = false; }
       if (!valid) return;
       var btn = document.getElementById('download-btn');
-      btn.textContent = 'DOWNLOADING...'; btn.disabled = true;
-      setTimeout(function() {
-        var link = document.createElement('a');
-        link.href = ({
-          'sol.cobotArm':      'https://filecenter.deltaww.com/about/images/about-202604301107446325.pdf',
-          'sol.semiconductor': 'https://filecenter.deltaww.com/about/images/about-202604301107446325.pdf',
-          'sol.dataCenter':    'https://filecenter.deltaww.com/about/images/about-202604301107446325.pdf',
-          'sol.evCharger':     'https://filecenter.deltaww.com/about/images/about-202604301107446325.pdf',
-          'sol.greenEnergy':   'https://filecenter.deltaww.com/about/images/about-202604301107446325.pdf',
-          'sol.processAuto':   'https://filecenter.deltaww.com/about/images/about-202604301107446325.pdf'
-        })[window.currentApplication] || 'https://filecenter.deltaww.com/about/images/about-202604301107446325.pdf';
-        link.download = (window.currentApplication || 'sales').replace(/\s+/g,'_') + '_Sales_Kit.pdf';
-        link.click();
-        alert('Thank you! Your sales kit is being downloaded.');
-        window.closeSalesKitModal();
-        btn.textContent = 'DOWNLOAD SALES KIT'; btn.disabled = false;
-      }, 1000);
+      btn.disabled = true;
+      fetch('{{ route("landingSkitRequest") }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': window._csrfToken },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          company: company,
+          phone: document.getElementById('saleskit-phone') ? document.getElementById('saleskit-phone').value.trim() : '',
+          application: window.currentApplication || '',
+          locale: window._locale || 'en'
+        })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.status === 'success') {
+          var link = document.createElement('a');
+          link.href = data.download_url;
+          link.download = '';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.closeSalesKitModal();
+        } else {
+          alert(data.message || 'Error, please try again.');
+        }
+      })
+      .catch(function() { alert('Network error, please try again.'); })
+      .finally(function() { btn.disabled = false; });
     });
   });
 
@@ -2457,7 +2477,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
   };
   window.switchLang = function(lang, el) {
     var url = el && el.getAttribute('data-lang-url');
-    if (url) { window.location.href = url; return; }
+    if (url) { history.pushState(null, '', url); }
+    window._locale = {'en':'en','zh-TW':'tw','zh-CN':'cn','ja':'jp'}[lang] || 'en';
     document.documentElement.setAttribute('lang', lang);
     var names = { 'en':'EN','zh-TW':'繁中','zh-CN':'简中','ja':'日本語' };
     var nameEl = document.getElementById('langCurrentName');
@@ -2515,7 +2536,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'notify.title':'Stay Updated','notify.desc':'Be the first to know about our latest power solutions and product launches',
       'notify.emailPlaceholder':'Your Email Address','notify.namePlaceholder':'Your Name','notify.countryPlaceholder':'Select Country','notify.agree':'I agree to receive updates and marketing communications','notify.privacyAgree':'By submitting this form, You understand and agree to our privacy policy.','notify.subscribe':'SUBSCRIBE NOW',
       'notify.productUpdates':'Product Updates','notify.eventInvites':'Event Invites','notify.exclusiveOffers':'Exclusive Offers',
-      'saleskit.title':'Request Sales Kit','saleskit.name':'Name *','saleskit.namePlaceholder':'Your name','saleskit.email':'Email *','saleskit.company':'Company *','saleskit.companyPlaceholder':'Your company name','saleskit.phone':'Phone','saleskit.phonePlaceholder':'Optional','saleskit.download':'DOWNLOAD SALES KIT',
+      'saleskit.title':'Request Sales Kit','saleskit.name':'Name *','saleskit.namePlaceholder':'Your name','saleskit.email':'Email *','saleskit.company':'Company *','saleskit.companyPlaceholder':'Your company name','saleskit.phone':'Phone','saleskit.phonePlaceholder':'Optional','saleskit.download':'DOWNLOAD SALES KIT','saleskit.privacyAgree':'I have read and agree to the Privacy Policy.','saleskit.privacyRequired':'Please agree to the Privacy Policy.',
       'offices.title':'Global Operations &amp; Service Locations','offices.asia':'Asia','offices.northAmerica':'North America','offices.centralSouthAmerica':'Central &amp; South America','offices.europe':'Europe',
       'wechat.scan':'Scan to add WeChat','wechat.instruction':'Open WeChat → Scan QR Code',
       'features.title':'Engineering Excellence','features.desc':'High performance architecture for the Industry 4.0 era',
@@ -2566,7 +2587,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'notify.title':'訂閱更新','notify.desc':'搶先獲得最新電源解決方案與產品發布資訊',
       'notify.emailPlaceholder':'您的電子郵件','notify.namePlaceholder':'您的姓名','notify.countryPlaceholder':'選擇國家','notify.agree':'我同意接收最新資訊及行銷通訊','notify.privacyAgree':'已瞭解與同意我們的隱私權政策','notify.subscribe':'立即訂閱',
       'notify.productUpdates':'產品更新','notify.eventInvites':'活動邀請','notify.exclusiveOffers':'專屬優惠',
-      'saleskit.title':'索取銷售資料','saleskit.name':'姓名 *','saleskit.namePlaceholder':'您的姓名','saleskit.email':'電子郵件 *','saleskit.company':'公司名稱 *','saleskit.companyPlaceholder':'您的公司名稱','saleskit.phone':'電話','saleskit.phonePlaceholder':'選填','saleskit.download':'下載銷售資料',
+      'saleskit.title':'索取銷售資料','saleskit.name':'姓名 *','saleskit.namePlaceholder':'您的姓名','saleskit.email':'電子郵件 *','saleskit.company':'公司名稱 *','saleskit.companyPlaceholder':'您的公司名稱','saleskit.phone':'電話','saleskit.phonePlaceholder':'選填','saleskit.download':'下載銷售資料','saleskit.privacyAgree':'我已閱讀並同意隱私權政策。','saleskit.privacyRequired':'請同意隱私權政策。',
       'offices.title':'全球運營與服務據點','offices.asia':'亞洲','offices.northAmerica':'北美','offices.centralSouthAmerica':'中南美','offices.europe':'歐洲',
       'wechat.scan':'掃描加入微信','wechat.instruction':'開啟微信 → 掃描 QR Code',
       'features.title':'卓越服務','features.desc':'為工業 4.0 時代打造的高效能架構',
@@ -2617,7 +2638,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'notify.title':'订阅更新','notify.desc':'抢先获得最新电源解决方案与产品发布资讯',
       'notify.emailPlaceholder':'您的电子邮件','notify.namePlaceholder':'您的姓名','notify.countryPlaceholder':'选择国家','notify.agree':'我同意接收最新资讯及营销资讯','notify.privacyAgree':'已了解并同意我们的隐私政策','notify.subscribe':'立即订阅',
       'notify.productUpdates':'产品更新','notify.eventInvites':'活动邀请','notify.exclusiveOffers':'专属优惠',
-      'saleskit.title':'索取销售资料','saleskit.name':'姓名 *','saleskit.namePlaceholder':'您的姓名','saleskit.email':'电子邮件 *','saleskit.company':'公司名称 *','saleskit.companyPlaceholder':'您的公司名称','saleskit.phone':'电话','saleskit.phonePlaceholder':'选填','saleskit.download':'资料下载',
+      'saleskit.title':'索取销售资料','saleskit.name':'姓名 *','saleskit.namePlaceholder':'您的姓名','saleskit.email':'电子邮件 *','saleskit.company':'公司名称 *','saleskit.companyPlaceholder':'您的公司名称','saleskit.phone':'电话','saleskit.phonePlaceholder':'选填','saleskit.download':'资料下载','saleskit.privacyAgree':'我已阅读并同意隐私政策。','saleskit.privacyRequired':'请同意隐私政策。',
       'offices.title':'全球运营与服务据点','offices.asia':'亚洲','offices.northAmerica':'北美','offices.centralSouthAmerica':'中南美','offices.europe':'欧洲',
       'wechat.scan':'扫描加入微信','wechat.instruction':'打开微信 → 扫描二维码',
       'features.title':'卓越服务','features.desc':'为工业 4.0 时代打造的高性能架构',
@@ -2668,7 +2689,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'notify.title':'最新情報を受け取る','notify.desc':'最新の電源ソリューションと製品発表をいち早くお届けします',
       'notify.emailPlaceholder':'メールアドレス','notify.namePlaceholder':'お名前','notify.countryPlaceholder':'国を選択','notify.agree':'アップデートやマーケティング情報の受け取りに同意します','notify.privacyAgree':'プライバシーポリシーを理解し、これに同意しました','notify.subscribe':'今すぐ登録',
       'notify.productUpdates':'製品情報','notify.eventInvites':'イベント案内','notify.exclusiveOffers':'限定オファー',
-      'saleskit.title':'営業資料の請求','saleskit.name':'お名前 *','saleskit.namePlaceholder':'お名前を入力','saleskit.email':'メールアドレス *','saleskit.company':'会社名 *','saleskit.companyPlaceholder':'会社名を入力','saleskit.phone':'電話番号','saleskit.phonePlaceholder':'任意','saleskit.download':'営業資料をダウンロード',
+      'saleskit.title':'営業資料の請求','saleskit.name':'お名前 *','saleskit.namePlaceholder':'お名前を入力','saleskit.email':'メールアドレス *','saleskit.company':'会社名 *','saleskit.companyPlaceholder':'会社名を入力','saleskit.phone':'電話番号','saleskit.phonePlaceholder':'任意','saleskit.download':'営業資料をダウンロード','saleskit.privacyAgree':'プライバシーポリシーを読み、同意しました。','saleskit.privacyRequired':'プライバシーポリシーに同意してください。',
       'offices.title':'グローバル拠点','offices.asia':'アジア','offices.northAmerica':'北米','offices.centralSouthAmerica':'中南米','offices.europe':'ヨーロッパ',
       'wechat.scan':'WeChatをスキャンして追加','wechat.instruction':'WeChatを開く → QRコードをスキャン',
       'features.title':'卓越したサービス','features.desc':'産業 4.0 時代のための高性能アーキテクチャ',
