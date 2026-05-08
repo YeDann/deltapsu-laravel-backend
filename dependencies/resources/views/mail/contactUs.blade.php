@@ -872,7 +872,13 @@
                                                             <td style="width: 180px;">Model : </td>
                                                             <td>{{isset($contactForm['model_name']) ? $contactForm['model_name'] :'-' }}</td>
                                                         </tr>
-                                                    
+                                                        @if(isset($contactForm['series']))
+                                                        <tr>
+                                                            <td style="width: 180px;">Series : </td>
+                                                            <td>{{$contactForm['series']}}</td>
+                                                        </tr>
+                                                        @endif
+
                                                         <tr>
                                                             <td style="width: 180px;color:#007bff;">Sign up for newsletter : </td>
                                                             <td>{{isset($contactForm['checkData']) && $contactForm['checkData'] == 1 ?'Yes':'No'}}</td>
