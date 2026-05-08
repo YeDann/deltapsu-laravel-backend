@@ -1,20 +1,110 @@
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+context: |
+  ## Project Overview
+  DeltaPSU Laravel Backend — multilingual product catalog site for Delta Electronics power supplies (psu.deltaww.com).
+  Working directory: `dependencies/`
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+  ## Tech Stack
+  - PHP 7.4, Laravel 6, MySQL, Blade, jQuery, Bootstrap 4
+  - LaravelLocalization (mcamara/laravel-localization) for i18n
+  - Supported locales: en, tw, cn, de, jp, tr
+
+  ## Key Files
+  - app/Http/Controllers/FrontendController.php — all frontend pages
+  - app/Http/Controllers/ProductsController.php — admin product CRUD
+  - resources/views/front-end/product.blade.php — product listing + JS filter/sort
+  - resources/views/front-end/productdetails.blade.php — product detail
+  - resources/views/front-end/resultsearch.blade.php — search results
+  - resources/views/front-end/landing-din-rail-infinity-ready.blade.php — DIN Rail landing page
+  - resources/views/product/create.blade.php — admin product create
+  - resources/views/product/edit.blade.php — admin product edit
+  - resources/views/components/hreflang.blade.php — shared hreflang SEO component
+  - app/Http/Middleware/CsvRedirectMiddleware.php — bulk 301/410 redirects
+  - storage/app/redirect_map.php — pre-processed redirect map
+
+  ## Architecture
+  - Routes → FrontendController (frontend) / ProductsController (admin CRUD)
+  - Blade templates with i18n via LaravelLocalization
+  - Product spec data: product_has_property + product_has_property_translation tables
+  - Translation pattern: every content table has {table}_translation with `local` column
+
+  ## Database Translation Pattern
+  Every content table has `{table}_translation` with `local` column.
+  Always join on `local = $lang` where `$lang = App::getLocale()`.
+  Supported locales: en, tw, cn, de, jp, tr
+
+  ## Product Sorting
+  Sorting on product.blade.php is done entirely in front-end JavaScript.
+  Do NOT add ORDER BY to controller queries for product.blade.
+  Sort priority (status_product): 2=New → 1/null=None → 3=NRND → 4=EOL
+  For searchAll page: sorting IS done in controller.
+
+  ## Product Spec Fields (Dynamic)
+  - Table: product_has_property + product_has_property_translation
+  - status_input: 1=Single, 2=Multiple (data_1..data_12), 3=Range (data_1=min, data_2=max)
+  - type_value='text': value stored in value_text of translation table — only ONE value per row
+
+  ## Landing Page (DIN Rail)
+  - File: resources/views/front-end/landing-din-rail-infinity-ready.blade.php (~2750 lines)
+  - i18n: JS translations object with keys for en, tw, cn, jp; no de/tr
+  - Layout: Bento-grid Feature Cards (PRO series + ECO series), countdown timers, product grid
+  - Two countdown timers: Hero (#cd-days-hero) and Video (#cd-days / video-countdown)
+  - Lang detection: document.documentElement.lang (set by controller via $htmlLang)
+
+  ## Redirect System
+  - CSV source: storage/app/psu.deltaww.csv
+  - Pre-process: php artisan redirects:generate → generates storage/app/redirect_map.php
+  - Supports 301 redirects and 410 Gone responses
+
+  ## URL Routing
+  - New product list URL: /{lang}/product/{main_cate_id}/{main_cate}/{cate_id}
+  - New product detail URL: /{lang}/product/{cate_name}/{pro_code}
+  - Landing page: /{lang}/landing/din-rail-infinity-ready
+
+  ## Naming Conventions
+  - Controllers: PascalCase with Controller suffix
+  - Blade files: kebab-case in resources/views/front-end/
+  - i18n keys: dot notation (e.g. hero.title, overview.videoExpiry)
+  - CSS selectors: BEM-inspired with component prefix (#din-pro, .feature-card, .pos1-icon)
+
+  ## Key Constraints
+  - product.blade.php is ~5000+ lines — always read the specific section before editing
+  - Edit tool may fail on large blade files if strings aren't unique — use more surrounding context
+  - Desktop and mobile sections in blade files often have slightly different indentation
+  - Never use product_has_property for multi-field-per-row data (only 1 value_text for text type)
+  - Multi-main-category gotcha: categories_has_main_pro — one sub-category can belong to multiple main categories
+
+rules:
+  proposal:
+    - "All content MUST be written in 繁體中文 (Traditional Chinese). Section headings (lines starting with ##) MUST remain in English."
+    - "State whether the change affects: Frontend pages, Admin CRUD, Landing page, Redirect system, or DB schema."
+    - "List all affected files explicitly."
+    - "When identifying New Capabilities, use kebab-case names matching the functional unit (e.g. din-rail-landing-page, product-detail, csv-redirect)."
+    - "When identifying Modified Capabilities, check openspec/specs/ for existing spec folder names before listing them."
+
+  specs:
+    - "All content MUST be written in 繁體中文 (Traditional Chinese). Section headings (lines starting with ## or ###) MUST remain in English."
+    - "For frontend/blade changes: scenarios must cover desktop layout, mobile layout, and all supported locales (en, tw, cn, jp) where behavior differs."
+    - "For i18n changes: scenarios must specify which locale(s) are affected and the exact expected string value."
+    - "For CSS/layout changes: scenarios must describe the visual behavior (alignment, sizing, responsive breakpoints) in testable terms."
+    - "For JS changes (countdown timers, filters, sort): scenarios must cover the locale-dependent logic and edge cases (e.g. diff <= 0 for countdown)."
+    - "Each scenario must be verifiable by manual browser testing or PHP unit test."
+    - "For controller changes: scenarios must cover all supported locales and URL patterns."
+
+  design:
+    - "All content MUST be written in 繁體中文 (Traditional Chinese). Section headings (lines starting with ##) MUST remain in English."
+    - "For blade file changes: note the line range of the affected section and whether desktop/mobile sections both need updating."
+    - "For CSS changes: document the selector strategy and any !important usage rationale."
+    - "For JS changes: document the lang detection approach (document.documentElement.lang vs window._locale) and fallback behavior."
+    - "For DB/query changes: note the translation join pattern and whether ORDER BY belongs in controller or JS."
+    - "For large blade files (>2000 lines): document the specific search strings to locate the edit target, since Edit tool requires unique context."
+
+  tasks:
+    - "All content MUST be written in 繁體中文 (Traditional Chinese). Section headings (lines starting with ##) MUST remain in English. Task descriptions after the checkbox (- [ ] X.Y) MUST be in 繁體中文."
+    - "Order task groups by dependency: DB migration → Model → Controller → Blade (CSS → HTML → JS) → i18n strings."
+    - "For blade files with both desktop and mobile sections, include separate tasks for each if they differ."
+    - "For i18n changes: include one task per locale (en, tw, cn, jp) if the strings differ."
+    - "Keep each task small and focused — one CSS rule block, one HTML section, or one locale's strings per task."
+    - "For landing page changes: always specify the element ID or CSS selector being targeted, and the line range if known."
+    - "For large blade files: note that Edit tool requires unique surrounding context — tasks should describe enough context to locate the target uniquely."

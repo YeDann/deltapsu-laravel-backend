@@ -867,7 +867,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="reveal-up delay-150" data-i18n="overview.event.line2" style="font-size:clamp(1.2rem,3.5vw,4rem);font-weight:700;letter-spacing:clamp(1px,0.3vw,4px);text-transform:uppercase;color:rgba(0,210,255,0.9);margin:0 0 clamp(14px,2.5vh,30px) 0;line-height:1.25;">New Product Launch Event 2026</div>
 <!-- Row 4: Online Launch Event at + date/time -->
 
-<div class="reveal-up delay-200" style="margin:0 0 clamp(16px,2.5vh,28px) 0;font-size:clamp(0.72rem,1.7vw,1.4rem);color:rgba(255,255,255,0.85);letter-spacing:0.5px;white-space:nowrap;"><span data-i18n="hero.onlineEventAt" style="color:rgba(255,255,255,0.85);">Online Launch Event at</span> <span data-i18n="overview.videoExpiry" style="color:#00f2ff;font-weight:700;letter-spacing:1px;white-space:nowrap;">2026.05.20 (Wed.) | 3 PM (UTC +8)</span></div>
+<div class="reveal-up delay-200" style="margin:0 0 clamp(16px,2.5vh,28px) 0;font-size:clamp(0.72rem,1.7vw,1.4rem);color:rgba(255,255,255,0.85);letter-spacing:0.5px;white-space:nowrap;"><span data-i18n="hero.onlineEventAt" style="color:rgba(255,255,255,0.85);">Online Launch Event at</span> <span data-i18n="overview.videoExpiry" style="color:#00f2ff;font-weight:700;letter-spacing:1px;white-space:nowrap;">2026.05.20 (Wed.) | 03:30 PM (UTC +8)</span></div>
 <!-- Row 5: Register Now + Countdown side by side -->
 
 <div class="reveal-up delay-250" style="display:flex;flex-direction:row;align-items:center;gap:clamp(10px,2vw,20px);flex-wrap:wrap;justify-content:center;margin-bottom:clamp(20px,3vh,40px);"><!-- Register Now button --><button class="btn-notify" onclick="UIkit.modal('#notify-modal').show()" style="min-width:160px;justify-content:center;padding:clamp(8px,1.4vw,12px) clamp(18px,2.5vw,30px);font-size:clamp(0.75rem,1.4vw,1rem);border-radius:8px;" type="button"><span data-i18n="hero.register" style="color:#fff!important;">Register Now</span></button><!-- Countdown -->
@@ -898,8 +898,12 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 </div>
 <script>
 (function syncHeroCountdown() {
+  var _lang = document.documentElement.lang;
+  var _heroTarget = (_lang === 'zh-TW' || _lang === 'zh-CN')
+    ? new Date('2026-05-20T09:30:00+08:00')
+    : new Date('2026-05-20T15:30:00+08:00');
   function tick() {
-    var target = new Date('2026-05-20T15:00:00+08:00');
+    var target = _heroTarget;
     var now = new Date();
     var diff = Math.max(0, target - now);
     var days = Math.floor(diff / 86400000);
@@ -2169,7 +2173,10 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit-icons.min.js"></script>
 <script>
 (function(){
-  var target = new Date('2026-05-20T15:00:00+08:00').getTime();
+  var _l = document.documentElement.lang;
+  var target = ((_l === 'zh-TW' || _l === 'zh-CN')
+    ? new Date('2026-05-20T09:30:00+08:00')
+    : new Date('2026-05-20T15:30:00+08:00')).getTime();
   function tick(){
     var now = Date.now(), diff = target - now;
     var el = document.getElementById('video-countdown');
@@ -2581,7 +2588,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     'en': {
       label:'EN',
       'nav.home':'Home','nav.live':'LIVE','nav.certification':'Certification','nav.compare':'Compare','nav.solutions':'Solutions','nav.contact':'Get Info','nav.dinpro':'DIN Pro','nav.dineco':'DIN Eco',
-      'overview.event.line1':'Delta Standard Power Supply','overview.event.line2':'New Product Launch Event 2026','overview.title1':'POWERING','overview.title2':'EXCELLENCE','overview.desc':'New-generation power solutions engineered for mission-critical stability','overview.videoExpiry':'2026.05.20 (Wed.) | 3 PM (UTC +8)',
+      'overview.event.line1':'Delta Standard Power Supply','overview.event.line2':'New Product Launch Event 2026','overview.title1':'POWERING','overview.title2':'EXCELLENCE','overview.desc':'New-generation power solutions engineered for mission-critical stability','overview.videoExpiry':'2026.05.20 (Wed.) | 03:30 PM (UTC +8)',
       'hero.title':'DELTA STANDARD POWER SUPPLY','hero.subtitle':'INFINITY READY','hero.notified':'GET NOTIFIED','hero.register':'Register Now','hero.onlineEventAt':'Online Launch Event at','hero.dinRailLabel':'DIN Rail Power Supplies','hero.upcomingLabel':"Delta's Upcoming New Products at a Glance",
       'dinpro.title':'DIN Pro 1-Phase Series','dinpro.desc':'The Source of Stability, Powering the Future','dinpro.learnMore':'LEARN MORE',
       'dineco.title':'DIN Eco 3-Phase Series','dineco.desc':'Performance at the Core, Built to Last','dineco.learnMore':'LEARN MORE',
@@ -2632,7 +2639,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     'zh-TW': {
       label:'繁中',
       'nav.home':'首頁','nav.live':'直播','nav.certification':'認證','nav.compare':'比較','nav.solutions':'應用方案','nav.contact':'取得資訊','nav.dinpro':'DIN Pro','nav.dineco':'DIN Eco',
-      'overview.event.line1':'台達標準電源','overview.event.line2':'2026 新品上市發表會','overview.title1':'世界級電源','overview.title2':'','overview.desc':'新世代電源解決方案，專為關鍵任務穩定性而設計','overview.videoExpiry':'2026.05.20 (星期三) | 15:00 (UTC +8)',
+      'overview.event.line1':'台達標準電源','overview.event.line2':'2026 新品上市發表會','overview.title1':'世界級電源','overview.title2':'','overview.desc':'新世代電源解決方案，專為關鍵任務穩定性而設計','overview.videoExpiry':'2026.05.20 (星期三) | 上午 09:30 (UTC +8)',
       'hero.title':'台達標準電源','hero.subtitle':'INFINITY READY','hero.notified':'訂閱通知','hero.register':'立刻報名','hero.onlineEventAt':'線上發表會時間：','hero.dinRailLabel':'導軌型工業電源供應器','hero.upcomingLabel':'即將上市新產品',
       'dinpro.title':'DIN Pro 單相電源系列','dinpro.desc':'穩定之源，智造未來','dinpro.learnMore':'了解更多',
       'dineco.title':'DIN Eco 三相電源系列','dineco.desc':'效能之本，穩築基石','dineco.learnMore':'了解更多',
@@ -2683,7 +2690,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     'zh-CN': {
       label:'简中',
       'nav.home':'首页','nav.live':'直播','nav.certification':'认证','nav.compare':'对比','nav.solutions':'应用方案','nav.contact':'获取资讯','nav.dinpro':'DIN Pro','nav.dineco':'DIN Eco',
-      'overview.event.line1':'台达标准电源','overview.event.line2':'2026 新品上市发布会','overview.title1':'世界级电源','overview.title2':'','overview.desc':'新一代电源解决方案，专为关键设备稳定性而设计','overview.videoExpiry':'2026.05.20 (星期三) | 15:00 (UTC +8)',
+      'overview.event.line1':'台达标准电源','overview.event.line2':'2026 新品上市发布会','overview.title1':'世界级电源','overview.title2':'','overview.desc':'新一代电源解决方案，专为关键设备稳定性而设计','overview.videoExpiry':'2026.05.20 (星期三) | 上午 09:30 (UTC +8)',
       'hero.title':'台达标准电源','hero.subtitle':'INFINITY READY','hero.notified':'订阅通知','hero.register':'立即报名','hero.onlineEventAt':'线上发布会时间：','hero.dinRailLabel':'导轨型工业电源供应器','hero.upcomingLabel':'即将上市新产品',
       'dinpro.title':'DIN Pro 系列 单相导轨电源','dinpro.desc':'稳定之源，智造未来','dinpro.learnMore':'了解更多',
       'dineco.title':'DIN Eco 系列 三相导轨电源','dineco.desc':'效能之本，稳筑基石','dineco.learnMore':'了解更多',
@@ -2734,8 +2741,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     'ja': {
       label:'日本語',
       'nav.home':'ホーム','nav.live':'ライブ','nav.certification':'認証','nav.compare':'比較','nav.solutions':'ソリューション','nav.contact':'資料請求','nav.dinpro':'DIN Pro','nav.dineco':'DIN Eco',
-      'overview.event.line1':'Delta Standard Power Supply','overview.event.line2':'New Product Launch Event 2026','overview.title1':'未来を動かす力','overview.title2':'','overview.desc':'新世代の電源ソリューション、ミッションクリティカルな安定性のために設計','overview.videoExpiry':'2026.05.20 (水) | 3 PM (UTC +8)',
-      'hero.title':'DELTA STANDARD POWER SUPPLY','hero.subtitle':'INFINITY READY','hero.notified':'通知を受け取る','hero.register':'今すぐ登録','hero.onlineEventAt':'オンライン発表会：','hero.dinRailLabel':'DINレール電源','hero.upcomingLabel':'デルタの新製品ラインアップ',
+      'overview.event.line1':'デルタ標準電源','overview.event.line2':'2026年 新製品発表イベント','overview.title1':'卓越したパワーを追求する','overview.title2':'','overview.desc':'新世代の電源ソリューション、ミッションクリティカルな安定性のために設計','overview.videoExpiry':'2026.05.20 (水) | 03:30 PM (UTC +8)',
+      'hero.title':'デルタ標準電源','hero.subtitle':'INFINITY READY','hero.notified':'通知を受け取る','hero.register':'今すぐ登録','hero.onlineEventAt':'オンライン発表会：','hero.dinRailLabel':'DINレール電源','hero.upcomingLabel':'デルタ最新製品ラインナップ一覧',
       'dinpro.title':'DIN Pro 1-Phase Series','dinpro.desc':'安定の源、未来を紡ぐ','dinpro.learnMore':'詳細を見る',
       'dineco.title':'DIN Eco 3-Phase Series','dineco.desc':'性能の礎、確かな基盤','dineco.learnMore':'詳細を見る',
       'pro.peakLabel':'最大達成値','pro.peakTitle':'ピークパワー','pro.peakDesc':'起動能力',
