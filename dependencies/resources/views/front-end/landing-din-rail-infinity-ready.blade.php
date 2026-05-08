@@ -1888,7 +1888,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 <div class="uk-margin"><input aria-label="Email Address" class="uk-input input-neon" data-i18n-placeholder="notify.emailPlaceholder" id="nf-email" placeholder="Your Email Address" type="email" /> <span class="cf-error" id="nf-email-err"></span></div>
 <div class="uk-margin"><input aria-label="Name" class="uk-input input-neon" data-i18n-placeholder="notify.namePlaceholder" id="nf-name" placeholder="Your Name" type="text" /> <span class="cf-error" id="nf-name-err"></span></div>
 <div class="uk-margin">
-<select class="uk-select input-neon" id="nf-country" style="background-color:transparent;color:#fff;">
+<select class="uk-select input-neon" id="nf-country" style="background:rgba(0,20,40,0.6);border:1px solid rgba(0,242,255,0.3);color:#fff;border-radius:4px;">
   <option value="" data-i18n="notify.countryPlaceholder">Select Country</option>
   @foreach ($mail_chimp_country as $c)
   <option value="{{ $c->name }}">{{ $c->name }}</option>
