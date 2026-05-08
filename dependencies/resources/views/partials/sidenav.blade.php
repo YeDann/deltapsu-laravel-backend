@@ -529,6 +529,15 @@
                     <span class="nav-main-link-name text-uppercase">GUI Downloads</span>
                 </a>
         </li>
+        <li class="nav-main-item">
+            @if($name == "saleskit-requests")
+            <a class="nav-main-link active" href="{{route('saleskit_requests_index')}}">
+                @else
+                <a class="nav-main-link" href="{{route('saleskit_requests_index')}}">
+                    @endif
+                    <span class="nav-main-link-name text-uppercase">Sales Kit Downloads</span>
+                </a>
+        </li>
         {{-- <li class="nav-main-item">
             @if($name == "feedbackEmail")
             <a class="nav-main-link active" href="{{route('emailnotification',1)}}">
