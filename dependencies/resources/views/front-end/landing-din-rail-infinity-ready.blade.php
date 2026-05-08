@@ -1227,7 +1227,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 
 <div class="product-img-wrap" style="width:100%;max-width:520px;margin:0 auto;height:400px;display:flex;align-items:center;justify-content:center;"><img alt="DIN Pro" class="static-product-img" id="pro-img" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202604231000027622.png" style="width:100%;height:100%;object-fit:contain;display:block;" /></div>
 
-<div class="uk-margin-medium-top"><a class="btn-cyber" data-i18n="dinpro.learnMore" href="https://psu.deltaww.com/en/product/2/din-rail-power-supply/1/din-pro/123" style="min-width:220px;display:inline-block;" target="_blank">LEARN MORE</a></div>
+<div class="uk-margin-medium-top"><a class="btn-cyber" data-i18n="dinpro.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/din-pro/123" href="{{ App::getLocale() === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/'.App::getLocale() }}/product/2/din-rail-power-supply/1/din-pro/123" style="min-width:220px;display:inline-block;" target="_blank">LEARN MORE</a></div>
 </div>
 </div>
 
@@ -1329,7 +1329,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 
 <div class="product-img-wrap" style="width:100%;max-width:520px;margin:0 auto;height:400px;display:flex;align-items:center;justify-content:center;"><img alt="DIN Eco" class="static-product-img" id="eco-img" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202604230959225538.png" style="width:100%;height:100%;object-fit:contain;display:block;" /></div>
 
-<div class="uk-margin-medium-top"><a class="btn-cyber" data-i18n="dineco.learnMore" href="https://psu.deltaww.com/en/product/2/din-rail-power-supply/1/DIN%20Eco/119" style="min-width:220px;background:linear-gradient(90deg,#00F1CD,#00F1CD);border-radius:50px;display:inline-block;" target="_blank">LEARN MORE</a></div>
+<div class="uk-margin-medium-top"><a class="btn-cyber" data-i18n="dineco.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/DIN%20Eco/119" href="{{ App::getLocale() === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/'.App::getLocale() }}/product/2/din-rail-power-supply/1/DIN%20Eco/119" style="min-width:220px;background:linear-gradient(90deg,#00F1CD,#00F1CD);border-radius:50px;display:inline-block;" target="_blank">LEARN MORE</a></div>
 </div>
 </div>
 
@@ -1732,7 +1732,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 
 <div class="compare-data-cell has-check"><span>120W / 240W / 480W / 960W</span><span class="cmp-check cmp-check-pro"><svg viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></div>
 
-<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="dinpro.learnMore" href="https://psu.deltaww.com/en/product/2/din-rail-power-supply/1/din-pro/123" target="_blank">LEARN MORE</a></div>
+<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="dinpro.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/din-pro/123" href="{{ App::getLocale() === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/'.App::getLocale() }}/product/2/din-rail-power-supply/1/din-pro/123" target="_blank">LEARN MORE</a></div>
 </div>
 
 <div class="compare-data-col" style="background:#0d1a24;border:2px solid #4a6a85;border-top:none;border-left:none;border-radius:0 0 14px 0;">
@@ -1752,7 +1752,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 
 <div class="compare-data-cell"><span>120W / 240W / 480W</span></div>
 
-<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="compare.learnMore" href="https://psu.deltaww.com/en/product/2/din-rail-power-supply/1/force-gt/108" target="_blank">LEARN MORE</a></div>
+<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="compare.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/force-gt/108" href="{{ App::getLocale() === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/'.App::getLocale() }}/product/2/din-rail-power-supply/1/force-gt/108" target="_blank">LEARN MORE</a></div>
 </div>
 </div>
 </div>
@@ -2574,6 +2574,10 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     var _ytId = (['tw','cn'].indexOf(window._locale) !== -1) ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
     var overviewIframe = document.getElementById('overview-yt-iframe');
     if (overviewIframe) overviewIframe.src = 'https://www.youtube.com/embed/' + _ytId + '?autoplay=0&mute=1&rel=0&modestbranding=1&enablejsapi=1';
+    var _urlBase = window._locale === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/' + window._locale;
+    document.querySelectorAll('[data-url-template]').forEach(function(el) {
+      el.href = el.getAttribute('data-url-template').replace('https://psu.deltaww.com/{locale}', _urlBase);
+    });
     document.documentElement.setAttribute('lang', lang);
     var names = { 'en':'EN','zh-TW':'繁中','zh-CN':'简中','ja':'日本語' };
     var nameEl = document.getElementById('langCurrentName');
