@@ -1573,7 +1573,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 </style>
 <div id="cert-modal" onclick="if(event.target===this){document.getElementById('cert-modal').style.display='none';document.body.style.overflow='';}" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:9999;overflow:hidden;align-items:center;justify-content:center;">
 <div id="cert-modal-dialog" onclick="event.stopPropagation()"><button onclick="event.preventDefault();document.getElementById('cert-modal').style.display='none';document.body.style.overflow='';" style="position:absolute;top:14px;right:18px;background:transparent;border:none;color:#05a3f7;font-size:1.6rem;cursor:pointer;z-index:10;line-height:1;" type="button">&times;</button>
-<h2 class="cert-modal-title" data-i18n="cert.modalTitle">Additional Certifications</h2>
+<h2 class="cert-modal-title" data-i18n="cert.modalTitle" style="font-weight: bold;">Additional Certifications</h2>
 
 <div id="cert-modal-scroll">
 <div class="cert-section">
@@ -1621,7 +1621,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="cert-card" style="grid-column:span 2;">
 <div class="cert-card-title">IEC/EN 61558-1/-2-16</div>
 
-<div class="cert-card-sub">CB Scheme report &nbsp;<span style="color:rgba(255,255,255,0.4);font-size:0.7rem;">* DIN Pro 960W only</span></div>
+<div class="cert-card-sub">CB Scheme report &nbsp;<span style="color:rgba(255,255,255,0.4);font-size:0.7rem;">* DIN Pro only</span></div>
 </div>
 </div>
 </div>
