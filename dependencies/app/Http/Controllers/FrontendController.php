@@ -6227,14 +6227,16 @@ class FrontendController extends Controller
                 'company'       => $company,
                 'country'       => $country,
                 'tel'           => $tel,
+                'series'        => $series,
                 'message'       => $message,
                 'subject'       => 'DIN Rail Inquiry',
                 'type_name'     => '',
                 'enquireStatus' => 0,
             ];
 
-            $recipient = config('mail.from.address');
+            $recipient = 'SPS.SALES@deltaww.com';
             Mail::to($recipient)->send(new Contact($mailData, ''));
+            Mail::to(strtolower(trim($email)))->send(new Contact($mailData, ''));
 
             return response()->json(['status' => 'success']);
         } catch (\Exception $e) {
