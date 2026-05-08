@@ -932,7 +932,8 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
   var videoHasPlayed = false; // tracks if user has ever played / video autoplay started
   var ytPlayer = null;        // YouTube IFrame API player instance
   // No loop, no playlist — plays once then pauses
-  var YT_SRC = 'https://www.youtube.com/embed/C5sG7MkyqlI?autoplay=1&mute=1&rel=0&modestbranding=1&enablejsapi=1';
+  var _ytId = (['tw','cn'].indexOf(window._locale) !== -1) ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
+  var YT_SRC = 'https://www.youtube.com/embed/' + _ytId + '?autoplay=1&mute=1&rel=0&modestbranding=1&enablejsapi=1';
 
   /* ---- build the floating mini container ---- */
   function buildMiniContainer() {
@@ -1138,7 +1139,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 </div>
 
 <div class="uk-width-3-5@l reveal-up delay-100">
-<div class="video-frame" id="overview-video-frame" style="cursor:default;"><iframe allow="autoplay; encrypted-media" allowfullscreen="" id="overview-yt-iframe" src="https://www.youtube.com/embed/C5sG7MkyqlI?autoplay=0&amp;mute=1&amp;rel=0&amp;modestbranding=1&amp;enablejsapi=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;"></iframe>
+<div class="video-frame" id="overview-video-frame" style="cursor:default;"><iframe allow="autoplay; encrypted-media" allowfullscreen="" id="overview-yt-iframe" src="https://www.youtube.com/embed/{{ in_array(App::getLocale(), ['tw','cn']) ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI' }}?autoplay=0&amp;mute=1&amp;rel=0&amp;modestbranding=1&amp;enablejsapi=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;"></iframe>
 
 <div style="position:absolute;bottom:0;left:0;width:100%;height:2px;background:#05a3f7;pointer-events:none;">&nbsp;</div>
 </div>
@@ -2506,7 +2507,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
      ============================================= */
   window.openYoutubeModal = function(e) {
     if (e) { e.preventDefault(); e.stopPropagation(); }
-    document.getElementById('yt-iframe').src = 'https://www.youtube.com/embed/C5sG7MkyqlI?autoplay=1&mute=1&rel=0&modestbranding=1';
+    var _ytId = (['tw','cn'].indexOf(window._locale) !== -1) ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
+    document.getElementById('yt-iframe').src = 'https://www.youtube.com/embed/' + _ytId + '?autoplay=1&mute=1&rel=0&modestbranding=1';
     document.getElementById('yt-modal').classList.add('is-open');
     document.body.style.overflow = 'hidden';
   };
@@ -2569,6 +2571,9 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     var url = el && el.getAttribute('data-lang-url');
     if (url) { history.pushState(null, '', url); }
     window._locale = {'en':'en','zh-TW':'tw','zh-CN':'cn','ja':'jp'}[lang] || 'en';
+    var _ytId = (['tw','cn'].indexOf(window._locale) !== -1) ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
+    var overviewIframe = document.getElementById('overview-yt-iframe');
+    if (overviewIframe) overviewIframe.src = 'https://www.youtube.com/embed/' + _ytId + '?autoplay=0&mute=1&rel=0&modestbranding=1&enablejsapi=1';
     document.documentElement.setAttribute('lang', lang);
     var names = { 'en':'EN','zh-TW':'繁中','zh-CN':'简中','ja':'日本語' };
     var nameEl = document.getElementById('langCurrentName');
