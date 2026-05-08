@@ -898,12 +898,11 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 </div>
 <script>
 (function syncHeroCountdown() {
-  var _lang = document.documentElement.lang;
-  var _heroTarget = (_lang === 'zh-TW' || _lang === 'zh-CN')
-    ? new Date('2026-05-20T09:30:00+08:00')
-    : new Date('2026-05-20T15:30:00+08:00');
   function tick() {
-    var target = _heroTarget;
+    var _l = document.documentElement.lang;
+    var target = (_l === 'zh-TW' || _l === 'zh-CN')
+      ? new Date('2026-05-20T09:30:00+08:00')
+      : new Date('2026-05-20T15:30:00+08:00');
     var now = new Date();
     var diff = Math.max(0, target - now);
     var days = Math.floor(diff / 86400000);
@@ -2173,11 +2172,11 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit-icons.min.js"></script>
 <script>
 (function(){
-  var _l = document.documentElement.lang;
-  var target = ((_l === 'zh-TW' || _l === 'zh-CN')
-    ? new Date('2026-05-20T09:30:00+08:00')
-    : new Date('2026-05-20T15:30:00+08:00')).getTime();
   function tick(){
+    var _l = document.documentElement.lang;
+    var target = (_l === 'zh-TW' || _l === 'zh-CN')
+      ? new Date('2026-05-20T09:30:00+08:00').getTime()
+      : new Date('2026-05-20T15:30:00+08:00').getTime();
     var now = Date.now(), diff = target - now;
     var el = document.getElementById('video-countdown');
     if(!el) return;

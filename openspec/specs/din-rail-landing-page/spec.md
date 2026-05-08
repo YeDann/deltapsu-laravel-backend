@@ -147,11 +147,11 @@ JP 語系的品牌名稱與活動標題 SHALL 顯示為：
 - **THEN** `overview.videoExpiry` 元素顯示 `2026.05.20 (星期三) | 上午 09:30 (UTC +8)`
 
 ### Requirement: Countdown timer targets locale-specific time
-倒數計時器 SHALL 依 `document.documentElement.lang` 選擇目標時間：
+倒數計時器 SHALL 在每次 tick 時動態讀取 `document.documentElement.lang` 並計算目標時間：
 - `zh-TW` / `zh-CN`：`2026-05-20T09:30:00+08:00`
 - 其他（en、ja 等）：`2026-05-20T15:30:00+08:00`
 
-Hero 和 video-countdown 兩個計時器均套用此邏輯。
+語系切換後，下一個 tick（最多 1 秒）須反映新語系的倒數時間。Hero 和 video-countdown 兩個計時器均套用此邏輯。
 
 #### Scenario: TC locale timer targets 09:30
 - **WHEN** 語系為 `zh-TW` 或 `zh-CN` 時頁面載入
@@ -160,3 +160,11 @@ Hero 和 video-countdown 兩個計時器均套用此邏輯。
 #### Scenario: EN/JP locale timer targets 15:30
 - **WHEN** 語系為 `en` 或 `ja` 時頁面載入
 - **THEN** 兩個計時器的目標時間為 2026-05-20 15:30 UTC+8
+
+#### Scenario: 語系切換後 Hero 計時器重算
+- **WHEN** 使用者從 EN 切換至 zh-TW
+- **THEN** Hero 計時器在 1 秒內更新為 09:30 的倒數時間
+
+#### Scenario: 語系切換後 Video 計時器重算
+- **WHEN** 使用者從 EN 切換至 zh-TW
+- **THEN** video-countdown 計時器在 1 秒內更新為 09:30 的倒數時間
