@@ -217,16 +217,44 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 #din-eco .bento-grid-horiz .feature-card.pos-5,
 #din-eco .bento-grid-horiz .feature-card.pos-6 {
   display: flex !important; flex-direction: column !important;
-  padding: clamp(10px,1.8vw,22px) clamp(10px,1.5vw,20px) !important;
-  gap: 0 !important; overflow: hidden !important;
+  align-items: center !important; justify-content: flex-end !important;
+  text-align: center !important;
+  padding: clamp(12px,2vw,28px) clamp(10px,1.5vw,20px) !important;
+  gap: clamp(6px,0.8vw,10px) !important; overflow: hidden !important;
+}
+/* Icon zone */
+#din-pro .bento-grid-horiz .feature-card.pos-2 .icon-wrap,
+#din-pro .bento-grid-horiz .feature-card.pos-3 .icon-wrap,
+#din-pro .bento-grid-horiz .feature-card.pos-4 .icon-wrap,
+#din-pro .bento-grid-horiz .feature-card.pos-5 .icon-wrap,
+#din-eco .bento-grid-horiz .feature-card.pos-2 .icon-wrap,
+#din-eco .bento-grid-horiz .feature-card.pos-3 .icon-wrap,
+#din-eco .bento-grid-horiz .feature-card.pos-5 .icon-wrap,
+#din-eco .bento-grid-horiz .feature-card.pos-6 .icon-wrap {
+  flex: 1 1 auto; width: 100%; display: flex; align-items: center; justify-content: center;
+}
+/* Desc fixed min-height */
+#din-pro .bento-grid-horiz .feature-card.pos-2 p,
+#din-pro .bento-grid-horiz .feature-card.pos-3 p,
+#din-pro .bento-grid-horiz .feature-card.pos-4 p,
+#din-pro .bento-grid-horiz .feature-card.pos-5 p,
+#din-eco .bento-grid-horiz .feature-card.pos-2 p,
+#din-eco .bento-grid-horiz .feature-card.pos-3 p,
+#din-eco .bento-grid-horiz .feature-card.pos-5 p,
+#din-eco .bento-grid-horiz .feature-card.pos-6 p {
+  min-height: 2.6em !important;
 }
 
-/* Card text fluid scaling */
-.feature-card .card-header, .pos1-subtitle, .temp-label {
-  font-size: clamp(1rem,9cqw,1.45rem) !important; margin: 0 0 4px 0 !important;
+/* ── ALL TITLES unified ── */
+.feature-card .card-header,
+.pos1-subtitle,
+.temp-label {
+  font-size: clamp(0.88rem,1.3vw,1.25rem) !important;
+  font-weight: 700 !important; line-height: 1.2 !important; margin: 0 !important;
 }
 .feature-card p, .temp-range, .pos1-label {
-  font-size: clamp(0.82rem,6.5cqw,1.05rem) !important; line-height: 1.3 !important;
+  font-size: clamp(0.72rem,0.85vw,0.95rem) !important; line-height: 1.3 !important;
+  color: rgba(255,255,255,0.80) !important;
   display: -webkit-box !important; -webkit-line-clamp: 3 !important;
   -webkit-box-orient: vertical !important; overflow: hidden !important; margin: 0 !important;
 }
@@ -237,25 +265,50 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 #din-pro .feature-card.pos-4 img, #din-pro .feature-card.pos-5 img,
 #din-eco .feature-card.pos-2 img, #din-eco .feature-card.pos-3 img,
 #din-eco .feature-card.pos-5 img, #din-eco .feature-card.pos-6 img {
-  width: clamp(36px,6vw,100px) !important; height: clamp(36px,6vw,100px) !important;
-  object-fit: contain !important; margin-bottom: clamp(6px,0.8vw,10px) !important;
+  width: clamp(48px,7.5vw,110px) !important; height: clamp(48px,7.5vw,110px) !important;
+  object-fit: contain !important; display: block !important; flex-shrink: 0 !important;
 }
 
 /* =============================================
    POS-1 CARD
    ============================================= */
-.pos1-icon { width: clamp(44px,5.5vw,130px); height: clamp(44px,5.5vw,130px); object-fit: contain; display: block; flex-shrink: 1; max-width: 100%; }
-.pos1-big-num { font-size: clamp(1.4rem,4.5vw,4.2rem); font-weight: 800; line-height: 1; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pos1-subtitle { font-size: clamp(0.9rem,1.4vw,1.5rem); font-weight: 700; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pos1-label { font-size: clamp(0.72rem,0.85vw,0.95rem); color: #fff; margin-bottom: 3px; letter-spacing: 0.8px; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pos1-note { font-size: clamp(0.6rem,0.65vw,0.72rem); color: rgba(255,255,255,0.55); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pos1-icon { width: clamp(44px,5.5vw,110px); height: clamp(44px,5.5vw,110px); object-fit: contain; display: block; flex-shrink: 0; max-width: 100%; }
+.pos1-big-num { font-size: clamp(1.4rem,4.5vw,4.2rem); font-weight: 800; line-height: 1.1; margin: 0; padding-top: clamp(2px,0.3vw,5px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pos1-subtitle { font-size: clamp(0.9rem,1.4vw,1.5rem); font-weight: 700; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pos1-label { font-size: clamp(0.72rem,0.85vw,0.95rem); color: #fff; margin: 0; letter-spacing: 0.8px; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pos1-note { font-size: clamp(0.6rem,0.65vw,0.72rem); color: rgba(255,255,255,0.55); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Extra gap between label and big num in icon-wrap */
+#din-pro .feature-card.pos-1 .icon-wrap .pos1-label,
+#din-eco .feature-card.pos-1 .icon-wrap .pos1-label {
+  margin-bottom: clamp(6px,0.8vw,12px) !important;
+}
 
-/* ECO "3 Phase" — match 95% size */
-#din-eco .feature-card.pos-1 .pos1-big-num { font-size: clamp(1.2rem,3.5vw,3.5rem) !important; white-space: nowrap !important; }
-@media (max-width: 1280px) { #din-eco .feature-card.pos-1 .pos1-big-num { font-size: clamp(1rem,2.8vw,2.8rem) !important; } }
-@media (max-width: 1100px) { #din-eco .feature-card.pos-1 .pos1-big-num { font-size: clamp(0.9rem,2.4vw,2.2rem) !important; } }
-/* PRO "150%" — match temp card size */
-#din-pro .feature-card.pos-1 .pos1-big-num { font-size: clamp(1rem,3vw,3rem) !important; }
+/* ECO "3 Phase" */
+#din-eco .feature-card.pos-1 .pos1-big-num { font-size: clamp(1rem,2.6vw,2.6rem) !important; white-space: nowrap !important; }
+@media (max-width: 1280px) { #din-eco .feature-card.pos-1 .pos1-big-num { font-size: clamp(0.9rem,2.2vw,2.2rem) !important; } }
+@media (max-width: 1100px) { #din-eco .feature-card.pos-1 .pos1-big-num { font-size: clamp(0.8rem,2vw,2rem) !important; } }
+/* PRO "150%" */
+#din-pro .feature-card.pos-1 .pos1-big-num { font-size: clamp(1rem,2.6vw,2.6rem) !important; }
+/* Peak Power title unified */
+#din-pro .feature-card.pos-1 .pos1-subtitle,
+#din-eco .feature-card.pos-1 .pos1-subtitle {
+  font-size: clamp(0.88rem,1.3vw,1.25rem) !important; font-weight: 700 !important; margin: 0 !important;
+}
+/* pos-1 text column flex */
+#din-pro .feature-card.pos-1 > div:last-child,
+#din-eco .feature-card.pos-1 > div:last-child {
+  justify-content: flex-end !important; align-items: flex-start !important;
+  align-self: stretch !important; gap: clamp(6px,0.8vw,10px) !important;
+}
+/* pos-1 icon-wrap takes remaining space */
+#din-pro .feature-card.pos-1 > div:last-child .icon-wrap,
+#din-eco .feature-card.pos-1 > div:last-child .icon-wrap {
+  flex: 1 1 auto; display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+}
+/* pos-1 desc fixed min-height */
+#din-pro .feature-card.pos-1 > div:last-child .pos1-label:last-child {
+  min-height: 2.6em !important;
+}
 
 /* =============================================
    TEMPERATURE CARD
@@ -266,13 +319,29 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
   justify-content: center !important; overflow: hidden !important; min-height: 0 !important;
   height: 100% !important; flex-wrap: nowrap !important;
 }
-.temp-icon-wrap { flex-shrink: 1; display: flex; align-items: center; justify-content: center; min-width: 0; }
+.temp-icon-wrap { flex-shrink: 0; display: flex; align-items: center; justify-content: center; min-width: 0; }
 .temp-icon { width: clamp(36px,5vw,100px); height: clamp(36px,5vw,100px); object-fit: contain; flex-shrink: 1; display: block; }
-.temp-text-wrap { min-width: 0; min-height: 0; flex-shrink: 1; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: clamp(2px,0.4vw,6px); }
-.temp-label { font-size: clamp(0.72rem,0.85vw,0.95rem); color: #fff; font-weight: 600; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.temp-big-num { font-size: clamp(1rem,3vw,3rem); font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; }
-.temp-to { font-size: clamp(0.5rem,1vw,1.1rem); font-weight: 400; color: #ffffff !important; }
-.temp-range { font-size: clamp(0.6rem,0.75vw,0.88rem); color: #fff; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.temp-text-wrap { min-width: 0; min-height: 0; flex-shrink: 1; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: clamp(2px,0.4vw,6px); align-items: flex-start !important; text-align: left !important; }
+.temp-label { font-size: clamp(0.88rem,1.3vw,1.25rem) !important; color: #fff; font-weight: 700 !important; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.temp-big-num { font-size: clamp(1rem,2.6vw,2.6rem) !important; font-weight: 800 !important; line-height: 1.1; white-space: nowrap; overflow: hidden; }
+.temp-to { font-size: clamp(0.7rem,1.2vw,1.2rem); font-weight: 400; color: #ffffff !important; }
+.temp-range { font-size: clamp(0.72rem,6cqw,0.92rem); color: rgba(255,255,255,0.80); letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* PRO pos-6 temp number grid */
+#din-pro .feature-card.pos-6 .temp-big-num {
+  display: inline-grid !important; grid-template-columns: 0.6em auto !important;
+  align-items: baseline !important; color: #05a3f7 !important;
+}
+#din-pro .feature-card.pos-6 .temp-big-num .temp-sign { color: #05a3f7 !important; display: block !important; text-align: center !important; }
+#din-pro .feature-card.pos-6 .temp-big-num .temp-digits { color: #05a3f7 !important; display: block !important; }
+#din-pro .feature-card.pos-6 .temp-big-num .temp-to { color: #fff !important; font-size: 0.45em !important; margin-left: 0.3em !important; }
+/* ECO pos-4 temp number grid */
+#din-eco .feature-card.pos-4 .temp-big-num {
+  display: inline-grid !important; grid-template-columns: 0.6em auto !important;
+  align-items: baseline !important; color: #00F1CD !important;
+}
+#din-eco .feature-card.pos-4 .temp-big-num .temp-sign { color: #00F1CD !important; display: block !important; text-align: center !important; }
+#din-eco .feature-card.pos-4 .temp-big-num .temp-digits { color: #00F1CD !important; display: block !important; }
+#din-eco .feature-card.pos-4 .temp-big-num .temp-to { color: #fff !important; font-size: 0.45em !important; margin-left: 0.3em !important; }
 
 /* =============================================
    SOLUTION CARDS
@@ -613,6 +682,13 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
   #din-pro .bento-grid-horiz > .pos-1, #din-eco .bento-grid-horiz > .pos-1 { grid-column: 1 / -1 !important; }
   #din-pro .bento-grid-horiz > .pos-6, #din-eco .bento-grid-horiz > .pos-4 { grid-column: 1 / -1 !important; }
   #din-pro .feature-card.pos-1, #din-eco .feature-card.pos-1 { flex-direction: column !important; align-items: center !important; text-align: center !important; padding: 16px 12px !important; gap: 10px !important; }
+  #din-pro .feature-card.pos-1 > div:last-child,
+  #din-eco .feature-card.pos-1 > div:last-child { align-items: center !important; text-align: center !important; width: 100% !important; justify-content: center !important; gap: 0 !important; }
+  #din-pro .feature-card.pos-1 .pos1-subtitle,
+  #din-eco .feature-card.pos-1 .pos1-subtitle { margin: 0 !important; }
+  /* Temp card: keep left-aligned on mobile */
+  #din-pro .feature-card.pos-6 .temp-text-wrap,
+  #din-eco .feature-card.pos-4 .temp-text-wrap { align-items: flex-start !important; text-align: left !important; }
   #din-pro .feature-card.pos-6, #din-eco .feature-card.pos-4 { flex-direction: row !important; align-items: center !important; justify-content: center !important; gap: 10px !important; padding: 14px 10px !important; }
   #din-pro .bento-grid-horiz .feature-card, #din-eco .bento-grid-horiz .feature-card { padding: clamp(8px,2.5vw,16px) !important; align-items: center !important; text-align: center !important; }
   .pos1-big-num { font-size: 2rem !important; }
@@ -738,7 +814,7 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 #offices-dialog .o-hq { color: #fff; font-size: 10px; }
 #offices-dialog .o-entry { margin-bottom: 8px; }
 </style>
-<script>window._serverLang = '{{ $htmlLang }}'; window._csrfToken = '{{ csrf_token() }}';</script>
+<script>window._serverLang = '{{ $htmlLang }}'; window._csrfToken = '{{ csrf_token() }}'; window._locale = '{{ App::getLocale() }}';</script>
 </head>
 
 
@@ -746,7 +822,8 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 <body>
 <style type="text/css">#overview-main-title { font-size: clamp(1.9rem,3.5vw,5rem) !important; }
 /* 85~305V in pos-3: fit within small card */
-#din-pro .feature-card.pos-3 .pos1-big-num { font-size: clamp(1.2rem,2.8vw,2.8rem) !important; white-space: nowrap; }
+#din-pro .feature-card.pos-3 .pos1-big-num { font-size: clamp(1rem,2.6vw,2.6rem) !important; white-space: nowrap !important; overflow: visible !important; text-overflow: unset !important; }
+#din-pro .bento-grid-horiz .feature-card.pos-3 .icon-wrap { overflow: visible !important; width: 100% !important; }
 @media (max-width: 900px) { #din-pro .feature-card.pos-3 .pos1-big-num { font-size: clamp(1rem,4vw,2rem) !important; } }
 @media (max-width: 768px) { #din-pro .feature-card.pos-3 .pos1-big-num { font-size: clamp(1rem,5vw,1.8rem) !important; } }
 /* Cert cards: logo scales with viewport, text never overflows */
@@ -790,7 +867,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="reveal-up delay-150" data-i18n="overview.event.line2" style="font-size:clamp(1.2rem,3.5vw,4rem);font-weight:700;letter-spacing:clamp(1px,0.3vw,4px);text-transform:uppercase;color:rgba(0,210,255,0.9);margin:0 0 clamp(14px,2.5vh,30px) 0;line-height:1.25;">New Product Launch Event 2026</div>
 <!-- Row 4: Online Launch Event at + date/time -->
 
-<div class="reveal-up delay-200" style="margin:0 0 clamp(16px,2.5vh,28px) 0;font-size:clamp(0.72rem,1.7vw,1.4rem);color:rgba(255,255,255,0.85);letter-spacing:0.5px;white-space:nowrap;"><span data-i18n="hero.onlineEventAt" style="color:rgba(255,255,255,0.85);">Online Launch Event at</span> <span data-i18n="overview.videoExpiry" style="color:#00f2ff;font-weight:700;letter-spacing:1px;white-space:nowrap;">2026.05.20 (Wed.) | 3 PM (UTC +8)</span></div>
+<div class="reveal-up delay-200" style="margin:0 0 clamp(16px,2.5vh,28px) 0;font-size:clamp(0.72rem,1.7vw,1.4rem);color:rgba(255,255,255,0.85);letter-spacing:0.5px;white-space:nowrap;"><span data-i18n="hero.onlineEventAt" style="color:rgba(255,255,255,0.85);">Online Launch Event at</span> <span data-i18n="overview.videoExpiry" style="color:#00f2ff;font-weight:700;letter-spacing:1px;white-space:nowrap;">2026.05.20 (Wed.) | 03:30 PM (UTC +8)</span></div>
 <!-- Row 5: Register Now + Countdown side by side -->
 
 <div class="reveal-up delay-250" style="display:flex;flex-direction:row;align-items:center;gap:clamp(10px,2vw,20px);flex-wrap:wrap;justify-content:center;margin-bottom:clamp(20px,3vh,40px);"><!-- Register Now button --><button class="btn-notify" onclick="UIkit.modal('#notify-modal').show()" style="min-width:160px;justify-content:center;padding:clamp(8px,1.4vw,12px) clamp(18px,2.5vw,30px);font-size:clamp(0.75rem,1.4vw,1rem);border-radius:8px;" type="button"><span data-i18n="hero.register" style="color:#fff!important;">Register Now</span></button><!-- Countdown -->
@@ -822,7 +899,10 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <script>
 (function syncHeroCountdown() {
   function tick() {
-    var target = new Date('2026-05-20T15:00:00+08:00');
+    var _l = document.documentElement.lang;
+    var target = (_l === 'zh-TW' || _l === 'zh-CN')
+      ? new Date('2026-05-20T09:30:00+08:00')
+      : new Date('2026-05-20T15:30:00+08:00');
     var now = new Date();
     var diff = Math.max(0, target - now);
     var days = Math.floor(diff / 86400000);
@@ -852,7 +932,8 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
   var videoHasPlayed = false; // tracks if user has ever played / video autoplay started
   var ytPlayer = null;        // YouTube IFrame API player instance
   // No loop, no playlist — plays once then pauses
-  var YT_SRC = 'https://www.youtube.com/embed/C5sG7MkyqlI?autoplay=1&mute=1&rel=0&modestbranding=1&enablejsapi=1';
+  var _ytId = (['tw','cn'].indexOf(window._locale) !== -1) ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
+  var YT_SRC = 'https://www.youtube.com/embed/' + _ytId + '?autoplay=1&mute=1&rel=0&modestbranding=1&enablejsapi=1';
 
   /* ---- build the floating mini container ---- */
   function buildMiniContainer() {
@@ -1058,7 +1139,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 </div>
 
 <div class="uk-width-3-5@l reveal-up delay-100">
-<div class="video-frame" id="overview-video-frame" style="cursor:default;"><iframe allow="autoplay; encrypted-media" allowfullscreen="" id="overview-yt-iframe" src="https://www.youtube.com/embed/C5sG7MkyqlI?autoplay=0&amp;mute=1&amp;rel=0&amp;modestbranding=1&amp;enablejsapi=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;"></iframe>
+<div class="video-frame" id="overview-video-frame" style="cursor:default;"><iframe allow="autoplay; encrypted-media" allowfullscreen="" id="overview-yt-iframe" src="https://www.youtube.com/embed/{{ in_array(App::getLocale(), ['tw','cn']) ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI' }}?autoplay=0&amp;mute=1&amp;rel=0&amp;modestbranding=1&amp;enablejsapi=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;"></iframe>
 
 <div style="position:absolute;bottom:0;left:0;width:100%;height:2px;background:#05a3f7;pointer-events:none;">&nbsp;</div>
 </div>
@@ -1146,7 +1227,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 
 <div class="product-img-wrap" style="width:100%;max-width:520px;margin:0 auto;height:400px;display:flex;align-items:center;justify-content:center;"><img alt="DIN Pro" class="static-product-img" id="pro-img" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202604231000027622.png" style="width:100%;height:100%;object-fit:contain;display:block;" /></div>
 
-<div class="uk-margin-medium-top"><a class="btn-cyber" data-i18n="dinpro.learnMore" href="https://psu.deltaww.com/en/product/2/din-rail-power-supply/1/din-pro/123" style="min-width:220px;display:inline-block;" target="_blank">LEARN MORE</a></div>
+<div class="uk-margin-medium-top"><a class="btn-cyber" data-i18n="dinpro.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/din-pro/123" href="{{ App::getLocale() === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/'.App::getLocale() }}/product/2/din-rail-power-supply/1/din-pro/123" style="min-width:220px;display:inline-block;" target="_blank">LEARN MORE</a></div>
 </div>
 </div>
 
@@ -1155,19 +1236,22 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="feature-card pro-theme pos-1 pro-card-bg reveal-up delay-100" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;box-sizing:border-box;">
 <div style="flex-shrink:1;display:flex;align-items:center;justify-content:center;"><img alt="Peak Power" class="pos1-icon" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271512230807.png" /></div>
 
-<div style="position:relative;z-index:1;min-width:0;overflow:hidden;">
+<div style="position:relative;z-index:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:0;align-self:stretch;">
+<div class="icon-wrap" style="flex:1 1 auto;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;flex-shrink:0;gap:clamp(4px,0.5vw,8px);padding-bottom:0;">
 <div class="pos1-label" data-i18n="pro.peakLabel">Maximum achievable</div>
 
-<div class="pos1-big-num" style="color:#05a3f7;">150%</div>
+<div class="pos1-big-num" style="color:#05a3f7;margin:0;">150%</div>
+</div>
 
-<div class="pos1-subtitle" data-i18n="pro.peakTitle" style="color:#fff;">Peak Power</div>
+<div class="pos1-subtitle" data-i18n="pro.peakTitle" style="color:#fff;margin:0;">Peak Power</div>
 
-<div class="pos1-label" data-i18n="pro.peakDesc">Starting capability</div>
+<div class="pos1-label" data-i18n="pro.peakDesc" style="min-height:2.6em;margin:0;">Starting capability</div>
 </div>
 </div>
 <!-- pos-2: EMS Immunity -->
 
-<div class="feature-card pro-theme pos-2 pro-card-bg reveal-up delay-200" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;"><img alt="EMS Immunity" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271512423557.png" />
+<div class="feature-card pro-theme pos-2 pro-card-bg reveal-up delay-200" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;">
+<div class="icon-wrap"><img alt="EMS Immunity" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271512423557.png" /></div>
 <div class="card-header" data-i18n="pro.universalInput" style="color:#fff;font-weight:700;">EMS Immunity</div>
 
 <p data-i18n="pro.universalInputDesc" style="color:#fff;">Certified IEC 61000-4-6, 20Vrms</p>
@@ -1175,7 +1259,9 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <!-- pos-3: Semi F47 -->
 
 <div class="feature-card pro-theme pos-3 pro-card-bg reveal-up delay-300" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;">
-<div class="pos1-big-num" data-i18n="pro.semiF47Value" style="color:#05a3f7;margin-bottom:8px;">85~305V</div>
+<div class="icon-wrap">
+<div class="pos1-big-num" data-i18n="pro.semiF47Value" style="color:#05a3f7;margin-bottom:0;">85~305V</div>
+</div>
 
 <div class="card-header" data-i18n="pro.semiF47" style="color:#fff;font-weight:700;margin:0 0 8px 0;">Wide AC Input</div>
 
@@ -1183,14 +1269,16 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 </div>
 <!-- pos-4: Current Sharing -->
 
-<div class="feature-card pro-theme pos-4 pro-card-bg reveal-up delay-100" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;"><img alt="Current Sharing" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271515414462.png" />
+<div class="feature-card pro-theme pos-4 pro-card-bg reveal-up delay-100" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;">
+<div class="icon-wrap"><img alt="Current Sharing" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271515414462.png" /></div>
 <div class="card-header" data-i18n="pro.currentSharing" style="color:#fff;font-weight:700;">Current Sharing</div>
 
 <p data-i18n="pro.currentSharingDesc" style="color:#fff;">Parallel operation support (960W)</p>
 </div>
 <!-- pos-5: PCBA Coating -->
 
-<div class="feature-card pro-theme pos-5 pro-card-bg reveal-up delay-200" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;"><img alt="PCBA Coating" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271515562129.png" />
+<div class="feature-card pro-theme pos-5 pro-card-bg reveal-up delay-200" style="border:1px solid rgba(0,242,255,0.25);border-radius:20px;position:relative;overflow:hidden;">
+<div class="icon-wrap"><img alt="PCBA Coating" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271515562129.png" /></div>
 <div class="card-header" data-i18n="pro.pcbaCoating" style="color:#fff;font-weight:700;">PCBA Coating</div>
 
 <p data-i18n="pro.pcbaCoatingDesc" style="color:#fff;">Industrial-grade protection</p>
@@ -1203,8 +1291,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="temp-text-wrap">
 <div class="temp-label" data-i18n="pro.extremeTemp">Extreme Temperature</div>
 
-<div class="temp-big-num" style="color:#05a3f7;">-40&deg;C <span class="temp-to" style="color:#fff!important;">to</span><br />
-+80&deg;C</div>
+<div class="temp-big-num"><span class="temp-sign">-</span><span class="temp-digits">40&deg;C <span class="temp-to">to</span></span><span class="temp-sign">+</span><span class="temp-digits">80&deg;C</span></div>
 
 <div class="temp-range" data-i18n="common.opRange">Operating range</div>
 </div>
@@ -1242,7 +1329,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 
 <div class="product-img-wrap" style="width:100%;max-width:520px;margin:0 auto;height:400px;display:flex;align-items:center;justify-content:center;"><img alt="DIN Eco" class="static-product-img" id="eco-img" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202604230959225538.png" style="width:100%;height:100%;object-fit:contain;display:block;" /></div>
 
-<div class="uk-margin-medium-top"><a class="btn-cyber" data-i18n="dineco.learnMore" href="https://psu.deltaww.com/en/product/2/din-rail-power-supply/1/DIN%20Eco/119" style="min-width:220px;background:linear-gradient(90deg,#00F1CD,#00F1CD);border-radius:50px;display:inline-block;" target="_blank">LEARN MORE</a></div>
+<div class="uk-margin-medium-top"><a class="btn-cyber" data-i18n="dineco.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/DIN%20Eco/119" href="{{ App::getLocale() === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/'.App::getLocale() }}/product/2/din-rail-power-supply/1/DIN%20Eco/119" style="min-width:220px;background:linear-gradient(90deg,#00F1CD,#00F1CD);border-radius:50px;display:inline-block;" target="_blank">LEARN MORE</a></div>
 </div>
 </div>
 
@@ -1251,32 +1338,32 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="feature-card eco-theme pos-1 eco-card-bg reveal-up delay-100" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;box-sizing:border-box;">
 <div style="flex-shrink:1;display:flex;align-items:center;justify-content:center;"><img alt="3 Phase" class="pos1-icon" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271517399744.png" /></div>
 
-<div style="position:relative;z-index:1;min-width:0;overflow:hidden;">
-<div class="pos1-label" data-i18n="eco.inputRange">Input range</div>
+<div style="position:relative;z-index:1;min-width:0;overflow:hidden;display:flex;flex-direction:column;gap:0;">
+<div class="pos1-label" data-i18n="eco.inputRange" style="margin-bottom:0.1em;">Input range</div>
 
-<div class="pos1-big-num" data-i18n="eco.phase" style="color:#00F1CD;">3 Phase</div>
+<div class="pos1-big-num" data-i18n="eco.phase" style="color:#00F1CD;margin-top:-0.1em;">3 Phase</div>
 
 <div class="pos1-subtitle" data-i18n="eco.wideInput" style="color:#fff;">Wide Input</div>
 
-<div class="pos1-label" data-i18n="eco.acSupport">340~600V AC support</div>
-
-<div class="pos1-note" data-i18n="eco.acSupportNote">(3EN series supports up to 575V)</div>
+<span data-i18n="eco.acSupport" style="display:block;font-size:clamp(0.72rem,0.85vw,0.95rem);color:rgba(255,255,255,0.80);line-height:1.3;font-weight:400;">340~600V AC support</span>
+<span data-i18n="eco.acSupportNote" style="display:block;font-size:clamp(0.72rem,0.85vw,0.95rem);color:rgba(255,255,255,0.80);line-height:1.3;font-weight:400;margin-top:-0.3em;">(3EN series supports up to 575V)</span>
 </div>
 </div>
 <!-- pos-2: High Efficiency -->
 
 <div class="feature-card eco-theme pos-2 eco-card-bg reveal-up delay-200" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;">
 <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-<div data-i18n="eco.effLabel" style="font-size:0.88rem;color:#fff;margin-bottom:16px;font-weight:400;">Up to</div>
+<div class="pos1-label" data-i18n="eco.effLabel" style="color:#fff;margin-bottom:0.4em;">Up to</div>
 
-<div data-i18n="eco.effValue" style="font-size:clamp(1.4rem,3.5vw,3.5rem);font-weight:800;line-height:1;color:#00c9b0;margin-bottom:8px;">95%</div>
+<div data-i18n="eco.effValue" style="font-size:clamp(1.4rem,3.5vw,3.5rem);font-weight:800;line-height:1;color:#00c9b0;margin-top:0.3em;margin-bottom:0.3em;">95%</div>
 
-<div data-i18n="eco.effTitle" style="font-size:1.3rem;font-weight:700;color:#fff;">High Efficiency</div>
+<div data-i18n="eco.effTitle" style="font-size:clamp(0.88rem,1.3vw,1.25rem);font-weight:700;color:#fff;margin-top:0;">High Efficiency</div>
 </div>
 </div>
 <!-- pos-3: Slim & Compact -->
 
-<div class="feature-card eco-theme pos-3 eco-card-bg reveal-up delay-300" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;"><img alt="Slim Design" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603301414447676.png" />
+<div class="feature-card eco-theme pos-3 eco-card-bg reveal-up delay-300" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;">
+<div class="icon-wrap"><img alt="Slim Design" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603301414447676.png" /></div>
 <div class="card-header" data-i18n="eco.slim" style="color:#fff;font-weight:700;">Slim &amp; Compact</div>
 
 <p data-i18n="eco.slimDesc" style="color:#fff;">Space-saving for distribution panel</p>
@@ -1289,22 +1376,23 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="temp-text-wrap">
 <div class="temp-label" data-i18n="eco.wideTemp">Extreme Temperature</div>
 
-<div class="temp-big-num" style="color:#00F1CD;">-40&deg;C <span class="temp-to" style="color:#fff!important;">to</span><br />
-+70&deg;C</div>
+<div class="temp-big-num"><span class="temp-sign">-</span><span class="temp-digits">40&deg;C <span class="temp-to">to</span></span><span class="temp-sign">+</span><span class="temp-digits">70&deg;C</span></div>
 
 <div class="temp-range" data-i18n="common.opRange">Operating range</div>
 </div>
 </div>
 <!-- pos-5: Global Certified -->
 
-<div class="feature-card eco-theme pos-5 eco-card-bg reveal-up delay-200" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;"><img alt="Global Certified" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271518124579.png" />
+<div class="feature-card eco-theme pos-5 eco-card-bg reveal-up delay-200" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;">
+<div class="icon-wrap"><img alt="Global Certified" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271518124579.png" /></div>
 <div class="card-header" data-i18n="eco.certified" style="color:#fff;font-weight:700;">Global Certified</div>
 
 <p data-i18n="eco.certifiedDesc" style="color:#fff;">IEC/EN/UL 62368-1/61010-1</p>
 </div>
 <!-- pos-6: Surge Protection -->
 
-<div class="feature-card eco-theme pos-6 eco-card-bg reveal-up delay-300" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;"><img alt="Surge Protection" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271518259233.png" />
+<div class="feature-card eco-theme pos-6 eco-card-bg reveal-up delay-300" style="border:1px solid rgba(0,241,205,0.25);border-radius:20px;position:relative;overflow:hidden;">
+<div class="icon-wrap"><img alt="Surge Protection" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603271518259233.png" /></div>
 <div class="card-header" data-i18n="eco.surge" style="color:#fff;font-weight:700;">Surge Protection</div>
 
 <p data-i18n="eco.surgeDesc" style="color:#fff;">4KV / 2KV surge immunity</p>
@@ -1485,7 +1573,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 </style>
 <div id="cert-modal" onclick="if(event.target===this){document.getElementById('cert-modal').style.display='none';document.body.style.overflow='';}" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:9999;overflow:hidden;align-items:center;justify-content:center;">
 <div id="cert-modal-dialog" onclick="event.stopPropagation()"><button onclick="event.preventDefault();document.getElementById('cert-modal').style.display='none';document.body.style.overflow='';" style="position:absolute;top:14px;right:18px;background:transparent;border:none;color:#05a3f7;font-size:1.6rem;cursor:pointer;z-index:10;line-height:1;" type="button">&times;</button>
-<h2 class="cert-modal-title" data-i18n="cert.modalTitle">Additional Certifications</h2>
+<h2 class="cert-modal-title" data-i18n="cert.modalTitle" style="font-weight: bold;">Additional Certifications</h2>
 
 <div id="cert-modal-scroll">
 <div class="cert-section">
@@ -1533,7 +1621,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="cert-card" style="grid-column:span 2;">
 <div class="cert-card-title">IEC/EN 61558-1/-2-16</div>
 
-<div class="cert-card-sub">CB Scheme report &nbsp;<span style="color:rgba(255,255,255,0.4);font-size:0.7rem;">* DIN Pro 960W only</span></div>
+<div class="cert-card-sub">CB Scheme report &nbsp;<span style="color:rgba(255,255,255,0.4);font-size:0.7rem;">* DIN Pro only</span></div>
 </div>
 </div>
 </div>
@@ -1644,7 +1732,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 
 <div class="compare-data-cell has-check"><span>120W / 240W / 480W / 960W</span><span class="cmp-check cmp-check-pro"><svg viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></div>
 
-<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="dinpro.learnMore" href="https://psu.deltaww.com/en/product/2/din-rail-power-supply/1/din-pro/123" target="_blank">LEARN MORE</a></div>
+<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="dinpro.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/din-pro/123" href="{{ App::getLocale() === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/'.App::getLocale() }}/product/2/din-rail-power-supply/1/din-pro/123" target="_blank">LEARN MORE</a></div>
 </div>
 
 <div class="compare-data-col" style="background:#0d1a24;border:2px solid #4a6a85;border-top:none;border-left:none;border-radius:0 0 14px 0;">
@@ -1664,7 +1752,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 
 <div class="compare-data-cell"><span>120W / 240W / 480W</span></div>
 
-<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="compare.learnMore" href="https://psu.deltaww.com/en/product/2/din-rail-power-supply/1/force-gt/108" target="_blank">LEARN MORE</a></div>
+<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="compare.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/force-gt/108" href="{{ App::getLocale() === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/'.App::getLocale() }}/product/2/din-rail-power-supply/1/force-gt/108" onclick="try{localStorage.setItem('productFilters',JSON.stringify({arr_inputtxt:[{type:'31',value_text:'90-264 Vac'}]}))}catch(e){}" target="_blank">LEARN MORE</a></div>
 </div>
 </div>
 </div>
@@ -1731,6 +1819,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 <div class="uk-grid uk-grid-large uk-flex-middle" uk-grid="">
 <div class="uk-width-1-2@l reveal-up">
 <h2 class="font-heading barlow" style="font-size:clamp(2.2rem,4vw,3.8rem)!important;line-height:1.2;margin-bottom:0.3em;"><span data-i18n="contact.titleStart" style="color:#fff;font-size:inherit!important;display:block;">REQUEST YOUR</span><span style="display:block;font-size:inherit!important;color:#fff;white-space:nowrap;"><span data-i18n="contact.titleMid" style="font-size:inherit!important;font-weight:inherit;text-shadow:0 0 20px rgba(0,220,255,0.9),0 0 40px rgba(0,180,255,0.7),0 0 80px rgba(0,140,255,0.5);color:#fff;">FREE SAMPLE</span><span data-i18n="contact.titleEnd" style="font-size:inherit!important;color:#fff;"> NOW!</span></span></h2>
+<div style="width:100%;"><img src="{{ asset('medias/landing_page/din-pro-and-din-eco.png') }}" alt="din-pro-and-din-eco" style="width:100%;" /></div>
 
 <p class="uk-text-large uk-margin-medium-top" data-i18n="contact.desc">Simply send us your inquiry, and our sales team will get in touch with you promptly.<br />
 <span class="disclaimer-note">* Limited quantities available.<br />
@@ -1760,6 +1849,9 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 <div class="uk-width-1-2@s"><label class="uk-form-label" data-i18n="contact.product" style="color:#fff;">PRODUCT</label> <select class="uk-select input-neon" id="cf-product" style="background:rgba(0,20,40,0.6);border:1px solid rgba(0,242,255,0.3);color:#fff;border-radius:4px;"><option data-i18n="contact.productPlaceholder" style="background:#071830;" value="">-- Select --</option><option style="background:#071830;" value="din-pro">DIN Pro</option><option style="background:#071830;" value="din-eco">DIN Eco</option> </select></div>
 
 <div class="uk-width-1-1"><label class="uk-form-label" data-i18n="contact.message" style="color:#fff;">MESSAGE</label><textarea class="uk-textarea input-neon contact-textarea" id="contact-message" rows="4"></textarea></div>
+
+<div class="uk-width-1-1" style="margin-top:12px;display:flex;align-items:flex-start;gap:10px;"><input id="cf-privacy" style="margin-top:3px;flex-shrink:0;accent-color:#05a3f7;width:16px;height:16px;cursor:pointer;" type="checkbox" /><label data-i18n="contact.privacyAgree" for="cf-privacy" style="color:#aaa;font-size:0.85rem;cursor:pointer;line-height:1.4;">I have read and agree to the Privacy Policy.</label></div>
+<span id="cf-privacy-err" style="color:#ff4444;font-size:0.8rem;margin-top:-4px;margin-bottom:0;display:none;"></span>
 
 <div class="uk-width-1-1 uk-margin-medium-top"><button class="btn-cyber uk-width-1-1" data-i18n="contact.send" id="cf-submit-btn" onclick="submitContactForm()" type="button">Send Request</button></div>
 </form>
@@ -1800,7 +1892,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 <div class="uk-margin"><input aria-label="Email Address" class="uk-input input-neon" data-i18n-placeholder="notify.emailPlaceholder" id="nf-email" placeholder="Your Email Address" type="email" /> <span class="cf-error" id="nf-email-err"></span></div>
 <div class="uk-margin"><input aria-label="Name" class="uk-input input-neon" data-i18n-placeholder="notify.namePlaceholder" id="nf-name" placeholder="Your Name" type="text" /> <span class="cf-error" id="nf-name-err"></span></div>
 <div class="uk-margin">
-<select class="uk-select input-neon" id="nf-country" style="background-color:transparent;color:#fff;">
+<select class="uk-select input-neon" id="nf-country" style="background:rgba(0,20,40,0.6);border:1px solid rgba(0,242,255,0.3);color:#fff;border-radius:4px;">
   <option value="" data-i18n="notify.countryPlaceholder">Select Country</option>
   @foreach ($mail_chimp_country as $c)
   <option value="{{ $c->name }}">{{ $c->name }}</option>
@@ -1891,6 +1983,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 <div style="margin-bottom:20px;"><label data-i18n="saleskit.company" style="display:block;color:#aaa;margin-bottom:8px;font-size:0.9rem;">Company *</label><input data-i18n-placeholder="saleskit.companyPlaceholder" id="saleskit-company" placeholder="Your company name" required="" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,242,255,0.3);border-radius:8px;color:#fff;font-size:1rem;" type="text" /><span id="saleskit-company-err" style="color:#ff4444;font-size:0.8rem;margin-top:4px;display:none;"></span></div>
 
 <div style="margin-bottom:30px;"><label data-i18n="saleskit.phone" style="display:block;color:#aaa;margin-bottom:8px;font-size:0.9rem;">Phone</label><input data-i18n-placeholder="saleskit.phonePlaceholder" id="saleskit-phone" placeholder="Optional" style="width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(0,242,255,0.3);border-radius:8px;color:#fff;font-size:1rem;" type="tel" /></div>
+<div style="margin-bottom:20px;display:flex;align-items:flex-start;gap:10px;"><input id="saleskit-privacy" style="margin-top:3px;flex-shrink:0;accent-color:#05a3f7;width:16px;height:16px;cursor:pointer;" type="checkbox" /><label data-i18n="saleskit.privacyAgree" for="saleskit-privacy" id="saleskit-privacy-label" style="color:#aaa;font-size:0.85rem;cursor:pointer;line-height:1.4;">I have read and agree to the Privacy Policy.</label></div>
+<span id="saleskit-privacy-err" style="color:#ff4444;font-size:0.8rem;margin-top:-12px;margin-bottom:12px;display:none;"></span>
 <button class="btn-cyber" data-i18n="saleskit.download" id="download-btn" style="width:100%;min-height:50px;" type="submit">DOWNLOAD SALES KIT</button></form>
 </div>
 </div>
@@ -1922,12 +2016,12 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 </div>
 <!-- ===== PROMO MODAL ===== -->
 
-<div id="promo-overlay" onclick="closePromoModal()">
+{{-- <div id="promo-overlay" onclick="closePromoModal()">
 <div id="promo-dialog" onclick="event.stopPropagation()"><button id="promo-close" onclick="closePromoModal()" type="button">&times;</button>
 
 <div id="promo-img-wrap"><img alt="Promotion" fetchpriority="high" id="promo-img" loading="eager" src="https://filecenter.deltaww.com/about/images/about-202604291009473100.jpg" /></div>
 </div>
-</div>
+</div> --}}
 <!-- ===== GLOBAL OFFICES MODAL ===== -->
 
 <div id="offices-modal" onclick="document.getElementById('offices-modal').classList.remove('is-open')">
@@ -2060,7 +2154,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 </div>
 </div>
 </div>
-<a class="scroll-top-btn" href="#intro"><svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24"><path d="M18 15l-6-6-6 6"></path></svg></a><button id="promo-mini-btn" onclick="document.getElementById('promo-overlay').classList.add('is-open')" title="View Promotion" type="button"><svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect height="5" width="20" x="2" y="7"></rect><line x1="12" x2="12" y1="22" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg></button></div>
+<a class="scroll-top-btn" href="#intro"><svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24"><path d="M18 15l-6-6-6 6"></path></svg></a><a href="#contact" id="promo-mini-btn" title="Get Info"><svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect height="5" width="20" x="2" y="7"></rect><line x1="12" x2="12" y1="22" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg></a></div>
 
 
 
@@ -2083,8 +2177,11 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit-icons.min.js"></script>
 <script>
 (function(){
-  var target = new Date('2026-05-20T15:00:00+08:00').getTime();
   function tick(){
+    var _l = document.documentElement.lang;
+    var target = (_l === 'zh-TW' || _l === 'zh-CN')
+      ? new Date('2026-05-20T09:30:00+08:00').getTime()
+      : new Date('2026-05-20T15:30:00+08:00').getTime();
     var now = Date.now(), diff = target - now;
     var el = document.getElementById('video-countdown');
     if(!el) return;
@@ -2221,6 +2318,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     var msgRequired = lang === 'zh-TW' ? '此欄位為必填' : lang === 'zh-CN' ? '此栏位为必填项' : lang === 'ja' ? 'この項目は必須です' : 'This field is required';
     var msgEmail = lang === 'zh-TW' ? '請輸入有效的電子郵件' : lang === 'zh-CN' ? '请输入有效的电子邮件' : lang === 'ja' ? '有効なメールアドレスを入力してください' : 'Please enter a valid email address';
     var msgSent = lang === 'zh-TW' ? '已成功送出！' : lang === 'zh-CN' ? '提交成功！' : lang === 'ja' ? '送信しました！' : 'Your request has been sent!';
+    var msgPrivacy = lang === 'zh-TW' ? '請勾選同意隱私權政策' : lang === 'zh-CN' ? '请勾选同意隐私政策' : lang === 'ja' ? 'プライバシーポリシーに同意してください' : 'Please agree to the Privacy Policy.';
     var fields = [
       { id:'cf-company', errId:'cf-company-err' },
       { id:'cf-name',    errId:'cf-name-err' },
@@ -2238,7 +2336,11 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       if (!val) { el.classList.add('cf-invalid'); err.textContent = msgRequired; err.classList.add('visible'); valid = false; }
       else if (f.isEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) { el.classList.add('cf-invalid'); err.textContent = msgEmail; err.classList.add('visible'); valid = false; }
     });
+    var cfPrivacyErr = document.getElementById('cf-privacy-err');
+    if (cfPrivacyErr) { cfPrivacyErr.textContent = ''; cfPrivacyErr.style.display = 'none'; }
     if (!valid) return;
+    var cfPrivacyChecked = document.getElementById('cf-privacy') && document.getElementById('cf-privacy').checked;
+    if (!cfPrivacyChecked) { if (cfPrivacyErr) { cfPrivacyErr.textContent = msgPrivacy; cfPrivacyErr.style.display = 'block'; } return; }
     // Use the specific button id to avoid ambiguity
     var btn = document.getElementById('cf-submit-btn');
     if (btn) { btn.disabled = true; }
@@ -2349,8 +2451,10 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       var lang = document.documentElement.getAttribute('lang') || 'en';
+      var t = window._translations && window._translations[lang] ? window._translations[lang] : {};
       var msgRequired = lang === 'zh-TW' ? '此欄位為必填' : lang === 'zh-CN' ? '此栏位为必填项' : lang === 'ja' ? 'この項目は必須です' : 'This field is required';
       var msgEmail = lang === 'zh-TW' ? '請輸入有效的電子郵件' : lang === 'zh-CN' ? '请输入有效的电子邮件' : lang === 'ja' ? '有効なメールアドレスを入力してください' : 'Please enter a valid email address';
+      var msgPrivacy = t['saleskit.privacyRequired'] || 'Please agree to the Privacy Policy.';
       var name = document.getElementById('saleskit-name').value.trim();
       var email = document.getElementById('saleskit-email').value.trim();
       var company = document.getElementById('saleskit-company').value.trim();
@@ -2364,30 +2468,46 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
         var el = document.getElementById(f.id), err = document.getElementById(f.errId);
         el.style.borderColor = ''; if (err) { err.textContent = ''; err.style.display = 'none'; }
       });
+      var privacyErr = document.getElementById('saleskit-privacy-err');
+      if (privacyErr) { privacyErr.textContent = ''; privacyErr.style.display = 'none'; }
       fields.forEach(function(f) {
         var el = document.getElementById(f.id), err = document.getElementById(f.errId);
         if (!f.val) { el.style.borderColor = '#ff4444'; if (err) { err.textContent = msgRequired; err.style.display = 'block'; } if (valid) el.focus(); valid = false; }
         else if (f.isEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.val)) { el.style.borderColor = '#ff4444'; if (err) { err.textContent = msgEmail; err.style.display = 'block'; } if (valid) el.focus(); valid = false; }
       });
+      var privacyChecked = document.getElementById('saleskit-privacy') && document.getElementById('saleskit-privacy').checked;
+      if (!privacyChecked) { if (privacyErr) { privacyErr.textContent = msgPrivacy; privacyErr.style.display = 'block'; } valid = false; }
       if (!valid) return;
       var btn = document.getElementById('download-btn');
-      btn.textContent = 'DOWNLOADING...'; btn.disabled = true;
-      setTimeout(function() {
-        var link = document.createElement('a');
-        link.href = ({
-          'sol.cobotArm':      'https://filecenter.deltaww.com/about/images/about-202604301107446325.pdf',
-          'sol.semiconductor': 'https://filecenter.deltaww.com/about/images/about-202604301107446325.pdf',
-          'sol.dataCenter':    'https://filecenter.deltaww.com/about/images/about-202604301107446325.pdf',
-          'sol.evCharger':     'https://filecenter.deltaww.com/about/images/about-202604301107446325.pdf',
-          'sol.greenEnergy':   'https://filecenter.deltaww.com/about/images/about-202604301107446325.pdf',
-          'sol.processAuto':   'https://filecenter.deltaww.com/about/images/about-202604301107446325.pdf'
-        })[window.currentApplication] || 'https://filecenter.deltaww.com/about/images/about-202604301107446325.pdf';
-        link.download = (window.currentApplication || 'sales').replace(/\s+/g,'_') + '_Sales_Kit.pdf';
-        link.click();
-        alert('Thank you! Your sales kit is being downloaded.');
-        window.closeSalesKitModal();
-        btn.textContent = 'DOWNLOAD SALES KIT'; btn.disabled = false;
-      }, 1000);
+      btn.disabled = true;
+      fetch('{{ route("landingSkitRequest") }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': window._csrfToken },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          company: company,
+          phone: document.getElementById('saleskit-phone') ? document.getElementById('saleskit-phone').value.trim() : '',
+          application: window.currentApplication || '',
+          locale: window._locale || 'en'
+        })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.status === 'success') {
+          var link = document.createElement('a');
+          link.href = data.download_url;
+          link.download = '';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.closeSalesKitModal();
+        } else {
+          alert(data.message || 'Error, please try again.');
+        }
+      })
+      .catch(function() { alert('Network error, please try again.'); })
+      .finally(function() { btn.disabled = false; });
     });
   });
 
@@ -2396,7 +2516,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
      ============================================= */
   window.openYoutubeModal = function(e) {
     if (e) { e.preventDefault(); e.stopPropagation(); }
-    document.getElementById('yt-iframe').src = 'https://www.youtube.com/embed/C5sG7MkyqlI?autoplay=1&mute=1&rel=0&modestbranding=1';
+    var _ytId = (['tw','cn'].indexOf(window._locale) !== -1) ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
+    document.getElementById('yt-iframe').src = 'https://www.youtube.com/embed/' + _ytId + '?autoplay=1&mute=1&rel=0&modestbranding=1';
     document.getElementById('yt-modal').classList.add('is-open');
     document.body.style.overflow = 'hidden';
   };
@@ -2457,7 +2578,15 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
   };
   window.switchLang = function(lang, el) {
     var url = el && el.getAttribute('data-lang-url');
-    if (url) { window.location.href = url; return; }
+    if (url) { history.pushState(null, '', url); }
+    window._locale = {'en':'en','zh-TW':'tw','zh-CN':'cn','ja':'jp'}[lang] || 'en';
+    var _ytId = (['tw','cn'].indexOf(window._locale) !== -1) ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
+    var overviewIframe = document.getElementById('overview-yt-iframe');
+    if (overviewIframe) overviewIframe.src = 'https://www.youtube.com/embed/' + _ytId + '?autoplay=0&mute=1&rel=0&modestbranding=1&enablejsapi=1';
+    var _urlBase = window._locale === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/' + window._locale;
+    document.querySelectorAll('[data-url-template]').forEach(function(el) {
+      el.href = el.getAttribute('data-url-template').replace('https://psu.deltaww.com/{locale}', _urlBase);
+    });
     document.documentElement.setAttribute('lang', lang);
     var names = { 'en':'EN','zh-TW':'繁中','zh-CN':'简中','ja':'日本語' };
     var nameEl = document.getElementById('langCurrentName');
@@ -2476,7 +2605,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     'en': {
       label:'EN',
       'nav.home':'Home','nav.live':'LIVE','nav.certification':'Certification','nav.compare':'Compare','nav.solutions':'Solutions','nav.contact':'Get Info','nav.dinpro':'DIN Pro','nav.dineco':'DIN Eco',
-      'overview.event.line1':'Delta Standard Power Supply','overview.event.line2':'New Product Launch Event 2026','overview.title1':'POWERING','overview.title2':'EXCELLENCE','overview.desc':'New-generation power solutions engineered for mission-critical stability','overview.videoExpiry':'2026.05.20 (Wed.) | 3 PM (UTC +8)',
+      'overview.event.line1':'Delta Standard Power Supply','overview.event.line2':'New Product Launch Event 2026','overview.title1':'POWERING','overview.title2':'EXCELLENCE','overview.desc':'New-generation power solutions engineered for mission-critical stability','overview.videoExpiry':'2026.05.20 (Wed.) | 03:30 PM (UTC +8)',
       'hero.title':'DELTA STANDARD POWER SUPPLY','hero.subtitle':'INFINITY READY','hero.notified':'GET NOTIFIED','hero.register':'Register Now','hero.onlineEventAt':'Online Launch Event at','hero.dinRailLabel':'DIN Rail Power Supplies','hero.upcomingLabel':"Delta's Upcoming New Products at a Glance",
       'dinpro.title':'DIN Pro 1-Phase Series','dinpro.desc':'The Source of Stability, Powering the Future','dinpro.learnMore':'LEARN MORE',
       'dineco.title':'DIN Eco 3-Phase Series','dineco.desc':'Performance at the Core, Built to Last','dineco.learnMore':'LEARN MORE',
@@ -2511,11 +2640,11 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'sol.cobotArm':'Cobot','sol.semiconductor':'Semiconductor','sol.dataCenter':'Data Center','sol.evCharger':'EV Charger','sol.greenEnergy':'Green Energy','sol.processAuto':'Process Automation',
       'contact.titleStart':'REQUEST YOUR','contact.titleMid':'FREE SAMPLE','contact.titleEnd':'NOW!','contact.desc':'Simply send us your inquiry, and our sales team will get in touch with you promptly.<br><span class="disclaimer-note">* Limited quantities available.<br>* Delta reserves the right to modify or interpret this offer.</span>',
       'contact.globalOffices':'Contact Us',
-      'contact.formTitle':'Request Consultation','contact.company':'COMPANY','contact.name':'NAME','contact.email':'EMAIL','contact.country':'COUNTRY','contact.phone':'PHONE','contact.product':'PRODUCT','contact.productPlaceholder':'-- Select --','contact.message':'MESSAGE','contact.send':'Send Request','contact.disclaimer':'',
+      'contact.formTitle':'Request Consultation','contact.company':'COMPANY','contact.name':'NAME','contact.email':'EMAIL','contact.country':'COUNTRY','contact.phone':'PHONE','contact.product':'PRODUCT','contact.productPlaceholder':'-- Select --','contact.message':'MESSAGE','contact.send':'Send Request','contact.privacyAgree':'I have read and agree to the Privacy Policy.','contact.privacyRequired':'Please agree to the Privacy Policy.','contact.disclaimer':'',
       'notify.title':'Stay Updated','notify.desc':'Be the first to know about our latest power solutions and product launches',
       'notify.emailPlaceholder':'Your Email Address','notify.namePlaceholder':'Your Name','notify.countryPlaceholder':'Select Country','notify.agree':'I agree to receive updates and marketing communications','notify.privacyAgree':'By submitting this form, You understand and agree to our privacy policy.','notify.subscribe':'SUBSCRIBE NOW',
       'notify.productUpdates':'Product Updates','notify.eventInvites':'Event Invites','notify.exclusiveOffers':'Exclusive Offers',
-      'saleskit.title':'Request Sales Kit','saleskit.name':'Name *','saleskit.namePlaceholder':'Your name','saleskit.email':'Email *','saleskit.company':'Company *','saleskit.companyPlaceholder':'Your company name','saleskit.phone':'Phone','saleskit.phonePlaceholder':'Optional','saleskit.download':'DOWNLOAD SALES KIT',
+      'saleskit.title':'Request Sales Kit','saleskit.name':'Name *','saleskit.namePlaceholder':'Your name','saleskit.email':'Email *','saleskit.company':'Company *','saleskit.companyPlaceholder':'Your company name','saleskit.phone':'Phone','saleskit.phonePlaceholder':'Optional','saleskit.download':'DOWNLOAD SALES KIT','saleskit.privacyAgree':'I have read and agree to the Privacy Policy.','saleskit.privacyRequired':'Please agree to the Privacy Policy.',
       'offices.title':'Global Operations &amp; Service Locations','offices.asia':'Asia','offices.northAmerica':'North America','offices.centralSouthAmerica':'Central &amp; South America','offices.europe':'Europe',
       'wechat.scan':'Scan to add WeChat','wechat.instruction':'Open WeChat → Scan QR Code',
       'features.title':'Engineering Excellence','features.desc':'High performance architecture for the Industry 4.0 era',
@@ -2527,7 +2656,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     'zh-TW': {
       label:'繁中',
       'nav.home':'首頁','nav.live':'直播','nav.certification':'認證','nav.compare':'比較','nav.solutions':'應用方案','nav.contact':'取得資訊','nav.dinpro':'DIN Pro','nav.dineco':'DIN Eco',
-      'overview.event.line1':'台達標準電源','overview.event.line2':'2026 新品上市發表會','overview.title1':'世界級電源','overview.title2':'','overview.desc':'新世代電源解決方案，專為關鍵任務穩定性而設計','overview.videoExpiry':'2026.05.20 (星期三) | 15:00 (UTC +8)',
+      'overview.event.line1':'台達標準電源','overview.event.line2':'2026 新品上市發表會','overview.title1':'世界級電源','overview.title2':'','overview.desc':'新世代電源解決方案，專為關鍵任務穩定性而設計','overview.videoExpiry':'2026.05.20 (星期三) | 上午 09:30 (UTC +8)',
       'hero.title':'台達標準電源','hero.subtitle':'INFINITY READY','hero.notified':'訂閱通知','hero.register':'立刻報名','hero.onlineEventAt':'線上發表會時間：','hero.dinRailLabel':'導軌型工業電源供應器','hero.upcomingLabel':'即將上市新產品',
       'dinpro.title':'DIN Pro 單相電源系列','dinpro.desc':'穩定之源，智造未來','dinpro.learnMore':'了解更多',
       'dineco.title':'DIN Eco 三相電源系列','dineco.desc':'效能之本，穩築基石','dineco.learnMore':'了解更多',
@@ -2562,11 +2691,11 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'sol.cobotArm':'協作機器人','sol.semiconductor':'半導體','sol.dataCenter':'資料中心','sol.evCharger':'EV 充電站','sol.greenEnergy':'綠色能源','sol.processAuto':'流程自動化',
       'contact.titleStart':'立即申請','contact.titleMid':'免費樣品！','contact.titleEnd':'','contact.desc':'歡迎填寫表單送出詢問，我們的業務團隊將盡快與您聯繫。<br><span class="disclaimer-note">* 數量有限，把握機會。<br>* 台達保留對本活動之最終解釋及修改權利。</span>',
       'contact.globalOffices':'聯繫我們',
-      'contact.formTitle':'申請諮詢','contact.company':'公司名稱','contact.name':'姓名','contact.email':'電子郵件','contact.country':'國家／地區','contact.phone':'電話','contact.product':'產品','contact.productPlaceholder':'-- 請選擇 --','contact.message':'訊息內容','contact.send':'送出申請','contact.disclaimer':'',
+      'contact.formTitle':'申請諮詢','contact.company':'公司名稱','contact.name':'姓名','contact.email':'電子郵件','contact.country':'國家／地區','contact.phone':'電話','contact.product':'產品','contact.productPlaceholder':'-- 請選擇 --','contact.message':'訊息內容','contact.send':'送出申請','contact.privacyAgree':'我已閱讀並同意隱私權政策。','contact.privacyRequired':'請勾選同意隱私權政策。','contact.disclaimer':'',
       'notify.title':'訂閱更新','notify.desc':'搶先獲得最新電源解決方案與產品發布資訊',
       'notify.emailPlaceholder':'您的電子郵件','notify.namePlaceholder':'您的姓名','notify.countryPlaceholder':'選擇國家','notify.agree':'我同意接收最新資訊及行銷通訊','notify.privacyAgree':'已瞭解與同意我們的隱私權政策','notify.subscribe':'立即訂閱',
       'notify.productUpdates':'產品更新','notify.eventInvites':'活動邀請','notify.exclusiveOffers':'專屬優惠',
-      'saleskit.title':'索取銷售資料','saleskit.name':'姓名 *','saleskit.namePlaceholder':'您的姓名','saleskit.email':'電子郵件 *','saleskit.company':'公司名稱 *','saleskit.companyPlaceholder':'您的公司名稱','saleskit.phone':'電話','saleskit.phonePlaceholder':'選填','saleskit.download':'下載銷售資料',
+      'saleskit.title':'索取銷售資料','saleskit.name':'姓名 *','saleskit.namePlaceholder':'您的姓名','saleskit.email':'電子郵件 *','saleskit.company':'公司名稱 *','saleskit.companyPlaceholder':'您的公司名稱','saleskit.phone':'電話','saleskit.phonePlaceholder':'選填','saleskit.download':'下載銷售資料','saleskit.privacyAgree':'我已閱讀並同意隱私權政策。','saleskit.privacyRequired':'請同意隱私權政策。',
       'offices.title':'全球運營與服務據點','offices.asia':'亞洲','offices.northAmerica':'北美','offices.centralSouthAmerica':'中南美','offices.europe':'歐洲',
       'wechat.scan':'掃描加入微信','wechat.instruction':'開啟微信 → 掃描 QR Code',
       'features.title':'卓越服務','features.desc':'為工業 4.0 時代打造的高效能架構',
@@ -2578,7 +2707,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     'zh-CN': {
       label:'简中',
       'nav.home':'首页','nav.live':'直播','nav.certification':'认证','nav.compare':'对比','nav.solutions':'应用方案','nav.contact':'获取资讯','nav.dinpro':'DIN Pro','nav.dineco':'DIN Eco',
-      'overview.event.line1':'台达标准电源','overview.event.line2':'2026 新品上市发布会','overview.title1':'世界级电源','overview.title2':'','overview.desc':'新一代电源解决方案，专为关键设备稳定性而设计','overview.videoExpiry':'2026.05.20 (星期三) | 15:00 (UTC +8)',
+      'overview.event.line1':'台达标准电源','overview.event.line2':'2026 新品上市发布会','overview.title1':'世界级电源','overview.title2':'','overview.desc':'新一代电源解决方案，专为关键设备稳定性而设计','overview.videoExpiry':'2026.05.20 (星期三) | 上午 09:30 (UTC +8)',
       'hero.title':'台达标准电源','hero.subtitle':'INFINITY READY','hero.notified':'订阅通知','hero.register':'立即报名','hero.onlineEventAt':'线上发布会时间：','hero.dinRailLabel':'导轨型工业电源供应器','hero.upcomingLabel':'即将上市新产品',
       'dinpro.title':'DIN Pro 系列 单相导轨电源','dinpro.desc':'稳定之源，智造未来','dinpro.learnMore':'了解更多',
       'dineco.title':'DIN Eco 系列 三相导轨电源','dineco.desc':'效能之本，稳筑基石','dineco.learnMore':'了解更多',
@@ -2613,11 +2742,11 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'sol.cobotArm':'协作机器人','sol.semiconductor':'半导体','sol.dataCenter':'数据中心','sol.evCharger':'EV 充电站','sol.greenEnergy':'绿色能源','sol.processAuto':'流程自动化',
       'contact.titleStart':'立即申请','contact.titleMid':'免费样品！','contact.titleEnd':'','contact.desc':'欢迎填写表单送出询问，我们的销售团队将尽快与您联系。<br><span class="disclaimer-note">* 数量有限，把握机会。<br>* 台达保留对本活动的最终解释及修改权利。</span>',
       'contact.globalOffices':'联系我们',
-      'contact.formTitle':'申请咨询','contact.company':'公司名称','contact.name':'姓名','contact.email':'电子邮件','contact.country':'国家/地区','contact.phone':'电话','contact.product':'产品','contact.productPlaceholder':'-- 请选择 --','contact.message':'留言内容','contact.send':'提交申请','contact.disclaimer':'',
+      'contact.formTitle':'申请咨询','contact.company':'公司名称','contact.name':'姓名','contact.email':'电子邮件','contact.country':'国家/地区','contact.phone':'电话','contact.product':'产品','contact.productPlaceholder':'-- 请选择 --','contact.message':'留言内容','contact.send':'提交申请','contact.privacyAgree':'我已阅读并同意隐私政策。','contact.privacyRequired':'请勾选同意隐私政策。','contact.disclaimer':'',
       'notify.title':'订阅更新','notify.desc':'抢先获得最新电源解决方案与产品发布资讯',
       'notify.emailPlaceholder':'您的电子邮件','notify.namePlaceholder':'您的姓名','notify.countryPlaceholder':'选择国家','notify.agree':'我同意接收最新资讯及营销资讯','notify.privacyAgree':'已了解并同意我们的隐私政策','notify.subscribe':'立即订阅',
       'notify.productUpdates':'产品更新','notify.eventInvites':'活动邀请','notify.exclusiveOffers':'专属优惠',
-      'saleskit.title':'索取销售资料','saleskit.name':'姓名 *','saleskit.namePlaceholder':'您的姓名','saleskit.email':'电子邮件 *','saleskit.company':'公司名称 *','saleskit.companyPlaceholder':'您的公司名称','saleskit.phone':'电话','saleskit.phonePlaceholder':'选填','saleskit.download':'资料下载',
+      'saleskit.title':'索取销售资料','saleskit.name':'姓名 *','saleskit.namePlaceholder':'您的姓名','saleskit.email':'电子邮件 *','saleskit.company':'公司名称 *','saleskit.companyPlaceholder':'您的公司名称','saleskit.phone':'电话','saleskit.phonePlaceholder':'选填','saleskit.download':'资料下载','saleskit.privacyAgree':'我已阅读并同意隐私政策。','saleskit.privacyRequired':'请同意隐私政策。',
       'offices.title':'全球运营与服务据点','offices.asia':'亚洲','offices.northAmerica':'北美','offices.centralSouthAmerica':'中南美','offices.europe':'欧洲',
       'wechat.scan':'扫描加入微信','wechat.instruction':'打开微信 → 扫描二维码',
       'features.title':'卓越服务','features.desc':'为工业 4.0 时代打造的高性能架构',
@@ -2629,8 +2758,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     'ja': {
       label:'日本語',
       'nav.home':'ホーム','nav.live':'ライブ','nav.certification':'認証','nav.compare':'比較','nav.solutions':'ソリューション','nav.contact':'資料請求','nav.dinpro':'DIN Pro','nav.dineco':'DIN Eco',
-      'overview.event.line1':'Delta Standard Power Supply','overview.event.line2':'New Product Launch Event 2026','overview.title1':'未来を動かす力','overview.title2':'','overview.desc':'新世代の電源ソリューション、ミッションクリティカルな安定性のために設計','overview.videoExpiry':'2026.05.20 (水) | 3 PM (UTC +8)',
-      'hero.title':'DELTA STANDARD POWER SUPPLY','hero.subtitle':'INFINITY READY','hero.notified':'通知を受け取る','hero.register':'今すぐ登録','hero.onlineEventAt':'オンライン発表会：','hero.dinRailLabel':'DINレール電源','hero.upcomingLabel':'デルタの新製品ラインアップ',
+      'overview.event.line1':'デルタ標準電源','overview.event.line2':'2026年 新製品発表イベント','overview.title1':'卓越したパワーを追求する','overview.title2':'','overview.desc':'新世代の電源ソリューション、ミッションクリティカルな安定性のために設計','overview.videoExpiry':'2026.05.20 (水) | 03:30 PM (UTC +8)',
+      'hero.title':'デルタ標準電源','hero.subtitle':'INFINITY READY','hero.notified':'通知を受け取る','hero.register':'今すぐ登録','hero.onlineEventAt':'オンライン発表会：','hero.dinRailLabel':'DINレール電源','hero.upcomingLabel':'デルタ最新製品ラインナップ一覧',
       'dinpro.title':'DIN Pro 1-Phase Series','dinpro.desc':'安定の源、未来を紡ぐ','dinpro.learnMore':'詳細を見る',
       'dineco.title':'DIN Eco 3-Phase Series','dineco.desc':'性能の礎、確かな基盤','dineco.learnMore':'詳細を見る',
       'pro.peakLabel':'最大達成値','pro.peakTitle':'ピークパワー','pro.peakDesc':'起動能力',
@@ -2664,11 +2793,11 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'sol.cobotArm':'協働ロボット','sol.semiconductor':'半導体','sol.dataCenter':'データセンター','sol.evCharger':'EV 充電器','sol.greenEnergy':'グリーンエネルギー','sol.processAuto':'プロセスオートメーション',
       'contact.titleStart':'今すぐ','contact.titleMid':'無料サンプルをゲット！','contact.titleEnd':'','contact.desc':'今すぐフォームを送信して、営業担当より迅速にご連絡いたします。<br><span class="disclaimer-note">* 数量限定の無料サンプルを入手ください。<br>* デルタは本イベントの解釈および変更の全権利を留保します。</span>',
       'contact.globalOffices':'お問い合わせ',
-      'contact.formTitle':'お問合せ','contact.company':'会社名','contact.name':'氏名','contact.email':'メールアドレス','contact.country':'国・地域','contact.phone':'電話番号','contact.product':'製品','contact.productPlaceholder':'-- 選択してください --','contact.message':'メッセージ','contact.send':'送信する','contact.disclaimer':'',
+      'contact.formTitle':'お問合せ','contact.company':'会社名','contact.name':'氏名','contact.email':'メールアドレス','contact.country':'国・地域','contact.phone':'電話番号','contact.product':'製品','contact.productPlaceholder':'-- 選択してください --','contact.message':'メッセージ','contact.send':'送信する','contact.privacyAgree':'プライバシーポリシーを読み、同意しました。','contact.privacyRequired':'プライバシーポリシーに同意してください。','contact.disclaimer':'',
       'notify.title':'最新情報を受け取る','notify.desc':'最新の電源ソリューションと製品発表をいち早くお届けします',
       'notify.emailPlaceholder':'メールアドレス','notify.namePlaceholder':'お名前','notify.countryPlaceholder':'国を選択','notify.agree':'アップデートやマーケティング情報の受け取りに同意します','notify.privacyAgree':'プライバシーポリシーを理解し、これに同意しました','notify.subscribe':'今すぐ登録',
       'notify.productUpdates':'製品情報','notify.eventInvites':'イベント案内','notify.exclusiveOffers':'限定オファー',
-      'saleskit.title':'営業資料の請求','saleskit.name':'お名前 *','saleskit.namePlaceholder':'お名前を入力','saleskit.email':'メールアドレス *','saleskit.company':'会社名 *','saleskit.companyPlaceholder':'会社名を入力','saleskit.phone':'電話番号','saleskit.phonePlaceholder':'任意','saleskit.download':'営業資料をダウンロード',
+      'saleskit.title':'営業資料の請求','saleskit.name':'お名前 *','saleskit.namePlaceholder':'お名前を入力','saleskit.email':'メールアドレス *','saleskit.company':'会社名 *','saleskit.companyPlaceholder':'会社名を入力','saleskit.phone':'電話番号','saleskit.phonePlaceholder':'任意','saleskit.download':'営業資料をダウンロード','saleskit.privacyAgree':'プライバシーポリシーを読み、同意しました。','saleskit.privacyRequired':'プライバシーポリシーに同意してください。',
       'offices.title':'グローバル拠点','offices.asia':'アジア','offices.northAmerica':'北米','offices.centralSouthAmerica':'中南米','offices.europe':'ヨーロッパ',
       'wechat.scan':'WeChatをスキャンして追加','wechat.instruction':'WeChatを開く → QRコードをスキャン',
       'features.title':'卓越したサービス','features.desc':'産業 4.0 時代のための高性能アーキテクチャ',
