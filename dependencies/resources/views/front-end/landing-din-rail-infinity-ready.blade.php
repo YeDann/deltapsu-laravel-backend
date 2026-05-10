@@ -1850,6 +1850,9 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 
 <div class="uk-width-1-1"><label class="uk-form-label" data-i18n="contact.message" style="color:#fff;">MESSAGE</label><textarea class="uk-textarea input-neon contact-textarea" id="contact-message" rows="4"></textarea></div>
 
+<div class="uk-width-1-1" style="margin-top:12px;display:flex;align-items:flex-start;gap:10px;"><input id="cf-privacy" style="margin-top:3px;flex-shrink:0;accent-color:#05a3f7;width:16px;height:16px;cursor:pointer;" type="checkbox" /><label data-i18n="contact.privacyAgree" for="cf-privacy" style="color:#aaa;font-size:0.85rem;cursor:pointer;line-height:1.4;">I have read and agree to the Privacy Policy.</label></div>
+<span id="cf-privacy-err" style="color:#ff4444;font-size:0.8rem;margin-top:-4px;margin-bottom:0;display:none;"></span>
+
 <div class="uk-width-1-1 uk-margin-medium-top"><button class="btn-cyber uk-width-1-1" data-i18n="contact.send" id="cf-submit-btn" onclick="submitContactForm()" type="button">Send Request</button></div>
 </form>
 </div>
@@ -2315,6 +2318,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     var msgRequired = lang === 'zh-TW' ? '此欄位為必填' : lang === 'zh-CN' ? '此栏位为必填项' : lang === 'ja' ? 'この項目は必須です' : 'This field is required';
     var msgEmail = lang === 'zh-TW' ? '請輸入有效的電子郵件' : lang === 'zh-CN' ? '请输入有效的电子邮件' : lang === 'ja' ? '有効なメールアドレスを入力してください' : 'Please enter a valid email address';
     var msgSent = lang === 'zh-TW' ? '已成功送出！' : lang === 'zh-CN' ? '提交成功！' : lang === 'ja' ? '送信しました！' : 'Your request has been sent!';
+    var msgPrivacy = lang === 'zh-TW' ? '請勾選同意隱私權政策' : lang === 'zh-CN' ? '请勾选同意隐私政策' : lang === 'ja' ? 'プライバシーポリシーに同意してください' : 'Please agree to the Privacy Policy.';
     var fields = [
       { id:'cf-company', errId:'cf-company-err' },
       { id:'cf-name',    errId:'cf-name-err' },
@@ -2332,7 +2336,11 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       if (!val) { el.classList.add('cf-invalid'); err.textContent = msgRequired; err.classList.add('visible'); valid = false; }
       else if (f.isEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) { el.classList.add('cf-invalid'); err.textContent = msgEmail; err.classList.add('visible'); valid = false; }
     });
+    var cfPrivacyErr = document.getElementById('cf-privacy-err');
+    if (cfPrivacyErr) { cfPrivacyErr.textContent = ''; cfPrivacyErr.style.display = 'none'; }
     if (!valid) return;
+    var cfPrivacyChecked = document.getElementById('cf-privacy') && document.getElementById('cf-privacy').checked;
+    if (!cfPrivacyChecked) { if (cfPrivacyErr) { cfPrivacyErr.textContent = msgPrivacy; cfPrivacyErr.style.display = 'block'; } return; }
     // Use the specific button id to avoid ambiguity
     var btn = document.getElementById('cf-submit-btn');
     if (btn) { btn.disabled = true; }
@@ -2632,7 +2640,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'sol.cobotArm':'Cobot','sol.semiconductor':'Semiconductor','sol.dataCenter':'Data Center','sol.evCharger':'EV Charger','sol.greenEnergy':'Green Energy','sol.processAuto':'Process Automation',
       'contact.titleStart':'REQUEST YOUR','contact.titleMid':'FREE SAMPLE','contact.titleEnd':'NOW!','contact.desc':'Simply send us your inquiry, and our sales team will get in touch with you promptly.<br><span class="disclaimer-note">* Limited quantities available.<br>* Delta reserves the right to modify or interpret this offer.</span>',
       'contact.globalOffices':'Contact Us',
-      'contact.formTitle':'Request Consultation','contact.company':'COMPANY','contact.name':'NAME','contact.email':'EMAIL','contact.country':'COUNTRY','contact.phone':'PHONE','contact.product':'PRODUCT','contact.productPlaceholder':'-- Select --','contact.message':'MESSAGE','contact.send':'Send Request','contact.disclaimer':'',
+      'contact.formTitle':'Request Consultation','contact.company':'COMPANY','contact.name':'NAME','contact.email':'EMAIL','contact.country':'COUNTRY','contact.phone':'PHONE','contact.product':'PRODUCT','contact.productPlaceholder':'-- Select --','contact.message':'MESSAGE','contact.send':'Send Request','contact.privacyAgree':'I have read and agree to the Privacy Policy.','contact.privacyRequired':'Please agree to the Privacy Policy.','contact.disclaimer':'',
       'notify.title':'Stay Updated','notify.desc':'Be the first to know about our latest power solutions and product launches',
       'notify.emailPlaceholder':'Your Email Address','notify.namePlaceholder':'Your Name','notify.countryPlaceholder':'Select Country','notify.agree':'I agree to receive updates and marketing communications','notify.privacyAgree':'By submitting this form, You understand and agree to our privacy policy.','notify.subscribe':'SUBSCRIBE NOW',
       'notify.productUpdates':'Product Updates','notify.eventInvites':'Event Invites','notify.exclusiveOffers':'Exclusive Offers',
@@ -2683,7 +2691,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'sol.cobotArm':'協作機器人','sol.semiconductor':'半導體','sol.dataCenter':'資料中心','sol.evCharger':'EV 充電站','sol.greenEnergy':'綠色能源','sol.processAuto':'流程自動化',
       'contact.titleStart':'立即申請','contact.titleMid':'免費樣品！','contact.titleEnd':'','contact.desc':'歡迎填寫表單送出詢問，我們的業務團隊將盡快與您聯繫。<br><span class="disclaimer-note">* 數量有限，把握機會。<br>* 台達保留對本活動之最終解釋及修改權利。</span>',
       'contact.globalOffices':'聯繫我們',
-      'contact.formTitle':'申請諮詢','contact.company':'公司名稱','contact.name':'姓名','contact.email':'電子郵件','contact.country':'國家／地區','contact.phone':'電話','contact.product':'產品','contact.productPlaceholder':'-- 請選擇 --','contact.message':'訊息內容','contact.send':'送出申請','contact.disclaimer':'',
+      'contact.formTitle':'申請諮詢','contact.company':'公司名稱','contact.name':'姓名','contact.email':'電子郵件','contact.country':'國家／地區','contact.phone':'電話','contact.product':'產品','contact.productPlaceholder':'-- 請選擇 --','contact.message':'訊息內容','contact.send':'送出申請','contact.privacyAgree':'我已閱讀並同意隱私權政策。','contact.privacyRequired':'請勾選同意隱私權政策。','contact.disclaimer':'',
       'notify.title':'訂閱更新','notify.desc':'搶先獲得最新電源解決方案與產品發布資訊',
       'notify.emailPlaceholder':'您的電子郵件','notify.namePlaceholder':'您的姓名','notify.countryPlaceholder':'選擇國家','notify.agree':'我同意接收最新資訊及行銷通訊','notify.privacyAgree':'已瞭解與同意我們的隱私權政策','notify.subscribe':'立即訂閱',
       'notify.productUpdates':'產品更新','notify.eventInvites':'活動邀請','notify.exclusiveOffers':'專屬優惠',
@@ -2734,7 +2742,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'sol.cobotArm':'协作机器人','sol.semiconductor':'半导体','sol.dataCenter':'数据中心','sol.evCharger':'EV 充电站','sol.greenEnergy':'绿色能源','sol.processAuto':'流程自动化',
       'contact.titleStart':'立即申请','contact.titleMid':'免费样品！','contact.titleEnd':'','contact.desc':'欢迎填写表单送出询问，我们的销售团队将尽快与您联系。<br><span class="disclaimer-note">* 数量有限，把握机会。<br>* 台达保留对本活动的最终解释及修改权利。</span>',
       'contact.globalOffices':'联系我们',
-      'contact.formTitle':'申请咨询','contact.company':'公司名称','contact.name':'姓名','contact.email':'电子邮件','contact.country':'国家/地区','contact.phone':'电话','contact.product':'产品','contact.productPlaceholder':'-- 请选择 --','contact.message':'留言内容','contact.send':'提交申请','contact.disclaimer':'',
+      'contact.formTitle':'申请咨询','contact.company':'公司名称','contact.name':'姓名','contact.email':'电子邮件','contact.country':'国家/地区','contact.phone':'电话','contact.product':'产品','contact.productPlaceholder':'-- 请选择 --','contact.message':'留言内容','contact.send':'提交申请','contact.privacyAgree':'我已阅读并同意隐私政策。','contact.privacyRequired':'请勾选同意隐私政策。','contact.disclaimer':'',
       'notify.title':'订阅更新','notify.desc':'抢先获得最新电源解决方案与产品发布资讯',
       'notify.emailPlaceholder':'您的电子邮件','notify.namePlaceholder':'您的姓名','notify.countryPlaceholder':'选择国家','notify.agree':'我同意接收最新资讯及营销资讯','notify.privacyAgree':'已了解并同意我们的隐私政策','notify.subscribe':'立即订阅',
       'notify.productUpdates':'产品更新','notify.eventInvites':'活动邀请','notify.exclusiveOffers':'专属优惠',
@@ -2785,7 +2793,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'sol.cobotArm':'協働ロボット','sol.semiconductor':'半導体','sol.dataCenter':'データセンター','sol.evCharger':'EV 充電器','sol.greenEnergy':'グリーンエネルギー','sol.processAuto':'プロセスオートメーション',
       'contact.titleStart':'今すぐ','contact.titleMid':'無料サンプルをゲット！','contact.titleEnd':'','contact.desc':'今すぐフォームを送信して、営業担当より迅速にご連絡いたします。<br><span class="disclaimer-note">* 数量限定の無料サンプルを入手ください。<br>* デルタは本イベントの解釈および変更の全権利を留保します。</span>',
       'contact.globalOffices':'お問い合わせ',
-      'contact.formTitle':'お問合せ','contact.company':'会社名','contact.name':'氏名','contact.email':'メールアドレス','contact.country':'国・地域','contact.phone':'電話番号','contact.product':'製品','contact.productPlaceholder':'-- 選択してください --','contact.message':'メッセージ','contact.send':'送信する','contact.disclaimer':'',
+      'contact.formTitle':'お問合せ','contact.company':'会社名','contact.name':'氏名','contact.email':'メールアドレス','contact.country':'国・地域','contact.phone':'電話番号','contact.product':'製品','contact.productPlaceholder':'-- 選択してください --','contact.message':'メッセージ','contact.send':'送信する','contact.privacyAgree':'プライバシーポリシーを読み、同意しました。','contact.privacyRequired':'プライバシーポリシーに同意してください。','contact.disclaimer':'',
       'notify.title':'最新情報を受け取る','notify.desc':'最新の電源ソリューションと製品発表をいち早くお届けします',
       'notify.emailPlaceholder':'メールアドレス','notify.namePlaceholder':'お名前','notify.countryPlaceholder':'国を選択','notify.agree':'アップデートやマーケティング情報の受け取りに同意します','notify.privacyAgree':'プライバシーポリシーを理解し、これに同意しました','notify.subscribe':'今すぐ登録',
       'notify.productUpdates':'製品情報','notify.eventInvites':'イベント案内','notify.exclusiveOffers':'限定オファー',
