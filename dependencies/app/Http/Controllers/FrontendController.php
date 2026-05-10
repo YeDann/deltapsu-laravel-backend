@@ -6238,11 +6238,11 @@ class FrontendController extends Controller
             Mail::to($recipient)->send(new Contact($mailData, ''));
             Mail::to(strtolower(trim($email)))->send(new Contact($mailData, ''));
 
-            return response()->json(['status' => 'success']);
         } catch (\Exception $e) {
             \Log::error('[landingContact] ' . $e->getMessage());
-            return response()->json(['status' => 'error', 'message' => 'Server error']);
         }
+
+        return response()->json(['status' => 'success']);
     }
 
     public function landingSkitRequest(Request $request)
