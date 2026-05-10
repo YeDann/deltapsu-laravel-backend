@@ -53,7 +53,7 @@
 - **THEN** API 的 locale 欄位為 `jp`，而非原始載入語系
 
 ### Requirement: 頁面視覺與互動功能完整保留
-所有動畫、滾動效果、影片背景、瓦數篩選、產品卡片、Modal、側邊導覽列、行動版底部導覽列，必須與原始 `delta-zh-TW.html` 完全相同。`#promo-mini-btn` SHALL 為錨點連結，點擊後捲動至 `#contact` section。
+所有動畫、滾動效果、影片背景、瓦數篩選、產品卡片、Modal、側邊導覽列、行動版底部導覽列，必須與原始 `delta-zh-TW.html` 完全相同。`#promo-mini-btn` SHALL 為錨點連結，點擊後捲動至 `#contact` section。saleskit modal 表單必須包含隱私權核取方塊（必填），且 submit 行為改為呼叫後端 API。
 
 #### Scenario: GSAP 滾動動畫正常觸發
 - **WHEN** 使用者向下滾動頁面
@@ -66,6 +66,18 @@
 #### Scenario: 點擊 promo-mini-btn 捲動至 contact
 - **WHEN** 使用者點擊右下角的 `#promo-mini-btn`
 - **THEN** 頁面平滑捲動至 `id="contact"` 的 section
+
+#### Scenario: 未勾選隱私權時無法送出
+- **WHEN** 使用者未勾選隱私權核取方塊直接點擊「下載」
+- **THEN** 表單不送出，顯示錯誤提示
+
+#### Scenario: 勾選並送出後觸發下載
+- **WHEN** 使用者填妥所有必填欄位、勾選隱私權、點擊「下載」
+- **THEN** 前端呼叫 `POST /landing/saleskit-request`，收到 download_url 後用 `<a download>` 觸發瀏覽器下載
+
+#### Scenario: API 失敗時顯示錯誤
+- **WHEN** API 回傳非 success 狀態
+- **THEN** 按鈕恢復可點擊，頁面顯示錯誤訊息
 
 ### Requirement: Feature Card small card layout
 Feature 小卡片（pos-2/4/5/6）SHALL 使用 flex column 縱向排列，圖示區域 `icon-wrap` 彈性延伸（`flex: 1 1 auto`），描述文字區塊具備 `min-height: 2.6em` 以確保同行標題對齊。

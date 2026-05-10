@@ -1752,7 +1752,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 
 <div class="compare-data-cell"><span>120W / 240W / 480W</span></div>
 
-<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="compare.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/force-gt/108" href="{{ App::getLocale() === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/'.App::getLocale() }}/product/2/din-rail-power-supply/1/force-gt/108" target="_blank">LEARN MORE</a></div>
+<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="compare.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/force-gt/108" href="{{ App::getLocale() === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/'.App::getLocale() }}/product/2/din-rail-power-supply/1/force-gt/108" onclick="try{localStorage.setItem('productFilters',JSON.stringify({arr_inputtxt:[{type:'31',value_text:'90-264 Vac'}]}))}catch(e){}" target="_blank">LEARN MORE</a></div>
 </div>
 </div>
 </div>
