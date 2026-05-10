@@ -1819,6 +1819,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 <div class="uk-grid uk-grid-large uk-flex-middle" uk-grid="">
 <div class="uk-width-1-2@l reveal-up">
 <h2 class="font-heading barlow" style="font-size:clamp(2.2rem,4vw,3.8rem)!important;line-height:1.2;margin-bottom:0.3em;"><span data-i18n="contact.titleStart" style="color:#fff;font-size:inherit!important;display:block;">REQUEST YOUR</span><span style="display:block;font-size:inherit!important;color:#fff;white-space:nowrap;"><span data-i18n="contact.titleMid" style="font-size:inherit!important;font-weight:inherit;text-shadow:0 0 20px rgba(0,220,255,0.9),0 0 40px rgba(0,180,255,0.7),0 0 80px rgba(0,140,255,0.5);color:#fff;">FREE SAMPLE</span><span data-i18n="contact.titleEnd" style="font-size:inherit!important;color:#fff;"> NOW!</span></span></h2>
+<div style="width:100%;"><img src="{{ asset('medias/landing_page/din-pro-and-din-eco.png') }}" alt="din-pro-and-din-eco" style="width:100%;" /></div>
 
 <p class="uk-text-large uk-margin-medium-top" data-i18n="contact.desc">Simply send us your inquiry, and our sales team will get in touch with you promptly.<br />
 <span class="disclaimer-note">* Limited quantities available.<br />
