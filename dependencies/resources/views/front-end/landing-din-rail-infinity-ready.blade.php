@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Delta Industrial Power Solutions</title>
+<link rel="stylesheet" href="{{ asset('frontend-asset/css/all.css') }}" />
+<link rel="stylesheet" href="{{ asset('frontend-asset/css/fontello3.css') }}" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/css/uikit.min.css" />
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <style>
@@ -45,6 +48,11 @@ p, .uk-text-meta { color: #fff; }
    ============================================= */
 section { min-height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; box-sizing: border-box; padding: 80px 0; }
 .container-wide { max-width: 1600px; margin: 0 auto; width: 92%; }
+/* Push content below fixed header */
+@media (max-width: 1199px) { main { padding-top: 75px; } }
+@media (min-width: 1200px) { main { padding-top: 106px; } }
+#scrollUp { display: none !important; }
+#distributor { display: none !important; }
 .fixed-bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #000510; background-image: linear-gradient(rgba(0,242,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,242,255,0.03) 1px,transparent 1px); background-size: 40px 40px; z-index: -99; pointer-events: none; }
 
 /* =============================================
@@ -106,6 +114,8 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 /* =============================================
    LANG SWITCHER
    ============================================= */
+#langSwitcher { top: 80px !important; }
+@media (min-width: 1200px) { #langSwitcher { top: 121px !important; } }
 .lang-switcher { position: relative; }
 .lang-switcher-btn { display: flex; align-items: center; gap: 6px; padding: 6px 14px 6px 12px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 100px; color: #fff !important; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer; transition: all 0.25s; white-space: nowrap; user-select: none; }
 .lang-switcher-btn * { color: #fff !important; }
@@ -820,6 +830,35 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 
 
 <body>
+<script>
+function subscribe(){document.getElementById("inp3").focus();$('#cxacceptPrivacy_data').val(0);$("#cxacceptPrivacy_data").prop("checked",false);}
+function toggle_visibility(id){var e=document.getElementById(id);if(e.style.visibility=='visible'){$('#in-sidenav').css('visibility','visible');e.style.visibility='hidden';}else{e.style.visibility='visible';$('#in-sidenav').css('visibility','hidden');}}
+function toggle_only(e,id){e.preventDefault();e.stopPropagation();toggle_visibility(id);}
+function openNav(){var e=document.getElementById('in-sidenav');if(e.style.visibility=='hidden'){$('#in-sidenav').css('visibility','visible');$('#search-box-mobile').hide();document.getElementById("Sidenav").classList.add("show");document.getElementById('bg-backslidenav').style.display="block";$('.menu-buger').addClass('active');}else{$('#in-sidenav').css('visibility','hidden');document.getElementById("Sidenav").classList.remove("show");document.getElementById('bg-backslidenav').style.display="none";$('.menu-buger').removeClass('active');}}
+function closeNav(){$('#in-sidenav').css('visibility','hidden');$('.menu-buger').removeClass('active');document.getElementById("Sidenav").classList.remove("show");document.getElementById('bg-backslidenav').style.display="none";}
+function showListCoparison(){document.getElementById("nav-comparison-mobile").style.height="fit-content";document.getElementById("editList").style.display="none";}
+function hideListCoparison(){document.getElementById("nav-comparison-mobile").style.height="80px";document.getElementById("editList").style.display="block";}
+function changeLangLocationmobile(){var link=$('#select-mobile-lang').val();window.location=link;}
+function clickLangLocationmobile(link){window.location=link;}
+function setlocaltion(lang,link){$.ajax({url:"{{ route('setlocaltion') }}",data:{'lang':lang},type:'POST',headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')||window._csrfToken},success:function(res){window.location=link;}});}
+function bigImg(image,id){if(image!=''){$('.imageNav'+id).attr('src','{{ config('app.url') }}/medias/categories/'+image);}else{$('.imageNav'+id).attr('src','{{ asset('frontend-asset/image/blank.png') }}');}}
+function mainCate(id){if(id=='sub1'){$('.imageNav2').attr('src',"{{ asset('frontend-asset/image/Industrial_Power_Supplies.png') }}");}else if(id=='sub2'){$('.imageNav1').attr('src',"{{ asset('frontend-asset/image/Medical-Power-Supplies.png') }}");}else if(id=='sub4'){$('.imageNav4').attr('src',"{{ asset('frontend-asset/image/battery_charging_new.webp') }}");}$('.sub-menu').removeClass('active');$('#'+id).addClass('active');}
+function deleteComparison(id){$.ajax({url:"{{ route('RemovedataInSection') }}",data:{'data':id},type:'POST',headers:{'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')||window._csrfToken},success:function(res){$('#numberselect').text(res['data'].length);$('#numberselect-mobile').text(res['data'].length);}});}
+$(document).ready(function(){
+  $('.btn-sidenav').css('visibility','hidden');
+  $(".megamenu").on("click",function(e){e.stopPropagation();});
+  $('#nav-two').addClass('scrolled');
+  $('#nav-two li a').on("click",function(){$('#nav-two').removeClass('bg-nav');$('#nav-two').addClass('scrolled');});
+  $('#search-box').hide();$('#search-box-mobile').hide();
+  $("#dropdown08").click(function(){$("#search-box").toggle();$('#nav-two').addClass('scrolled');document.getElementById("searchinput").focus();});
+  $("#btn-search-mobile").click(function(){$("#search-box-mobile").toggle();closeNav();document.getElementById("fgrgr-mobile").focus();});
+  $("#btn-close-search").click(function(){document.getElementById('searchinput-mobile').value='';$("#search-box-mobile").toggle();closeNav();});
+  $("#nav-comparison").hide();$("#nav-comparison-mobile").hide();
+  $("#formseachall").submit(function(event){var key=$('#searchinput').val();var newkey=key.replace(/[/]/g,'@');event.preventDefault();window.location='{{ route('searchAll') }}/'+newkey;});
+  $("#formseachall_mobile").submit(function(event){var key=$('#searchinput-mobile').val();var newkey=key.replace(/[/]/g,'@');event.preventDefault();window.location='{{ route('searchAll') }}/'+newkey;});
+});
+</script>
+@include('layouts.header-front')
 <style type="text/css">#overview-main-title { font-size: clamp(1.9rem,3.5vw,5rem) !important; }
 /* 85~305V in pos-3: fit within small card */
 #din-pro .feature-card.pos-3 .pos1-big-num { font-size: clamp(1rem,2.6vw,2.6rem) !important; white-space: nowrap !important; overflow: visible !important; text-overflow: unset !important; }
@@ -2318,7 +2357,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     var msgRequired = lang === 'zh-TW' ? '此欄位為必填' : lang === 'zh-CN' ? '此栏位为必填项' : lang === 'ja' ? 'この項目は必須です' : 'This field is required';
     var msgEmail = lang === 'zh-TW' ? '請輸入有效的電子郵件' : lang === 'zh-CN' ? '请输入有效的电子邮件' : lang === 'ja' ? '有効なメールアドレスを入力してください' : 'Please enter a valid email address';
     var msgSent = lang === 'zh-TW' ? '已成功送出！' : lang === 'zh-CN' ? '提交成功！' : lang === 'ja' ? '送信しました！' : 'Your request has been sent!';
-    var msgPrivacy = lang === 'zh-TW' ? '請勾選同意隱私權政策' : lang === 'zh-CN' ? '请勾选同意隐私政策' : lang === 'ja' ? 'プライバシーポリシーに同意してください' : 'Please agree to the Privacy Policy.';
+    var msgPrivacy = t['contact.privacyRequired'] || 'Please agree to the Privacy Policy.';
     var fields = [
       { id:'cf-company', errId:'cf-company-err' },
       { id:'cf-name',    errId:'cf-name-err' },
@@ -2850,6 +2889,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 </script>
 
 
-
+<script src="{{ asset('frontend-asset/js/popper.min.js') }}"></script>
+<script src="{{ asset('frontend-asset/js/bootstrap.min.js') }}"></script>
 </body>
 </html>
