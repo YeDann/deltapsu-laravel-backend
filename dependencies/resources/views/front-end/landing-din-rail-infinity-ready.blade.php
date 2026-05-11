@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" html_lang="{{ App::getLocale() }}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,23 +24,24 @@
   src: url('https://filecenter.deltaww.com/about/images/about-202604151019494841.otf') format('opentype');
   font-weight: normal; font-style: normal; font-display: swap;
 }
-body, body * { font-family: 'DeltaEN', Arial, sans-serif; }
-html[lang="en"] body, html[lang="en"] body * { font-family: 'DeltaEN', Arial, sans-serif !important; }
-html[lang="en"] h1, html[lang="en"] h2, html[lang="en"] h3,
-html[lang="en"] .text-neon-solid, html[lang="en"] .text-neon-outline { letter-spacing: 0.03em; }
-html[lang="zh-TW"] body, html[lang="zh-TW"] body * { font-family: 'DeltaTW','DeltaEN',Arial,sans-serif !important; letter-spacing: 0em !important; }
-html[lang="zh-CN"] body, html[lang="zh-CN"] body * { font-family: 'Microsoft YaHei','PingFang SC','Heiti SC',sans-serif !important; letter-spacing: 0em !important; }
-html[lang="ja"] body, html[lang="ja"] body * { font-family: 'DeltaEN', Arial, sans-serif !important; letter-spacing: 0em !important; }
+main, main * { font-family: 'DeltaEN', Arial, sans-serif; }
+html[lang="en"] main, html[lang="en"] main * { font-family: 'DeltaEN', Arial, sans-serif !important; }
+html[lang="en"] main h1, html[lang="en"] main h2, html[lang="en"] main h3,
+html[lang="en"] main .text-neon-solid, html[lang="en"] main .text-neon-outline { letter-spacing: 0.03em; }
+html[html_lang="tw"] main, html[html_lang="tw"] main * { font-family: 'DeltaTW','DeltaEN',Arial,sans-serif !important; letter-spacing: 0em !important; }
+html[html_lang="cn"] main, html[html_lang="cn"] main * { font-family: 'Microsoft YaHei','PingFang SC','Heiti SC',sans-serif !important; letter-spacing: 0em !important; }
+html[lang="ja"] main, html[lang="ja"] main * { font-family: 'DeltaEN', Arial, sans-serif !important; letter-spacing: 0em !important; }
 
 /* =============================================
    RESET & BASE
    ============================================= */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: auto; overflow-x: clip; max-width: 100vw; }
-body { background-color: #000510 !important; color: #fff !important; margin: 0; padding: 0; width: 100%; overflow-x: clip; }
-img, video, iframe { max-width: 100%; }
-h1, h2, h3, h4, .font-heading { font-family: inherit; color: #fff; }
-p, .uk-text-meta { color: #fff; }
+body { margin: 0; padding: 0; overflow-x: clip; }
+main { background-color: #000510; color: #fff; width: 100%; overflow-x: clip; }
+main img, main video, main iframe { max-width: 100%; }
+main h1, main h2, main h3, main h4, main .font-heading { font-family: inherit; color: #fff; }
+main p, main .uk-text-meta { color: #fff; }
 .barlow span { font-weight: 900 !important; letter-spacing: 0em !important; display: block; }
 
 /* =============================================
@@ -53,6 +54,8 @@ section { min-height: 100vh; width: 100%; display: flex; flex-direction: column;
 @media (min-width: 1200px) { main { padding-top: 106px; } }
 #scrollUp { display: none !important; }
 #distributor { display: none !important; }
+/* UIKit global reset leaks into header — restore baseline */
+#nav-position svg, .invisible-nav-minimize svg { vertical-align: baseline; }
 .fixed-bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #000510; background-image: linear-gradient(rgba(0,242,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,242,255,0.03) 1px,transparent 1px); background-size: 40px 40px; z-index: -99; pointer-events: none; }
 
 /* =============================================
@@ -209,6 +212,7 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 
 /* Shared class for repeated inline backgrounds */
 .pro-card-bg { background: linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,20,60,0.75) 60%,rgba(0,60,160,0.85) 85%,rgba(200,220,255,0.35) 100%) !important; }
+
 .eco-card-bg { background: linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,40,50,0.75) 60%,rgba(0,120,140,0.85) 85%,rgba(200,220,255,0.35) 100%) !important; }
 
 /* Wide cards row direction */
@@ -261,6 +265,7 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 .temp-label {
   font-size: clamp(0.88rem,1.3vw,1.25rem) !important;
   font-weight: 700 !important; line-height: 1.2 !important; margin: 0 !important;
+  padding: 0 !important; background-color: transparent !important; border-bottom: none !important;
 }
 .feature-card p, .temp-range, .pos1-label {
   font-size: clamp(0.72rem,0.85vw,0.95rem) !important; line-height: 1.3 !important;
@@ -286,12 +291,13 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 .pos1-big-num { font-size: clamp(1.4rem,4.5vw,4.2rem); font-weight: 800; line-height: 1.1; margin: 0; padding-top: clamp(2px,0.3vw,5px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pos1-subtitle { font-size: clamp(0.9rem,1.4vw,1.5rem); font-weight: 700; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pos1-label { font-size: clamp(0.72rem,0.85vw,0.95rem); color: #fff; margin: 0; letter-spacing: 0.8px; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pos1-note { font-size: clamp(0.6rem,0.65vw,0.72rem); color: rgba(255,255,255,0.55); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pos1-note { font-size: clamp(0.6rem,0.65vw,0.72rem); color: rgba(255,255,255,0.55); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 /* Extra gap between label and big num in icon-wrap */
 #din-pro .feature-card.pos-1 .icon-wrap .pos1-label,
 #din-eco .feature-card.pos-1 .icon-wrap .pos1-label {
   margin-bottom: clamp(6px,0.8vw,12px) !important;
 }
+
 
 /* ECO "3 Phase" */
 #din-eco .feature-card.pos-1 .pos1-big-num { font-size: clamp(1rem,2.6vw,2.6rem) !important; white-space: nowrap !important; }
@@ -886,6 +892,169 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
   margin-top: 10px !important;
   display: block !important;
 }
+/* Pull 150% closer to "Maximum achievable" */
+#din-pro .feature-card.pos-1 .pos1-big-num {
+  padding-top: 0 !important;
+  margin-top: -0.25em !important;
+}
+/* Fix eco pos-2 (95% High Efficiency): center content vertically */
+#din-eco .bento-grid-horiz .feature-card.pos-2 {
+  justify-content: center !important;
+}
+/* Fix eco pos-1 (3 Phase): text block vertically centered */
+#din-eco .feature-card.pos-1 > div:last-child {
+  justify-content: center !important;
+}
+#din-eco .feature-card.pos-1 > div:last-child .icon-wrap {
+  justify-content: flex-start !important;
+  flex: 0 0 auto !important;
+}
+@media (max-width: 768px) {
+  #din-eco .feature-card.pos-1 > div:last-child .icon-wrap {
+    gap: 2px !important;
+  }
+  #din-eco .feature-card.pos-1 span[data-i18n="eco.acSupport"],
+  #din-eco .feature-card.pos-1 span[data-i18n="eco.acSupportNote"] {
+    font-size: 0.65rem !important;
+    line-height: 1.2 !important;
+  }
+  /* Fix Wide Temperature label same size as card-header (Slim & Compact) */
+  .temp-label {
+    font-size: clamp(0.8rem, 1.2vw, 1.1rem) !important;
+  }
+  /* Reduce pos-1 card gap on mobile to reduce crowding */
+  #din-eco .feature-card.pos-1 {
+    gap: 4px !important;
+  }
+  /* Reduce pos1-label margin in eco pos-1 on mobile */
+  #din-eco .feature-card.pos-1 .icon-wrap .pos1-label {
+    margin-bottom: 0 !important;
+  }
+}
+/* Remove extra gap between 340~600V and (3EN...) */
+#din-eco .feature-card.pos-1 .icon-wrap .pos1-label[data-i18n="eco.acSupport"] {
+  margin-bottom: 0 !important;
+}
+#din-pro .feature-card.pos-6 .temp-big-num {
+  display: inline-grid !important;
+  grid-template-columns: 0.6em auto !important;
+  align-items: baseline !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  row-gap: 0 !important;
+  column-gap: 0.05em !important;
+  color: #05a3f7 !important;
+}
+#din-pro .feature-card.pos-6 .temp-big-num .temp-sign {
+  color: #05a3f7 !important;
+  line-height: 1.15 !important;
+  display: block !important;
+  text-align: center !important;
+}
+#din-pro .feature-card.pos-6 .temp-big-num .temp-digits {
+  color: #05a3f7 !important;
+  line-height: 1.15 !important;
+  display: block !important;
+}
+#din-pro .feature-card.pos-6 .temp-big-num .temp-to {
+  color: #fff !important;
+  font-size: 0.45em !important;
+  font-weight: 400 !important;
+  vertical-align: middle !important;
+  margin-left: 0.3em !important;
+}
+/* DIN Eco temperature card */
+#din-eco .feature-card.pos-4 .temp-big-num {
+  display: inline-grid !important;
+  grid-template-columns: 0.6em auto !important;
+  align-items: baseline !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  row-gap: 0 !important;
+  column-gap: 0.05em !important;
+  color: #00F1CD !important;
+}
+#din-eco .feature-card.pos-4 .temp-big-num .temp-sign {
+  color: #00F1CD !important;
+  line-height: 1.15 !important;
+  display: block !important;
+  text-align: center !important;
+}
+#din-eco .feature-card.pos-4 .temp-big-num .temp-digits {
+  color: #00F1CD !important;
+  line-height: 1.15 !important;
+  display: block !important;
+}
+#din-eco .feature-card.pos-4 .temp-big-num .temp-to {
+  color: #fff !important;
+  font-size: 0.45em !important;
+  font-weight: 400 !important;
+  vertical-align: middle !important;
+  margin-left: 0.3em !important;
+}
+/* Pull 150% closer to "Maximum achievable" */
+#din-pro .feature-card.pos-1 .pos1-big-num {
+  padding-top: 0 !important;
+  margin-top: -0.25em !important;
+}
+/* Temperature: grid with fixed sign column width so - and + align perfectly */
+#din-pro .feature-card.pos-6 .temp-big-num {
+  display: inline-grid !important;
+  grid-template-columns: 0.6em auto !important;
+  align-items: baseline !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  row-gap: 0 !important;
+  column-gap: 0.05em !important;
+  color: #05a3f7 !important;
+}
+#din-pro .feature-card.pos-6 .temp-big-num .temp-sign {
+  color: #05a3f7 !important;
+  line-height: 1.15 !important;
+  display: block !important;
+  text-align: center !important;
+}
+#din-pro .feature-card.pos-6 .temp-big-num .temp-digits {
+  color: #05a3f7 !important;
+  line-height: 1.15 !important;
+  display: block !important;
+}
+#din-pro .feature-card.pos-6 .temp-big-num .temp-to {
+  color: #fff !important;
+  font-size: 0.45em !important;
+  font-weight: 400 !important;
+  vertical-align: middle !important;
+  margin-left: 0.3em !important;
+}
+/* DIN Eco temperature card: same grid layout, teal color */
+#din-eco .feature-card.pos-4 .temp-big-num {
+  display: inline-grid !important;
+  grid-template-columns: 0.6em auto !important;
+  align-items: baseline !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  row-gap: 0 !important;
+  column-gap: 0.05em !important;
+  color: #00F1CD !important;
+}
+#din-eco .feature-card.pos-4 .temp-big-num .temp-sign {
+  color: #00F1CD !important;
+  line-height: 1.15 !important;
+  display: block !important;
+  text-align: center !important;
+}
+#din-eco .feature-card.pos-4 .temp-big-num .temp-digits {
+  color: #00F1CD !important;
+  line-height: 1.15 !important;
+  display: block !important;
+}
+#din-eco .feature-card.pos-4 .temp-big-num .temp-to {
+  color: #fff !important;
+  font-size: 0.45em !important;
+  font-weight: 400 !important;
+  vertical-align: middle !important;
+  margin-left: 0.3em !important;
+}
 </style>
 <div>
 <div class="fixed-bg-layer">&nbsp;</div>
@@ -1280,11 +1449,11 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="pos1-label" data-i18n="pro.peakLabel">Maximum achievable</div>
 
 <div class="pos1-big-num" style="color:#05a3f7;margin:0;">150%</div>
-</div>
 
 <div class="pos1-subtitle" data-i18n="pro.peakTitle" style="color:#fff;margin:0;">Peak Power</div>
 
 <div class="pos1-label" data-i18n="pro.peakDesc" style="min-height:2.6em;margin:0;">Starting capability</div>
+</div>
 </div>
 </div>
 <!-- pos-2: EMS Immunity -->
@@ -2854,7 +3023,10 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     var t = translations[lang];
     if (!t) return;
     window._currentTranslations = t;
-    document.documentElement.setAttribute('lang', lang);
+    var _langAttrMap = {'en':{'lang':'en','html_lang':'en'},'zh-TW':{'lang':'zh','html_lang':'tw'},'zh-CN':{'lang':'zh','html_lang':'cn'},'ja':{'lang':'ja','html_lang':'jp'}};
+    var _la = _langAttrMap[lang] || {'lang':'en','html_lang':'en'};
+    document.documentElement.setAttribute('lang', _la.lang);
+    document.documentElement.setAttribute('html_lang', _la.html_lang);
     document.querySelectorAll('[data-i18n]').forEach(function(el) { var k = el.getAttribute('data-i18n'); if (t[k] !== undefined) el.innerHTML = t[k]; });
     document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) { var k = el.getAttribute('data-i18n-placeholder'); if (t[k] !== undefined) el.setAttribute('placeholder', t[k]); });
     document.querySelectorAll('[data-i18n-option]').forEach(function(el) { var k = el.getAttribute('data-i18n-option'); if (t[k] !== undefined) el.textContent = t[k]; });
