@@ -6204,21 +6204,23 @@ class FrontendController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Missing required fields']);
         }
 
-        $series  = $this->validateInput($request->input('cf-product'), 'text', true) ?: null;
-        $tel     = $this->validateInput($request->input('cf-phone'), 'text', true) ?: null;
-        $message = $this->validateInput($request->input('contact-message'), 'text', true) ?: null;
+        $series          = $this->validateInput($request->input('cf-product'), 'text', true) ?: null;
+        $tel             = $this->validateInput($request->input('cf-phone'), 'text', true) ?: null;
+        $message         = $this->validateInput($request->input('contact-message'), 'text', true) ?: null;
+        $projectStatus = $this->validateInput($request->input('cf-project-status'), 'text', true) ?: null;
 
         try {
             DB::table('contacts')->insert([
-                'name'       => $name,
-                'email'      => strtolower(trim($email)),
-                'company'    => $company,
-                'country'    => $country,
-                'tel'        => $tel,
-                'series'     => $series,
-                'message'    => $message,
-                'subject'    => 'DIN Rail Inquiry',
-                'created_at' => \Carbon\Carbon::now(),
+                'name'                     => $name,
+                'email'                    => strtolower(trim($email)),
+                'company'                  => $company,
+                'country'                  => $country,
+                'tel'                      => $tel,
+                'series'                   => $series,
+                'message'                  => $message,
+                'question_project_status'  => $projectStatus,
+                'subject'                  => 'DIN Rail Inquiry',
+                'created_at'               => \Carbon\Carbon::now(),
             ]);
 
             $mailData = [
