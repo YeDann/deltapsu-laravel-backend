@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Delta Industrial Power Solutions</title>
+<title>{{ ['en'=>'2026 Delta New Product Launch Event','tw'=>'2026 台達標準電源新品發表會','cn'=>'2026 台达标准电源新品发布会','jp'=>'2026 デルタ標準電源新製品発表イベント'][App::getLocale()] ?? '2026 Delta New Product Launch Event' }}</title>
 <link rel="stylesheet" href="{{ asset('frontend-asset/css/all.css') }}" />
 <link rel="stylesheet" href="{{ asset('frontend-asset/css/fontello3.css') }}" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/css/uikit.min.css" />
@@ -52,10 +52,16 @@ section { min-height: 100vh; width: 100%; display: flex; flex-direction: column;
 /* Push content below fixed header */
 @media (max-width: 1199px) { main { padding-top: 75px; } }
 @media (min-width: 1200px) { main { padding-top: 106px; } }
+/* Anchor scroll offset for fixed header */
+main section[id] { scroll-margin-top: 110px; }
+@media (max-width: 1199px) { main section[id] { scroll-margin-top: 70px; } }
 #scrollUp { display: none !important; }
 #distributor { display: none !important; }
 /* UIKit global reset leaks into header — restore baseline */
-#nav-position svg, .invisible-nav-minimize svg { vertical-align: baseline; }
+#nav-position svg, .invisible-nav-minimize svg,
+.nav-mobile svg, #Sidenav svg { vertical-align: baseline; }
+/* freeze header .power-supplies-link padding to server-rendered locale so JS lang switch won't affect it */
+html .power-supplies-link { padding-top: {{ ['tw'=>'31px','cn'=>'31px','jp'=>'32px','de'=>'30px'][App::getLocale()] ?? '16px' }} !important; }
 .fixed-bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #000510; background-image: linear-gradient(rgba(0,242,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,242,255,0.03) 1px,transparent 1px); background-size: 40px 40px; z-index: -99; pointer-events: none; }
 
 /* =============================================
@@ -1140,8 +1146,9 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
   var videoHasPlayed = false; // tracks if user has ever played / video autoplay started
   var ytPlayer = null;        // YouTube IFrame API player instance
   // No loop, no playlist — plays once then pauses
-  var _ytId = (['tw','cn'].indexOf(window._locale) !== -1) ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
-  var YT_SRC = 'https://www.youtube.com/embed/' + _ytId + '?autoplay=1&mute=1&rel=0&modestbranding=1&enablejsapi=1';
+  var YOUKU_SRC = 'https://player.youku.com/embed/XNTk5MTU5NDA4MA==';
+  var _ytId = window._locale === 'tw' ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
+  var YT_SRC = window._locale === 'cn' ? YOUKU_SRC : 'https://www.youtube.com/embed/' + _ytId + '?autoplay=1&mute=1&rel=0&modestbranding=1&enablejsapi=1';
 
   /* ---- build the floating mini container ---- */
   function buildMiniContainer() {
@@ -1347,7 +1354,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 </div>
 
 <div class="uk-width-3-5@l reveal-up delay-100">
-<div class="video-frame" id="overview-video-frame" style="cursor:default;"><iframe allow="autoplay; encrypted-media" allowfullscreen="" id="overview-yt-iframe" src="https://www.youtube.com/embed/{{ in_array(App::getLocale(), ['tw','cn']) ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI' }}?autoplay=0&amp;mute=1&amp;rel=0&amp;modestbranding=1&amp;enablejsapi=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;"></iframe>
+<div class="video-frame" id="overview-video-frame" style="cursor:default;"><iframe allow="autoplay; encrypted-media" allowfullscreen="" id="overview-yt-iframe" src="{{ App::getLocale() === 'cn' ? 'https://player.youku.com/embed/XNTk5MTU5NDA4MA==' : 'https://www.youtube.com/embed/'.(App::getLocale() === 'tw' ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI').'?autoplay=0&mute=1&rel=0&modestbranding=1&enablejsapi=1' }}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;"></iframe>
 
 <div style="position:absolute;bottom:0;left:0;width:100%;height:2px;background:#05a3f7;pointer-events:none;">&nbsp;</div>
 </div>
@@ -1435,7 +1442,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 
 <div class="product-img-wrap" style="width:100%;max-width:520px;margin:0 auto;height:400px;display:flex;align-items:center;justify-content:center;"><img alt="DIN Pro" class="static-product-img" id="pro-img" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202604231000027622.png" style="width:100%;height:100%;object-fit:contain;display:block;" /></div>
 
-<div class="uk-margin-medium-top"><a class="btn-cyber" data-i18n="dinpro.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/din-pro/123" href="{{ App::getLocale() === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/'.App::getLocale() }}/product/2/din-rail-power-supply/1/din-pro/123" style="min-width:220px;display:inline-block;" target="_blank">LEARN MORE</a></div>
+<div class="uk-margin-medium-top"><a class="btn-cyber" data-i18n="dinpro.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/din-pro/123" data-cn-url="https://www.deltapsu.cn/product/din-rail-power-supply/1/din-pro/123" href="{{ App::getLocale() === 'cn' ? 'https://www.deltapsu.cn/product/din-rail-power-supply/1/din-pro/123' : 'https://psu.deltaww.com/'.App::getLocale().'/product/2/din-rail-power-supply/1/din-pro/123' }}" style="min-width:220px;display:inline-block;" target="_blank">LEARN MORE</a></div>
 </div>
 </div>
 
@@ -1537,7 +1544,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 
 <div class="product-img-wrap" style="width:100%;max-width:520px;margin:0 auto;height:400px;display:flex;align-items:center;justify-content:center;"><img alt="DIN Eco" class="static-product-img" id="eco-img" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202604230959225538.png" style="width:100%;height:100%;object-fit:contain;display:block;" /></div>
 
-<div class="uk-margin-medium-top"><a class="btn-cyber" data-i18n="dineco.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/din-eco/121" href="{{ App::getLocale() === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/'.App::getLocale() }}/product/2/din-rail-power-supply/1/din-eco/121" style="min-width:220px;background:linear-gradient(90deg,#00F1CD,#00F1CD);border-radius:50px;display:inline-block;" target="_blank">LEARN MORE</a></div>
+<div class="uk-margin-medium-top"><a class="btn-cyber" data-i18n="dineco.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/din-eco/121" data-cn-url="https://www.deltapsu.cn/product/din-rail-power-supply/1/din-eco/121" href="{{ App::getLocale() === 'cn' ? 'https://www.deltapsu.cn/product/din-rail-power-supply/1/din-eco/121' : 'https://psu.deltaww.com/'.App::getLocale().'/product/2/din-rail-power-supply/1/din-eco/121' }}" style="min-width:220px;background:linear-gradient(90deg,#00F1CD,#00F1CD);border-radius:50px;display:inline-block;" target="_blank">LEARN MORE</a></div>
 </div>
 </div>
 
@@ -1940,7 +1947,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 
 <div class="compare-data-cell has-check"><span>120W / 240W / 480W / 960W</span><span class="cmp-check cmp-check-pro"><svg viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></div>
 
-<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="dinpro.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/din-pro/123" href="{{ App::getLocale() === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/'.App::getLocale() }}/product/2/din-rail-power-supply/1/din-pro/123" target="_blank">LEARN MORE</a></div>
+<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="dinpro.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/din-pro/123" data-cn-url="https://www.deltapsu.cn/product/din-rail-power-supply/1/din-pro/123" href="{{ App::getLocale() === 'cn' ? 'https://www.deltapsu.cn/product/din-rail-power-supply/1/din-pro/123' : 'https://psu.deltaww.com/'.App::getLocale().'/product/2/din-rail-power-supply/1/din-pro/123' }}" target="_blank">LEARN MORE</a></div>
 </div>
 
 <div class="compare-data-col" style="background:#0d1a24;border:2px solid #4a6a85;border-top:none;border-left:none;border-radius:0 0 14px 0;">
@@ -1960,7 +1967,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 
 <div class="compare-data-cell"><span>120W / 240W / 480W</span></div>
 
-<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="compare.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/force-gt/109" href="{{ App::getLocale() === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/'.App::getLocale() }}/product/2/din-rail-power-supply/1/force-gt/109" onclick="try{localStorage.setItem('productFilters',JSON.stringify({arr_inputtxt:[{type:'31',value_text:'90-264 Vac'}]}))}catch(e){}" target="_blank">LEARN MORE</a></div>
+<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="compare.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/force-gt/109" data-cn-url="https://www.deltapsu.cn/product/din-rail-power-supply/1/force-gt/109" href="{{ App::getLocale() === 'cn' ? 'https://www.deltapsu.cn/product/din-rail-power-supply/1/force-gt/109' : 'https://psu.deltaww.com/'.App::getLocale().'/product/2/din-rail-power-supply/1/force-gt/109' }}" onclick="try{localStorage.setItem('productFilters',JSON.stringify({arr_inputtxt:[{type:'31',value_text:'90-264 Vac'}]}))}catch(e){}" target="_blank">LEARN MORE</a></div>
 </div>
 </div>
 </div>
@@ -2054,7 +2061,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 
 <div class="uk-width-1-2@s"><label class="uk-form-label" data-i18n="contact.phone" style="color:#fff;">PHONE</label> <input class="uk-input input-neon" id="cf-phone" type="tel" /></div>
 
-<div class="uk-width-1-2@s"><label class="uk-form-label" data-i18n="contact.product" style="color:#fff;">PRODUCT</label> <select class="uk-select input-neon" id="cf-product" style="background:rgba(0,20,40,0.6);border:1px solid rgba(0,242,255,0.3);color:#fff;border-radius:4px;"><option data-i18n="contact.productPlaceholder" style="background:#071830;" value="">-- Select --</option><option style="background:#071830;" value="din-pro">DIN Pro</option><option style="background:#071830;" value="din-eco">DIN Eco</option> </select></div>
+<div class="uk-width-1-2@s"><label class="uk-form-label" data-i18n="contact.product" style="color:#fff;">PRODUCT</label> <select class="uk-select input-neon" id="cf-product" style="background:rgba(0,20,40,0.6);border:1px solid rgba(0,242,255,0.3);color:#fff;border-radius:4px;"><option data-i18n="contact.productPlaceholder" style="background:#071830;color:#fff;" value="">-- Select --</option><option style="background:#071830;color:#fff;" value="din-pro">DIN Pro</option><option style="background:#071830;color:#fff;" value="din-eco">DIN Eco</option> </select></div>
 
 <div class="uk-width-1-1"><label class="uk-form-label" data-i18n="contact.projectStatusLabel" style="color:#fff;">Do you have an active or upcoming project that requires a power supply solution?</label><select class="uk-select input-neon" id="cf-project-status" style="background:#0a1628;color:#fff;border-color:rgba(0,242,255,0.3);"><option value="" data-i18n-option="contact.projectStatusPlaceholder" style="background:#071830;color:#fff;">-- Select --</option><option value="a" data-i18n-option="contact.projectStatusOpt1" style="background:#071830;color:#fff;">Yes, currently in development</option><option value="b" data-i18n-option="contact.projectStatusOpt2" style="background:#071830;color:#fff;">Yes, planning within the next 6 months</option><option value="c" data-i18n-option="contact.projectStatusOpt3" style="background:#071830;color:#fff;">Researching for future projects</option><option value="d" data-i18n-option="contact.projectStatusOpt4" style="background:#071830;color:#fff;">No specific project at the moment</option></select></div>
 <div class="uk-width-1-1"><label class="uk-form-label" data-i18n="contact.message" style="color:#fff;">MESSAGE</label><textarea class="uk-textarea input-neon contact-textarea" id="contact-message" rows="4"></textarea></div>
@@ -2727,8 +2734,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
      ============================================= */
   window.openYoutubeModal = function(e) {
     if (e) { e.preventDefault(); e.stopPropagation(); }
-    var _ytId = (['tw','cn'].indexOf(window._locale) !== -1) ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
-    document.getElementById('yt-iframe').src = 'https://www.youtube.com/embed/' + _ytId + '?autoplay=1&mute=1&rel=0&modestbranding=1';
+    var _ytId = window._locale === 'tw' ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
+    document.getElementById('yt-iframe').src = window._locale === 'cn' ? 'https://player.youku.com/embed/XNTk5MTU5NDA4MA==' : 'https://www.youtube.com/embed/' + _ytId + '?autoplay=1&mute=1&rel=0&modestbranding=1';
     document.getElementById('yt-modal').classList.add('is-open');
     document.body.style.overflow = 'hidden';
   };
@@ -2791,12 +2798,16 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     var url = el && el.getAttribute('data-lang-url');
     if (url) { history.pushState(null, '', url); }
     window._locale = {'en':'en','zh-TW':'tw','zh-CN':'cn','ja':'jp'}[lang] || 'en';
-    var _ytId = (['tw','cn'].indexOf(window._locale) !== -1) ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
+    var _ytId = window._locale === 'tw' ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
     var overviewIframe = document.getElementById('overview-yt-iframe');
-    if (overviewIframe) overviewIframe.src = 'https://www.youtube.com/embed/' + _ytId + '?autoplay=0&mute=1&rel=0&modestbranding=1&enablejsapi=1';
+    if (overviewIframe) overviewIframe.src = window._locale === 'cn' ? 'https://player.youku.com/embed/XNTk5MTU5NDA4MA==' : 'https://www.youtube.com/embed/' + _ytId + '?autoplay=0&mute=1&rel=0&modestbranding=1&enablejsapi=1';
     var _urlBase = window._locale === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/' + window._locale;
     document.querySelectorAll('[data-url-template]').forEach(function(el) {
-      el.href = el.getAttribute('data-url-template').replace('https://psu.deltaww.com/{locale}', _urlBase);
+      if (window._locale === 'cn' && el.getAttribute('data-cn-url')) {
+        el.href = el.getAttribute('data-cn-url');
+      } else {
+        el.href = el.getAttribute('data-url-template').replace('https://psu.deltaww.com/{locale}', _urlBase);
+      }
     });
     document.documentElement.setAttribute('lang', lang);
     var names = { 'en':'EN','zh-TW':'繁中','zh-CN':'简中','ja':'日本語' };
@@ -3037,6 +3048,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     document.querySelectorAll('.lang-option').forEach(function(opt) { opt.classList.toggle('active', opt.getAttribute('data-lang') === lang); });
     var globeLink = document.getElementById('footer-globe-link');
     if (globeLink) globeLink.href = lang === 'zh-CN' ? 'https://psu.deltaww.com/cn' : lang === 'zh-TW' ? 'https://psu.deltaww.com/tw' : lang === 'ja' ? 'https://psu.deltaww.com/jp' : 'https://psu.deltaww.com/en';
+    var titles = {'en':'2026 Delta New Product Launch Event','zh-TW':'2026 台達標準電源新品發表會','zh-CN':'2026 台达标准电源新品发布会','ja':'2026 デルタ標準電源新製品発表イベント'};
+    if (titles[lang]) document.title = titles[lang];
     try { localStorage.setItem('delta-lang', lang); } catch(e) {}
   };
 
