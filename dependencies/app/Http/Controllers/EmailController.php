@@ -340,7 +340,9 @@ class EmailController extends Controller
                 'Accept Signup News',
                 'Message',
                 'Config file',
-                'Created_at'
+                'Created_at',
+                'Series',
+                'Project Status'
             ];
 
             // Add data rows
@@ -364,7 +366,9 @@ class EmailController extends Controller
                     $accept,
                     $sub->message,
                     $configFile,
-                    $sub->created_at
+                    $sub->created_at,
+                    $sub->series,
+                    $sub->question_project_status
                 ];
             }
 
