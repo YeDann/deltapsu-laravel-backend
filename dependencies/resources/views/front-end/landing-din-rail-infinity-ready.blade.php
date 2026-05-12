@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Delta Industrial Power Solutions</title>
+<title>{{ ['en'=>'2026 Delta New Product Launch Event','tw'=>'2026 台達標準電源新品發表會','cn'=>'2026 台达标准电源新品发布会','jp'=>'2026 デルタ標準電源新製品発表イベント'][App::getLocale()] ?? '2026 Delta New Product Launch Event' }}</title>
 <link rel="stylesheet" href="{{ asset('frontend-asset/css/all.css') }}" />
 <link rel="stylesheet" href="{{ asset('frontend-asset/css/fontello3.css') }}" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/css/uikit.min.css" />
@@ -58,7 +58,8 @@ main section[id] { scroll-margin-top: 110px; }
 #scrollUp { display: none !important; }
 #distributor { display: none !important; }
 /* UIKit global reset leaks into header — restore baseline */
-#nav-position svg, .invisible-nav-minimize svg { vertical-align: baseline; }
+#nav-position svg, .invisible-nav-minimize svg,
+.nav-mobile svg, #Sidenav svg { vertical-align: baseline; }
 /* freeze header .power-supplies-link padding to server-rendered locale so JS lang switch won't affect it */
 html .power-supplies-link { padding-top: {{ ['tw'=>'31px','cn'=>'31px','jp'=>'32px','de'=>'30px'][App::getLocale()] ?? '16px' }} !important; }
 .fixed-bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #000510; background-image: linear-gradient(rgba(0,242,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,242,255,0.03) 1px,transparent 1px); background-size: 40px 40px; z-index: -99; pointer-events: none; }
@@ -3042,6 +3043,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     document.querySelectorAll('.lang-option').forEach(function(opt) { opt.classList.toggle('active', opt.getAttribute('data-lang') === lang); });
     var globeLink = document.getElementById('footer-globe-link');
     if (globeLink) globeLink.href = lang === 'zh-CN' ? 'https://psu.deltaww.com/cn' : lang === 'zh-TW' ? 'https://psu.deltaww.com/tw' : lang === 'ja' ? 'https://psu.deltaww.com/jp' : 'https://psu.deltaww.com/en';
+    var titles = {'en':'2026 Delta New Product Launch Event','zh-TW':'2026 台達標準電源新品發表會','zh-CN':'2026 台达标准电源新品发布会','ja':'2026 デルタ標準電源新製品発表イベント'};
+    if (titles[lang]) document.title = titles[lang];
     try { localStorage.setItem('delta-lang', lang); } catch(e) {}
   };
 
