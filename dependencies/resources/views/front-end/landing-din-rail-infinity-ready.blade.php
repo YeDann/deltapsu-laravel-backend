@@ -1544,7 +1544,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 
 <div class="product-img-wrap" style="width:100%;max-width:520px;margin:0 auto;height:400px;display:flex;align-items:center;justify-content:center;"><img alt="DIN Eco" class="static-product-img" id="eco-img" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202604230959225538.png" style="width:100%;height:100%;object-fit:contain;display:block;" /></div>
 
-<div class="uk-margin-medium-top"><a class="btn-cyber" data-i18n="dineco.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/din-eco/121" data-cn-url="https://www.deltapsu.cn/product/din-rail-power-supply/1/din-eco/121" href="{{ App::getLocale() === 'cn' ? 'https://www.deltapsu.cn/product/din-rail-power-supply/1/din-eco/121' : 'https://psu.deltaww.com/'.App::getLocale().'/product/2/din-rail-power-supply/1/din-eco/121' }}" style="min-width:220px;background:linear-gradient(90deg,#00F1CD,#00F1CD);border-radius:50px;display:inline-block;" target="_blank">LEARN MORE</a></div>
+<div class="uk-margin-medium-top"><a class="btn-cyber" data-i18n="dineco.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/din-eco/119" data-cn-url="https://www.deltapsu.cn/product/din-rail-power-supply/1/din-eco/119" href="{{ App::getLocale() === 'cn' ? 'https://www.deltapsu.cn/product/din-rail-power-supply/1/din-eco/119' : 'https://psu.deltaww.com/'.App::getLocale().'/product/2/din-rail-power-supply/1/din-eco/119' }}" style="min-width:220px;background:linear-gradient(90deg,#00F1CD,#00F1CD);border-radius:50px;display:inline-block;" target="_blank">LEARN MORE</a></div>
 </div>
 </div>
 
@@ -1967,7 +1967,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 
 <div class="compare-data-cell"><span>120W / 240W / 480W</span></div>
 
-<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="compare.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/force-gt/109" data-cn-url="https://www.deltapsu.cn/product/din-rail-power-supply/1/force-gt/109" href="{{ App::getLocale() === 'cn' ? 'https://www.deltapsu.cn/product/din-rail-power-supply/1/force-gt/109' : 'https://psu.deltaww.com/'.App::getLocale().'/product/2/din-rail-power-supply/1/force-gt/109' }}" onclick="try{localStorage.setItem('productFilters',JSON.stringify({arr_inputtxt:[{type:'31',value_text:'90-264 Vac'}]}))}catch(e){}" target="_blank">LEARN MORE</a></div>
+<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="compare.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/force-gt/108" data-cn-url="https://www.deltapsu.cn/product/din-rail-power-supply/1/force-gt/108" href="{{ App::getLocale() === 'cn' ? 'https://www.deltapsu.cn/product/din-rail-power-supply/1/force-gt/108' : 'https://psu.deltaww.com/'.App::getLocale().'/product/2/din-rail-power-supply/1/force-gt/108' }}" onclick="try{localStorage.setItem('productFilters',JSON.stringify({arr_inputtxt:[{type:'31',value_text:'90-264 Vac'}]}))}catch(e){}" target="_blank">LEARN MORE</a></div>
 </div>
 </div>
 </div>
