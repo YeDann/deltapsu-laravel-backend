@@ -23,13 +23,13 @@
 
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
-            <h3 class="block-title">Total: {{ $records->total() }}</h3>
+            <h3 class="block-title"></h3>
             <div class="block-options">
                 <a href="{{ route('saleskit_requests_export') }}" class="btn btn-primary">Export Data</a>
             </div>
         </div>
         <div class="block-content block-content-full">
-            <table class="table table-bordered table-striped table-vcenter">
+            <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
                 <thead>
                     <tr>
                         <th style="width:4%;" class="text-center">No.</th>
@@ -45,7 +45,7 @@
                 <tbody>
                     @forelse($records as $item)
                     <tr>
-                        <td class="text-center">{{ $loop->iteration + ($records->currentPage() - 1) * $records->perPage() }}</td>
+                        <td class="text-center">{{ $loop->iteration }}</td>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->email }}</td>
                         <td>{{ $item->company }}</td>
@@ -59,9 +59,6 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="mt-3">
-                {{ $records->links() }}
-            </div>
         </div>
     </div>
 </div>
