@@ -54,6 +54,7 @@
                     </option>
                     <option value="Get Advice" {{isset($selecValue) && $selecValue=='Get Advice' ? 'selected' :'' }}>Get
                         Advice</option>
+                    <option value="DIN Rail Inquiry" {{isset($selecValue) && $selecValue=='DIN Rail Inquiry' ? 'selected' :'' }}>DIN Rail Inquiry</option>
                 </select>
             </div>
             <h3 class="block-title">
@@ -84,6 +85,8 @@
                             <th class="th-sm">Tel</th>
                             <th class="th-sm">Created_at</th>
                             <th class="th-sm">Config file</th>
+                            <th class="th-sm">Series</th>
+                            <th class="th-sm">Project Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,6 +110,8 @@
                             No file
                             @endif
                         </td>
+                        <td class="d-none d-sm-table-cell">{{$item->series ?? ''}}</td>
+                        <td class="d-none d-sm-table-cell">{{$item->question_project_status ?? ''}}</td>
                         </tr>
                         @endforeach
                         @endif
