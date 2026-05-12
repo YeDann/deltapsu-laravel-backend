@@ -56,6 +56,8 @@ section { min-height: 100vh; width: 100%; display: flex; flex-direction: column;
 #distributor { display: none !important; }
 /* UIKit global reset leaks into header — restore baseline */
 #nav-position svg, .invisible-nav-minimize svg { vertical-align: baseline; }
+/* freeze header .power-supplies-link padding to server-rendered locale so JS lang switch won't affect it */
+html .power-supplies-link { padding-top: {{ ['tw'=>'31px','cn'=>'31px','jp'=>'32px','de'=>'30px'][App::getLocale()] ?? '16px' }} !important; }
 .fixed-bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #000510; background-image: linear-gradient(rgba(0,242,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,242,255,0.03) 1px,transparent 1px); background-size: 40px 40px; z-index: -99; pointer-events: none; }
 
 /* =============================================
