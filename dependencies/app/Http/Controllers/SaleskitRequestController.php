@@ -20,7 +20,7 @@ class SaleskitRequestController extends Controller
     {
         $records = DB::table('landing_saleskit_requests')
             ->orderBy('created_at', 'desc')
-            ->paginate(15);
+            ->get();
 
         return view('saleskit-requests.index')
             ->with('name', 'saleskit-requests')
