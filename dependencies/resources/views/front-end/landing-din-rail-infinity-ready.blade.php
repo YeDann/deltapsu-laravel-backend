@@ -52,6 +52,9 @@ section { min-height: 100vh; width: 100%; display: flex; flex-direction: column;
 /* Push content below fixed header */
 @media (max-width: 1199px) { main { padding-top: 75px; } }
 @media (min-width: 1200px) { main { padding-top: 106px; } }
+/* Anchor scroll offset for fixed header */
+main section[id] { scroll-margin-top: 110px; }
+@media (max-width: 1199px) { main section[id] { scroll-margin-top: 70px; } }
 #scrollUp { display: none !important; }
 #distributor { display: none !important; }
 /* UIKit global reset leaks into header — restore baseline */
