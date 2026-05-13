@@ -163,7 +163,7 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
    WATTAGE FILTER
    ============================================= */
 .wattage-filter { display: inline-flex; align-items: center; justify-content: center; gap: 2px; margin-bottom: 40px; background: rgba(10,20,40,0.55); border: 1px solid rgba(255,255,255,0.12); border-radius: 50px; padding: 5px; backdrop-filter: blur(10px); }
-.watt-btn { background: transparent; border: none; color: rgba(255,255,255,0.75); padding: 8px 22px; border-radius: 50px; cursor: pointer; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.3px; transition: color 0.25s,background 0.25s,box-shadow 0.25s; white-space: nowrap; }
+.watt-btn { background: transparent; border: none; color: rgba(255,255,255,0.75); padding: clamp(6px, 0.65vw, 8px) clamp(10px, calc(3.87vw - 35.7px), 20px); border-radius: 50px; cursor: pointer; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.3px; transition: color 0.25s,background 0.25s,box-shadow 0.25s; white-space: nowrap; }
 .watt-btn:hover:not(.active) { color: #fff; background: rgba(255,255,255,0.07); }
 .pro-theme .watt-btn.active { background: #05a3f7; color: #fff; font-weight: 700; }
 .eco-theme .watt-btn.active { background: #00F1CD; color: #000; font-weight: 700; }
@@ -735,7 +735,6 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
   .static-product-img { height: auto !important; max-height: 58vw !important; width: auto !important; max-width: 90% !important; }
   /* Wattage filter — respect screen edges like certifications table */
   .wattage-filter { width: calc(100% - 32px) !important; margin-left: auto !important; margin-right: auto !important; box-sizing: border-box !important; flex-wrap: wrap !important; justify-content: center !important; }
-  .watt-btn { padding: 6px 10px !important; font-size: 0.8rem !important; }
   .scroll-down-container { display: none !important; }
   h1.text-neon-solid.hero-title { font-size: clamp(1.4rem,10vw,2.2rem) !important; line-height: 1.1 !important; }
   #intro div[data-i18n="hero.title"] { white-space: normal !important; font-size: clamp(1rem,5.5vw,2.2rem) !important; }
