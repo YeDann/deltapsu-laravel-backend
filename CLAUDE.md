@@ -84,6 +84,78 @@ When joining, use `CASE WHEN main_cateid = 2 THEN 0` to prefer Industrial (id=2)
 - Spec properties: `property[type_id][index]`, `property[data_1][index]`, etc.
 - Part numbers: `partNumber[no][0]`, `partNumber[text][0]`, `partNumber[no][1]`, ...
 
+## Git Workflow
+
+### Remotes
+| Remote | URL | 用途 |
+|--------|-----|------|
+| `origin` | git@gitlab.twjoin.com:deltapsu-group/deltapsu-laravel-backend.git | 主要 remote |
+| `uat` | git@github.com:YeDann/deltapsu-laravel-backend.git | UAT & Prod 環境（同 remote，分支不同） |
+| `cn` | git@github.com:YeDann/deltapsu-cn-laravel-backend.git | CN 站專用 |
+
+> **原則：所有開發都在 `origin` 進行。`uat` 和 `cn` 只用來 merge/cherry-pick 後部署，不在上面開發。**
+
+### UAT 測試流程
+
+**「推 origin develop」** — 把目前分支 merge 進 develop，推 origin：
+```bash
+git checkout develop
+git merge <current-branch> --no-ff
+git push origin develop
+```
+
+**「推 uat develop」** — 切到 develop，推 uat（不重複推 origin）：
+```bash
+git checkout develop
+git push uat develop
+```
+
+### 正式站流程（全站）
+```bash
+# 1. 從 origin/staging 開分支，cherry-pick 需要的 commit
+git checkout -b <branch> staging
+git cherry-pick <hash1> <hash2> ...
+
+# 2. merge 回 staging
+git checkout staging
+git merge <branch> --no-edit
+
+# 3. 先推 origin，再推 uat，去正式站 pull
+git push origin staging
+git push uat staging
+```
+
+### 正式站流程（CN，無測試環境）
+```bash
+# 1. 從 cn/staging 開分支，cherry-pick 需要的 commit
+git fetch cn
+git checkout -b <branch> cn/staging
+git cherry-pick <hash>
+# 衝突一律以 CN 站為準（保留 HEAD）
+
+# 2. merge 回 cn/staging
+git checkout <cn-staging-branch>
+git merge <branch> --no-edit
+
+# 3. 推到 cn，去 CN 正式站 pull
+git push cn <branch>
+```
+
+### 分支命名慣例
+- 功能縮寫：`staging-lp`（lp = landing page 專案）
+- 日期：`staging-0413`
+- 不用描述性英文內容當後綴（`staging-bilibili` ❌）
+
+### CN 注意事項
+- CN 站 CSP（`ContentSecurityPolicy.php`）格式與全站不同，衝突時保留 CN 版本
+- CN 站影片用 Bilibili（`player.bilibili.com`），全站用 YouTube
+- CN locale 判斷：`App::getLocale() === 'cn'`
+
+### 常見地雷
+- `index.lock` 存在：`rm -f .git/index.lock`
+- cherry-pick 前確認 commit hash 在對的 branch，不要漏撿
+- force push 前確認 log 乾淨再推
+
 ## Artisan Commands
 ```bash
 php artisan redirects:generate    # Rebuild redirect map from CSV
