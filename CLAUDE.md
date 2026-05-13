@@ -89,48 +89,67 @@ When joining, use `CASE WHEN main_cateid = 2 THEN 0` to prefer Industrial (id=2)
 ### Remotes
 | Remote | URL | 用途 |
 |--------|-----|------|
-| `origin` | gitlab.twjoin.com (GitLab) | 主要 remote |
-| `uat` | GitHub / YeDann/deltapsu-laravel-backend | UAT 環境 |
-| `cn` | GitHub / YeDann/deltapsu-cn-laravel-backend | CN 站專用 |
+| `origin` | git@gitlab.twjoin.com:deltapsu-group/deltapsu-laravel-backend.git | 主要 remote |
+| `uat` | git@github.com:YeDann/deltapsu-laravel-backend.git | UAT & Prod 環境（同 remote，分支不同） |
+| `cn` | git@github.com:YeDann/deltapsu-cn-laravel-backend.git | CN 站專用 |
 
-### Push 順序
-**永遠先推 origin，再推 uat。** 順序反了會產生多餘的 merge commit。
+> **原則：所有開發都在 `origin` 進行。`uat` 和 `cn` 只用來 merge/cherry-pick 後部署，不在上面開發。**
+
+### UAT 測試流程
+
+**「推 origin develop」** — 把目前分支 merge 進 develop，推 origin：
 ```bash
-git push origin <branch>
-git push uat <branch>
+git checkout develop
+git merge <current-branch> --no-edit
+git push origin develop
 ```
 
-### Cherry-pick commits 進 staging
+**「推 uat develop」** — 切到 develop，推 uat（不重複推 origin）：
 ```bash
-git checkout staging
+git checkout develop
+git push uat develop
+```
+
+### 正式站流程（全站）
+```bash
+# 1. 從 origin/staging 開分支，cherry-pick 需要的 commit
+git checkout -b <branch> staging
 git cherry-pick <hash1> <hash2> ...
-# 解衝突後
-git add <files> && git cherry-pick --continue
+
+# 2. merge 回 staging
+git checkout staging
+git merge <branch> --no-edit
+
+# 3. 先推 origin，再推 uat，去正式站 pull
 git push origin staging
 git push uat staging
 ```
-不需要開中間分支，除非明確要求。
+
+### 正式站流程（CN，無測試環境）
+```bash
+# 1. 從 cn/staging 開分支，cherry-pick 需要的 commit
+git fetch cn
+git checkout -b <branch> cn/staging
+git cherry-pick <hash>
+# 衝突一律以 CN 站為準（保留 HEAD）
+
+# 2. merge 回 cn/staging
+git checkout <cn-staging-branch>
+git merge <branch> --no-edit
+
+# 3. 推到 cn，去 CN 正式站 pull
+git push cn <branch>
+```
 
 ### 分支命名慣例
-- 功能縮寫：`staging-lp`
+- 功能縮寫：`staging-lp`（lp = landing page 專案）
 - 日期：`staging-0413`
 - 不用描述性英文內容當後綴（`staging-bilibili` ❌）
 
-### develop → staging 完整流程
-```bash
-git checkout staging
-git merge develop --no-edit
-git push origin staging
-git push uat staging
-```
-
-### CN remote 流程
-```bash
-git checkout cn-staging-lp
-git cherry-pick <hash>
-# 衝突以 CN 站為準（保留 HEAD）
-git push cn cn-staging-lp
-```
+### CN 注意事項
+- CN 站 CSP（`ContentSecurityPolicy.php`）格式與全站不同，衝突時保留 CN 版本
+- CN 站影片用 Bilibili（`player.bilibili.com`），全站用 YouTube
+- CN locale 判斷：`App::getLocale() === 'cn'`
 
 ### 常見地雷
 - `index.lock` 存在：`rm -f .git/index.lock`
