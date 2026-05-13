@@ -84,6 +84,59 @@ When joining, use `CASE WHEN main_cateid = 2 THEN 0` to prefer Industrial (id=2)
 - Spec properties: `property[type_id][index]`, `property[data_1][index]`, etc.
 - Part numbers: `partNumber[no][0]`, `partNumber[text][0]`, `partNumber[no][1]`, ...
 
+## Git Workflow
+
+### Remotes
+| Remote | URL | 用途 |
+|--------|-----|------|
+| `origin` | gitlab.twjoin.com (GitLab) | 主要 remote |
+| `uat` | GitHub / YeDann/deltapsu-laravel-backend | UAT 環境 |
+| `cn` | GitHub / YeDann/deltapsu-cn-laravel-backend | CN 站專用 |
+
+### Push 順序
+**永遠先推 origin，再推 uat。** 順序反了會產生多餘的 merge commit。
+```bash
+git push origin <branch>
+git push uat <branch>
+```
+
+### Cherry-pick commits 進 staging
+```bash
+git checkout staging
+git cherry-pick <hash1> <hash2> ...
+# 解衝突後
+git add <files> && git cherry-pick --continue
+git push origin staging
+git push uat staging
+```
+不需要開中間分支，除非明確要求。
+
+### 分支命名慣例
+- 功能縮寫：`staging-lp`
+- 日期：`staging-0413`
+- 不用描述性英文內容當後綴（`staging-bilibili` ❌）
+
+### develop → staging 完整流程
+```bash
+git checkout staging
+git merge develop --no-edit
+git push origin staging
+git push uat staging
+```
+
+### CN remote 流程
+```bash
+git checkout cn-staging-lp
+git cherry-pick <hash>
+# 衝突以 CN 站為準（保留 HEAD）
+git push cn cn-staging-lp
+```
+
+### 常見地雷
+- `index.lock` 存在：`rm -f .git/index.lock`
+- cherry-pick 前確認 commit hash 在對的 branch，不要漏撿
+- force push 前確認 log 乾淨再推
+
 ## Artisan Commands
 ```bash
 php artisan redirects:generate    # Rebuild redirect map from CSV
