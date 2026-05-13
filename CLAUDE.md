@@ -100,7 +100,7 @@ When joining, use `CASE WHEN main_cateid = 2 THEN 0` to prefer Industrial (id=2)
 **「推 origin develop」** — 把目前分支 merge 進 develop，推 origin：
 ```bash
 git checkout develop
-git merge <current-branch> --no-edit
+git merge <current-branch> --no-ff
 git push origin develop
 ```
 
