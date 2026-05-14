@@ -2161,8 +2161,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       body: JSON.stringify({ email: emailVal, name: nameVal, country: countryVal })
     })
     .then(function(r){ return r.json(); })
-    .then(function(){ alert('Thank you for subscribing!'); UIkit.modal('#notify-modal').hide(); })
-    .catch(function(){ alert('Thank you for subscribing!'); UIkit.modal('#notify-modal').hide(); });
+    .then(function(){ var _tm={'tw':'如果您從未訂閱過我們，請檢查您的電子信箱並確認訂閱。','cn':'如果您从未订阅过我们，请查看您的電子郵箱並确认订阅。','jp':'初めてご購読いただく場合は、お送りしたメールの受信をご確認の上、承認のお手続きをお願い申し上げます。'}; alert(_tm[window._locale]||'Please verify the subscription in your email inbox if you have never subscribed to us before.'); UIkit.modal('#notify-modal').hide(); })
+    .catch(function(){ var _tm={'tw':'如果您從未訂閱過我們，請檢查您的電子信箱並確認訂閱。','cn':'如果您从未订阅过我们，请查看您的電子郵箱並确认订阅。','jp':'初めてご購読いただく場合は、お送りしたメールの受信をご確認の上、承認のお手続きをお願い申し上げます。'}; alert(_tm[window._locale]||'Please verify the subscription in your email inbox if you have never subscribed to us before.'); UIkit.modal('#notify-modal').hide(); });
   }
 });
 </script>
@@ -2872,6 +2872,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'notify.title':'Stay Updated','notify.desc':'Be the first to know about our latest power solutions and product launches',
       'notify.emailPlaceholder':'Your Email Address','notify.namePlaceholder':'Your Name','notify.countryPlaceholder':'Select Country','notify.agree':'I agree to receive updates and marketing communications','notify.privacyAgree':'I have read and agree to the <a href="https://psu.deltaww.com/en/etc/privacy-policy" target="_blank" style="color:#05a3f7;">Privacy Policy</a>.','notify.subscribe':'SUBSCRIBE NOW',
       'notify.productUpdates':'Product Updates','notify.eventInvites':'Event Invites','notify.exclusiveOffers':'Exclusive Offers',
+      'notify.thanks':'Please verify the subscription in your email inbox if you have never subscribed to us before.',
       'saleskit.title':'Request Sales Kit','saleskit.name':'Name *','saleskit.namePlaceholder':'Your name','saleskit.email':'Email *','saleskit.company':'Company *','saleskit.companyPlaceholder':'Your company name','saleskit.phone':'Phone','saleskit.phonePlaceholder':'Optional','saleskit.download':'DOWNLOAD SALES KIT','saleskit.privacyAgree':'I have read and agree to the <a href="https://psu.deltaww.com/en/etc/privacy-policy" target="_blank" style="color:#05a3f7;">Privacy Policy</a>.','saleskit.privacyRequired':'Please agree to the Privacy Policy.',
       'offices.title':'Global Operations &amp; Service Locations','offices.asia':'Asia','offices.northAmerica':'North America','offices.centralSouthAmerica':'Central &amp; South America','offices.europe':'Europe',
       'wechat.scan':'Scan to add WeChat','wechat.instruction':'Open WeChat → Scan QR Code',
@@ -2923,6 +2924,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'notify.title':'訂閱更新','notify.desc':'搶先獲得最新電源解決方案與產品發布資訊',
       'notify.emailPlaceholder':'您的電子郵件','notify.namePlaceholder':'您的姓名','notify.countryPlaceholder':'選擇國家','notify.agree':'我同意接收最新資訊及行銷通訊','notify.privacyAgree':'已瞭解與同意我們的<a href="https://psu.deltaww.com/tw/etc/privacy-policy" target="_blank" style="color:#05a3f7;">隱私權政策</a>','notify.subscribe':'立即訂閱',
       'notify.productUpdates':'產品更新','notify.eventInvites':'活動邀請','notify.exclusiveOffers':'專屬優惠',
+      'notify.thanks':'如果您從未訂閱過我們，請檢查您的電子信箱並確認訂閱。',
       'saleskit.title':'索取銷售資料','saleskit.name':'姓名 *','saleskit.namePlaceholder':'您的姓名','saleskit.email':'電子郵件 *','saleskit.company':'公司名稱 *','saleskit.companyPlaceholder':'您的公司名稱','saleskit.phone':'電話','saleskit.phonePlaceholder':'選填','saleskit.download':'下載銷售資料','saleskit.privacyAgree':'我已閱讀並同意<a href="https://psu.deltaww.com/tw/etc/privacy-policy" target="_blank" style="color:#05a3f7;">隱私權政策</a>。','saleskit.privacyRequired':'請同意隱私權政策。',
       'offices.title':'全球運營與服務據點','offices.asia':'亞洲','offices.northAmerica':'北美','offices.centralSouthAmerica':'中南美','offices.europe':'歐洲',
       'wechat.scan':'掃描加入微信','wechat.instruction':'開啟微信 → 掃描 QR Code',
@@ -2974,6 +2976,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'notify.title':'订阅更新','notify.desc':'抢先获得最新电源解决方案与产品发布资讯',
       'notify.emailPlaceholder':'您的电子邮件','notify.namePlaceholder':'您的姓名','notify.countryPlaceholder':'选择国家','notify.agree':'我同意接收最新资讯及营销资讯','notify.privacyAgree':'已了解并同意我们的<a href="https://www.deltapsu.cn/cn/etc/privacy-policy" target="_blank" style="color:#05a3f7;">隐私政策</a>','notify.subscribe':'立即订阅',
       'notify.productUpdates':'产品更新','notify.eventInvites':'活动邀请','notify.exclusiveOffers':'专属优惠',
+      'notify.thanks':'如果您从未订阅过我们，请查看您的電子郵箱並确认订阅。',
       'saleskit.title':'索取销售资料','saleskit.name':'姓名 *','saleskit.namePlaceholder':'您的姓名','saleskit.email':'电子邮件 *','saleskit.company':'公司名称 *','saleskit.companyPlaceholder':'您的公司名称','saleskit.phone':'电话','saleskit.phonePlaceholder':'选填','saleskit.download':'资料下载','saleskit.privacyAgree':'我已阅读并同意<a href="https://www.deltapsu.cn/cn/etc/privacy-policy" target="_blank" style="color:#05a3f7;">隐私政策</a>。','saleskit.privacyRequired':'请同意隐私政策。',
       'offices.title':'全球运营与服务据点','offices.asia':'亚洲','offices.northAmerica':'北美','offices.centralSouthAmerica':'中南美','offices.europe':'欧洲',
       'wechat.scan':'扫描加入微信','wechat.instruction':'打开微信 → 扫描二维码',
@@ -3025,6 +3028,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'notify.title':'最新情報を受け取る','notify.desc':'最新の電源ソリューションと製品発表をいち早くお届けします',
       'notify.emailPlaceholder':'メールアドレス','notify.namePlaceholder':'お名前','notify.countryPlaceholder':'国を選択','notify.agree':'アップデートやマーケティング情報の受け取りに同意します','notify.privacyAgree':'<a href="https://psu.deltaww.com/jp/etc/privacy-policy" target="_blank" style="color:#05a3f7;">プライバシーポリシー</a>を理解し、これに同意しました','notify.subscribe':'今すぐ登録',
       'notify.productUpdates':'製品情報','notify.eventInvites':'イベント案内','notify.exclusiveOffers':'限定オファー',
+      'notify.thanks':'初めてご購読いただく場合は、お送りしたメールの受信をご確認の上、承認のお手続きをお願い申し上げます。',
       'saleskit.title':'営業資料の請求','saleskit.name':'お名前 *','saleskit.namePlaceholder':'お名前を入力','saleskit.email':'メールアドレス *','saleskit.company':'会社名 *','saleskit.companyPlaceholder':'会社名を入力','saleskit.phone':'電話番号','saleskit.phonePlaceholder':'任意','saleskit.download':'営業資料をダウンロード','saleskit.privacyAgree':'<a href="https://psu.deltaww.com/jp/etc/privacy-policy" target="_blank" style="color:#05a3f7;">プライバシーポリシー</a>を読み、同意しました。','saleskit.privacyRequired':'プライバシーポリシーに同意してください。',
       'offices.title':'グローバル拠点','offices.asia':'アジア','offices.northAmerica':'北米','offices.centralSouthAmerica':'中南米','offices.europe':'ヨーロッパ',
       'wechat.scan':'WeChatをスキャンして追加','wechat.instruction':'WeChatを開く → QRコードをスキャン',
