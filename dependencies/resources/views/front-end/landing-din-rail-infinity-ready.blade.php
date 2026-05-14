@@ -837,11 +837,22 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 #offices-dialog .o-entry { margin-bottom: 8px; }
 </style>
 <script>window._serverLang = '{{ $htmlLang }}'; window._csrfToken = '{{ csrf_token() }}'; window._locale = '{{ App::getLocale() }}';</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MKT8KMQ6');</script>
+<!-- End Google Tag Manager -->
 </head>
 
 
 
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MKT8KMQ6"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <script>
 function subscribe(){document.getElementById("inp3").focus();$('#cxacceptPrivacy_data').val(0);$("#cxacceptPrivacy_data").prop("checked",false);}
 function toggle_visibility(id){var e=document.getElementById(id);if(e.style.visibility=='visible'){$('#in-sidenav').css('visibility','visible');e.style.visibility='hidden';}else{e.style.visibility='visible';$('#in-sidenav').css('visibility','hidden');}}
@@ -2858,7 +2869,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'compare.remoteControl':'Remote Control','compare.yes':'Yes',
       'compare.warranty':'Warranty','compare.years5':'5 Years','compare.years3':'3 Years',
       'compare.wattage':'Wattage','compare.na':'N/A','compare.learnMore':'LEARN MORE',
-      'solutions.title':'Featured Solutions','solutions.desc':'Standard power modules ready for volume shipment','solutions.all':'All products',
+      'solutions.title':'Featured Solutions','solutions.desc':'Download the sales kit to learn about the application of DIN Rail Power Supply','solutions.all':'All products',
       'sol.cobotArm':'Cobot','sol.semiconductor':'Semiconductor','sol.dataCenter':'Data Center','sol.evCharger':'EV Charger','sol.greenEnergy':'Green Energy','sol.processAuto':'Process Automation',
       'contact.titleStart':'REQUEST YOUR','contact.titleMid':'FREE SAMPLE','contact.titleEnd':'NOW!','contact.desc':'Simply send us your inquiry, and our sales team will get in touch with you promptly.<br><span class="disclaimer-note">* Limited quantities available.<br>* Delta reserves the right to modify or interpret this offer.</span>',
       'contact.globalOffices':'Contact Us',
@@ -2909,7 +2920,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'compare.remoteControl':'遠端控制','compare.yes':'是',
       'compare.warranty':'保固','compare.years5':'5 年','compare.years3':'3 年',
       'compare.wattage':'瓦數','compare.na':'N/A','compare.learnMore':'了解更多',
-      'solutions.title':'精選方案','solutions.desc':'標準電源模組，準備量產出貨','solutions.all':'全部產品',
+      'solutions.title':'精選方案','solutions.desc':'立即下載各行業導軌型工業電源應用範例!','solutions.all':'全部產品',
       'sol.cobotArm':'協作機器人','sol.semiconductor':'半導體','sol.dataCenter':'資料中心','sol.evCharger':'EV 充電站','sol.greenEnergy':'綠色能源','sol.processAuto':'流程自動化',
       'contact.titleStart':'立即申請','contact.titleMid':'免費樣品！','contact.titleEnd':'','contact.desc':'歡迎填寫表單送出詢問，我們的業務團隊將盡快與您聯繫。<br><span class="disclaimer-note">* 數量有限，把握機會。<br>* 台達保留對本活動之最終解釋及修改權利。</span>',
       'contact.globalOffices':'聯繫我們',
@@ -2960,7 +2971,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'compare.remoteControl':'远程控制','compare.yes':'是',
       'compare.warranty':'保固','compare.years5':'5 年','compare.years3':'3 年',
       'compare.wattage':'功率','compare.na':'N/A','compare.learnMore':'了解更多',
-      'solutions.title':'精选方案','solutions.desc':'标准电源模块，准备量产出货','solutions.all':'全部产品',
+      'solutions.title':'精选方案','solutions.desc':'立即下载各行各业导轨型工业电源应用范例！','solutions.all':'全部产品',
       'sol.cobotArm':'协作机器人','sol.semiconductor':'半导体','sol.dataCenter':'数据中心','sol.evCharger':'EV 充电站','sol.greenEnergy':'绿色能源','sol.processAuto':'流程自动化',
       'contact.titleStart':'立即申请','contact.titleMid':'免费样品！','contact.titleEnd':'','contact.desc':'欢迎填写表单送出询问，我们的销售团队将尽快与您联系。<br><span class="disclaimer-note">* 数量有限，把握机会。<br>* 台达保留对本活动的最终解释及修改权利。</span>',
       'contact.globalOffices':'联系我们',
@@ -3011,7 +3022,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'compare.remoteControl':'リモートコントロール','compare.yes':'あり',
       'compare.warranty':'保証','compare.years5':'5年','compare.years3':'3年',
       'compare.wattage':'ワット数','compare.na':'N/A','compare.learnMore':'詳細を見る',
-      'solutions.title':'注目のソリューション','solutions.desc':'量産出荷準備が整った標準電源モジュール','solutions.all':'全製品',
+      'solutions.title':'注目のソリューション','solutions.desc':'各業界をクリックして、DINレール電源の活用事例を今すぐダウンロード！','solutions.all':'全製品',
       'sol.cobotArm':'協働ロボット','sol.semiconductor':'半導体','sol.dataCenter':'データセンター','sol.evCharger':'EV 充電器','sol.greenEnergy':'グリーンエネルギー','sol.processAuto':'プロセスオートメーション',
       'contact.titleStart':'今すぐ','contact.titleMid':'無料サンプルをゲット！','contact.titleEnd':'','contact.desc':'今すぐフォームを送信！営業担当より迅速にご連絡いたします。<br><span class="disclaimer-note">* 数量限定の無料サンプルを入手ください。<br>* デルタは本イベントの解釈および変更の全権利を留保します。</span>',
       'contact.globalOffices':'お問い合わせ',
