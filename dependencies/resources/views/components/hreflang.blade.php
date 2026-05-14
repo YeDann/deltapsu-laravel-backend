@@ -22,12 +22,16 @@
         $langCode = $language->name; // name 欄位才是語言代碼 (en, cn, tw 等)
         $hreflangCode = $langMapping[$langCode] ?? $langCode; // 轉換為標準代碼
         
-        // 生成該語言的URL
-        $langUrl = str_replace('/' . $currentLang . '/', '/' . $langCode . '/', $currentUrl);
-        
-        // 如果當前URL沒有語言前綴，則加上語言前綴
-        if (!strpos($currentUrl, '/' . $currentLang . '/')) {
-            $langUrl = str_replace(config('app.url'), config('app.url') . '/' . $langCode, $currentUrl);
+        // 生成該語言的URL（處理 /en/ 中間 和 /en 結尾兩種情況）
+        if (preg_match('#/' . preg_quote($currentLang, '#') . '(/|$)#', $currentUrl)) {
+            $langUrl = preg_replace(
+                '#/' . preg_quote($currentLang, '#') . '(/|$)#',
+                '/' . $langCode . '$1',
+                $currentUrl
+            );
+        } else {
+            // URL 完全沒有語言前綴，加上語言前綴
+            $langUrl = rtrim(config('app.url'), '/') . '/' . $langCode . '/' . ltrim(str_replace(config('app.url'), '', $currentUrl), '/');
         }
     @endphp
     <link rel="alternate" href="{{ $langUrl }}" hreflang="{{ $hreflangCode }}" />
@@ -35,9 +39,14 @@
 
 {{-- x-default 指向英文版本 --}}
 @php
-    $defaultUrl = str_replace('/' . $currentLang . '/', '/en/', $currentUrl);
-    if (!strpos($currentUrl, '/' . $currentLang . '/')) {
-        $defaultUrl = str_replace(config('app.url'), config('app.url') . '/en', $currentUrl);
+    if (preg_match('#/' . preg_quote($currentLang, '#') . '(/|$)#', $currentUrl)) {
+        $defaultUrl = preg_replace(
+            '#/' . preg_quote($currentLang, '#') . '(/|$)#',
+            '/en$1',
+            $currentUrl
+        );
+    } else {
+        $defaultUrl = rtrim(config('app.url'), '/') . '/en/' . ltrim(str_replace(config('app.url'), '', $currentUrl), '/');
     }
 @endphp
 <link rel="alternate" href="{{ $defaultUrl }}" hreflang="x-default" />
