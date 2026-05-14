@@ -836,11 +836,22 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 #offices-dialog .o-entry { margin-bottom: 8px; }
 </style>
 <script>window._serverLang = '{{ $htmlLang }}'; window._csrfToken = '{{ csrf_token() }}'; window._locale = '{{ App::getLocale() }}';</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MKT8KMQ6');</script>
+<!-- End Google Tag Manager -->
 </head>
 
 
 
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MKT8KMQ6"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <script>
 function subscribe(){document.getElementById("inp3").focus();$('#cxacceptPrivacy_data').val(0);$("#cxacceptPrivacy_data").prop("checked",false);}
 function toggle_visibility(id){var e=document.getElementById(id);if(e.style.visibility=='visible'){$('#in-sidenav').css('visibility','visible');e.style.visibility='hidden';}else{e.style.visibility='visible';$('#in-sidenav').css('visibility','hidden');}}
