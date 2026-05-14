@@ -1159,7 +1159,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
   // No loop, no playlist — plays once then pauses
   var YOUKU_SRC = 'https://player.bilibili.com/player.html?bvid=BV1B6556GEBa';
   var _ytId = window._locale === 'tw' ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
-  var YT_SRC = window._locale === 'cn' ? YOUKU_SRC : 'https://www.youtube.com/embed/' + _ytId + '?autoplay=1&mute=1&rel=0&modestbranding=1&enablejsapi=1';
+  var YT_SRC = window._locale === 'cn' ? YOUKU_SRC : 'https://www.youtube.com/embed/' + _ytId + '?autoplay=0&rel=0&modestbranding=1&enablejsapi=1';
 
   /* ---- build the floating mini container ---- */
   function buildMiniContainer() {
@@ -1185,7 +1185,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 
     miniIframe = document.createElement('iframe');
     miniIframe.id = 'mini-yt-iframe';
-    miniIframe.allow = 'autoplay; encrypted-media';
+    miniIframe.allow = 'encrypted-media';
     miniIframe.allowFullscreen = true;
     miniIframe.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;';
     miniIframe.src = 'about:blank';
@@ -1365,7 +1365,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 </div>
 
 <div class="uk-width-3-5@l reveal-up delay-100">
-<div class="video-frame" id="overview-video-frame" style="cursor:default;"><iframe allow="autoplay; encrypted-media" allowfullscreen="" id="overview-yt-iframe" src="{{ App::getLocale() === 'cn' ? 'https://player.bilibili.com/player.html?bvid=BV1B6556GEBa' : 'https://www.youtube.com/embed/'.(App::getLocale() === 'tw' ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI').'?autoplay=0&mute=1&rel=0&modestbranding=1&enablejsapi=1' }}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;"></iframe>
+<div class="video-frame" id="overview-video-frame" style="cursor:default;"><iframe allow="encrypted-media" allowfullscreen="" id="overview-yt-iframe" src="{{ App::getLocale() === 'cn' ? 'https://player.bilibili.com/player.html?bvid=BV1B6556GEBa' : 'https://www.youtube.com/embed/'.(App::getLocale() === 'tw' ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI').'?rel=0&modestbranding=1&enablejsapi=1' }}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;"></iframe>
 
 <div style="position:absolute;bottom:0;left:0;width:100%;height:2px;background:#05a3f7;pointer-events:none;">&nbsp;</div>
 </div>
@@ -1397,8 +1397,6 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
         events: {
           onReady: function() {
             playerReady = true;
-            // Play immediately if already in view when player becomes ready
-            if (isInView) ytPlayer.playVideo();
           }
         }
       });
@@ -1414,10 +1412,8 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 
     if (nowInView && !isInView) {
       isInView = true;
-      if (playerReady && ytPlayer) ytPlayer.playVideo();
     } else if (!nowInView && isInView) {
       isInView = false;
-      if (playerReady && ytPlayer) ytPlayer.pauseVideo();
     }
   }
 
@@ -2239,7 +2235,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 <!-- ===== YOUTUBE MODAL ===== -->
 
 <div id="yt-modal">
-<div id="yt-dialog"><button id="yt-close" onclick="closeYoutubeModal()" type="button">&times;</button><iframe allow="autoplay;encrypted-media" allowfullscreen="" id="yt-iframe" src="about:blank"></iframe></div>
+<div id="yt-dialog"><button id="yt-close" onclick="closeYoutubeModal()" type="button">&times;</button><iframe allow="encrypted-media" allowfullscreen="" id="yt-iframe" src="about:blank"></iframe></div>
 </div>
 <!-- ===== PROMO MODAL ===== -->
 
@@ -2746,7 +2742,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
   window.openYoutubeModal = function(e) {
     if (e) { e.preventDefault(); e.stopPropagation(); }
     var _ytId = window._locale === 'tw' ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
-    document.getElementById('yt-iframe').src = window._locale === 'cn' ? 'https://player.bilibili.com/player.html?bvid=BV1B6556GEBa' : 'https://www.youtube.com/embed/' + _ytId + '?autoplay=1&mute=1&rel=0&modestbranding=1';
+    document.getElementById('yt-iframe').src = window._locale === 'cn' ? 'https://player.bilibili.com/player.html?bvid=BV1B6556GEBa' : 'https://www.youtube.com/embed/' + _ytId + '?autoplay=0&rel=0&modestbranding=1';
     document.getElementById('yt-modal').classList.add('is-open');
     document.body.style.overflow = 'hidden';
   };
@@ -2811,7 +2807,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     window._locale = {'en':'en','zh-TW':'tw','zh-CN':'cn','ja':'jp'}[lang] || 'en';
     var _ytId = window._locale === 'tw' ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
     var overviewIframe = document.getElementById('overview-yt-iframe');
-    if (overviewIframe) overviewIframe.src = window._locale === 'cn' ? 'https://player.bilibili.com/player.html?bvid=BV1B6556GEBa' : 'https://www.youtube.com/embed/' + _ytId + '?autoplay=0&mute=1&rel=0&modestbranding=1&enablejsapi=1';
+    if (overviewIframe) overviewIframe.src = window._locale === 'cn' ? 'https://player.bilibili.com/player.html?bvid=BV1B6556GEBa' : 'https://www.youtube.com/embed/' + _ytId + '?rel=0&modestbranding=1&enablejsapi=1';
     var _urlBase = window._locale === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/' + window._locale;
     document.querySelectorAll('[data-url-template]').forEach(function(el) {
       if (window._locale === 'cn' && el.getAttribute('data-cn-url')) {
