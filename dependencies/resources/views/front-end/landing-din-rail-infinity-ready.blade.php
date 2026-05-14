@@ -3018,7 +3018,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
       'compare.remoteControl':'リモートコントロール','compare.yes':'あり',
       'compare.warranty':'保証','compare.years5':'5年','compare.years3':'3年',
       'compare.wattage':'ワット数','compare.na':'N/A','compare.learnMore':'詳細を見る',
-      'solutions.title':'注目のソリューション','solutions.desc':'各業界をクリックして、DINレール電源の活用事例を今すぐダウンロード！','solutions.all':'全製品',
+      'solutions.title':'注目のソリューション','solutions.desc':'以下の業界別リンクより、DINレール電源の最新活用事例をダウンロードいただけます。ぜひ業務にお役立てください。','solutions.all':'全製品',
       'sol.cobotArm':'協働ロボット','sol.semiconductor':'半導体','sol.dataCenter':'データセンター','sol.evCharger':'EV 充電器','sol.greenEnergy':'グリーンエネルギー','sol.processAuto':'プロセスオートメーション',
       'contact.titleStart':'今すぐ','contact.titleMid':'無料サンプルをゲット！','contact.titleEnd':'','contact.desc':'今すぐフォームを送信！営業担当より迅速にご連絡いたします。<br><span class="disclaimer-note">* 数量限定の無料サンプルを入手ください。<br>* デルタは本イベントの解釈および変更の全権利を留保します。</span>',
       'contact.globalOffices':'お問い合わせ',
