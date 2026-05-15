@@ -1988,8 +1988,8 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 </div>
 </div>
 </section>
-<!-- ===== SOLUTIONS ===== -->
-
+{{-- ===== SOLUTIONS (hidden until 5/20) ===== --}}
+{{--
 <section class="solutions-section" id="solutions" style="padding-top:60px;padding-bottom:20px;">
 <div class="container-wide">
 <div class="uk-text-center uk-margin-large-bottom reveal-up">
@@ -2041,6 +2041,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 </div>
 </div>
 </section>
+--}}
 <!-- ===== CONTACT ===== -->
 
 <section class="contact-bg" id="contact">
