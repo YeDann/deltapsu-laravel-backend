@@ -1357,10 +1357,18 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <section id="overview" style="background:url('https://filecenter.deltaww.com/about/images/about-202603311615129063.jpg') center/cover no-repeat;position:relative;z-index:1;">
 <div class="container-wide">
 <div class="uk-grid uk-grid-large uk-flex-middle" uk-grid="">
-<div class="uk-width-2-5@l reveal-up" style="display:flex;flex-direction:column;justify-content:space-between;gap:42px;">
+<div class="uk-width-2-5@l reveal-up" style="display:flex;flex-direction:column;justify-content:space-between;gap:30px;">
 <h2 class="font-heading barlow" id="overview-main-title" style="color:#fff;line-height:1;margin:0;padding:0;font-size:clamp(1.9rem,3.5vw,5rem) !important;text-transform:uppercase;"><span data-i18n="overview.title1" style="color:#fff;display:block;margin:0 0 4px;padding:0;">POWERING</span> <span data-i18n="overview.title2" style="color:#fff;display:block;margin:0;padding:0;">EXCELLENCE</span></h2>
 
+<div id="overview-wechat-qr" style="display:none;text-align:left;">
+  <div style="display:inline-block;text-align:center;">
+    <img src="{{ asset('frontend-asset/image/wechat_qrcode.jpg') }}" alt="WeChat QR Code" style="width:120px;height:120px;border-radius:8px;display:block;" />
+    <p style="margin:6px 0 0;font-size:clamp(0.85rem, 1rem, 1rem) !important;color:#fff;">台达标准电源</p>
+  </div>
+</div>
+<p id="overview-wechat-time" style="display:none;margin:0;font-size:clamp(0.85rem, 1.6rem, 2.4rem) !important;">5/20 (三) 上午 10:30 扫描加入微信直播</p>
 <p data-i18n="overview.desc" style="margin:0;">Next-generation power solutions engineered for mission-critical stability</p>
+
 </div>
 
 <div class="uk-width-3-5@l reveal-up delay-100">
@@ -3056,6 +3064,10 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     var nameEl = document.getElementById('langCurrentName');
     if (nameEl) nameEl.textContent = names[lang] || 'EN';
     document.querySelectorAll('.lang-option').forEach(function(opt) { opt.classList.toggle('active', opt.getAttribute('data-lang') === lang); });
+    var wechatQr = document.getElementById('overview-wechat-qr');
+    if (wechatQr) wechatQr.style.display = lang === 'zh-CN' ? 'block' : 'none';
+    var wechatTime = document.getElementById('overview-wechat-time');
+    if (wechatTime) wechatTime.style.display = lang === 'zh-CN' ? 'block' : 'none';
     var globeLink = document.getElementById('footer-globe-link');
     if (globeLink) globeLink.href = lang === 'zh-CN' ? 'https://psu.deltaww.com/cn' : lang === 'zh-TW' ? 'https://psu.deltaww.com/tw' : lang === 'ja' ? 'https://psu.deltaww.com/jp' : 'https://psu.deltaww.com/en';
     var titles = {'en':'2026 Delta New Product Launch Event','zh-TW':'2026 台達標準電源新品發表會','zh-CN':'2026 台达标准电源新品发布会','ja':'2026 デルタ標準電源新製品発表イベント'};
