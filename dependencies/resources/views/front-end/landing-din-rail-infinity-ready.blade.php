@@ -1125,8 +1125,8 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 (function syncHeroCountdown() {
   function tick() {
     var _l = document.documentElement.lang;
-    var target = (_l === 'zh-TW' || _l === 'zh-CN')
-      ? new Date('2026-05-20T09:30:00+08:00')
+    var target = (_l === 'zh-TW' || _l === 'zh-CN' || _l === 'zh')
+      ? new Date('2026-05-20T10:30:00+08:00')
       : new Date('2026-05-20T15:30:00+08:00');
     var now = new Date();
     var diff = Math.max(0, target - now);
@@ -2411,8 +2411,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 (function(){
   function tick(){
     var _l = document.documentElement.lang;
-    var target = (_l === 'zh-TW' || _l === 'zh-CN')
-      ? new Date('2026-05-20T09:30:00+08:00').getTime()
+    var target = (_l === 'zh-TW' || _l === 'zh-CN' || _l === 'zh')
+      ? new Date('2026-05-20T10:30:00+08:00').getTime()
       : new Date('2026-05-20T15:30:00+08:00').getTime();
     var now = Date.now(), diff = target - now;
     var el = document.getElementById('video-countdown');
@@ -2895,7 +2895,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     'zh-TW': {
       label:'繁中',
       'nav.home':'首頁','nav.live':'直播','nav.certification':'認證','nav.compare':'比較','nav.solutions':'應用方案','nav.contact':'取得資訊','nav.dinpro':'DIN Pro','nav.dineco':'DIN Eco',
-      'overview.event.line1':'台達標準電源','overview.event.line2':'2026 新品上市發表會','overview.title1':'世界級電源','overview.title2':'','overview.desc':'新世代電源解決方案，專為關鍵任務穩定性而設計','overview.videoExpiry':'2026.05.20 (星期三) | 上午 09:30 (UTC +8)',
+      'overview.event.line1':'台達標準電源','overview.event.line2':'2026 新品上市發表會','overview.title1':'世界級電源','overview.title2':'','overview.desc':'新世代電源解決方案，專為關鍵任務穩定性而設計','overview.videoExpiry':'2026.05.20 (星期三) | 上午 10:30 (UTC +8)',
       'hero.title':'台達標準電源','hero.subtitle':'INFINITY READY','hero.notified':'訂閱通知','hero.register':'立刻報名','hero.onlineEventAt':'線上發表會時間：','hero.dinRailLabel':'導軌型工業電源供應器','hero.upcomingLabel':'即將上市新產品',
       'dinpro.title':'DIN Pro 單相電源系列','dinpro.desc':'穩定之源，智造未來','dinpro.learnMore':'了解更多',
       'dineco.title':'DIN Eco 三相電源系列','dineco.desc':'效能之本，穩築基石','dineco.learnMore':'了解更多',
@@ -2947,7 +2947,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     'zh-CN': {
       label:'简中',
       'nav.home':'首页','nav.live':'直播','nav.certification':'认证','nav.compare':'对比','nav.solutions':'应用方案','nav.contact':'获取资讯','nav.dinpro':'DIN Pro','nav.dineco':'DIN Eco',
-      'overview.event.line1':'台达标准电源','overview.event.line2':'2026 新品上市发布会','overview.title1':'世界级电源','overview.title2':'','overview.desc':'新一代电源解决方案，专为关键设备稳定性而设计','overview.videoExpiry':'2026.05.20 (星期三) | 上午 09:30 (UTC +8)',
+      'overview.event.line1':'台达标准电源','overview.event.line2':'2026 新品上市发布会','overview.title1':'世界级电源','overview.title2':'','overview.desc':'新一代电源解决方案，专为关键设备稳定性而设计','overview.videoExpiry':'2026.05.20 (星期三) | 上午 10:30 (UTC +8)',
       'hero.title':'台达标准电源','hero.subtitle':'INFINITY READY','hero.notified':'订阅通知','hero.register':'立即报名','hero.onlineEventAt':'线上发布会时间：','hero.dinRailLabel':'导轨型工业电源供应器','hero.upcomingLabel':'即将上市新产品',
       'dinpro.title':'DIN Pro 系列 单相导轨电源','dinpro.desc':'稳定之源，智造未来','dinpro.learnMore':'了解更多',
       'dineco.title':'DIN Eco 系列 三相导轨电源','dineco.desc':'效能之本，稳筑基石','dineco.learnMore':'了解更多',
