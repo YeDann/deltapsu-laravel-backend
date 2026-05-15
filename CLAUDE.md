@@ -113,12 +113,12 @@ git push uat develop
 ### 正式站流程（全站）
 ```bash
 # 1. 從 origin/staging 開分支，cherry-pick 需要的 commit
-git checkout -b <branch> staging
+git checkout -b <branch> origin/staging
 git cherry-pick <hash1> <hash2> ...
 
-# 2. merge 回 staging
+# 2. merge 回 staging，**必須 --no-ff**，否則 fast-forward 看不出有開分支
 git checkout staging
-git merge <branch> --no-edit
+git merge <branch> --no-ff --no-edit
 
 # 3. 先推 origin，再推 uat，去正式站 pull
 git push origin staging
@@ -140,6 +140,10 @@ git merge <branch> --no-edit
 # 3. 推到 cn，去 CN 正式站 pull
 git push cn <branch>
 ```
+
+### Commit 格式
+- **只寫 title，不寫 body**
+- `git commit -m "feat: 簡短說明"`
 
 ### 分支命名慣例
 - 功能縮寫：`staging-lp`（lp = landing page 專案）
