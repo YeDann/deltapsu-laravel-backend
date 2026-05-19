@@ -835,6 +835,8 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 #offices-dialog .o-addr { color: #aaa; margin: 0 0 1px; }
 #offices-dialog .o-hq { color: #fff; font-size: 10px; }
 #offices-dialog .o-entry { margin-bottom: 8px; }
+html[html_lang="tw"] #hero-time-row, html[html_lang="cn"] #hero-time-row, html[lang="zh"] #hero-time-row { display: none !important; }
+html[html_lang="tw"] #hero-countdown-wrap, html[html_lang="cn"] #hero-countdown-wrap, html[lang="zh"] #hero-countdown-wrap { display: none !important; }
 </style>
 <script>window._serverLang = '{{ $htmlLang }}'; window._csrfToken = '{{ csrf_token() }}'; window._locale = '{{ App::getLocale() }}';</script>
 <!-- Google Tag Manager -->
@@ -1092,12 +1094,12 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="reveal-up delay-150" data-i18n="overview.event.line2" style="font-size:clamp(1.2rem,3.5vw,4rem);font-weight:700;letter-spacing:clamp(1px,0.3vw,4px);text-transform:uppercase;color:rgba(0,210,255,0.9);margin:0 0 clamp(14px,2.5vh,30px) 0;line-height:1.25;">New Product Launch Event 2026</div>
 <!-- Row 4: Online Launch Event at + date/time -->
 
-<div class="reveal-up delay-200" style="margin:0 0 clamp(16px,2.5vh,28px) 0;font-size:clamp(1.6rem,1.7vw,1.4rem);color:rgba(255,255,255,0.85);letter-spacing:0.5px;white-space:nowrap;"><span data-i18n="hero.onlineEventAt" style="color:rgba(255,255,255,0.85);">Online Launch Event at</span> <span data-i18n="overview.videoExpiry" style="color:#00f2ff;font-weight:700;letter-spacing:1px;white-space:nowrap;">2026.05.20 (Wed.) | 03:30 PM (UTC +8)</span></div>
+<div class="reveal-up delay-200" id="hero-time-row" style="margin:0 0 clamp(16px,2.5vh,28px) 0;font-size:clamp(1.6rem,1.7vw,1.4rem);color:rgba(255,255,255,0.85);letter-spacing:0.5px;white-space:nowrap;"><span data-i18n="hero.onlineEventAt" style="color:rgba(255,255,255,0.85);">Online Launch Event at</span> <span data-i18n="overview.videoExpiry" style="color:#00f2ff;font-weight:700;letter-spacing:1px;white-space:nowrap;">2026.05.20 (Wed.) | 03:30 PM (UTC +8)</span></div>
 <!-- Row 5: Register Now + Countdown side by side -->
 
 <div class="reveal-up delay-250" style="display:flex;flex-direction:row;align-items:center;gap:clamp(10px,2vw,20px);flex-wrap:wrap;justify-content:center;margin-bottom:clamp(20px,3vh,40px);"><!-- Register Now button --><button class="btn-notify" onclick="UIkit.modal('#notify-modal').show()" style="min-width:160px;justify-content:center;padding:clamp(8px,1.4vw,12px) clamp(18px,2.5vw,30px);font-size:clamp(0.75rem,1.4vw,1rem);border-radius:8px;" type="button"><span data-i18n="hero.register" style="color:#fff!important;">Register Now</span></button><!-- Countdown -->
 
-<div style="display:flex;gap:6px;align-items:center;">
+<div id="hero-countdown-wrap" style="display:flex;gap:6px;align-items:center;">
 <div class="cd-block"><span class="cd-num" id="cd-days-hero">00</span><span class="cd-label">DAYS</span></div>
 <span class="cd-sep">:</span>
 
@@ -2904,8 +2906,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     'zh-TW': {
       label:'繁中',
       'nav.home':'首頁','nav.live':'直播','nav.certification':'認證','nav.compare':'比較','nav.solutions':'應用方案','nav.contact':'取得資訊','nav.dinpro':'DIN Pro','nav.dineco':'DIN Eco',
-      'overview.event.line1':'台達標準電源','overview.event.line2':'2026 新品上市發表會','overview.title1':'世界級電源','overview.title2':'','overview.desc':'新世代電源解決方案，專為關鍵任務穩定性而設計','overview.videoExpiry':'2026.05.20 (星期三) | 上午 09:30 (UTC +8)',
-      'hero.title':'台達標準電源','hero.subtitle':'INFINITY READY','hero.notified':'訂閱通知','hero.register':'立刻報名','hero.onlineEventAt':'線上發表會時間：','hero.dinRailLabel':'導軌型工業電源供應器','hero.upcomingLabel':'即將上市新產品',
+      'overview.event.line1':'台達標準電源','overview.event.line2':'2026 新品上市','overview.title1':'世界級電源','overview.title2':'','overview.desc':'新世代電源解決方案，專為關鍵任務穩定性而設計','overview.videoExpiry':'2026.05.20 (星期三) | 上午 09:30 (UTC +8)',
+      'hero.title':'台達標準電源','hero.subtitle':'INFINITY READY','hero.notified':'訂閱通知','hero.register':'訂閱通知','hero.onlineEventAt':'線上發表會時間：','hero.dinRailLabel':'導軌型工業電源供應器','hero.upcomingLabel':'全新產品',
       'dinpro.title':'DIN Pro 單相電源系列','dinpro.desc':'穩定之源，智造未來','dinpro.learnMore':'了解更多',
       'dineco.title':'DIN Eco 三相電源系列','dineco.desc':'效能之本，穩築基石','dineco.learnMore':'了解更多',
       'pro.peakLabel':'最高可達','pro.peakTitle':'峰值功率','pro.peakDesc':'啟動能力',
@@ -2956,8 +2958,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     'zh-CN': {
       label:'简中',
       'nav.home':'首页','nav.live':'直播','nav.certification':'认证','nav.compare':'对比','nav.solutions':'应用方案','nav.contact':'获取资讯','nav.dinpro':'DIN Pro','nav.dineco':'DIN Eco',
-      'overview.event.line1':'台达标准电源','overview.event.line2':'2026 新品上市发布会','overview.title1':'世界级电源','overview.title2':'','overview.desc':'新一代电源解决方案，专为关键设备稳定性而设计','overview.videoExpiry':'2026.05.20 (星期三) | 上午 10:30 (UTC +8)',
-      'hero.title':'台达标准电源','hero.subtitle':'INFINITY READY','hero.notified':'订阅通知','hero.register':'立即报名','hero.onlineEventAt':'线上发布会时间：','hero.dinRailLabel':'导轨型工业电源供应器','hero.upcomingLabel':'即将上市新产品',
+      'overview.event.line1':'台达标准电源','overview.event.line2':'2026 新品上市','overview.title1':'世界级电源','overview.title2':'','overview.desc':'新一代电源解决方案，专为关键设备稳定性而设计','overview.videoExpiry':'2026.05.20 (星期三) | 上午 10:30 (UTC +8)',
+      'hero.title':'台达标准电源','hero.subtitle':'INFINITY READY','hero.notified':'订阅通知','hero.register':'订阅通知','hero.onlineEventAt':'线上发布会时间：','hero.dinRailLabel':'导轨型工业电源供应器','hero.upcomingLabel':'全新产品',
       'dinpro.title':'DIN Pro 系列 单相导轨电源','dinpro.desc':'稳定之源，智造未来','dinpro.learnMore':'了解更多',
       'dineco.title':'DIN Eco 系列 三相导轨电源','dineco.desc':'效能之本，稳筑基石','dineco.learnMore':'了解更多',
       'pro.peakLabel':'最高可达','pro.peakTitle':'峰值功率','pro.peakDesc':'启动能力',
