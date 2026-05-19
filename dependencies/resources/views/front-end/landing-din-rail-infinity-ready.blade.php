@@ -1162,7 +1162,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
   var videoHasPlayed = false; // tracks if user has ever played / video autoplay started
   var ytPlayer = null;        // YouTube IFrame API player instance
   // No loop, no playlist — plays once then pauses
-  var YOUKU_SRC = 'https://player.bilibili.com/player.html?bvid=BV1B6556GEBa';
+  var YOUKU_SRC = 'https://player.bilibili.com/player.html?bvid=BV1R6Lz6GEsB';
   var _ytId = window._locale === 'tw' ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
   var YT_SRC = window._locale === 'cn' ? YOUKU_SRC : 'https://www.youtube.com/embed/' + _ytId + '?autoplay=0&rel=0&modestbranding=1&enablejsapi=1';
 
@@ -1378,7 +1378,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 </div>
 
 <div class="uk-width-3-5@l reveal-up delay-100">
-<div class="video-frame" id="overview-video-frame" style="cursor:default;"><iframe allow="encrypted-media" allowfullscreen="" id="overview-yt-iframe" src="{{ App::getLocale() === 'cn' ? 'https://player.bilibili.com/player.html?bvid=BV1B6556GEBa' : 'https://www.youtube.com/embed/'.(App::getLocale() === 'tw' ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI').'?rel=0&modestbranding=1&enablejsapi=1' }}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;"></iframe>
+<div class="video-frame" id="overview-video-frame" style="cursor:default;"><iframe allow="encrypted-media" allowfullscreen="" id="overview-yt-iframe" src="{{ App::getLocale() === 'cn' ? 'https://player.bilibili.com/player.html?bvid=BV1R6Lz6GEsB' : 'https://www.youtube.com/embed/'.(App::getLocale() === 'tw' ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI').'?rel=0&modestbranding=1&enablejsapi=1' }}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block;"></iframe>
 
 <div style="position:absolute;bottom:0;left:0;width:100%;height:2px;background:#05a3f7;pointer-events:none;">&nbsp;</div>
 </div>
@@ -2760,7 +2760,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
   window.openYoutubeModal = function(e) {
     if (e) { e.preventDefault(); e.stopPropagation(); }
     var _ytId = window._locale === 'tw' ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
-    document.getElementById('yt-iframe').src = window._locale === 'cn' ? 'https://player.bilibili.com/player.html?bvid=BV1B6556GEBa' : 'https://www.youtube.com/embed/' + _ytId + '?autoplay=0&rel=0&modestbranding=1';
+    document.getElementById('yt-iframe').src = window._locale === 'cn' ? 'https://player.bilibili.com/player.html?bvid=BV1R6Lz6GEsB' : 'https://www.youtube.com/embed/' + _ytId + '?autoplay=0&rel=0&modestbranding=1';
     document.getElementById('yt-modal').classList.add('is-open');
     document.body.style.overflow = 'hidden';
   };
@@ -2825,7 +2825,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     window._locale = {'en':'en','zh-TW':'tw','zh-CN':'cn','ja':'jp'}[lang] || 'en';
     var _ytId = window._locale === 'tw' ? 'bBNC4lOdEUo' : 'RTiVd5EOXXI';
     var overviewIframe = document.getElementById('overview-yt-iframe');
-    if (overviewIframe) overviewIframe.src = window._locale === 'cn' ? 'https://player.bilibili.com/player.html?bvid=BV1B6556GEBa' : 'https://www.youtube.com/embed/' + _ytId + '?rel=0&modestbranding=1&enablejsapi=1';
+    if (overviewIframe) overviewIframe.src = window._locale === 'cn' ? 'https://player.bilibili.com/player.html?bvid=BV1R6Lz6GEsB' : 'https://www.youtube.com/embed/' + _ytId + '?rel=0&modestbranding=1&enablejsapi=1';
     var _urlBase = window._locale === 'cn' ? 'https://deltapsu.cn/cn' : 'https://psu.deltaww.com/' + window._locale;
     document.querySelectorAll('[data-url-template]').forEach(function(el) {
       if (window._locale === 'cn' && el.getAttribute('data-cn-url')) {
