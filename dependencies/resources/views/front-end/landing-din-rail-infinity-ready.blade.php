@@ -699,7 +699,8 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
   /* NEW PRODUCT LAUNCH EVENT 2026 */
   #intro div[data-i18n="overview.event.line2"] { font-size: clamp(0.6rem,2.8vw,0.85rem) !important; letter-spacing: 2px !important; margin-bottom: 12px !important; }
   /* Launch date tag */
-  #intro div[data-i18n="overview.videoExpiry"] { font-size: clamp(0.5rem,2.5vw,0.85rem) !important; letter-spacing: 1px !important; }
+  #intro [data-i18n="hero.onlineEventAt"] { font-size: clamp(12px,5.5vw,18px) !important; }
+  #intro [data-i18n="overview.videoExpiry"] { font-size: clamp(12px,5.5vw,18px) !important; letter-spacing: 1px !important; display: block !important; white-space: normal !important; word-break: break-word !important; }
   .bento-grid-horiz, .bento-grid-horiz[style] { display: grid !important; grid-template-columns: 1fr 1fr !important; grid-template-rows: auto !important; height: auto !important; gap: 10px !important; }
   #din-pro .bento-grid-horiz > .pos-1, #din-eco .bento-grid-horiz > .pos-1 { grid-column: 1 / -1 !important; }
   #din-pro .bento-grid-horiz > .pos-6, #din-eco .bento-grid-horiz > .pos-4 { grid-column: 1 / -1 !important; }
@@ -1993,8 +1994,8 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 </div>
 </div>
 </section>
-{{-- ===== SOLUTIONS (hidden until 5/20) ===== --}}
-{{--
+<!-- ===== SOLUTIONS ===== -->
+
 <section class="solutions-section" id="solutions" style="padding-top:60px;padding-bottom:20px;">
 <div class="container-wide">
 <div class="uk-text-center uk-margin-large-bottom reveal-up">
@@ -2046,7 +2047,6 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 </div>
 </div>
 </section>
---}}
 <!-- ===== CONTACT ===== -->
 
 <section class="contact-bg" id="contact">
