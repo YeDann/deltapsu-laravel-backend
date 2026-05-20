@@ -835,8 +835,9 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 #offices-dialog .o-addr { color: #aaa; margin: 0 0 1px; }
 #offices-dialog .o-hq { color: #fff; font-size: 10px; }
 #offices-dialog .o-entry { margin-bottom: 8px; }
-html[html_lang="tw"] #hero-time-row, html[html_lang="cn"] #hero-time-row, html[lang="zh"] #hero-time-row { display: none !important; }
-html[html_lang="tw"] #hero-countdown-wrap, html[html_lang="cn"] #hero-countdown-wrap, html[lang="zh"] #hero-countdown-wrap { display: none !important; }
+#hero-time-row { display: none !important; }
+#hero-countdown-wrap { display: none !important; }
+html[html_lang="en"] [data-i18n="hero.upcomingLabel"], html[html_lang="jp"] [data-i18n="hero.upcomingLabel"], html[lang="en"] [data-i18n="hero.upcomingLabel"], html[lang="ja"] [data-i18n="hero.upcomingLabel"] { display: none !important; }
 </style>
 <script>window._serverLang = '{{ $htmlLang }}'; window._csrfToken = '{{ csrf_token() }}'; window._locale = '{{ App::getLocale() }}';</script>
 <!-- Google Tag Manager -->
@@ -2854,7 +2855,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     'en': {
       label:'EN',
       'nav.home':'Home','nav.live':'LIVE','nav.certification':'Certification','nav.compare':'Compare','nav.solutions':'Solutions','nav.contact':'Get Info','nav.dinpro':'DIN Pro','nav.dineco':'DIN Eco',
-      'overview.event.line1':'Delta Standard Power Supply','overview.event.line2':'New Product Launch Event 2026','overview.title1':'POWERING','overview.title2':'EXCELLENCE','overview.desc':'New-generation power solutions engineered for mission-critical stability','overview.videoExpiry':'2026.05.20 (Wed.) | 03:30 PM (UTC +8)',
+      'overview.event.line1':'Delta Standard Power Supply','overview.event.line2':'New Product Launch 2026','overview.title1':'POWERING','overview.title2':'EXCELLENCE','overview.desc':'New-generation power solutions engineered for mission-critical stability','overview.videoExpiry':'2026.05.20 (Wed.) | 03:30 PM (UTC +8)',
       'hero.title':'DELTA STANDARD POWER SUPPLY','hero.subtitle':'INFINITY READY','hero.notified':'GET NOTIFIED','hero.register':'Register Now','hero.onlineEventAt':'Online Launch Event at','hero.dinRailLabel':'DIN Rail Power Supplies','hero.upcomingLabel':"Delta's Upcoming New Products at a Glance",
       'dinpro.title':'DIN Pro 1-Phase Series','dinpro.desc':'The Source of Stability, Powering the Future','dinpro.learnMore':'LEARN MORE',
       'dineco.title':'DIN Eco 3-Phase Series','dineco.desc':'Performance at the Core, Built to Last','dineco.learnMore':'LEARN MORE',
@@ -3010,7 +3011,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
     'ja': {
       label:'日本語',
       'nav.home':'ホーム','nav.live':'ライブ','nav.certification':'認証','nav.compare':'比較','nav.solutions':'ソリューション','nav.contact':'資料請求','nav.dinpro':'DIN Pro','nav.dineco':'DIN Eco',
-      'overview.event.line1':'デルタ標準電源','overview.event.line2':'2026年 新製品発表イベント','overview.title1':'卓越したパワーを追求する','overview.title2':'','overview.desc':'新世代の電源ソリューション、ミッションクリティカルな安定性のために設計','overview.videoExpiry':'2026.05.20 (水) | 03:30 PM (UTC +8)',
+      'overview.event.line1':'デルタ標準電源','overview.event.line2':'2026年 新製品発表','overview.title1':'卓越したパワーを追求する','overview.title2':'','overview.desc':'新世代の電源ソリューション、ミッションクリティカルな安定性のために設計','overview.videoExpiry':'2026.05.20 (水) | 03:30 PM (UTC +8)',
       'hero.title':'デルタ標準電源','hero.subtitle':'INFINITY READY','hero.notified':'通知を受け取る','hero.register':'今すぐ登録','hero.onlineEventAt':'オンライン発表会：','hero.dinRailLabel':'DINレール電源','hero.upcomingLabel':'デルタ最新製品ラインナップ一覧',
       'dinpro.title':'DIN Pro 1-Phase Series','dinpro.desc':'安定の源、未来を紡ぐ','dinpro.learnMore':'詳細を見る',
       'dineco.title':'DIN Eco 3-Phase Series','dineco.desc':'性能の礎、確かな基盤','dineco.learnMore':'詳細を見る',
