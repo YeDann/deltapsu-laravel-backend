@@ -1593,7 +1593,7 @@ class FrontendController extends Controller
             ->orderBy('p.created_at', 'desc')
             ->first();
 
-        if (!self::checkContentPro($pro->pro_id)) {
+        if (!$pro || !self::checkContentPro($pro->pro_id)) {
             return redirect()->route('productFinder');
         }
 
