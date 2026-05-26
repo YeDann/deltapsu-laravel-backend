@@ -5776,11 +5776,10 @@ class FrontendController extends Controller
         return redirect()->route($salesKit ? 'index' : 'marketingResourcesDownloads', $salesKit ? 'partners' : '');
     }
 
-    // TODO 看起來沒再用了，測試確認後，下一版移除
-    // public function productCate($cate)
-    // {
-    //     return redirect()->route('productFinder');
-    // }
+    public function productCate($cate = null)
+    {
+        return redirect()->route('productFinder');
+    }
 
     public function searchDocByModelId(Request $request)
     {
