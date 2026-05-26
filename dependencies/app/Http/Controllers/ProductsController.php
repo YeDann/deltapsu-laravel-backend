@@ -130,6 +130,7 @@ class ProductsController extends Controller
         if ($validate->fails()) {
             return redirect()->back()->withErrors($validate->errors());
         } else {
+            DB::transaction(function () use ($request, $langs, $overview, $content, $short_features, $status, $productfieldText, $productfieldNumbers, $inputText, $inputNumber, $status_input, $certificate, $tags, $optional_models, $relatePros, $pro_categories, $meta_description) {
             if ($request->hasFile('thumbnail')) {
 
                 $thumbnailImage = $request->file('thumbnail');
@@ -208,7 +209,7 @@ class ProductsController extends Controller
                     DB::table('product_optional_model')->insert(
                         [
                             "optional_model" => $optional,
-                            "product_id" => $pro_id,
+                            "product_id" => $id,
                         ]
                     );
                 }
@@ -350,6 +351,7 @@ class ProductsController extends Controller
                 }
             }
 
+            }); // end DB::transaction
             return redirect()->route('products.index')->with('flash_message', 'Insert Data successfully');
         }
 
