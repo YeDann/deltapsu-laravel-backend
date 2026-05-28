@@ -24,13 +24,19 @@
 
     /* show labels in line */
     .calendar-month-tab {
-        border-bottom: 2px solid #E3EFF8;
+        border-bottom: 2px solid #dcdcdc;
         margin-bottom: 1em;
         display: flex;
         justify-content: space-around;
     }
 
+    .calendar-month-tab label:hover {
+        color: #0087DC;
+        border-bottom: 2px solid #0087DC;
+    }
+
     input:checked+label {
+        color: #0087DC;
         border-bottom: 2px solid #0087DC;
     }
 
