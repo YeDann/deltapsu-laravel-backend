@@ -417,6 +417,16 @@ a:hover {
   font-weight: bold;
 }
 
+.text-p-banner {
+  font-size: 18px;
+}
+
+@media only screen and (max-width:768px) {
+  .text-p-banner {
+    font-size: 16px;
+  }
+}
+
 .text-p-banner p {
   color: inherit;
 }

@@ -365,7 +365,7 @@ a:hover{
 }
 
 .box-banner-pro-type-all {
-    height: 319px;
+    height: 317px;
 }
 .box-banner-pro-type-all-new {
     height: 400px;
@@ -483,7 +483,7 @@ input:checked+label {
     line-height: 24px;
     font-family: 'DeltaSans';
     cursor: pointer;
-    color: #ffffff;
+    color: #000;
     margin: 0px 5px;
 }
 
@@ -539,7 +539,7 @@ input:checked+label {
     margin: 4px 9px 0px 24px;
     font-size: 14px;
     font-weight: bold;
-    color: #ffffff;
+    color: #000;
 }
 
 .margin-top-card {
@@ -547,8 +547,21 @@ input:checked+label {
 }
 
 .bg-menu-filler {
-    background-color: #444444;
+    background-color: #dcdcdc;
     padding: 12px 0px 12px 0px;
+    color: #000;
+}
+
+.bg-menu-filler a {
+    color: #000;
+}
+
+.bg-menu-filler img {
+    filter: brightness(0);
+}
+
+.bg-menu-filler img.bord-icon {
+    filter: none !important;
 }
 
 .menu-filler-mobile {
@@ -563,7 +576,7 @@ input:checked+label {
 
 .menu-filler-mobile-filter {
     height: 60px;
-    background-color: #444444;
+    background-color: #dcdcdc;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -661,7 +674,7 @@ input:checked+label {
 }
 
 a.filter-mobile-link {
-    color: #ffffff;
+    color: #000;
     font-size: 14px;
     font-weight: bold;
 }
@@ -698,7 +711,7 @@ a.filter-mobile-link:hover {
     line-height: 24px !important;
     font-family: 'DeltaSans';
     font-weight: bold;
-    color: #ffffff;
+    color: #000;
 }
 
 #dtBasicExample_length {
@@ -718,7 +731,7 @@ a.filter-mobile-link:hover {
 }
 
 .headder-bg-table {
-    background-color: #444444;
+    background-color: #dcdcdc;
 }
 
 .headder-bg-table th {
