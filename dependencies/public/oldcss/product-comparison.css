@@ -29,7 +29,7 @@
 
 .box-comparison .col-1 {
     width: 25%;
-    color: #444444;
+    color: #000;
     font-weight: bold;
 }
 
@@ -60,7 +60,7 @@
 }
 
 .text-dark {
-    color: #444444 !important;
+    color: #000 !important;
 }
 
 .text-dark-gray {
@@ -124,7 +124,7 @@
     bottom: 50%;
 }
 .icon-pointer i{
-    color: #444444;
+    color: #000;
     font-size: 35px;
 }
 .icon-prev {
@@ -141,7 +141,7 @@
     content: "\f273";
     float: right;
     font-size: 24px;
-    color: #444444;
+    color: #000;
 }
 .comparison-collapse-title {
     font-size: 18px;
@@ -170,7 +170,7 @@
     color:  #0087DC;
 }
 .comparison-collapse-title.collapsed .comparison-collapse-title-content > h5{
-    color:  #444444;
+    color:  #000;
 }
 .nav-enquiry-mobile{
     position: fixed;
