@@ -12211,7 +12211,7 @@ a .title-new {
   position: relative;
   /* height: 333px; */
   overflow: hidden;
-  border: unset;
+  border: 1px solid #dcdcdc;
   border-radius: unset;
 }
 
@@ -12256,7 +12256,7 @@ a .title-new {
   height: 300px;
   bottom: -130px;
   padding: 20px;
-  background-color: #f0f5fa;
+  background-color: #fff;
   transition: .5s;
 }
 
