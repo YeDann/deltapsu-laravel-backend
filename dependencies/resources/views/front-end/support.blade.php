@@ -17,7 +17,7 @@
         -webkit-appearance: none;
         -moz-appearance: none;
         border-radius: 0;
-        border: 1px solid #444444;
+        border: 1px solid #dcdcdc;
         background-position: right 50%;
         background-repeat: no-repeat;
         background-image: url('{{$imgDown}}');
@@ -107,6 +107,7 @@
 
     textarea {
         padding-left: 12px;
+        border: 1px solid #dcdcdc;
     }
 
     .tel-not-req {

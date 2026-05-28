@@ -52,7 +52,7 @@ $langch = str_replace('_', '-', app()->getLocale());
             -webkit-appearance: none;
             -moz-appearance: none;
             border-radius: 0;
-            border: 1px solid #444444;
+            border: 1px solid #dcdcdc;
             background-position: right 50%;
             background-repeat: no-repeat;
             background-image: url('{{$imgDown}}');
