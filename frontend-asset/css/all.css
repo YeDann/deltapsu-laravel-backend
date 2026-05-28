@@ -11636,11 +11636,50 @@ a .title-new {
 }
 
 .text-title-delta {
-  color: #0087DC;
+  color: #000;
+  font-size: 32px;
   font-weight: bold;
   margin-bottom: 2rem;
   margin-top: 2rem;
-  text-align: center;
+  text-align: left;
+  position: relative;
+}
+
+.text-title-delta::before {
+  content: '';
+  display: block;
+  height: 5px;
+  width: 80px;
+  background-color: #0087DC;
+  background-image: linear-gradient(to right, #0087DC 60%, #64d7d7 60%, #64d7d7 80%, #b9eb5f 80%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: -80px 0;
+  margin-bottom: 12px;
+  animation: brand-bar-flow 6s linear infinite;
+}
+
+@keyframes brand-bar-flow {
+  0% { background-position: -80px 0; }
+  20%, 80% { background-position: 0 0; }
+  100% { background-position: 80px 0; }
+}
+
+@media (max-width: 768px) {
+  .text-title-delta {
+    font-size: 24px;
+  }
+  .text-title-delta::before {
+    height: 2.5px;
+    width: 40px;
+    background-position: -40px 0;
+    animation-name: brand-bar-flow-mobile;
+  }
+  @keyframes brand-bar-flow-mobile {
+    0% { background-position: -40px 0; }
+    20%, 80% { background-position: 0 0; }
+    100% { background-position: 40px 0; }
+  }
 }
 
 .text-title-delta-home {
@@ -13147,16 +13186,16 @@ hr {
 .date{
     font-size: 14px;
 }
-.nav-tabs .nav-link {
-    color: #888 !important;
+.box-news .nav-tabs .nav-link {
+    color: #888;
 }
 
-.nav-tabs .nav-link:hover {
-    color: #0087DC !important;
+.box-news .nav-tabs .nav-link:hover {
+    color: #0087DC;
 }
 
-.nav-tabs .nav-link.active {
-    color: #0087DC !important;
+.box-news .nav-tabs .nav-link.active {
+    color: #0087DC;
     font-weight: bold;
     background-color: transparent;
     border-bottom: 3px solid #0087DC;
@@ -13165,7 +13204,7 @@ hr {
     border-top: none;
 }
 
-.nav-tabs.border-b-2px {
+.box-news .nav-tabs.border-b-2px {
     border-bottom-color: #dcdcdc;
 }
 
@@ -14873,7 +14912,30 @@ input[type=text], input[type=email]{
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 400px;
+    height: 317px;
+}
+
+.banner-type-product-all-new h1.text-title-banner {
+    font-size: 48px;
+}
+
+.product-type-boxitem-sub-banner-text h2.text-dark {
+    font-size: 24px;
+}
+
+.product-type-boxitem-sub-banner-text p {
+    font-size: 18px;
+}
+
+.series-list h3.text-dark {
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .product-type-boxitem-sub-banner-text p,
+    .series-list h3.text-dark {
+        font-size: 16px;
+    }
 }
 #slide-banner-products {
     /* height: 500px; */
@@ -15045,17 +15107,30 @@ a:hover{
 }
 
 #bar-product-type-nav .nav-link {
-    font-size: 16px;
+    font-size: 18px;
     padding: 0 0px 16px 0px;
     color: #000;
 }
 
-#bar-product-type-nav .nav-link.active {
+@media (max-width: 768px) {
+    #bar-product-type-nav .nav-link {
+        font-size: 16px;
+    }
+}
+
+#bar-product-type-nav .nav-link.active,
+#bar-product-type-nav .nav-link:hover {
     color: #0087DC;
+}
+
+#bar-product-type-nav .nav-link.active {
+    background-color: transparent;
+    border-color: transparent transparent #0087DC transparent;
 }
 
 .nav-tabs .nav-link:hover,
 .nav-tabs .nav-link:focus {
+    color: #0087DC;
     background-color: transparent;
     border-bottom: 3px solid;
     border-color: transparent transparent #0087DC transparent;
@@ -15106,9 +15181,15 @@ a:hover{
     position: relative;
     top: 5px;
     color: #000000;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 18px;
     font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .carousel__item-name {
+        font-size: 16px;
+    }
 }
 
 
@@ -15132,7 +15213,12 @@ a:hover{
     font-family: 'DeltaSans';
     cursor: pointer;
     font-weight: bold;
-    color: #0087DC;
+    color: #ffffff;
+    background-color: #0087DC;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    padding: 6px 16px;
+    display: inline-block;
 }
 
 .link-see-product i {
