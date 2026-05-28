@@ -16283,12 +16283,15 @@ e.search-filter-action {
     visibility: hidden;
 }
 .series-list-home{
-    border: 2px solid #E3EFF8;
+    border: 1px solid #e4e4e4;
     height: 362px;
     position: relative;
     margin:12px;
     background-color: #ffffff;
 
+}
+.series-list-home h3{
+    font-size: 18px;
 }
 .series-list-home:hover .series-img{
     display: none;
