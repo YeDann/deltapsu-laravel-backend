@@ -206,6 +206,35 @@
         clip: rect(0, 0, 0, 0);
         border: 0;
     }
+
+    .banner-type-product-all-new {
+        height: 317px;
+    }
+
+    .app-text-detail,
+    .app-text-detail p,
+    .text-editor,
+    .text-editor p {
+        font-size: 18px;
+        color: #000;
+    }
+
+    .app-text-detail h3.text-color-delta {
+        font-size: 24px;
+    }
+
+    @media (max-width: 768px) {
+        .app-text-detail,
+        .app-text-detail p,
+        .text-editor,
+        .text-editor p {
+            font-size: 16px;
+        }
+
+        .invisible-up-922 h4.text-color-delta {
+            font-size: 18px;
+        }
+    }
 </style>
 @endsection
 @section('meta')
