@@ -557,10 +557,6 @@
     }
 
 
-    .font-size-tab {
-        color: #0087DC !important;
-    }
-
     .cur-link {
         cursor: pointer;
     }

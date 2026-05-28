@@ -1046,11 +1046,50 @@ a .title-new {
 }
 
 .text-title-delta {
-  color: #0087DC;
+  color: #000;
+  font-size: 32px;
   font-weight: bold;
   margin-bottom: 2rem;
   margin-top: 2rem;
-  text-align: center;
+  text-align: left;
+  position: relative;
+}
+
+.text-title-delta::before {
+  content: '';
+  display: block;
+  height: 5px;
+  width: 80px;
+  background-color: #0087DC;
+  background-image: linear-gradient(to right, #0087DC 60%, #64d7d7 60%, #64d7d7 80%, #b9eb5f 80%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: -80px 0;
+  margin-bottom: 12px;
+  animation: brand-bar-flow 6s linear infinite;
+}
+
+@keyframes brand-bar-flow {
+  0% { background-position: -80px 0; }
+  20%, 80% { background-position: 0 0; }
+  100% { background-position: 80px 0; }
+}
+
+@media (max-width: 768px) {
+  .text-title-delta {
+    font-size: 24px;
+  }
+  .text-title-delta::before {
+    height: 2.5px;
+    width: 40px;
+    background-position: -40px 0;
+    animation-name: brand-bar-flow-mobile;
+  }
+  @keyframes brand-bar-flow-mobile {
+    0% { background-position: -40px 0; }
+    20%, 80% { background-position: 0 0; }
+    100% { background-position: 40px 0; }
+  }
 }
 
 .text-title-delta-home {

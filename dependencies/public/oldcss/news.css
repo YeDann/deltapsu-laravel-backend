@@ -9,16 +9,16 @@
 .date{
     font-size: 14px;
 }
-.nav-tabs .nav-link {
-    color: #888 !important;
+.box-news .nav-tabs .nav-link {
+    color: #888;
 }
 
-.nav-tabs .nav-link:hover {
-    color: #0087DC !important;
+.box-news .nav-tabs .nav-link:hover {
+    color: #0087DC;
 }
 
-.nav-tabs .nav-link.active {
-    color: #0087DC !important;
+.box-news .nav-tabs .nav-link.active {
+    color: #0087DC;
     font-weight: bold;
     background-color: transparent;
     border-bottom: 3px solid #0087DC;
@@ -27,7 +27,7 @@
     border-top: none;
 }
 
-.nav-tabs.border-b-2px {
+.box-news .nav-tabs.border-b-2px {
     border-bottom-color: #dcdcdc;
 }
 

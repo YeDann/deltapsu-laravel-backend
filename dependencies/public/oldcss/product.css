@@ -116,7 +116,30 @@ input[type=text], input[type=email]{
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 400px;
+    height: 317px;
+}
+
+.banner-type-product-all-new h1.text-title-banner {
+    font-size: 48px;
+}
+
+.product-type-boxitem-sub-banner-text h2.text-dark {
+    font-size: 24px;
+}
+
+.product-type-boxitem-sub-banner-text p {
+    font-size: 18px;
+}
+
+.series-list h3.text-dark {
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .product-type-boxitem-sub-banner-text p,
+    .series-list h3.text-dark {
+        font-size: 16px;
+    }
 }
 #slide-banner-products {
     /* height: 500px; */
@@ -288,17 +311,30 @@ a:hover{
 }
 
 #bar-product-type-nav .nav-link {
-    font-size: 16px;
+    font-size: 18px;
     padding: 0 0px 16px 0px;
     color: #000;
 }
 
-#bar-product-type-nav .nav-link.active {
+@media (max-width: 768px) {
+    #bar-product-type-nav .nav-link {
+        font-size: 16px;
+    }
+}
+
+#bar-product-type-nav .nav-link.active,
+#bar-product-type-nav .nav-link:hover {
     color: #0087DC;
+}
+
+#bar-product-type-nav .nav-link.active {
+    background-color: transparent;
+    border-color: transparent transparent #0087DC transparent;
 }
 
 .nav-tabs .nav-link:hover,
 .nav-tabs .nav-link:focus {
+    color: #0087DC;
     background-color: transparent;
     border-bottom: 3px solid;
     border-color: transparent transparent #0087DC transparent;
@@ -349,9 +385,15 @@ a:hover{
     position: relative;
     top: 5px;
     color: #000000;
-    font-size: 14px;
+    font-size: 18px;
     line-height: 18px;
     font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .carousel__item-name {
+        font-size: 16px;
+    }
 }
 
 
@@ -375,7 +417,12 @@ a:hover{
     font-family: 'DeltaSans';
     cursor: pointer;
     font-weight: bold;
-    color: #0087DC;
+    color: #ffffff;
+    background-color: #0087DC;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    padding: 6px 16px;
+    display: inline-block;
 }
 
 .link-see-product i {
