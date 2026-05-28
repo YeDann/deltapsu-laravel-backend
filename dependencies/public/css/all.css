@@ -12564,15 +12564,7 @@ a.dropdown-item:hover {
 }
 
 #tools-dropdown::after {
-  content: "\f107";
-  font-family: 'FontAwesome';
-  padding: 1px 2px;
-  border: 1px solid #0087DC;
-  background: #0087DC;
-  border-radius: 4px;
-  margin-left: 4px;
-  font-size: 12px;
-  color: #ffffff;
+  display: none;
 }
 
 .breadcrumb>.dropdown>.dropdown-menu li a {
