@@ -9,7 +9,7 @@
     justify-content: flex-end;
 }
 .link-d-sheet{
-    color: #212529;
+    color: #000;
 }
 
 .btn-datasheet {
@@ -85,7 +85,7 @@ input[type=text], input[type=email]{
 
 .text-breadcrumb-home a,
 .text-breadcrumb-ative a {
-    color: #444444;
+    color: #000;
     font-size: 12px;
 }
 
@@ -95,7 +95,7 @@ input[type=text], input[type=email]{
 }
 
 .text-breadcrumb a {
-    color: #444444;
+    color: #000;
     font-size: 12px;
     text-decoration: none;
 }
@@ -290,7 +290,7 @@ a:hover{
 #bar-product-type-nav .nav-link {
     font-size: 16px;
     padding: 0 0px 16px 0px;
-    color: #444444;
+    color: #000;
 }
 
 #bar-product-type-nav .nav-link.active {
@@ -805,7 +805,7 @@ e.search-filter-action {
 .text-sixteen-dark {
     font-size: 16px;
     font-weight: bold;
-    color: #444444;
+    color: #000;
 }
 
 .box-search-filter {
@@ -1331,7 +1331,7 @@ e.search-filter-action {
     content: "\f273";
     float: right;
     font-size: 24px;
-    color: #444444;
+    color: #000;
     position: absolute;
     top: 50%;
     right: 0;
@@ -1372,10 +1372,10 @@ e.search-filter-action {
         border-bottom: unset;
     }
     .faqs-list.collapsed {
-        color: #444444 ;
+        color: #000 ;
     }
     .faqs-list.collapsed > p{
-        color: #444444 ;
+        color: #000 ;
     }
     .success-storie-btn{
         position: fixed;

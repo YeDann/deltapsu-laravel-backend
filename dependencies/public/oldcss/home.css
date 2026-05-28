@@ -72,7 +72,7 @@
   content: "\f139";
   font-family: 'FontAwesome';
   font-size: 52px;
-  color: #444444;
+  color: #000;
   cursor: pointer;
 }
 
@@ -142,7 +142,7 @@ p {
   font-weight: 300;
   margin-bottom: 0.25rem;
   word-break: break-word;
-  color: #444444;
+  color: #000;
 }
 
 .text-one {
@@ -161,7 +161,7 @@ p {
 
 .text-title-dark {
   font-weight: bold;
-  color: #444444;
+  color: #000;
 
 }
 
@@ -713,7 +713,7 @@ a:hover {
 
 .text-title-ft-sub {
   font-weight: 600;
-  color: #444444;
+  color: #000;
 }
 
 .text-ft-sub {
@@ -909,11 +909,11 @@ a:hover {
 }
 
 a .title-new {
-  color: #444444;
+  color: #000;
 }
 
 .title-new a {
-  color: #444444;
+  color: #000;
 }
 
 .box-text-date {
@@ -1066,7 +1066,7 @@ a .title-new {
 
 .text-be-first {
   font-family: 'DeltaSans';
-  color: #444444;
+  color: #000;
   font-size: 16px;
   line-height: 20px;
   padding-bottom: 18px;
@@ -1113,12 +1113,12 @@ a .title-new {
   width: 160px;
   font-size: 12px;
   font-weight: bold;
-  color: #444444;
+  color: #000;
 }
 
 .btn-boxen:hover {
   text-decoration: none;
-  color: #444444;
+  color: #000;
 }
 
 .box-eventnews .container {
@@ -1222,7 +1222,7 @@ a .title-new {
     font-size: 20px;
     line-height: 32px;
     font-weight: bold;
-    color: #444444;
+    color: #000;
   }
 
 
@@ -1573,7 +1573,7 @@ a .title-new {
 #bar-search-results-nav .nav-link {
   font-size: 16px;
   padding: 0 0px 16px 0px;
-  color: #444444;
+  color: #000;
 }
 
 #bar-search-results-nav .nav-link.active {
@@ -2010,7 +2010,7 @@ a.btn-enquiry:hover {
   padding: 0;
   clear: both;
   font-weight: 400;
-  color: #444444;
+  color: #000;
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;

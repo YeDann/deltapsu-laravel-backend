@@ -9,12 +9,12 @@
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(15px);
     font-size: 12px;
-    color: #444444;
+    color: #000;
     height: 68px;
     display: none;
 }
 .text-title-twentyfour {
-    color: #444444;
+    color: #000;
     font-size: 24px;
     font-weight: bold;
 }
@@ -28,7 +28,7 @@
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     font-size: 12px;
-    color: #444444;
+    color: #000;
     height: 68px;
     display: none;
 }
@@ -78,7 +78,7 @@
 .text-title-twenty-dark {
     font-size: 20px;
     font-weight: bold;
-    color: #444444;
+    color: #000;
     line-height: 1;
 }
 
@@ -309,7 +309,7 @@ table.model-num tbody td:last-child {
 .box-tech-specs b,
 .text-title-detail-dark {
     font-weight: bold;
-    color: #444444;
+    color: #000;
     font-size: 16px;
 }
 
@@ -318,7 +318,7 @@ table.model-num tbody td:last-child {
     content: "\f273";
     float: right;
     font-size: 24px;
-    color: #444444;
+    color: #000;
 }
 .box-spc{
     height: 36px;
@@ -338,7 +338,7 @@ table.model-num tbody td:last-child {
     content: "\f273";
     float: right;
     font-size: 24px;
-    color: #444444;
+    color: #000;
 }
 
 .box-spc.collapsed:after {
@@ -387,7 +387,7 @@ table.model-num tbody td:last-child {
 }
 
 .text-title-thirtytwo-dark {
-    color: #444444;
+    color: #000;
     font-size: 32px;
     font-weight: bold;
 }

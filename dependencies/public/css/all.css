@@ -64,7 +64,7 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #212529;
+  color: #000;
   text-align: left;
   background-color: #fff;
 }
@@ -539,7 +539,7 @@ kbd kbd {
 pre {
   display: block;
   font-size: 87.5%;
-  color: #212529;
+  color: #000;
 }
 
 pre code {
@@ -2638,13 +2638,13 @@ fieldset:disabled a.btn {
 }
 
 .btn-warning {
-  color: #212529;
+  color: #000;
   background-color: #ffc107;
   border-color: #ffc107;
 }
 
 .btn-warning:hover {
-  color: #212529;
+  color: #000;
   background-color: #e0a800;
   border-color: #d39e00;
 }
@@ -2654,14 +2654,14 @@ fieldset:disabled a.btn {
 }
 
 .btn-warning.disabled, .btn-warning:disabled {
-  color: #212529;
+  color: #000;
   background-color: #ffc107;
   border-color: #ffc107;
 }
 
 .btn-warning:not(:disabled):not(.disabled):active, .btn-warning:not(:disabled):not(.disabled).active,
 .show > .btn-warning.dropdown-toggle {
-  color: #212529;
+  color: #000;
   background-color: #d39e00;
   border-color: #c69500;
 }
@@ -2706,13 +2706,13 @@ fieldset:disabled a.btn {
 }
 
 .btn-light {
-  color: #212529;
+  color: #000;
   background-color: #f8f9fa;
   border-color: #f8f9fa;
 }
 
 .btn-light:hover {
-  color: #212529;
+  color: #000;
   background-color: #e2e6ea;
   border-color: #dae0e5;
 }
@@ -2722,14 +2722,14 @@ fieldset:disabled a.btn {
 }
 
 .btn-light.disabled, .btn-light:disabled {
-  color: #212529;
+  color: #000;
   background-color: #f8f9fa;
   border-color: #f8f9fa;
 }
 
 .btn-light:not(:disabled):not(.disabled):active, .btn-light:not(:disabled):not(.disabled).active,
 .show > .btn-light.dropdown-toggle {
-  color: #212529;
+  color: #000;
   background-color: #dae0e5;
   border-color: #d3d9df;
 }
@@ -2917,7 +2917,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-warning:hover {
-  color: #212529;
+  color: #000;
   background-color: #ffc107;
   border-color: #ffc107;
 }
@@ -2933,7 +2933,7 @@ fieldset:disabled a.btn {
 
 .btn-outline-warning:not(:disabled):not(.disabled):active, .btn-outline-warning:not(:disabled):not(.disabled).active,
 .show > .btn-outline-warning.dropdown-toggle {
-  color: #212529;
+  color: #000;
   background-color: #ffc107;
   border-color: #ffc107;
 }
@@ -2985,7 +2985,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-light:hover {
-  color: #212529;
+  color: #000;
   background-color: #f8f9fa;
   border-color: #f8f9fa;
 }
@@ -3001,7 +3001,7 @@ fieldset:disabled a.btn {
 
 .btn-outline-light:not(:disabled):not(.disabled):active, .btn-outline-light:not(:disabled):not(.disabled).active,
 .show > .btn-outline-light.dropdown-toggle {
-  color: #212529;
+  color: #000;
   background-color: #f8f9fa;
   border-color: #f8f9fa;
 }
@@ -3162,7 +3162,7 @@ tbody.collapse.show {
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
   font-size: 1rem;
-  color: #212529;
+  color: #000;
   text-align: left;
   list-style: none;
   background-color: #fff;
@@ -3269,7 +3269,7 @@ tbody.collapse.show {
   padding: 0.25rem 1.5rem;
   clear: both;
   font-weight: 400;
-  color: #212529;
+  color: #000;
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
@@ -4886,12 +4886,12 @@ tbody.collapse.show {
 }
 
 .badge-warning {
-  color: #212529;
+  color: #000;
   background-color: #ffc107;
 }
 
 .badge-warning[href]:hover, .badge-warning[href]:focus {
-  color: #212529;
+  color: #000;
   text-decoration: none;
   background-color: #d39e00;
 }
@@ -4908,12 +4908,12 @@ tbody.collapse.show {
 }
 
 .badge-light {
-  color: #212529;
+  color: #000;
   background-color: #f8f9fa;
 }
 
 .badge-light[href]:hover, .badge-light[href]:focus {
-  color: #212529;
+  color: #000;
   text-decoration: none;
   background-color: #dae0e5;
 }
@@ -5184,7 +5184,7 @@ tbody.collapse.show {
 }
 
 .list-group-item-action:active {
-  color: #212529;
+  color: #000;
   background-color: #e9ecef;
 }
 
@@ -5846,7 +5846,7 @@ button.close {
 
 .popover-body {
   padding: 0.5rem 0.75rem;
-  color: #212529;
+  color: #000;
 }
 
 .carousel {
@@ -9512,7 +9512,7 @@ body {
 }
 
 .link-nav-first {
-    color: #444444;
+    color: #000;
     padding-bottom: 0;
     padding-top: 0;
     padding-left: 0;
@@ -9575,7 +9575,7 @@ body {
 }
 
 .navbar-light .navbar-nav .nav-link {
-    color: #444444
+    color: #000
 }
 
 .chang-lang-nav {
@@ -10584,7 +10584,7 @@ a.a-link-hover:hover {
   content: "\f139";
   font-family: 'FontAwesome';
   font-size: 52px;
-  color: #444444;
+  color: #000;
   cursor: pointer;
 }
 
@@ -10654,7 +10654,7 @@ p {
   font-weight: 300;
   margin-bottom: 0.25rem;
   word-break: break-word;
-  color: #444444;
+  color: #000;
 }
 
 .text-one {
@@ -10673,7 +10673,7 @@ p {
 
 .text-title-dark {
   font-weight: bold;
-  color: #444444;
+  color: #000;
 
 }
 
@@ -11226,7 +11226,7 @@ a:hover {
 
 .text-title-ft-sub {
   font-weight: 600;
-  color: #444444;
+  color: #000;
 }
 
 .text-ft-sub {
@@ -11422,11 +11422,11 @@ a:hover {
 }
 
 a .title-new {
-  color: #444444;
+  color: #000;
 }
 
 .title-new a {
-  color: #444444;
+  color: #000;
 }
 
 .box-text-date {
@@ -11579,7 +11579,7 @@ a .title-new {
 
 .text-be-first {
   font-family: 'DeltaSans';
-  color: #444444;
+  color: #000;
   font-size: 16px;
   line-height: 20px;
   padding-bottom: 18px;
@@ -11626,12 +11626,12 @@ a .title-new {
   width: 160px;
   font-size: 12px;
   font-weight: bold;
-  color: #444444;
+  color: #000;
 }
 
 .btn-boxen:hover {
   text-decoration: none;
-  color: #444444;
+  color: #000;
 }
 
 .box-eventnews .container {
@@ -11735,7 +11735,7 @@ a .title-new {
     font-size: 20px;
     line-height: 32px;
     font-weight: bold;
-    color: #444444;
+    color: #000;
   }
 
 
@@ -12087,7 +12087,7 @@ a .title-new {
 #bar-search-results-nav .nav-link {
   font-size: 16px;
   padding: 0 0px 16px 0px;
-  color: #444444;
+  color: #000;
 }
 
 #bar-search-results-nav .nav-link.active {
@@ -12524,7 +12524,7 @@ a.btn-enquiry:hover {
   padding: 0;
   clear: both;
   font-weight: 400;
-  color: #444444;
+  color: #000;
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
@@ -13159,7 +13159,7 @@ hr {
 
 .date a {
     font-size: 12px;
-    color: #444444;
+    color: #000;
     font-weight: 400;
 }
 
@@ -13582,12 +13582,12 @@ hr {
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(15px);
     font-size: 12px;
-    color: #444444;
+    color: #000;
     height: 68px;
     display: none;
 }
 .text-title-twentyfour {
-    color: #444444;
+    color: #000;
     font-size: 24px;
     font-weight: bold;
 }
@@ -13601,7 +13601,7 @@ hr {
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     font-size: 12px;
-    color: #444444;
+    color: #000;
     height: 68px;
     display: none;
 }
@@ -13651,7 +13651,7 @@ hr {
 .text-title-twenty-dark {
     font-size: 20px;
     font-weight: bold;
-    color: #444444;
+    color: #000;
     line-height: 1;
 }
 
@@ -13882,7 +13882,7 @@ table.model-num tbody td:last-child {
 .box-tech-specs b,
 .text-title-detail-dark {
     font-weight: bold;
-    color: #444444;
+    color: #000;
     font-size: 16px;
 }
 
@@ -13891,7 +13891,7 @@ table.model-num tbody td:last-child {
     content: "\f273";
     float: right;
     font-size: 24px;
-    color: #444444;
+    color: #000;
 }
 .box-spc{
     height: 36px;
@@ -13911,7 +13911,7 @@ table.model-num tbody td:last-child {
     content: "\f273";
     float: right;
     font-size: 24px;
-    color: #444444;
+    color: #000;
 }
 
 .box-spc.collapsed:after {
@@ -13960,7 +13960,7 @@ table.model-num tbody td:last-child {
 }
 
 .text-title-thirtytwo-dark {
-    color: #444444;
+    color: #000;
     font-size: 32px;
     font-weight: bold;
 }
@@ -14067,7 +14067,7 @@ table.model-num tbody td:last-child {
 }
 
 .box-result-search .nav-tabs a {
-    color: #444444;
+    color: #000;
 }
 
 #select-search-results {
@@ -14093,7 +14093,7 @@ table.model-num tbody td:last-child {
     content: "\f273";
     float: right;
     font-size: 24px;
-    color: #444444;
+    color: #000;
     }
 
     .sales-offices-type .sales-offices-list.collapsed:after ,.find-distributor-type .find-distributor-list.collapsed:after,.product-docment-list.collapsed:after{
@@ -14134,7 +14134,7 @@ table.model-num tbody td:last-child {
         border-bottom: unset;
     }
     .sales-offices-list.collapsed , .find-distributor-list.collapsed ,.product-docment-list.collapsed{
-        color: #444444 ;
+        color: #000 ;
     }
     .text-colour-delta{
         color: #0087DC;
@@ -14205,7 +14205,7 @@ table.model-num tbody td:last-child {
 
 .box-comparison .col-1 {
     width: 25%;
-    color: #444444;
+    color: #000;
     font-weight: bold;
 }
 
@@ -14236,7 +14236,7 @@ table.model-num tbody td:last-child {
 }
 
 .text-dark {
-    color: #444444 !important;
+    color: #000 !important;
 }
 
 .text-dark-gray {
@@ -14300,7 +14300,7 @@ table.model-num tbody td:last-child {
     bottom: 50%;
 }
 .icon-pointer i{
-    color: #444444;
+    color: #000;
     font-size: 35px;
 }
 .icon-prev {
@@ -14317,7 +14317,7 @@ table.model-num tbody td:last-child {
     content: "\f273";
     float: right;
     font-size: 24px;
-    color: #444444;
+    color: #000;
 }
 .comparison-collapse-title {
     font-size: 18px;
@@ -14346,7 +14346,7 @@ table.model-num tbody td:last-child {
     color:  #0087DC;
 }
 .comparison-collapse-title.collapsed .comparison-collapse-title-content > h5{
-    color:  #444444;
+    color:  #000;
 }
 .nav-enquiry-mobile{
     position: fixed;
@@ -14620,7 +14620,7 @@ table.model-num tbody td:last-child {
     justify-content: flex-end;
 }
 .link-d-sheet{
-    color: #212529;
+    color: #000;
 }
 
 .btn-datasheet {
@@ -14696,7 +14696,7 @@ input[type=text], input[type=email]{
 
 .text-breadcrumb-home a,
 .text-breadcrumb-ative a {
-    color: #444444;
+    color: #000;
     font-size: 12px;
 }
 
@@ -14706,7 +14706,7 @@ input[type=text], input[type=email]{
 }
 
 .text-breadcrumb a {
-    color: #444444;
+    color: #000;
     font-size: 12px;
     text-decoration: none;
 }
@@ -14901,7 +14901,7 @@ a:hover{
 #bar-product-type-nav .nav-link {
     font-size: 16px;
     padding: 0 0px 16px 0px;
-    color: #444444;
+    color: #000;
 }
 
 #bar-product-type-nav .nav-link.active {
@@ -15416,7 +15416,7 @@ e.search-filter-action {
 .text-sixteen-dark {
     font-size: 16px;
     font-weight: bold;
-    color: #444444;
+    color: #000;
 }
 
 .box-search-filter {
@@ -15949,7 +15949,7 @@ e.search-filter-action {
     content: "\f273";
     float: right;
     font-size: 24px;
-    color: #444444;
+    color: #000;
     position: absolute;
     top: 50%;
     right: 0;
@@ -15990,10 +15990,10 @@ e.search-filter-action {
         border-bottom: unset;
     }
     .faqs-list.collapsed {
-        color: #444444 ;
+        color: #000 ;
     }
     .faqs-list.collapsed > p{
-        color: #444444 ;
+        color: #000 ;
     }
     .success-storie-btn{
         position: fixed;

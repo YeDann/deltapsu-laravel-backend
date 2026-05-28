@@ -13,7 +13,7 @@
 }
 
 .box-result-search .nav-tabs a {
-    color: #444444;
+    color: #000;
 }
 
 #select-search-results {
@@ -39,7 +39,7 @@
     content: "\f273";
     float: right;
     font-size: 24px;
-    color: #444444;
+    color: #000;
     }
 
     .sales-offices-type .sales-offices-list.collapsed:after ,.find-distributor-type .find-distributor-list.collapsed:after,.product-docment-list.collapsed:after{
@@ -80,7 +80,7 @@
         border-bottom: unset;
     }
     .sales-offices-list.collapsed , .find-distributor-list.collapsed ,.product-docment-list.collapsed{
-        color: #444444 ;
+        color: #000 ;
     }
     .text-colour-delta{
         color: #0087DC;
