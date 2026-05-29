@@ -8,9 +8,11 @@
 }
 .date{
     font-size: 14px;
+    color: #646464;
 }
 .box-news .nav-tabs .nav-link {
     color: #888;
+    font-weight: normal;
 }
 
 .box-news .nav-tabs .nav-link:hover {
@@ -19,7 +21,7 @@
 
 .box-news .nav-tabs .nav-link.active {
     color: #0087DC;
-    font-weight: bold;
+    font-weight: normal;
     background-color: transparent;
     border-bottom: 3px solid #0087DC;
     border-right: none;
@@ -242,7 +244,7 @@
 
 .resources-download {
     padding: 12px 0;
-    border-bottom: 2px solid #E3EFF8;
+    border-bottom: 2px solid #dcdcdc;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -276,7 +278,7 @@
 }
 
 .image-datasheet {
-    border: 2px solid #E3EFF8;
+    border: 2px solid #dcdcdc;
     min-height: 388px;
 }
 
@@ -288,7 +290,7 @@
     padding-left: 12px;
 }
 .border-2px{
-    border: 2px solid #E3EFF8;
+    border: 2px solid #dcdcdc;
 }
 .visible-touch .border-b-2px{
     margin-left: 2rem;

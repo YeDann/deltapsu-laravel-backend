@@ -18,6 +18,29 @@
         margin: -2px 32px;
     }
 
+    .detail-download h5,
+    .detail-download p {
+        font-size: 18px;
+    }
+
+    .search-space.justify-content-center,
+    .nav-tabs.justify-content-center {
+        justify-content: flex-start !important;
+    }
+
+    .btn-search-border {
+        background-color: #0087DC;
+        color: #ffffff;
+        border-color: #0087DC;
+    }
+
+    @media (max-width: 768px) {
+        .detail-download h5,
+        .detail-download p {
+            font-size: 16px;
+        }
+    }
+
     .box-search-input {
         width: 270px;
     }

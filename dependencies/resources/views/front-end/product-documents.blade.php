@@ -18,6 +18,19 @@
         margin: 0 29px;
     }
 
+    .search-filter-action .text-sixteen-dark,
+    .datasheet-select p.text-dark {
+        font-size: 18px;
+        color: #000;
+    }
+
+    @media (max-width: 768px) {
+        .search-filter-action .text-sixteen-dark,
+        .datasheet-select p.text-dark {
+            font-size: 16px;
+        }
+    }
+
     .mr-b-1 {
         margin-bottom: 1px;
     }
