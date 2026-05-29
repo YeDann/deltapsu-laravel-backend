@@ -3,12 +3,44 @@
 <?php $imgDown = asset('frontend-asset/image/arrow-down.svg') ?>
 <style>
     .banner-type-product-all {
-        height: 432px;
+        height: 317px;
     }
 
     @media (max-width:768px) {
         .banner-type-product-all {
             height: 250px;
+        }
+    }
+
+    .box-support-detail h1.text-title-delta,
+    .box-support-detail h3.text-title-delta {
+        text-align: left;
+    }
+
+    .box-support-detail h4 {
+        text-align: left !important;
+        justify-content: flex-start !important;
+        font-size: 24px;
+    }
+
+    .box-support-detail label,
+    .box-support-detail input,
+    .box-support-detail select,
+    .box-support-detail textarea,
+    .box-support-detail p {
+        font-size: 18px;
+    }
+
+    @media (max-width: 768px) {
+        .box-support-detail h4 {
+            font-size: 18px;
+        }
+        .box-support-detail label,
+        .box-support-detail input,
+        .box-support-detail select,
+        .box-support-detail textarea,
+        .box-support-detail p {
+            font-size: 16px;
         }
     }
 
