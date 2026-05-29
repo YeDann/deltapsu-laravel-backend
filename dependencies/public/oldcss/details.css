@@ -117,7 +117,7 @@
 }
 
 .btn-enquiry {
-    background-color: rgb(120,120,120);
+    background-color: #0087DC;
 }
 
 .btn-addcompare:hover, 
@@ -133,7 +133,7 @@
 }
 
 .btn-addcompare {
-    background-color: rgb(120,120,120);
+    background-color: #0087DC;
 }
 
 .text-fourteen-gray {
@@ -301,8 +301,8 @@ table.model-num tbody td:last-child {
 .explain-detail {
     padding-bottom: 21px;
     border-bottom: 2px solid #E3EFF8;
-    color: #5F5F5F;
-    font-size: 16px;
+    color: #000;
+    font-size: 18px;
     word-break: break-all;
 }
 
@@ -310,15 +310,23 @@ table.model-num tbody td:last-child {
 .text-title-detail-dark {
     font-weight: bold;
     color: #000;
-    font-size: 16px;
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .explain-detail,
+    .box-tech-specs b,
+    .text-title-detail-dark {
+        font-size: 16px;
+    }
 }
 
 .box-doc-type .box-doc-list:after {
-    font-family: 'Material-Design-Iconic-Font';
-    content: "\f273";
+    font-family: 'FontAwesome';
+    content: "\f077";
     float: right;
-    font-size: 24px;
-    color: #000;
+    font-size: 18px;
+    color: #888;
 }
 .box-spc{
     height: 36px;
@@ -328,22 +336,22 @@ table.model-num tbody td:last-child {
 }
 .box-doc-type .box-doc-list.collapsed:after {
     /* symbol for "collapsed" panels */
-    content: "\f278";
+    content: "\f078";
 }
 
 
 
 .box-spc:after {
-    font-family: 'Material-Design-Iconic-Font';
-    content: "\f273";
+    font-family: 'FontAwesome';
+    content: "\f077";
     float: right;
-    font-size: 24px;
-    color: #000;
+    font-size: 18px;
+    color: #888;
 }
 
 .box-spc.collapsed:after {
     /* symbol for "collapsed" panels */
-    content: "\f278";
+    content: "\f078";
 }
 
 .box-doc-list {
@@ -353,8 +361,8 @@ table.model-num tbody td:last-child {
     font-weight: bolder;
     padding: .75rem 15px;
     margin-bottom: -2px;
-    border-top: 2px solid #E3EFF8;
-    border-bottom: 2px solid #E3EFF8;
+    border-top: 2px solid #dcdcdc;
+    border-bottom: 2px solid #dcdcdc;
 }
 
 .collapse:not(.show) .box-doc-list-sub {
