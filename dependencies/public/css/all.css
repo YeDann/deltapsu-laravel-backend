@@ -12255,6 +12255,13 @@ a .title-new {
   color: #0087DC;
 }
 
+.read-more::after {
+  content: "\f054";
+  font-family: 'FontAwesome';
+  margin-left: 6px;
+  font-size: 12px;
+}
+
 .read-more:hover {
   text-decoration: none !important;
 }
@@ -15125,8 +15132,7 @@ a:hover{
 }
 
 .link-see-product i {
-    padding-left: 5px;
-    font-weight: bold;
+    display: none;
 }
 
 .bg-background-all-pro {

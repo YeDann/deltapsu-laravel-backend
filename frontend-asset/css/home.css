@@ -1731,6 +1731,13 @@ a .title-new {
   color: #0087DC;
 }
 
+.read-more::after {
+  content: "\f054";
+  font-family: 'FontAwesome';
+  margin-left: 6px;
+  font-size: 12px;
+}
+
 .read-more:hover {
   text-decoration: none !important;
 }
