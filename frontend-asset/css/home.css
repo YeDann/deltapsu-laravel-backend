@@ -654,7 +654,7 @@ a:hover {
   font-size: 12px;
   color: #ffffff;
   font-weight: bold;
-  background-color: rgb(120,120, 120);
+  background-color: #0087DC;
   padding: 9px 20px;
   /* padding: 10px 15px; */
   border: 2px solid transparent;
@@ -1284,7 +1284,7 @@ a .title-new {
 
 .btn-subscribe {
   font-family: 'DeltaSans';
-  font-size: 14px;
+  font-size: 18px;
   color: #ffffff;
   font-weight: bold;
   background-color: #0087DC;
@@ -1293,6 +1293,17 @@ a .title-new {
   border: 2px solid transparent;
   border-radius: 5px;
   cursor: pointer;
+  padding: 0 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .btn-subscribe {
+    font-size: 16px;
+  }
 }
 
 .btn-border-delta {

@@ -23,7 +23,7 @@
     cursor: pointer;
 }
 .btn-datasheet{
-    background-color: rgb(120, 120, 120);
+    background-color: #0087DC;
 }
 .card-btn-a-detail{
     position: relative;
@@ -86,12 +86,12 @@ input[type=text], input[type=email]{
 
 .text-breadcrumb-home a,
 .text-breadcrumb-ative a {
-    color: #000;
+    color: rgb(150, 150, 150);
     font-size: 12px;
 }
 
 .text-breadcrumb-home a {
-    font-weight: bold;
+    font-weight: normal;
     text-decoration: none;
 }
 

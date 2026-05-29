@@ -11243,7 +11243,7 @@ a:hover {
   font-size: 12px;
   color: #ffffff;
   font-weight: normal;
-  background-color: rgb(120,120, 120);
+  background-color: #0087DC;
   padding: 9px 20px;
   /* padding: 10px 15px; */
   border: 2px solid transparent;
@@ -11878,7 +11878,7 @@ a .title-new {
 
 .btn-subscribe {
   font-family: 'DeltaSans';
-  font-size: 14px;
+  font-size: 18px;
   color: #ffffff;
   /* font-weight: bold; */
   background-color: #0087DC;
@@ -11887,6 +11887,17 @@ a .title-new {
   border: 2px solid transparent;
   border-radius: 5px;
   cursor: pointer;
+  padding: 0 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .btn-subscribe {
+    font-size: 16px;
+  }
 }
 
 .btn-subscribe:hover {
@@ -13419,7 +13430,7 @@ hr {
     border-radius: 5px;
     border: unset;
     background-color: #0087DC;
-    font-size: 12px;
+    font-size: 18px;
     color: #ffffff;
     font-weight: normal;
     cursor: pointer;
@@ -13453,9 +13464,15 @@ hr {
 }
 .data-sheet-downloade {
     padding: 12px 0;
-    border-bottom: 2px solid #E3EFF8;
+    border-bottom: 2px solid #dcdcdc;
     margin: 0 24px;
     flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .btn-downlode {
+        font-size: 16px;
+    }
 }
 
 .image-datasheet {
@@ -13875,10 +13892,10 @@ hr {
 }
 
 .btn-enquiry {
-    background-color: rgb(120,120,120);
+    background-color: #0087DC;
 }
 
-.btn-addcompare:hover, 
+.btn-addcompare:hover,
 .btn-enquiry:hover,
 .btn-datasheet:hover {
   text-decoration: none;
@@ -13891,7 +13908,7 @@ hr {
 }
 
 .btn-addcompare {
-    background-color: rgb(120,120,120);
+    background-color: #0087DC;
 }
 
 .text-fourteen-gray {
@@ -14059,8 +14076,8 @@ table.model-num tbody td:last-child {
 .explain-detail {
     padding-bottom: 21px;
     border-bottom: 2px solid #E3EFF8;
-    color: #5F5F5F;
-    font-size: 16px;
+    color: #000;
+    font-size: 18px;
     word-break: break-all;
 }
 
@@ -14068,15 +14085,23 @@ table.model-num tbody td:last-child {
 .text-title-detail-dark {
     font-weight: bold;
     color: #000;
-    font-size: 16px;
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .explain-detail,
+    .box-tech-specs b,
+    .text-title-detail-dark {
+        font-size: 16px;
+    }
 }
 
 .box-doc-type .box-doc-list:after {
-    font-family: 'Material-Design-Iconic-Font';
-    content: "\f273";
+    font-family: 'FontAwesome';
+    content: "\f077";
     float: right;
-    font-size: 24px;
-    color: #000;
+    font-size: 18px;
+    color: #888;
 }
 .box-spc{
     height: 36px;
@@ -14086,22 +14111,22 @@ table.model-num tbody td:last-child {
 }
 .box-doc-type .box-doc-list.collapsed:after {
     /* symbol for "collapsed" panels */
-    content: "\f278";
+    content: "\f078";
 }
 
 
 
 .box-spc:after {
-    font-family: 'Material-Design-Iconic-Font';
-    content: "\f273";
+    font-family: 'FontAwesome';
+    content: "\f077";
     float: right;
-    font-size: 24px;
-    color: #000;
+    font-size: 18px;
+    color: #888;
 }
 
 .box-spc.collapsed:after {
     /* symbol for "collapsed" panels */
-    content: "\f278";
+    content: "\f078";
 }
 
 .box-doc-list {
@@ -14111,8 +14136,8 @@ table.model-num tbody td:last-child {
     font-weight: bolder;
     padding: .75rem 15px;
     margin-bottom: -2px;
-    border-top: 2px solid #E3EFF8;
-    border-bottom: 2px solid #E3EFF8;
+    border-top: 2px solid #dcdcdc;
+    border-bottom: 2px solid #dcdcdc;
 }
 
 .collapse:not(.show) .box-doc-list-sub {
@@ -14819,7 +14844,7 @@ table.model-num tbody td:last-child {
     cursor: pointer;
 }
 .btn-datasheet{
-    background-color: rgb(120, 120, 120);
+    background-color: #0087DC;
 }
 .card-btn-a-detail{
     position: relative;
@@ -14881,12 +14906,12 @@ input[type=text], input[type=email]{
 
 .text-breadcrumb-home a,
 .text-breadcrumb-ative a {
-    color: #000;
+    color: rgb(150, 150, 150);
     font-size: 12px;
 }
 
 .text-breadcrumb-home a {
-    font-weight: bold;
+    font-weight: normal;
     text-decoration: none;
 }
 
