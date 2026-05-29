@@ -35,11 +35,29 @@
     #related-product-mobile .item-related {
         width: 100%;
         height: 200px;
-        border: 2px solid #E3EFF8;
+        border: 2px solid #dcdcdc;
         background-size: cover;
         background: no-repeat;
         text-align: center;
 
+    }
+
+    .text-title-twenty-dark,
+    .other-applications-list h6.text-title-dark {
+        font-size: 18px;
+    }
+
+    .btn-border-delta {
+        background-color: #0087DC;
+        color: #ffffff !important;
+        border-color: #0087DC;
+    }
+
+    @media (max-width: 768px) {
+        .text-title-twenty-dark,
+        .other-applications-list h6.text-title-dark {
+            font-size: 16px;
+        }
     }
 
     #related-product .item-related:hover,
@@ -83,7 +101,7 @@
     .other-applications-list {
         height: auto;
         padding: 24px;
-        border: 2px solid #E3EFF8;
+        border: 2px solid #dcdcdc;
         margin-bottom: 20px;
 
     }
@@ -98,7 +116,7 @@
     }
 
     .other-applications-grid-mobile-list {
-        border: 2px solid #E3EFF8;
+        border: 2px solid #dcdcdc;
         display: block;
         margin: 12px 0;
     }
