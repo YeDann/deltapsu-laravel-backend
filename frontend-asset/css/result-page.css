@@ -35,16 +35,16 @@
 }
 /* sale office */
 .sales-offices-type .sales-offices-list:after, .find-distributor-type .find-distributor-list:after ,.product-docment-list:after{
-    font-family: 'Material-Design-Iconic-Font';
-    content: "\f273";
+    font-family: 'FontAwesome';
+    content: "\f077";
     float: right;
-    font-size: 24px;
-    color: #000;
+    font-size: 18px;
+    color: #888;
     }
 
     .sales-offices-type .sales-offices-list.collapsed:after ,.find-distributor-type .find-distributor-list.collapsed:after,.product-docment-list.collapsed:after{
         /* symbol for "collapsed" panels */
-        content: "\f278";
+        content: "\f078";
     }
 
     .sales-offices-list ,.find-distributor-list,.product-docment-list{

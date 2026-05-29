@@ -11423,12 +11423,19 @@ a:hover {
 }
 
 .title-new {
-  font-weight: bold;
+  font-weight: normal;
+  font-size: 18px;
   margin-top: 0.5rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .title-new {
+    font-size: 16px;
+  }
 }
 
 a .title-new {
@@ -12244,8 +12251,8 @@ a .title-new {
   left: 20px;
   bottom: 25px;
   font-size: 14px;
-  font-weight: bold;
-  color: #5F5F5F;
+  font-weight: normal;
+  color: #0087DC;
 }
 
 .read-more:hover {
@@ -13085,9 +13092,11 @@ hr {
 }
 .date{
     font-size: 14px;
+    color: #646464;
 }
 .box-news .nav-tabs .nav-link {
     color: #888;
+    font-weight: normal;
 }
 
 .box-news .nav-tabs .nav-link:hover {
@@ -13096,7 +13105,7 @@ hr {
 
 .box-news .nav-tabs .nav-link.active {
     color: #0087DC;
-    font-weight: bold;
+    font-weight: normal;
     background-color: transparent;
     border-bottom: 3px solid #0087DC;
     border-right: none;
@@ -13319,7 +13328,7 @@ hr {
 
 .resources-download {
     padding: 12px 0;
-    border-bottom: 2px solid #E3EFF8;
+    border-bottom: 2px solid #dcdcdc;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -13353,7 +13362,7 @@ hr {
 }
 
 .image-datasheet {
-    border: 2px solid #E3EFF8;
+    border: 2px solid #dcdcdc;
     min-height: 388px;
 }
 
@@ -13365,7 +13374,7 @@ hr {
     padding-left: 12px;
 }
 .border-2px{
-    border: 2px solid #E3EFF8;
+    border: 2px solid #dcdcdc;
 }
 
 .visible-touch .border-b-2px{
@@ -14168,16 +14177,16 @@ table.model-num tbody td:last-child {
 }
 /* sale office */
 .sales-offices-type .sales-offices-list:after, .find-distributor-type .find-distributor-list:after ,.product-docment-list:after{
-    font-family: 'Material-Design-Iconic-Font';
-    content: "\f273";
+    font-family: 'FontAwesome';
+    content: "\f077";
     float: right;
-    font-size: 24px;
-    color: #000;
+    font-size: 18px;
+    color: #888;
     }
 
     .sales-offices-type .sales-offices-list.collapsed:after ,.find-distributor-type .find-distributor-list.collapsed:after,.product-docment-list.collapsed:after{
         /* symbol for "collapsed" panels */
-        content: "\f278";
+        content: "\f078";
     }
 
     .sales-offices-list ,.find-distributor-list,.product-docment-list{
@@ -14256,8 +14265,8 @@ table.model-num tbody td:last-child {
 .box-comparison {}
 
 .box-for-collap {
-    border-top: 2px solid #E3EFF8;
-    border-bottom: 2px solid #E3EFF8;
+    border-top: 2px solid #dcdcdc;
+    border-bottom: 2px solid #dcdcdc;
 }
 
 .box-for-collap {
