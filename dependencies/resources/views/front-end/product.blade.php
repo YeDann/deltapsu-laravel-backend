@@ -55,7 +55,7 @@
     #showfiler a {
         text-decoration: none;
         font-size: 14px;
-        color: #ffffff;
+        color: #000;
         font-weight: bold;
     }
 
@@ -104,16 +104,16 @@
     }
 
     tbody td {
-        border-top: 2px solid #E3EFF8 !important;
-        border-bottom: 2px solid #E3EFF8;
+        border-top: 2px solid #e4e4e4 !important;
+        border-bottom: 2px solid #e4e4e4;
     }
 
     tbody td:first-child {
-        border-left: 2px solid #E3EFF8;
+        border-left: 2px solid #e4e4e4;
     }
 
     tbody td:last-child {
-        border-right: 2px solid #E3EFF8;
+        border-right: 2px solid #e4e4e4;
     }
 
     /* tr td {
@@ -183,7 +183,7 @@
         display: block;
         visibility: visible;
         position: absolute;
-        color: #fff;
+        color: #000;
         top: 50%;
         right: 0.25rem;
         transform: translateY(calc(50% - 2rem));
@@ -199,7 +199,7 @@
         display: block;
         visibility: visible;
         position: absolute;
-        color: #fff;
+        color: #000;
         top: 50%;
         right: 0.25rem;
         transform: translateY(calc(50% - 0rem));

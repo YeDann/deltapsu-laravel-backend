@@ -9,6 +9,45 @@
         max-width: 100%;
     }
 
+    .box-news-detail {
+        border: none;
+        padding: 0;
+    }
+
+    .box-news-detail h1.text-dark {
+        font-size: 32px;
+    }
+
+    .content,
+    .content p,
+    .content li {
+        font-size: 18px;
+        color: #000;
+    }
+
+    .content h2,
+    .content h3,
+    .content h4 {
+        font-size: 24px;
+        color: #000;
+    }
+
+    @media (max-width: 768px) {
+        .box-news-detail h1.text-dark {
+            font-size: 24px;
+        }
+        .content,
+        .content p,
+        .content li {
+            font-size: 16px;
+        }
+        .content h2,
+        .content h3,
+        .content h4 {
+            font-size: 18px;
+        }
+    }
+
     .content b {
         font-weight: bold;
     }
@@ -139,9 +178,9 @@
 <section class="box-news  my-5 {{-- visible-up-922 --}}">
     <div class="container">
         <div class="box-news-detail">
-            <h2 class="text-dark">
+            <h1 class="text-dark">
                 {{isset($faqs[0]->title)? $faqs[0]->title:'' }}
-            </h2>
+            </h1>
         </div>
         <div class="content">
             @if(isset($faqs[0]->content))
