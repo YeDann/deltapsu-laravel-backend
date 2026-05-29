@@ -282,6 +282,36 @@
         font-size: 25px;
         color: #ffffff;
     }
+    /* 加入 Stock 按鈕後，列表卡片按鈕列由 3 顆增為 4 顆（僅作用於列表頁，商品詳細頁不受影響）。
+       間距改用容器 gap 而非各按鈕 margin —— 因部分按鈕外層包 <a>、部分為裸 <button>，
+       margin 加在 button 上會造成 flex 子元素間距不一致；gap 對所有子元素一致，並縮小 icon 以容於窄卡片。 */
+    .boxlist-icon-img {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 6px;
+    }
+    .boxlist-icon-img .img-btn-icon-pro {
+        margin-right: 0;
+    }
+    .boxlist-icon-img .img-btn-icon-pro img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+    }
+    /* grid 檢視（桌機 + 手機，皆在 #GridView）：四顆平均分佈滿卡片寬，左右貼齊卡片內邊距；
+       list 檢視（#ListView）寬卡片維持靠左、不套用，避免 icon 被撐得太開。 */
+    #GridView .boxlist-icon-img {
+        justify-content: space-between;
+    }
+    /* 手機 grid icon 列（帶 .pd-mobile，較具體故蓋過上方桌機的 space-between）：改用 space-evenly，
+       讓最左/最右 icon 與卡片邊的距離跟 icon 之間的間距一致（全部等距）；移除原 .pd-mobile 左右 13px padding
+       以免疊加破壞等距。桌機 grid（無 .pd-mobile）維持 space-between。 */
+    #GridView .boxlist-icon-img.pd-mobile {
+        justify-content: space-evenly;
+        padding-left: 0;
+        padding-right: 0;
+    }
     .add-hight{
         margin-top:10px;
     }
@@ -804,7 +834,13 @@
         var categoryId = getProductCategoryId(product);
         showNavCoparison(productId, categoryId);
     }
-    
+
+    // 查詢經銷商庫存（Stock 按鈕入口）。本階段為佔位，僅顯示「即將開通」提示；
+    // 後續 DILP API 串接 change 會在此替換為實際庫存查詢與 Modal 呈現。
+    function checkStock(proCode) {
+        alert('{{ $staticContent['Stock_coming_soon'] ?? 'Coming soon' }}');
+    }
+
     // 生成詢價連結的函數，從產品分類資料獲取資訊
     function generateEnquiryLink(proCode, product) {
         var typeId = '';
@@ -1952,9 +1988,10 @@
 
         html += '<div class="w-100">';
         html += '<div class="boxlist-icon-img">';
-        html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></a>';
+        html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button></a>';
         html += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
         html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
+        html += '<button onclick="checkStock(\'' + pro['pro_code'] + '\')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
         html += '</div>';
         html += '</div>';
 
@@ -2050,9 +2087,10 @@
             html += '</div>';
             html += '<div class="w-100">';
             html += '<div class="boxlist-icon-img pd-mobile">';
-            html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
+            html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button></a>';
             html += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
             html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
+            html += '<button onclick="checkStock(\'' + pro['pro_code'] + '\')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
             html += '</div>';
             html += '</div>';
             html += '</div>';
@@ -2155,9 +2193,10 @@
             html1 += '</a>';
             html1 += '<div class="w-100">';
             html1 += '<div class="boxlist-icon-img">';
-            html1 += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
+            html1 += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button></a>';
             html1 += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
             html1 += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
+            html1 += '<button onclick="checkStock(\'' + pro['pro_code'] + '\')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
             html1 += '</div>';
             html1 += '</div>';
             // html1 += '<div class="w-100">';
