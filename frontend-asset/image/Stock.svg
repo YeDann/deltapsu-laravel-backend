@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stock / distributor-network icon — placeholder, white fill, 34x34 to match Compare.svg / Datasheet.svg -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 34 34" style="enable-background:new 0 0 34 34;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+</style>
+<g>
+	<rect class="st0" x="13" y="4" width="8" height="7" rx="1"/>
+	<rect class="st0" x="3.5" y="23" width="8" height="7" rx="1"/>
+	<rect class="st0" x="22.5" y="23" width="8" height="7" rx="1"/>
+	<rect class="st0" x="16.25" y="11" width="1.5" height="5.5"/>
+	<rect class="st0" x="6.75" y="16.5" width="1.5" height="6.5"/>
+	<rect class="st0" x="25.75" y="16.5" width="1.5" height="6.5"/>
+	<rect class="st0" x="6.75" y="16.5" width="20.5" height="1.5"/>
+</g>
+</svg>
