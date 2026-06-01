@@ -106,6 +106,21 @@ class OfficeController extends Controller
                 ->select('c.id', 'c.slug', 'ct.name')
                 ->get();
         }
+
+        // Sales Territory 另帶所屬 Region 名稱、依 Region 排序，供後台表單分組顯示
+        $out['sales_territory'] = DB::table('sales_territory as c')
+            ->join('sales_territory_translation as ct', 'ct.fk_id', '=', 'c.id')
+            ->leftJoin('continents as cont', 'cont.id', '=', 'c.continent_id')
+            ->leftJoin('continents_translations as cnt', function ($j) {
+                $j->on('cnt.cont_id', '=', 'cont.id')->where('cnt.local', '=', 'en');
+            })
+            ->where('ct.local', 'en')
+            ->where('c.status', 1)
+            ->orderBy('cont.order_seq')
+            ->orderBy('c.order_seq')
+            ->select('c.id', 'c.slug', 'ct.name', DB::raw("COALESCE(cnt.name, 'Other') as region"))
+            ->get();
+
         return $out;
     }
 
