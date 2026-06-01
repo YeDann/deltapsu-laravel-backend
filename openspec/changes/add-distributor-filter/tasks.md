@@ -11,19 +11,23 @@
 ## 階段二：後台（Admin）
 
 - [ ] 2.1 分類 CRUD：specialized_application / product_line / distributor_service 的後台 controller + views + 路由（含多語名稱），沿用本專案內容模組 CRUD 模式
-- [ ] 2.2 `OfficeController` create/edit 擴充：讀寫 logo(上傳)、website、telephone、email、google_maps、sales_territory、certification
-- [ ] 2.3 `OfficeController` store/update 擴充：以「先刪後插」寫入三組 pivot（specialized application／product line／service）
-- [ ] 2.4 `office/` 後台表單 views 擴充：logo 上傳欄、文字欄位、三組勾選框；依 type_id=2 才顯示
-- [ ] 2.5 確認 Sales Offices（type_id=1）表單與行為不受影響
+- [x] 2.2 `OfficeController` create/edit 擴充：讀寫 logo(上傳)、website、telephone、email、google_maps、sales_territory、certification —— create() / edit() 帶 `$categories`（+ edit 帶 `$selected`）
+- [x] 2.3 `OfficeController` store/update 擴充：`saveDistributorPivots()` 以「先刪後插」寫入三組 pivot；logo 上傳沿用 medias/distributor
+- [x] 2.4 `office/` create.blade / edit.blade 擴充：logo 上傳（edit 顯示舊圖）、六個文字欄、三組勾選框；皆置於 `@if($type_id == 2)` 內
+- [x] 2.5 type_id=1 不顯示經銷商欄位（包在 type_id==2 區塊）；pivot helper 對 type_id=1 無輸入時不寫入（建議瀏覽器最終確認）
 
 ## 階段三：前端（篩選頁）
 
-- [ ] 3.1 `FrontendController@contactFindDistributor` 擴充查詢：帶出各經銷商文字欄 + 三類屬性 id 陣列，連同分類選項清單與各 territory/certification 去重清單，傳給 view
-- [ ] 3.2 `find-distributor.blade.php` 改版：地區頁籤（continents type_id=2）+ 篩選列（Sales Territory／Certification 下拉、Specialized Application／Product Line／Service 勾選，含 All 全選捷徑）
-- [ ] 3.3 前端 JS 即時篩選：依地區與條件過濾（類間 AND、類內 OR，依 Delta 確認調整）
-- [ ] 3.4 結果卡渲染：有 logo 顯示圖、無 logo 顯示名稱；地址、電話、email、Google Maps 連結、website、應用/服務標籤、產品線打勾
-- [ ] 3.5 Certification 篩選：若資料全空則先隱藏該下拉
-- [ ] 3.6 篩選列 UI 標籤多語（`static_keyword` 新增所需字串，六語系）
+- [x] 3.1 `FrontendController@contactFindDistributor` 擴充查詢：帶出各經銷商文字欄 + 三類屬性 slug 陣列 + 分類選項清單（status=1，依圖 5/9/3），territory/cert 去重在前端 JS 產生
+- [x] 3.2 `find-distributor.blade.php` 改版：地區頁籤（continents type_id=2）+ 篩選列（Sales Territory／Certifications 內聯下拉、三類勾選，All 僅 Product Lines）；樣式比照 Slide5（置中頁籤、白底、粗體區塊標題、內聯下拉）
+- [x] 3.3 前端 JS 即時篩選：依地區與條件過濾（類間 AND、類內 OR）
+- [x] 3.4 結果卡渲染：有 logo 顯示圖、無 logo 顯示名稱；地址、電話、email、Google Maps、website、應用/服務藍標、產品線打勾
+- [x] 3.5 Certification 篩選：客戶要求「欄位都先做、篩不到就篩不到」→ 一律顯示（不因空隱藏）
+- [x] 3.6 篩選列 UI 標籤多語 —— `database/seeds/DistributorLabelSeeder.php`（7 個 key × 六語系，已執行）；分類名稱多語走分類 `_translation`
+
+## 階段一補充（依客戶「依圖標籤」）
+
+- [x] 1.6 重跑：分類改為依 Slide5 —— Specialized Application 5 項（Industrial/Medical/LED Lighting/LED Signage/Railway）、Product Line 9 項（含 LED Signage Power Supply）、Service 3 項（Stocking/After Sales/Technical Configuration）；Excel 才有的 Online shop 停用（status=0，資料保留）。保留既有 slug 不斷鏈已匯入資料。
 
 ## 驗證
 

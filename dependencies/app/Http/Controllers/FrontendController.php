@@ -2659,8 +2659,38 @@ class FrontendController extends Controller
             ->where('f.type_id', 2)
             ->where('oft.local', '=', $lang)
             ->where('f.status', 1)
-            ->select('f.*', 'oft.*')
+            ->select('f.*', 'oft.title', 'oft.sub_title', 'oft.content')
             ->get();
+
+        // 三類分類選項（當前語系），供篩選 UI 與卡片標籤
+        $catLists = [];
+        foreach (['specialized_application' => 'specialized_application', 'product_line' => 'product_line', 'service' => 'distributor_service'] as $key => $t) {
+            $catLists[$key] = DB::table($t . ' as c')
+                ->join($t . '_translation as ct', 'ct.fk_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.status', 1)
+                ->orderBy('c.order_seq')
+                ->select('c.id', 'c.slug', 'ct.name')
+                ->get();
+        }
+
+        // 每家經銷商已勾選的分類 slug（供前端比對篩選與卡片顯示）
+        $pivotSlugs = function ($pivot, $table) {
+            return DB::table($pivot . ' as p')
+                ->join($table . ' as c', 'c.id', '=', 'p.category_id')
+                ->select('p.office_id', 'c.slug')
+                ->get()
+                ->groupBy('office_id');
+        };
+        $sa = $pivotSlugs('office_has_specialized_application', 'specialized_application');
+        $pl = $pivotSlugs('office_has_product_line', 'product_line');
+        $sv = $pivotSlugs('office_has_service', 'distributor_service');
+        foreach ($offices as $o) {
+            $o->apps = isset($sa[$o->id]) ? $sa[$o->id]->pluck('slug')->toArray() : [];
+            $o->lines = isset($pl[$o->id]) ? $pl[$o->id]->pluck('slug')->toArray() : [];
+            $o->services = isset($sv[$o->id]) ? $sv[$o->id]->pluck('slug')->toArray() : [];
+            $o->territories = array_values(array_filter(array_map('trim', explode(';', (string) $o->sales_territory))));
+        }
 
         $metatag = DB::table('meta_tag_page as mtp')
             ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
@@ -2672,6 +2702,7 @@ class FrontendController extends Controller
         return view('front-end.find-distributor')
             ->with('metatag', $metatag)
             ->with('offices', $offices)
+            ->with('catLists', $catLists)
             ->with('continents', $continents);
     }
 

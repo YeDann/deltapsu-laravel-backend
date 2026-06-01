@@ -34,6 +34,11 @@ class DistributorImportSeeder extends Seeder
             ->where('c.type_id', 2)->where('ct.local', 'en')
             ->pluck('c.id', 'ct.name')->toArray();
 
+        // Taiwan 洲別 en 名稱可能為 "Taiwan Region"（原始）或已正規化為 "Taiwan"，兩者皆可對應
+        if (!isset($continentIdByName['Taiwan Region']) && isset($continentIdByName['Taiwan'])) {
+            $continentIdByName['Taiwan Region'] = $continentIdByName['Taiwan'];
+        }
+
         // category slug → id, per table
         $catId = [];
         foreach (['specialized_application', 'product_line', 'distributor_service'] as $t) {
@@ -76,6 +81,22 @@ class DistributorImportSeeder extends Seeder
             ];
         };
 
+        // 由 Excel 欄位組成 content（地址 + Tel + Email + 網址），格式比照既有經銷商
+        $buildContent = function (array $r) {
+            $c = trim((string) $r['address']);
+            if (!empty($r['telephone'])) {
+                $c .= '<br>Tel: ' . $r['telephone'];
+            }
+            if (!empty($r['email'])) {
+                $c .= '<br>Email: <a href="mailto:' . $r['email'] . '">' . $r['email'] . '</a>';
+            }
+            if (!empty($r['website'])) {
+                $url = preg_match('/^https?:\/\//', $r['website']) ? $r['website'] : 'https://' . $r['website'];
+                $c .= '<br><a href="' . $url . '" target="_blank" rel="noopener">' . $r['website'] . '</a>';
+            }
+            return $c;
+        };
+
         while (($row = fgetcsv($fh)) !== false) {
             $r = array_combine($header, $row);
             $name = trim($r['name']);
@@ -94,13 +115,26 @@ class DistributorImportSeeder extends Seeder
                 ->where('t.local', 'en')->where('t.title', $name)
                 ->value('f.id');
 
+            $content = $buildContent($r);
+
             if ($officeId) {
                 // 既有：更新新欄位（不動既有多語 translation）
                 DB::table('office')->where('id', $officeId)
                     ->update($fields($r) + ['updated_at' => now()]);
+                // 若 content 仍是本 seeder 早期匯入的「純地址」（新建那批），補成完整格式；
+                // 46 家原站經銷商的 content 為既有豐富 HTML，與純地址不符，不受影響。
+                $enContent = DB::table('office_translations')
+                    ->where('fk_office_id', $officeId)->where('local', 'en')->value('content');
+                if (trim((string) $enContent) === trim((string) $r['address'])) {
+                    foreach ($languages as $local) {
+                        DB::table('office_translations')
+                            ->where('fk_office_id', $officeId)->where('local', $local)
+                            ->update(['content' => $content]);
+                    }
+                }
                 $updated++;
             } else {
-                // 新建：office + 每語系一筆 translation（英文內容，待 Delta 在地化）
+                // 新建：office + 每語系一筆 translation（content 為完整格式，英文，待 Delta 在地化）
                 $officeId = DB::table('office')->insertGetId([
                     'type_id' => 2,
                     'continent_id' => $continentId,
@@ -113,7 +147,7 @@ class DistributorImportSeeder extends Seeder
                         'fk_office_id' => $officeId,
                         'title' => $name,
                         'sub_title' => null,
-                        'content' => $r['address'] ?: null,
+                        'content' => $content ?: null,
                         'local' => $local,
                     ]);
                 }

@@ -1,37 +1,49 @@
 @extends('layouts.front-end')
 @section('css')
 <style>
-    .text-editor img {
-        max-width: 100%;
-    }
+    .text-editor img { max-width: 100%; }
+    .text-editor b { font-weight: bold; }
 
-    .text-editor b {
-        font-weight: bold;
-    }
+    /* 地區頁籤：外層用 .box-news 套用 News 頁完全相同的 nav-tabs 樣式（字色 #888、active 藍底線、線色 #dcdcdc） */
+    #fd-region-tabs .nav-link { margin: -2px 20px; }
+    .fd-region-tab { cursor: pointer; }
 
-    .btn-certi {
-        height: 40px;
-        min-width: 160px;
-        border-radius: 5px;
-        border: 2px solid #444444;
-        background-color: #ffffff;
-        color: #000000;
-        font-weight: bold;
-        cursor: pointer;
-        font-size: 14px;
-        
+    /* 篩選列（白底、無外框，貼齊圖示樣式） */
+    .fd-filters { padding: 8px 0 0; }
+    .fd-inline-dropdowns { display: flex; flex-wrap: wrap; gap: 28px; margin-bottom: 10px; }
+    .fd-mini-select {
+        border: none; background: transparent; font-weight: 600; font-size: 14px;
+        color: #000; cursor: pointer; padding: 0 4px 0 0; margin-left: -4px; max-width: 220px;
     }
+    .fd-mini-select:focus { outline: none; }
+    .fd-section-title { font-weight: 700; font-size: 14px; color: #000; margin: 16px 0 8px; }
+    /* 每區塊固定欄數對齊（比照圖：應用 5 / 產品線 4 / 服務 3），短標籤不再卡 min-width 亂折 */
+    .fd-filter-group { display: grid; gap: 8px 16px; margin-bottom: 8px; }
+    .fd-filter-group.fd-group-apps { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .fd-filter-group.fd-group-lines { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .fd-filter-group.fd-group-services { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    @media (max-width: 767px) { .fd-filter-group { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+    .fd-check { display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 400; color: #333; cursor: pointer; }
+    .fd-check input { margin-right: 6px; }
 
-    .f-btn {
-        font-size: 12px;
-        font-family: 'DeltaSans';
+    /* 結果卡：一列一家、三欄（資訊 / 徽章 / 產品線），比照 Slide5 */
+    .fd-results { margin-top: 24px; }
+    .fd-card { display: flex; gap: 28px; border: 1px solid #dcdcdc; border-radius: 6px; padding: 22px 26px; margin-bottom: 20px; }
+    .fd-card-info { flex: 0 0 40%; max-width: 40%; }
+    .fd-card-badges { flex: 0 0 24%; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+    .fd-card-lines { flex: 1; }
+    @media (max-width: 767px) {
+        .fd-card { flex-direction: column; gap: 14px; }
+        .fd-card-info, .fd-card-badges { flex: auto; max-width: 100%; }
     }
-
-    .btn-certi:hover {
-        border: 1px solid #0087DC;
-        background-color: #0087DC;
-        color: #ffffff;
-    }
+    .fd-logo { max-height: 44px; max-width: 200px; display: block; margin-bottom: 12px; }
+    .fd-name { font-size: 16px; font-weight: 700; color: #000; margin-bottom: 8px; }
+    .fd-address { font-size: 14px; color: #333; line-height: 1.6; }
+    .fd-address a { color: #0087DC; word-break: break-word; }
+    .fd-tag { background: #0087DC; color: #fff; font-size: 12px; border-radius: 3px; padding: 4px 10px; }
+    .fd-line-item { font-size: 14px; color: #333; margin-bottom: 8px; }
+    .fd-line-item .chk { color: #2e7d32; margin-right: 8px; font-weight: bold; }
+    .fd-empty { text-align: center; color: #646464; padding: 40px 0; }
 </style>
 @endsection
 @section('meta')
@@ -40,8 +52,7 @@
 <link rel="canonical" href="{{url()->current()}}" />
 @endsection
 @section('container')
-<div class="padding-top-content">
-</div>
+<div class="padding-top-content"></div>
 <div class="products-index-nav visible-up-922">
     <div class="bg-bredcrumb">
         <div class="container">
@@ -52,8 +63,7 @@
                     <li class="breadcrumb-item active text-breadcrumb-home dropdown" aria-current="page"><a href="#"
                             data-toggle="dropdown" id="tools-dropdown">{{$staticContent['Where_to_Buy']}}</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Where_to_Buy']}}</a>
-                            </li>
+                            <li><a href="#" id="tools-dropdown" class="text-bold">{{$staticContent['Where_to_Buy']}}</a></li>
                             <hr>
                             <li><a href="{{route('contactSupport')}}">{{$staticContent['contact_us']}}</a></li>
                             <li><a href="{{route('contactFindDistributor')}}">{{$staticContent['find_a_distributor']}}</a></li>
@@ -73,356 +83,149 @@
         <h2 class="text-title-delta visible-tablets-up">{{$staticContent['find_a_distributor']}}</h2>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['find_a_distributor']}}</h3>
         <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
-        <div id="find-distributor" class="find-distributor-type">
 
-            @foreach ($continents as $item)
-            <div class="box-for-collap">
-                <div class="find-distributor-list collapsed  hide-box text-colour-delta" data-toggle="collapse"
-                    data-parent="#find-distributor-type" href="#collapse-ofictab{{$item->id}}">
-                    <h5>{{$item->name}}</h5>
+        <div id="find-distributor-app" class="box-news">
+            {{-- 地區頁籤（樣式同 News 頁，JS 切換不換頁） --}}
+            <div class="nav nav-tabs d-flex justify-content-center border-b-2px mb-5" id="fd-region-tabs" role="tablist">
+                @foreach($continents as $i => $item)
+                <a class="nav-item nav-link font-size-tab fd-region-tab {{ $i == 0 ? 'active' : '' }}" href="#" data-continent="{{$item->id}}">{{$item->name}}</a>
+                @endforeach
+            </div>
+
+            {{-- 篩選列 --}}
+            @php
+                $filterGroups = [
+                    ['key' => 'apps', 'label' => $staticContent['Specialized_Applications'] ?? 'Specialized Applications', 'items' => $catLists['specialized_application']],
+                    ['key' => 'lines', 'label' => $staticContent['Product_Lines'] ?? 'Product Lines', 'items' => $catLists['product_line']],
+                    ['key' => 'services', 'label' => $staticContent['Services'] ?? 'Services', 'items' => $catLists['service']],
+                ];
+            @endphp
+            <div class="fd-filters mb-4">
+                <div class="fd-inline-dropdowns">
+                    <select class="fd-mini-select fd-filter-territory">
+                        <option value="">{{ $staticContent['Sales_Territory'] ?? 'Sales Territory' }}</option>
+                    </select>
+                    <select class="fd-mini-select fd-filter-certification fd-cert-wrap">
+                        <option value="">{{ $staticContent['Certifications'] ?? 'Certifications' }}</option>
+                    </select>
                 </div>
-                <div id="collapse-ofictab{{$item->id}}" class="find-distributor-list-sub collapse"
-                    data-parent="#find-distributor-type">
-                    <div class="force-overflow">
-                        @foreach ($offices as $office)
-                        @if($office->continent_id == $item->id )
-                        <div class="sales-offices-address">
-                            <p class="text-sixteen-dark mr-b-1">
-                                {{$office->title}}
-                                <br>{{$office->sub_title}}
-                            </p>
-                            <div class="text-editor">
-                                {!!$office->content!!}
-                            </div>
-                            {{-- 羅昇企業股份有限公司 加上電商網站按鈕 office->id = 47 --}}
-                            @if (App::getLocale() == 'tw' && $office->id == 47)
-                                <a href="https://www.acepillar-ec.com/collections/power" target="_blank">
-                                    <button class="btn-subscribe mt-2">
-                                        {{ $office->local == 'tw' ? '電商網站' : 'Buy Now' }}
-                                    </button>
-                                </a>
-                            @endif
+                @foreach($filterGroups as $g)
+                <div class="fd-section-title">{{ $g['label'] }}</div>
+                <div class="fd-filter-group fd-group-{{ $g['key'] }}">
+                    @foreach($g['items'] as $c)
+                    <label class="fd-check"><input type="checkbox" class="fd-filter-cb" data-group="{{$g['key']}}" value="{{$c->slug}}"> {{$c->name}}</label>
+                    @endforeach
+                    @if($g['key'] === 'lines')
+                    <label class="fd-check"><input type="checkbox" class="fd-all" data-group="{{$g['key']}}"> {{ $staticContent['All'] ?? 'All' }}</label>
+                    @endif
+                </div>
+                @endforeach
+            </div>
 
-                            <a href="https://www.google.com/maps/?q={{$office->lat}},{{$office->lon}}&sensor=true"
-                                target="_blank"><button
-                                    class="btn-subscribe mt-2">{{isset($staticContent['GetDirection'])?
-                                    $staticContent['GetDirection'] : 'Get Direction'}}</button></a>
-
-                            @if($office->status_cer == 1)
-                            <a href="{{config('app.url')}}/medias/distributor/{{$office->file_cer}}" target="_blank">
-                                <button class="btn-certi mt-2">
-                                    {{-- <i class="cer-icon icon-facon icon-web-certificate"></i> --}}
-                                    {{ $office->local == 'tw' ? '代理證書' : 'Certificate' }}
-                                    {{-- <span class="f-btn">Certificate</span> --}}
-                                </button>
-                            </a>
-                            @endif
-                        </div>
+            {{-- 結果卡 --}}
+            <div class="fd-results">
+                @foreach($offices as $office)
+                <div class="fd-card"
+                     data-continent="{{$office->continent_id}}"
+                     data-apps="{{ implode(',', $office->apps) }}"
+                     data-lines="{{ implode(',', $office->lines) }}"
+                     data-services="{{ implode(',', $office->services) }}"
+                     data-territories="{{ strtolower(implode('|', $office->territories)) }}"
+                     data-certification="{{ trim($office->certification) }}">
+                    <div class="fd-card-info">
+                        @if($office->logo)
+                        <img class="fd-logo" src="{{config('app.url')}}/medias/distributor/{{$office->logo}}" alt="{{$office->title}}">
                         @endif
-                        @endforeach
+                        <div class="fd-name">{{$office->title}}</div>
+                        <div class="fd-address text-editor">{!! $office->content !!}</div>
+                    </div>
+                    <div class="fd-card-badges">
+                        @foreach($catLists['specialized_application'] as $c)@if(in_array($c->slug, $office->apps))<span class="fd-tag">{{$c->name}}</span>@endif @endforeach
+                        @foreach($catLists['service'] as $c)@if(in_array($c->slug, $office->services))<span class="fd-tag">{{$c->name}}</span>@endif @endforeach
+                    </div>
+                    <div class="fd-card-lines">
+                        @foreach($catLists['product_line'] as $c)@if(in_array($c->slug, $office->lines))<div class="fd-line-item"><span class="chk">&#10003;</span>{{$c->name}}</div>@endif @endforeach
                     </div>
                 </div>
+                @endforeach
+                <div class="fd-empty">{{ $staticContent['No_Results'] ?? 'No matching distributors' }}</div>
             </div>
-            @endforeach
-            {{-- <div class="box-for-collap">
-                <div class="find-distributor-list collapsed  hide-box text-delta" data-toggle="collapse"
-                    data-parent="#find-distributor-type" href="#collapse-fad-americas">
-
-                    <h5>AMERICAS</h5>
-
-                </div>
-                <div id="collapse-fad-americas" class="find-distributor-list-sub collapse"
-                    data-parent="#find-distributor-type">
-                    <div class="force-overflow">
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">Arrow Electronics</p>
-                            <p>9201 East Dry Creek Road
-                                <br>Centennial, CO 80112
-                                <br>Tel: +1 800-833-3557
-                                <br>Email: advantagesales@arrow.com
-                                <br>Web: https://www.arrow.com
-                                <br>Link: https://www.arrow.com/en/products/manufacturers/d/delta-electronics
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">Avnet Inc</p>
-                            <p>2211 South 47th St
-                                <br>Phoenix, AZ 85034
-                                <br>Tel: +1-800-409-1483
-                                <br>Web: http://www.avnet.com
-                                <br>Link:
-                                http://avnetexpress.avnet.com/store/em/EMController/Delta-Corp/_/N-4280354008?action=products&storeId=500201&langId=-1&sel=M
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">Digi-Key Corporation</p>
-                            <p>701 Brooks Avenue South Thief River Falls, MN 56701
-                                <br>Tel: +1 800-344-4539
-                                <br>Email: sales@digikey.com
-                                <br>Web: http://www.digikey.com
-                                <br>Link: http://www.digikey.com/Suppliers/us/Delta-Product-Groups-Power.page
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">Master Electronics</p>
-                            <p>Tel: +1 888-473-5297
-                                <br>Email: powersolutions@masterelectronics.com
-                                <br>Web: http://www.masterelectronics.com
-                                <br>Link: http://www.masterelectronics.com/suppliers/delta-psu-1378/
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">Mouser Electronics,</p>
-                            <p>1000 North Main Street Mansfield, TX 76063
-                                <br>Tel: +1 800-346-6873
-                                <br>Email: sales@mouser.com
-                                <br>Web: http://www.mouser.com
-                                <br>Link: http://www.mouser.com/delta-electronics/
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">NRC Electronics, Inc.,</p>
-                            <p>6600 Park of Commerce Blvd , Boca Raton, FL 33487
-                                <br>Tel: +1 561-241-8600
-                                <br>Email: d.eisen@nrcelectronics.com
-                                <br>Web: http://www.nrcelectronics.com
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="box-for-collap">
-                <div class="find-distributor-list collapsed  hide-box text-delta" data-toggle="collapse"
-                    data-parent="#find-distributor-type" href="#collapse-fad-europe">
-
-                    <h5>EUROPE</h5>
-                </div>
-                <div id="collapse-fad-europe" class="find-distributor-list-sub collapse"
-                    data-parent="#find-distributor-type">
-                    <div class="force-overflow">
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">ASTONE TECHNOLOGY</p>
-                            <p>41-43, rue Perier, 92120 Montrouge, France
-                                <br>Tel: +33 (0)1 55 58 04 04
-                                <br>Email: contact@via-design.fr
-                                <br>Web: http://www.astone-technology.com/
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">AVNET-ABACUS</p>
-                            <p>All European countries + Israel + South Africa
-                                <br>Web: http://www.avnet-abacus.eu/
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">CEMATEC NV / SA</p>
-                            <p>Wijngaardveld 11 B-9300 Aalst Belgium
-                                <br>Tel: +32 53 606767
-                                <br>Email: info@cematec.com
-                                <br>Web: http://www.cematec.com
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">MPL Power Elektro sp. z o.o.</p>
-                            <p>44-119 Gliwice, Wschodnia 40, Poland
-                                <br>Tel: +48 32 44 00 850
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">Neumüller Elektronik GmbH</p>
-                            <p>Gewerbegebiet Ost 7 91085 Weisendorf, Germany
-                                <br>Tel: +49 9135 73666-0
-                                <br>Email: info@neumueller.com
-                                <br>Web: http://www.neumueller.com
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">SGE-SYSCOM S.P.A</p>
-                            <p>Sede Commerciale e Amministrativa, Via Gran Sasso, 35 -
-                                <br>20092 CINISELLO BALSAMO (MI), Italy
-                                <br>Tel: +39 02 617901 (15 Linee r.a.)
-                                <br>Fax: +39 02 611199
-                                <br>Email: gronzino@sge-syscom.com
-                                <br>Web: http://www.sge-syscom.com
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="box-for-collap">
-                <div class="find-distributor-list collapsed  hide-box text-delta" data-toggle="collapse"
-                    data-parent="#find-distributor-type" href="#collapse-fad-japan">
-
-                    <h5>JAPAN</h5>
-                </div>
-                <div id="collapse-fad-japan" class="find-distributor-list-sub collapse"
-                    data-parent="#find-distributor-type">
-                    <div class="force-overflow">
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">Okaya Electronics Corp.</p>
-                            <p>Kandashinko Bldg. 7F, 2-1 Kandatacho Chiyoda-ku, Tokyo101-0046
-                                <br>Tel: +81-3-5207-2750
-                                <br>Web: https://www.oec.okaya.co.jp/
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">Kaga Micro Solution Co.,LTD</p>
-                            <p>Hatchobori Plaza Building, 3-27-10 Hatchobori,Chuo-ku Tokyo 104-0032
-                                <br>Tel: +81-3-5931-0160
-                                <br>Web: http://www.microsol.co.jp/index.html
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">Tsuzuki Denki Co., Ltd.</p>
-                            <p>2-5-3, Nishi-Shinbashi, Minato-Ku, Tokyo 105-8420, Japan
-                                <br>Tel: +81-3-3502-2521
-                                <br>Web: http://www.tsuzuki.co.jp
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">Bellnix Co., Ltd.</p>
-                            <p>5-7-8,Negishi,Minami-Ku,Saitama-Shi,Saitama-Ken,336-0024,Japan
-                                <br>Tel: +81-48-864-7733
-                                <br>Web: http://www.bellnix.co.jp/
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="box-for-collap">
-                <div class="find-distributor-list collapsed  hide-box text-delta" data-toggle="collapse"
-                    data-parent="#find-distributor-type" href="#collapse-fad-korea">
-
-                    <h5>KOREA</h5>
-                </div>
-                <div id="collapse-fad-korea" class="find-distributor-list-sub collapse"
-                    data-parent="#find-distributor-type">
-                    <div class="force-overflow">
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">Bluecosmos</p>
-                            <p>Chunui Techno Tower 4F RM 404, 80 Jomaru-ro 385 Beongil,
-                                <br>Bucheon-si, Gyeonggi-do, Korea
-                                <br>Tel: +82-32-662-2350
-                                <br>Fax: +82-32-662-2351
-                                <br>Email: shawn.yoon@bluecosmos.co.kr
-                                <br>Web: http://www.bluecosmos.co.kr
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">KEC</p>
-                            <p>5, Mabang-ro 10-gil, Seocho-gu, Seoul, Republic of Korea, 06775
-                                <br>Tel : +82-2025-5702
-                                <br>Email : swlee@kec.co.kr
-                                <br>Web : www.kec.co.kr
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">One Corporation</p>
-                            <p>1302, 648, Seobusaet-Gil, Geumcheon-Gu, Seoul, Korea, 08504
-                                <br>Tel: +82-3283-4105
-                                <br>Email: sam@onecorp.co.kr
-                                <br>Web: http://www.deltapsu.co.kr/
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="box-for-collap">
-                <div class="find-distributor-list collapsed  hide-box text-delta" data-toggle="collapse"
-                    data-parent="#find-distributor-type" href="#collapse-fad-taiwan">
-
-                    <h5>TAIWAN</h5>
-                </div>
-                <div id="collapse-fad-taiwan" class="find-distributor-list-sub collapse"
-                    data-parent="#find-distributor-type">
-                    <div class="force-overflow">
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">ACE PILLAR CO., LTD.</p>
-                            <p>2F, No.7, Lane 83, Sec. 1, Kuang - Fu Rd., San – Chung Dist.,
-                                <br>New Taipei City, Taiwan, R.O.C.
-                                <br>Tel: +886-2-2995-8400
-                                <br>Email: sales@acepillar.com.tw
-                                <br>Web: www.acepillar.com.tw
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">Honya Electronic CO., LTD.</p>
-                            <p>8F, No.99, Sec 3, Nankang Rd., Taipei, Taiwan, R.O.C.
-                                <br>Tel: +886-2-2785-6812
-                                <br>Email: rickhu@honyabiz.com.tw
-                                <br>Web: http://www.honyabiz.com.tw
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">FIRMTECH ELECTRONICS CO., LTD. ( 聯新 / 聯發科 )</p>
-                            <p>2F., No.7, LN. 420, Sec. 5, Cheng gong Rd., Nei-hu Dist., Taipei
-                                <br>City 11477, Taiwan, R.O.C.
-                                <br>Tel: +886-2-2633-0559 (TW) ; +86-755-26612663 (CN)
-                                <br>Mobile: 1300-6699-879 & 0937-525-975 (Alpha Liu)
-                                <br>Email: rebecca@firmtek.net ; alpha.liu@firmtek.net
-                                <br>Web: http://www.firmtek.net
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="box-for-collap">
-                <div class="find-distributor-list collapsed  hide-box text-delta" data-toggle="collapse"
-                    data-parent="#find-distributor-type" href="#collapse-fad-thailand">
-
-                    <h5>THAILAND</h5>
-                </div>
-                <div id="collapse-fad-thailand" class="find-distributor-list-sub collapse"
-                    data-parent="#find-distributor-type">
-                    <div class="force-overflow">
-                        <div class="find-distributor-address">
-                            <p class="text-sixteen-dark mr-b-1">Electronics Source Co.,Ltd.</p>
-                            <p>256 Floor 5 and 6 Phahonyothin Road,
-                                <br>Sam Sen Nai, Phayathai,
-                                <br>Bangkok 10400, Thailand
-                                <br>Tel: +662-062-4970
-                                <br>Fax: +662-062-4999
-                                <br>Email: info@es.co.th
-                                <br>Web: http://www.es.co.th
-                            </p>
-                            <button class="btn-subscribe">GET DIRECTION</button>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </div>
 </div>
-
-
 @endsection
-
 
 @section('js')
 <script>
+$(function () {
+    var $cards = $('.fd-card');
+    var activeContinent = $('#fd-region-tabs .fd-region-tab.active').data('continent');
 
+    // 銷售區域下拉：彙整所有卡片的 territory
+    var terrSet = {};
+    $cards.each(function () {
+        var t = ($(this).attr('data-territories') || '').toString();
+        if (t) t.split('|').forEach(function (x) { if (x) terrSet[x] = true; });
+    });
+    Object.keys(terrSet).sort().forEach(function (t) {
+        $('.fd-filter-territory').append($('<option>').val(t).text(t));
+    });
 
+    // 認證下拉：彙整非空 certification（依圖一律顯示，無資料時僅有預設項）
+    var certSet = {};
+    $cards.each(function () {
+        var c = ($(this).attr('data-certification') || '').toString().trim();
+        if (c) certSet[c] = true;
+    });
+    Object.keys(certSet).sort().forEach(function (c) {
+        $('.fd-filter-certification').append($('<option>').val(c).text(c));
+    });
+
+    function checkedVals(group) {
+        return $('.fd-filter-cb[data-group="' + group + '"]:checked').map(function () { return $(this).val(); }).get();
+    }
+    // 類內 OR：未勾任何 → 不限制；有勾 → 卡片含任一即通過
+    function groupMatch(card, group) {
+        var vals = checkedVals(group);
+        if (vals.length === 0) return true;
+        var have = ($(card).attr('data-' + group) || '').split(',');
+        return vals.some(function (v) { return have.indexOf(v) !== -1; });
+    }
+    // 類間 AND
+    function applyFilter() {
+        var terr = ($('.fd-filter-territory').val() || '').toLowerCase();
+        var cert = $('.fd-filter-certification').val() || '';
+        var shown = 0;
+        $cards.each(function () {
+            var $c = $(this);
+            var ok = ('' + $c.attr('data-continent')) === ('' + activeContinent);
+            if (ok && terr) ok = (('' + $c.attr('data-territories')).split('|').indexOf(terr) !== -1);
+            if (ok && cert) ok = (('' + $c.attr('data-certification')) === cert);
+            if (ok) ok = groupMatch(this, 'apps');
+            if (ok) ok = groupMatch(this, 'lines');
+            if (ok) ok = groupMatch(this, 'services');
+            $c.toggle(ok);
+            if (ok) shown++;
+        });
+        $('.fd-empty').toggle(shown === 0);
+    }
+
+    $('#fd-region-tabs').on('click', '.fd-region-tab', function (e) {
+        e.preventDefault();
+        $('.fd-region-tab').removeClass('active');
+        $(this).addClass('active');
+        activeContinent = $(this).data('continent');
+        applyFilter();
+    });
+    $('.fd-filter-territory, .fd-filter-certification').on('change', applyFilter);
+    $('.fd-filter-cb').on('change', applyFilter);
+    $('.fd-all').on('change', function () {
+        var g = $(this).data('group');
+        $('.fd-filter-cb[data-group="' + g + '"]').prop('checked', $(this).prop('checked'));
+        applyFilter();
+    });
+
+    applyFilter();
+});
 </script>
 @endsection
