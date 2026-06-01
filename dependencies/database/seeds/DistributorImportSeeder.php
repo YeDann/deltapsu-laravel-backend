@@ -97,6 +97,44 @@ class DistributorImportSeeder extends Seeder
             return $c;
         };
 
+        // 把 ; 分隔的自由文字（sales territory / certification）轉成可管理選項 + 經銷商關聯（find-or-create，可重跑）
+        $linkText = function ($officeId, $table, $pivot, $text, $continentId = null) use ($languages) {
+            DB::table($pivot)->where('office_id', $officeId)->delete();
+            foreach (array_filter(array_map('trim', explode(';', (string) $text))) as $value) {
+                $catId = DB::table($table . ' as c')
+                    ->join($table . '_translation as t', 't.fk_id', '=', 'c.id')
+                    ->where('t.local', 'en')->where('t.name', $value)
+                    ->value('c.id');
+                if (!$catId) {
+                    $base = [
+                        'slug' => \Illuminate\Support\Str::slug($value) ?: uniqid(),
+                        'status' => 1,
+                        'order_seq' => (int) DB::table($table)->max('order_seq') + 1,
+                        'created_at' => now(), 'updated_at' => now(),
+                    ];
+                    // Sales Territory 帶上所屬地區（取該經銷商的洲別）
+                    if ($table === 'sales_territory') {
+                        $base['continent_id'] = $continentId;
+                    }
+                    $catId = DB::table($table)->insertGetId($base);
+                    foreach ($languages as $local) {
+                        DB::table($table . '_translation')->insert([
+                            'fk_id' => $catId, 'name' => $value, 'local' => $local,
+                            'created_at' => now(), 'updated_at' => now(),
+                        ]);
+                    }
+                }
+                // 既有 territory 若尚未設定地區，回填（取該經銷商洲別）
+                if ($table === 'sales_territory' && $continentId) {
+                    DB::table($table)->where('id', $catId)->whereNull('continent_id')->update(['continent_id' => $continentId]);
+                }
+                DB::table($pivot)->insert([
+                    'office_id' => $officeId, 'category_id' => $catId,
+                    'created_at' => now(), 'updated_at' => now(),
+                ]);
+            }
+        };
+
         while (($row = fgetcsv($fh)) !== false) {
             $r = array_combine($header, $row);
             $name = trim($r['name']);
@@ -171,6 +209,10 @@ class DistributorImportSeeder extends Seeder
                     }
                 }
             }
+
+            // Sales Territory / Certification：自由文字 → 可管理選項 + 關聯
+            $linkText($officeId, 'sales_territory', 'office_has_sales_territory', $r['sales_territory'], $continentId);
+            $linkText($officeId, 'distributor_certification', 'office_has_certification', $r['certification']);
         }
         fclose($fh);
         echo "Distributors imported: created {$created}, updated {$updated}\n";

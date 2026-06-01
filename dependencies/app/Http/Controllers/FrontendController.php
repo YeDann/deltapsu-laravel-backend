@@ -2804,15 +2804,42 @@ class FrontendController extends Controller
                 ->get()
                 ->groupBy('office_id');
         };
+        // territory / certification 為下拉，顯示當前語系名稱
+        $pivotNames = function ($pivot, $table) use ($lang) {
+            return DB::table($pivot . ' as p')
+                ->join($table . ' as c', 'c.id', '=', 'p.category_id')
+                ->join($table . '_translation as t', 't.fk_id', '=', 'c.id')
+                ->where('t.local', $lang)
+                ->select('p.office_id', 't.name')
+                ->get()
+                ->groupBy('office_id');
+        };
         $sa = $pivotSlugs('office_has_specialized_application', 'specialized_application');
         $pl = $pivotSlugs('office_has_product_line', 'product_line');
         $sv = $pivotSlugs('office_has_service', 'distributor_service');
+        $terr = $pivotNames('office_has_sales_territory', 'sales_territory');
+        $cert = $pivotNames('office_has_certification', 'distributor_certification');
         foreach ($offices as $o) {
             $o->apps = isset($sa[$o->id]) ? $sa[$o->id]->pluck('slug')->toArray() : [];
             $o->lines = isset($pl[$o->id]) ? $pl[$o->id]->pluck('slug')->toArray() : [];
             $o->services = isset($sv[$o->id]) ? $sv[$o->id]->pluck('slug')->toArray() : [];
-            $o->territories = array_values(array_filter(array_map('trim', explode(';', (string) $o->sales_territory))));
+            $o->territories = isset($terr[$o->id]) ? $terr[$o->id]->pluck('name')->toArray() : [];
+            $o->certs = isset($cert[$o->id]) ? $cert[$o->id]->pluck('name')->toArray() : [];
         }
+
+        // Sales Territory 下拉：依所屬地區（continent_id）分組（管理端設定為準）
+        $territoryByContinent = DB::table('sales_territory as c')
+            ->join('sales_territory_translation as t', 't.fk_id', '=', 'c.id')
+            ->where('t.local', $lang)
+            ->where('c.status', 1)
+            ->whereNotNull('c.continent_id')
+            ->orderBy('c.order_seq')
+            ->select('c.continent_id', 't.name')
+            ->get()
+            ->groupBy('continent_id')
+            ->map(function ($g) {
+                return $g->pluck('name')->values();
+            });
 
         $metatag = DB::table('meta_tag_page as mtp')
             ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
@@ -2825,6 +2852,7 @@ class FrontendController extends Controller
             ->with('metatag', $metatag)
             ->with('offices', $offices)
             ->with('catLists', $catLists)
+            ->with('territoryByContinent', $territoryByContinent)
             ->with('continents', $continents);
     }
 
