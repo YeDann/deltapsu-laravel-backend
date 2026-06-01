@@ -93,7 +93,7 @@ office 加 `logo` 欄、後台加上傳欄位**現在就建好**，先留空。�
 
 ## 部署計畫（分三階段）
 
-1. **Schema + 匯入**：migrations（office 加欄、三分類表 + translation、三 pivot）+ seeder（分類值）+ Excel 匯入。
+1. **Schema**：migrations（office 加欄、五類分類表 + translation + pivot、sales_territory 加 continent_id）+ seeder（分類與 UI 標籤，英文 baseline；不含 Excel 匯入）。
 2. **後台**：分類 CRUD + 經銷商表單擴充。
 3. **前端**：find-distributor.blade 改版為篩選頁 + JS 篩選 + 結果卡。
 
@@ -105,3 +105,16 @@ office 加 `logo` 欄、後台加上傳欄位**現在就建好**，先留空。�
 - **Sales Territory 下拉呈現**：直接列各家 territory 文字（去重），或要 Delta 規範成固定清單？目前採前者。
 - **Certification 篩選**：資料幾乎全空，先隱藏或保留空下拉？目前傾向有值才顯示。
 - **logo**：圖檔待客戶提供；結構與上傳介面先備、卡片無圖時以名稱呈現。
+
+## 實作後調整（與上述初版設計的差異，以此為準）
+
+實作過程依客戶回饋調整，最終狀態如下（上方初版段落保留為歷史脈絡）：
+
+1. **Sales Territory / Certification 升級為可管理分類**：不再是 office 的自由文字欄，而是與其他三類相同的 lookup 表 + `_translation` + 與 office 的 M:N pivot（migration `..._000004`）。因此分類由「三類」變「**五類**」。
+2. **Sales Territory 綁地區**：加 `continent_id`（migration `..._000005`），後台新增/編輯可選 Region，前台下拉依此分區、隨頁籤連動（不再靠各家文字去重推算）。
+3. **移除 Excel 匯入**：`DistributorImportSeeder` 與 `distributors.csv` 刪除；經銷商資料、洲別名稱皆由後台維護，避免假資料覆寫正式站既有資料。
+4. **分類標籤依 Slide5、非 Excel**：5 應用 / 9 產品線 / 3 服務（含 LED Signage、Railway、Technical Configuration、LED Signage PS）；Excel 才有的 Online shop 停用保留。
+5. **結果卡藍標只顯示 Certifications**（應用/服務僅作篩選條件，不上卡）。
+6. **i18n 改英文 baseline**：分類名稱與篩選列 UI 標籤的所有語系先填英文，後台再逐一在地化（取代「依語系顯示翻譯」）。
+7. **後台選單**：分類管理獨立成「Distributor Filter」群組（置於 Distributors 之前）。
+8. **部署 seeder**：`DatabaseSeeder` 自動跑 `DistributorCategorySeeder` + `DistributorLabelSeeder`（只建分類結構與標籤）。

@@ -8,12 +8,11 @@ Phase II ③：在 DeltaPSU 網站新增「Find a Distributor」篩選頁（對�
 
 ## 變更內容
 
-> 分類定義以 Delta 提供的「2025 deltapsu Distributor filter.xlsx」為準（含 ~60 家經銷商實際資料），取代先前依 Slide5 的猜測。
+> 分類標籤依 Delta 確認的 Slide5 清單（5 應用 / 9 產品線 / 3 服務）。經銷商實際資料由後台維護，不灌假資料（Excel 匯入 seeder 已移除）。各語系名稱先填英文 baseline，後台再在地化。
 
-- **資料結構**：擴充 `office` 主表（logo、website、telephone、email、google_maps、sales_territory 文字、certification 文字）；新增三張可管理分類表（specialized_application、product_line、distributor_service，各帶 `_translation` 多語）；新增三組經銷商↔分類關聯表（多對多）。Sales territory、certification 因 Excel 為自由文字，存文字欄不另開管理表。
-- **匯入**：將 Excel 經銷商資料匯入為初始資料（region→continent，SEA→Thailand，略過範例列與 India）。
-- **後台**：擴充既有 Contact Us → Distributors 編輯表單（logo 上傳、文字欄位、勾選 Specialized Application／Product Line／Service）；新增三張分類表的 CRUD，讓 Delta 維護選項與多語名稱。
-- **前端**：將 `find-distributor.blade.php` 改為篩選頁 —— 地區頁籤 + 篩選列（Sales Territory／Certification 下拉、Specialized Application／Product Line／Service 勾選）+ 結果卡（logo 或名稱／地址／電話／email／Google Maps／website／應用服務標籤／產品線打勾），篩選於前端 JS 即時運作。logo 圖檔待客戶提供，結構與上傳介面先備、無圖時以名稱呈現。
+- **資料結構**：擴充 `office` 主表（logo、website、telephone、email、google_maps）；**五類可管理分類**各為 lookup 表 + `_translation` + 與 office 的多對多 pivot：Specialized Application、Product Line、Service、Sales Territory、Certification。Sales Territory 另綁所屬地區（`continent_id`）。
+- **後台**：擴充既有 Contact Us → Distributors 編輯表單（logo 上傳、聯絡欄、五類勾選）；新增泛型分類 CRUD（`DistributorCategoryController` 管 5 類，含名稱／order／show-hide；Sales Territory 可選 Region），獨立成「Distributor Filter」選單群組。
+- **前端**：將 `find-distributor.blade.php` 改為篩選頁 —— 地區頁籤（沿用 News nav-tabs 樣式）+ 篩選列（Sales Territory／Certifications 下拉、三類勾選）+ 三欄結果卡（左 logo 或名稱＋地址/聯絡、中 Certifications 藍標、右 Product Line 打勾），前端 JS 即時篩選（類間 AND、類內 OR）。Sales Territory 下拉依 continent_id 隨頁籤連動。logo 待客戶提供，結構先備、無圖時以名稱呈現。
 
 ## 功能範圍
 

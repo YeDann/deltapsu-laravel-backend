@@ -18,10 +18,8 @@ class DatabaseSeeder extends Seeder
         // Phase II — Stock icon 標籤
         $this->call(StockKeywordSeeder::class);
 
-        // Phase II — Distributor Filter（順序：分類 → 匯入經銷商 → 篩選標籤 → 洲別名稱修正）
+        // Phase II — Distributor Filter（只建分類結構與標籤；經銷商資料、洲別名稱由後台維護）
         $this->call(DistributorCategorySeeder::class);
-        $this->call(DistributorImportSeeder::class);
         $this->call(DistributorLabelSeeder::class);
-        $this->call(DistributorContinentNameSeeder::class);
     }
 }
