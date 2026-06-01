@@ -95,7 +95,7 @@ class OfficeController extends Controller
      */
     private function distributorCategories()
     {
-        $tables = ['specialized_application', 'product_line', 'distributor_service'];
+        $tables = ['specialized_application', 'product_line', 'distributor_service', 'sales_territory', 'distributor_certification'];
         $out = [];
         foreach ($tables as $t) {
             $out[$t] = DB::table($t . ' as c')
@@ -118,6 +118,8 @@ class OfficeController extends Controller
             'specialized_application' => DB::table('office_has_specialized_application')->where('office_id', $officeId)->pluck('category_id')->toArray(),
             'product_line' => DB::table('office_has_product_line')->where('office_id', $officeId)->pluck('category_id')->toArray(),
             'distributor_service' => DB::table('office_has_service')->where('office_id', $officeId)->pluck('category_id')->toArray(),
+            'sales_territory' => DB::table('office_has_sales_territory')->where('office_id', $officeId)->pluck('category_id')->toArray(),
+            'distributor_certification' => DB::table('office_has_certification')->where('office_id', $officeId)->pluck('category_id')->toArray(),
         ];
     }
 
@@ -130,6 +132,8 @@ class OfficeController extends Controller
             'specialized_application' => 'office_has_specialized_application',
             'product_line' => 'office_has_product_line',
             'service' => 'office_has_service',
+            'sales_territory' => 'office_has_sales_territory',
+            'distributor_certification' => 'office_has_certification',
         ];
         foreach ($map as $field => $pivot) {
             DB::table($pivot)->where('office_id', $officeId)->delete();
@@ -197,8 +201,6 @@ class OfficeController extends Controller
                     "telephone" => $request->telephone,
                     "email" => $request->email,
                     "google_maps" => $request->google_maps,
-                    "sales_territory" => $request->sales_territory,
-                    "certification" => $request->certification,
                     "created_at" => \Carbon\Carbon::now(),
                     "updated_at" => \Carbon\Carbon::now(),
                 ]
@@ -331,8 +333,6 @@ class OfficeController extends Controller
                     "telephone" => $request->telephone,
                     "email" => $request->email,
                     "google_maps" => $request->google_maps,
-                    "sales_territory" => $request->sales_territory,
-                    "certification" => $request->certification,
                     "updated_at" => \Carbon\Carbon::now(),
                 ]
             );

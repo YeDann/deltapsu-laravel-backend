@@ -124,12 +124,12 @@
                             <div class="form-group"><label>Telephone</label><input type="text" class="form-control" name="telephone" value="{{$offices[0]->telephone ?? ''}}"></div>
                             <div class="form-group"><label>Email</label><input type="text" class="form-control" name="email" value="{{$offices[0]->email ?? ''}}"></div>
                             <div class="form-group"><label>Google Maps URL</label><input type="text" class="form-control" name="google_maps" value="{{$offices[0]->google_maps ?? ''}}"></div>
-                            <div class="form-group"><label>Sales Territory</label><input type="text" class="form-control" name="sales_territory" value="{{$offices[0]->sales_territory ?? ''}}" placeholder="多個以 ; 分隔"></div>
-                            <div class="form-group"><label>Certification</label><input type="text" class="form-control" name="certification" value="{{$offices[0]->certification ?? ''}}"></div>
 
-                            {{-- 三類分類勾選 --}}
+                            {{-- 五類分類勾選（含 Sales Territory / Certification） --}}
                             @php
                                 $catGroups = [
+                                    ['field' => 'sales_territory', 'label' => 'Sales Territory', 'items' => $categories['sales_territory'], 'sel' => 'sales_territory'],
+                                    ['field' => 'distributor_certification', 'label' => 'Certification', 'items' => $categories['distributor_certification'], 'sel' => 'distributor_certification'],
                                     ['field' => 'specialized_application', 'label' => 'Specialized Application', 'items' => $categories['specialized_application'], 'sel' => 'specialized_application'],
                                     ['field' => 'product_line', 'label' => 'Product Line', 'items' => $categories['product_line'], 'sel' => 'product_line'],
                                     ['field' => 'service', 'label' => 'Service', 'items' => $categories['distributor_service'], 'sel' => 'distributor_service'],

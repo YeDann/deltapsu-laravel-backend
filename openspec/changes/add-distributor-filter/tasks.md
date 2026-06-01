@@ -10,7 +10,7 @@
 
 ## 階段二：後台（Admin）
 
-- [ ] 2.1 分類 CRUD：specialized_application / product_line / distributor_service 的後台 controller + views + 路由（含多語名稱），沿用本專案內容模組 CRUD 模式
+- [x] 2.1 分類 CRUD：泛型 `DistributorCategoryController` 管 **5 類**（specialized_application / product_line / distributor_service / sales_territory / distributor_certification）+ `distributor-category/*` views（index/create/edit）+ 路由（含多語名稱編輯、order、status）。Sales Territory 另綁所屬地區（continent_id，create/edit 有 Region 下拉、前台依此分區）；Certification 亦升級為可管理。後台選單獨立成「Distributor Filter」群組（置於 Distributors 前），順序 Sales Territory→Certifications→Specialized Applications→Product Lines→Services。Sales Territory / Certification 在經銷商表單改為「清單勾選」、匯入時自由文字 find-or-create 成選項 + 關聯
 - [x] 2.2 `OfficeController` create/edit 擴充：讀寫 logo(上傳)、website、telephone、email、google_maps、sales_territory、certification —— create() / edit() 帶 `$categories`（+ edit 帶 `$selected`）
 - [x] 2.3 `OfficeController` store/update 擴充：`saveDistributorPivots()` 以「先刪後插」寫入三組 pivot；logo 上傳沿用 medias/distributor
 - [x] 2.4 `office/` create.blade / edit.blade 擴充：logo 上傳（edit 顯示舊圖）、六個文字欄、三組勾選框；皆置於 `@if($type_id == 2)` 內

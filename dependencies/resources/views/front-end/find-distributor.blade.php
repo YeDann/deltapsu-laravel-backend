@@ -13,7 +13,7 @@
     .fd-inline-dropdowns { display: flex; flex-wrap: wrap; gap: 28px; margin-bottom: 10px; }
     .fd-mini-select {
         border: none; background: transparent; font-weight: 600; font-size: 14px;
-        color: #000; cursor: pointer; padding: 0 4px 0 0; margin-left: -4px; max-width: 220px;
+        color: #000; cursor: pointer; padding: 0 4px 0 0; margin-left: -4px; width: 170px;
     }
     .fd-mini-select:focus { outline: none; }
     .fd-section-title { font-weight: 700; font-size: 14px; color: #000; margin: 16px 0 8px; }
@@ -130,8 +130,8 @@
                      data-apps="{{ implode(',', $office->apps) }}"
                      data-lines="{{ implode(',', $office->lines) }}"
                      data-services="{{ implode(',', $office->services) }}"
-                     data-territories="{{ strtolower(implode('|', $office->territories)) }}"
-                     data-certification="{{ trim($office->certification) }}">
+                     data-territories="{{ implode('|', $office->territories) }}"
+                     data-certs="{{ implode('|', $office->certs) }}">
                     <div class="fd-card-info">
                         @if($office->logo)
                         <img class="fd-logo" src="{{config('app.url')}}/medias/distributor/{{$office->logo}}" alt="{{$office->title}}">
@@ -140,8 +140,7 @@
                         <div class="fd-address text-editor">{!! $office->content !!}</div>
                     </div>
                     <div class="fd-card-badges">
-                        @foreach($catLists['specialized_application'] as $c)@if(in_array($c->slug, $office->apps))<span class="fd-tag">{{$c->name}}</span>@endif @endforeach
-                        @foreach($catLists['service'] as $c)@if(in_array($c->slug, $office->services))<span class="fd-tag">{{$c->name}}</span>@endif @endforeach
+                        @foreach($office->certs as $cert)<span class="fd-tag">{{ $cert }}</span>@endforeach
                     </div>
                     <div class="fd-card-lines">
                         @foreach($catLists['product_line'] as $c)@if(in_array($c->slug, $office->lines))<div class="fd-line-item"><span class="chk">&#10003;</span>{{$c->name}}</div>@endif @endforeach
@@ -161,26 +160,6 @@ $(function () {
     var $cards = $('.fd-card');
     var activeContinent = $('#fd-region-tabs .fd-region-tab.active').data('continent');
 
-    // 銷售區域下拉：彙整所有卡片的 territory
-    var terrSet = {};
-    $cards.each(function () {
-        var t = ($(this).attr('data-territories') || '').toString();
-        if (t) t.split('|').forEach(function (x) { if (x) terrSet[x] = true; });
-    });
-    Object.keys(terrSet).sort().forEach(function (t) {
-        $('.fd-filter-territory').append($('<option>').val(t).text(t));
-    });
-
-    // 認證下拉：彙整非空 certification（依圖一律顯示，無資料時僅有預設項）
-    var certSet = {};
-    $cards.each(function () {
-        var c = ($(this).attr('data-certification') || '').toString().trim();
-        if (c) certSet[c] = true;
-    });
-    Object.keys(certSet).sort().forEach(function (c) {
-        $('.fd-filter-certification').append($('<option>').val(c).text(c));
-    });
-
     function checkedVals(group) {
         return $('.fd-filter-cb[data-group="' + group + '"]:checked').map(function () { return $(this).val(); }).get();
     }
@@ -191,16 +170,38 @@ $(function () {
         var have = ($(card).attr('data-' + group) || '').split(',');
         return vals.some(function (v) { return have.indexOf(v) !== -1; });
     }
+
+    var territoryByContinent = @json($territoryByContinent);
+
+    function fillSelect($sel, items, keep) {
+        var map = {};
+        (items || []).forEach(function (x) { x = ('' + x).trim(); if (x) map[x.toLowerCase()] = x; });
+        $sel.find('option:not(:first)').remove();
+        Object.keys(map).sort().forEach(function (k) { $sel.append($('<option>').val(map[k]).text(map[k])); });
+        $sel.val(keep && map[keep.toLowerCase()] ? keep : '');
+    }
+
+    // 依目前地區重建下拉：Sales Territory 依管理端設定的地區；Certifications 由該區經銷商彙整
+    function rebuildDropdowns() {
+        fillSelect($('.fd-filter-territory'), territoryByContinent[activeContinent] || [], $('.fd-filter-territory').val());
+        var certs = [];
+        $cards.each(function () {
+            if (('' + $(this).attr('data-continent')) !== ('' + activeContinent)) return;
+            ('' + ($(this).attr('data-certs') || '')).split('|').forEach(function (x) { if (x.trim()) certs.push(x.trim()); });
+        });
+        fillSelect($('.fd-filter-certification'), certs, $('.fd-filter-certification').val());
+    }
+
     // 類間 AND
     function applyFilter() {
-        var terr = ($('.fd-filter-territory').val() || '').toLowerCase();
-        var cert = $('.fd-filter-certification').val() || '';
+        var terr = ('' + ($('.fd-filter-territory').val() || '')).toLowerCase();
+        var cert = ('' + ($('.fd-filter-certification').val() || '')).toLowerCase();
         var shown = 0;
         $cards.each(function () {
             var $c = $(this);
             var ok = ('' + $c.attr('data-continent')) === ('' + activeContinent);
-            if (ok && terr) ok = (('' + $c.attr('data-territories')).split('|').indexOf(terr) !== -1);
-            if (ok && cert) ok = (('' + $c.attr('data-certification')) === cert);
+            if (ok && terr) ok = ('' + ($c.attr('data-territories') || '')).toLowerCase().split('|').indexOf(terr) !== -1;
+            if (ok && cert) ok = ('' + ($c.attr('data-certs') || '')).toLowerCase().split('|').indexOf(cert) !== -1;
             if (ok) ok = groupMatch(this, 'apps');
             if (ok) ok = groupMatch(this, 'lines');
             if (ok) ok = groupMatch(this, 'services');
@@ -215,6 +216,7 @@ $(function () {
         $('.fd-region-tab').removeClass('active');
         $(this).addClass('active');
         activeContinent = $(this).data('continent');
+        rebuildDropdowns();
         applyFilter();
     });
     $('.fd-filter-territory, .fd-filter-certification').on('change', applyFilter);
@@ -225,6 +227,7 @@ $(function () {
         applyFilter();
     });
 
+    rebuildDropdowns();
     applyFilter();
 });
 </script>
