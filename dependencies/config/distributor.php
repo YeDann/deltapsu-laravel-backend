@@ -22,7 +22,7 @@ foreach ($keys as $key) {
     $categories[$key] = [
         'label' => ucwords(str_replace('_', ' ', preg_replace('/^distributor_/', '', $key))),
         'field' => $key,
-        'pivot' => 'office_has_' . $key,
+        'pivot' => 'office_has_' . preg_replace('/^distributor_/', '', $key),
     ];
 }
 

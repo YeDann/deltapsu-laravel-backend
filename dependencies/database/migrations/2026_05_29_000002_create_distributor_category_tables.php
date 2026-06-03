@@ -14,25 +14,59 @@ class CreateDistributorCategoryTables extends Migration
      */
     public function up()
     {
-        foreach (['distributor_specialized_application', 'distributor_product_line', 'distributor_service'] as $base) {
-            Schema::create($base, function (Blueprint $table) {
-                $table->id();
-                $table->string('slug')->nullable();
-                $table->boolean('status')->default(1);
-                $table->integer('order_seq')->default(0);
-                $table->timestamps();
-            });
+        Schema::create('distributor_specialized_application', function (Blueprint $table) {
+            $table->id();
+            $table->string('slug')->nullable();
+            $table->boolean('status')->default(1);
+            $table->integer('order_seq')->default(0);
+            $table->timestamps();
+        });
 
-            Schema::create($base . '_translation', function (Blueprint $table) use ($base) {
-                $table->id();
-                $table->unsignedBigInteger('fk_id');
-                $table->string('name')->nullable();
-                $table->string('local')->nullable();
-                $table->timestamps();
+        Schema::create('distributor_specialized_application_translation', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('fk_id');
+            $table->string('name')->nullable();
+            $table->string('local')->nullable();
+            $table->timestamps();
 
-                $table->foreign('fk_id')->references('id')->on($base)->onDelete('cascade');
-            });
-        }
+            $table->foreign('fk_id')->references('id')->on('distributor_specialized_application')->onDelete('cascade');
+        });
+
+        Schema::create('distributor_product_line', function (Blueprint $table) {
+            $table->id();
+            $table->string('slug')->nullable();
+            $table->boolean('status')->default(1);
+            $table->integer('order_seq')->default(0);
+            $table->timestamps();
+        });
+
+        Schema::create('distributor_product_line_translation', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('fk_id');
+            $table->string('name')->nullable();
+            $table->string('local')->nullable();
+            $table->timestamps();
+
+            $table->foreign('fk_id')->references('id')->on('distributor_product_line')->onDelete('cascade');
+        });
+
+        Schema::create('distributor_service', function (Blueprint $table) {
+            $table->id();
+            $table->string('slug')->nullable();
+            $table->boolean('status')->default(1);
+            $table->integer('order_seq')->default(0);
+            $table->timestamps();
+        });
+
+        Schema::create('distributor_service_translation', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('fk_id');
+            $table->string('name')->nullable();
+            $table->string('local')->nullable();
+            $table->timestamps();
+
+            $table->foreign('fk_id')->references('id')->on('distributor_service')->onDelete('cascade');
+        });
     }
 
     /**
@@ -40,9 +74,11 @@ class CreateDistributorCategoryTables extends Migration
      */
     public function down()
     {
-        foreach (['distributor_specialized_application', 'distributor_product_line', 'distributor_service'] as $base) {
-            Schema::dropIfExists($base . '_translation');
-            Schema::dropIfExists($base);
-        }
+        Schema::dropIfExists('distributor_specialized_application_translation');
+        Schema::dropIfExists('distributor_specialized_application');
+        Schema::dropIfExists('distributor_product_line_translation');
+        Schema::dropIfExists('distributor_product_line');
+        Schema::dropIfExists('distributor_service_translation');
+        Schema::dropIfExists('distributor_service');
     }
 }

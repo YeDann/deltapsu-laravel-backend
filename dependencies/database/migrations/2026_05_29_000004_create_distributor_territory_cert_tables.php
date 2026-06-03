@@ -13,41 +13,61 @@ class CreateDistributorTerritoryCertTables extends Migration
      */
     public function up()
     {
-        foreach (['distributor_sales_territory', 'distributor_certification'] as $base) {
-            Schema::create($base, function (Blueprint $table) {
-                $table->id();
-                $table->string('slug')->nullable();
-                $table->boolean('status')->default(1);
-                $table->integer('order_seq')->default(0);
-                $table->timestamps();
-            });
+        Schema::create('distributor_sales_territory', function (Blueprint $table) {
+            $table->id();
+            $table->string('slug')->nullable();
+            $table->boolean('status')->default(1);
+            $table->integer('order_seq')->default(0);
+            $table->timestamps();
+        });
 
-            Schema::create($base . '_translation', function (Blueprint $table) use ($base) {
-                $table->id();
-                $table->unsignedBigInteger('fk_id');
-                $table->string('name')->nullable();
-                $table->string('local')->nullable();
-                $table->timestamps();
+        Schema::create('distributor_sales_territory_translation', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('fk_id');
+            $table->string('name')->nullable();
+            $table->string('local')->nullable();
+            $table->timestamps();
 
-                $table->foreign('fk_id')->references('id')->on($base)->onDelete('cascade');
-            });
-        }
+            $table->foreign('fk_id')->references('id')->on('distributor_sales_territory')->onDelete('cascade');
+        });
 
-        $pivots = [
-            'office_has_distributor_sales_territory' => 'distributor_sales_territory',
-            'office_has_distributor_certification' => 'distributor_certification',
-        ];
-        foreach ($pivots as $pivot => $category) {
-            Schema::create($pivot, function (Blueprint $table) use ($category) {
-                $table->id();
-                $table->integer('office_id');
-                $table->unsignedBigInteger('category_id');
-                $table->timestamps();
+        Schema::create('distributor_certification', function (Blueprint $table) {
+            $table->id();
+            $table->string('slug')->nullable();
+            $table->boolean('status')->default(1);
+            $table->integer('order_seq')->default(0);
+            $table->timestamps();
+        });
 
-                $table->foreign('office_id')->references('id')->on('office')->onDelete('cascade');
-                $table->foreign('category_id')->references('id')->on($category)->onDelete('cascade');
-            });
-        }
+        Schema::create('distributor_certification_translation', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('fk_id');
+            $table->string('name')->nullable();
+            $table->string('local')->nullable();
+            $table->timestamps();
+
+            $table->foreign('fk_id')->references('id')->on('distributor_certification')->onDelete('cascade');
+        });
+
+        Schema::create('office_has_sales_territory', function (Blueprint $table) {
+            $table->id();
+            $table->integer('office_id');
+            $table->unsignedBigInteger('category_id');
+            $table->timestamps();
+
+            $table->foreign('office_id')->references('id')->on('office')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('distributor_sales_territory')->onDelete('cascade');
+        });
+
+        Schema::create('office_has_certification', function (Blueprint $table) {
+            $table->id();
+            $table->integer('office_id');
+            $table->unsignedBigInteger('category_id');
+            $table->timestamps();
+
+            $table->foreign('office_id')->references('id')->on('office')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('distributor_certification')->onDelete('cascade');
+        });
     }
 
     /**
@@ -55,8 +75,8 @@ class CreateDistributorTerritoryCertTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('office_has_distributor_sales_territory');
-        Schema::dropIfExists('office_has_distributor_certification');
+        Schema::dropIfExists('office_has_sales_territory');
+        Schema::dropIfExists('office_has_certification');
         Schema::dropIfExists('distributor_sales_territory_translation');
         Schema::dropIfExists('distributor_sales_territory');
         Schema::dropIfExists('distributor_certification_translation');
