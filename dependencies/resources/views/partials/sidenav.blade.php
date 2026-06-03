@@ -675,8 +675,8 @@
                     </a>
                     <ul class="nav-main-submenu">
                         <li class="nav-main-item">
-                            <a class="nav-main-link {{(isset($submenu) && $submenu =='distcat_sales_territory')?" active":""}}"
-                                href="{{route('distributorCategory.index','sales_territory')}}">
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='distcat_distributor_sales_territory')?" active":""}}"
+                                href="{{route('distributorCategory.index','distributor_sales_territory')}}">
                                 <span class="nav-main-link-name">Sales Territory</span>
                             </a>
                         </li>
@@ -687,14 +687,14 @@
                             </a>
                         </li>
                         <li class="nav-main-item">
-                            <a class="nav-main-link {{(isset($submenu) && $submenu =='distcat_specialized_application')?" active":""}}"
-                                href="{{route('distributorCategory.index','specialized_application')}}">
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='distcat_distributor_specialized_application')?" active":""}}"
+                                href="{{route('distributorCategory.index','distributor_specialized_application')}}">
                                 <span class="nav-main-link-name">Specialized Applications</span>
                             </a>
                         </li>
                         <li class="nav-main-item">
-                            <a class="nav-main-link {{(isset($submenu) && $submenu =='distcat_product_line')?" active":""}}"
-                                href="{{route('distributorCategory.index','product_line')}}">
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='distcat_distributor_product_line')?" active":""}}"
+                                href="{{route('distributorCategory.index','distributor_product_line')}}">
                                 <span class="nav-main-link-name">Product Lines</span>
                             </a>
                         </li>

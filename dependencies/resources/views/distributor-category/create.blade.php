@@ -28,7 +28,7 @@
                             <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" name="name" placeholder="Enter name...">
                             <small class="text-muted">先輸入英文名稱，建立後可在編輯頁補各語系翻譯。</small>
                         </div>
-                        @if($type === 'sales_territory')
+                        @if($type === 'distributor_sales_territory')
                         <div class="form-group">
                             <label>Region</label>
                             <select class="form-control" name="continent_id">

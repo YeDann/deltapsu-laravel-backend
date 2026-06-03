@@ -13,7 +13,7 @@ class CreateDistributorTerritoryCertTables extends Migration
      */
     public function up()
     {
-        foreach (['sales_territory', 'distributor_certification'] as $base) {
+        foreach (['distributor_sales_territory', 'distributor_certification'] as $base) {
             Schema::create($base, function (Blueprint $table) {
                 $table->id();
                 $table->string('slug')->nullable();
@@ -34,8 +34,8 @@ class CreateDistributorTerritoryCertTables extends Migration
         }
 
         $pivots = [
-            'office_has_sales_territory' => 'sales_territory',
-            'office_has_certification'   => 'distributor_certification',
+            'office_has_distributor_sales_territory' => 'distributor_sales_territory',
+            'office_has_distributor_certification' => 'distributor_certification',
         ];
         foreach ($pivots as $pivot => $category) {
             Schema::create($pivot, function (Blueprint $table) use ($category) {
@@ -55,10 +55,10 @@ class CreateDistributorTerritoryCertTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('office_has_sales_territory');
-        Schema::dropIfExists('office_has_certification');
-        Schema::dropIfExists('sales_territory_translation');
-        Schema::dropIfExists('sales_territory');
+        Schema::dropIfExists('office_has_distributor_sales_territory');
+        Schema::dropIfExists('office_has_distributor_certification');
+        Schema::dropIfExists('distributor_sales_territory_translation');
+        Schema::dropIfExists('distributor_sales_territory');
         Schema::dropIfExists('distributor_certification_translation');
         Schema::dropIfExists('distributor_certification');
     }

@@ -95,7 +95,7 @@ class OfficeController extends Controller
      */
     private function distributorCategories()
     {
-        $tables = ['specialized_application', 'product_line', 'distributor_service', 'sales_territory', 'distributor_certification'];
+        $tables = array_keys(config('distributor.categories'));
         $out = [];
         foreach ($tables as $t) {
             $out[$t] = DB::table($t . ' as c')
@@ -108,8 +108,8 @@ class OfficeController extends Controller
         }
 
         // Sales Territory 另帶所屬 Region 名稱、依 Region 排序，供後台表單分組顯示
-        $out['sales_territory'] = DB::table('sales_territory as c')
-            ->join('sales_territory_translation as ct', 'ct.fk_id', '=', 'c.id')
+        $out['distributor_sales_territory'] = DB::table('distributor_sales_territory as c')
+            ->join('distributor_sales_territory_translation as ct', 'ct.fk_id', '=', 'c.id')
             ->leftJoin('continents as cont', 'cont.id', '=', 'c.continent_id')
             ->leftJoin('continents_translations as cnt', function ($j) {
                 $j->on('cnt.cont_id', '=', 'cont.id')->where('cnt.local', '=', 'en');
@@ -129,27 +129,22 @@ class OfficeController extends Controller
      */
     private function officeCategoryIds($officeId)
     {
-        return [
-            'specialized_application' => DB::table('office_has_specialized_application')->where('office_id', $officeId)->pluck('category_id')->toArray(),
-            'product_line' => DB::table('office_has_product_line')->where('office_id', $officeId)->pluck('category_id')->toArray(),
-            'distributor_service' => DB::table('office_has_service')->where('office_id', $officeId)->pluck('category_id')->toArray(),
-            'sales_territory' => DB::table('office_has_sales_territory')->where('office_id', $officeId)->pluck('category_id')->toArray(),
-            'distributor_certification' => DB::table('office_has_certification')->where('office_id', $officeId)->pluck('category_id')->toArray(),
-        ];
+        $out = [];
+        foreach (config('distributor.categories') as $key => $c) {
+            $out[$key] = DB::table($c['pivot'])->where('office_id', $officeId)->pluck('category_id')->toArray();
+        }
+        return $out;
     }
 
     /**
-     * 以先刪後插寫入三組分類 pivot。請求欄位：specialized_application[]、product_line[]、service[]。
+     * 以先刪後插寫入各分類 pivot；請求欄位名 = config 的 field（即各分類資料表名，如 distributor_service[]）。
      */
     private function saveDistributorPivots($officeId, Request $request)
     {
-        $map = [
-            'specialized_application' => 'office_has_specialized_application',
-            'product_line' => 'office_has_product_line',
-            'service' => 'office_has_service',
-            'sales_territory' => 'office_has_sales_territory',
-            'distributor_certification' => 'office_has_certification',
-        ];
+        $map = [];
+        foreach (config('distributor.categories') as $c) {
+            $map[$c['field']] = $c['pivot'];
+        }
         foreach ($map as $field => $pivot) {
             DB::table($pivot)->where('office_id', $officeId)->delete();
             foreach ((array) $request->input($field, []) as $cid) {

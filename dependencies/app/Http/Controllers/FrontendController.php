@@ -2786,8 +2786,8 @@ class FrontendController extends Controller
 
         // 三類分類選項（當前語系），供篩選 UI 與卡片標籤
         $catLists = [];
-        foreach (['specialized_application' => 'specialized_application', 'product_line' => 'product_line', 'service' => 'distributor_service'] as $key => $t) {
-            $catLists[$key] = DB::table($t . ' as c')
+        foreach (['distributor_specialized_application', 'distributor_product_line', 'distributor_service'] as $t) {
+            $catLists[config("distributor.categories.{$t}.field")] = DB::table($t . ' as c')
                 ->join($t . '_translation as ct', 'ct.fk_id', '=', 'c.id')
                 ->where('ct.local', $lang)
                 ->where('c.status', 1)
@@ -2814,11 +2814,12 @@ class FrontendController extends Controller
                 ->get()
                 ->groupBy('office_id');
         };
-        $sa = $pivotSlugs('office_has_specialized_application', 'specialized_application');
-        $pl = $pivotSlugs('office_has_product_line', 'product_line');
-        $sv = $pivotSlugs('office_has_service', 'distributor_service');
-        $terr = $pivotNames('office_has_sales_territory', 'sales_territory');
-        $cert = $pivotNames('office_has_certification', 'distributor_certification');
+        $cats = config('distributor.categories');
+        $sa = $pivotSlugs($cats['distributor_specialized_application']['pivot'], 'distributor_specialized_application');
+        $pl = $pivotSlugs($cats['distributor_product_line']['pivot'], 'distributor_product_line');
+        $sv = $pivotSlugs($cats['distributor_service']['pivot'], 'distributor_service');
+        $terr = $pivotNames($cats['distributor_sales_territory']['pivot'], 'distributor_sales_territory');
+        $cert = $pivotNames($cats['distributor_certification']['pivot'], 'distributor_certification');
         foreach ($offices as $o) {
             $o->apps = isset($sa[$o->id]) ? $sa[$o->id]->pluck('slug')->toArray() : [];
             $o->lines = isset($pl[$o->id]) ? $pl[$o->id]->pluck('slug')->toArray() : [];
@@ -2828,8 +2829,8 @@ class FrontendController extends Controller
         }
 
         // Sales Territory 下拉：依所屬地區（continent_id）分組（管理端設定為準）
-        $territoryByContinent = DB::table('sales_territory as c')
-            ->join('sales_territory_translation as t', 't.fk_id', '=', 'c.id')
+        $territoryByContinent = DB::table('distributor_sales_territory as c')
+            ->join('distributor_sales_territory_translation as t', 't.fk_id', '=', 'c.id')
             ->where('t.local', $lang)
             ->where('c.status', 1)
             ->whereNotNull('c.continent_id')

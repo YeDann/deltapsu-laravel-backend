@@ -14,7 +14,7 @@ class CreateDistributorCategoryTables extends Migration
      */
     public function up()
     {
-        foreach (['specialized_application', 'product_line', 'distributor_service'] as $base) {
+        foreach (['distributor_specialized_application', 'distributor_product_line', 'distributor_service'] as $base) {
             Schema::create($base, function (Blueprint $table) {
                 $table->id();
                 $table->string('slug')->nullable();
@@ -40,7 +40,7 @@ class CreateDistributorCategoryTables extends Migration
      */
     public function down()
     {
-        foreach (['specialized_application', 'product_line', 'distributor_service'] as $base) {
+        foreach (['distributor_specialized_application', 'distributor_product_line', 'distributor_service'] as $base) {
             Schema::dropIfExists($base . '_translation');
             Schema::dropIfExists($base);
         }

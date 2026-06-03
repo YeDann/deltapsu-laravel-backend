@@ -95,9 +95,9 @@
             {{-- 篩選列 --}}
             @php
                 $filterGroups = [
-                    ['key' => 'apps', 'label' => $staticContent['Specialized_Applications'] ?? 'Specialized Applications', 'items' => $catLists['specialized_application']],
-                    ['key' => 'lines', 'label' => $staticContent['Product_Lines'] ?? 'Product Lines', 'items' => $catLists['product_line']],
-                    ['key' => 'services', 'label' => $staticContent['Services'] ?? 'Services', 'items' => $catLists['service']],
+                    ['key' => 'apps', 'label' => $staticContent['Specialized_Applications'] ?? 'Specialized Applications', 'items' => $catLists['distributor_specialized_application']],
+                    ['key' => 'lines', 'label' => $staticContent['Product_Lines'] ?? 'Product Lines', 'items' => $catLists['distributor_product_line']],
+                    ['key' => 'services', 'label' => $staticContent['Services'] ?? 'Services', 'items' => $catLists['distributor_service']],
                 ];
             @endphp
             <div class="fd-filters mb-4">
@@ -143,7 +143,7 @@
                         @foreach($office->certs as $cert)<span class="fd-tag">{{ $cert }}</span>@endforeach
                     </div>
                     <div class="fd-card-lines">
-                        @foreach($catLists['product_line'] as $c)@if(in_array($c->slug, $office->lines))<div class="fd-line-item"><span class="chk">&#10003;</span>{{$c->name}}</div>@endif @endforeach
+                        @foreach($catLists['distributor_product_line'] as $c)@if(in_array($c->slug, $office->lines))<div class="fd-line-item"><span class="chk">&#10003;</span>{{$c->name}}</div>@endif @endforeach
                     </div>
                 </div>
                 @endforeach

@@ -20,8 +20,6 @@ class AddDistributorFieldsToOffice extends Migration
             $table->string('telephone')->nullable();
             $table->string('email')->nullable();
             $table->string('google_maps', 1024)->nullable();
-            $table->text('sales_territory')->nullable();   // 自由文字，多個以 ; 分隔
-            $table->text('certification')->nullable();     // 自由文字
         });
     }
 
@@ -35,7 +33,7 @@ class AddDistributorFieldsToOffice extends Migration
         Schema::table('office', function (Blueprint $table) {
             $table->dropColumn([
                 'logo', 'website', 'telephone', 'email',
-                'google_maps', 'sales_territory', 'certification',
+                'google_maps',
             ]);
         });
     }

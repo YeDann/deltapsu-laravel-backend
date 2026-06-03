@@ -49,7 +49,7 @@
                                 @endforeach
                             </div>
                         </div>
-                        @if($type === 'sales_territory')
+                        @if($type === 'distributor_sales_territory')
                         <div class="form-group">
                             <label>Region</label>
                             <select class="form-control" name="continent_id">
