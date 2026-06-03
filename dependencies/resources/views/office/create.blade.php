@@ -62,11 +62,34 @@
                         <div class="form-group">
                             <label>Logo</label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" name="logo" id="logo_input">
+                                <input type="file" class="custom-file-input" name="logo" id="logo_input" accept="image/*" data-toggle="custom-file-input">
                                 <label class="custom-file-label" for="logo_input">Choose logo image</label>
                             </div>
-                            <small class="text-muted">圖檔可日後再上傳；未上傳時前台以名稱呈現。</small>
+                            @php $logoUnit = strtoupper(substr(ini_get('upload_max_filesize'), -1)); $logoMaxBytes = (int) ini_get('upload_max_filesize') * (['K'=>1024,'M'=>1048576,'G'=>1073741824][$logoUnit] ?? 1); @endphp
+                            <small class="text-muted">圖檔可日後再上傳；未上傳時前台以名稱呈現。上限約 {{ floor($logoMaxBytes/1048576) }} MB。</small>
+                            {{-- 選檔後即時縮圖預覽 + 超過上限即時提醒（門檻 = 伺服器 upload_max_filesize） --}}
+                            <div class="mt-2"><img id="logo_preview" src="" alt="" style="max-height:60px;display:none;border:1px solid #e3e3e3;border-radius:4px;"></div>
                         </div>
+                        <script>
+                            (function () {
+                                var inp = document.getElementById('logo_input'), prev = document.getElementById('logo_preview'), max = {{ $logoMaxBytes }};
+                                if (!inp || !prev) { return; }
+                                inp.addEventListener('change', function () {
+                                    var f = this.files && this.files[0];
+                                    if (!f) { prev.style.display = 'none'; return; }
+                                    if (max && f.size > max) {
+                                        alert('Logo 檔案過大（' + (f.size / 1048576).toFixed(1) + ' MB），上限約 ' + Math.floor(max / 1048576) + ' MB。請壓縮或換較小的圖，否則不會上傳成功。');
+                                        this.value = '';
+                                        $('.custom-file-label[for="logo_input"]').text('Choose logo image');
+                                        prev.style.display = 'none';
+                                        return;
+                                    }
+                                    var r = new FileReader();
+                                    r.onload = function (e) { prev.src = e.target.result; prev.style.display = 'inline-block'; };
+                                    r.readAsDataURL(f);
+                                });
+                            })();
+                        </script>
                         <div class="form-group"><label>Website</label><input type="text" class="form-control" name="website" placeholder="https://..."></div>
                         <div class="form-group"><label>Telephone</label><input type="text" class="form-control" name="telephone"></div>
                         <div class="form-group"><label>Email</label><input type="text" class="form-control" name="email"></div>
