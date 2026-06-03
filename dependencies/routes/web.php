@@ -79,6 +79,7 @@ Route::group([
             Route::get('/partners/marketing-resources/configurable-history', 'FrontendController@confighistory')->name('confighistory');
             Route::get('/partners/marketing-resources/product-launch-schedule', 'FrontendController@productLaunchSchedule')->name('productLaunchSchedule');
             Route::get('/partners/marketing-resources/marketing-resources-downloads', 'FrontendController@marketingResourcesDownloads')->name('marketingResourcesDownloads');
+            Route::get('/partners/marketing-resources/preview', 'FrontendController@previewMarketingResource')->name('previewMarketingResource');
             Route::get('/partners/marketing-resources/sale-kit', 'FrontendController@saleKit')->name('saleKit');
             Route::get('/partners/marketing-resources/product-cross-reference', 'FrontendController@productCrossReference')->name('productCrossReference');
             Route::get('/partners/marketing-resources/partnerinfo/{id?}/{name?}', 'FrontendController@partnerinfo')->name('partnerinfo');
