@@ -58,6 +58,59 @@
                                 <textarea name="content"class="jsnotenew"></textarea>
                         </div>
                         @if($type_id == 2)
+                        {{-- 經銷商基本資訊 --}}
+                        <div class="form-group">
+                            <label>Logo</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="logo" id="logo_input">
+                                <label class="custom-file-label" for="logo_input">Choose logo image</label>
+                            </div>
+                            <small class="text-muted">圖檔可日後再上傳；未上傳時前台以名稱呈現。</small>
+                        </div>
+                        <div class="form-group"><label>Website</label><input type="text" class="form-control" name="website" placeholder="https://..."></div>
+                        <div class="form-group"><label>Telephone</label><input type="text" class="form-control" name="telephone"></div>
+                        <div class="form-group"><label>Email</label><input type="text" class="form-control" name="email"></div>
+                        <div class="form-group"><label>Google Maps URL</label><input type="text" class="form-control" name="google_maps"></div>
+
+                        {{-- 五類分類勾選（含 Sales Territory / Certification） --}}
+                        @php
+                            $catGroups = [
+                                ['field' => 'distributor_sales_territory', 'label' => 'Sales Territory', 'items' => $categories['distributor_sales_territory'], 'sel' => 'distributor_sales_territory'],
+                                ['field' => 'distributor_certification', 'label' => 'Certification', 'items' => $categories['distributor_certification'], 'sel' => 'distributor_certification'],
+                                ['field' => 'distributor_specialized_application', 'label' => 'Specialized Application', 'items' => $categories['distributor_specialized_application'], 'sel' => 'distributor_specialized_application'],
+                                ['field' => 'distributor_product_line', 'label' => 'Product Line', 'items' => $categories['distributor_product_line'], 'sel' => 'distributor_product_line'],
+                                ['field' => 'distributor_service', 'label' => 'Service', 'items' => $categories['distributor_service'], 'sel' => 'distributor_service'],
+                            ];
+                        @endphp
+                        @foreach($catGroups as $g)
+                        <div class="form-group">
+                            <label class="d-block">{{ $g['label'] }}</label>
+                            @if($g['field'] === 'distributor_sales_territory')
+                                {{-- Sales Territory 依 Region 分組：左欄 Region 標籤、右欄勾選項橫排 --}}
+                                @foreach($g['items']->groupBy('region') as $region => $items)
+                                <div class="d-flex align-items-center mb-2 pl-3">
+                                    <div style="flex:0 0 110px"><small class="text-muted font-weight-bold">{{ $region }}</small></div>
+                                    <div class="d-flex flex-wrap">
+                                        @foreach($items as $c)
+                                        <div class="custom-control custom-checkbox custom-control-inline">
+                                            <input type="checkbox" class="custom-control-input" id="{{$g['field']}}_{{$c->id}}" name="{{$g['field']}}[]" value="{{$c->id}}" {{ isset($selected) && in_array($c->id, $selected[$g['sel']]) ? 'checked' : '' }}>
+                                            <label class="custom-control-label" for="{{$g['field']}}_{{$c->id}}">{{ $c->name }}</label>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                @endforeach
+                            @else
+                            @foreach($g['items'] as $c)
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="{{$g['field']}}_{{$c->id}}" name="{{$g['field']}}[]" value="{{$c->id}}" {{ isset($selected) && in_array($c->id, $selected[$g['sel']]) ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="{{$g['field']}}_{{$c->id}}">{{ $c->name }}</label>
+                            </div>
+                            @endforeach
+                            @endif
+                        </div>
+                        @endforeach
+
                         <div class="form-group">
                             <label for="example-select">File Certificate</label>
                             <div class="custom-file">

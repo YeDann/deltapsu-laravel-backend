@@ -668,6 +668,44 @@
 
                     </ul>
                 </li>
+                <li class="nav-main-item {{(isset($menu) && $menu == 'distributor_filter')?" open":""}}">
+                    <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                        aria-expanded="false" href="#">
+                        <span class="nav-main-link-name">Distributor Filter</span>
+                    </a>
+                    <ul class="nav-main-submenu">
+                        <li class="nav-main-item">
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='distcat_distributor_sales_territory')?" active":""}}"
+                                href="{{route('distributorCategory.index','distributor_sales_territory')}}">
+                                <span class="nav-main-link-name">Sales Territory</span>
+                            </a>
+                        </li>
+                        <li class="nav-main-item">
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='distcat_distributor_certification')?" active":""}}"
+                                href="{{route('distributorCategory.index','distributor_certification')}}">
+                                <span class="nav-main-link-name">Certifications</span>
+                            </a>
+                        </li>
+                        <li class="nav-main-item">
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='distcat_distributor_specialized_application')?" active":""}}"
+                                href="{{route('distributorCategory.index','distributor_specialized_application')}}">
+                                <span class="nav-main-link-name">Specialized Applications</span>
+                            </a>
+                        </li>
+                        <li class="nav-main-item">
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='distcat_distributor_product_line')?" active":""}}"
+                                href="{{route('distributorCategory.index','distributor_product_line')}}">
+                                <span class="nav-main-link-name">Product Lines</span>
+                            </a>
+                        </li>
+                        <li class="nav-main-item">
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='distcat_distributor_service')?" active":""}}"
+                                href="{{route('distributorCategory.index','distributor_service')}}">
+                                <span class="nav-main-link-name">Services</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-main-item {{(isset($menu) && $menu == 'distributors')?" open":""}}">
 
                     <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
@@ -682,7 +720,6 @@
                                 <span class="nav-main-link-name">Continents</span>
                             </a>
                         </li>
-
                     </ul>
                 </li>
 
