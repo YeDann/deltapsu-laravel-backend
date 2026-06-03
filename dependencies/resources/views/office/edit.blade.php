@@ -138,29 +138,12 @@
                             @foreach($catGroups as $g)
                             <div class="form-group">
                                 <label class="d-block">{{ $g['label'] }}</label>
-                                @if($g['field'] === 'distributor_sales_territory')
-                                    {{-- Sales Territory 依 Region 分組：左欄 Region 標籤、右欄勾選項橫排 --}}
-                                    @foreach($g['items']->groupBy('region') as $region => $items)
-                                    <div class="d-flex align-items-center mb-2 pl-3">
-                                        <div style="flex:0 0 110px"><small class="text-muted font-weight-bold">{{ $region }}</small></div>
-                                        <div class="d-flex flex-wrap">
-                                            @foreach($items as $c)
-                                            <div class="custom-control custom-checkbox custom-control-inline">
-                                                <input type="checkbox" class="custom-control-input" id="{{$g['field']}}_{{$c->id}}" name="{{$g['field']}}[]" value="{{$c->id}}" {{ isset($selected) && in_array($c->id, $selected[$g['sel']]) ? 'checked' : '' }}>
-                                                <label class="custom-control-label" for="{{$g['field']}}_{{$c->id}}">{{ $c->name }}</label>
-                                            </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                @else
-                                    @foreach($g['items'] as $c)
-                                    <div class="custom-control custom-checkbox custom-control-inline">
-                                        <input type="checkbox" class="custom-control-input" id="{{$g['field']}}_{{$c->id}}" name="{{$g['field']}}[]" value="{{$c->id}}" {{ isset($selected) && in_array($c->id, $selected[$g['sel']]) ? 'checked' : '' }}>
-                                        <label class="custom-control-label" for="{{$g['field']}}_{{$c->id}}">{{ $c->name }}</label>
-                                    </div>
-                                    @endforeach
-                                @endif
+                                @foreach($g['items'] as $c)
+                                <div class="custom-control custom-checkbox custom-control-inline">
+                                    <input type="checkbox" class="custom-control-input" id="{{$g['field']}}_{{$c->id}}" name="{{$g['field']}}[]" value="{{$c->id}}" {{ isset($selected) && in_array($c->id, $selected[$g['sel']]) ? 'checked' : '' }}>
+                                    <label class="custom-control-label" for="{{$g['field']}}_{{$c->id}}">{{ $c->name }}</label>
+                                </div>
+                                @endforeach
                             </div>
                             @endforeach
 
