@@ -299,11 +299,11 @@ function getDateformat($date){
       }
       var margeting = <?= json_encode($margeting);?>;
       function searchmarketingbycate(){
-        var modelname = $("input[name=modelname]").val();
-        var cateid = $("input[name=cateid]").val();
-
         event.preventDefault();
-        console.log(cateid);
+        // 各 tab 的搜尋 form 共用 name，全域 $("input[name=...]") 只會取到第一個 tab → 必須限定在當前 active 分頁內取值與渲染
+        var $pane = $('.tab-pane.active');
+        var modelname = $pane.find('input[name=modelname]').val();
+        var cateid = $pane.find('input[name=cateid]').val();
         var resultsearch  = [];
         var term = modelname; // search term (regex pattern)
         var search = new RegExp(term , 'i'); // prepare a regex object     
@@ -364,8 +364,9 @@ function getDateformat($date){
             }
         });
         if (isProductImages) { html = '<div class="mr-image-grid">'+html+'</div>'; }
-        $('.contentdatasearch').html(html);
+        $pane.find('.contentdatasearch').html(html);
         mrObserveVideos();   // 搜尋後動態注入的影片也要 lazy-load / 手機捲動播放
+        mrLoadImages();      // 動態注入的圖片：全站 lazyload 只處理初始 DOM、不接動態節點，手動把 data-src 載入
 
       }
 
@@ -451,6 +452,12 @@ function getDateformat($date){
           if (!mrVideoObserver) return;
           document.querySelectorAll('.mr-video-thumb').forEach(function (v) {
               if (!v.dataset.mrObserved) { v.dataset.mrObserved = '1'; mrVideoObserver.observe(v); }
+          });
+      }
+      // 搜尋動態注入的圖片不被全站 lazyload（只處理初始 DOM）接手，手動把 data-src 設為 src 載入
+      function mrLoadImages() {
+          document.querySelectorAll('.mr-img-thumb[data-src]').forEach(function (img) {
+              if (!img.getAttribute('src')) { img.src = img.dataset.src; }
           });
       }
       mrObserveVideos();
