@@ -36,6 +36,38 @@
     .tab-content>.active {
         margin: 0;
     }
+
+    /* Product Images 縮圖網格（媒體中心樣式：縮圖 + 預覽/下載 icon） */
+    .mr-image-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    @media (max-width: 991px) { .mr-image-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 575px) { .mr-image-grid { grid-template-columns: 1fr; } }
+    .mr-img-card { position: relative; border: 1px solid #e3e3e3; border-radius: 6px; overflow: hidden; background: #fff; }
+    .mr-img-thumb { width: 100%; height: 200px; object-fit: cover; display: block; background: #f2f2f2; }
+    .mr-img-noimg { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center;
+        text-align: center; padding: 12px; color: #888; font-size: 14px; background: #f7f7f7; }
+    /* hover 時底部滑出小 bar：左邊檔名、右邊預覽/下載 icon */
+    .mr-img-bar { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center;
+        justify-content: space-between; gap: 10px; padding: 8px 12px; background: rgba(0,0,0,.62); color: #fff;
+        transform: translateY(100%); transition: transform .35s ease; }
+    .mr-img-card:hover .mr-img-bar { transform: translateY(0); }
+    .mr-img-fname { font-size: 13px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mr-img-bar-actions { display: flex; gap: 6px; flex: 0 0 auto; }
+    .mr-img-bar-actions form { margin: 0; }
+    .mr-icon-btn { width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.92); border: none;
+        display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; }
+    .mr-icon-btn:hover { background: #fff; }
+    .mr-icon-btn svg { width: 16px; height: 16px; stroke: #0087DC; }
+    /* 觸控裝置沒有 hover，bar 直接顯示 */
+    @media (hover: none) { .mr-img-bar { transform: translateY(0); } }
+
+    /* 預覽彈窗：無白色 header，圖片直接顯示，X 疊在圖片右上角 */
+    #mr-preview-modal .mr-preview-content { background: transparent; border: none; box-shadow: none; }
+    #mr-preview-modal .modal-body { overflow: hidden; border-radius: 4px; }
+    #mr-preview-modal .modal-body img { display: block; width: 100%; height: auto; }
+    .mr-preview-close { position: absolute; top: 10px; right: 10px; z-index: 10; width: 36px; height: 36px;
+        border: none; border-radius: 50%; background: rgba(0,0,0,.55); color: #fff; font-size: 22px; line-height: 36px;
+        text-align: center; cursor: pointer; padding: 0; }
+    .mr-preview-close:hover { background: rgba(0,0,0,.85); }
 </style>
 @endsection
 @section('meta')
@@ -149,24 +181,57 @@ function getDateformat($date){
 
                             </div>
                         </form>
+                        @php $isProductImages = (isset($previewCateId) && $cate->cate_id == $previewCateId); @endphp
                         <div class="contentdatasearch">
-
+                        @if($isProductImages)
+                            {{-- Product Images：圖片縮圖網格（縮圖 + 預覽/下載 icon） --}}
+                            <div class="mr-image-grid">
+                            @foreach ($margeting as $marget)
+                            @if($marget->cate_id == $cate->cate_id)
+                            @php $ext = strtolower(pathinfo($marget->file, PATHINFO_EXTENSION));
+                                 $isImage = in_array($ext, ['jpg','jpeg','png','gif','webp']); @endphp
+                            <div class="mr-img-card">
+                                @if($isImage)
+                                <img class="mr-img-thumb lazyload" loading="lazy" alt="{{$marget->name}}"
+                                    data-src="{{ route('previewMarketingResource') }}?doc={{ urlencode($marget->file) }}&v={{ $marget->updated_at ? \Illuminate\Support\Carbon::parse($marget->updated_at)->timestamp : '1' }}">
+                                @else
+                                <div class="mr-img-noimg">{{ strtoupper($ext) }}</div>
+                                @endif
+                                <div class="mr-img-bar">
+                                    <span class="mr-img-fname" title="{{$marget->name}}">{{$marget->name}}</span>
+                                    <div class="mr-img-bar-actions">
+                                        @if($isImage)
+                                        <button type="button" class="mr-icon-btn mr-preview-trigger" title="{{$staticContent['Preview'] ?? 'Preview'}}"
+                                            data-file="{{$marget->file}}" data-name="{{$marget->name}}">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                        </button>
+                                        @endif
+                                        <form method="POST" action="{{route('partnerLoginDoc_success')}}">
+                                            {{csrf_field()}}
+                                            <input type="hidden" name="section_id" value={{session('partner_id')}}>
+                                            <input type="hidden" name="doc" value="{{$marget->file}}">
+                                            <button type="submit" class="mr-icon-btn" title="{{$staticContent['Downloads']}}">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/></svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                            @endforeach
+                            </div>
+                        @else
                             @foreach ($margeting as $marget)
                             @if($marget->cate_id == $cate->cate_id )
                             <div class="resources-download">
-                                <div class="detail-download ">
+                                <div class="detail-download">
                                     <h5>{{$marget->name}}</h5>
-                                    {{-- <p>{{$staticContent['Uploaded_on']}} 13-Mar-2019 | 4.7 MB</p> --}}
                                     <?php
                                 $date = getDateformat($marget->created_at);
                                ?>
                                     <p>{{$staticContent['Uploaded_on']}} {{$date['d'].'-'.$date['m'].'-'.$date['y']}}
                                     </p>
                                 </div>
-                                {{-- <a href="{{config('app.url')}}/file_doc_2/marketing_resources/{{$marget->file}}"
-                                    download="{{$marget->name}}">
-                                    <button class="btn-downlode">{{$staticContent['Downloads']}}</button>
-                                </a> --}}
                                 <form method="POST" action="{{route('partnerLoginDoc_success')}}">
                                     {{csrf_field()}}
                                     <input type="hidden" name="section_id" value={{session('partner_id')}}>
@@ -176,6 +241,7 @@ function getDateformat($date){
                             </div>
                             @endif
                             @endforeach
+                        @endif
                         </div>
 
                     </div>
@@ -188,6 +254,15 @@ function getDateformat($date){
     </div>
 </section>
 
+{{-- 行銷資源預覽彈窗（PDF / 圖片） --}}
+<div class="modal fade" id="mr-preview-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content mr-preview-content">
+            <button type="button" class="mr-preview-close" data-dismiss="modal" aria-label="Close">&times;</button>
+            <div class="modal-body p-0" id="mr-preview-body"></div>
+        </div>
+    </div>
+</div>
 
 @endsection
 
@@ -228,21 +303,77 @@ function getDateformat($date){
            });
 
 
+        var isProductImages = (mrPreviewCateId && cateid == mrPreviewCateId);
+        var eyeSvg = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+        var dlSvg = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/></svg>';
+        var dlBase = '{{config('app.url')}}/file_doc_2/marketing_resources/';
         var html = '';
         $.each(resultsearch, function(index,value){
-            html += '<div class="resources-download">';
-            html += '<div class="detail-download ">';
-            html +=  '<h5>'+value['name']+'</h5>';
-            html += '<p>{{$staticContent['Uploaded_on']}} 13-Mar-2019 </p>';
-            html += '</div>';
-            html += '<a href="{{config('app.url')}}/file_doc_2/marketing_resources/'+value['file']+'">';
-            html += '<button class="btn-downlode">DOWNLOAD</button>';
-            html += '</a>';
-            html += '</div>'
+            var ext = (value['file']||'').split('.').pop().toLowerCase();
+            var isImage = ['jpg','jpeg','png','gif','webp'].indexOf(ext) > -1;
+            if (isProductImages) {
+                // Product Images：縮圖卡片（圖片→縮圖+預覽+下載；非圖片→佔位+下載）
+                html += '<div class="mr-img-card">';
+                if (isImage) {
+                    html += '<img class="mr-img-thumb lazyload" loading="lazy" alt="'+value['name']+'" data-src="'+mrPreviewBase+'?doc='+encodeURIComponent(value['file'])+'">';
+                } else {
+                    html += '<div class="mr-img-noimg">'+ext.toUpperCase()+'</div>';
+                }
+                html += '<div class="mr-img-bar"><span class="mr-img-fname" title="'+value['name']+'">'+value['name']+'</span><div class="mr-img-bar-actions">';
+                if (isImage) {
+                    html += '<button type="button" class="mr-icon-btn mr-preview-trigger" data-file="'+value['file']+'" data-name="'+value['name']+'" title="Preview">'+eyeSvg+'</button>';
+                }
+                html += '<a class="mr-icon-btn" href="'+dlBase+value['file']+'" title="Download">'+dlSvg+'</a>';
+                html += '</div></div></div>';
+            } else {
+                html += '<div class="resources-download">';
+                html += '<div class="detail-download">';
+                html +=  '<h5>'+value['name']+'</h5>';
+                html += '<p>{{$staticContent['Uploaded_on']}} 13-Mar-2019 </p>';
+                html += '</div>';
+                html += '<a href="'+dlBase+value['file']+'">';
+                html += '<button class="btn-downlode">DOWNLOAD</button>';
+                html += '</a>';
+                html += '</div>';
+            }
         });
+        if (isProductImages) { html = '<div class="mr-image-grid">'+html+'</div>'; }
         $('.contentdatasearch').html(html);
-          
+
       }
+
+      // 點檔名/標題區塊 → 彈窗預覽（僅 PDF / 圖片）。事件委派，含搜尋後動態項目
+      var mrPreviewBase = @json(route('previewMarketingResource'));
+      var mrPreviewCateId = @json($previewCateId ?? null);
+      function mrNotice(text) {
+          return '<div style="padding:48px 24px;text-align:center;color:#646464">' + text + '</div>';
+      }
+      $(document).on('click', '.mr-preview-trigger', function () {
+          var file = $(this).attr('data-file');
+          var name = $(this).attr('data-name') || '';
+          if (!file) return;
+          var url = mrPreviewBase + '?doc=' + encodeURIComponent(file);
+          $('#mr-preview-title').text(name);
+          $('#mr-preview-body').html(mrNotice('Loading…'));
+          $('#mr-preview-modal').modal('show');
+          // 先用 HEAD 看回傳類型（不下載檔案本體，避免重複下載拖慢）再決定呈現：
+          // PDF→高 iframe、圖片→img、其餘（如檔案不存在的提示）→小訊息
+          fetch(url, { method: 'HEAD', credentials: 'same-origin' }).then(function (res) {
+              var ct = (res.headers.get('content-type') || '').toLowerCase();
+              if (ct.indexOf('pdf') > -1) {
+                  $('#mr-preview-body').html('<iframe src="' + url + '" style="width:100%;height:78vh;border:0;"></iframe>');
+              } else if (ct.indexOf('image') > -1) {
+                  $('#mr-preview-body').html('<img src="' + url + '" style="max-width:100%;display:block;margin:0 auto;">');
+              } else {
+                  $('#mr-preview-body').html(mrNotice('File not available for preview.'));
+              }
+          }).catch(function () {
+              $('#mr-preview-body').html(mrNotice('File not available for preview.'));
+          });
+      });
+      $('#mr-preview-modal').on('hidden.bs.modal', function () {
+          $('#mr-preview-body').empty();
+      });
 </script>
 
 @endsection

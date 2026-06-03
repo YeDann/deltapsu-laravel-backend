@@ -3055,10 +3055,74 @@ class FrontendController extends Controller
             ->select('mtp.*', 'mtpt.*')
             ->get();
 
+        // 僅「Product Images」分類提供圖片預覽（以英文分類名定位 cate_id）
+        $previewCateId = DB::table('marketing_resource_cate_translations')
+            ->where('local', 'en')
+            ->where('name', 'Product Images')
+            ->value('mk_fk_id');
+
         return view('front-end.marketing-resources-downloads')
             ->with('metatag', $metatag)
             ->with('margetCate', $margetCate)
+            ->with('previewCateId', $previewCateId)
             ->with('margeting', $margeting);
+    }
+
+    /**
+     * 行銷資源檔案的「彈窗預覽」端點：以 inline 方式回傳檔案（瀏覽器內顯示而非下載），
+     * 僅限可預覽類型（PDF / 圖片），並沿用與下載相同的合作夥伴權限檢查。
+     */
+    public function previewMarketingResource(Request $request)
+    {
+        $partnerId = session('partner_id');
+        $roleId = session('partner_role');
+        self::checkExpiryLogin();
+
+        // 預覽是塞在彈窗 iframe 內顯示，失敗時回傳「乾淨的小訊息」而非整頁網站（避免彈窗裡出現完整 404 網頁）
+        $notice = function ($text) {
+            $html = '<!doctype html><html lang="en"><head><meta charset="utf-8">'
+                . '<style>html,body{margin:0;height:100%}body{display:flex;align-items:center;justify-content:center;'
+                . 'font-family:Arial,"Microsoft JhengHei",sans-serif;color:#646464;font-size:16px;background:#f7f7f7}</style>'
+                . '</head><body><div>' . e($text) . '</div></body></html>';
+
+            return response($html, 200)->header('Content-Type', 'text/html; charset=utf-8');
+        };
+
+        if (null == $partnerId) {
+            return $notice('Please log in to preview.');
+        }
+
+        // basename 防路徑穿越；僅允許圖片（範圍：只有 Product Images 分類做圖片預覽）
+        $doc = basename($this->validateInput($request->doc, 'text', true));
+        $ext = strtolower(pathinfo($doc, PATHINFO_EXTENSION));
+        $previewable = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        if (!in_array($ext, $previewable)) {
+            return $notice('This file type cannot be previewed.');
+        }
+
+        // 權限 + 範圍：此檔需屬於該 partner role 可存取、且為「Product Images」分類下的行銷資源
+        $allowed = DB::table('marketing_resource as mr')
+            ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+            ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mr.cate_id')
+            ->join('marketing_resource_cate_translations as mct', function ($j) {
+                $j->on('mct.mk_fk_id', '=', 'mr.cate_id')->where('mct.local', '=', 'en');
+            })
+            ->where('mrt.file', $doc)
+            ->where('permar.permission_id', $roleId)
+            ->where('mct.name', 'Product Images')
+            ->exists();
+
+        if (!$allowed) {
+            return $notice('You do not have access to preview this file.');
+        }
+
+        $path = base_path('../uploads_delta/partner/marketing_resources/') . $doc;
+        if (!file_exists($path)) {
+            return $notice('File not available for preview.');
+        }
+
+        // inline 顯示（response()->file 預設 Content-Disposition: inline、自動帶 MIME）
+        return response()->file($path);
     }
 
     public function saleKit()
