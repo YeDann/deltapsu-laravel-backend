@@ -41,12 +41,18 @@
                                     name="name" placeholder="Enter name..." required>
                             </div>
                             <div class="form-group">
-                                <label for="example-select">File <span class="req-fed">* Max File Size 2 GB</span></label>
+                                <label for="example-select">File <span class="req-fed">* Max File Size 2 GB（分塊上傳）</span></label>
                                 <div class="custom-file " style="width:100%;">
-                                    <input type="file" class="custom-file-input file_input"  name="file"
+                                    <input type="file" class="custom-file-input" id="mr_file_browse"
                                         data-toggle="custom-file-input">
-                                    <label class="custom-file-label" id="file_lable"  for="file">Choose file</label>
+                                    <label class="custom-file-label" id="file_lable" for="mr_file_browse">Choose file</label>
                                 </div>
+                                {{-- 分塊上傳進度條 + 狀態；上傳完成後最終檔名存進 hidden file_uploaded 隨表單送出 --}}
+                                <div class="progress mt-2 d-none" id="mr_upload_progress" style="height:20px;">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:0%">0%</div>
+                                </div>
+                                <small class="text-muted d-block mt-1" id="mr_upload_status"></small>
+                                <input type="hidden" name="file_uploaded" id="mr_file_uploaded" value="">
                             </div>
                             <div class="form-group">
                                 <label for="example-select">Select Categories <span class="req-fed">*</span></label>
@@ -85,15 +91,22 @@
 </div>
 @endsection
 @section('js')
+<script src="{{ asset('backend-asset/js/resumable.js') }}"></script>
+<script src="{{ asset('backend-asset/js/mr-chunk-upload.js') }}"></script>
 <script>
-     $(document).on('change', '.file_input', function () {
-        // alert(this.files[0].size);
-        var FileSize = this.files[0].size / 1024 / 1024; // in MB
-        if (FileSize > 2048) {
-            alert("File size exceeds 2 GB!");
-            this.value = "";
-            $('#file_lable').text('Choose file');
-        };
+    $(function () {
+        MRChunkUpload.init({
+            input: document.getElementById('mr_file_browse'),
+            chunkUrl: '{{ route('MarketResource.chunk') }}',
+            posterUrl: '{{ route('MarketResource.poster') }}',
+            csrf: '{{ csrf_token() }}',
+            label: $('#file_lable'),
+            progress: $('#mr_upload_progress'),
+            bar: $('#mr_upload_progress .progress-bar'),
+            status: $('#mr_upload_status'),
+            hidden: $('#mr_file_uploaded')
+        });
+        MRChunkUpload.guardSubmit($('form'));
     });
 </script>
 @endsection

@@ -463,6 +463,8 @@ Route::prefix('/backend')->group(function () {
     Route::post('update_MarketResourceCategories', 'MarketResourceCateController@update')->name('update_MarketResourceCategories');
     Route::post('delete_MarketResourceCategories', 'MarketResourceCateController@destroy')->name('delete_MarketResourceCategories');
 
+    Route::post('MarketResource/chunk', 'MarketResourceController@chunkUpload')->name('MarketResource.chunk');
+    Route::post('MarketResource/poster', 'MarketResourceController@savePoster')->name('MarketResource.poster');
     Route::resource('MarketResource', 'MarketResourceController');
     Route::get('editMarketResource/{id?}', 'MarketResourceController@edit')->name('editMarketResource');
     Route::post('update_MarketResource', 'MarketResourceController@update')->name('update_MarketResource');

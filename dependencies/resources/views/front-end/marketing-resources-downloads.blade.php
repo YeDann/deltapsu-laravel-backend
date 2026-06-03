@@ -16,7 +16,7 @@
     }
 
     .nav-tabs .nav-link {
-        margin: -2px 32px;
+        margin: -2px 16px;
     }
 
     .box-search-input {
@@ -199,12 +199,19 @@ function getDateformat($date){
                             @php $ext = strtolower(pathinfo($marget->file, PATHINFO_EXTENSION));
                                  $isImage = in_array($ext, ['jpg','jpeg','png','gif','webp']);
                                  $isVideo = in_array($ext, ['mp4','webm','mov']);
-                                 $mrSrc = route('previewMarketingResource').'?doc='.urlencode($marget->file).'&v='.($marget->updated_at ? \Illuminate\Support\Carbon::parse($marget->updated_at)->timestamp : '1'); @endphp
+                                 $mrSrc = route('previewMarketingResource').'?doc='.urlencode($marget->file).'&v='.($marget->updated_at ? \Illuminate\Support\Carbon::parse($marget->updated_at)->timestamp : '1');
+                                 $mrPoster = null;
+                                 if ($isVideo) {
+                                     $posterName = pathinfo($marget->file, PATHINFO_FILENAME).'.jpg';
+                                     if (is_file(base_path('../uploads_delta/partner/marketing_resources/').$posterName)) {
+                                         $mrPoster = asset('uploads_delta/partner/marketing_resources/'.$posterName);
+                                     }
+                                 } @endphp
                             <div class="mr-img-card">
                                 @if($isImage)
                                 <img class="mr-img-thumb lazyload" loading="lazy" alt="{{$marget->name}}" data-src="{{ $mrSrc }}">
                                 @elseif($isVideo)
-                                <video class="mr-video-thumb" muted preload="metadata" playsinline src="{{ $mrSrc }}#t=0.1"></video>
+                                <video class="mr-video-thumb" muted preload="none" playsinline @if($mrPoster) poster="{{ $mrPoster }}" @endif data-src="{{ $mrSrc }}"></video>
                                 <span class="mr-video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
                                 @else
                                 <div class="mr-img-noimg">{{ strtoupper($ext) }}</div>
@@ -319,6 +326,7 @@ function getDateformat($date){
         var eyeSvg = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
         var dlSvg = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/></svg>';
         var dlBase = '{{config('app.url')}}/file_doc_2/marketing_resources/';
+        var mrStaticBase = '{{ asset('uploads_delta/partner/marketing_resources') }}/';   // 影片縮圖(poster)靜態 base
         var html = '';
         $.each(resultsearch, function(index,value){
             var ext = (value['file']||'').split('.').pop().toLowerCase();
@@ -331,7 +339,8 @@ function getDateformat($date){
                 if (isImage) {
                     html += '<img class="mr-img-thumb lazyload" loading="lazy" alt="'+value['name']+'" data-src="'+mrSrc+'">';
                 } else if (isVideo) {
-                    html += '<video class="mr-video-thumb" muted preload="metadata" playsinline src="'+mrSrc+'#t=0.1"></video>';
+                    var poster = mrStaticBase + value['file'].replace(/\.[^.]+$/, '.jpg');   // 縮圖不存在則瀏覽器自動略過
+                    html += '<video class="mr-video-thumb" muted preload="none" playsinline poster="'+poster+'" data-src="'+mrSrc+'"></video>';
                     html += '<span class="mr-video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>';
                 } else {
                     html += '<div class="mr-img-noimg">'+ext.toUpperCase()+'</div>';
@@ -356,6 +365,7 @@ function getDateformat($date){
         });
         if (isProductImages) { html = '<div class="mr-image-grid">'+html+'</div>'; }
         $('.contentdatasearch').html(html);
+        mrObserveVideos();   // 搜尋後動態注入的影片也要 lazy-load / 手機捲動播放
 
       }
 
@@ -372,6 +382,8 @@ function getDateformat($date){
           var url = mrPreviewBase + '?doc=' + encodeURIComponent(file);
           $('#mr-preview-title').text(name);
           $('#mr-preview-body').html(mrNotice('Loading…'));
+          // 開預覽前先暫停所有縮圖影片（手機捲動自動播放的那支），避免背景無聲影片繼續播
+          document.querySelectorAll('.mr-video-thumb').forEach(function (v) { v.pause(); });
           $('#mr-preview-modal').modal('show');
           // 先用 HEAD 看回傳類型（不下載檔案本體，避免重複下載拖慢）再決定呈現：
           // PDF→高 iframe、圖片→img、其餘（如檔案不存在的提示）→小訊息
@@ -390,12 +402,28 @@ function getDateformat($date){
               $('#mr-preview-body').html(mrNotice('File not available for preview.'));
           });
       });
+      // 關閉開始時先移開 modal 內的焦點，避免焦點還在內部就被設 aria-hidden（無障礙警告）
+      $('#mr-preview-modal').on('hide.bs.modal', function () {
+          if (document.activeElement && this.contains(document.activeElement)) {
+              document.activeElement.blur();
+          }
+      });
       $('#mr-preview-modal').on('hidden.bs.modal', function () {
           $('#mr-preview-body').empty();
+          // 關閉預覽後：手機上讓仍在視窗內（達門檻）的縮圖影片接著播
+          if (mrNoHover.matches) {
+              document.querySelectorAll('.mr-video-thumb').forEach(function (v) {
+                  var r = v.getBoundingClientRect();
+                  if (!r.height) { return; }
+                  var ratio = (Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0)) / r.height;
+                  if (ratio >= 0.6) { var p = v.play(); if (p && p.catch) { p.catch(function () {}); } }
+              });
+          }
       });
 
-      // 影片縮圖：hover 播放、移開暫停並退回第一幀（muted 才能免點擊自動播）。事件委派，含搜尋後動態項目
+      // 桌機：hover 播放、移開暫停退回開頭（muted 才能免點擊自動播）。事件委派，含搜尋後動態項目
       $(document).on('mouseenter', '.mr-video-thumb', function () {
+          if (!this.getAttribute('src') && this.dataset.src) { this.src = this.dataset.src; }  // lazy：尚未載入則此時載入
           var p = this.play();
           if (p && p.catch) { p.catch(function () {}); }
       });
@@ -403,6 +431,29 @@ function getDateformat($date){
           this.pause();
           try { this.currentTime = 0; } catch (e) {}
       });
+
+      // 影片 lazy-load + 手機捲到視窗內自動播放（靜音）、捲走暫停退回開頭；桌機不在捲動時自動播（交給 hover）
+      var mrNoHover = window.matchMedia('(hover: none)');
+      var mrVideoObserver = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+              var v = e.target;
+              if (e.isIntersecting) {
+                  if (!v.getAttribute('src') && v.dataset.src) { v.src = v.dataset.src; }   // 進入視窗才載入該支
+                  if (mrNoHover.matches) { var p = v.play(); if (p && p.catch) { p.catch(function () {}); } }
+              } else if (mrNoHover.matches) {
+                  v.pause();
+                  try { v.currentTime = 0; } catch (err) {}
+              }
+          });
+      }, { threshold: 0.6 }) : null;
+
+      function mrObserveVideos() {
+          if (!mrVideoObserver) return;
+          document.querySelectorAll('.mr-video-thumb').forEach(function (v) {
+              if (!v.dataset.mrObserved) { v.dataset.mrObserved = '1'; mrVideoObserver.observe(v); }
+          });
+      }
+      mrObserveVideos();
 </script>
 
 @endsection

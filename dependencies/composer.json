@@ -16,6 +16,7 @@
         "maatwebsite/excel": "^3.1",
         "mcamara/laravel-localization": "^1.5",
         "nztim/mailchimp": "*",
+        "pion/laravel-chunk-upload": "^1.5",
         "s-ichikawa/laravel-sendgrid-driver": "^4.0",
         "spatie/laravel-permission": "^5.4"
     },
