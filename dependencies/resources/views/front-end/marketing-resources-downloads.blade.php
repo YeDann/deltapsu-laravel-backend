@@ -60,10 +60,18 @@
     /* 觸控裝置沒有 hover，bar 直接顯示 */
     @media (hover: none) { .mr-img-bar { transform: translateY(0); } }
 
+    /* 影片縮圖：與圖片同尺寸，靜止顯示第一幀、hover 播放（JS 控制） */
+    .mr-video-thumb { width: 100%; height: 200px; object-fit: cover; display: block; background: #000; }
+    /* 右上 ▶ 角標：標示這是影片（置頂右避免與底部 hover bar 重疊） */
+    .mr-video-badge { position: absolute; right: 8px; top: 8px; width: 32px; height: 32px; border-radius: 50%;
+        background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; pointer-events: none; }
+    .mr-video-badge svg { width: 16px; height: 16px; fill: #fff; margin-left: 2px; }
+
     /* 預覽彈窗：無白色 header，圖片直接顯示，X 疊在圖片右上角 */
     #mr-preview-modal .mr-preview-content { background: transparent; border: none; box-shadow: none; }
     #mr-preview-modal .modal-body { overflow: hidden; border-radius: 4px; }
     #mr-preview-modal .modal-body img { display: block; width: 100%; height: auto; }
+    #mr-preview-modal .modal-body video { display: block; width: 100%; height: auto; max-height: 82vh; background: #000; }
     .mr-preview-close { position: absolute; top: 10px; right: 10px; z-index: 10; width: 36px; height: 36px;
         border: none; border-radius: 50%; background: rgba(0,0,0,.55); color: #fff; font-size: 22px; line-height: 36px;
         text-align: center; cursor: pointer; padding: 0; }
@@ -189,18 +197,22 @@ function getDateformat($date){
                             @foreach ($margeting as $marget)
                             @if($marget->cate_id == $cate->cate_id)
                             @php $ext = strtolower(pathinfo($marget->file, PATHINFO_EXTENSION));
-                                 $isImage = in_array($ext, ['jpg','jpeg','png','gif','webp']); @endphp
+                                 $isImage = in_array($ext, ['jpg','jpeg','png','gif','webp']);
+                                 $isVideo = in_array($ext, ['mp4','webm','mov']);
+                                 $mrSrc = route('previewMarketingResource').'?doc='.urlencode($marget->file).'&v='.($marget->updated_at ? \Illuminate\Support\Carbon::parse($marget->updated_at)->timestamp : '1'); @endphp
                             <div class="mr-img-card">
                                 @if($isImage)
-                                <img class="mr-img-thumb lazyload" loading="lazy" alt="{{$marget->name}}"
-                                    data-src="{{ route('previewMarketingResource') }}?doc={{ urlencode($marget->file) }}&v={{ $marget->updated_at ? \Illuminate\Support\Carbon::parse($marget->updated_at)->timestamp : '1' }}">
+                                <img class="mr-img-thumb lazyload" loading="lazy" alt="{{$marget->name}}" data-src="{{ $mrSrc }}">
+                                @elseif($isVideo)
+                                <video class="mr-video-thumb" muted preload="metadata" playsinline src="{{ $mrSrc }}#t=0.1"></video>
+                                <span class="mr-video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
                                 @else
                                 <div class="mr-img-noimg">{{ strtoupper($ext) }}</div>
                                 @endif
                                 <div class="mr-img-bar">
                                     <span class="mr-img-fname" title="{{$marget->name}}">{{$marget->name}}</span>
                                     <div class="mr-img-bar-actions">
-                                        @if($isImage)
+                                        @if($isImage || $isVideo)
                                         <button type="button" class="mr-icon-btn mr-preview-trigger" title="{{$staticContent['Preview'] ?? 'Preview'}}"
                                             data-file="{{$marget->file}}" data-name="{{$marget->name}}">
                                             <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -311,16 +323,21 @@ function getDateformat($date){
         $.each(resultsearch, function(index,value){
             var ext = (value['file']||'').split('.').pop().toLowerCase();
             var isImage = ['jpg','jpeg','png','gif','webp'].indexOf(ext) > -1;
+            var isVideo = ['mp4','webm','mov'].indexOf(ext) > -1;
+            var mrSrc = mrPreviewBase+'?doc='+encodeURIComponent(value['file']);
             if (isProductImages) {
-                // Product Images：縮圖卡片（圖片→縮圖+預覽+下載；非圖片→佔位+下載）
+                // Product Images / Videos：圖片→縮圖、影片→hover 播放+▶ 角標、其他→佔位；皆可下載
                 html += '<div class="mr-img-card">';
                 if (isImage) {
-                    html += '<img class="mr-img-thumb lazyload" loading="lazy" alt="'+value['name']+'" data-src="'+mrPreviewBase+'?doc='+encodeURIComponent(value['file'])+'">';
+                    html += '<img class="mr-img-thumb lazyload" loading="lazy" alt="'+value['name']+'" data-src="'+mrSrc+'">';
+                } else if (isVideo) {
+                    html += '<video class="mr-video-thumb" muted preload="metadata" playsinline src="'+mrSrc+'#t=0.1"></video>';
+                    html += '<span class="mr-video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>';
                 } else {
                     html += '<div class="mr-img-noimg">'+ext.toUpperCase()+'</div>';
                 }
                 html += '<div class="mr-img-bar"><span class="mr-img-fname" title="'+value['name']+'">'+value['name']+'</span><div class="mr-img-bar-actions">';
-                if (isImage) {
+                if (isImage || isVideo) {
                     html += '<button type="button" class="mr-icon-btn mr-preview-trigger" data-file="'+value['file']+'" data-name="'+value['name']+'" title="Preview">'+eyeSvg+'</button>';
                 }
                 html += '<a class="mr-icon-btn" href="'+dlBase+value['file']+'" title="Download">'+dlSvg+'</a>';
@@ -362,6 +379,8 @@ function getDateformat($date){
               var ct = (res.headers.get('content-type') || '').toLowerCase();
               if (ct.indexOf('pdf') > -1) {
                   $('#mr-preview-body').html('<iframe src="' + url + '" style="width:100%;height:78vh;border:0;"></iframe>');
+              } else if (ct.indexOf('video') > -1) {
+                  $('#mr-preview-body').html('<video src="' + url + '" controls autoplay playsinline style="width:100%;height:auto;max-height:82vh;display:block;background:#000;"></video>');
               } else if (ct.indexOf('image') > -1) {
                   $('#mr-preview-body').html('<img src="' + url + '" style="max-width:100%;display:block;margin:0 auto;">');
               } else {
@@ -373,6 +392,16 @@ function getDateformat($date){
       });
       $('#mr-preview-modal').on('hidden.bs.modal', function () {
           $('#mr-preview-body').empty();
+      });
+
+      // 影片縮圖：hover 播放、移開暫停並退回第一幀（muted 才能免點擊自動播）。事件委派，含搜尋後動態項目
+      $(document).on('mouseenter', '.mr-video-thumb', function () {
+          var p = this.play();
+          if (p && p.catch) { p.catch(function () {}); }
+      });
+      $(document).on('mouseleave', '.mr-video-thumb', function () {
+          this.pause();
+          try { this.currentTime = 0; } catch (e) {}
       });
 </script>
 

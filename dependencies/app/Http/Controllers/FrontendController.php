@@ -3003,10 +3003,10 @@ class FrontendController extends Controller
             ->select('mtp.*', 'mtpt.*')
             ->get();
 
-        // 僅「Product Images」分類提供圖片預覽（以英文分類名定位 cate_id）
+        // 僅「Product Images / Videos」分類提供圖片/影片預覽（以英文分類名定位 cate_id；含改名前後兩種名稱）
         $previewCateId = DB::table('marketing_resource_cate_translations')
             ->where('local', 'en')
-            ->where('name', 'Product Images')
+            ->whereIn('name', ['Product Images', 'Product Images / Videos'])
             ->value('mk_fk_id');
 
         return view('front-end.marketing-resources-downloads')
@@ -3040,15 +3040,15 @@ class FrontendController extends Controller
             return $notice('Please log in to preview.');
         }
 
-        // basename 防路徑穿越；僅允許圖片（範圍：只有 Product Images 分類做圖片預覽）
+        // basename 防路徑穿越；允許圖片與影片（範圍：只有 Product Images / Videos 分類做預覽）
         $doc = basename($this->validateInput($request->doc, 'text', true));
         $ext = strtolower(pathinfo($doc, PATHINFO_EXTENSION));
-        $previewable = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        $previewable = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4', 'webm', 'mov'];
         if (!in_array($ext, $previewable)) {
             return $notice('This file type cannot be previewed.');
         }
 
-        // 權限 + 範圍：此檔需屬於該 partner role 可存取、且為「Product Images」分類下的行銷資源
+        // 權限 + 範圍：此檔需屬於該 partner role 可存取、且為「Product Images / Videos」分類下的行銷資源
         $allowed = DB::table('marketing_resource as mr')
             ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
             ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mr.cate_id')
@@ -3057,7 +3057,7 @@ class FrontendController extends Controller
             })
             ->where('mrt.file', $doc)
             ->where('permar.permission_id', $roleId)
-            ->where('mct.name', 'Product Images')
+            ->whereIn('mct.name', ['Product Images', 'Product Images / Videos'])
             ->exists();
 
         if (!$allowed) {

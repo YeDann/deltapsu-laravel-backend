@@ -41,7 +41,7 @@
                                     name="name" placeholder="Enter name..." required>
                             </div>
                             <div class="form-group">
-                                <label for="example-select">File <span class="req-fed">* Max File Size 80 MB</span></label>
+                                <label for="example-select">File <span class="req-fed">* Max File Size 2 GB</span></label>
                                 <div class="custom-file " style="width:100%;">
                                     <input type="file" class="custom-file-input file_input"  name="file"
                                         data-toggle="custom-file-input">
@@ -89,8 +89,8 @@
      $(document).on('change', '.file_input', function () {
         // alert(this.files[0].size);
         var FileSize = this.files[0].size / 1024 / 1024; // in MB
-        if (FileSize > 80) {
-            alert("File size exceeds 80 MB!");
+        if (FileSize > 2048) {
+            alert("File size exceeds 2 GB!");
             this.value = "";
             $('#file_lable').text('Choose file');
         };
