@@ -96,8 +96,7 @@
                                             value="{{isset($current->file) ? $current->file :''}}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="example-select">File <span class="req-fed">* Max File Size 80
-                                                MB</span></label>
+                                        <label for="example-select">File <span class="req-fed">* Max File Size 2 GB</span></label>
                                         <div class="custom-file " style="width:100%;">
                                             <input type="file" class="custom-file-input" id="file_input{{$item->name}}"
                                                 onchange="checkmaxsize(`file_input{{$item->name}}` ,'file_lable{{$item->name}}')"
@@ -161,8 +160,8 @@
          var file =  $('#'+id)[0].files[0];
          var FileSize = file.size / 1024 / 1024; // in MB
          
-          if (FileSize > 80) {
-            alert("File size exceeds 80 MB!");
+          if (FileSize > 2048) {
+            alert("File size exceeds 2 GB!");
            
            
             $('#'+id).val('');
