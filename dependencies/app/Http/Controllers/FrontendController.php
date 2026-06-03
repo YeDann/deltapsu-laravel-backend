@@ -3505,7 +3505,10 @@ class FrontendController extends Controller
             ->where('ct.local', $lang)
             ->where('c.content_type', '=', 'news')
             ->where('c.status', 1)
-            ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+            ->where(function ($q) use ($keysearch) {
+                $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+            })
             ->select('c.*', 'ct.*', 'nt.name as cateName', 'pnc.categories_id as typeId')
             ->orderBy('c.date_publish', 'desc')
             ->distinct()
