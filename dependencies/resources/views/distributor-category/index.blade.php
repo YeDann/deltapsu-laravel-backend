@@ -34,7 +34,7 @@
                     <tr>
                         <th class="text-center" style="width: 5%;">No.</th>
                         <th style="width: 30%;">Name (EN)</th>
-                        @if($type === 'sales_territory')<th style="width: 15%;">Region</th>@endif
+                        @if($type === 'distributor_sales_territory')<th style="width: 15%;">Region</th>@endif
                         <th style="width: 10%;">Order</th>
                         <th style="width: 10%;">Status</th>
                         <th style="width: 15%;" class="text-center">Manage</th>
@@ -46,7 +46,7 @@
                     <tr>
                         <td class="text-center">{{$loop->iteration}}</td>
                         <td>{{$item->name}}</td>
-                        @if($type === 'sales_territory')<td>{{ isset($continents[$item->continent_id]) ? $continents[$item->continent_id]->name : '-' }}</td>@endif
+                        @if($type === 'distributor_sales_territory')<td>{{ isset($continents[$item->continent_id]) ? $continents[$item->continent_id]->name : '-' }}</td>@endif
                         <td>{{$item->order_seq}}</td>
                         <td>{{ $item->status ? 'Show' : 'Hide' }}</td>
                         <td class="text-center">

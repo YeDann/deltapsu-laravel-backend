@@ -18,14 +18,14 @@ class DistributorCategorySeeder extends Seeder
     {
         // 各語系一律先填英文，實際在地化由後台逐一處理
         $data = [
-            'specialized_application' => [
+            'distributor_specialized_application' => [
                 ['slug' => 'industrial',  'name' => 'Industrial'],
                 ['slug' => 'medical',     'name' => 'Medical'],
                 ['slug' => 'lighting',    'name' => 'LED Lighting'],
                 ['slug' => 'led-signage', 'name' => 'LED Signage'],
                 ['slug' => 'railway',     'name' => 'Railway'],
             ],
-            'product_line' => [
+            'distributor_product_line' => [
                 ['slug' => 'din-rail',                 'name' => 'DIN Rail Power Supply'],
                 ['slug' => 'panel-mount',              'name' => 'Panel Mount Power Supply'],
                 ['slug' => 'open-frame',               'name' => 'Open Frame Power Supply'],

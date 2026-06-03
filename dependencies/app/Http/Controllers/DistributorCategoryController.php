@@ -11,23 +11,9 @@ class DistributorCategoryController extends Controller
 {
     /**
      * 五類經銷商分類共用一個 controller，以 $type 區分對應的資料表。
+     * 分類定義（label / field / pivot）集中於 config/distributor.php。
      * 結構：{table}（id, slug, status, order_seq）+ {table}_translation（fk_id, name, local）。
      */
-    private $types = [
-        'specialized_application' => 'Specialized Application',
-        'product_line' => 'Product Line',
-        'distributor_service' => 'Service',
-        'sales_territory' => 'Sales Territory',
-        'distributor_certification' => 'Certification',
-    ];
-
-    private $pivots = [
-        'specialized_application' => 'office_has_specialized_application',
-        'product_line' => 'office_has_product_line',
-        'distributor_service' => 'office_has_service',
-        'sales_territory' => 'office_has_sales_territory',
-        'distributor_certification' => 'office_has_certification',
-    ];
 
     public function __construct()
     {
@@ -36,7 +22,7 @@ class DistributorCategoryController extends Controller
 
     private function guard($type)
     {
-        abort_unless(isset($this->types[$type]), 404);
+        abort_unless(config("distributor.categories.{$type}"), 404);
     }
 
     /** 經銷商地區（continents type_id=2），供 Sales Territory 綁定所屬地區。 */
@@ -65,7 +51,7 @@ class DistributorCategoryController extends Controller
             ->with('menu', 'distributor_filter')
             ->with('submenu', 'distcat_' . $type)
             ->with('type', $type)
-            ->with('typeLabel', $this->types[$type])
+            ->with('typeLabel', config("distributor.categories.{$type}.label"))
             ->with('continents', $this->continents()->keyBy('id'))
             ->with('contents', $contents);
     }
@@ -78,7 +64,7 @@ class DistributorCategoryController extends Controller
             ->with('menu', 'distributor_filter')
             ->with('submenu', 'distcat_' . $type)
             ->with('type', $type)
-            ->with('typeLabel', $this->types[$type])
+            ->with('typeLabel', config("distributor.categories.{$type}.label"))
             ->with('continents', $this->continents());
     }
 
@@ -101,7 +87,7 @@ class DistributorCategoryController extends Controller
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ];
-        if ($type === 'sales_territory') {
+        if ($type === 'distributor_sales_territory') {
             $data['continent_id'] = $request->continent_id ?: null;
         }
         $id = DB::table($type)->insertGetId($data);
@@ -133,7 +119,7 @@ class DistributorCategoryController extends Controller
             ->with('menu', 'distributor_filter')
             ->with('submenu', 'distcat_' . $type)
             ->with('type', $type)
-            ->with('typeLabel', $this->types[$type])
+            ->with('typeLabel', config("distributor.categories.{$type}.label"))
             ->with('continents', $this->continents())
             ->with('language', DB::table('language')->get())
             ->with('contents', $contents);
@@ -156,7 +142,7 @@ class DistributorCategoryController extends Controller
             'order_seq' => $request->order_seq,
             'updated_at' => \Carbon\Carbon::now(),
         ];
-        if ($type === 'sales_territory') {
+        if ($type === 'distributor_sales_territory') {
             $upd['continent_id'] = $request->continent_id ?: null;
         }
         DB::table($type)->where('id', $id)->update($upd);
@@ -183,7 +169,7 @@ class DistributorCategoryController extends Controller
         DB::table($type)->where('id', $id)->delete();
         DB::table($type . '_translation')->where('fk_id', $id)->delete();
         // 一併移除經銷商關聯，避免孤兒資料
-        DB::table($this->pivots[$type])->where('category_id', $id)->delete();
+        DB::table(config("distributor.categories.{$type}.pivot"))->where('category_id', $id)->delete();
         return back()->with('flash_message', 'Delete Data successfully');
     }
 }

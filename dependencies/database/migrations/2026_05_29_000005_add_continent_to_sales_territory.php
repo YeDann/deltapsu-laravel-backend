@@ -13,7 +13,7 @@ class AddContinentToSalesTerritory extends Migration
      */
     public function up()
     {
-        Schema::table('sales_territory', function (Blueprint $table) {
+        Schema::table('distributor_sales_territory', function (Blueprint $table) {
             $table->integer('continent_id')->nullable()->after('slug');
         });
     }
@@ -23,7 +23,7 @@ class AddContinentToSalesTerritory extends Migration
      */
     public function down()
     {
-        Schema::table('sales_territory', function (Blueprint $table) {
+        Schema::table('distributor_sales_territory', function (Blueprint $table) {
             $table->dropColumn('continent_id');
         });
     }

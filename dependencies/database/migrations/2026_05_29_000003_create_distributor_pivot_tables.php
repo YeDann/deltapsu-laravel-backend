@@ -15,9 +15,9 @@ class CreateDistributorPivotTables extends Migration
     public function up()
     {
         $pivots = [
-            'office_has_specialized_application' => 'specialized_application',
-            'office_has_product_line'            => 'product_line',
-            'office_has_service'                 => 'distributor_service',
+            'office_has_distributor_specialized_application' => 'distributor_specialized_application',
+            'office_has_distributor_product_line'            => 'distributor_product_line',
+            'office_has_distributor_service'     => 'distributor_service',
         ];
 
         foreach ($pivots as $pivot => $category) {
@@ -38,8 +38,8 @@ class CreateDistributorPivotTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('office_has_specialized_application');
-        Schema::dropIfExists('office_has_product_line');
-        Schema::dropIfExists('office_has_service');
+        Schema::dropIfExists('office_has_distributor_specialized_application');
+        Schema::dropIfExists('office_has_distributor_product_line');
+        Schema::dropIfExists('office_has_distributor_service');
     }
 }

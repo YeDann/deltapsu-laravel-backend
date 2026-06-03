@@ -75,17 +75,17 @@
                         {{-- 五類分類勾選（含 Sales Territory / Certification） --}}
                         @php
                             $catGroups = [
-                                ['field' => 'sales_territory', 'label' => 'Sales Territory', 'items' => $categories['sales_territory'], 'sel' => 'sales_territory'],
+                                ['field' => 'distributor_sales_territory', 'label' => 'Sales Territory', 'items' => $categories['distributor_sales_territory'], 'sel' => 'distributor_sales_territory'],
                                 ['field' => 'distributor_certification', 'label' => 'Certification', 'items' => $categories['distributor_certification'], 'sel' => 'distributor_certification'],
-                                ['field' => 'specialized_application', 'label' => 'Specialized Application', 'items' => $categories['specialized_application'], 'sel' => 'specialized_application'],
-                                ['field' => 'product_line', 'label' => 'Product Line', 'items' => $categories['product_line'], 'sel' => 'product_line'],
-                                ['field' => 'service', 'label' => 'Service', 'items' => $categories['distributor_service'], 'sel' => 'distributor_service'],
+                                ['field' => 'distributor_specialized_application', 'label' => 'Specialized Application', 'items' => $categories['distributor_specialized_application'], 'sel' => 'distributor_specialized_application'],
+                                ['field' => 'distributor_product_line', 'label' => 'Product Line', 'items' => $categories['distributor_product_line'], 'sel' => 'distributor_product_line'],
+                                ['field' => 'distributor_service', 'label' => 'Service', 'items' => $categories['distributor_service'], 'sel' => 'distributor_service'],
                             ];
                         @endphp
                         @foreach($catGroups as $g)
                         <div class="form-group">
                             <label class="d-block">{{ $g['label'] }}</label>
-                            @if($g['field'] === 'sales_territory')
+                            @if($g['field'] === 'distributor_sales_territory')
                                 {{-- Sales Territory 依 Region 分組：左欄 Region 標籤、右欄勾選項橫排 --}}
                                 @foreach($g['items']->groupBy('region') as $region => $items)
                                 <div class="d-flex align-items-center mb-2 pl-3">
