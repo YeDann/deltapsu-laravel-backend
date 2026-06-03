@@ -14,23 +14,35 @@ class CreateDistributorPivotTables extends Migration
      */
     public function up()
     {
-        $pivots = [
-            'office_has_distributor_specialized_application' => 'distributor_specialized_application',
-            'office_has_distributor_product_line'            => 'distributor_product_line',
-            'office_has_distributor_service'     => 'distributor_service',
-        ];
+        Schema::create('office_has_specialized_application', function (Blueprint $table) {
+            $table->id();
+            $table->integer('office_id');
+            $table->unsignedBigInteger('category_id');
+            $table->timestamps();
 
-        foreach ($pivots as $pivot => $category) {
-            Schema::create($pivot, function (Blueprint $table) use ($category) {
-                $table->id();
-                $table->integer('office_id');
-                $table->unsignedBigInteger('category_id');
-                $table->timestamps();
+            $table->foreign('office_id')->references('id')->on('office')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('distributor_specialized_application')->onDelete('cascade');
+        });
 
-                $table->foreign('office_id')->references('id')->on('office')->onDelete('cascade');
-                $table->foreign('category_id')->references('id')->on($category)->onDelete('cascade');
-            });
-        }
+        Schema::create('office_has_product_line', function (Blueprint $table) {
+            $table->id();
+            $table->integer('office_id');
+            $table->unsignedBigInteger('category_id');
+            $table->timestamps();
+
+            $table->foreign('office_id')->references('id')->on('office')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('distributor_product_line')->onDelete('cascade');
+        });
+
+        Schema::create('office_has_service', function (Blueprint $table) {
+            $table->id();
+            $table->integer('office_id');
+            $table->unsignedBigInteger('category_id');
+            $table->timestamps();
+
+            $table->foreign('office_id')->references('id')->on('office')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('distributor_service')->onDelete('cascade');
+        });
     }
 
     /**
@@ -38,8 +50,8 @@ class CreateDistributorPivotTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('office_has_distributor_specialized_application');
-        Schema::dropIfExists('office_has_distributor_product_line');
-        Schema::dropIfExists('office_has_distributor_service');
+        Schema::dropIfExists('office_has_specialized_application');
+        Schema::dropIfExists('office_has_product_line');
+        Schema::dropIfExists('office_has_service');
     }
 }
