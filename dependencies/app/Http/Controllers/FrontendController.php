@@ -3069,7 +3069,13 @@ class FrontendController extends Controller
             return $notice('File not available for preview.');
         }
 
-        // inline 顯示（response()->file 預設 Content-Disposition: inline、自動帶 MIME）
+        // 影片：權限通過後轉址到靜態 URL（public/uploads_delta symlink），交給 web server 串流。
+        // 原生支援 HTTP Range、不吃 PHP max_execution_time，避免大影片用 response()->file() 串流逾時。
+        if (in_array($ext, ['mp4', 'webm', 'mov'])) {
+            return redirect(asset('uploads_delta/partner/marketing_resources/' . $doc));
+        }
+
+        // 圖片：inline 顯示（response()->file 預設 Content-Disposition: inline、自動帶 MIME）
         return response()->file($path);
     }
 

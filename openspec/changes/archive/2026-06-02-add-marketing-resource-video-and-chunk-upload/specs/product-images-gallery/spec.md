@@ -1,8 +1,5 @@
-# product-images-gallery Specification
+## MODIFIED Requirements
 
-## Purpose
-TBD - created by archiving change add-product-images-preview. Update Purpose after archive.
-## Requirements
 ### Requirement: Product Images 縮圖網格
 
 Marketing Resources Downloads 的 **Product Images / Videos** 分類 MUST 以縮圖網格呈現（媒體中心風格），其他分類 MUST 維持原本「檔名 + Download」列表。圖片項目 MUST 顯示縮圖；**影片項目（mp4/webm/mov）MUST 以 `<video>` 呈現、右上標示 ▶ 角標、並以 `data-src` + `preload="none"` 延後載入（捲入視窗才載入，避免大影片拖慢頁面）**；其他非媒體項目（如 ZIP）MUST 以佔位卡呈現。圖片縮圖 MUST 沿用站上 lazyload 慣例（`data-src`）。分類定位 MUST 以英文名稱比對（含更名前後的 `Product Images` 與 `Product Images / Videos`），不因顯示名更名而失效。
@@ -51,13 +48,7 @@ Marketing Resources Downloads 的 **Product Images / Videos** 分類 MUST 以縮
 - **WHEN** 檔案非圖片亦非影片（如 ZIP）
 - **THEN** 不提供預覽，僅能下載
 
-### Requirement: 下載行為不變
-
-各項目的下載 MUST 維持既有行為與權限（透過既有下載流程），不受縮圖網格與預覽變更影響。
-
-#### Scenario: 下載維持原樣
-- **WHEN** 使用者點選下載
-- **THEN** 以既有合作夥伴下載流程取得檔案
+## ADDED Requirements
 
 ### Requirement: 影片縮圖播放行為（桌機 hover / 手機捲動）
 
@@ -86,4 +77,3 @@ Marketing Resources Downloads 的 **Product Images / Videos** 分類 MUST 以縮
 #### Scenario: 影片無縮圖時不破版
 - **WHEN** 影片尚無同名 .jpg（如舊影片）
 - **THEN** `<video poster>` 來源不存在時優雅退回深色底，不顯示破圖
-
