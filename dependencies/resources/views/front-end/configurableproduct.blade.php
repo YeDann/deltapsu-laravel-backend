@@ -1297,6 +1297,10 @@
 	var do_a_gobal = [5,5,5,5,5,5,5,5,5,5,5,4,4,4];
 
 	var code = '';
+	// Dual Output 上限 map（by frame max_power）與多語說明文字模板；
+	// 須在 selectionGenerate() 之前定義 —— 否則初始 addSlotOutput→dualOutputMax 會讀到尚未賦值的 var 而 TypeError
+	var maxDualMap = {700: 3, 1200: 3, 2100: 2, 3000: 3};
+	var dualLimitTpl = @json($staticContent['configurable_dual_limit_desc'] ?? '');
 	selectionGenerate();
 	$(function () {
 		$('[data-toggle="tooltip"]').tooltip()
@@ -1626,6 +1630,47 @@
         });
     }
 
+	// === Dual Output 模組數上限驗證（依 frame max_power；不動既有 validateDualInputs / checkSlotMax）
+	//     maxDualMap / dualLimitTpl 定義在上方 selectionGenerate() 之前（var 賦值不會 hoist，初始呼叫鏈會先讀到）===
+
+	// 當前 frame 的 dual output 上限；查不到（未來新 frame）回 Infinity，不誤限制
+	function dualOutputMax() {
+		var index = $('#model').children("option:selected").val();
+		var power = (model_alldata[index]) ? parseInt(model_alldata[index]['max_power']) : 0;
+		return maxDualMap.hasOwnProperty(power) ? maxDualMap[power] : Infinity;
+	}
+
+	// 已選為 Dual（slot-type value=2）的 slot 總數
+	function countDualSlots() {
+		return $('input[name^="slot-type-"]:checked').filter(function () {
+			return $(this).val() == 2;
+		}).length;
+	}
+
+	// 說明文字：模板帶入當前 frame 名（product_code）與上限數
+	function dualLimitText() {
+		var index = $('#model').children("option:selected").val();
+		var frame = (model_alldata[index]) ? model_alldata[index]['product_code'] : '';
+		var n = dualOutputMax();
+		if (!dualLimitTpl || n === Infinity) { return ''; }
+		return dualLimitTpl.replace('{frame}', frame).replace('{n}', n);
+	}
+
+	// 達上限時 disable 其餘「未選 Dual」的 Dual 選項；已選 Dual 的保持可改回 Single。依已選總數、非出現順序
+	function applyDualLimit() {
+		var reached = countDualSlots() >= dualOutputMax();
+		$('input[type="radio"][id^="dual"]').each(function () {
+			var $fc = $(this).closest('.form-check');
+			if (reached && !$(this).is(':checked')) {
+				$(this).prop('disabled', true);
+				$fc.find('label[for^="dual"]').css('opacity', 0.45);
+			} else {
+				$(this).prop('disabled', false);
+				$fc.find('label[for^="dual"]').css('opacity', '');
+			}
+		});
+	}
+
 	function addSlotOutput() {
 		if(checkSlotMax()){
 			var index = $('#model').children("option:selected").val();
@@ -1649,6 +1694,8 @@
 		text +='<div class="form-check form-check-inline">';
 		text +='<input class="form-check-input" type="radio" onchange="getSelecter(this);" name="slot-type-'+index+'" id="dual'+index+'" value="2">';
 		text +='<label class="form-check-label" for="dual'+index+'">{{$staticContent['Dual_Slot']}}</label>';
+		var _dualTip = dualLimitText();
+		text += _dualTip ? '<img class="dual-limit-tip align-baseline ml-1" src="{{asset('frontend-asset/image/tooltip.svg')}}" data-toggle="tooltip" data-placement="top" title="'+_dualTip+'">' : '';
 		text +='</div>';
 		text +='</div>';
 		text +='</div>'
@@ -1673,6 +1720,8 @@
 		$('.slot #child-'+index+' #single'+index+'').attr('checked', 'checked');
 		// $('#numoutput').text(index);
 		checkSlotMax();
+		applyDualLimit();
+		$('.dual-limit-tip').tooltip();   // 動態產生的 slot 問號需 init tooltip（比照頁面既有 Option/Communication 問號）
 	}
 
 	function getSelecter(_this) {
@@ -1725,6 +1774,7 @@
 		setHeight();
 		setModelPreview();
 		setModelPreviewToSum();
+		applyDualLimit();
 	}
 	function getToSummary02(i){
 		// alert("55555555555");
@@ -2008,6 +2058,7 @@
 		setModelPreview();
 		setModelPreviewToSum();
         validateDualInputs();
+		applyDualLimit();
 	}
 
 	function setHeight(){
