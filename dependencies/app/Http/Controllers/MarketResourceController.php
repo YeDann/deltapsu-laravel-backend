@@ -83,17 +83,19 @@ class MarketResourceController extends Controller
             // 檔案已由分塊上傳端點（chunkUpload）預先存好，表單只帶最終檔名；basename 防路徑穿越
             $imageName = $request->input('file_uploaded') ? basename($request->input('file_uploaded')) : '';
 
-            $id = DB::table('marketing_resource')->insertGetID(
-                [
-                    "status" => $request->status,
-                    "cate_id" => $request->mr_categories,
-                    "created_at" => \Carbon\Carbon::now(),
-                    "updated_at" => \Carbon\Carbon::now(),
-                ]
-            );
-                foreach($langs as $lang){
-                     DB::table('marketing_resource_translations')->insert(
-                        [   
+            // 主表 + 各語系 translation 包在同一交易，避免中途失敗留下半套資料（主表有、部分語系缺）
+            DB::transaction(function () use ($request, $langs, $imageName) {
+                $id = DB::table('marketing_resource')->insertGetID(
+                    [
+                        "status" => $request->status,
+                        "cate_id" => $request->mr_categories,
+                        "created_at" => \Carbon\Carbon::now(),
+                        "updated_at" => \Carbon\Carbon::now(),
+                    ]
+                );
+                foreach ($langs as $lang) {
+                    DB::table('marketing_resource_translations')->insert(
+                        [
                             "mr_id" => $id,
                             "name" => $request->name,
                             "file" => $imageName,
@@ -101,7 +103,9 @@ class MarketResourceController extends Controller
                         ]
                     );
                 }
-                return redirect()->route('MarketResource.index')->with('flash_message', 'Insert Data successfully');
+            });
+
+            return redirect()->route('MarketResource.index')->with('flash_message', 'Insert Data successfully');
         }
 
 
@@ -302,16 +306,8 @@ class MarketResourceController extends Controller
             return redirect()->back()->withErrors($validate->errors());
         } else {
       
-                DB::table('marketing_resource')->where('id',$id)->update(
-                        [
-                            "status" => $request->status,
-                            "cate_id" => $request->mr_categories,
-                            "created_at" => \Carbon\Carbon::now(),
-                            "updated_at" => \Carbon\Carbon::now(),
-                        ]
-                    );
                 // Product Images / Videos（gallery）：file_uploaded 是單一字串 → 共用檔套用所有語系；
-                // 其他分類：file_uploaded[locale] 是陣列 → 逐語系
+                // 其他分類：file_uploaded[locale] 是陣列 → 逐語系（純讀 request，可在交易外先算好）
                 if (is_array($uploaded)) {
                     $arrayfileName = $this->applyChunkedFiles($uploaded, $langs, (array) $oldfile);
                     $oldVals = (array) $oldfile;
@@ -321,17 +317,31 @@ class MarketResourceController extends Controller
                     foreach ($langs as $lang) { $arrayfileName[$lang] = $newFile; }
                     $oldVals = [$oldfile];
                 }
-                foreach($langs as $lang){
-                     DB::table('marketing_resource_translations')->where('local', $lang)->where('mr_id',$id)->update(
+
+                // 主表 + 各語系 translation 包在同一交易，避免中途失敗留下半套資料
+                DB::transaction(function () use ($request, $id, $langs, $name, $arrayfileName) {
+                    DB::table('marketing_resource')->where('id', $id)->update(
                         [
-                            "name" => $name[$lang],
-                            "file" => $arrayfileName[$lang],
-                            "local" => $lang,
+                            "status" => $request->status,
+                            "cate_id" => $request->mr_categories,
+                            "created_at" => \Carbon\Carbon::now(),
+                            "updated_at" => \Carbon\Carbon::now(),
                         ]
                     );
-                }
-                // 各語系已更新為新檔名；刪除已無人引用的舊檔（與其縮圖）
+                    foreach ($langs as $lang) {
+                        DB::table('marketing_resource_translations')->where('local', $lang)->where('mr_id', $id)->update(
+                            [
+                                "name" => $name[$lang],
+                                "file" => $arrayfileName[$lang],
+                                "local" => $lang,
+                            ]
+                        );
+                    }
+                });
+
+                // DB 交易 commit 後才刪實體檔；避免「DB rollback 但舊檔已刪」的不一致
                 $this->deleteOrphanFiles($oldVals);
+
                 return redirect()->route('MarketResource.index')->with('flash_message', 'Update Data successfully');
         }
     }

@@ -332,7 +332,8 @@ function getDateformat($date){
             var ext = (value['file']||'').split('.').pop().toLowerCase();
             var isImage = ['jpg','jpeg','png','gif','webp'].indexOf(ext) > -1;
             var isVideo = ['mp4','webm','mov'].indexOf(ext) > -1;
-            var mrSrc = mrPreviewBase+'?doc='+encodeURIComponent(value['file']);
+            // 帶 updated_at 當 cache-buster：換檔後 v 改變、避免搜尋結果顯示舊快取圖（對齊初始 blade 的 &v）
+            var mrSrc = mrPreviewBase+'?doc='+encodeURIComponent(value['file'])+'&v='+encodeURIComponent(value['updated_at']||'1');
             if (isProductImages) {
                 // Product Images / Videos：圖片→縮圖、影片→hover 播放+▶ 角標、其他→佔位；皆可下載
                 html += '<div class="mr-img-card">';
