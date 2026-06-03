@@ -3535,6 +3535,10 @@ class FrontendController extends Controller
                     ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
                     ->leftJoin('product_tags as ptag', 'ptag.product_id', '=', 'p.pro_id')
                     ->leftJoin('product_optional_model as op', 'op.product_id', '=', 'p.pro_id')
+                    ->leftJoin('products_translation as pt', function ($join) use ($lang) {
+                        $join->on('pt.product_id', '=', 'p.pro_id')
+                            ->where('pt.local', '=', $lang);
+                    })
                     ->where('spt.local', $lang)
                     ->where('st.local', $lang)
                     ->where('p.enable_pro', 1)
@@ -3566,7 +3570,8 @@ class FrontendController extends Controller
                         DB::raw('MAX(phc.categories_id) as categories_id'),
                         DB::raw('MAX(st.title) as seName'),
                         DB::raw('GROUP_CONCAT(DISTINCT ptag.tag) as tags'),
-                        DB::raw('GROUP_CONCAT(DISTINCT op.optional_model) as optional_models')
+                        DB::raw('GROUP_CONCAT(DISTINCT op.optional_model) as optional_models'),
+                        DB::raw('MAX(pt.short_features) as short_features')
                     )
                     ->groupBy(
                         'p.pro_id',
@@ -3646,6 +3651,7 @@ class FrontendController extends Controller
                     'dimensionL' => $pro->dimensionL,
                     'dimensionW' => $pro->dimensionW,
                     'dimensionD' => $pro->dimensionD,
+                    'short_features' => $pro->short_features,
                 ];
         })->filter()->values();
 
