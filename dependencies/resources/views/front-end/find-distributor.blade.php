@@ -36,7 +36,7 @@
         .fd-card { flex-direction: column; gap: 14px; }
         .fd-card-info, .fd-card-badges { flex: auto; max-width: 100%; }
     }
-    .fd-logo { max-height: 44px; max-width: 200px; display: block; margin-bottom: 12px; }
+    .fd-logo { max-height: 96px; max-width: 300px; display: block; margin-bottom: 12px; }
     .fd-name { font-size: 16px; font-weight: 700; color: #000; margin-bottom: 8px; }
     .fd-address { font-size: 14px; color: #333; line-height: 1.6; }
     .fd-address a { color: #0087DC; word-break: break-word; }
