@@ -302,6 +302,10 @@
                                             </div>
 
                                             <div class="dimension">
+                                                @if(($pro['url_item'] ?? '') == 'wireless-charging-system')
+                                                <h6 class="text-title-ft-sub mt-3"> {{ $staticContent['product_highLights'] ?? 'Other Features' }}</h6>
+                                                <div class="text-ft-sub text-one">{!! $pro['short_features'] ?? '' !!}</div>
+                                                @else
                                                 <h6 class="text-title-ft-sub"> {{$staticContent['Dimensions']}}</h6>
                                                 @if(is_numeric($pro['dimensionL']) && is_numeric($pro['dimensionW']) &&
                                                 is_numeric($pro['dimensionD']) && isset($pro['dimensionW']) &&
@@ -316,6 +320,7 @@
                                                     {{number_format($pro['dimensionD']* 0.0393701 ,2)}}”</p>
                                                 @else
                                                 <p class="text-ft-sub text-one">{!!$pro['dimensionL']!!}</p>
+                                                @endif
                                                 @endif
                                                 <div class="tag-seach">
                                                     <h6 class="text-title-ft-sub mt-2">Tags</h6>
@@ -507,6 +512,11 @@
 
                                                 </div>
                                                 <div class="dimension mt-2">
+                                                    @if(($pro['url_item'] ?? '') == 'wireless-charging-system')
+                                                    <p class="text-title-ft-sub text-two mt-3">
+                                                        {{ $staticContent['product_highLights'] ?? 'Other Features' }}</p>
+                                                    <div class="text-ft-sub text-one">{!! $pro['short_features'] ?? '' !!}</div>
+                                                    @else
                                                     <p class="text-title-ft-sub text-two">
                                                         {{$staticContent['Dimensions']}}</p>
                                                     @if(is_numeric($pro['dimensionL']) && is_numeric($pro['dimensionW'])
@@ -521,6 +531,7 @@
                                                         {{number_format($pro['dimensionD']* 0.0393701 ,2)}}”</p>
                                                     @else
                                                     <p class="text-ft-sub text-one">{!!$pro['dimensionL']!!}</p>
+                                                    @endif
                                                     @endif
                                                 </div>
                                                 <h6 class="text-title-ft-sub mt-2">Tags</h6>
