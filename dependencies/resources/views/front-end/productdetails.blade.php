@@ -1920,6 +1920,8 @@
         </div>
     </div>
 </div>
+
+@include('front-end.partials.stock-modal')
 @endsection
 
 
@@ -1934,10 +1936,6 @@
             var newkey = key.replace(/[/]/g,'@');
               event.preventDefault();
               window.location = '{{route('productsDetailsByType' ,['cateid'=> preg_replace('/\s+/', '-', $product[0]['url_item']) ,'pro_code' => setTextpro($product[0]['pro_code']) ])}}?optional_model='+newkey;
-    }
-    // 查詢經銷商庫存（Stock 按鈕，行為比照列表頁；本階段為佔位、僅顯示「即將開通」提示）
-    function checkStock(proCode) {
-        alert('{{ $staticContent['Stock_coming_soon'] ?? 'Coming soon' }}');
     }
 </script>
 <script>

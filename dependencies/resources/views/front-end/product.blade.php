@@ -745,6 +745,8 @@
 <input type="hidden" id="current_list_item" value="0">
 <input type="hidden" id="current_method" value="0">
 
+{{-- 經銷商庫存查詢 Modal（DILP）：桌機 grid / 手機 grid / list view 三段 render 共用同一份 --}}
+@include('front-end.partials.stock-modal')
 
 @endsection
 
@@ -904,11 +906,6 @@
         showNavCoparison(productId, categoryId);
     }
 
-    // 查詢經銷商庫存（Stock 按鈕入口）。本階段為佔位，僅顯示「即將開通」提示；
-    // 後續 DILP API 串接 change 會在此替換為實際庫存查詢與 Modal 呈現。
-    function checkStock(proCode) {
-        alert('{{ $staticContent['Stock_coming_soon'] ?? 'Coming soon' }}');
-    }
 
     // 生成詢價連結的函數，從產品分類資料獲取資訊
     function generateEnquiryLink(proCode, product) {

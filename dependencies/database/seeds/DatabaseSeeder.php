@@ -14,5 +14,20 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         // $this->call(MetaTagSeeder::class);
         $this->call(RegenerateSlugSeeder::class);
+
+        // Phase II — Stock icon 標籤
+        $this->call(StockKeywordSeeder::class);
+
+        // Phase II — Stock Checking 庫存 Modal 標籤（DILP）
+        $this->call(StockModalKeywordSeeder::class);
+
+        // Phase II — Stock Modal 國別篩選標籤（All Regions）
+        $this->call(StockRegionKeywordSeeder::class);
+
+        // Phase II — Stock Modal 兩層（洲→國）篩選標籤（All Countries + 各洲名）
+        $this->call(StockCountryFilterKeywordSeeder::class);
+
+        // Phase II — Stock Modal 無購物車連結時的「Go to Distributor」按鈕標籤
+        $this->call(StockContactKeywordSeeder::class);
     }
 }
