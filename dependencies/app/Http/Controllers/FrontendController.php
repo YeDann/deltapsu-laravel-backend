@@ -1922,17 +1922,35 @@ class FrontendController extends Controller
             ->with('products', $pro_new);
     }
 
+    /**
+     * Industrial(main 2) / Medical(main 1) 兩類涵蓋的 sub category id 清單（跨類比較範圍，Case#1）。
+     */
+    private function crossTypeCateIds()
+    {
+        return DB::table('categories_has_main_pro')
+            ->whereIn('main_cateid', [1, 2])
+            ->pluck('cate_id')->unique()->values()->toArray();
+    }
+
     public function getProductByType(Request $request)
     {
         $lang = App::getLocale();
-        $cateid = $this->validateInput($request->typeId, 'number', true);
+        // typeId='cross' → Industrial × Medical 跨類；否則為單一 sub category id（維持原行為）
+        $isCross = 'cross' === $request->typeId;
+        $crossCates = $isCross ? $this->crossTypeCateIds() : [];
+        $cateid = $isCross ? null : $this->validateInput($request->typeId, 'number', true);
         $products = [];
 
         $seachpro = DB::table('products as p')
             ->join('product_has_categories as phc', 'p.pro_id', '=', 'phc.product_id')
             ->where('p.enable_pro', 1)
-            ->where('phc.categories_id', $cateid)
+            ->when($isCross, function ($q) use ($crossCates) {
+                return $q->whereIn('phc.categories_id', $crossCates);
+            }, function ($q) use ($cateid) {
+                return $q->where('phc.categories_id', $cateid);
+            })
             ->select('p.*')
+            ->distinct()
             ->orderBy('p.pro_code', 'asc')
             ->get();
 
@@ -1943,7 +1961,11 @@ class FrontendController extends Controller
                     ->join('products as p', 'p.pro_id', '=', 'po.product_id')
                     ->join('product_has_categories as phc', 'p.pro_id', '=', 'phc.product_id')
                     ->where('p.enable_pro', 1)
-                    ->where('phc.categories_id', $cateid)
+                    ->when($isCross, function ($q) use ($crossCates) {
+                        return $q->whereIn('phc.categories_id', $crossCates);
+                    }, function ($q) use ($cateid) {
+                        return $q->where('phc.categories_id', $cateid);
+                    })
                     ->where('po.product_id', $pro->pro_id)
                     ->select('p.*', 'po.optional_model as pro_code')
                     ->orderBy('p.pro_code', 'asc')
@@ -2006,6 +2028,9 @@ class FrontendController extends Controller
         $cateid = $this->validateInput($request->cateid, 'number', true);
         $sess_arr = session('product_comp');
         //  session(['product_comp' =>  []]);
+        // 跨類比較（Case#1 Industrial×Medical）：該 sub 屬 Industrial(2)/Medical(1) 時放寬「同 sub」加入限制；其他 main 維持原規則
+        $crossCates = $this->crossTypeCateIds();
+        $maybeCross = in_array($cateid, $crossCates);
 
         $Newsproduct = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
@@ -2055,12 +2080,21 @@ class FrontendController extends Controller
            ->where('pt.local', $lang)
            ->where('pt.showstatus', 1)
            ->whereIn('p.pro_id', $sess_arr)
-           ->where('phc.categories_id', $cateid)
+           ->when(!$maybeCross, function ($q) use ($cateid) {
+               return $q->where('phc.categories_id', $cateid);   // 非跨類維持原本「同 sub」取清單
+           })
            ->select('p.*', 'pt.*', 'phc.categories_id as pro_categories_id')
            ->orderBy('p.created_at', 'desc')
            ->get();
 
-        if ((!in_array($data_id, $sess_arr)) && isset($oldpro[0]->pro_categories_id) && $Newsproduct->pro_categories_id == $oldpro[0]->pro_categories_id) {
+        $oldCates = $oldpro->pluck('pro_categories_id')->unique();
+        $sameType = isset($Newsproduct->pro_categories_id) && $oldCates->contains($Newsproduct->pro_categories_id);
+        // 跨類允許：新 sub 與清單所有 sub 都屬 Industrial/Medical
+        $crossOk = $maybeCross && $oldCates->isNotEmpty() && $oldCates->every(function ($c) use ($crossCates) {
+            return in_array($c, $crossCates);
+        });
+
+        if ((!in_array($data_id, $sess_arr)) && isset($Newsproduct->pro_categories_id) && ($sameType || $crossOk)) {
             if (count($sess_arr) < 3) {
                 array_push($sess_arr, $data_id);
                 session(['product_comp' => $sess_arr]);
@@ -2072,7 +2106,9 @@ class FrontendController extends Controller
                         ->where('pt.local', $lang)
                         ->where('spt.local', $lang)
                         ->where('st.local', $lang)
-                        ->where('phc.categories_id', $cateid)
+                        ->when(!$maybeCross, function ($q) use ($cateid) {
+                            return $q->where('phc.categories_id', $cateid);   // 同類限 cate；跨類回全清單（彈窗顯示完整）
+                        })
                         ->whereIn('p.pro_id', $sess_arr)
                         ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
                         ->orderBy('p.created_at', 'desc')
@@ -2094,7 +2130,9 @@ class FrontendController extends Controller
                         ->where('pt.local', $lang)
                         ->where('spt.local', $lang)
                         ->where('st.local', $lang)
-                        ->where('phc.categories_id', $cateid)
+                        ->when(!$maybeCross, function ($q) use ($cateid) {
+                            return $q->where('phc.categories_id', $cateid);   // 同類限 cate；跨類回全清單（彈窗顯示完整）
+                        })
                         ->whereIn('p.pro_id', $sess_arr)
                         ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
                         ->orderBy('p.created_at', 'desc')
@@ -2115,7 +2153,9 @@ class FrontendController extends Controller
                         ->where('pt.local', $lang)
                         ->where('spt.local', $lang)
                         ->where('st.local', $lang)
-                        ->where('phc.categories_id', $cateid)
+                        ->when(!$maybeCross, function ($q) use ($cateid) {
+                            return $q->where('phc.categories_id', $cateid);   // 同類限 cate；跨類回全清單（彈窗顯示完整）
+                        })
                         ->whereIn('p.pro_id', $sess_arr)
                         ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
                         ->orderBy('p.created_at', 'desc')
@@ -3535,6 +3575,10 @@ class FrontendController extends Controller
                     ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
                     ->leftJoin('product_tags as ptag', 'ptag.product_id', '=', 'p.pro_id')
                     ->leftJoin('product_optional_model as op', 'op.product_id', '=', 'p.pro_id')
+                    ->leftJoin('products_translation as pt', function ($join) use ($lang) {
+                        $join->on('pt.product_id', '=', 'p.pro_id')
+                            ->where('pt.local', '=', $lang);
+                    })
                     ->where('spt.local', $lang)
                     ->where('st.local', $lang)
                     ->where('p.enable_pro', 1)
@@ -3566,7 +3610,8 @@ class FrontendController extends Controller
                         DB::raw('MAX(phc.categories_id) as categories_id'),
                         DB::raw('MAX(st.title) as seName'),
                         DB::raw('GROUP_CONCAT(DISTINCT ptag.tag) as tags'),
-                        DB::raw('GROUP_CONCAT(DISTINCT op.optional_model) as optional_models')
+                        DB::raw('GROUP_CONCAT(DISTINCT op.optional_model) as optional_models'),
+                        DB::raw('MAX(pt.short_features) as short_features')
                     )
                     ->groupBy(
                         'p.pro_id',
@@ -3646,6 +3691,7 @@ class FrontendController extends Controller
                     'dimensionL' => $pro->dimensionL,
                     'dimensionW' => $pro->dimensionW,
                     'dimensionD' => $pro->dimensionD,
+                    'short_features' => $pro->short_features,
                 ];
         })->filter()->values();
 
@@ -3657,7 +3703,10 @@ class FrontendController extends Controller
             ->where('ct.local', $lang)
             ->where('c.content_type', '=', 'news')
             ->where('c.status', 1)
-            ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+            ->where(function ($q) use ($keysearch) {
+                $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+            })
             ->select('c.*', 'ct.*', 'nt.name as cateName', 'pnc.categories_id as typeId')
             ->orderBy('c.date_publish', 'desc')
             ->distinct()
@@ -3669,7 +3718,10 @@ class FrontendController extends Controller
                 ->where('ct.local', $lang)
                 ->where('c.content_type', '=', 'event')
                 ->where('c.status', 1)
-                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->select('c.*', 'ct.*')
                 ->orderBy('c.date_publish', 'desc')
                 ->distinct()

@@ -21,5 +21,8 @@ class DatabaseSeeder extends Seeder
         // Phase II — Distributor Filter（只建分類結構與標籤；經銷商資料、洲別名稱由後台維護）
         $this->call(DistributorCategorySeeder::class);
         $this->call(DistributorLabelSeeder::class);
+
+        // Phase II — 經銷商名錄匯入（2025 Excel；須在 DistributorCategorySeeder 之後）
+        $this->call(DistributorOfficeSeeder::class);
     }
 }

@@ -105,12 +105,14 @@
                     <select class="fd-mini-select fd-filter-territory">
                         <option value="">{{ $staticContent['Sales_Territory'] ?? 'Sales Territory' }}</option>
                     </select>
-                    <select class="fd-mini-select fd-filter-certification fd-cert-wrap"@if(count($certList) === 0) style="display:none"@endif>
+                    @if(count($certList) > 0)
+                    <select class="fd-mini-select fd-filter-certification fd-cert-wrap">
                         <option value="">{{ $staticContent['Certifications'] ?? 'Certifications' }}</option>
                         @foreach($certList as $certName)
                         <option value="{{ $certName }}">{{ $certName }}</option>
                         @endforeach
                     </select>
+                    @endif
                 </div>
                 @foreach($filterGroups as $g)
                 <div class="fd-section-title">{{ $g['label'] }}</div>
