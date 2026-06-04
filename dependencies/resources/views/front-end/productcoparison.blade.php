@@ -196,6 +196,7 @@
                 <div class="mx-auto">
                     <select id="proType" class="form-control pr-4 border-radius-6" onchange="chageProductType();">
                         <option value="0">{{$staticContent['Please_Select']}}*</option>
+                        <option value="cross">{{$staticContent['comparison_cross_industrial_medical'] ?? 'Industrial × Medical'}}</option>
                         @foreach ($Categories as $item)
                         <option {{($item->sub_pro_id == $cateid ?"selected":"")}}
                             value="{{$item->sub_pro_id}}">{{$item->name}}</option>
@@ -335,6 +336,7 @@
         <div class="d-flex justify-content-center mb-2">
             <select id="proType_mobile" class="form-control w-100 pr-4 border-radius-6" onchange="chageProductTypeMobile();">
                 <option value="0">{{$staticContent['Please_Select']}}*</option>
+                <option value="cross">{{$staticContent['comparison_cross_industrial_medical'] ?? 'Industrial × Medical'}}</option>
                 @foreach ($Categories as $item)
                 <option {{($item->sub_pro_id == $cateid ?"selected":"")}} value="{{$item->sub_pro_id}}">{{$item->name}}
                 </option>
