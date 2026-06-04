@@ -1037,7 +1037,7 @@ class FrontendController extends Controller
             ->get();
 
         // dd($mainCategories);
-        
+
         $subCategories = DB::table('categories_has_main_pro as chmp')
             ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
             ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
@@ -1345,7 +1345,7 @@ class FrontendController extends Controller
                 "section_id" => null,
             ]);
         }
-        
+
         // 取得 商品欄位資料
         $pdField = DB::table('product_field as pf')
             ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
@@ -2720,6 +2720,14 @@ class FrontendController extends Controller
                 return $g->pluck('name')->values();
             });
 
+        // Certifications 下拉選項：列出所有啟用中的認證
+        $certList = DB::table('distributor_certification as c')
+            ->join('distributor_certification_translation as t', 't.fk_id', '=', 'c.id')
+            ->where('t.local', $lang)
+            ->where('c.status', 1)
+            ->orderBy('c.order_seq')
+            ->pluck('t.name');
+
         $metatag = DB::table('meta_tag_page as mtp')
             ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
             ->where('mtp.id', 12)
@@ -2732,13 +2740,14 @@ class FrontendController extends Controller
             ->with('offices', $offices)
             ->with('catLists', $catLists)
             ->with('territoryByContinent', $territoryByContinent)
+            ->with('certList', $certList)
             ->with('continents', $continents);
     }
 
     public function redirectOldProductUrl($main_cate, $cate_id)
     {
         $lang = app()->getLocale();
-        
+
         // 根據 subcategory ID 找到對應的 main_cateid，優先選擇 main_cateid = 2 (Industrial Power)
         $categoryInfo = DB::table('sub_pro_categories as spc')
             ->join('categories_has_main_pro as chmp', 'spc.sub_pro_id', '=', 'chmp.cate_id')
@@ -2751,19 +2760,19 @@ class FrontendController extends Controller
             // 如果找不到對應的商品分類，直接返回 404
             return response()->view('errors.404', [], 404);
         }
-        
+
         $main_cate_id = $categoryInfo->main_cate_id;
-        
+
         // 建構新的 URL 格式：/{lang}/product/{main_cate_id}/{main_cate}/{cate_id}
         $newUrl = "/{$lang}/product/{$main_cate_id}/{$main_cate}/{$cate_id}";
-        
+
         return redirect($newUrl, 301);
     }
 
     public function redirectOldProductDetailUrl($main_cate, $cate_id, $se_name, $se_id)
     {
         $lang = app()->getLocale();
-        
+
         // 根據 subcategory ID 找到對應的 main_cateid，優先選擇 main_cateid = 2 (Industrial Power)
         $categoryInfo = DB::table('sub_pro_categories as spc')
             ->join('categories_has_main_pro as chmp', 'spc.sub_pro_id', '=', 'chmp.cate_id')
@@ -2776,12 +2785,12 @@ class FrontendController extends Controller
             // 如果找不到對應的商品分類，直接返回 404
             return response()->view('errors.404', [], 404);
         }
-        
+
         $main_cate_id = $categoryInfo->main_cate_id;
-        
+
         // 建構新的 URL 格式：/{lang}/product/{main_cate_id}/{main_cate}/{cate_id}/{se_name}/{se_id}
         $newUrl = "/{$lang}/product/{$main_cate_id}/{$main_cate}/{$cate_id}/{$se_name}/{$se_id}";
-        
+
         return redirect($newUrl, 301);
     }
 
@@ -3459,12 +3468,12 @@ class FrontendController extends Controller
                         END",
                         ['%' . $cleanQueryString . '%']
                     )
-                    ->orderByRaw('CASE 
-                        WHEN p.status_product = 2 THEN 1 
-                        WHEN p.status_product = 1 OR p.status_product IS NULL OR p.status_product NOT IN (2,3,4) THEN 2 
-                        WHEN p.status_product = 3 THEN 3 
-                        WHEN p.status_product = 4 THEN 4 
-                        ELSE 5 
+                    ->orderByRaw('CASE
+                        WHEN p.status_product = 2 THEN 1
+                        WHEN p.status_product = 1 OR p.status_product IS NULL OR p.status_product NOT IN (2,3,4) THEN 2
+                        WHEN p.status_product = 3 THEN 3
+                        WHEN p.status_product = 4 THEN 4
+                        ELSE 5
                         END')
                     ->orderBy('p.pro_code', 'asc')
                     ->limit($limit_product);
