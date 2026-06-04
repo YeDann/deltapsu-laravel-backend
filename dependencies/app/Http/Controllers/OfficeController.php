@@ -78,7 +78,7 @@ class OfficeController extends Controller
         ->with('menu', $name)
         ->with('type_id', $type_id)
         ->with('conid', $conid)
-        ->with('categories', $this->distributorCategories())
+        ->with('categories', $this->distributorCategories($conid))
         ->with('language', $language);
     }
      private function fileformat($file){
@@ -91,9 +91,10 @@ class OfficeController extends Controller
     }
 
     /**
-     * 取得三類經銷商分類選項（含英文名稱），供後台勾選使用。
+     * 取得經銷商五類分類選項（含英文名稱），供後台勾選使用。
+     * 傳入 $conid（所屬 continent/地區 id）時，Sales Territory 只列出該地區的銷售區域。
      */
-    private function distributorCategories()
+    private function distributorCategories($conid = null)
     {
         $tables = array_keys(config('distributor.categories'));
         $out = [];
@@ -102,24 +103,14 @@ class OfficeController extends Controller
                 ->join($t . '_translation as ct', 'ct.fk_id', '=', 'c.id')
                 ->where('ct.local', 'en')
                 ->where('c.status', 1)
+                // Sales Territory 限定該經銷商所屬地區，避免跨區誤勾
+                ->when($t === 'distributor_sales_territory' && $conid, function ($q) use ($conid) {
+                    return $q->where('c.continent_id', $conid);
+                })
                 ->orderBy('c.order_seq')
                 ->select('c.id', 'c.slug', 'ct.name')
                 ->get();
         }
-
-        // Sales Territory 另帶所屬 Region 名稱、依 Region 排序，供後台表單分組顯示
-        $out['distributor_sales_territory'] = DB::table('distributor_sales_territory as c')
-            ->join('distributor_sales_territory_translation as ct', 'ct.fk_id', '=', 'c.id')
-            ->leftJoin('continents as cont', 'cont.id', '=', 'c.continent_id')
-            ->leftJoin('continents_translations as cnt', function ($j) {
-                $j->on('cnt.cont_id', '=', 'cont.id')->where('cnt.local', '=', 'en');
-            })
-            ->where('ct.local', 'en')
-            ->where('c.status', 1)
-            ->orderBy('cont.order_seq')
-            ->orderBy('c.order_seq')
-            ->select('c.id', 'c.slug', 'ct.name', DB::raw("COALESCE(cnt.name, 'Other') as region"))
-            ->get();
 
         return $out;
     }
@@ -275,7 +266,7 @@ class OfficeController extends Controller
             ->with('type_id', $type_id)
             ->with('conid', $conid)
             ->with('offices', $offices)
-            ->with('categories', $this->distributorCategories())
+            ->with('categories', $this->distributorCategories($conid))
             ->with('selected', $this->officeCategoryIds($id))
             ->with('language', $language);
     }

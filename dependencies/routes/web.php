@@ -79,6 +79,7 @@ Route::group([
             Route::get('/partners/marketing-resources/configurable-history', 'FrontendController@confighistory')->name('confighistory');
             Route::get('/partners/marketing-resources/product-launch-schedule', 'FrontendController@productLaunchSchedule')->name('productLaunchSchedule');
             Route::get('/partners/marketing-resources/marketing-resources-downloads', 'FrontendController@marketingResourcesDownloads')->name('marketingResourcesDownloads');
+            Route::get('/partners/marketing-resources/preview', 'FrontendController@previewMarketingResource')->name('previewMarketingResource');
             Route::get('/partners/marketing-resources/sale-kit', 'FrontendController@saleKit')->name('saleKit');
             Route::get('/partners/marketing-resources/product-cross-reference', 'FrontendController@productCrossReference')->name('productCrossReference');
             Route::get('/partners/marketing-resources/partnerinfo/{id?}/{name?}', 'FrontendController@partnerinfo')->name('partnerinfo');
@@ -462,6 +463,8 @@ Route::prefix('/backend')->group(function () {
     Route::post('update_MarketResourceCategories', 'MarketResourceCateController@update')->name('update_MarketResourceCategories');
     Route::post('delete_MarketResourceCategories', 'MarketResourceCateController@destroy')->name('delete_MarketResourceCategories');
 
+    Route::post('MarketResource/chunk', 'MarketResourceController@chunkUpload')->name('MarketResource.chunk');
+    Route::post('MarketResource/poster', 'MarketResourceController@savePoster')->name('MarketResource.poster');
     Route::resource('MarketResource', 'MarketResourceController');
     Route::get('editMarketResource/{id?}', 'MarketResourceController@edit')->name('editMarketResource');
     Route::post('update_MarketResource', 'MarketResourceController@update')->name('update_MarketResource');
