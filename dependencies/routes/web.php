@@ -30,6 +30,10 @@ Route::group([
      'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'HtmlMinifier', 'verifyLang'],
         ], function () {
+            // 庫存查詢端點：須在 /{page?} 萬用路由之前，否則單段路徑會被 index 攔截
+            Route::get('/stock-check', 'StockController@check')->name('stockCheck');
+            // 經銷商聯絡 email（無購物車連結時，前台「Contact」mailto 用）
+            Route::get('/stock-check/distributor', 'StockController@contact')->name('stockContact');
             Route::get('/{page?}', 'FrontendController@index')->name('index');
             Route::get('/download/{doc?}', 'FrontendController@oldDoc')->name('downloadDocData');
             Route::get('/download/resources-catalogs/{doc?}', 'FrontendController@downloadoldCatalogs')->name('downloadoldCatalogs');
