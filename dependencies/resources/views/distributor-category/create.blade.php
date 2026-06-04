@@ -16,13 +16,13 @@
 <div class="content">
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
-            <h3 class="block-title"><a href="{{route('distributorCategory.index', $type)}}" class="btn btn-info"><i class="fa fa-chevron-left"></i> {{ $typeLabel }}</a></h3>
+            <h3 class="block-title">Information</h3>
         </div>
         <div class="block-content">
             <form action="{{route('distributorCategory.store', $type)}}" method="POST">
                 {{csrf_field()}}
                 <div class="row push">
-                    <div class="col-lg-8 col-xl-5">
+                    <div class="col-lg-12">
                         <div class="form-group">
                             <label>Name</label>
                             <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" name="name" placeholder="Enter name...">
@@ -40,9 +40,9 @@
                             <small class="text-muted">此銷售區域會出現在前台對應的地區頁籤下。</small>
                         </div>
                         @endif
-                        <div class="form-group">
-                            <button class="btn btn-success" type="submit">Create</button>
-                            <a href="{{route('distributorCategory.index', $type)}}" class="btn btn-secondary">Cancel</a>
+                        <div class="text-center mb-3">
+                            <button class="btn btn-success col-md-1" type="submit">Create</button>
+                            <a href="{{route('distributorCategory.index', $type)}}" class="btn btn-secondary col-md-1">Cancel</a>
                         </div>
                     </div>
                 </div>

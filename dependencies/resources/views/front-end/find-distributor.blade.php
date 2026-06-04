@@ -105,8 +105,11 @@
                     <select class="fd-mini-select fd-filter-territory">
                         <option value="">{{ $staticContent['Sales_Territory'] ?? 'Sales Territory' }}</option>
                     </select>
-                    <select class="fd-mini-select fd-filter-certification fd-cert-wrap">
+                    <select class="fd-mini-select fd-filter-certification fd-cert-wrap"@if(count($certList) === 0) style="display:none"@endif>
                         <option value="">{{ $staticContent['Certifications'] ?? 'Certifications' }}</option>
+                        @foreach($certList as $certName)
+                        <option value="{{ $certName }}">{{ $certName }}</option>
+                        @endforeach
                     </select>
                 </div>
                 @foreach($filterGroups as $g)
@@ -177,19 +180,18 @@ $(function () {
         var map = {};
         (items || []).forEach(function (x) { x = ('' + x).trim(); if (x) map[x.toLowerCase()] = x; });
         $sel.find('option:not(:first)').remove();
-        Object.keys(map).sort().forEach(function (k) { $sel.append($('<option>').val(map[k]).text(map[k])); });
+        var keys = Object.keys(map).sort();
+        keys.forEach(function (k) { $sel.append($('<option>').val(map[k]).text(map[k])); });
         $sel.val(keep && map[keep.toLowerCase()] ? keep : '');
+        return keys.length;
     }
 
-    // 依目前地區重建下拉：Sales Territory 依管理端設定的地區；Certifications 由該區經銷商彙整
+    // Certifications：選項由後端 $certList（認證分類表）直接 render，整頁固定，不隨地區變動。
+
+    // Sales Territory：依目前地區過濾；該地區沒有設定就隱藏整個下拉。
     function rebuildDropdowns() {
-        fillSelect($('.fd-filter-territory'), territoryByContinent[activeContinent] || [], $('.fd-filter-territory').val());
-        var certs = [];
-        $cards.each(function () {
-            if (('' + $(this).attr('data-continent')) !== ('' + activeContinent)) return;
-            ('' + ($(this).attr('data-certs') || '')).split('|').forEach(function (x) { if (x.trim()) certs.push(x.trim()); });
-        });
-        fillSelect($('.fd-filter-certification'), certs, $('.fd-filter-certification').val());
+        var n = fillSelect($('.fd-filter-territory'), territoryByContinent[activeContinent] || [], $('.fd-filter-territory').val());
+        $('.fd-filter-territory').toggle(n > 0);
     }
 
     // 類間 AND
