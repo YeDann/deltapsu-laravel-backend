@@ -107,6 +107,8 @@ window.MRChunkUpload = (function () {
                 if (posterBlob) { uploadPoster(o.posterUrl, o.csrf, finalFile, posterBlob); }
                 o.bar.css('width', '100%').text('100%');
                 o.status.text('上傳完成');
+                // 短暫顯示 100% 後收起進度條；重選檔時 fileAdded 會再 removeClass 顯示
+                setTimeout(function () { o.progress.addClass('d-none'); }, 800);
             } else {
                 o.bar.addClass('bg-danger');
                 o.status.text('上傳失敗（伺服器未回傳檔名）');
