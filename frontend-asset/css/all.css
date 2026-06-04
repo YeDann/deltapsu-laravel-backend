@@ -15622,8 +15622,8 @@ a.filter-mobile-link:hover {
 
 .cardlist-toadd {
     position: relative;
-    height: 270px;
-    padding: 1rem 0rem 0rem 1rem;
+    height: auto;
+    padding: 0.5rem 0rem 0.5rem 1rem;
 }
 
 .cardlist-view {
