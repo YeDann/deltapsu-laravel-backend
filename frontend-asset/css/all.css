@@ -15626,6 +15626,10 @@ a.filter-mobile-link:hover {
     padding: 0.5rem 0rem 0.5rem 1rem;
 }
 
+/* 列表卡片只圓外側角：第一格圓左、最後一格圓右，避免內側出現弧度 */
+#dtBasicExample .box-cardlist td:first-child { border-radius: 6px 0 0 6px !important; }
+#dtBasicExample .box-cardlist td:last-child { border-radius: 0 6px 6px 0 !important; }
+
 .cardlist-view {
     /* position: relative; */
     width: 170px;
