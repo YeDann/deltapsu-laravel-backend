@@ -35,6 +35,8 @@
     #related-product-mobile .item-related {
         width: 100%;
         height: 200px;
+        flex-direction: column;
+        justify-content: center;
         border: 2px solid #dcdcdc;
         background-size: cover;
         background: no-repeat;
