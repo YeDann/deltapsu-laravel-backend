@@ -1,6 +1,13 @@
 @extends('layouts.front-end')
 @section('css')
 <style>
+    /* FAQs 分類下拉框延伸滿版（deck Slide 37，比照 deltaww Country/Region）。
+       原本外層 .in-div-center 是 flex 置中、把 select 縮成內容寬；這頁改 block 讓它吃滿 container。
+       scope 在 .box-faqs，不影響 applicationdetail 用 .in-div-center 置中的 Contact Us 按鈕 */
+    .box-faqs .in-div-center {
+        display: block;
+    }
+
     .faqs-list {
         color: #0087DC;
         font-size: 16px;
