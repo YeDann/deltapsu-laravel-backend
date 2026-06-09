@@ -312,6 +312,58 @@
         padding-left: 0;
         padding-right: 0;
     }
+
+    /* 769–991px：桌機 banner 兩欄(col-lg-6)會上下堆疊，圖原本 .middle-img 絕對定位會疊到文字。
+       改成正常流：文字與圖垂直堆疊、各自水平置中，banner 貼合內容＋上下對稱留白，不重疊 */
+    @media (min-width: 769px) and (max-width: 991px) {
+        #products-index-banner-type .banner-type-product-all {
+            height: auto;
+            padding: 32px 0;
+        }
+        #products-index-banner-type .box-banner-pro-type-all {
+            height: auto;
+        }
+        #products-index-banner-type .box-banner-pro-type-all .text-middle {
+            position: static;
+            transform: none;
+            text-align: center;
+        }
+        #products-index-banner-type .banner-products-pic {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0;
+        }
+        #products-index-banner-type .banner-products-pic .middle-img {
+            position: static;
+            transform: none;
+            margin-top: 16px;
+            max-height: 240px;
+        }
+    }
+
+    /* ≤768px 手機版 banner：圖原本只有 max-width、無 max-height，整張會撐高溢出蓋到下方 Search。
+       banner 改貼合內容、圖限制最大高度，不再溢出 */
+    @media (max-width: 768px) {
+        .products-index-banner-tablet-down .banner-type-product-all-tablet-down {
+            height: auto;
+            padding: 24px 0;
+        }
+        .products-index-banner-tablet-down .img-res-prolis {
+            max-height: 200px;
+            width: auto;
+        }
+    }
+
+    /* filter 側欄 checkbox：長標籤換行時用 flex 讓框固定在左、文字縮排對齊第一行
+       （取代 inline-block 換行整段掉到框下方的問題）；單行標籤外觀不變 */
+    .box-input-checkbox .cbx {
+        display: flex;
+        align-items: flex-start;
+    }
+    .box-input-checkbox .cbx span:first-child {
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
     .add-hight{
         margin-top:10px;
     }
@@ -1916,7 +1968,7 @@
         }
         html += '<div class="card-body ft-products-item hover01"><figure><img src="'+domainUrl+'/upload/thumbs/'+pro['picture']+'" class="product-cat mb-2" style="width:70%;"></figure>';
         html += '<div class="">';
-        html += '<h4 class="text-title-ft">'+checkNull(pro['pro_code'])+'</h4>';
+        html += '<h4 class="text-title-ft">'+pro['pro_code']+'</h4>';
         html += '</a>';
         html += '<div class="d-flex flex-wrap" >';
         html += '<div class="mr-3">';
