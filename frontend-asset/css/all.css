@@ -12363,7 +12363,7 @@ a .title-new {
 }
 
 .read-more::after {
-  content: "\f054";
+  content: "\f105";
   font-family: 'FontAwesome';
   margin-left: 6px;
   font-size: 12px;
@@ -13403,6 +13403,41 @@ hr {
 
 .content {
     margin-top: 24px;
+    font-size: 18px;   /* 內文預設 PC18（色繼承 body 的 #000）*/
+}
+
+/* 文章內容是 CMS 富文本 HTML，字級多半以 inline style 存在 DB
+   （例如 <p style="font-size:16px">、<h2 style="font-size:22px">）。
+   外部 CSS 的優先序蓋不過 inline，所以這裡必須用 !important，
+   才能把 deck 要求的字級（內文 PC18/手機16、小標 PC24/手機18）統一強制套上。
+   副作用：會一併蓋掉編輯對個別段落/標題故意設定的大小 —— 但「字級統一」正是此需求。 */
+.content p {
+    font-size: 18px !important;
+}
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+    font-size: 24px !important;
+}
+
+@media (max-width: 768px) {
+    .content {
+        font-size: 16px;
+    }
+    .content p {
+        font-size: 16px !important;
+    }
+    .content h1,
+    .content h2,
+    .content h3,
+    .content h4,
+    .content h5,
+    .content h6 {
+        font-size: 18px !important;
+    }
 }
 
 /* .content .image-event {
