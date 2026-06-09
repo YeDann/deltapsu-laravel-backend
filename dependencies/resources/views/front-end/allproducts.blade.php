@@ -32,6 +32,34 @@
         top: 50%;
         transform: translate(-50%, -50%);
     }
+
+    /* Banner 左右兩欄都改 flex 置中，縮放時才會一直保持置中（取代 .text-middle / .middle-img 的 translate hack） */
+    #slide-banner-products .box-banner-pro-type-all {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 317px;
+    }
+
+    #slide-banner-products .box-banner-pro-type-all .text-middle {
+        position: static;
+        transform: none;
+        top: auto;
+        left: auto;
+        width: 100%;
+    }
+
+    #slide-banner-products .banner-products-pic {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 317px;
+    }
+
+    #slide-banner-products .banner-products-pic img {
+        position: static;
+        transform: none;
+    }
 </style>
 @endsection
 @section('meta')
@@ -46,7 +74,7 @@
 <div class="visible-up-922">
     <div class="padding-top-content ">
     </div>
-    <div class="products-index-banner">
+    <div class="products-index-banner" id="products-index-banner-type">
         <div class="products-index-nav">
             <div class="bg-bredcrumb">
                 <div class="container">
@@ -62,6 +90,7 @@
                 </div>
             </div>
         </div>
+        <div class="padding-top-content-breadcrumb"></div>
         <div class="nav-desktop-allproduct" style="display:none;">
             <div class="nav-allproduct-desk d-flex justify-content-between " data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
@@ -113,7 +142,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6">
-                            <div class="box-banner-pro-type-all-new">
+                            <div class="box-banner-pro-type-all">
                                 <div class="text-middle">
                                     <h1 class="text-title-banner">{{$pro->pro_code}}</h1>
                                     <div class="text-p-banner">
@@ -129,15 +158,15 @@
                                     </div>
                                     <a
                                         href="{{route('productsDetailsByType',[ preg_replace('/\s+/', '-', $pro->url_item),$pro->pro_code ])}}">
-                                        <div class="link-see-product">{{$staticContent['See_Products']}} <i
+                                        <div class="link-see-product mt-3">{{$staticContent['See_Products']}} <i
                                                 class="zmdi zmdi-chevron-right" aria-hidden="true"></i>
                                         </div>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 banner-products-pic-new">
-                            <img class="midle-item-img" src="{{config('app.url')}}/upload/thumbs/{{$pro->picture}}"
+                        <div class="col-lg-6 banner-products-pic">
+                            <img class="img-fluid middle-img" src="{{config('app.url')}}/upload/thumbs/{{$pro->picture}}"
                                 alt="">
                         </div>
                     </div>
@@ -150,7 +179,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-6">
-                            <div class="box-banner-pro-type-all-new">
+                            <div class="box-banner-pro-type-all">
                                 <div class="text-middle">
                                     <h2 class="text-title-banner" style="color:{{$pro2->title_color}}">
                                         <?php
@@ -174,7 +203,7 @@
                                     }
                                     ?>
                                     </div>
-                                    <div class="link-see-product" style="color:{{$pro2->title_color}}">
+                                    <div class="link-see-product mt-3" style="color:{{$pro2->title_color}}">
                                         {{$staticContent['See_More']}}<i class="zmdi zmdi-chevron-right"
                                             aria-hidden="true"></i>
                                     </div>
@@ -182,7 +211,7 @@
                             </div>
                         </div>
                         <div class="col-lg-6 banner-products-pic">
-                            <img class="midle-item-img" src="{{config('app.url')}}/medias/categories/{{$pro2->image}}"
+                            <img class="img-fluid middle-img" src="{{config('app.url')}}/medias/categories/{{$pro2->image}}"
                                 alt="">
                         </div>
                     </div>
@@ -649,7 +678,9 @@
     </div>
     <div class="product-type-boxitem" id="delta-industrial-power-supplies">
         @foreach ($mainCategories as $mainCate)
-        <h2 class="text-title-delta">{{$mainCate->name}}</h2>
+        <div class="container">
+            <h2 class="text-title-delta">{{$mainCate->name}}</h2>
+        </div>
         @foreach ($subCategories as $subCate)
         @if($subCate->main_cateid == $mainCate->main_id)
         <div class="product-type-boxitem-sub" id="tab_cate_mobile{{$mainCate->main_id}}{{$subCate->sub_pro_id}}">
