@@ -9781,10 +9781,10 @@ html[html_lang="de"] .navbar-expand-lg .navbar-nav .nav-link {
     display: inline-block;
     padding-right: .5rem;
     padding-left: .5rem;
-    color: #444444;
-    content: "\f105\00a0";
-    font-family: 'fontawesome';
-    font-weight: bold;
+    color: rgb(150, 150, 150);
+    content: ">";
+    font-family: inherit;
+    font-weight: normal;
 }
 
 .breadcrumb-item a {
@@ -14114,7 +14114,7 @@ table.model-num tbody td:last-child {
 
 .box-doc-type .box-doc-list:after {
     font-family: 'FontAwesome';
-    content: "\f077";
+    content: "\f106";
     float: right;
     font-size: 18px;
     color: #888;
@@ -14127,14 +14127,14 @@ table.model-num tbody td:last-child {
 }
 .box-doc-type .box-doc-list.collapsed:after {
     /* symbol for "collapsed" panels */
-    content: "\f078";
+    content: "\f107";
 }
 
 
 
 .box-spc:after {
     font-family: 'FontAwesome';
-    content: "\f077";
+    content: "\f106";
     float: right;
     font-size: 18px;
     color: #888;
@@ -14142,7 +14142,7 @@ table.model-num tbody td:last-child {
 
 .box-spc.collapsed:after {
     /* symbol for "collapsed" panels */
-    content: "\f078";
+    content: "\f107";
 }
 
 .box-doc-list {
