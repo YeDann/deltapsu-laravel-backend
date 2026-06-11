@@ -101,8 +101,10 @@
 </div>
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
 <section class="box-news pb-5">
-    <h2 class="text-title-delta visible-tablets-up">{{$staticContent['Marketing_Resources']}}</h2>
-    <h3 class="text-title-delta visible-mobile">{{$staticContent['Marketing_Resources']}}</h3>
+    <div class="container">
+        <h2 class="text-title-delta visible-tablets-up">{{$staticContent['Marketing_Resources']}}</h2>
+        <h3 class="text-title-delta visible-mobile">{{$staticContent['Marketing_Resources']}}</h3>
+    </div>
     <div class="container">
         <div class="marketing-grid">
             @if(session('partner_role') == 1)
