@@ -13408,35 +13408,83 @@ hr {
 
 /* 文章內容是 CMS 富文本 HTML，字級多半以 inline style 存在 DB
    （例如 <p style="font-size:16px">、<h2 style="font-size:22px">）。
-   外部 CSS 的優先序蓋不過 inline，所以這裡必須用 !important，
-   才能把 deck 要求的字級（內文 PC18/手機16、小標 PC24/手機18）統一強制套上。
-   副作用：會一併蓋掉編輯對個別段落/標題故意設定的大小 —— 但「字級統一」正是此需求。 */
-.content p {
+   外部 CSS 的優先序蓋不過 inline，所以這裡用 !important，
+   把 deck 要求的字級（內文 PC18/手機16、小標 PC24/手機18）統一強制套上。
+   排除 .wizard 內的 .content：jquery.steps 的步驟容器同樣叫 .content
+   （例如 Configurable Selector #configurable.wizard > .content），不該套到文章 CMS 字級。 */
+.content:not(.wizard .content) p {
     font-size: 18px !important;
 }
-.content h1,
-.content h2,
-.content h3,
-.content h4,
-.content h5,
-.content h6 {
+.content:not(.wizard .content) h1,
+.content:not(.wizard .content) h2,
+.content:not(.wizard .content) h3,
+.content:not(.wizard .content) h4,
+.content:not(.wizard .content) h5,
+.content:not(.wizard .content) h6 {
     font-size: 24px !important;
 }
 
 @media (max-width: 768px) {
-    .content {
+    .content:not(.wizard .content) {
         font-size: 16px;
     }
-    .content p {
+    .content:not(.wizard .content) p {
         font-size: 16px !important;
     }
-    .content h1,
-    .content h2,
-    .content h3,
-    .content h4,
-    .content h5,
-    .content h6 {
+    .content:not(.wizard .content) h1,
+    .content:not(.wizard .content) h2,
+    .content:not(.wizard .content) h3,
+    .content:not(.wizard .content) h4,
+    .content:not(.wizard .content) h5,
+    .content:not(.wizard .content) h6 {
         font-size: 18px !important;
+    }
+}
+
+/* Privacy Policy / Terms of Use（Slide 54/55）
+   兩頁皆為 CMS 富文本，字級與顏色以 inline style 存在 DB，外部 CSS 蓋不過，
+   故 scope 在 .box-privacy .container（用 :not(.pt-5) 排除標題那層）+ !important，
+   統一 deck 字級：內文 PC18/手機16、小標 PC24/手機18，內文黑字統一 #000（藍色小標保留 Delta 藍）。
+   Privacy 把 text-title-detail 同時用在藍色小標與內文段落（內文包在 <span> 內），
+   所以小標字級下在 p.text-title-detail，再用內層 span 把內文壓回 18px；連結另給字級避免繼承小標 24px。 */
+.box-privacy .container:not(.pt-5) p.text-title-detail,
+.box-privacy .container:not(.pt-5) h2,
+.box-privacy .container:not(.pt-5) h3,
+.box-privacy .container:not(.pt-5) h4,
+.box-privacy .container:not(.pt-5) h5 {
+    font-size: 24px !important;
+}
+/* h6（Terms 項目小標 ACCEPTANCE/COPYRIGHT…）維持內文字級 18/16、保留 Delta 藍 */
+.box-privacy .container:not(.pt-5) span,
+.box-privacy .container:not(.pt-5) p.text-bold,
+.box-privacy .container:not(.pt-5) p:not(.text-title-detail),
+.box-privacy .container:not(.pt-5) li,
+.box-privacy .container:not(.pt-5) h6,
+.box-privacy .container:not(.pt-5) a {
+    font-size: 18px !important;
+}
+.box-privacy .container:not(.pt-5) span,
+.box-privacy .container:not(.pt-5) p.text-bold,
+.box-privacy .container:not(.pt-5) p:not(.text-title-detail),
+.box-privacy .container:not(.pt-5) li {
+    color: #000 !important;
+}
+
+@media (max-width: 768px) {
+    .box-privacy .container:not(.pt-5) p.text-title-detail,
+    .box-privacy .container:not(.pt-5) h2,
+    .box-privacy .container:not(.pt-5) h3,
+    .box-privacy .container:not(.pt-5) h4,
+    .box-privacy .container:not(.pt-5) h5 {
+        font-size: 18px !important;
+    }
+    .box-privacy .container:not(.pt-5) span,
+    .box-privacy .container:not(.pt-5) p.text-bold,
+    .box-privacy .container:not(.pt-5) p:not(.text-title-detail),
+    .box-privacy .container:not(.pt-5) li,
+    .box-privacy .container:not(.pt-5) h6,
+    .box-privacy .container:not(.pt-5) a {
+        font-size: 16px !important;
     }
 }
 
@@ -14351,7 +14399,7 @@ table.model-num tbody td:last-child {
 /* sale office */
 .sales-offices-type .sales-offices-list:after, .find-distributor-type .find-distributor-list:after ,.product-docment-list:after{
     font-family: 'FontAwesome';
-    content: "\f077";
+    content: "\f106";
     float: right;
     font-size: 18px;
     color: #888;
@@ -14359,7 +14407,7 @@ table.model-num tbody td:last-child {
 
     .sales-offices-type .sales-offices-list.collapsed:after ,.find-distributor-type .find-distributor-list.collapsed:after,.product-docment-list.collapsed:after{
         /* symbol for "collapsed" panels */
-        content: "\f078";
+        content: "\f107";
     }
 
     .sales-offices-list ,.find-distributor-list,.product-docment-list{
@@ -14379,6 +14427,24 @@ table.model-num tbody td:last-child {
     }
     .product-docment-list-sub{
         padding-bottom: 2rem;
+    }
+
+    /* Sales Offices（deck Slide 50）字級統一：地區小標 PC24/手機18、辦公室明細內文 PC18/手機16 #000。
+       scope 在 .sales-offices-type，避免動到共用同款 class 的 Find Distributor / Product Document */
+    .sales-offices-type .sales-offices-list h5 {
+        font-size: 24px;
+    }
+    .sales-offices-type .sales-offices-list-sub {
+        font-size: 18px;
+        color: #000;
+    }
+    @media (max-width: 768px) {
+        .sales-offices-type .sales-offices-list h5 {
+            font-size: 18px;
+        }
+        .sales-offices-type .sales-offices-list-sub {
+            font-size: 16px;
+        }
     }
     .force-overflow {
     min-height: 200px;

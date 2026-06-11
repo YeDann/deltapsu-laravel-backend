@@ -19,9 +19,11 @@
     }
 
     /* test */
+    /* 手風琴 +/- 改成細 chevron
+       由 zmdi 的 −/＋ 換成 FontAwesome 細 angle，與其他頁手風琴一致 */
     .comparison-type .comparison-list:after {
-        font-family: 'Material-Design-Iconic-Font';
-        content: "\f273";
+        font-family: 'FontAwesome';
+        content: "\f106";   /* 展開時 ∧ (angle-up) */
         float: right;
         font-size: 24px;
         color: #444444;
@@ -29,7 +31,7 @@
 
     .comparison-type .comparison-list.collapsed:after {
         /* symbol for "collapsed" panels */
-        content: "\f278";
+        content: "\f107";   /* 收合時 ∨ (angle-down) */
     }
 
     .comparison-list {
@@ -44,6 +46,19 @@
 
     .comparison-list-sub {
         padding: 12px;
+    }
+
+    /* 系列名（CHROME II 等）字級 PC18/手機16（deck Slide 52）。
+       原本用 .text-two(14px)，但 .text-two 也用在比較表數值，故換成獨立 class、只改系列名 */
+    .comparison-series-name {
+        font-size: 18px;
+        font-weight: 300;
+        margin-bottom: 0.25rem;
+    }
+    @media (max-width: 768px) {
+        .comparison-series-name {
+            font-size: 16px;
+        }
     }
 
     .force-overflow {
@@ -190,7 +205,7 @@
     <div id="contentLodpdf" class="box-comparison mb-5">
         <div class="container">
             <h1 class="text-title-delta">{{$staticContent['product_comparison']}}</h1>
-            <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
+            <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
             <p class="text-center text-sixteen-dark">{{$staticContent['Type']}}</p>
             <div class="d-flex mb-3">
                 <div class="mx-auto">
@@ -244,7 +259,7 @@
                                 <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
                                     <img class="w-100" src="{{config('app.url')}}/upload/thumbs/{{$result->picture}}"
                                         alt="">
-                                    <p class="text-center text-dark">{{$result->seName}}</p>
+                                    <p class="text-center text-dark comparison-series-name">{{$result->seName}}</p>
                                     <p class="text-title-twentyfour-delta text-center">{{$result->pro_code}}</p>
                                     <div class="btn-center">
                                         <button class="btn-enquiry">ENQUIRY</button>
@@ -330,7 +345,7 @@
     </div>
     <div class="container">
         <h3 class="text-title-delta">{{$staticContent['product_comparison']}}</h3>
-        <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
+        <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
         <h5 class="text-center">{{$staticContent['Type']}}</h5>
         <div class="d-flex justify-content-center mb-2">
             <select id="proType_mobile" class="form-control w-100 pr-4 border-radius-6" onchange="chageProductTypeMobile();">
@@ -407,7 +422,7 @@
 </div>
 @endsection
 
-@section('js') 
+@section('js')
 
 <script>
     $("#collapse-output").collapse('show');
@@ -420,12 +435,12 @@
         if (scrollTop >= offsetTop) {
             $(".add-compare-nav").slideDown(500);
         }else{
-            $(".add-compare-nav").fadeOut(); 
+            $(".add-compare-nav").fadeOut();
         }
         if (scrollTop >= 400) {
             $(".nav-enquiry-mobile").slideDown(500);
         }else{
-            $(".nav-enquiry-mobile").fadeOut(); 
+            $(".nav-enquiry-mobile").fadeOut();
         }
     });
     var comArr = [];
@@ -470,12 +485,12 @@
         $('#nextdata').addClass('d-none');
         $('#predata').addClass('d-none');
       }
-        
-       
+
+
         setAllFrist(pro1 ,pro2 , pro3)
         contentLoad();
         // console.log(comArr);
-     
+
     });
     function clearProduct(){
         pro1 = 0;
@@ -498,7 +513,7 @@
            }
         });
         contentLoad();
-       
+
     }
      function loadhtml(){
          var arrcon = [];
@@ -540,13 +555,13 @@
         loadSetImageMobile(pro2 ,2)
       $("#procom-mobile1 option[value="+pro1+"]").prop('selected', true);
       $("#procom-mobile2 option[value="+pro2+"]").prop('selected', true);
-   
+
       $("#procom1 option[value="+pro1+"]").prop('selected', true);
-      $("#procomnav1 option[value="+pro1+"]").prop('selected', true); 
+      $("#procomnav1 option[value="+pro1+"]").prop('selected', true);
       $("#procom2 option[value="+pro2+"]").prop('selected', true);
-      $("#procomnav2 option[value="+pro2+"]").prop('selected', true); 
+      $("#procomnav2 option[value="+pro2+"]").prop('selected', true);
       $("#procom3 option[value="+pro3+"]").prop('selected', true);
-      $("#procomnav3 option[value="+pro3+"]").prop('selected', true); 
+      $("#procomnav3 option[value="+pro3+"]").prop('selected', true);
 
     }
     var countItem  = 2;
@@ -567,7 +582,7 @@
         pro1 = comArr[countItem-1];
         pro2  = comArr[countItem];
         contentloadMobile();
-     
+
     }
     function BackData(){
         countItem  = countItem-2;
@@ -589,9 +604,9 @@
     }
     function pushtoArr(val ,pos){
         comArr[pos] = val;
-      
+
     }
-    
+
     function fidoldpo(val){
         var index = comArr.indexOf(val);
         return index;
@@ -619,7 +634,7 @@
         loadSetImageMobile(newpro2,2);
         contentLoad();
       }else{
-     
+
         alert('The selected model has been added to the Comparison list.');
         var indexset = $('#mobileindex2').val();
         if(indexset == 2){
@@ -627,7 +642,7 @@
         }else{
             $("#procom-mobile2 option[value="+comArr[1]+"]").prop('selected', true);
         }
-      
+
         // if(fidoldpo(newpro2) == 0){
         //     $("#procom-mobile2 option[value="+comArr[0]+"]").prop('selected', true);
         // }else if(fidoldpo(newpro2) == 1){
@@ -635,7 +650,7 @@
         // }else if(fidoldpo(newpro2) == 2){
         //     $("#procom-mobile2 option[value="+comArr[2]+"]").prop('selected', true);
         // }
-      
+
       }
     }
 
@@ -654,7 +669,7 @@
             var url = '{{config('app.url')}}/upload/thumbs/';
             var html2 = '';
             var html3  = '';
-  
+
            var t_id = $('#proType_mobile').val();
            var t_name = $('#proType_mobile option:selected').text();
            $.ajax({
@@ -671,22 +686,22 @@
             $.each(res['data'], function(index,val){
                 html2 +=  '<div class="">';
                 html2 +=  '<img class="img-fluid w-75 mb-2" src="'+url+val['picture']+'" alt="">';
-                html2 +=  '  <p class="text-two">'+val['seName'] +'</p>';
-                html2 += '<a target="_blank" href="'+link+'/'+t_name.replace(/ /g,"_")+'/'+val['pro_code']+'">';    
+                html2 +=  '  <p class="comparison-series-name">'+val['seName'] +'</p>';
+                html2 += '<a target="_blank" href="'+link+'/'+t_name.replace(/ /g,"_")+'/'+val['pro_code']+'">';
                 html2 +=    '<h5 class="text-color-delta">'+val['pro_code']+'</h5>';
                 html2 +=    '</a>';
                 html2 += '   <a class="btn btn-enquiry w-100" href="{{route('LinktoEnquiry')}}/'+t_id+'/'+t_name+'/'+val['pro_code']+'">{{$staticContent['Enquiry']}}</a>';
-                html2 += '</div>';     
+                html2 += '</div>';
 
-                html3 += ' <p class="text-two">'+val['seName'] +'</p>';
+                html3 += ' <p class="comparison-series-name">'+val['seName'] +'</p>';
                 html3 += ' <h5 class="text-color-delta">'+val['pro_code']+'</h5>';
-                html3 += '<a class="btn btn-enquiry w-100" href="{{route('LinktoEnquiry')}}/'+t_id+'/'+t_name+'/'+val['pro_code']+'">{{$staticContent['Enquiry']}}</a>'    
+                html3 += '<a class="btn btn-enquiry w-100" href="{{route('LinktoEnquiry')}}/'+t_id+'/'+t_name+'/'+val['pro_code']+'">{{$staticContent['Enquiry']}}</a>'
             });
-               
 
-             $('#imagepro_com_mobile'+id).html(html2);   
-             $('#nav_mobilepro'+id).html(html3);   
-          
+
+             $('#imagepro_com_mobile'+id).html(html2);
+             $('#nav_mobilepro'+id).html(html3);
+
            }
            });
      }
@@ -742,7 +757,7 @@
            }
            });
            chageProductTypeMobile();
-     
+
     }
 
     function chageProductTypeMobile(){
@@ -763,7 +778,7 @@
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            },
            success: function (res) {
-         
+
             var html = '';
             html += '<option value="0">Please Select*</option>';
             $.each(res['data'], function(index,val){
@@ -776,14 +791,14 @@
     }
     function chedup(proid){
          var index =  comArr.indexOf(proid);
-     
+
         return index == -1;
     }
-    
-  
+
+
     function selectprocom1(clcom){
       var selectedId =  $('#'+clcom).val();
-   
+
       if(chedup(selectedId)){
           pro1  = selectedId;
             pushtoArr(pro1 ,0);
@@ -800,21 +815,21 @@
     }
     function selectprocom2(clcom){
       var selectedId =  $('#'+clcom).val();
-     
+
       if(chedup(selectedId)){
         pro2  = selectedId;
         pushtoArr(pro2 ,1);
         contentLoad();
         setproimage(pro2 ,2);
-     
+
         $("#procom2 option[value="+selectedId+"]").prop('selected', true);
-        $("#procomnav2 option[value="+selectedId+"]").prop('selected', true); 
+        $("#procomnav2 option[value="+selectedId+"]").prop('selected', true);
       }else{
         alert('The selected model has been added to the Comparison list.');
         $("#procom2 option[value="+comArr[1]+"]").prop('selected', true);
-        $("#procomnav2 option[value="+comArr[1]+"]").prop('selected', true); 
+        $("#procomnav2 option[value="+comArr[1]+"]").prop('selected', true);
       }
-    
+
     }
     function selectprocom3(clcom){
       var selectedId =  $('#'+clcom).val();
@@ -823,17 +838,17 @@
       pushtoArr(pro3 ,2);
       contentLoad();
       setproimage(pro3 ,3);
-    
+
       $("#procom3 option[value="+selectedId+"]").prop('selected', true);
-      $("#procomnav3 option[value="+selectedId+"]").prop('selected', true); 
+      $("#procomnav3 option[value="+selectedId+"]").prop('selected', true);
       }else{
         alert('The selected model has been added to the Comparison list.');
         $("#procom3 option[value="+comArr[2]+"]").prop('selected', true);
-        $("#procomnav3 option[value="+comArr[2]+"]").prop('selected', true); 
+        $("#procomnav3 option[value="+comArr[2]+"]").prop('selected', true);
       }
     }
     function contentLoad(){
-        loadnewPerti();  
+        loadnewPerti();
     }
     function contentloadDesk(){
           var arrType3 = [];
@@ -842,7 +857,7 @@
            html += '<div class="box-for-collap">';
            html += '<div class="comparison-list   hide-box text-delta" data-toggle="collapse"  data-parent="#comparison-type"';
            html += 'href="#collapse-headCom'+section['id']+'" >';
-           html += section['name']; 
+           html += section['name'];
            html += '</div>';
            html += ' <div id="collapse-headCom'+section['id']+'" class="comparison-list-sub collapse" aria-expanded="true" data-parent="#comparison-type">';
            html += '<div class="force-overflow">';
@@ -858,14 +873,14 @@
                     if(section['id'] == 3){
                         arrType3.push(index2);
                         var lastindex = arrType3[arrType3.length - 1];
-                      
+
                     }
                 html += ' <tr id="addhtml'+lastindex+'">';
 
                }else{
-                html += ' <tr class="d-none">';  
+                html += ' <tr class="d-none">';
                }
-       
+
            html += ' <td class="col-1 col-xs-3 '+index2+'">'+pd_val['field_name']+'</td>';
            html += '<td class="col-xs-3">'+search(pd_val['id'],pro1,pd_val['type'] ,pd_val['unit_name']) +'</td>';
            html += ' <td class="col-xs-3">'+search(pd_val['id'],pro2,pd_val['type'] ,pd_val['unit_name']) +'</td>';
@@ -873,13 +888,13 @@
            html += '</tr>';
            }
         //    else if(section['id'] == 3){
-         
+
         //     if( pro1 != 0
         //       || pro2 != 0
         //       || pro3 != 0){
         //      if(index2 == 0){
-        //         html += '<tr id="addhtml3"></tr>'; 
-        //         html += '<tr id="addhtmldi3"></tr>'; 
+        //         html += '<tr id="addhtml3"></tr>';
+        //         html += '<tr id="addhtmldi3"></tr>';
         //       }
         //       }
         //     }
@@ -889,7 +904,7 @@
             //     || pro3 != 0){
             //     html += ' <tr>';
             //    }else{
-            //     html += ' <tr class="d-none">';  
+            //     html += ' <tr class="d-none">';
             //    }
             // if(index2 == 0){
             //   html += ' <td class="col-1 col-xs-3">Dimensions</td>';
@@ -898,10 +913,10 @@
             //   html += '<td class="col-xs-3">'+getDimansion(pro3)+'</td>'
             //   html += '</tr>';
             // }
-         
+
          });
            html += '</tbody>';
-           html += '</table>'; 
+           html += '</table>';
            html += '</div>';
            html += '</div>';
            html += '</div>';
@@ -963,7 +978,7 @@
         });
        return data;
     }
-    
+
     function contentloadMobile(){
         var html = '';
         $.each(section, function(index,section){
@@ -980,7 +995,7 @@
                 || checkdata(pd_val['id'],pro2,pd_val['type'] ,pd_val['unit_name']) && pro2 != 0){
                 html += ' <div>';
                }else{
-                html += ' <div class="d-none">';  
+                html += ' <div class="d-none">';
                }
             html += ' <div class="comparison-heading">';
             html += ' <h6 class="text-center">'+pd_val['field_name']+'</h6>'
@@ -1012,7 +1027,7 @@
                 html += ' </div>';
                 html +=  ' </div>';
                 html +=   '</div>';
-             } 
+             }
              if(index2 == 0){
                 html += ' <div class="comparison-heading">';
                 html += ' <h6 class="text-center">{{$staticContent['Dimensions']}}</h6>'
@@ -1027,10 +1042,10 @@
                 html += ' </div>';
                 html +=  ' </div>';
                 html +=   '</div>';
-             } 
+             }
           }
         }
-         
+
             });
 
             html +=  '</div>';
@@ -1044,7 +1059,7 @@
            return newkey;
     }
      function setproimage(pro ,id){
-     
+
              if(pro == null || ''){
                   pro = 0 ;
               }
@@ -1065,27 +1080,27 @@
                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
            },
            success: function (res) {
-           
+
             $.each(res['data'], function(index,val){
              html2 += '<img class="w-100" src="'+url+val['picture']+'" alt="" >';
-             html2 += '<p class="text-center text-dark">'+val['seName'] +'</p>'; 
-             html2 += '<a target="_blank" href="'+link+'/'+t_name.replace(/ /g,"_")+'/'+viewKey(val['pro_code'])+'">';      
+             html2 += '<p class="text-center text-dark comparison-series-name">'+val['seName'] +'</p>';
+             html2 += '<a target="_blank" href="'+link+'/'+t_name.replace(/ /g,"_")+'/'+viewKey(val['pro_code'])+'">';
              html2 += '<p class="text-title-twentyfour-delta text-center">'+val['pro_code']+'</p>'
-             html2 += '</a>';    
-             html2 += '<div class="btn-center">'; 
-             html2 += '<a href="{{route('LinktoEnquiry')}}/'+t_id+'/'+t_name+'/'+viewKey(val['pro_code'])+'">';    
+             html2 += '</a>';
+             html2 += '<div class="btn-center">';
+             html2 += '<a href="{{route('LinktoEnquiry')}}/'+t_id+'/'+t_name+'/'+viewKey(val['pro_code'])+'">';
              html2 += '<button class="btn-enquiry">{{$staticContent['Enquiry']}}</button>';
-             html2 += '</a>';    
-             html2 += ' </div>';          
+             html2 += '</a>';
+             html2 += ' </div>';
             });
-             $('#imagepro_com'+id).html(html2);   
+             $('#imagepro_com'+id).html(html2);
            }
            });
      }
 
     function search(fil_id ,proid ,type ,unit){
         var data_result = '-';
-   
+
         if(type == 'number'){
             product_has_property.filter(function(data) {
                if(data['type_id'] == fil_id && data['product_id'] == proid){
@@ -1100,8 +1115,8 @@
                 // }else if(data['data_1'] != null ){
                 //     data_result = data['data_1'] +unit;
                 // }else{
-                   
-                // }  
+
+                // }
                 var datarr = [
                      data['data_1'],
                      data['data_2'],
@@ -1119,20 +1134,20 @@
                 data_result = checkNull(datarr,unit,data['status_input']);
               }
            });
-         
+
         }else if(type == 'text') {
             product_has_property.filter(function(data) {
             if(data['type_id'] == fil_id && data['product_id'] == proid){
                 if(data['value_text'] != null && data['value_text'] != 'null' ){
                     data_result = data['value_text'];
                 }
-               
+
             }
             });
         }
-       
+
         return data_result;
-       
+
     }
 
 
@@ -1146,7 +1161,7 @@
                 }else{
                     data_result = false;
                 }
-               
+
             }
         });
         }else if(type == 'number'){
@@ -1171,7 +1186,7 @@
                 //     data_result = true;
                 // }else{
                 //     data_result = false;
-                // }  
+                // }
                 var datarr = [
                      data['data_1'],
                      data['data_2'],
@@ -1187,30 +1202,30 @@
                      data['data_12']
                 ];
                 var areAllNotNull = datarr.some(function(i) {
-                    
+
                      return i !== null;
                 });
-             
+
                 if(areAllNotNull){
                     data_result = true;
                 }else{
                     data_result = false;
                 }
-             
+
 
 
               }
            });
-         
+
         }else{
             data_result = false;
         }
         if(data_result == ''){
             data_result = false;
         }
-  
+
         return data_result;
-       
+
     }
     function  loadnewPerti(){
         $.ajax({
@@ -1246,7 +1261,7 @@
        }
          return  string;
     }
- 
+
 
 </script>
 

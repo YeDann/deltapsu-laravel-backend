@@ -15,8 +15,10 @@
 <div class="padding-top-content">
 </div>
 <div class="box-privacy mb-5">
-  <h2 class="text-title-delta visible-tablets-up"> {!!$static_content->title !!}</h2>
-  <h3 class="text-title-delta visible-mobile"> {!!$static_content->title !!}</h3>
+    <div class="container pt-5">
+        <h2 class="text-title-delta visible-tablets-up"> {!!$static_content->title !!}</h2>
+        <h3 class="text-title-delta visible-mobile"> {!!$static_content->title !!}</h3>
+    </div>
   <div class="container">
     {!!$static_content->content !!}
     {{-- <h4 class="text-color-delta visible-tablets-up">Website Terms Of Use Agreement</h2>
