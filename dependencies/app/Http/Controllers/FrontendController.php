@@ -2821,7 +2821,7 @@ class FrontendController extends Controller
             ->where('f.type_id', 2)
             ->where('oft.local', '=', $lang)
             ->where('f.status', 1)
-            ->select('f.*', 'oft.title', 'oft.sub_title', 'oft.content')
+            ->select('f.*', 'oft.title', 'oft.sub_title', 'oft.content', 'oft.local')
             ->get();
 
         // 三類分類選項（當前語系），供篩選 UI 與卡片標籤
@@ -2859,7 +2859,7 @@ class FrontendController extends Controller
         $pl = $pivotSlugs($cats['distributor_product_line']['pivot'], 'distributor_product_line');
         $sv = $pivotSlugs($cats['distributor_service']['pivot'], 'distributor_service');
         $terr = $pivotNames($cats['distributor_sales_territory']['pivot'], 'distributor_sales_territory');
-        $cert = $pivotNames($cats['distributor_certification']['pivot'], 'distributor_certification');
+        $cert = $pivotNames($cats['distributor_expertise']['pivot'], 'distributor_expertise');
         foreach ($offices as $o) {
             $o->apps = isset($sa[$o->id]) ? $sa[$o->id]->pluck('slug')->toArray() : [];
             $o->lines = isset($pl[$o->id]) ? $pl[$o->id]->pluck('slug')->toArray() : [];
@@ -2883,8 +2883,8 @@ class FrontendController extends Controller
             });
 
         // Certifications 下拉選項：列出所有啟用中的認證
-        $certList = DB::table('distributor_certification as c')
-            ->join('distributor_certification_translation as t', 't.fk_id', '=', 'c.id')
+        $certList = DB::table('distributor_expertise as c')
+            ->join('distributor_expertise_translation as t', 't.fk_id', '=', 'c.id')
             ->where('t.local', $lang)
             ->where('c.status', 1)
             ->orderBy('c.order_seq')

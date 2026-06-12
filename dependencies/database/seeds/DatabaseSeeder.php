@@ -24,5 +24,8 @@ class DatabaseSeeder extends Seeder
 
         // Phase II — 經銷商名錄匯入（2025 Excel；須在 DistributorCategorySeeder 之後）
         $this->call(DistributorOfficeSeeder::class);
+
+        // Phase II — Find a Distributor：Certificate 按鈕 static word + Certifications→Expertise 顯示值
+        $this->call(DistributorExpertiseKeywordSeeder::class);
     }
 }

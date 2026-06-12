@@ -8,41 +8,84 @@
     #fd-region-tabs .nav-link { margin: -2px 20px; }
     .fd-region-tab { cursor: pointer; }
 
-    /* 篩選列（白底、無外框，貼齊圖示樣式） */
-    .fd-filters { padding: 8px 0 0; }
-    .fd-inline-dropdowns { display: flex; flex-wrap: wrap; gap: 28px; margin-bottom: 10px; }
-    .fd-mini-select {
-        border: none; background: transparent; font-weight: 600; font-size: 14px;
-        color: #000; cursor: pointer; padding: 0 4px 0 0; margin-left: -4px; width: 170px;
+    /* 篩選列：灰底圓角框（比照 slide 7 mockup） */
+    .fd-filters { padding: 24px; background: #f0f0f0; border-radius: 6px; }
+    /* 下拉：白底外框 + 上方標籤（比照 mockup「Please Select」），兩欄並排 */
+    /* 下拉列與下方三欄共用同一組 fd-col-* 寬度(2:2:1)＋padding，確保上下完全對齊 */
+    .fd-dropdowns-row { display: flex; margin-bottom: 20px; }
+    .fd-dd { padding: 0 24px; min-width: 0; }
+    .fd-dd:first-child { padding-left: 0; }
+    .fd-dd-label { font-weight: 700; font-size: 14px; color: #000; margin-bottom: 8px; }
+    .fd-select {
+        width: 100%; height: 40px; padding: 0 10px;
+        border: 1px solid #ccc; border-radius: 4px; background: #fff;
+        font-size: 14px; color: #333; cursor: pointer;
     }
-    .fd-mini-select:focus { outline: none; }
-    .fd-section-title { font-weight: 700; font-size: 14px; color: #000; margin: 16px 0 8px; }
-    /* 每區塊固定欄數對齊（比照圖：應用 5 / 產品線 4 / 服務 3），短標籤不再卡 min-width 亂折 */
-    .fd-filter-group { display: grid; gap: 8px 16px; margin-bottom: 8px; }
-    .fd-filter-group.fd-group-apps { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-    .fd-filter-group.fd-group-lines { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .fd-filter-group.fd-group-services { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    @media (max-width: 767px) { .fd-filter-group { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+    .fd-select:focus { outline: none; border-color: #0087DC; }
+    .fd-section-title { font-weight: 700; font-size: 14px; color: #000; margin: 0 0 12px; }
+    /* 三欄並排（Specialized Applications｜Product Lines｜Services），欄間灰色分隔線（比照 mockup） */
+    .fd-filter-columns { display: flex; }
+    .fd-filter-col { padding: 0 24px; }
+    .fd-filter-col:first-child { padding-left: 0; }
+    .fd-filter-col + .fd-filter-col { border-left: 1px solid #d5d5d5; }
+    .fd-col-apps { flex: 2; }
+    .fd-col-lines { flex: 2; }
+    .fd-col-services { flex: 1; }
+    .fd-filter-group { display: grid; gap: 12px 16px; }
+    .fd-group-apps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fd-group-lines { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fd-group-services { grid-template-columns: 1fr; }
+    @media (max-width: 767px) {
+        .fd-dropdowns-row { flex-direction: column; }
+        .fd-dd { padding: 0 0 14px; }
+        .fd-dd-empty { display: none; }
+        .fd-filter-columns { flex-direction: column; }
+        .fd-filter-col { padding: 16px 0 0; }
+        .fd-filter-col:first-child { padding-top: 0; }
+        .fd-filter-col + .fd-filter-col { border-left: none; border-top: 1px solid #d5d5d5; }
+        .fd-filter-group { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
     .fd-check { display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 400; color: #333; cursor: pointer; }
     .fd-check input { margin-right: 6px; }
 
     /* 結果卡：一列一家、三欄（資訊 / 徽章 / 產品線），比照 Slide5 */
     .fd-results { margin-top: 24px; }
-    .fd-card { display: flex; gap: 28px; border: 1px solid #dcdcdc; border-radius: 6px; padding: 22px 26px; margin-bottom: 20px; }
-    .fd-card-info { flex: 0 0 40%; max-width: 40%; }
-    .fd-card-badges { flex: 0 0 24%; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
-    .fd-card-lines { flex: 1; }
+    .fd-card { display: flex; align-items: center; gap: 28px; border: 1px solid #dcdcdc; border-radius: 6px; padding: 22px 26px; margin-bottom: 20px; }
+    /* 卡片左右 1:2（左=資訊+按鈕、右=Expertise/Product Lines/Services 三區塊），比照 mockup */
+    .fd-card-info { flex: 1; min-width: 0; }
+    .fd-card-detail { flex: 2; min-width: 0; }
+    .fd-card-section { margin-bottom: 16px; }
+    .fd-card-section:last-child { margin-bottom: 0; }
+    .fd-card-sec-title { font-weight: 700; font-size: 14px; color: #000; margin-bottom: 8px; }
+    .fd-card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 16px; }
+    .fd-card-chk { font-size: 14px; color: #333; display: flex; align-items: flex-start; }
+    .fd-card-chk .chk { margin-right: 6px; font-weight: bold; flex-shrink: 0; }
+    .chk-blue { color: #0087DC; }
+    .chk-green { color: #2e7d32; }
+    .fd-svc-icon { width: 18px; height: 18px; margin-right: 6px; flex-shrink: 0; }
     @media (max-width: 767px) {
         .fd-card { flex-direction: column; gap: 14px; }
-        .fd-card-info, .fd-card-badges { flex: auto; max-width: 100%; }
+        .fd-card-info, .fd-card-detail { flex: auto; }
+        .fd-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     .fd-logo { max-height: 96px; max-width: 300px; display: block; margin-bottom: 12px; }
     .fd-name { font-size: 16px; font-weight: 700; color: #000; margin-bottom: 8px; }
     .fd-address { font-size: 14px; color: #333; line-height: 1.6; }
     .fd-address a { color: #0087DC; word-break: break-word; }
-    .fd-tag { background: #0087DC; color: #fff; font-size: 12px; border-radius: 3px; padding: 4px 10px; }
-    .fd-line-item { font-size: 14px; color: #333; margin-bottom: 8px; }
-    .fd-line-item .chk { color: #2e7d32; margin-right: 8px; font-weight: bold; }
+    /* 卡片按鈕：grid 等分使每顆同寬。≥1200 與 <768 一排 3 個；768–1199 左欄較窄改一排 2 個（第 3 個落到第二行）。
+       minmax(0,1fr) 與 button 的 min-width:0 蓋掉全域 .btn-subscribe 的 min-width，避免按鈕撐爆格子；white-space:normal 讓長字(德文等)換行不裁。 */
+    .fd-card-btns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
+    .fd-card-btns a { min-width: 0; display: flex; }
+    .fd-card-btns button {
+        width: 100%; min-width: 0; min-height: 44px; padding: 4px 6px; border-radius: 5px;
+        background: #0087DC; color: #fff; border: 2px solid transparent;
+        font-size: 14px; font-weight: bold; cursor: pointer; white-space: normal; line-height: 1.15; text-align: center;
+        display: inline-flex; align-items: center; justify-content: center;
+    }
+    .fd-card-btns button:hover { background: #1E50C8; }
+    @media (min-width: 768px) and (max-width: 1199px) {
+        .fd-card-btns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
     .fd-empty { text-align: center; color: #646464; padding: 40px 0; }
 </style>
 @endsection
@@ -101,30 +144,38 @@
                 ];
             @endphp
             <div class="fd-filters mb-4">
-                <div class="fd-inline-dropdowns">
-                    <select class="fd-mini-select fd-filter-territory">
-                        <option value="">{{ $staticContent['Sales_Territory'] ?? 'Sales Territory' }}</option>
-                    </select>
-                    @if(count($certList) > 0)
-                    <select class="fd-mini-select fd-filter-certification fd-cert-wrap">
-                        <option value="">{{ $staticContent['Certifications'] ?? 'Certifications' }}</option>
-                        @foreach($certList as $certName)
-                        <option value="{{ $certName }}">{{ $certName }}</option>
-                        @endforeach
-                    </select>
-                    @endif
+                <div class="fd-dropdowns-row">
+                    <div class="fd-dd fd-col-apps">
+                        <div class="fd-dd-label">{{ $staticContent['Sales_Territory'] ?? 'Sales Territory' }}</div>
+                        <select class="fd-select fd-filter-territory">
+                            <option value="">{{ $staticContent['Please_Select'] ?? 'Please Select' }}</option>
+                        </select>
+                    </div>
+                    <div class="fd-dd fd-col-lines">
+                        @if(count($certList) > 0)
+                        <div class="fd-dd-label">{{ $staticContent['Expertise'] ?? 'Expertise' }}</div>
+                        <select class="fd-select fd-filter-certification fd-cert-wrap">
+                            <option value="">{{ $staticContent['Please_Select'] ?? 'Please Select' }}</option>
+                            @foreach($certList as $certName)
+                            <option value="{{ $certName }}">{{ $certName }}</option>
+                            @endforeach
+                        </select>
+                        @endif
+                    </div>
+                    <div class="fd-dd fd-dd-empty fd-col-services"></div>
                 </div>
-                @foreach($filterGroups as $g)
-                <div class="fd-section-title">{{ $g['label'] }}</div>
-                <div class="fd-filter-group fd-group-{{ $g['key'] }}">
-                    @foreach($g['items'] as $c)
-                    <label class="fd-check"><input type="checkbox" class="fd-filter-cb" data-group="{{$g['key']}}" value="{{$c->slug}}"> {{$c->name}}</label>
+                <div class="fd-filter-columns">
+                    @foreach($filterGroups as $g)
+                    <div class="fd-filter-col fd-col-{{ $g['key'] }}">
+                        <div class="fd-section-title">{{ $g['label'] }}</div>
+                        <div class="fd-filter-group fd-group-{{ $g['key'] }}">
+                            @foreach($g['items'] as $c)
+                            <label class="fd-check"><input type="checkbox" class="fd-filter-cb" data-group="{{$g['key']}}" value="{{$c->slug}}"> {{$c->name}}</label>
+                            @endforeach
+                        </div>
+                    </div>
                     @endforeach
-                    @if($g['key'] === 'lines')
-                    <label class="fd-check"><input type="checkbox" class="fd-all" data-group="{{$g['key']}}"> {{ $staticContent['All'] ?? 'All' }}</label>
-                    @endif
                 </div>
-                @endforeach
             </div>
 
             {{-- 結果卡 --}}
@@ -143,12 +194,48 @@
                         @endif
                         <div class="fd-name">{{$office->title}}</div>
                         <div class="fd-address text-editor">{!! $office->content !!}</div>
+                        <div class="fd-card-btns">
+                            <a href="https://www.google.com/maps/?q={{$office->lat}},{{$office->lon}}&sensor=true" target="_blank">
+                                <button class="btn-subscribe">{{ $staticContent['GetDirection'] ?? 'Get Direction' }}</button>
+                            </a>
+                            @if($office->status_cer == 1)
+                            <a href="{{config('app.url')}}/medias/distributor/{{$office->file_cer}}" target="_blank">
+                                <button class="btn-certi">{{ $staticContent['Certificate'] ?? 'Certificate' }}</button>
+                            </a>
+                            @endif
+                            @if($office->local == 'tw' && $office->id == 47)
+                            {{-- 羅昇企業：電商網站按鈕（特定 office，比照原版保留；放最後一個） --}}
+                            <a href="https://www.acepillar-ec.com/collections/delta" target="_blank">
+                                <button class="btn-subscribe">電商網站</button>
+                            </a>
+                            @endif
+                        </div>
                     </div>
-                    <div class="fd-card-badges">
-                        @foreach($office->certs as $cert)<span class="fd-tag">{{ $cert }}</span>@endforeach
-                    </div>
-                    <div class="fd-card-lines">
-                        @foreach($catLists['distributor_product_line'] as $c)@if(in_array($c->slug, $office->lines))<div class="fd-line-item"><span class="chk">&#10003;</span>{{$c->name}}</div>@endif @endforeach
+                    <div class="fd-card-detail">
+                        <div class="fd-card-section">
+                            <div class="fd-card-sec-title">{{ $staticContent['Expertise'] ?? 'Expertise' }}</div>
+                            <div class="fd-card-grid">
+                                @foreach($office->certs as $cert)
+                                <div class="fd-card-chk"><span class="chk chk-blue">&#10003;</span>{{ $cert }}</div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="fd-card-section">
+                            <div class="fd-card-sec-title">{{ $staticContent['Product_Lines'] ?? 'Product Lines' }}</div>
+                            <div class="fd-card-grid">
+                                @foreach($catLists['distributor_product_line'] as $c)@if(in_array($c->slug, $office->lines))
+                                <div class="fd-card-chk"><span class="chk chk-green">&#10003;</span>{{ $c->name }}</div>
+                                @endif @endforeach
+                            </div>
+                        </div>
+                        <div class="fd-card-section">
+                            <div class="fd-card-sec-title">{{ $staticContent['Services_Offered'] ?? 'Services Offered' }}</div>
+                            <div class="fd-card-grid">
+                                @foreach($catLists['distributor_service'] as $c)@if(in_array($c->slug, $office->services))
+                                <div class="fd-card-chk fd-svc"><img class="fd-svc-icon" src="{{asset('frontend-asset/image/distributor-service/'.$c->slug.'.svg')}}" onerror="this.remove()">{{ $c->name }}</div>
+                                @endif @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
                 @endforeach
@@ -225,11 +312,6 @@ $(function () {
     });
     $('.fd-filter-territory, .fd-filter-certification').on('change', applyFilter);
     $('.fd-filter-cb').on('change', applyFilter);
-    $('.fd-all').on('change', function () {
-        var g = $(this).data('group');
-        $('.fd-filter-cb[data-group="' + g + '"]').prop('checked', $(this).prop('checked'));
-        applyFilter();
-    });
 
     rebuildDropdowns();
     applyFilter();
