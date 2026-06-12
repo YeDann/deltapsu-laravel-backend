@@ -35,6 +35,8 @@
     #related-product-mobile .item-related {
         width: 100%;
         height: 200px;
+        flex-direction: column;
+        justify-content: center;
         border: 2px solid #dcdcdc;
         background-size: cover;
         background: no-repeat;
@@ -103,7 +105,10 @@
         padding: 24px;
         border: 2px solid #dcdcdc;
         margin-bottom: 20px;
-
+        /* .media=display:flex；把唯一子元素 .app-middle-box 在卡片內水平置中，
+           使 icon+文字整塊左右留白一致（icon 與文字保持相鄰、不被拆開） */
+        justify-content: center;
+        align-items: center;
     }
 
     .other-applications-list img {
@@ -177,23 +182,19 @@
     }
 
     .h-text-app {
-        /* height: 50px; */
-        width: 163px;
-        top: 50%;
-        left: 30%;
-        -webkit-transform: translate(30%, -50%);
-        -ms-transform: translate(30%, -50%);
-        transform: translate(30%, -50%);
+        min-width: 0;
         text-align: left;
-        vertical-align: middle;
-        position: absolute;
-        word-break: break-all;
+        /* 可換行，但只在詞界（空白）斷，不從單字中間切斷（取代舊的 word-break:break-all）；
+           overflow-wrap:break-word 僅當單一長字塞不下才當保險、一般名稱用不到 */
+        word-break: normal;
+        overflow-wrap: break-word;
     }
 
     .app-middle-box {
         display: flex;
+        align-items: center;
+        /* 內層維持內容寬度（icon 緊鄰文字）；置中交給外層 .other-applications-list 處理 */
         height: 90px;
-        position: relative;
     }
 
     .other-applications-grid-mobile-list img {

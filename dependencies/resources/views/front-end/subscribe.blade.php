@@ -3,8 +3,25 @@
 <style>
     .cbx span:last-child {
         padding-left: 8px;
-        font-size: 14px;
         width: auto !important;
+    }
+
+    /* Slide 56：內文字級統一 PC18/手機16、黑色字 #000。
+       本頁文字寫死在 blade（非 CMS inline），直接 scope 在頁面 wrapper #products-index-banner-type。
+       label 顏色用 !important 蓋過 Bootstrap .text-dark 的 #343a40；必填星號 .red 直接命中、不受繼承影響仍為紅色。 */
+    #products-index-banner-type .subscribe-text,
+    #products-index-banner-type .input-label label,
+    #products-index-banner-type .cbx span:last-child {
+        font-size: 18px;
+        color: #000 !important;
+    }
+
+    @media (max-width: 768px) {
+        #products-index-banner-type .subscribe-text,
+        #products-index-banner-type .input-label label,
+        #products-index-banner-type .cbx span:last-child {
+            font-size: 16px;
+        }
     }
 </style>
 @endsection
@@ -37,7 +54,7 @@
     <div class="container">
         <h1 class="text-title-delta visible-up-922">{{$staticContent['Subscribe']}}</h1>
         <h3 class="text-title-delta invisible-up-922">{{$staticContent['Subscribe']}}</h3>
-        <div class="col-12 mt-4 text-center">
+        <div class="col-12 mt-4 text-left pl-0 subscribe-text">
             Subscribe to DeltaPSU newsletter and be the first to know about our new product releases and industry
             knowledge.
         </div>
@@ -72,7 +89,7 @@
                         </div>
 
                         <div class="col-lg-12 text-center">
-                            <div> You understand and agree to our <a href="{{route('privacyPolicy')}}"
+                            <div class="subscribe-text"> You understand and agree to our <a href="{{route('privacyPolicy')}}"
                                     class="text-underline text-bold"> {{$staticContent['Privacy_Policy']}}</a>.</div>
                             <div class="box-input-checkbox mb-4">
                                 <input class="inp-cbx" name="accept" id="cx-sign-up-sub" onclick="chagedata()" value="0"
