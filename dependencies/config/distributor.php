@@ -14,7 +14,7 @@ $keys = [
     'distributor_product_line',
     'distributor_service',
     'distributor_sales_territory',
-    'distributor_certification',
+    'distributor_expertise',
 ];
 
 $categories = [];

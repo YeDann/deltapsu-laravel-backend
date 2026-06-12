@@ -681,9 +681,9 @@
                             </a>
                         </li>
                         <li class="nav-main-item">
-                            <a class="nav-main-link {{(isset($submenu) && $submenu =='distcat_distributor_certification')?" active":""}}"
-                                href="{{route('distributorCategory.index','distributor_certification')}}">
-                                <span class="nav-main-link-name">Certifications</span>
+                            <a class="nav-main-link {{(isset($submenu) && $submenu =='distcat_distributor_expertise')?" active":""}}"
+                                href="{{route('distributorCategory.index','distributor_expertise')}}">
+                                <span class="nav-main-link-name">Expertise</span>
                             </a>
                         </li>
                         <li class="nav-main-item">

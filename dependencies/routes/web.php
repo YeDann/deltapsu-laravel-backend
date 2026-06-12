@@ -335,7 +335,7 @@ Route::prefix('/backend')->group(function () {
     Route::post('newstypeUpdate', 'NewstypeController@update')->name('newstypeUpdate');
     Route::get('newstypeDestroy/{id?}', 'NewstypeController@destroy')->name('newstypeDestroy');
 
-    // Distributor Filter 分類管理（specialized_application / product_line / distributor_service / sales_territory / distributor_certification）
+    // Distributor Filter 分類管理（specialized_application / product_line / distributor_service / sales_territory / distributor_expertise）
     Route::get('distributor-category/{type}', 'DistributorCategoryController@index')->name('distributorCategory.index');
     Route::get('distributor-category/{type}/create', 'DistributorCategoryController@create')->name('distributorCategory.create');
     Route::post('distributor-category/{type}', 'DistributorCategoryController@store')->name('distributorCategory.store');
