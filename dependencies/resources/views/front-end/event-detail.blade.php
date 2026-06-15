@@ -30,28 +30,13 @@
         margin-top: 24px;
     }
 
-    .text-editor {
-        font-family: Arial, Helvetica, sans-serif !important;
-    }
-
+    /* 內文字體沿用站台預設(DeltaSans)，與 News detail 一致；不再強制 Arial */
     .text-editor iframe {
         max-width: 100%;
     }
 
     .text-editor img {
         max-width: 100%;
-    }
-
-    .text-editor span {
-        font-family: Arial, Helvetica, sans-serif !important;
-    }
-
-    .text-editor label {
-        font-family: Arial, Helvetica, sans-serif !important;
-    }
-
-    .text-editor p {
-        font-family: Arial, Helvetica, sans-serif !important;
     }
 
     .text-editor table img {
