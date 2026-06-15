@@ -18,11 +18,26 @@ class DatabaseSeeder extends Seeder
         // Phase II — Stock icon 標籤
         $this->call(StockKeywordSeeder::class);
 
+        // Phase II — Stock Checking 庫存 Modal 標籤（DILP）
+        $this->call(StockModalKeywordSeeder::class);
+
+        // Phase II — Stock Modal 國別篩選標籤（All Regions）
+        $this->call(StockRegionKeywordSeeder::class);
+
+        // Phase II — Stock Modal 兩層（洲→國）篩選標籤（All Countries + 各洲名）
+        $this->call(StockCountryFilterKeywordSeeder::class);
+
+        // Phase II — Stock Modal 無購物車連結時的「Go to Distributor」按鈕標籤
+        $this->call(StockContactKeywordSeeder::class);
+
         // Phase II — Distributor Filter（只建分類結構與標籤；經銷商資料、洲別名稱由後台維護）
         $this->call(DistributorCategorySeeder::class);
         $this->call(DistributorLabelSeeder::class);
 
         // Phase II — 經銷商名錄匯入（2025 Excel；須在 DistributorCategorySeeder 之後）
         $this->call(DistributorOfficeSeeder::class);
+
+        // Phase II — Find a Distributor：Certificate 按鈕 static word + Certifications→Expertise 顯示值
+        $this->call(DistributorExpertiseKeywordSeeder::class);
     }
 }

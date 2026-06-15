@@ -23,14 +23,6 @@ TBD - created by archiving change add-stock-icon. Update Purpose after archive.
 - **WHEN** 任一版型顯示商品卡片
 - **THEN** Enquiry、Compare、Datasheet 三顆按鈕的位置與行為與新增 Stock 前相同
 
-### Requirement: 點擊 Stock 顯示「即將開通」提示
-
-Stock 按鈕 MUST 綁定點擊入口（`checkStock` 函式）。本階段點擊時 MUST 顯示多語「即將開通」提示，且 MUST 不執行庫存查詢、不開啟 Modal、不造成 JS 錯誤或影響頁面其他功能。實際庫存查詢行為由後續 DILP 串接變更定義。
-
-#### Scenario: 點擊顯示即將開通提示
-- **WHEN** 使用者點擊 Stock 按鈕
-- **THEN** 畫面顯示對應語系的「即將開通」提示，頁面不產生 JS 錯誤，其他功能正常
-
 ### Requirement: Stock 文字多語化
 
 Stock 按鈕的 tooltip 與「即將開通」提示 MUST 依當前語系顯示對應文字，文字來源 MUST 為 `static_keyword` / `static_keyword_translations`（key：`Stock`、`Stock_coming_soon`）。

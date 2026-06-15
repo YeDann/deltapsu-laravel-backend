@@ -748,6 +748,7 @@
                             target="_blank">
                             <button class="btn btn-datasheet">{{$staticContent['data_sheet']}}</button>
                         </a>
+                        <button class="btn btn-datasheet" onclick="checkStock('{{$product[0]['pro_code']}}')">{{ $staticContent['Stock'] ?? 'Stock' }}</button>
                         @foreach ($ec_link as $item)
                         <a href="{{$item->link}}" target="_blank">
                             <button class="btn btn-buynow mr-2">{{$item->name}}</button>
@@ -1094,6 +1095,7 @@
                 <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}" target="_blank">
                     <button class="btn btn-datasheet w-100 my-2">{{$staticContent['data_sheet']}}</button>
                 </a>
+                <button class="btn btn-datasheet w-100 my-2" onclick="checkStock('{{$product[0]['pro_code']}}')">{{ $staticContent['Stock'] ?? 'Stock' }}</button>
 
                 @foreach ($ec_link as $item)
                 <a href="{{$item->link}}" target="_blank">
@@ -1918,6 +1920,8 @@
         </div>
     </div>
 </div>
+
+@include('front-end.partials.stock-modal')
 @endsection
 
 

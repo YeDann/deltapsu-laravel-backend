@@ -152,7 +152,7 @@
                             @php
                                 $catGroups = [
                                     ['field' => 'distributor_sales_territory', 'label' => 'Sales Territory', 'items' => $categories['distributor_sales_territory'], 'sel' => 'distributor_sales_territory'],
-                                    ['field' => 'distributor_certification', 'label' => 'Certification', 'items' => $categories['distributor_certification'], 'sel' => 'distributor_certification'],
+                                    ['field' => 'distributor_expertise', 'label' => 'Expertise', 'items' => $categories['distributor_expertise'], 'sel' => 'distributor_expertise'],
                                     ['field' => 'distributor_specialized_application', 'label' => 'Specialized Application', 'items' => $categories['distributor_specialized_application'], 'sel' => 'distributor_specialized_application'],
                                     ['field' => 'distributor_product_line', 'label' => 'Product Line', 'items' => $categories['distributor_product_line'], 'sel' => 'distributor_product_line'],
                                     ['field' => 'distributor_service', 'label' => 'Service', 'items' => $categories['distributor_service'], 'sel' => 'distributor_service'],
