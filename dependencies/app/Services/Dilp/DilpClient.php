@@ -2,6 +2,7 @@
 
 namespace App\Services\Dilp;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -21,6 +22,7 @@ class DilpClient
     private int $tokenTtl;
     private int $cacheTtl;
     private bool $mock;
+    private bool $debug;
 
     public function __construct()
     {
@@ -31,6 +33,7 @@ class DilpClient
         $this->tokenTtl = (int) ($cfg['token_ttl'] ?? 840);
         $this->cacheTtl = (int) ($cfg['cache_ttl'] ?? 300);
         $this->mock     = (bool) ($cfg['mock'] ?? false);
+        $this->debug    = (bool) ($cfg['debug'] ?? false);
     }
 
     /**
@@ -69,8 +72,16 @@ class DilpClient
         }
 
         if (! $response->successful()) {
-            Log::warning('DILP search failed', ['part' => $partNumber, 'status' => $response->status()]);
+            Log::warning('DILP search failed', [
+                'part'   => $partNumber,
+                'status' => $response->status(),
+                'body'   => $this->snippet($response->body()),
+            ]);
             throw new RuntimeException('DILP search failed: HTTP ' . $response->status());
+        }
+
+        if ($this->debug) {
+            Log::info('DILP search ok', ['part' => $partNumber, 'body' => $this->snippet($response->body(), 2000)]);
         }
 
         return $this->mapParts($response->json() ?? []);
@@ -78,16 +89,28 @@ class DilpClient
 
     private function doSearch(string $partNumber, ?string $clientIp, string $token)
     {
-        return Http::timeout(30)
-            ->withHeaders([
-                'Content-Type'  => 'application/json',
-                'Authorization' => $token,
-            ])
-            ->get($this->baseUrl . '/Search', [
-                'pn1'        => $partNumber,
-                'SearchType' => 'EQUALS',
-                'ClientIP'   => $clientIp ?: request()->ip(),
-            ]);
+        $url = $this->baseUrl . '/Search';
+        $query = [
+            'pn1'        => $partNumber,
+            'SearchType' => 'EQUALS',
+            'ClientIP'   => $clientIp ?: request()->ip(),
+        ];
+
+        if ($this->debug) {
+            Log::info('DILP search request', ['url' => $url, 'query' => $query]);
+        }
+
+        try {
+            return Http::timeout(30)
+                ->withHeaders([
+                    'Content-Type'  => 'application/json',
+                    'Authorization' => $token,
+                ])
+                ->get($url, $query);
+        } catch (ConnectionException $e) {
+            $this->logConnError('search', ['part' => $partNumber, 'url' => $url], $e);
+            throw $e;
+        }
     }
 
     /**
@@ -98,19 +121,39 @@ class DilpClient
     {
         return Cache::remember($this->tokenCacheKey(), $this->tokenTtl, function () {
             $basic = 'Basic ' . base64_encode($this->username . ':' . $this->password);
+            $url = $this->baseUrl . '/Login?TTL=900';
 
-            $response = Http::timeout(30)
-                ->withHeaders(['Authorization' => $basic])
-                ->withBody('', 'application/json')   // 空 body → 有 Content-Length，避開 411
-                ->post($this->baseUrl . '/Login?TTL=900');
+            if ($this->debug) {
+                Log::info('DILP login request', ['url' => $url, 'username' => $this->username]);
+            }
+
+            try {
+                $response = Http::timeout(30)
+                    ->withHeaders(['Authorization' => $basic])
+                    ->withBody('', 'application/json')   // 空 body → 有 Content-Length，避開 411
+                    ->post($url);
+            } catch (ConnectionException $e) {
+                $this->logConnError('login', ['url' => $url], $e);
+                throw $e;
+            }
 
             if (! $response->successful()) {
+                Log::warning('DILP login failed', [
+                    'url'    => $url,
+                    'status' => $response->status(),
+                    'body'   => $this->snippet($response->body()),
+                ]);
                 throw new RuntimeException('DILP login failed: HTTP ' . $response->status());
             }
 
             $token = $response->json('AuthToken');
             if (! $token) {
+                Log::warning('DILP login: AuthToken missing', ['body' => $this->snippet($response->body())]);
                 throw new RuntimeException('DILP login: AuthToken missing in response');
+            }
+
+            if ($this->debug) {
+                Log::info('DILP login ok', ['url' => $url]);
             }
 
             return $token; // 已含 "Basic " 前綴，後續請求直接當 Authorization 帶
@@ -221,7 +264,11 @@ class DilpClient
             }
 
             if (! $response->successful()) {
-                Log::warning('DILP distributor fetch failed', ['id' => $id, 'status' => $response->status()]);
+                Log::warning('DILP distributor fetch failed', [
+                    'id'     => $id,
+                    'status' => $response->status(),
+                    'body'   => $this->snippet($response->body()),
+                ]);
                 throw new RuntimeException('DILP distributor failed: HTTP ' . $response->status());
             }
 
@@ -231,14 +278,21 @@ class DilpClient
 
     private function doDistributor(string $id, ?string $clientIp, string $token)
     {
-        return Http::timeout(30)
-            ->withHeaders([
-                'Content-Type'  => 'application/json',
-                'Authorization' => $token,
-            ])
-            ->get($this->baseUrl . '/Distributor/' . rawurlencode($id), [
-                'ClientIP' => $clientIp ?: request()->ip(),
-            ]);
+        $url = $this->baseUrl . '/Distributor/' . rawurlencode($id);
+
+        try {
+            return Http::timeout(30)
+                ->withHeaders([
+                    'Content-Type'  => 'application/json',
+                    'Authorization' => $token,
+                ])
+                ->get($url, [
+                    'ClientIP' => $clientIp ?: request()->ip(),
+                ]);
+        } catch (ConnectionException $e) {
+            $this->logConnError('distributor', ['id' => $id, 'url' => $url], $e);
+            throw $e;
+        }
     }
 
     /**
@@ -309,5 +363,27 @@ class DilpClient
             'region'     => $rCode,
             'regionName' => $rName,
         ];
+    }
+
+    /**
+     * 連線層級錯誤（timeout / DNS / refused / SSL）統一記 error，附 base_url 與例外訊息，方便定位「打不進去」。
+     */
+    private function logConnError(string $what, array $ctx, ConnectionException $e): void
+    {
+        Log::error("DILP {$what} connection error", $ctx + [
+            'base_url'  => $this->baseUrl,
+            'exception' => get_class($e),
+            'message'   => $e->getMessage(),
+        ]);
+    }
+
+    /**
+     * 截短回應 body 供 log 用，避免整包塞進 log。
+     */
+    private function snippet(?string $body, int $limit = 500): string
+    {
+        $body = trim((string) $body);
+
+        return mb_strlen($body) > $limit ? mb_substr($body, 0, $limit) . '…' : $body;
     }
 }

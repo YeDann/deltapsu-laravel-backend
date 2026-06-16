@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
         // Phase II — Stock Checking 庫存 Modal 標籤（DILP）
         $this->call(StockModalKeywordSeeder::class);
 
+        // Phase II — Stock Modal 文案調整（表頭 Stock_model_number→Stock_model_name、footer 文案）
+        $this->call(StockModalCopyFixSeeder::class);
+
         // Phase II — Stock Modal 國別篩選標籤（All Regions）
         $this->call(StockRegionKeywordSeeder::class);
 

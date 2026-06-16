@@ -257,6 +257,7 @@
 	#configurable .btn-enquiry {
 		font-size: 18px;
 		line-height: 1;
+		font-weight: normal;
 	}
 
 	/* Next/Previous 是固定高 40px 的 <a>（procompare.css），原 padding 0.75em 在 18px 會超出 40px、

@@ -37,10 +37,10 @@
     #stockModal th.stock-date, #stockModal td.stock-date { text-align: center; white-space: nowrap; }
     #stockModal .btn-buy {
         display: inline-block; background: #0087DC; color: #fff;
-        border: 0; border-radius: 4px; padding: 8px 30px;
+        border: 0; border-radius: 4px; padding: 8px 12px;
         font-size: 14px; font-weight: 600; line-height: 1.5; white-space: nowrap;
         text-decoration: none; cursor: pointer; transition: background .15s;
-        min-width: 120px; text-align: center;   /* Buy Now 與聯絡鈕等寬對齊 */
+        width: 160px; text-align: center;   /* 固定寬度：Buy Now 與 Go to Distributor 等寬對齊（slide 19） */
     }
     #stockModal .btn-buy:hover { background: #005a99; color: #fff; text-decoration: none; }
     #stockModal .btn-buy:disabled, #stockModal .btn-buy[disabled] { background: #c0c4cc; cursor: not-allowed; }
@@ -72,7 +72,7 @@
         #stockModal table th, #stockModal table td { padding: 10px 5px; font-size: 13px; }
         #stockModal thead th { font-size: 13px; }
         #stockModal td.stock-date, #stockModal th.stock-date { white-space: normal; }
-        #stockModal .btn-buy { padding: 6px 12px; font-size: 12px; min-width: 92px; }
+        #stockModal .btn-buy { padding: 6px 8px; font-size: 12px; width: 140px; }
         /* footer：直排堆疊，否則 space-between 在窄螢幕會把 Contact Us 推出右緣裁掉 */
         #stockModal .modal-footer { flex-direction: column; align-items: flex-start; gap: 10px; padding: 14px 16px; }
         #stockModal .stock-footer-right { flex-wrap: wrap; gap: 6px 12px; }
@@ -101,7 +101,7 @@
                     <table class="mb-0">
                         <thead>
                             <tr>
-                                <th>{{ $staticContent['Stock_model_number'] ?? 'Model Number' }}</th>
+                                <th>{{ $staticContent['Stock_model_name'] ?? 'Model Name' }}</th>
                                 <th>{{ $staticContent['Stock_distributor'] ?? 'Distributor' }}</th>
                                 <th class="stock-availability">{{ $staticContent['Stock_availability'] ?? 'Availability' }}</th>
                                 <th class="stock-date">{{ $staticContent['Stock_upload_date'] ?? 'Date Updated' }}</th>
@@ -115,7 +115,7 @@
             <div class="modal-footer stock-footer">
                 <span class="stock-powered">{{ $staticContent['Stock_powered_by'] ?? 'Powered by' }} <a href="https://www.netcomponents.com" target="_blank" rel="noopener"><img class="nc-logo" src="{{ asset('frontend-asset/image/netcomponents-logo.svg') }}" alt="netCOMPONENTS"></a></span>
                 <span class="stock-footer-right">
-                    <span class="stock-footer-text">{{ $staticContent['Stock_sales_support'] ?? 'For other buy options / Sales support' }}</span>
+                    <span class="stock-footer-text">{{ $staticContent['Stock_sales_support'] ?? 'For other purchasing options or sales support:' }}</span>
                     <a href="{{ route('contactSupport') }}" class="btn-contact">{{ $staticContent['contact_us'] ?? 'Contact Us' }}</a>
                 </span>
             </div>
