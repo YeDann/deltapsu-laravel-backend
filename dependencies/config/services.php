@@ -54,6 +54,7 @@ return [
         'token_ttl' => (int) env('DILP_TOKEN_TTL', 840),   // 秒，API token 有效 900，留 buffer
         'cache_ttl' => (int) env('DILP_CACHE_TTL', 300),   // 庫存查詢結果短快取秒數
         'mock'      => (bool) env('DILP_MOCK', false),     // 測試環境空庫存時回 fixture
+        'debug'     => (bool) env('DILP_DEBUG', false),    // 開啟時把每次請求/原始回應記到 log（除錯用）
     ],
 
 ];
