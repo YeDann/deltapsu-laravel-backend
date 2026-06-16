@@ -1,25 +1,30 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class StockContactKeywordSeeder extends Seeder
+class StockRegionKeywordSeeder extends Seeder
 {
     /**
-     * Seed the Stock-checking Modal「Contact」按鈕 keyword（無購物車連結時 mailto 該經銷商）
+     * Seed the Stock-checking Modal 國別篩選相關 keyword（目前只有「All Regions」預設選項）
      * into static_keyword / static_keyword_translations for all locales.
-     * 獨立一支，不動既有 Stock seeders。Idempotent。
+     * 獨立一支，不動既有 StockModalKeywordSeeder。Idempotent。
      *
      * @return void
      */
     public function run()
     {
         // 各語系一律先填對應翻譯；缺項 fallback en
-        // 全語系先同值「Go to Distributor」，客戶之後到後台 Static Word 各語系自行微調
         $keywords = [
-            'Stock_contact' => [
-                'en' => 'Go to Distributor', 'tw' => 'Go to Distributor', 'cn' => 'Go to Distributor',
-                'de' => 'Go to Distributor', 'jp' => 'Go to Distributor', 'tr' => 'Go to Distributor',
+            'Stock_all_regions' => [
+                'en' => 'All Regions',
+                'tw' => '所有地區',
+                'cn' => '所有地区',
+                'de' => 'Alle Regionen',
+                'jp' => 'すべての地域',
+                'tr' => 'Tüm Bölgeler',
             ],
         ];
 

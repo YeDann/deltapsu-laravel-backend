@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -39,5 +41,11 @@ class DatabaseSeeder extends Seeder
 
         // Phase II — Find a Distributor：Certificate 按鈕 static word + Certifications→Expertise 顯示值
         $this->call(DistributorExpertiseKeywordSeeder::class);
+
+        // Phase II — Configurable Power Selector：Dual Output 上限說明文字（多語模板）
+        $this->call(ConfigurableDualLimitSeeder::class);
+
+        // Phase II — Product Comparison：跨類選項（Industrial × Medical）標籤
+        $this->call(ComparisonCrossKeywordSeeder::class);
     }
 }
