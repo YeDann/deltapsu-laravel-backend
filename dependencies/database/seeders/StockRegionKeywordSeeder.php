@@ -1,35 +1,30 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class StockKeywordSeeder extends Seeder
+class StockRegionKeywordSeeder extends Seeder
 {
     /**
-     * Seed the Stock UI static keywords (button tooltip + coming-soon notice)
+     * Seed the Stock-checking Modal 國別篩選相關 keyword（目前只有「All Regions」預設選項）
      * into static_keyword / static_keyword_translations for all locales.
+     * 獨立一支，不動既有 StockModalKeywordSeeder。Idempotent。
      *
      * @return void
      */
     public function run()
     {
-        // 每個 key 對應各語系的文字；缺語系時 fallback 到 en
+        // 各語系一律先填對應翻譯；缺項 fallback en
         $keywords = [
-            'Stock' => [
-                'en' => 'Stock',
-                'tw' => '庫存',
-                'cn' => '库存',
-                'de' => 'Lagerbestand',
-                'jp' => '在庫',
-                'tr' => 'Stok',
-            ],
-            'Stock_coming_soon' => [
-                'en' => 'Coming soon',
-                'tw' => '即將開通',
-                'cn' => '即将开通',
-                'de' => 'Demnächst verfügbar',
-                'jp' => '近日公開',
-                'tr' => 'Çok yakında',
+            'Stock_all_regions' => [
+                'en' => 'All Regions',
+                'tw' => '所有地區',
+                'cn' => '所有地区',
+                'de' => 'Alle Regionen',
+                'jp' => 'すべての地域',
+                'tr' => 'Tüm Bölgeler',
             ],
         ];
 

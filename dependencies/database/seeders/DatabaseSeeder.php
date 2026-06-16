@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -29,5 +31,11 @@ class DatabaseSeeder extends Seeder
 
         // Phase II — Stock Modal 無購物車連結時的「Go to Distributor」按鈕標籤
         $this->call(StockContactKeywordSeeder::class);
+
+        // Phase II — Configurable Power Selector：Dual Output 上限說明文字（多語模板）
+        $this->call(ConfigurableDualLimitSeeder::class);
+
+        // Phase II — Product Comparison：跨類選項（Industrial × Medical）標籤
+        $this->call(ComparisonCrossKeywordSeeder::class);
     }
 }
