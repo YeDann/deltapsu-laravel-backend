@@ -70,9 +70,9 @@
     #related-product .item-related img,
     #related-product-mobile .item-related img {
         padding-top: 10px;
-        max-width: 100%;
-        margin-left: auto;
-        margin-right: auto;
+        width: 100%;
+        height: 110px;       /* 固定圖區高度，每張卡圖一致 → 產品名對齊、卡片同大小 */
+        object-fit: scale-down;   /* 大圖縮小至 110px 內、小圖維持原大小不放大(不模糊)，皆等比置中不變形 */
         margin-bottom: 20px;
     }
 
@@ -184,10 +184,13 @@
     .h-text-app {
         min-width: 0;
         text-align: left;
-        /* 可換行，但只在詞界（空白）斷，不從單字中間切斷（取代舊的 word-break:break-all）；
-           overflow-wrap:break-word 僅當單一長字塞不下才當保險、一般名稱用不到 */
+        /* 德文長複合字（無空格）以「連字號」自動斷字換行（hyphens:auto，靠 html lang=de 的德文斷字字典），
+           其他語系字短不觸發、CJK 不適用 hyphenation。
+           overflow-wrap:break-word 為保險（無斷字點時才硬斷）。 */
         word-break: normal;
         overflow-wrap: break-word;
+        -webkit-hyphens: auto;
+        hyphens: auto;
     }
 
     .app-middle-box {
@@ -298,6 +301,8 @@
         </div>
     </div>
 </div>
+{{-- 麵包屑是 position:absolute，補間隔把 banner 往下推 64px，讓麵包屑有自己的位子、不壓在 banner 上（比照 allproducts） --}}
+<div class="padding-top-content-breadcrumb visible-up-922"></div>
 <div class="visible-up-922">
     @if($application->id == 7)
     <div role="img" alt="Delta provides AC-DC power supplies for medical applications"
@@ -508,8 +513,8 @@
                                         . $st[$k]
                                         . '</li>';
                                     }
-                                
-                                
+
+
                             }
                             echo '</ul>';
                             echo '<ul class="col-6 order-1">';
@@ -519,8 +524,8 @@
                                         . $st[$k]
                                         . '</li>';
                                     }
-                                
-                                
+
+
                             }
                             echo '</ul>';
 
@@ -641,8 +646,8 @@
                             . $st[$k]
                             . '</li>';
                         }
-                    
-                    
+
+
                 }
                 echo '</ul>';
                 echo '<ul class="col-6 order-1">';
@@ -652,8 +657,8 @@
                             . $st[$k]
                             . '</li>';
                         }
-                    
-                    
+
+
                 }
                 echo '</ul>';
 
@@ -775,9 +780,9 @@
                 navText: ['<i class="zmdi zmdi-chevron-left" aria-hidden="true"></i>',
                             '<i class="zmdi zmdi-chevron-right" aria-hidden="true"></i>',
                 ]
-            
+
         });
-          
+
         $("#related-product-mobile").owlCarousel({
                 loop: false,
                 margin: 24,
@@ -798,9 +803,9 @@
                 navText: ['<i class="zmdi zmdi-chevron-left" aria-hidden="true"></i>',
                             '<i class="zmdi zmdi-chevron-right" aria-hidden="true"></i>',
                 ]
-            
+
         });
     });
-    
+
                     </script>
                     @endsection
