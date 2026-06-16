@@ -17,9 +17,13 @@
     .fd-dd:first-child { padding-left: 0; }
     .fd-dd-label { font-weight: 700; font-size: 14px; color: #000; margin-bottom: 8px; }
     .fd-select {
-        width: 100%; height: 40px; padding: 0 10px;
-        border: 1px solid #ccc; border-radius: 4px; background: #fff;
-        font-size: 14px; color: #333; cursor: pointer;
+        width: 100%; height: 40px; padding: 0 34px 0 10px;
+        border: 1px solid #ccc; border-radius: 4px; color: #333; cursor: pointer;
+        font-size: 14px;
+        /* 自訂箭頭：原生箭頭貼右邊無法留間距，改 appearance:none + SVG，箭頭離右邊框 12px（slide 8） */
+        -webkit-appearance: none; -moz-appearance: none; appearance: none;
+        background: #fff url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%23333333' stroke-width='1.6' d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E") no-repeat right 12px center;
+        background-size: 12px;
     }
     .fd-select:focus { outline: none; border-color: #0087DC; }
     .fd-section-title { font-weight: 700; font-size: 14px; color: #000; margin: 0 0 12px; }
@@ -45,8 +49,9 @@
         .fd-filter-col + .fd-filter-col { border-left: none; border-top: 1px solid #d5d5d5; }
         .fd-filter-group { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-    .fd-check { display: flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 400; color: #333; cursor: pointer; }
-    .fd-check input { margin-right: 6px; }
+    /* align-items:flex-start 讓多行項目的 checkbox 對齊第一行（非垂直置中）；input margin-top 微調對齊第一行文字 */
+    .fd-check { display: flex; align-items: flex-start; gap: 4px; font-size: 14px; font-weight: 400; color: #333; cursor: pointer; }
+    .fd-check input { margin-right: 6px; margin-top: 3px; flex-shrink: 0; }
 
     /* 結果卡：一列一家、三欄（資訊 / 徽章 / 產品線），比照 Slide5 */
     .fd-results { margin-top: 24px; }
@@ -56,7 +61,7 @@
     .fd-card-detail { flex: 2; min-width: 0; }
     .fd-card-section { margin-bottom: 16px; }
     .fd-card-section:last-child { margin-bottom: 0; }
-    .fd-card-sec-title { font-weight: 700; font-size: 14px; color: #000; margin-bottom: 8px; }
+    .fd-card-sec-title { font-weight: 700; font-size: 16px; color: #000; margin-bottom: 8px; }
     .fd-card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 16px; }
     .fd-card-chk { font-size: 14px; color: #333; display: flex; align-items: flex-start; }
     .fd-card-chk .chk { margin-right: 6px; font-weight: bold; flex-shrink: 0; }
@@ -69,8 +74,8 @@
         .fd-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     .fd-logo { max-height: 96px; max-width: 300px; display: block; margin-bottom: 12px; }
-    .fd-name { font-size: 16px; font-weight: 700; color: #000; margin-bottom: 8px; }
-    .fd-address { font-size: 14px; color: #333; line-height: 1.6; }
+    .fd-name { font-size: 18px; font-weight: 700; color: #000; margin-bottom: 8px; }
+    .fd-address { font-size: 16px; color: #333; line-height: 1.6; }
     .fd-address a { color: #0087DC; word-break: break-word; }
     /* 卡片按鈕：grid 等分使每顆同寬。≥1200 與 <768 一排 3 個；768–1199 左欄較窄改一排 2 個（第 3 個落到第二行）。
        minmax(0,1fr) 與 button 的 min-width:0 蓋掉全域 .btn-subscribe 的 min-width，避免按鈕撐爆格子；white-space:normal 讓長字(德文等)換行不裁。 */
@@ -79,7 +84,7 @@
     .fd-card-btns button {
         width: 100%; min-width: 0; min-height: 44px; padding: 4px 6px; border-radius: 5px;
         background: #0087DC; color: #fff; border: 2px solid transparent;
-        font-size: 14px; font-weight: bold; cursor: pointer; white-space: normal; line-height: 1.15; text-align: center;
+        font-size: 14px; font-weight: normal; cursor: pointer; white-space: normal; line-height: 1.15; text-align: center;
         display: inline-flex; align-items: center; justify-content: center;
     }
     .fd-card-btns button:hover { background: #1E50C8; }
@@ -87,6 +92,12 @@
         .fd-card-btns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     .fd-empty { text-align: center; color: #646464; padding: 40px 0; }
+    /* 手機字級（放最後，確保蓋過上方 .fd-name / .fd-address 基準值）：公司名 16、區塊標題＋地址 14、勾選項 12 */
+    @media (max-width: 767px) {
+        .fd-name { font-size: 16px; }
+        .fd-card-sec-title, .fd-address { font-size: 14px; }
+        .fd-card-chk { font-size: 12px; }
+    }
 </style>
 @endsection
 @section('meta')
