@@ -129,7 +129,7 @@
         padding: 3px 11px !important;
     }
 
-    
+
 
     .list-group {
         margin-top: 20px;
@@ -290,6 +290,7 @@
         flex-wrap: nowrap;
         align-items: center;
         gap: 6px;
+        padding-bottom: 12px;   /* icon 列下方多留一點 padding */
     }
     .boxlist-icon-img .img-btn-icon-pro {
         margin-right: 0;
@@ -385,6 +386,9 @@
     .box-search-icon {
         border-top-left-radius: 6px;
         border-bottom-left-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;   /* icon 在框內置中 */
     }
 
     .select2-container .select2-selection--single {
@@ -423,7 +427,7 @@
   $categories_id = isset($subCategories[0]) ? $subCategories[0]->sub_pro_id  : null;
   // 定義 $subCate 變數供 JavaScript 使用
   $subCate = isset($subCategories[0]) ? $subCategories[0] : null;
-  
+
   // 建立分類 ID 到 url_item 的對應表
   $cateUrlMap = [];
   foreach($subCategories as $subCategory) {
@@ -756,7 +760,7 @@
 </script>
 <script type="text/javascript">
     /**
-     * 
+     *
      * 1. 初始化與篩選邏輯
      *    # popcheckSerries()
      *      功能：初始化系列篩選的勾選狀態。
@@ -821,11 +825,11 @@
      */
     function onclickshow(id) {
         var element = document.getElementById("contentProList");
-        
+
         if (id == 2) {
             // Show Sidebar
             $(element).removeClass("col-md-12").addClass("col-xl-9 col-lg-12 pl-lg-0");
-            
+
             if (!$("#sidebar").hasClass("show")) {
                 $("#sidebar").addClass("show");
             }
@@ -836,7 +840,7 @@
         } else {
             // Hide Sidebar
             $(element).removeClass("col-xl-9 col-lg-12 pl-lg-0").addClass("col-md-12");
-            
+
             if ($("#sidebar").hasClass("show")) {
                 $("#sidebar").removeClass("show");
             }
@@ -864,18 +868,18 @@
     var url_name =  <?= json_encode($url_name);?>;
     var subCategories = <?= json_encode($subCategories);?>;
     var pro_perti = [];
-    
+
     // 從產品資料獲取分類 ID 的函數
     function getProductCategoryId(product) {
         // 如果產品有分類資訊，取第一個分類
         if (product && product.cate_ids && product.cate_ids.length > 0) {
             return product.cate_ids[0];
         }
-        
+
         // 回退到原來的邏輯
         return cateid || 0;
     }
-    
+
     // 產品比較函數，通過產品 ID 查找產品資料
     function addToComparison(productId) {
         // 在全域產品陣列中找到對應的產品
@@ -891,22 +895,22 @@
     function generateEnquiryLink(proCode, product) {
         var typeId = '';
         var typeName = '';
-        
+
         // 如果有產品物件且包含分類資訊，從產品資料中取得
         if (product && product.cate_ids && product.cate_ids.length > 0) {
             // 取得產品的第一個分類 ID
             typeId = product.cate_ids[0];
-            
+
             // 在子分類資料中找到對應的 url_item
             var subCat = subCategories.find(function(cat) {
                 return cat.sub_pro_id == typeId;
             });
-            
+
             if (subCat) {
                 typeName = subCat.url_item || '';
             }
         }
-        
+
         // 如果從產品資料中找不到，回退到原來的邏輯
         if (!typeId && cateid) {
             typeId = cateid;
@@ -914,13 +918,13 @@
         if (!typeName && catename) {
             typeName = catename;
         }
-        
+
         var productCode = productKey(proCode);
-        
+
         // 構建 URL 路徑部分，然後與 route 基礎 URL 結合
         var pathPart = '/' + typeId + '/' + typeName + '/' + productCode;
         pathPart = pathPart.replace(/\/+/g, '/'); // 去除多餘斜線
-        
+
         return '{{route('LinktoEnquiry')}}' + pathPart;
     }
     var ser_arr = [];
@@ -947,7 +951,7 @@
         if (cateid && main_cate_id == 3) {
             mode_series_arr.push(parseInt(cateid));
         }
-        
+
         loadAddContent();
         filtercontentMobile();
         filtercontent();
@@ -955,7 +959,7 @@
 
         // 先檢查並恢復瀏覽器返回時的篩選狀態
         var hasRestoredFilters = checkAndRestoreFilters();
-        
+
         var size  = $(window).width();
         if (size <= 768) {
             $('#current_list_item').val(1);
@@ -989,7 +993,7 @@
        });
 
     });
-    
+
     // ------------------------------------------------------------------
     // localStorage 篩選狀態恢復
     // ------------------------------------------------------------------
@@ -1000,30 +1004,30 @@
      */
     function checkAndRestoreFilters() {
         var needsUpdate = false;
-        
+
         // 嘗試從 localStorage 恢復篩選狀態（加上 checkbox 同步）
         try {
             var savedFilters = JSON.parse(localStorage.getItem('productFilters') || '{}');
             console.log('從 localStorage 讀取篩選狀態:', savedFilters);
-            
+
             if (savedFilters.pro_type_arr && savedFilters.pro_type_arr.length > 0) {
                 pro_type_arr = savedFilters.pro_type_arr;
                 needsUpdate = true;
-                
+
                 // 同步更新 checkbox 勾選狀態
                 savedFilters.pro_type_arr.forEach(function(typeId) {
                     $("#cx-product_type" + typeId).prop("checked", true);
                     $("#cx-product_type" + typeId + "_mobile").prop("checked", true);
                 });
             }
-            
+
             if (savedFilters.ser_arr && savedFilters.ser_arr.length > 0) {
                 ser_arr = savedFilters.ser_arr;
                 needsUpdate = true;
-                
+
                 // series checkbox 會在 updateSeriesOptions 後同步
             }
-            
+
             if (savedFilters.mode_series_arr && savedFilters.mode_series_arr.length > 0) {
                 mode_series_arr = savedFilters.mode_series_arr;
                 needsUpdate = true;
@@ -1364,7 +1368,7 @@
 
         // Force default filters based on main_cate_id (Mutually Exclusive)
         // Note: Total products (160) vs Filtered Sum (124) discrepancy:
-        // Products with mode_series values NOT in [1, 2, 3] (or null) will not be counted 
+        // Products with mode_series values NOT in [1, 2, 3] (or null) will not be counted
         // in the hardcoded filter options, but will appear in the "All" list.
         if (main_cate_id == 3) {
             // For Adapter category (ID 3), force 'mode_series'
@@ -1428,7 +1432,7 @@
         }
         return null;
     }
-    
+
     /**
      * 將 products 與 product_has_property / pro_perti 組合成前端用的產品陣列
      * 若 series_id 不為空，只回傳符合該系列的產品
@@ -1547,9 +1551,9 @@
 
        // 1. 執行基礎篩選 (系列 Series)
        filterBaseData();
-       
+
       var arr_filterall = [];
-        
+
         // 檢查是否所有篩選條件都屬於同一屬性類型
         checktypegroup = arr_type_an_val.every(
             function(val, i, arr) {
@@ -1701,7 +1705,7 @@
         } else {
           resultCertificate = resultinputtext;
         }
-        
+
         // 4. 應用領域篩選 (Segment/Application Filter)
         var resultSegment = [];
         if (arr_cer.length > 0) {
@@ -1709,7 +1713,7 @@
         } else {
           resultSegment = resultCertificate;
         }
-        
+
         // 5. 產品狀態篩選 (Status Filter: New, EOL, etc.)
         var resultstatus = [];
         if (arr_status.length > 0) {
@@ -2594,7 +2598,7 @@
                         if (serie.main_cate != main_cate_id) {
                             return false;
                         }
-                        
+
                         // LED Driver (main_cate_id = 3) 使用 mode_series 篩選
                         if (main_cate_id == 3) {
                             if (mode_series_arr.length > 0) {
@@ -2606,11 +2610,11 @@
                                 return pro_type_arr.indexOf(serie.pro_categories_id) !== -1;
                             }
                         }
-                        
+
                         return true;
                     });
                 }
-                
+
                 // 根據 se_id 去重
                 var uniqueSeries = [];
                 var seenIds = [];
@@ -2621,7 +2625,7 @@
                     }
                 });
                 filteredSeries = uniqueSeries;
-                
+
 
                 $.each(filteredSeries, function(index_serie, serie) {
                     html3 += '<div onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="box-input-checkbox">';
@@ -2837,7 +2841,7 @@
                         if (serie.main_cate != main_cate_id) {
                             return false;
                         }
-                        
+
                         // LED Driver (main_cate_id = 3) 使用 mode_series 篩選
                         if (main_cate_id == 3) {
                             if (mode_series_arr.length > 0) {
@@ -2849,11 +2853,11 @@
                                 return pro_type_arr.indexOf(serie.pro_categories_id) !== -1;
                             }
                         }
-                        
+
                         return true;
                     });
                 }
-                
+
                 // 根據 se_id 去重
                 var uniqueSeries = [];
                 var seenIds = [];
@@ -2864,7 +2868,7 @@
                     }
                 });
                 filteredSeries = uniqueSeries;
-                
+
                 $.each(filteredSeries, function(index_serie, serie) {
                     html3 += '<div class="box-input-checkbox">';
                     html3 += '<input onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="inp-cbx" id="cx-'+fil_con['field_id']+serie['se_id']+'_mobile" type="checkbox" style="display: none;" >';
@@ -3025,11 +3029,11 @@
         if (series_id) {
             $("#cx-series01"+series_id).prop("checked" , true);
             $("#cx-series01"+series_id+"_mobile").prop("checked" , true);
-            
+
             // 展開 Series Accordion
             $("#collapse-fliter_series01").addClass("show");
             $("#collapse-fliter_series01_mobile").addClass("show");
-            
+
             onclickshow(2);
             ser_arr.push({{$se_id}});
         }
@@ -3044,9 +3048,9 @@
         if (cateid && main_cate_id != 3) {
             $("#cx-product_type"+cateid).prop("checked" , true);
             $("#cx-product_type"+cateid+"_mobile").prop("checked" , true);
-            
+
             onclickshow(2);
-            
+
             if (pro_type_arr.indexOf(cateid) == -1) {
                 pro_type_arr.push(cateid);
             }
@@ -3061,13 +3065,13 @@
         if (cateid && main_cate_id == 3) {
             $("#cx-mode_series"+cateid).prop("checked" , true);
             $("#cx-mode_series"+cateid+"_mobile").prop("checked" , true);
-            
+
             // Expand the accordion
             $("#collapse-fliter_mode_series").addClass("show");
             $("#collapse-fliter_mode_series_mobile").addClass("show");
-            
+
             onclickshow(2);
-            
+
             if (mode_series_arr.indexOf(cateid) == -1) {
                 mode_series_arr.push(cateid);
             }
@@ -3120,8 +3124,8 @@
         // 強制轉為數字，避免字串與數字比對問題
         var val = parseInt(value);
         var index_se = -1;
-        
-        
+
+
         // 檢查是否存在（用寬鬆比較）
         var exists = false;
         $.each(pro_type_arr, function(i, v) {
@@ -3140,10 +3144,10 @@
             // 如果不存在，添加（只添加數字版本）
             pro_type_arr.push(val);
         }
-       
-        
+
+
         fillerData();
-       
+
         // 延遲更新 series 選項，避免影響 product type 勾選
         setTimeout(function() {
             updateSeriesOptions();
@@ -3163,7 +3167,7 @@
                 if (serie.main_cate != main_cate_id) {
                     return false;
                 }
-                
+
                 // LED Driver (main_cate_id = 3) 使用 mode_series 篩選
                 if (main_cate_id == 3) {
                     if (mode_series_arr.length > 0) {
@@ -3175,11 +3179,11 @@
                         return pro_type_arr.indexOf(serie.pro_categories_id) !== -1;
                     }
                 }
-                
+
                 return true;
             });
         }
-        
+
         // 根據 se_id 去重
         var uniqueSeries = [];
         var seenIds = [];
@@ -3189,7 +3193,7 @@
                 uniqueSeries.push(serie);
             }
         });
-        
+
         // 更新桌面版 HTML
         var html = '';
         $.each(uniqueSeries, function(index_serie, serie) {
@@ -3204,7 +3208,7 @@
         });
 
         $('.dataserchfilterseries01').html(html);
-        
+
         // 更新手機版 HTML
         var htmlMobile = '';
         $.each(uniqueSeries, function(index_serie, serie) {
@@ -3243,7 +3247,7 @@
     function mode_series_filter(type, value) {
         var val = parseInt(value);
         var index_se = -1;
-        
+
         $.each(mode_series_arr, function(i, v) {
             if (v == val) {
                 index_se = i;
@@ -3306,7 +3310,7 @@
                             }
                         });
                     }
-                    
+
                     // 檢查 cate_id 是否匹配 (相容舊資料)
                     if (value['cate_id'] == value_type) {
                         is_match_type = true;
@@ -3361,7 +3365,7 @@
                 productFilter.push(productObj);
             }
         });
-        
+
     }
 
     // ------------------------------------------------------------------
@@ -4075,10 +4079,10 @@
               $('#form-mobile'+fil_con['field_id'] )[0].reset();
         });
         $('#collapse-fliter_series01').addClass('show');
-        
+
         // 更新 series 選項
         updateSeriesOptions();
-        
+
         fillerData();
     }
     function resetformById(id) {
@@ -4219,15 +4223,15 @@
                 if (status == 4) return 4; // EOL
                 return 5; // 其他
             }
-            
+
             var priorityA = getStatusPriority(a.status_product);
             var priorityB = getStatusPriority(b.status_product);
-            
+
             // 狀態相同時，按產品代碼排序
             if (priorityA === priorityB) {
                 return a.pro_code > b.pro_code ? 1 : -1;
             }
-            
+
             return priorityA - priorityB;
         });
     }

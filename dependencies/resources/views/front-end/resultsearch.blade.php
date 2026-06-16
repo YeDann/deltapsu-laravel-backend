@@ -52,6 +52,15 @@
     .hightlight {
         background: #ff0;
     }
+    #nav-tab.nav-tabs {
+        flex-wrap: wrap !important;
+        justify-content: flex-start !important;
+        column-gap: 30px !important;
+    }
+    /* Slide69：「Products (N)」分類下拉改圓角（比照旁邊 Adapter 下拉） */
+    #search-category-filter {
+        border-radius: 6px;
+    }
 </style>
 @endsection
 

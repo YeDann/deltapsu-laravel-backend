@@ -15033,7 +15033,7 @@ input[type=text], input[type=email]{
 }
 
 .text-breadcrumb a {
-    color: #000;
+    color: rgb(150, 150, 150);
     font-size: 12px;
     text-decoration: none;
 }
@@ -15354,7 +15354,7 @@ a:hover{
     line-height: 24px;
     font-family: 'DeltaSans';
     cursor: pointer;
-    font-weight: bold;
+    font-weight: normal;
     color: #ffffff;
     background-color: #0087DC;
     border: 2px solid transparent;

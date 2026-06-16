@@ -3389,7 +3389,10 @@ class FrontendController extends Controller
                         $q->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
                         ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(st.title, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
                         ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(ptag.tag, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
-                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(op.optional_model, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%');
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(op.optional_model, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        // 分類名 spt.name 與 Highlights & Features(content_1) 也納入搜尋；沿用去空白/連字號比對
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(spt.name, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(pt.content_1, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%');
                         // ->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%')
                         // ->orWhere('op.optional_model', 'LIKE', '%' . $keypro . '%');
                         // foreach ($keyParts as $part) {
