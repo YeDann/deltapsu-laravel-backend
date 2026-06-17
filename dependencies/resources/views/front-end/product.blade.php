@@ -423,7 +423,8 @@
 <title>{{isset($metatag[0]->title)? $metatag[0]->title :''}}</title>
 <meta name="description" content="{{isset($metatag[0]->description)? $metatag[0]->description :''}}">
 <?php
-  $url_name = isset($subCategories[0]) ? $subCategories[0]->url_item  : null;
+  // 用當前分類的 url_item（$catename = validateInput(cate_parname)，controller 已 redirect 保證 == 該分類 url_item）；
+  $url_name = $catename ?? (isset($subCategories[0]) ? $subCategories[0]->url_item : null);
   $categories_id = isset($subCategories[0]) ? $subCategories[0]->sub_pro_id  : null;
   // 定義 $subCate 變數供 JavaScript 使用
   $subCate = isset($subCategories[0]) ? $subCategories[0] : null;
