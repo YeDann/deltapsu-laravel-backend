@@ -171,7 +171,7 @@ class ProductCategoriesController extends Controller
         $mainId = $request->mainId;
         $oldfile = $request->oldfile;
         $fileGU = $request->file('fileGU');
-        
+
         // Get current banner filename for potential deletion
         $currentData = DB::table('main_pro_categories')->where('main_id', $mainId)->first();
         $currentBanner = $currentData ? $currentData->banner : null;
@@ -181,7 +181,7 @@ class ProductCategoriesController extends Controller
             $bannerImage = $request->file('banner');
             $bannerName = uniqid() . "." . $bannerImage->getClientOriginalExtension();
             $bannerImage->move(base_path('/../medias/categories'), preg_replace('/\s+/', '', $bannerName));
-            
+
             // Delete old banner file if exists
             if ($currentBanner) {
                 $file_pointer = base_path('/../medias/categories/') . $currentBanner;
@@ -253,7 +253,7 @@ class ProductCategoriesController extends Controller
 
     {
         $id = $request->itemId;
-        
+
         // Get banner filename before deletion
         $currentData = DB::table('main_pro_categories')->where('main_id', $id)->first();
         if ($currentData && $currentData->banner) {
@@ -262,7 +262,7 @@ class ProductCategoriesController extends Controller
                 unlink($file_pointer);
             }
         }
-        
+
         DB::table('main_pro_categories')->where('main_id', '=', $id)->delete();
         DB::table('main_pro_categories_translations')->where('main_pro_id', '=', $id)->delete();
 

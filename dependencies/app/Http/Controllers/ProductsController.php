@@ -41,6 +41,32 @@ class ProductsController extends Controller
         ->with('products', $products)
         ->with('name', "product");
     }
+
+    /**
+     * 取得 Industrial Battery Charging 主分類底下所有子分類的 url_item（slug）。
+     * 供後台產品表單判斷是否顯示「Short Features」欄（= 前台 Other Features）。
+     * 以主分類英文名稱判斷，不綁 main_id；跨環境穩定，且該主分類新增子分類後自動納入。
+     *
+     * @return array<int,string>
+     */
+    private function batteryChargingCateSlugs()
+    {
+        $mainId = DB::table('main_pro_categories_translations')
+            ->where('local', 'en')
+            ->where('name', 'Industrial Battery Charging')
+            ->value('main_pro_id');
+
+        if (!$mainId) {
+            return [];
+        }
+
+        return DB::table('categories_has_main_pro as chmp')
+            ->join('sub_pro_categories as sc', 'sc.sub_pro_id', '=', 'chmp.cate_id')
+            ->where('chmp.main_cateid', $mainId)
+            ->pluck('sc.url_item')
+            ->toArray();
+    }
+
     public function create()
     {
         $language = DB::table('language')->get();
@@ -69,6 +95,7 @@ class ProductsController extends Controller
         ->get();
 
         return  view('product.create')
+        ->with('batteryCateSlugs', $this->batteryChargingCateSlugs())
         ->with('products', $products)
         ->with('pd_fields', $pd_fields)
         ->with('section', $section)
@@ -492,6 +519,7 @@ class ProductsController extends Controller
             ->get();
 
         return view('product.edit')
+            ->with('batteryCateSlugs', $this->batteryChargingCateSlugs())
             ->with('arrProCateName', $arrProCateName)
             ->with('arrProcate', $arrProcate)
             ->with('products_input', $products_input)
