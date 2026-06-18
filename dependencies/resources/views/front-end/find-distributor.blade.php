@@ -223,6 +223,7 @@
                         </div>
                     </div>
                     <div class="fd-card-detail">
+                        @if(count($certList) > 0)
                         <div class="fd-card-section">
                             <div class="fd-card-sec-title">{{ $staticContent['Expertise'] ?? 'Expertise' }}</div>
                             <div class="fd-card-grid">
@@ -231,6 +232,7 @@
                                 @endforeach
                             </div>
                         </div>
+                        @endif
                         <div class="fd-card-section">
                             <div class="fd-card-sec-title">{{ $staticContent['Product_Lines'] ?? 'Product Lines' }}</div>
                             <div class="fd-card-grid">
