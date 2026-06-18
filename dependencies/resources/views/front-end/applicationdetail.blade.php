@@ -35,11 +35,31 @@
     #related-product-mobile .item-related {
         width: 100%;
         height: 200px;
-        border: 2px solid #E3EFF8;
+        flex-direction: column;
+        justify-content: center;
+        border: 2px solid #dcdcdc;
         background-size: cover;
         background: no-repeat;
         text-align: center;
 
+    }
+
+    .text-title-twenty-dark,
+    .other-applications-list h6.text-title-dark {
+        font-size: 18px;
+    }
+
+    .btn-border-delta {
+        background-color: #0087DC;
+        color: #ffffff !important;
+        border-color: #0087DC;
+    }
+
+    @media (max-width: 768px) {
+        .text-title-twenty-dark,
+        .other-applications-list h6.text-title-dark {
+            font-size: 16px;
+        }
     }
 
     #related-product .item-related:hover,
@@ -50,9 +70,9 @@
     #related-product .item-related img,
     #related-product-mobile .item-related img {
         padding-top: 10px;
-        max-width: 100%;
-        margin-left: auto;
-        margin-right: auto;
+        width: 100%;
+        height: 110px;       /* 固定圖區高度，每張卡圖一致 → 產品名對齊、卡片同大小 */
+        object-fit: scale-down;   /* 大圖縮小至 110px 內、小圖維持原大小不放大(不模糊)，皆等比置中不變形 */
         margin-bottom: 20px;
     }
 
@@ -83,9 +103,12 @@
     .other-applications-list {
         height: auto;
         padding: 24px;
-        border: 2px solid #E3EFF8;
+        border: 2px solid #dcdcdc;
         margin-bottom: 20px;
-
+        /* .media=display:flex；把唯一子元素 .app-middle-box 在卡片內水平置中，
+           使 icon+文字整塊左右留白一致（icon 與文字保持相鄰、不被拆開） */
+        justify-content: center;
+        align-items: center;
     }
 
     .other-applications-list img {
@@ -98,7 +121,7 @@
     }
 
     .other-applications-grid-mobile-list {
-        border: 2px solid #E3EFF8;
+        border: 2px solid #dcdcdc;
         display: block;
         margin: 12px 0;
     }
@@ -159,23 +182,22 @@
     }
 
     .h-text-app {
-        /* height: 50px; */
-        width: 163px;
-        top: 50%;
-        left: 30%;
-        -webkit-transform: translate(30%, -50%);
-        -ms-transform: translate(30%, -50%);
-        transform: translate(30%, -50%);
+        min-width: 0;
         text-align: left;
-        vertical-align: middle;
-        position: absolute;
-        word-break: break-all;
+        /* 德文長複合字（無空格）以「連字號」自動斷字換行（hyphens:auto，靠 html lang=de 的德文斷字字典），
+           其他語系字短不觸發、CJK 不適用 hyphenation。
+           overflow-wrap:break-word 為保險（無斷字點時才硬斷）。 */
+        word-break: normal;
+        overflow-wrap: break-word;
+        -webkit-hyphens: auto;
+        hyphens: auto;
     }
 
     .app-middle-box {
         display: flex;
+        align-items: center;
+        /* 內層維持內容寬度（icon 緊鄰文字）；置中交給外層 .other-applications-list 處理 */
         height: 90px;
-        position: relative;
     }
 
     .other-applications-grid-mobile-list img {
@@ -205,6 +227,35 @@
         overflow: hidden;
         clip: rect(0, 0, 0, 0);
         border: 0;
+    }
+
+    .banner-type-product-all-new {
+        height: 317px;
+    }
+
+    .app-text-detail,
+    .app-text-detail p,
+    .text-editor,
+    .text-editor p {
+        font-size: 18px;
+        color: #000;
+    }
+
+    .app-text-detail h3.text-color-delta {
+        font-size: 24px;
+    }
+
+    @media (max-width: 768px) {
+        .app-text-detail,
+        .app-text-detail p,
+        .text-editor,
+        .text-editor p {
+            font-size: 16px;
+        }
+
+        .invisible-up-922 h4.text-color-delta {
+            font-size: 18px;
+        }
     }
 </style>
 @endsection
@@ -250,6 +301,8 @@
         </div>
     </div>
 </div>
+{{-- 麵包屑是 position:absolute，補間隔把 banner 往下推 64px，讓麵包屑有自己的位子、不壓在 banner 上（比照 allproducts） --}}
+<div class="padding-top-content-breadcrumb visible-up-922"></div>
 <div class="visible-up-922">
     @if($application->id == 7)
     <div role="img" alt="Delta provides AC-DC power supplies for medical applications"
@@ -460,8 +513,8 @@
                                         . $st[$k]
                                         . '</li>';
                                     }
-                                
-                                
+
+
                             }
                             echo '</ul>';
                             echo '<ul class="col-6 order-1">';
@@ -471,8 +524,8 @@
                                         . $st[$k]
                                         . '</li>';
                                     }
-                                
-                                
+
+
                             }
                             echo '</ul>';
 
@@ -593,8 +646,8 @@
                             . $st[$k]
                             . '</li>';
                         }
-                    
-                    
+
+
                 }
                 echo '</ul>';
                 echo '<ul class="col-6 order-1">';
@@ -604,8 +657,8 @@
                             . $st[$k]
                             . '</li>';
                         }
-                    
-                    
+
+
                 }
                 echo '</ul>';
 
@@ -727,9 +780,9 @@
                 navText: ['<i class="zmdi zmdi-chevron-left" aria-hidden="true"></i>',
                             '<i class="zmdi zmdi-chevron-right" aria-hidden="true"></i>',
                 ]
-            
+
         });
-          
+
         $("#related-product-mobile").owlCarousel({
                 loop: false,
                 margin: 24,
@@ -750,9 +803,9 @@
                 navText: ['<i class="zmdi zmdi-chevron-left" aria-hidden="true"></i>',
                             '<i class="zmdi zmdi-chevron-right" aria-hidden="true"></i>',
                 ]
-            
+
         });
     });
-    
+
                     </script>
                     @endsection

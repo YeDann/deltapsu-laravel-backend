@@ -99,8 +99,10 @@
 </div>
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
 <section class="box-news pb-5">
-    <h1 class="text-title-delta visible-tablets-up">{{$staticContent['Partners']}}</h1>
-    <h3 class="text-title-delta visible-mobile">{{$staticContent['Partners']}}</h3>
+    <div class="container">
+        <h1 class="text-title-delta visible-tablets-up">{{$staticContent['Partners']}}</h1>
+        <h3 class="text-title-delta visible-mobile">{{$staticContent['Partners']}}</h3>
+    </div>
     <div class="container">
         <div class="partners-grid">
             <a href="{{route('marketingResources')}}" class="partners-grid-list border-radius-6">

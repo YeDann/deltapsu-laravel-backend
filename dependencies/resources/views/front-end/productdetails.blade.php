@@ -22,12 +22,52 @@
         font-size: 50px;
     }
 
-    #bar-tech-specs-nav .nav-tabs .nav-link.active {
+    #bar-tech-specs-nav .nav-tabs .nav-link {
+        color: #888;
+        font-weight: normal;
+        font-size: 18px;
+    }
+
+    #bar-tech-specs-nav .nav-tabs .nav-link:hover {
         color: #0087DC;
     }
 
-    #bar-tech-specs-nav .nav-tabs .nav-link {
-        color: #b2b2b2;
+    #bar-tech-specs-nav .nav-tabs .nav-link.active {
+        color: #0087DC;
+        font-weight: normal;
+        background-color: transparent;
+        border-color: transparent transparent #0087DC transparent;
+    }
+
+    .box-product-detail h5.text-color-delta,
+    .box-product-detail p.text-one,
+    h5.text-color-delta,
+    .text-editor,
+    .text-editor p,
+    .text-editor li,
+    .text-tag,
+    .box-doc-list .card-title.text-sixteen-dark,
+    .detail-downlode p.text-dark,
+    .box-tech-specs table {
+        font-size: 18px;
+    }
+
+    @media (max-width: 768px) {
+        #bar-tech-specs-nav .nav-tabs .nav-link {
+            font-size: 16px;
+        }
+        .box-product-detail h5.text-color-delta,
+        .box-product-detail p.text-one,
+        h5.text-color-delta,
+        .text-editor,
+        .text-editor p,
+        .text-editor li,
+        .text-tag,
+        .box-doc-list .card-title.text-sixteen-dark,
+        .detail-downlode p.text-dark,
+        .box-tech-specs table {
+            font-size: 16px;
+        }
     }
 
     #preview .slick-list {
@@ -164,7 +204,7 @@
     }
 
     .text-tag {
-        color: #444444;
+        color: #000;
         cursor: pointer;
     }
 
@@ -1052,7 +1092,7 @@
                 <button class="btn btn-addcompare w-100 my-2"
                     onclick="showNavCoparison({{$product[0]['pro_id']}} ,{{$product[0]['cate_id']}})">{{$staticContent['Add_to_Compare']}}</button>
                 <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}" target="_blank">
-                    <button class="btn btn-datasheet w-100 mr-2">{{$staticContent['data_sheet']}}</button>
+                    <button class="btn btn-datasheet w-100 my-2">{{$staticContent['data_sheet']}}</button>
                 </a>
 
                 @foreach ($ec_link as $item)

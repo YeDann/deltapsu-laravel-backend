@@ -1367,6 +1367,13 @@ class FrontendController extends Controller
             ->select('mpc.*', 'mpct.*')
             ->first();
 
+        // Industrial Battery Charging 主分類：列表最後一欄改用「Other Features」取代「Dimensions」。
+        // 以英文名稱判斷（不綁 main_id，跨環境/語系皆穩定）。
+        $isOtherFeature = DB::table('main_pro_categories_translations')
+            ->where('main_pro_id', $mainCateId)
+            ->where('local', 'en')
+            ->value('name') === 'Industrial Battery Charging';
+
 
         // 取得子商品分類的翻譯資料（用於列表上方的子商品分類描述）
         $subCategories = DB::table('sub_pro_categories as sc')
@@ -1406,6 +1413,7 @@ class FrontendController extends Controller
                 ->with('categoriesHasMainPro', $categoriesHasMainPro)
                 ->with('catename', $catename)
                 ->with('main_cate_id', $mainCateId)
+                ->with('isOtherFeature', $isOtherFeature)
                 ->with('cateid', $cateid)
                 ->with('se_name', $seName)
                 ->with('series', $series)
@@ -3378,6 +3386,10 @@ class FrontendController extends Controller
                     ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
                     ->leftJoin('product_tags as ptag', 'ptag.product_id', '=', 'p.pro_id')
                     ->leftJoin('product_optional_model as op', 'op.product_id', '=', 'p.pro_id')
+                    ->leftJoin('products_translation as pt', function ($join) use ($lang) {
+                        $join->on('pt.product_id', '=', 'p.pro_id')
+                            ->where('pt.local', '=', $lang);
+                    })
                     ->where('spt.local', $lang)
                     ->where('st.local', $lang)
                     ->where('p.enable_pro', 1)
@@ -3385,7 +3397,10 @@ class FrontendController extends Controller
                         $q->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
                         ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(st.title, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
                         ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(ptag.tag, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
-                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(op.optional_model, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%');
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(op.optional_model, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        // 分類名 spt.name 與 Highlights & Features(content_1) 也納入搜尋；沿用去空白/連字號比對
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(spt.name, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(pt.content_1, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%');
                         // ->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%')
                         // ->orWhere('op.optional_model', 'LIKE', '%' . $keypro . '%');
                         // foreach ($keyParts as $part) {
@@ -3409,7 +3424,8 @@ class FrontendController extends Controller
                         DB::raw('MAX(phc.categories_id) as categories_id'),
                         DB::raw('MAX(st.title) as seName'),
                         DB::raw('GROUP_CONCAT(DISTINCT ptag.tag) as tags'),
-                        DB::raw('GROUP_CONCAT(DISTINCT op.optional_model) as optional_models')
+                        DB::raw('GROUP_CONCAT(DISTINCT op.optional_model) as optional_models'),
+                        DB::raw('MAX(pt.short_features) as short_features')
                     )
                     ->groupBy(
                         'p.pro_id',
@@ -3489,6 +3505,7 @@ class FrontendController extends Controller
                     'dimensionL' => $pro->dimensionL,
                     'dimensionW' => $pro->dimensionW,
                     'dimensionD' => $pro->dimensionD,
+                    'short_features' => $pro->short_features,
                 ];
         })->filter()->values();
 
@@ -3499,7 +3516,10 @@ class FrontendController extends Controller
             ->where('ct.local', $lang)
             ->where('c.content_type', '=', 'news')
             ->where('c.status', 1)
-            ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+            ->where(function ($q) use ($keysearch) {
+                $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+            })
             ->select('c.*', 'ct.*', 'nt.name as cateName', 'pnc.categories_id as typeId')
             ->orderBy('c.date_publish', 'desc')
             ->distinct()
@@ -3511,7 +3531,10 @@ class FrontendController extends Controller
                 ->where('ct.local', $lang)
                 ->where('c.content_type', '=', 'event')
                 ->where('c.status', 1)
-                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->select('c.*', 'ct.*')
                 ->orderBy('c.date_publish', 'desc')
                 ->distinct()

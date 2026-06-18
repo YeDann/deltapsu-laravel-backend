@@ -36,3 +36,6 @@ dependencies/storage/logs/laravel.log
 .DS_Store
 **/.DS_Store
 .php-cs-fixer.cache
+
+# Code review reports
+pr/

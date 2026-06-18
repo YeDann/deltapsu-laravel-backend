@@ -144,14 +144,14 @@ margin-bottom: 0em;
     background-color: #fff !important;
     border: 2px solid #444444 !important;
     border-radius: 5px;
-    color: #444444 !important;
+    color: #000 !important;
 }
 .btn-previous-border::before{
     font-family: FontAwesome;
     content: "\f104";
     float: left;
     /* font-size: 24px; */
-    color: #444444;
+    color: #000;
 }
 
 .btn-previous-border:hover::before {
@@ -202,7 +202,7 @@ button:focus{
     float: right;
     width: 24px;
     height: 24px;
-    color: #444444;
+    color: #000;
     bottom: 8px;
     left: 0;
     position: absolute;

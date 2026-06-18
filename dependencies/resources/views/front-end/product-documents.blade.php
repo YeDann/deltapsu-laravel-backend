@@ -18,6 +18,33 @@
         margin: 0 29px;
     }
 
+    .search-filter-action .text-sixteen-dark,
+    .datasheet-select p.text-dark {
+        font-size: 18px;
+        color: #000;
+    }
+
+    @media (max-width: 768px) {
+        .search-filter-action .text-sixteen-dark,
+        .datasheet-select p.text-dark {
+            font-size: 16px;
+        }
+    }
+
+    /* 按鈕比照 Download(.btn-downlode) 尺寸/字級（40px / 18px / radius 5）；用 .btn-filters.btn-search 蓋過全域 .btn-search 的 32px/12px */
+    .btn-filters.btn-search {
+        height: 40px;
+        border-radius: 5px;
+        font-size: 18px;
+    }
+    /* 兩個按鈕手機 16px（PC18 / 手機16） */
+    @media (max-width: 768px) {
+        .btn-filters.btn-search,
+        .btn-downlode {
+            font-size: 16px;
+        }
+    }
+
     .mr-b-1 {
         margin-bottom: 1px;
     }

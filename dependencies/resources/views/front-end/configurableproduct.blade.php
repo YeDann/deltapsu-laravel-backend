@@ -251,6 +251,101 @@
 		background-color: #e7e9ed !important;
 	}
 
+	/* 底部按鈕字級對齊
+	   scope 在 #configurable，靠 ID 特異度蓋過全域 .btn-enquiry 的 12px，不污染產品比較/詳情頁。 */
+	#configurable .actions a,
+	#configurable .btn-enquiry {
+		font-size: 18px;
+		line-height: 1;
+		font-weight: normal;
+	}
+
+	/* Next/Previous 是固定高 40px 的 <a>（procompare.css），原 padding 0.75em 在 18px 會超出 40px、
+	   文字垂直偏掉；改上下 0.5em(=9px) 配 line-height:1 → 9+18+9+邊框4 = 40、垂直置中不溢出。
+	   不改成 flex 置中：箭頭 .arrow-next::before(float:right)、.btn-previous-border::before(float:left)
+	   在 flex 下會變成文字前面的 flex item、左右相反。 */
+	#configurable .actions a {
+		padding-top: 0.5em;
+		padding-bottom: 0.5em;
+	}
+
+	/* 箭頭與文字間距：箭頭是 float 的 ::before，加 margin 把它跟文字拉開避免貼太近 */
+	#configurable .arrow-next::before {
+		margin-left: 8px;
+	}
+	#configurable .btn-previous-border::before {
+		margin-right: 8px;
+	}
+
+	@media (max-width: 768px) {
+		#configurable .actions a,
+		#configurable .btn-enquiry {
+			font-size: 16px;
+		}
+	}
+
+	/* 表單內文字級統一 PC18/手機16 */
+	#configurable .content p,
+	#configurable .content b,
+	#configurable .content h5,
+    #configurable .content h3,
+	#configurable .content li {
+		font-size: 18px;
+	}
+
+	@media (max-width: 768px) {
+		#configurable .content p,
+		#configurable .content b,
+		#configurable .content h5,
+		#configurable .content li {
+			font-size: 16px;
+		}
+	}
+
+	/* radio/checkbox 選項標籤（Single/Dual Output 等）比照內文：桌機 18 / 手機 16。 */
+	#configurable .form-check-label {
+		font-size: 18px;
+	}
+
+	@media (max-width: 768px) {
+		#configurable .form-check-label {
+			font-size: 16px;
+		}
+	}
+
+	/* Select Parallel 表格（#data_tableslot，JS 生成 .parallel 表）的 td 文字：手機版 16px。 */
+	@media (max-width: 768px) {
+		#data_tableslot td {
+			font-size: 16px;
+		}
+	}
+
+	#configurable .describe-list .text-detail-describe {
+		font-size: 18px;
+	}
+	/* 模組預覽圖格子內文字（Slot 標籤 + 電壓/電流/瓦數） */
+	#configurable #port .fix-height,
+	#configurable #port02 .fix-height {
+		font-size: 18px;
+	}
+
+	#configurable #data_table2_con td {
+		font-size: 18px;
+	}
+	#configurable .customer {
+		font-size: 18px;
+	}
+
+	@media (max-width: 768px) {
+		#configurable .describe-list .text-detail-describe,
+		#configurable #port .fix-height,
+		#configurable #port02 .fix-height,
+		#configurable #data_table2_con td,
+		#configurable .customer {
+			font-size: 16px;
+		}
+	}
+
 
 	/* #PDFconfigurable{
 		display: none;

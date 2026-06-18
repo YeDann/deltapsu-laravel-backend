@@ -64,7 +64,7 @@
   content: "\f139";
   font-family: 'FontAwesome';
   font-size: 52px;
-  color: #444444;
+  color: #000;
   cursor: pointer;
 }
 
@@ -134,7 +134,7 @@ p {
   font-weight: 300;
   margin-bottom: 0.25rem;
   word-break: break-word;
-  color: #444444;
+  color: #000;
 }
 
 .text-one {
@@ -153,7 +153,7 @@ p {
 
 .text-title-dark {
   font-weight: bold;
-  color: #444444;
+  color: #000;
 
 }
 
@@ -413,7 +413,14 @@ a:hover {
 }
 
 .text-p-banner {
-  color: #444444;
+  color: #000;
+  font-size: 18px;
+}
+
+@media only screen and (max-width:768px) {
+  .text-p-banner {
+    font-size: 16px;
+  }
 }
 
 
@@ -647,7 +654,7 @@ a:hover {
   font-size: 12px;
   color: #ffffff;
   font-weight: bold;
-  background-color: rgb(120,120, 120);
+  background-color: #0087DC;
   padding: 9px 20px;
   /* padding: 10px 15px; */
   border: 2px solid transparent;
@@ -708,7 +715,7 @@ a:hover {
 
 .text-title-ft-sub {
   font-weight: 600;
-  color: #444444;
+  color: #000;
 }
 
 .text-ft-sub {
@@ -895,7 +902,8 @@ a:hover {
 }
 
 .title-new {
-  font-weight: bold;
+  font-weight: normal;
+  font-size: 18px;
   margin-top: 0.5rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -903,12 +911,18 @@ a:hover {
   overflow: hidden;
 }
 
+@media (max-width: 768px) {
+  .title-new {
+    font-size: 16px;
+  }
+}
+
 a .title-new {
-  color: #444444;
+  color: #000;
 }
 
 .title-new a {
-  color: #444444;
+  color: #000;
 }
 
 .box-text-date {
@@ -1039,11 +1053,50 @@ a .title-new {
 }
 
 .text-title-delta {
-  color: #0087DC;
+  color: #000;
+  font-size: 32px;
   font-weight: bold;
   margin-bottom: 2rem;
   margin-top: 2rem;
-  text-align: center;
+  text-align: left;
+  position: relative;
+}
+
+.text-title-delta::before {
+  content: '';
+  display: block;
+  height: 5px;
+  width: 80px;
+  background-color: #0087DC;
+  background-image: linear-gradient(to right, #0087DC 60%, #64d7d7 60%, #64d7d7 80%, #b9eb5f 80%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: -80px 0;
+  margin-bottom: 12px;
+  animation: brand-bar-flow 6s linear infinite;
+}
+
+@keyframes brand-bar-flow {
+  0% { background-position: -80px 0; }
+  20%, 80% { background-position: 0 0; }
+  100% { background-position: 80px 0; }
+}
+
+@media (max-width: 768px) {
+  .text-title-delta {
+    font-size: 24px;
+  }
+  .text-title-delta::before {
+    height: 2.5px;
+    width: 40px;
+    background-position: -40px 0;
+    animation-name: brand-bar-flow-mobile;
+  }
+  @keyframes brand-bar-flow-mobile {
+    0% { background-position: -40px 0; }
+    20%, 80% { background-position: 0 0; }
+    100% { background-position: 40px 0; }
+  }
 }
 
 .text-title-delta-home {
@@ -1061,7 +1114,7 @@ a .title-new {
 
 .text-be-first {
   font-family: 'DeltaSans';
-  color: #444444;
+  color: #000;
   font-size: 16px;
   line-height: 20px;
   padding-bottom: 18px;
@@ -1108,12 +1161,12 @@ a .title-new {
   width: 160px;
   font-size: 12px;
   font-weight: bold;
-  color: #444444;
+  color: #000;
 }
 
 .btn-boxen:hover {
   text-decoration: none;
-  color: #444444;
+  color: #000;
 }
 
 .box-eventnews .container {
@@ -1217,7 +1270,7 @@ a .title-new {
     font-size: 20px;
     line-height: 32px;
     font-weight: bold;
-    color: #444444;
+    color: #000;
   }
 
   .box-product-document-mobile {
@@ -1238,7 +1291,7 @@ a .title-new {
 
 .btn-subscribe {
   font-family: 'DeltaSans';
-  font-size: 14px;
+  font-size: 18px;
   color: #ffffff;
   font-weight: bold;
   background-color: #0087DC;
@@ -1247,6 +1300,17 @@ a .title-new {
   border: 2px solid transparent;
   border-radius: 5px;
   cursor: pointer;
+  padding: 0 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .btn-subscribe {
+    font-size: 16px;
+  }
 }
 
 .btn-border-delta {
@@ -1565,7 +1629,7 @@ a .title-new {
 #bar-search-results-nav .nav-link {
   font-size: 16px;
   padding: 0 0px 16px 0px;
-  color: #444444;
+  color: #000;
 }
 
 #bar-search-results-nav .nav-link.active {
@@ -1581,7 +1645,7 @@ a .title-new {
   position: relative;
   height: 333px;
   overflow: hidden;
-  border: unset;
+  border: 1px solid #dcdcdc;
   border-radius: unset;
 }
 
@@ -1618,7 +1682,7 @@ a .title-new {
   height: 300px;
   bottom: -130px;
   padding: 20px;
-  background-color: #f0f5fa;
+  background-color: #fff;
   transition: .5s;
 }
 
@@ -1663,8 +1727,15 @@ a .title-new {
   left: 20px;
   bottom: 25px;
   font-size: 14px;
-  font-weight: bold;
-  color: #5F5F5F;
+  font-weight: normal;
+  color: #0087DC;
+}
+
+.read-more::after {
+  content: "\f054";
+  font-family: 'FontAwesome';
+  margin-left: 6px;
+  font-size: 12px;
 }
 
 .read-more:hover {
@@ -2002,7 +2073,7 @@ a.btn-enquiry:hover {
   padding: 0;
   clear: both;
   font-weight: 400;
-  color: #444444;
+  color: #000;
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
@@ -2032,15 +2103,7 @@ a.dropdown-item:hover {
 }
 
 #tools-dropdown::after {
-  content: "\f107";
-  font-family: 'FontAwesome';
-  padding: 1px 2px;
-  border: 1px solid #0087DC;
-  background: #0087DC;
-  border-radius: 4px;
-  margin-left: 4px;
-  font-size: 12px;
-  color: #ffffff;
+  display: none;
 }
 
 .breadcrumb>.dropdown>.dropdown-menu li a {
