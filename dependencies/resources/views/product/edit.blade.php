@@ -622,6 +622,8 @@
         var allLangs  = <?= json_encode($allLang);?>;
         var arrCate  = <?= json_encode($arrProcate);?>;
         var arrProCateName  = <?= json_encode($arrProCateName);?>;
+        // Industrial Battery Charging 主分類底下子分類的 slug 清單（決定是否顯示 Short Features 欄）
+        var batteryCateSlugs  = <?= json_encode($batteryCateSlugs ?? []);?>;
 
          function getHtmlContent(lang){
             $('#contenttdata').empty();
@@ -1032,7 +1034,8 @@
             }
         }
 
-        if(slug == 'wireless-charging-system' || arrProCateName.includes('wireless-charging-system')){
+        // 點選的分類、或商品既有任一分類，屬於 Industrial Battery Charging 主分類底下，就顯示 Short Features 欄
+        if(batteryCateSlugs.includes(slug) || arrProCateName.some(function(s){ return batteryCateSlugs.includes(s); })){
                document.getElementById("box_cate_cate_battery").style.display =  "block";
             }else{
               document.getElementById("box_cate_cate_battery").style.display =  "none";

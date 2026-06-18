@@ -1367,6 +1367,13 @@ class FrontendController extends Controller
             ->select('mpc.*', 'mpct.*')
             ->first();
 
+        // Industrial Battery Charging 主分類：列表最後一欄改用「Other Features」取代「Dimensions」。
+        // 以英文名稱判斷（不綁 main_id，跨環境/語系皆穩定）。
+        $isOtherFeature = DB::table('main_pro_categories_translations')
+            ->where('main_pro_id', $mainCateId)
+            ->where('local', 'en')
+            ->value('name') === 'Industrial Battery Charging';
+
 
         // 取得子商品分類的翻譯資料（用於列表上方的子商品分類描述）
         $subCategories = DB::table('sub_pro_categories as sc')
@@ -1406,6 +1413,7 @@ class FrontendController extends Controller
                 ->with('categoriesHasMainPro', $categoriesHasMainPro)
                 ->with('catename', $catename)
                 ->with('main_cate_id', $mainCateId)
+                ->with('isOtherFeature', $isOtherFeature)
                 ->with('cateid', $cateid)
                 ->with('se_name', $seName)
                 ->with('series', $series)

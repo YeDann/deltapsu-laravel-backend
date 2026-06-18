@@ -2,6 +2,15 @@
 @section('css')
 <?php $imgDown = asset('frontend-asset/image/arrow-down.svg') ?>
 <style>
+    /* Other Features 清單靠左：縮掉 <ul>/<ol> 預設左 padding，項目符號對齊標題（桌機＋手機共用同組 class） */
+    .text-editor-card ul,
+    .text-editor-card ol,
+    .w-td-con-text-editor ul,
+    .w-td-con-text-editor ol {
+        margin: 0;
+        padding-left: 1.1em;
+    }
+
     /* select */
     .form-control {
         font-size: 14px;
@@ -867,6 +876,9 @@
     var cateid = <?= json_encode($cateid);?>;
     var main_cate_id = <?= json_encode($main_cate_id);?>;
     var url_name =  <?= json_encode($url_name);?>;
+    // Industrial Battery Charging 主分類底下所有子分類，列表最後一欄以「Other Features」取代「Dimensions」。
+    // 由 controller 以主分類英文名稱判斷（不綁 id，跨環境/語系皆穩定）後傳入。
+    var isOtherFeature = <?= json_encode((bool)($isOtherFeature ?? false)); ?>;
     var subCategories = <?= json_encode($subCategories);?>;
     var pro_perti = [];
 
@@ -2015,7 +2027,7 @@
         html += '</div>';
         html += '</div>';
         html += '</div>';
-        if (url_name == "wireless-charging-system") {
+        if (isOtherFeature) {
         html += '<p class="text-title-ft-sub text-two add-hight">{{$staticContent['product_highLights']}}</p>';
         html += '<div class="text-editor-card mt-2"> '+checkNullTexteditor(pro['short_features']) +'</div>';
         } else {
@@ -2116,7 +2128,7 @@
             html += '</div>';
             html += '</div>';
 
-            if (url_name == "wireless-charging-system") {
+            if (isOtherFeature) {
                 html += '<p class="text-title-ft-sub text-two">{{$staticContent['product_highLights']}}</p>';
                 html += '<div class="text-editor-card mt-2"> '+checkNullTexteditor(pro['short_features']) +'</div>';
             } else {
@@ -2181,7 +2193,7 @@
         html1 += '<th id="sortdata3" class=" header-font-table w-tabfix w-120"  onclick="selectTable(3)">{{$staticContent['Output_Current']}}</th>';
         html1 += '<th id="sortdata4" class=" header-font-table w-tabfix w-120"  onclick="selectTable(4)">{{$staticContent['Output_Power']}} </th>';
         html1 += '<th id="sortdata5" class=" header-font-table w-tabfix"  onclick="selectTable(5)">{{$staticContent['Input_Voltage']}}</th>';
-        if (url_name == "wireless-charging-system") {
+        if (isOtherFeature) {
             html1 += '<th  class="header-font-table" >{{$staticContent['product_highLights']}}</th>';
         } else {
             html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['Dimensions']}}</th>';
@@ -2288,7 +2300,7 @@
             } else {
                 html1 += ' <td class="text-middle-td">-</td>';
             }
-            if (url_name == "wireless-charging-system") {
+            if (isOtherFeature) {
                 html1 += ' <td class="text-middle-td border-radius-6 pad-right-1rem break-word"> <div class="w-td-con-text-editor">'+checkNullTexteditor(pro['short_features'])+'</div></td>';
             } else {
                 if (pro['dimensionL'] != null && pro['dimensionL'].length < 7 && pro['dimensionW'] != '' && pro['dimensionD'] != '') {

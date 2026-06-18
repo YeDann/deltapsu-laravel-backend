@@ -556,6 +556,8 @@
 @endsection
 @section('js')
 <script type="text/javascript">
+    // Industrial Battery Charging 主分類底下子分類的 slug 清單（決定是否顯示 Short Features 欄）
+    var batteryCateSlugs = <?= json_encode($batteryCateSlugs ?? []); ?>;
     $(document).ready(function () {
            document.getElementById("box_cate_cate_battery").style.display =  "none";
     });
@@ -670,12 +672,8 @@
                 categorie.splice(index, 1);
             }
         }
-        let check = false;
-         if(slug == 'wireless-charging-system'){
-            check = true;
-         }else{
-            check = false;
-         }
+        // Industrial Battery Charging 主分類底下的子分類才顯示「Short Features」欄（slug 集合由 controller 傳入，不綁單一 slug）
+        let check = batteryCateSlugs.includes(slug);
         document.getElementById("box_cate_cate_battery").style.display = check ? "block" : "none";
         $.ajax({
             url: "{{ (route('searhSeries')) }}",
