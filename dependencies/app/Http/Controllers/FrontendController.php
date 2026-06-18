@@ -2852,12 +2852,14 @@ class FrontendController extends Controller
                 ->get()
                 ->groupBy('office_id');
         };
-        // territory / certification 為下拉，顯示當前語系名稱
+        // territory / expertise 為下拉，顯示當前語系名稱
+        // 只取啟用中(status=1)的分類，讓卡片與篩選下拉一致：設 Hide 的標籤不會出現在卡片
         $pivotNames = function ($pivot, $table) use ($lang) {
             return DB::table($pivot . ' as p')
                 ->join($table . ' as c', 'c.id', '=', 'p.category_id')
                 ->join($table . '_translation as t', 't.fk_id', '=', 'c.id')
                 ->where('t.local', $lang)
+                ->where('c.status', 1)
                 ->select('p.office_id', 't.name')
                 ->get()
                 ->groupBy('office_id');
