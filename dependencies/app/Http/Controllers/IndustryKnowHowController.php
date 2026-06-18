@@ -146,6 +146,7 @@ class IndustryKnowHowController extends Controller
                         "meta_title" => $metaTitle,
                         "meta_description" => $metaDescription,
                         'file' => $arrFileName['industryknowhowfile'],
+                        "head" => $request->head,
                         "local" => $lang,
                     ]
                 );
@@ -286,6 +287,7 @@ class IndustryKnowHowController extends Controller
                     "meta_description" => $meta_des[$lang],
                     "description" => $description[$lang],
                     'file' =>  $arrrayName[$lang],
+                    "head" => $request->head[$lang] ?? '',
                 ]
             );
         }

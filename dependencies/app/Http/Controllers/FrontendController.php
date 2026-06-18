@@ -900,11 +900,19 @@ class FrontendController extends Controller
                 ->select('mtp.*', 'mtpt.*')
                 ->get();
 
+        $mainCategory = DB::table('main_pro_categories as mpc')
+            ->join('main_pro_categories_translations as mpct', 'mpc.main_id', '=', 'mpct.main_pro_id')
+            ->where('mpc.main_id', 5)
+            ->where('mpct.local', $lang)
+            ->select('mpc.*', 'mpct.*')
+            ->first();
+
         return view('front-end.configurableproduct')
             ->with('metatag', $metatag)
             ->with('model', $model)
             ->with('connectors_images', $connectors_images)
-            ->with('model_alldata', $model_alldata);
+            ->with('model_alldata', $model_alldata)
+            ->with('head', $mainCategory->head ?? '');
     }
 
     public function allproductsByType($cate_parname, $cate_par_id = 0, $main_pId)
@@ -1418,7 +1426,8 @@ class FrontendController extends Controller
                 ->with('se_name', $seName)
                 ->with('series', $series)
                 ->with('modeSeries', $modeSeries)
-                ->with('se_id', $seId);
+                ->with('se_id', $seId)
+                ->with('head', $mainCategory->head ?? '');
         }
 
         return response()->view('errors.404', [], 404);
@@ -1751,13 +1760,13 @@ class FrontendController extends Controller
         $data_other = [];
         $data_check_poOther = [];
         $j = 0;
-        foreach ($product_related as $pro) {
+        foreach ($product_related as $prod) {
             $arraysub = [];
             $arraysub = DB::table('product_has_property as ph')
                 ->join('product_has_property_translation as pht', 'ph.per_id', '=', 'pht.per_fk_id')
                 ->join('product_field as pf', 'pf.id', '=', 'ph.type_id')
                 ->join('product_field_translation as pft', 'ph.type_id', '=', 'pft.product_field_id')
-                ->where('ph.product_id', $pro->pro_id)
+                ->where('ph.product_id', $prod->pro_id)
                 ->where('pht.local', 'en')
                 ->where('pft.local', $lang)
                 ->whereIn('ph.type_id', [3, 4, 8, 31])
@@ -1765,23 +1774,23 @@ class FrontendController extends Controller
                 ->select('pht.value_text', 'ph.*', 'pft.field_name as fieldCate', 'pf.unit_name')
                 ->get();
 
-            if (!in_array($pro->pro_id, $data_check_poOther) && self::checkContentPro($pro->pro_id)) {
+            if (!in_array($prod->pro_id, $data_check_poOther) && self::checkContentPro($prod->pro_id)) {
                 array_push($data_check_poOther, $pro->pro_id);
                 $data_other[$j] = [
-                    'pro_id' => $pro->pro_id,
-                    'pro_code' => $pro->pro_code,
-                    'catename' => $pro->catename,
-                    'cate_id' => $pro->pro_categories_id,
-                    'picture' => $pro->picture,
-                    'unit_dimension_1' => $pro->unit_dimension_1,
-                    'unit_dimension' => $pro->unit_dimension,
-                    'status_product' => $pro->status_product,
+                    'pro_id' => $prod->pro_id,
+                    'pro_code' => $prod->pro_code,
+                    'catename' => $prod->catename,
+                    'cate_id' => $prod->pro_categories_id,
+                    'picture' => $prod->picture,
+                    'unit_dimension_1' => $prod->unit_dimension_1,
+                    'unit_dimension' => $prod->unit_dimension,
+                    'status_product' => $prod->status_product,
                     'content' => $arraysub,
-                    'alt_img' => $pro->alt_img,
-                    'url_item' => $pro->url_item,
-                    'dimensionL' => $pro->dimensionL,
-                    'dimensionW' => $pro->dimensionW,
-                    'dimensionD' => $pro->dimensionD,
+                    'alt_img' => $prod->alt_img,
+                    'url_item' => $prod->url_item,
+                    'dimensionL' => $prod->dimensionL,
+                    'dimensionW' => $prod->dimensionW,
+                    'dimensionD' => $prod->dimensionD,
                 ];
             }
 
@@ -1811,7 +1820,8 @@ class FrontendController extends Controller
             ->with('product_has_property', $product_has_property)
             ->with('external_link', $external_link)
             ->with('ec_link', $ec_link)
-            ->with('product', $data);
+            ->with('product', $data)
+            ->with('head', $pro->head ?? '');
     }
 
     public function resultSearch()
@@ -2251,6 +2261,7 @@ class FrontendController extends Controller
             'apt.overview_text',
             'apt.meta_title',
             'apt.meta_description',
+            'apt.head',
             'h1'
         )
         ->orderBy('ap.order_seq', 'asc')
@@ -2288,7 +2299,8 @@ class FrontendController extends Controller
             ->with('image', $image)
             ->with('otherapp', $otherapp)
             ->with('relatedApp', $relatedApp)
-            ->with('application', $application);
+            ->with('application', $application)
+            ->with('head', $application->head ?? '');
         }
 
         return response()->view('errors.404', [], 404);
@@ -2374,7 +2386,8 @@ class FrontendController extends Controller
         //return dd($contents);
         return view('front-end.news-detail')
           ->with('otherNews', $otherNews)
-          ->with('contents', $contents);
+          ->with('contents', $contents)
+          ->with('head', isset($contents[0]) ? ($contents[0]->head ?? '') : '');
     }
 
     public function updateVideoDetail($namePar)
@@ -2424,7 +2437,8 @@ class FrontendController extends Controller
 
         return view('front-end.video-detail')
           ->with('otherNews', $otherNews)
-          ->with('contents', $contents);
+          ->with('contents', $contents)
+          ->with('head', isset($contents[0]) ? ($contents[0]->head ?? '') : '');
     }
 
     public function updateProductNoticeDetail($namePar)
@@ -2474,7 +2488,8 @@ class FrontendController extends Controller
 
         return view('front-end.product-notice-detail')
           ->with('otherNews', $otherNews)
-          ->with('contents', $contents);
+          ->with('contents', $contents)
+          ->with('head', isset($contents[0]) ? ($contents[0]->head ?? '') : '');
     }
 
     public function updateIndustryKnowHowDetail($namePar)
@@ -2524,7 +2539,8 @@ class FrontendController extends Controller
 
         return view('front-end.industry-know-how-detail')
           ->with('otherNews', $otherNews)
-          ->with('contents', $contents);
+          ->with('contents', $contents)
+          ->with('head', isset($contents[0]) ? ($contents[0]->head ?? '') : '');
     }
 
     public function updateEOLDetail($namePar)
@@ -2574,7 +2590,8 @@ class FrontendController extends Controller
 
         return view('front-end.eol-detail')
           ->with('otherNews', $otherNews)
-          ->with('contents', $contents);
+          ->with('contents', $contents)
+          ->with('head', isset($contents[0]) ? ($contents[0]->head ?? '') : '');
     }
 
     public function updateEventDetail($namePar)
@@ -2622,7 +2639,8 @@ class FrontendController extends Controller
         // }
         return view('front-end.event-detail')
         ->with('otherNews', $otherNews)
-        ->with('contents', $contents);
+        ->with('contents', $contents)
+        ->with('head', isset($contents[0]) ? ($contents[0]->head ?? '') : '');
     }
 
     public function updateTechnicalDetail($namePar)
@@ -3509,6 +3527,7 @@ class FrontendController extends Controller
                 ];
         })->filter()->values();
 
+
         $news = DB::table('product_news_has_categories as pnc')
             ->join('contents as c', 'c.id', '=', 'pnc.content_id')
             ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
@@ -3552,6 +3571,54 @@ class FrontendController extends Controller
                 ->where('c.status', 1)
                 ->where('c.content_type', '=', 'blog')
                 ->select('c.*', 'ct.*', 'tyt.name as cateName', 'anc.categories_id as typeId')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
+        $videos = DB::table('contents as c')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'video')
+                ->where('c.status', 1)
+                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->select('c.*', 'ct.*')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
+        $industryKnowHow = DB::table('contents as c')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'industry-know-how')
+                ->where('c.status', 1)
+                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->select('c.*', 'ct.*')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
+        $productNotices = DB::table('contents as c')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'product-notice')
+                ->where('c.status', 1)
+                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->select('c.*', 'ct.*')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
+        $eols = DB::table('contents as c')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'eol')
+                ->where('c.status', 1)
+                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->select('c.*', 'ct.*')
                 ->orderBy('c.date_publish', 'desc')
                 ->distinct()
                 ->limit($limit_other)
@@ -3664,6 +3731,10 @@ class FrontendController extends Controller
             ->with('news', $news)
             ->with('events', $events)
             ->with('articles', $articles)
+            ->with('videos', $videos)
+            ->with('industryKnowHow', $industryKnowHow)
+            ->with('productNotices', $productNotices)
+            ->with('eols', $eols)
             ->with('offices', $offices)
             ->with('distributor', $distributor)
             ->with('continents_office', $continents_office)

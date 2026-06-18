@@ -155,8 +155,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label>Head (Custom HTML)</label>
+                                        <small class="text-muted d-block mb-1">輸入自訂 &lt;meta&gt;、&lt;link&gt;、&lt;script&gt; 等 HTML，將插入前台該頁面的 &lt;head&gt; 區塊。</small>
+                                        <textarea name="head[{{$item->name}}]" rows="6" class="form-control" style="font-family:monospace;">{{isset($current->head) ? $current->head : ''}}</textarea>
+                                    </div>
                                 </div>
-
                                 @endforeach
                             </div>
                         </div>

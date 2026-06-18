@@ -72,17 +72,23 @@
     <div class="container">
         <h1 class="text-title-delta visible-tablets-up">{{$staticContent['Search_Results']}}</h1>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['Search_Results']}}</h3>
-        <select id="select-search-results" class="form-control mb-4">
-            <option value="0">{{$staticContent['Products']}} ({{count($pro_results)}})</option>
-            <option value="1">{{$staticContent['Product_News']}} ({{count($news)}})</option>
-            <option value="2">{{$staticContent['Events']}} ({{count($events)}})</option>
-            {{-- <option value="3">{{$staticContent['Technical_Articles']}}({{count($articles)}})</option> --}}
-            <option value="7">{{$staticContent['Applications']}} ({{count($applications)}})</option>
-            <option value="4">{{$staticContent['FAQs']}} ({{count($faqs)}})</option>
-            <option value="5">{{$staticContent['Marketing_Resources']}} ({{count($margeting)}})</option>
-            <option value="6"> {{$staticContent['contact_Info']}} ({{count($distributor)+count($offices)}})</option>
-
-        </select>
+        <div class="d-flex align-items-center mb-4" style="gap:12px;">
+            <select id="search-category-filter" class="form-control" style="max-width:280px;">
+                <option value="nav-products">{{$staticContent['Products']}} ({{count($pro_results)}})</option>
+                <option value="nav-news">{{$staticContent['Product_News']}} ({{count($news)}})</option>
+                <option value="nav-events">{{$staticContent['Events']}} ({{count($events)}})</option>
+                <option value="nav-applications">{{$staticContent['Applications']}} ({{count($applications)}})</option>
+                <option value="nav-industry-know-how">Industry Know-How ({{count($industryKnowHow)}})</option>
+                <option value="nav-videos">Video ({{count($videos)}})</option>
+                <option value="nav-product-notices">Product Notice ({{count($productNotices)}})</option>
+                <option value="nav-eols">EOL ({{count($eols)}})</option>
+                <option value="nav-faqs">{{$staticContent['FAQs']}} ({{count($faqs)}})</option>
+                <option value="nav-marketing-resources">{{$staticContent['Marketing_Resources']}} ({{count($margeting)}})</option>
+                <option value="nav-contact-info">{{$staticContent['contact_Info']}} ({{count($distributor)+count($offices)}})</option>
+            </select>
+        </div>
+        {{-- mobile select & nav-tabs 已由上方下拉選單取代 --}}
+        {{-- <select id="select-search-results" class="form-control mb-4">...</select> --}}
         <?php
         function checkProcode($code){
           $string =  str_replace("/", "@",$code);
@@ -90,39 +96,11 @@
         }
        ?>
         <div class="bar-product-type">
-            <nav id="bar-search-results-page-nav">
-                <div class="nav nav-tabs mb-4" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-tab0" data-val="0" data-toggle="tab"
-                        href="#nav-products" role="tab" aria-controls="nav-products"
-                        aria-selected="true">{{$staticContent['Products']}} ({{count($pro_results)}})</a>
-                    <a class="nav-item nav-link" id="nav-tab1" data-val="1" data-toggle="tab" href="#nav-news"
-                        role="tab" aria-controls="nav-news" aria-selected="false">{{$staticContent['Product_News']}}
-                        ({{count($news)}})</a>
-                    <a class="nav-item nav-link" id="nav-tab2" data-val="2" data-toggle="tab" href="#nav-events"
-                        role="tab" aria-controls="nav-events" aria-selected="false">{{$staticContent['Events']}}
-                        ({{count($events)}})</a>
-                    {{-- <a class="nav-item nav-link" id="nav-tab3" data-val="3" data-toggle="tab"
-                        href="#nav-technical-articles" role="tab" aria-controls="nav-technical-articles"
-                        aria-selected="false">{{$staticContent['Technical_Articles']}} ({{count($articles)}})</a> --}}
-                    <a class="nav-item nav-link" id="nav-tab7" data-val="7" data-toggle="tab" href="#nav-applications"
-                        role="tab" aria-controls="nav-applications"
-                        aria-selected="false">{{$staticContent['Applications']}} ({{count($applications)}})</a>
-                    <a class="nav-item nav-link" id="nav-tab4" data-toggle="tab" data-val="4" href="#nav-faqs"
-                        role="tab" aria-controls="nav-faqs" aria-selected="false">{{$staticContent['FAQs']}}
-                        ({{count($faqs)}})</a>
-                    <a class="nav-item nav-link" id="nav-tab5" data-val="5" data-toggle="tab"
-                        href="#nav-marketing-resources" role="tab" aria-controls="nav-marketing-resources"
-                        aria-selected="false">{{$staticContent['Marketing_Resources']}} ({{count($margeting)}})</a>
-                    <a class="nav-item nav-link" id="nav-tab6" data-val="6" data-toggle="tab" href="#nav-contact-info"
-                        role="tab" aria-controls="nav-contact-info"
-                        aria-selected="false">{{$staticContent['contact_Info']}}
-                        ({{count($distributor)+count($offices)}})</a>
-
-                </div>
-            </nav>
+            {{-- nav-tabs 保留備用
+            <nav id="bar-search-results-page-nav">...</nav>
+            --}}
             <div class="tab-content mb-5" id="nav-tabContent">
-                <div class="tab-pane fade show active bar-product-type-list " id="nav-products" role="tabpanel"
-                    aria-labelledby="nav-products-tab">
+                <div class="tab-pane fade show active bar-product-type-list" id="nav-products" role="tabpanel">
                     <div id="result1" class="w-100">
                         <div class="visible-up-922 ">
                             <div class="row w-100">
@@ -572,7 +550,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-news tab-pane fade" id="nav-news" role="tabpanel" aria-labelledby="nav-news-tab">
+                <div class="box-news tab-pane fade" id="nav-news" role="tabpanel">
                     <div id="result2" class="row">
                         <?php
                         function getDateformat($date){
@@ -647,7 +625,7 @@
 
                     </div>
                 </div>
-                <div class="box-news tab-pane fade" id="nav-events" role="tabpanel" aria-labelledby="nav-events-tab">
+                <div class="box-news tab-pane fade" id="nav-events" role="tabpanel">
                     <div id="result3" class="row">
                         @foreach ($events as $item)
                         <div class="col-md-6 col-lg-4">
@@ -750,7 +728,7 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="tab-pane fade row" id="nav-faqs" role="tabpanel" aria-labelledby="nav-faqs-tab">
+                <div class="tab-pane fade row" id="nav-faqs" role="tabpanel">
                     <div id="result5" class="faqs-type w-100">
                         @foreach ($faqs as $faq)
                         <div class="box-for-collap">
@@ -812,7 +790,7 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="tab-pane fade" id="nav-contact-info" role="tabpanel" aria-labelledby="nav-contact-info-tab">
+                <div class="tab-pane fade" id="nav-contact-info" role="tabpanel">
                     <div id="result6" class="ft-products-body w-100">
                         <div class="sales-offices  ">
                             <h3 class="text-color-delta my-3">{{$staticContent['sales_offices']}}</h3>
@@ -917,7 +895,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade row" id="nav-applications" role="tabpanel" aria-labelledby="nav-applications">
+                <div class="tab-pane fade row" id="nav-applications" role="tabpanel">
                     <div id="result7" class="faqs-type w-100">
                         <div class="box-applications  ">
                             <div class="container">
@@ -966,6 +944,103 @@
 
                     </div>
                 </div>
+
+
+                <div class="box-news tab-pane fade" id="nav-videos" role="tabpanel">
+                    <div class="row">
+                        @forelse ($videos as $item)
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="card border-radius-6">
+                                <a href="{{route('updateVideoDetail',['name'=> $item->slug])}}">
+                                    <div class="post-image">
+                                        <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt="" class="img-responsive">
+                                    </div>
+                                </a>
+                                <div class="news-content">
+                                    <a href="{{route('updateVideoDetail',['name'=> $item->slug])}}">
+                                        <h4 class="post-header title-new">{!! iconv_substr(strip_tags($item->title),0,90,'UTF-8') !!}</h4>
+                                    </a>
+                                    <p>{!! iconv_substr(strip_tags($item->content),0,80,'UTF-8') !!} ...</p>
+                                </div>
+                                <a href="{{route('updateVideoDetail',['name'=> $item->slug])}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                            </div>
+                        </div>
+                        @empty
+                        @endforelse
+                    </div>
+                </div>
+
+                <div class="box-news tab-pane fade" id="nav-industry-know-how" role="tabpanel">
+                    <div class="row">
+                        @forelse ($industryKnowHow as $item)
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="card border-radius-6">
+                                <a href="{{route('updateIndustryKnowHowDetail',['name'=> $item->slug])}}">
+                                    <div class="post-image">
+                                        <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt="" class="img-responsive">
+                                    </div>
+                                </a>
+                                <div class="news-content">
+                                    <a href="{{route('updateIndustryKnowHowDetail',['name'=> $item->slug])}}">
+                                        <h4 class="post-header title-new">{!! iconv_substr(strip_tags($item->title),0,90,'UTF-8') !!}</h4>
+                                    </a>
+                                    <p>{!! iconv_substr(strip_tags($item->content),0,80,'UTF-8') !!} ...</p>
+                                </div>
+                                <a href="{{route('updateIndustryKnowHowDetail',['name'=> $item->slug])}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                            </div>
+                        </div>
+                        @empty
+                        @endforelse
+                    </div>
+                </div>
+
+                <div class="box-news tab-pane fade" id="nav-product-notices" role="tabpanel">
+                    <div class="row">
+                        @forelse ($productNotices as $item)
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="card border-radius-6">
+                                <a href="{{route('updateProductNoticeDetail',['name'=> $item->slug])}}">
+                                    <div class="post-image">
+                                        <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt="" class="img-responsive">
+                                    </div>
+                                </a>
+                                <div class="news-content">
+                                    <a href="{{route('updateProductNoticeDetail',['name'=> $item->slug])}}">
+                                        <h4 class="post-header title-new">{!! iconv_substr(strip_tags($item->title),0,90,'UTF-8') !!}</h4>
+                                    </a>
+                                    <p>{!! iconv_substr(strip_tags($item->content),0,80,'UTF-8') !!} ...</p>
+                                </div>
+                                <a href="{{route('updateProductNoticeDetail',['name'=> $item->slug])}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                            </div>
+                        </div>
+                        @empty
+                        @endforelse
+                    </div>
+                </div>
+
+                <div class="box-news tab-pane fade" id="nav-eols" role="tabpanel">
+                    <div class="row">
+                        @forelse ($eols as $item)
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="card border-radius-6">
+                                <a href="{{route('updateEOLDetail',['name'=> $item->slug])}}">
+                                    <div class="post-image">
+                                        <img src="{{config('app.url')}}/uploads_delta/{{$item->thumb}}" alt="" class="img-responsive">
+                                    </div>
+                                </a>
+                                <div class="news-content">
+                                    <a href="{{route('updateEOLDetail',['name'=> $item->slug])}}">
+                                        <h4 class="post-header title-new">{!! iconv_substr(strip_tags($item->title),0,90,'UTF-8') !!}</h4>
+                                    </a>
+                                    <p>{!! iconv_substr(strip_tags($item->content),0,80,'UTF-8') !!} ...</p>
+                                </div>
+                                <a href="{{route('updateEOLDetail',['name'=> $item->slug])}}" class="read-more">{{$staticContent['Read_More']}}</a>
+                            </div>
+                        </div>
+                        @empty
+                        @endforelse
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -995,14 +1070,14 @@
     }
 </script>
 <script>
-    $('#nav-tab a').click(function(){
-           var id =  $(this).data('val');
-           $("#select-search-results option[value="+id+"]").prop('selected', true);
-        });
-         $('#select-search-results').on('change', function(e) {
-            var data =  $(this).val();
-            // console.log(data);
-           $('#nav-tab'+data).click();
-        });
+    function filterSearchSections(val) {
+        $('.tab-pane').removeClass('show active');
+        $('#' + val).addClass('show active');
+    }
+    $('#search-category-filter').on('change', function() {
+        filterSearchSections($(this).val());
+    });
+    // 預設顯示第一個選項
+    filterSearchSections($('#search-category-filter').val());
 </script>
 @endsection
