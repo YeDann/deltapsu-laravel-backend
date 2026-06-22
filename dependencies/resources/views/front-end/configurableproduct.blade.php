@@ -1651,8 +1651,10 @@
 	function dualLimitText() {
 		var index = $('#model').children("option:selected").val();
 		var frame = (model_alldata[index]) ? model_alldata[index]['product_code'] : '';
+		var power = (model_alldata[index]) ? parseInt(model_alldata[index]['max_power']) : 0;
 		var n = dualOutputMax();
-		if (!dualLimitTpl || n === Infinity) { return ''; }
+		// MEG-700A（700W frame）不顯示 Dual Output 的 ? 說明提示；上限仍由 dualOutputMax/applyDualLimit 控制
+		if (!dualLimitTpl || n === Infinity || power === 700) { return ''; }
 		return dualLimitTpl.replace('{frame}', frame).replace('{n}', n);
 	}
 
