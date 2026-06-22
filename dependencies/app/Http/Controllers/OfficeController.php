@@ -201,6 +201,7 @@ class OfficeController extends Controller
                     "website" => $request->website,
                     "telephone" => $request->telephone,
                     "email" => $request->email,
+                    "address" => $request->address,
                     "google_maps" => $request->google_maps,
                     "created_at" => \Carbon\Carbon::now(),
                     "updated_at" => \Carbon\Carbon::now(),
@@ -333,6 +334,7 @@ class OfficeController extends Controller
                     "website" => $request->website,
                     "telephone" => $request->telephone,
                     "email" => $request->email,
+                    "address" => $request->address,
                     "google_maps" => $request->google_maps,
                     "updated_at" => \Carbon\Carbon::now(),
                 ]
@@ -344,7 +346,7 @@ class OfficeController extends Controller
                             [   
                                 "title" => $title[$lang],
                                 "sub_title" => $sub_title[$lang],
-                                "content" => $content[$lang],
+                                "content" => $content[$lang] ?? null,
                             ]
                         );
                     }else{
@@ -353,7 +355,7 @@ class OfficeController extends Controller
                                 "fk_office_id" => $id,
                                 "title" => $title[$lang],
                                 "sub_title" => $sub_title[$lang],
-                                "content" => $content[$lang],
+                                "content" => $content[$lang] ?? null,
                                 "local" => $lang,
                             ]
                         );

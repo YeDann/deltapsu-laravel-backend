@@ -15,22 +15,22 @@
                             <a href="{{route('getOffices',['contentId'=>$conid , 'type_id'=>$type_id])}}">
                             @if($type_id == 1)
                             Sales Offices
-                            @else 
+                            @else
                             Distributors
                             @endif
                             </a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">Edit</li>
                     </ol>
-                    
-             
+
+
             </nav>
         </div>
     </div>
 </div>
 <!-- Content -->
 <div class="content">
-    
+
     @if(Session::has('flash_message'))
     <div class="alert alert-success" role="alert">
         <button class="close" data-dismiss="alert"></button>
@@ -56,7 +56,7 @@
                 <!-- Basic Elements -->
                 <div class="row">
                     <div class="col-lg-12">
-                    
+
                         <div class="block block-rounded block-bordered">
                                 <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
                                     @foreach ($language as $item)
@@ -75,9 +75,9 @@
                                 </ul>
                                 <div class="block-content tab-content">
                                     @foreach ($language as $item)
-                                    <?php 
+                                    <?php
                                     $current = null;
-                                    foreach($offices as $item2) { 
+                                    foreach($offices as $item2) {
                                         if ($item->name == $item2->local) {
                                             $current = $item2;
                                             break;
@@ -86,7 +86,7 @@
                                ?>
                                     <input type="hidden" name="lang_loop[]" value="{{$item->name}}">
                                     <div class="tab-pane {{($loop->iteration == 1)?"active":""}}" id="btabs-alt-static-{{$item->name}}" role="tabpanel">
-                                          
+
                                             <div class="form-group">
                                                     <label for="example-select">Title </label>
                                                     <input type="text" class="form-control" name="title[{{$item->name}}]" value="{{isset($current->title)? $current->title:""}}" placeholder="Enter Text" >
@@ -95,10 +95,12 @@
                                                         <label for="example-select">Sub Title</label>
                                                         <input type="text" class="form-control " name="sub_title[{{$item->name}}]" value="{{isset($current->sub_title)? $current->sub_title:""}}" placeholder="Enter Text" >
                                                 </div>
+                                                @if($type_id != 2)
                                                 <div class="form-group">
                                                         <label for="example-select">Content</label>
                                                         <textarea name="content[{{$item->name}}]"class="jsnotenew">{{isset($current->content)? $current->content:""}}</textarea>
                                                 </div>
+                                                @endif
                                         </div>
                                     @endforeach
                                 </div>
@@ -143,9 +145,10 @@
                                     });
                                 })();
                             </script>
-                            <div class="form-group"><label>Website</label><input type="text" class="form-control" name="website" value="{{$offices[0]->website ?? ''}}" placeholder="https://..."></div>
+                            <div class="form-group"><label>Address</label><textarea class="form-control" name="address" rows="3">{{$offices[0]->address ?? ''}}</textarea></div>
                             <div class="form-group"><label>Telephone</label><input type="text" class="form-control" name="telephone" value="{{$offices[0]->telephone ?? ''}}"></div>
                             <div class="form-group"><label>Email</label><input type="text" class="form-control" name="email" value="{{$offices[0]->email ?? ''}}"></div>
+                            <div class="form-group"><label>Website</label><input type="text" class="form-control" name="website" value="{{$offices[0]->website ?? ''}}" placeholder="https://..."></div>
                             <div class="form-group"><label>Google Maps URL</label><input type="text" class="form-control" name="google_maps" value="{{$offices[0]->google_maps ?? ''}}"></div>
 
                             {{-- 五類分類勾選（含 Sales Territory / Certification） --}}
@@ -174,10 +177,10 @@
                             <div class="form-group">
                                 <label for="example-select"> Old File</label>
                                 <a href="{{config('app.url')}}/medias/distributor/{{isset($offices[0]->file_cer) ? $offices[0]->file_cer :''}}">{{isset($offices[0]->file_cer) ? $offices[0]->file_cer :''}}</a>
-                                
-                              
+
+
                                 <a href="{{route('removefileCerDis',[$offices[0]->id])}}"  class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
-                                  
+
                                 <input type="hidden" name="oldfileCer" value="{{$offices[0]->file_cer}}">
                             </div>
                             @endif
@@ -186,7 +189,7 @@
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" name="filecer" data-toggle="custom-file-input" id="file_input" >
                                     <label class="custom-file-label" for="file_input">Choose file</label>
-                               
+
                                 </div>
                            </div>
                            <div class="form-group">
@@ -220,14 +223,14 @@
                                     <div id="us2" style="width: 100%; height: 500px;"></div>
                                 </div>
                             </div>
-                
+
                             <div class="form-group">
                                 <label for="titleen" class="col-md-2 control-label">Latitude *</label>
                                 <div class="col-md-6">
                                     <input type="text" id="us2-lat" name="lat" class="form-control" />
                                 </div>
                             </div>
-                
+
                             <div class="form-group">
                                     <label for="titleen" class="col-md-2 control-label">Longitude *</label>
                                     <div class="col-md-6">
@@ -237,7 +240,7 @@
                         <div class="text-center mb-3">
                             <button class="btn btn-info col-md-1" type="submit" >Update  </button>
                             <a href="{{route('getOffices',['contentId'=>$conid , 'type_id'=>$type_id])}}"  class="btn btn-secondary col-md-1">
-                                Cancel 
+                                Cancel
                             </a>
                         </div>
                     </div>
@@ -283,5 +286,41 @@
     function updateControls(addressComponents) {
         console.log(addressComponents);
     }
+
+    // 貼上 Google Maps 完整網址 → 解析座標 → 連動地圖與 Latitude/Longitude。
+    // 只支援「含座標的完整網址」（網址列那種，含 @緯,經 或 ll= / q= / !3d!4d）；
+    // 分享短網址（maps.app.goo.gl / goo.gl）網址內沒有座標，無法在前端解析。
+    function extractLatLngFromMapUrl(url) {
+        if (!url) { return null; }
+        var patterns = [
+            /!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/,    // 地點實際座標（圖釘）：最精準，優先
+            /[?&]q=(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/,   // ?q=lat,lng
+            /[?&]ll=(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/,  // ?ll=lat,lng
+            /@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/,        // 地圖鏡頭中心：較不精準，後援
+            /(-?\d{1,2}(?:\.\d+)?),\s*(-?\d{1,3}(?:\.\d+)?)/
+        ];
+        for (var i = 0; i < patterns.length; i++) {
+            var m = url.match(patterns[i]);
+            if (m) {
+                var lat = parseFloat(m[1]), lng = parseFloat(m[2]);
+                if (lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+                    return { latitude: lat, longitude: lng };
+                }
+            }
+        }
+        return null;
+    }
+    $('input[name="google_maps"]').on('change', function () {
+        var val = (this.value || '').trim();
+        if (val === '') { return; }
+        var loc = extractLatLngFromMapUrl(val);
+        if (loc) {
+            $('#us2').locationpicker('location', loc);
+            $('#us2-lat').val(loc.latitude);
+            $('#us2-lon').val(loc.longitude);
+        } else {
+            alert('Could not parse coordinates from this Google Maps URL.\nPlease paste the full URL from the browser address bar (the one containing @lat,lng). Short share links (maps.app.goo.gl / goo.gl) do not contain coordinates and cannot be parsed.');
+        }
+    });
 </script>
 @endsection
