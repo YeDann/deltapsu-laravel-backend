@@ -5,7 +5,6 @@
     @media (max-width: 992px) {
         .resources-download {
             padding: 12px;
-            margin: 0 -2rem;
         }
     }
 </style>

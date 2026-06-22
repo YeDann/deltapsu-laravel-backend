@@ -13694,11 +13694,14 @@ hr {
   background-size: cover;
 }
 @media (max-width:992px){
+    /* 頁面標題上方間距：≤992px 麵包屑(.visible-up-922)隱藏、少了上方空間，
+       各頁標題 class 寫法不一(visible-mobile / visible-tablets-up / visible-up-922 / 無 class)，
+       故直接調 .text-title-delta 的 margin-top，避免標題緊貼 header；margin-bottom 維持 1.5rem。 */
     .text-title-delta{
-        margin-top: 1.5rem;
+        margin-top: 2.5rem;
         margin-bottom: 1.5rem;
     }
-  
+
     .img-my-mobeile{
         margin-top: 1.5rem;
         margin-bottom: 1.5rem;
