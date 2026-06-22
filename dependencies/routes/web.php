@@ -68,7 +68,6 @@ Route::group([
             Route::post('/loadProduct', 'FrontendController@loadProduct')->name('loadProduct');
             Route::post('/checkProductSection', 'FrontendController@checkProductSection')->name('checkProductSection');
             Route::post('/RemovedataInSection', 'FrontendController@RemovedataInSection')->name('RemovedataInSection');
-            Route::post('/getProductByType', 'FrontendController@getProductByType')->name('getProductByType');
             Route::post('/loadImageProByArr', 'FrontendController@loadImageProByArr')->name('loadImageProByArr');
             Route::get('/searchAll/{key?}', 'FrontendController@searchAll')->name('searchAll');
             Route::get('/searchByTag/{key?}', 'FrontendController@searchByTag')->name('searchByTag');
