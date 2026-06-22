@@ -1960,6 +1960,35 @@ class FrontendController extends Controller
         ], 200);
     }
 
+    /**
+     * 比較清單：依產品 id 取得比較 tray/彈窗所需資料（跨類型、去重）。
+     * 供 checkProductSection / RemovedataInSection / ShareData 載入還原共用。
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public static function comparisonList($lang, $ids)
+    {
+        if (empty($ids)) {
+            return collect();
+        }
+
+        return DB::table('products as p')
+            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+            ->where('pt.local', $lang)
+            ->where('spt.local', $lang)
+            ->where('st.local', $lang)
+            ->where('pt.showstatus', 1)
+            ->whereIn('p.pro_id', $ids)
+            ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
+            ->orderBy('p.created_at', 'desc')
+            ->get()
+            ->unique('pro_id')   // 多分類產品只留一筆
+            ->values();
+    }
+
     public function checkProductSection(Request $request)
     {
         $lang = App::getLocale();
@@ -1968,27 +1997,6 @@ class FrontendController extends Controller
         $sess_arr = session('product_comp') ?? [];
 
         // 比較開放跨全類型：加入比較不再限制分類（任意產品，最多 3 個）
-        $compareList = function ($ids) use ($lang) {
-            if (empty($ids)) {
-                return collect();
-            }
-            $rows = DB::table('products as p')
-                ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-                ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-                ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-                ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-                ->where('pt.local', $lang)
-                ->where('spt.local', $lang)
-                ->where('st.local', $lang)
-                ->where('pt.showstatus', 1)
-                ->whereIn('p.pro_id', $ids)
-                ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
-                ->orderBy('p.created_at', 'desc')
-                ->get();
-
-            return self::removeDuplicates($rows, 'pro_id');   // 多分類產品只留一筆
-        };
-
         if (in_array($data_id, $sess_arr)) {
             $msg = 'The selected model has been added to the Comparison list.';
         } elseif (count($sess_arr) >= 3) {
@@ -2002,7 +2010,7 @@ class FrontendController extends Controller
 
         return response()->json([
             'section' => $sess_arr,
-            'data'    => $compareList($sess_arr),
+            'data'    => self::comparisonList($lang, $sess_arr),
             'cateid'  => $cateid,
             'message' => $msg,
         ], 200);
@@ -2019,18 +2027,8 @@ class FrontendController extends Controller
         $sess_arr = array_values($sess_arr);
         session(['product_comp' => $sess_arr]);
 
-        // 跨類型比較：剩餘清單不再限分類（否則刪到剩下不同分類的那個會被濾掉、計數錯誤歸 0）
-        $data = DB::table('products as p')
-        ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-        ->leftjoin('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-        ->leftjoin('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-        ->where('spt.local', $lang)
-        ->where('st.local', $lang)
-        ->whereIn('p.pro_id', $sess_arr)
-        ->select('p.*', 'spt.name as catename', 'st.title as seName')
-        ->orderBy('p.created_at', 'desc')
-        ->get();
-        $data = self::removeDuplicates($data, 'pro_id');
+        // 跨類型比較：剩餘清單不限分類（與 checkProductSection 共用同一查詢）
+        $data = self::comparisonList($lang, $sess_arr);
 
         return response()->json([
             'section' => $sess_arr,
