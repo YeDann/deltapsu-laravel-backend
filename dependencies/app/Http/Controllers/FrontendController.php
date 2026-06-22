@@ -1852,21 +1852,14 @@ class FrontendController extends Controller
             $cateid = $data[0]->pro_categories_id;
         }
 
-        $Categories = DB::table('sub_pro_categories as sp')
-            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
-            ->where('spt.local', '=', $lang)
-            ->where('sp.status', '=', 1)
-            ->select('sp.*', 'spt.*')
-            ->orderBy('spt.name', 'asc')
-            ->get();
         $products = [];
+        // 產品比較開放跨類型：載入「所有」可比較產品（不再限單一分類），沒有的 spec 在表格留空
         $seachpro = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-            ->join('product_has_categories as phc', 'p.pro_id', '=', 'phc.product_id')
             ->where('pt.local', $lang)
             ->where('pt.showstatus', 1)
-            ->where('phc.categories_id', $cateid)
             ->select('p.*', 'pt.*')
+            ->distinct()
             ->orderBy('p.pro_code', 'asc')
             ->get();
         foreach ($seachpro as $pro) {
@@ -1874,9 +1867,7 @@ class FrontendController extends Controller
                 array_push($products, $pro);
                 $optional_product = DB::table('product_optional_model as po')
                     ->join('products as p', 'p.pro_id', '=', 'po.product_id')
-                    ->join('product_has_categories as phc', 'p.pro_id', '=', 'phc.product_id')
                     ->where('p.enable_pro', 1)
-                    ->where('phc.categories_id', $cateid)
                     ->where('po.product_id', $pro->pro_id)
                     ->select('p.*', 'po.optional_model as pro_code')
                     ->orderBy('p.pro_code', 'asc')
@@ -1925,70 +1916,8 @@ class FrontendController extends Controller
             ->with('sess_arr', $sess_arr)
             ->with('data_re', $data)
             ->with('section', $section)
-            ->with('Categories', $Categories)
             ->with('pd_field', $pd_field)
             ->with('products', $pro_new);
-    }
-
-    /**
-     * Industrial(main 2) / Medical(main 1) 兩類涵蓋的 sub category id 清單（跨類比較範圍，Case#1）。
-     */
-    private function crossTypeCateIds()
-    {
-        return DB::table('categories_has_main_pro')
-            ->whereIn('main_cateid', [1, 2])
-            ->pluck('cate_id')->unique()->values()->toArray();
-    }
-
-    public function getProductByType(Request $request)
-    {
-        $lang = App::getLocale();
-        // typeId='cross' → Industrial × Medical 跨類；否則為單一 sub category id（維持原行為）
-        $isCross = 'cross' === $request->typeId;
-        $crossCates = $isCross ? $this->crossTypeCateIds() : [];
-        $cateid = $isCross ? null : $this->validateInput($request->typeId, 'number', true);
-        $products = [];
-
-        $seachpro = DB::table('products as p')
-            ->join('product_has_categories as phc', 'p.pro_id', '=', 'phc.product_id')
-            ->where('p.enable_pro', 1)
-            ->when($isCross, function ($q) use ($crossCates) {
-                return $q->whereIn('phc.categories_id', $crossCates);
-            }, function ($q) use ($cateid) {
-                return $q->where('phc.categories_id', $cateid);
-            })
-            ->select('p.*')
-            ->distinct()
-            ->orderBy('p.pro_code', 'asc')
-            ->get();
-
-        foreach ($seachpro as $pro) {
-            if (self::checkContentPro($pro->pro_id)) {
-                array_push($products, $pro);
-                $optional_product = DB::table('product_optional_model as po')
-                    ->join('products as p', 'p.pro_id', '=', 'po.product_id')
-                    ->join('product_has_categories as phc', 'p.pro_id', '=', 'phc.product_id')
-                    ->where('p.enable_pro', 1)
-                    ->when($isCross, function ($q) use ($crossCates) {
-                        return $q->whereIn('phc.categories_id', $crossCates);
-                    }, function ($q) use ($cateid) {
-                        return $q->where('phc.categories_id', $cateid);
-                    })
-                    ->where('po.product_id', $pro->pro_id)
-                    ->select('p.*', 'po.optional_model as pro_code')
-                    ->orderBy('p.pro_code', 'asc')
-                    ->get();
-                foreach ($optional_product as $optional_model) {
-                    array_push($products, $optional_model);
-                }
-            }
-        }
-
-        $pro_new = self::removeDuplicates($products, 'pro_code');
-
-        return response()->json([
-            'data' => $pro_new,
-        ], 200);
     }
 
     public function clearproductsection(Request $request)
@@ -2018,14 +1947,16 @@ class FrontendController extends Controller
         ->where('st.local', $lang)
         ->where('pt.showstatus', 1)
         ->whereIn('p.pro_id', $arr_pro)
-        ->where('phc.categories_id', $typeid)
-        ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
+        ->select('p.*', 'pt.*', 'spt.name as catename', 'phc.categories_id as cateid', 'st.title as seName')
         ->orderBy('p.created_at', 'desc')
         ->get();
 
+        // 跨類型比較：產品不再依傳入 typeid 限分類；一個產品可能屬多個分類，取一筆即可（連結/Enquiry 用其本身分類）
+        $products = self::removeDuplicates($products, 'pro_id');
+
         return response()->json([
             'data' => $products,
-            'type' => $typeid,
+            'type' => null,
         ], 200);
     }
 
@@ -2034,183 +1965,61 @@ class FrontendController extends Controller
         $lang = App::getLocale();
         $data_id = $this->validateInput($request->data, 'number', true);
         $cateid = $this->validateInput($request->cateid, 'number', true);
-        $sess_arr = session('product_comp');
-        //  session(['product_comp' =>  []]);
-        // 跨類比較（Case#1 Industrial×Medical）：該 sub 屬 Industrial(2)/Medical(1) 時放寬「同 sub」加入限制；其他 main 維持原規則
-        $crossCates = $this->crossTypeCateIds();
-        $maybeCross = in_array($cateid, $crossCates);
+        $sess_arr = session('product_comp') ?? [];
 
-        $Newsproduct = DB::table('products as p')
-            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-            ->where('pt.local', $lang)
-            ->where('spt.local', $lang)
-            ->where('st.local', $lang)
-            ->where('pt.showstatus', 1)
-            ->where('p.pro_id', $data_id)
-            ->where('phc.categories_id', $cateid)
-            ->select('p.*', 'pt.*', 'phc.categories_id as pro_categories_id')
-            ->orderBy('p.created_at', 'desc')
-            ->first();
-        $data = [];
+        // 比較開放跨全類型：加入比較不再限制分類（任意產品，最多 3 個）
+        $compareList = function ($ids) use ($lang) {
+            if (empty($ids)) {
+                return collect();
+            }
+            $rows = DB::table('products as p')
+                ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+                ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+                ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+                ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+                ->where('pt.local', $lang)
+                ->where('spt.local', $lang)
+                ->where('st.local', $lang)
+                ->where('pt.showstatus', 1)
+                ->whereIn('p.pro_id', $ids)
+                ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
+                ->orderBy('p.created_at', 'desc')
+                ->get();
 
-        $dataFirst = DB::table('products as p')
-            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-            ->where('pt.local', $lang)
-            ->where('spt.local', $lang)
-            ->where('st.local', $lang)
-            ->where('pt.showstatus', 1)
-            ->where('p.pro_id', $data_id)
-            ->where('phc.categories_id', $cateid)
-            ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
-            ->orderBy('p.created_at', 'desc')
-            ->get();
+            return self::removeDuplicates($rows, 'pro_id');   // 多分類產品只留一筆
+        };
 
-        if (empty($sess_arr)) {
+        if (in_array($data_id, $sess_arr)) {
+            $msg = 'The selected model has been added to the Comparison list.';
+        } elseif (count($sess_arr) >= 3) {
+            $msg = 'Only 3 models can be added to the Comparison list.';
+        } else {
             array_push($sess_arr, $data_id);
             session(['product_comp' => $sess_arr]);
             session(['section_Cateid' => $cateid]);
-
-            return response()->json([
-                'section' => $sess_arr,
-                'data' => $dataFirst,
-                'message' => 'The selected model has been added to the Comparison list.',
-            ], 200);
+            $msg = 'The selected model has been added to the Comparison list.';
         }
-        $oldpro = DB::table('products as p')
-           ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-           ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-           ->where('pt.local', $lang)
-           ->where('pt.showstatus', 1)
-           ->whereIn('p.pro_id', $sess_arr)
-           ->when(!$maybeCross, function ($q) use ($cateid) {
-               return $q->where('phc.categories_id', $cateid);   // 非跨類維持原本「同 sub」取清單
-           })
-           ->select('p.*', 'pt.*', 'phc.categories_id as pro_categories_id')
-           ->orderBy('p.created_at', 'desc')
-           ->get();
-
-        $oldCates = $oldpro->pluck('pro_categories_id')->unique();
-        $sameType = isset($Newsproduct->pro_categories_id) && $oldCates->contains($Newsproduct->pro_categories_id);
-        // 跨類允許：新 sub 與清單所有 sub 都屬 Industrial/Medical
-        $crossOk = $maybeCross && $oldCates->isNotEmpty() && $oldCates->every(function ($c) use ($crossCates) {
-            return in_array($c, $crossCates);
-        });
-
-        if ((!in_array($data_id, $sess_arr)) && isset($Newsproduct->pro_categories_id) && ($sameType || $crossOk)) {
-            if (count($sess_arr) < 3) {
-                array_push($sess_arr, $data_id);
-                session(['product_comp' => $sess_arr]);
-                $data = DB::table('products as p')
-                        ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-                        ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-                        ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-                        ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-                        ->where('pt.local', $lang)
-                        ->where('spt.local', $lang)
-                        ->where('st.local', $lang)
-                        ->when(!$maybeCross, function ($q) use ($cateid) {
-                            return $q->where('phc.categories_id', $cateid);   // 同類限 cate；跨類回全清單（彈窗顯示完整）
-                        })
-                        ->whereIn('p.pro_id', $sess_arr)
-                        ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
-                        ->orderBy('p.created_at', 'desc')
-                        ->get();
-
-                return response()->json([
-                            'section' => $sess_arr,
-                            'data' => $data,
-                            'cateid' => $cateid,
-                            'message' => 'The selected model has been added to the Comparison list.',
-                        ], 200);
-            }
-
-            $data = DB::table('products as p')
-                        ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-                        ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-                        ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-                        ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-                        ->where('pt.local', $lang)
-                        ->where('spt.local', $lang)
-                        ->where('st.local', $lang)
-                        ->when(!$maybeCross, function ($q) use ($cateid) {
-                            return $q->where('phc.categories_id', $cateid);   // 同類限 cate；跨類回全清單（彈窗顯示完整）
-                        })
-                        ->whereIn('p.pro_id', $sess_arr)
-                        ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
-                        ->orderBy('p.created_at', 'desc')
-                        ->get();
-
-            return response()->json([
-                        'section' => $sess_arr,
-                        'data' => $data,
-                        'cateid' => $cateid,
-                        'message' => 'Only 3 models can be added to the Comparison list.',
-                    ], 200);
-        } elseif (in_array($data_id, $sess_arr)) {
-            $data = DB::table('products as p')
-                        ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-                        ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-                        ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-                        ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-                        ->where('pt.local', $lang)
-                        ->where('spt.local', $lang)
-                        ->where('st.local', $lang)
-                        ->when(!$maybeCross, function ($q) use ($cateid) {
-                            return $q->where('phc.categories_id', $cateid);   // 同類限 cate；跨類回全清單（彈窗顯示完整）
-                        })
-                        ->whereIn('p.pro_id', $sess_arr)
-                        ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
-                        ->orderBy('p.created_at', 'desc')
-                        ->get();
-
-            return response()->json([
-                        'section' => $sess_arr,
-                        'data' => $data,
-                        'cateid' => $cateid,
-                        'message' => 'The selected model has been added to the Comparison list.',
-                    ], 200);
-        }
-        $catesection = session('section_Cateid');
-        $data = DB::table('products as p')
-                    ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-                    ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-                    ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-                    ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-                    ->where('pt.local', $lang)
-                    ->where('spt.local', $lang)
-                    ->where('st.local', $lang)
-                    ->where('phc.categories_id', $catesection)
-                    ->whereIn('p.pro_id', $sess_arr)
-                    ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
-                    ->orderBy('p.created_at', 'desc')
-                    ->get();
 
         return response()->json([
-                    'section' => $sess_arr,
-                    'data' => $data,
-                    'cateid' => $catesection,
-                    'message' => 'Please select the model in the same category',
-                ], 200);
+            'section' => $sess_arr,
+            'data'    => $compareList($sess_arr),
+            'cateid'  => $cateid,
+            'message' => $msg,
+        ], 200);
     }
 
     public function RemovedataInSection(Request $request)
     {
         $lang = App::getLocale();
         $input = $request->data;
-        $sess_arr = session('product_comp');
-        $cateid = session('section_Cateid');
-        $arr_new = [];
+        $sess_arr = session('product_comp') ?? [];
         if (($key = array_search($input, $sess_arr)) !== false) {
             unset($sess_arr[$key]);
         }
+        $sess_arr = array_values($sess_arr);
         session(['product_comp' => $sess_arr]);
 
+        // 跨類型比較：剩餘清單不再限分類（否則刪到剩下不同分類的那個會被濾掉、計數錯誤歸 0）
         $data = DB::table('products as p')
         ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
         ->leftjoin('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
@@ -2218,10 +2027,10 @@ class FrontendController extends Controller
         ->where('spt.local', $lang)
         ->where('st.local', $lang)
         ->whereIn('p.pro_id', $sess_arr)
-        ->where('phc.categories_id', $cateid)
         ->select('p.*', 'spt.name as catename', 'st.title as seName')
         ->orderBy('p.created_at', 'desc')
         ->get();
+        $data = self::removeDuplicates($data, 'pro_id');
 
         return response()->json([
             'section' => $sess_arr,
