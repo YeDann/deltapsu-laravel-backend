@@ -204,7 +204,16 @@
                         <img class="fd-logo" src="{{config('app.url')}}/medias/distributor/{{$office->logo}}" alt="{{$office->title}}">
                         @endif
                         <div class="fd-name">{{$office->title}}</div>
-                        <div class="fd-address text-editor">{!! $office->content !!}</div>
+                        <div class="fd-address">
+                            @if($office->address)<div class="fd-addr-line">{!! nl2br(e($office->address)) !!}</div>@endif
+                            @if($office->telephone)<div>Tel: {{ $office->telephone }}</div>@endif
+                            @if($office->email)<div>Email: <a href="mailto:{{ $office->email }}">{{ $office->email }}</a></div>@endif
+                            @php $web = trim((string) $office->website); @endphp
+                            @if($web !== '')
+                            @php $webHref = preg_match('#^https?://#i', $web) ? $web : 'https://' . $web; @endphp
+                            <div>Website: <a href="{{ $webHref }}" target="_blank" rel="noopener">{{ $web }}</a></div>
+                            @endif
+                        </div>
                         <div class="fd-card-btns">
                             <a href="https://www.google.com/maps/?q={{$office->lat}},{{$office->lon}}&sensor=true" target="_blank">
                                 <button class="btn-subscribe">{{ $staticContent['GetDirection'] ?? 'Get Direction' }}</button>
@@ -223,6 +232,7 @@
                         </div>
                     </div>
                     <div class="fd-card-detail">
+                        @if(count($certList) > 0)
                         <div class="fd-card-section">
                             <div class="fd-card-sec-title">{{ $staticContent['Expertise'] ?? 'Expertise' }}</div>
                             <div class="fd-card-grid">
@@ -231,6 +241,7 @@
                                 @endforeach
                             </div>
                         </div>
+                        @endif
                         <div class="fd-card-section">
                             <div class="fd-card-sec-title">{{ $staticContent['Product_Lines'] ?? 'Product Lines' }}</div>
                             <div class="fd-card-grid">

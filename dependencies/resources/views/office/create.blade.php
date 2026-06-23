@@ -15,15 +15,15 @@
                             <a href="{{route('getOffices',['contentId'=>$conid , 'type_id'=>$type_id])}}">
                             @if($type_id == 1)
                             Sales Offices
-                            @else 
+                            @else
                             Distributors
                             @endif
                             </a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">Create</li>
                     </ol>
-                    
-             
+
+
             </nav>
         </div>
     </div>
@@ -53,10 +53,12 @@
                                 <label for="example-select">Sub Title</label>
                                 <input type="text" class="form-control " name="sub_title" placeholder="Enter Text" >
                         </div>
+                        @if($type_id != 2)
                         <div class="form-group">
                                 <label for="example-select">Content</label>
                                 <textarea name="content"class="jsnotenew"></textarea>
                         </div>
+                        @endif
                         @if($type_id == 2)
                         {{-- 經銷商基本資訊 --}}
                         <div class="form-group">
@@ -90,9 +92,10 @@
                                 });
                             })();
                         </script>
-                        <div class="form-group"><label>Website</label><input type="text" class="form-control" name="website" placeholder="https://..."></div>
+                        <div class="form-group"><label>Address</label><textarea class="form-control" name="address" rows="3"></textarea></div>
                         <div class="form-group"><label>Telephone</label><input type="text" class="form-control" name="telephone"></div>
                         <div class="form-group"><label>Email</label><input type="text" class="form-control" name="email"></div>
+                        <div class="form-group"><label>Website</label><input type="text" class="form-control" name="website" placeholder="https://..."></div>
                         <div class="form-group"><label>Google Maps URL</label><input type="text" class="form-control" name="google_maps"></div>
 
                         {{-- 五類分類勾選（含 Sales Territory / Certification） --}}
@@ -122,7 +125,7 @@
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="filecer" data-toggle="custom-file-input" id="file_input" >
                                 <label class="custom-file-label" for="file_input">Choose file</label>
-                              
+
                             </div>
                        </div>
                        <div class="form-group">
@@ -155,14 +158,14 @@
                                     <div id="us2" style="width: 100%; height: 500px;"></div>
                                 </div>
                             </div>
-                
+
                             <div class="form-group">
                                 <label for="titleen" class="col-md-2 control-label">Latitude *</label>
                                 <div class="col-md-6">
                                     <input type="text" id="us2-lat" name="lat" class="form-control" />
                                 </div>
                             </div>
-                
+
                             <div class="form-group">
                                     <label for="titleen" class="col-md-2 control-label">Longitude *</label>
                                     <div class="col-md-6">
@@ -172,7 +175,7 @@
                         <div class="text-center mb-3">
                             <button class="btn btn-success col-md-1" type="submit" >Create  </button>
                             <a href="{{route('getOffices',['contentId'=>$conid , 'type_id'=>$type_id])}}"  class="btn btn-secondary col-md-1">
-                                Cancel 
+                                Cancel
                             </a>
                         </div>
                     </div>
@@ -211,5 +214,41 @@
     function updateControls(addressComponents) {
         console.log(addressComponents);
     }
+
+    // 貼上 Google Maps 完整網址 → 解析座標 → 連動地圖與 Latitude/Longitude。
+    // 只支援「含座標的完整網址」（網址列那種，含 @緯,經 或 ll= / q= / !3d!4d）；
+    // 分享短網址（maps.app.goo.gl / goo.gl）網址內沒有座標，無法在前端解析。
+    function extractLatLngFromMapUrl(url) {
+        if (!url) { return null; }
+        var patterns = [
+            /!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/,    // 地點實際座標（圖釘）：最精準，優先
+            /[?&]q=(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/,   // ?q=lat,lng
+            /[?&]ll=(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/,  // ?ll=lat,lng
+            /@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/,        // 地圖鏡頭中心：較不精準，後援
+            /(-?\d{1,2}(?:\.\d+)?),\s*(-?\d{1,3}(?:\.\d+)?)/
+        ];
+        for (var i = 0; i < patterns.length; i++) {
+            var m = url.match(patterns[i]);
+            if (m) {
+                var lat = parseFloat(m[1]), lng = parseFloat(m[2]);
+                if (lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+                    return { latitude: lat, longitude: lng };
+                }
+            }
+        }
+        return null;
+    }
+    $('input[name="google_maps"]').on('change', function () {
+        var val = (this.value || '').trim();
+        if (val === '') { return; }
+        var loc = extractLatLngFromMapUrl(val);
+        if (loc) {
+            $('#us2').locationpicker('location', loc);
+            $('#us2-lat').val(loc.latitude);
+            $('#us2-lon').val(loc.longitude);
+        } else {
+            alert('Could not parse coordinates from this Google Maps URL.\nPlease paste the full URL from the browser address bar (the one containing @lat,lng). Short share links (maps.app.goo.gl / goo.gl) do not contain coordinates and cannot be parsed.');
+        }
+    });
 </script>
 @endsection
