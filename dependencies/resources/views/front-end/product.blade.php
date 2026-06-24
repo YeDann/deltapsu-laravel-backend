@@ -287,6 +287,19 @@
         width: 130px;
     }
 
+    /* 表頭只在「軟連字號」處斷字（如德文 Ausgangs­spannung→Ausgangs-/spannung）；manual=不靠瀏覽器字典亂斷 */
+    .header-font-table {
+        -webkit-hyphens: manual;
+        hyphens: manual;
+    }
+
+    /* grid 卡片標籤：長德文字（Eingangsspannungsbereich）在 4 欄窄卡片會撐爆 —— 允許字內斷行縮 min-width + 德文音節斷 */
+    #cardGridList .text-title-ft-sub {
+        overflow-wrap: anywhere;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+
     .icon-inquiry-product {
         font-size: 25px;
         color: #ffffff;
@@ -375,7 +388,11 @@
         margin-top: 2px;
     }
     .add-hight{
-        margin-top:10px;
+        margin-top:14px;
+    }
+    /* Dimensions 區塊比照 Other Features(.add-hight) 補上方間距，與上方規格分開（grid 卡片；長標籤換 2 行也不擠）*/
+    .dimension{
+        margin-top:14px;
     }
     .text-editor-card {
         color: #5f5f5f;
@@ -2194,14 +2211,14 @@
         html1 += '<thead>';
         html1 += '<tr class="headder-bg-table">';
         html1 += '<th  id="sortdata1" class=" header-font-table w-tabfix"  onclick="selectTable(1)">{{$staticContent['Model_Name']}}</th>';
-        html1 += '<th id="sortdata2" class=" header-font-table w-tabfix w-120"  onclick="selectTable(2)">{{$staticContent['Output_Voltage']}}</th>';
-        html1 += '<th id="sortdata3" class=" header-font-table w-tabfix w-120"  onclick="selectTable(3)">{{$staticContent['Output_Current']}}</th>';
-        html1 += '<th id="sortdata4" class=" header-font-table w-tabfix w-120"  onclick="selectTable(4)">{{$staticContent['Output_Power']}} </th>';
-        html1 += '<th id="sortdata5" class=" header-font-table w-tabfix"  onclick="selectTable(5)">{{$staticContent['Input_Voltage']}}</th>';
+        html1 += '<th id="sortdata2" class=" header-font-table w-tabfix w-120"  onclick="selectTable(2)">{{$staticContent['ProductList_Output_Voltage']}}</th>';
+        html1 += '<th id="sortdata3" class=" header-font-table w-tabfix w-120"  onclick="selectTable(3)">{{$staticContent['ProductList_Output_Current']}}</th>';
+        html1 += '<th id="sortdata4" class=" header-font-table w-tabfix w-120"  onclick="selectTable(4)">{{$staticContent['ProductList_Output_Power']}} </th>';
+        html1 += '<th id="sortdata5" class=" header-font-table w-tabfix"  onclick="selectTable(5)">{{$staticContent['ProductList_Input_Voltage']}}</th>';
         if (isOtherFeature) {
             html1 += '<th  class="header-font-table" >{{$staticContent['product_highLights']}}</th>';
         } else {
-            html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['Dimensions']}}</th>';
+            html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['ProductList_Dimensions']}}</th>';
         }
 
         html1 += '</tr>';
