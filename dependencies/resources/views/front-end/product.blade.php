@@ -617,13 +617,13 @@
         <div class="menu-filler-mobile-filter ">
             <div class=" d-flex justify-content-between h-100">
                 <div id="showfiler-mobile" class="my-auto">
-                    <div style="color:#fff;" id="filterMobile-btn" onclick="OpenFiiter();"
+                    <div style="color:#000;" id="filterMobile-btn" onclick="OpenFiiter();"
                         class="filter-mobile-link text-bold"><img
                             src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}"
                             alt="">{{$staticContent['filters']}}</div>
                 </div>
                 <div class="d-flex">
-                    <p class="text-white my-auto mr-2 text-card-detial text-bold">{{$staticContent['Sort_by']}}:</p>
+                    <p class="my-auto mr-2 text-card-detial text-bold" style="color:#000;">{{$staticContent['Sort_by']}}:</p>
                     <div class="input-label my-auto">
                         <select onchange="onselectSort();" class="form-control selectSort border-radius-6">
                             <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
