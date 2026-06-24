@@ -12198,6 +12198,11 @@ a .title-new {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1)) !important;
 }
 
+/* 手機 footer「Follow us on social」(<p>，原繼承容器 #0087DC) 對齊桌機灰 */
+.footer-nav-mobile p {
+  color: rgb(150 150 150 / var(--tw-text-opacity, 1)) !important;
+}
+
 .footer-nav-mobile a:hover {
   text-decoration: none;
 }
