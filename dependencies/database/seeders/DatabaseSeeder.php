@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
         // $this->call(MetaTagSeeder::class);
         $this->call(RegenerateSlugSeeder::class);
 
+        // UI — 產品列表頁表格欄位標題的頁面專用 static key（可單獨調整不影響其他頁）
+        $this->call(ProductListHeaderKeywordSeeder::class);
+
         // Phase II — Stock icon 標籤
         $this->call(StockKeywordSeeder::class);
 
