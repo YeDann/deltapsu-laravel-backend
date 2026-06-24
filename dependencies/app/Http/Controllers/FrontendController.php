@@ -1427,6 +1427,7 @@ class FrontendController extends Controller
                 ->with('series', $series)
                 ->with('modeSeries', $modeSeries)
                 ->with('se_id', $seId)
+                ->with('showCompareTray', true)
                 ->with('head', $mainCategory->head ?? '');
         }
 
@@ -1821,6 +1822,7 @@ class FrontendController extends Controller
             ->with('external_link', $external_link)
             ->with('ec_link', $ec_link)
             ->with('product', $data)
+            ->with('showCompareTray', true)
             ->with('head', $pro->head ?? '');
     }
 
