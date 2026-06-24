@@ -15572,6 +15572,11 @@ input:checked+label {
     padding-right: 15px;
 }
 
+/* 手機 filter 列的漏斗 icon 是白色 SVG，淺底看不到；比照桌機 .bg-menu-filler img 轉黑 */
+.menu-filler-mobile-filter img {
+    filter: brightness(0);
+}
+
 .margin-p-left-card {
     margin: 12px 0px;
     width: 100%;
