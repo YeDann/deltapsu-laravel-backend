@@ -647,10 +647,10 @@ if (!Array.prototype.findIndex) {
     </script>
     <script>
         // 比較 tray 跨頁還原：載入時若 session 已有產品，還原縮圖+計數並顯示；否則隱藏。
-        // 比較頁本身（/tools/comparison）不顯示這個 tray（已在比較頁，重複）。
+        // tray 只在商品列表頁/詳細頁顯示（showCompareTray 由 controller 標記）；其他頁面（含比較頁、Products Overview、Configurable Power）一律隱藏。
         var compareInit = @json($compareInit ?? []);
-        var onComparePage = window.location.pathname.indexOf('/tools/comparison') !== -1;
-        if (!onComparePage && compareInit && compareInit.length) {
+        var showCompareTray = @json($showCompareTray ?? false);
+        if (showCompareTray && compareInit && compareInit.length) {
             loadcompareProduct(compareInit);
             $('#numberselect').text(compareInit.length);
             $('#numberselect-mobile').text(compareInit.length);
