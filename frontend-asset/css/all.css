@@ -16066,7 +16066,11 @@ e.search-filter-action {
     font-size: 12px;
     font-weight: normal;
     width: 160px;
-    height: 32px;
+    /* 高度隨文字增長，避免德文等長字串換行被固定 32px 切掉 */
+    min-height: 32px;
+    height: auto;
+    padding: 5px 8px;
+    line-height: 1.25;
 }
 
 .btn-addremove-filer:hover {
