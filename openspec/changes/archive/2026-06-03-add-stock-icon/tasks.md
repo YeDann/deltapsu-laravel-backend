@@ -15,7 +15,7 @@
 - [x] 3.4 卡片按鈕列由 3 顆增為 4 顆的版面（在 `product.blade.php` inline `<style>`，只作用於列表頁，詳細頁走外部 all.css 不受影響）：
   - `.boxlist-icon-img` 改用 flex `gap:6px` + `align-items:center` + `nowrap`（間距不再用各按鈕 margin，避免 `<a>`/`<button>` 混用造成不一致）
   - icon 統一 `width/height:30px` + `object-fit:contain`
-  - 詢價按鈕原為 fontello 字型圖示（`.icon-facon3` 有 `1em`+左右 `.2em` 邊距，比其他三顆寬）→ 三段都改用 `<img Enquiry.svg>`（與其他三顆、與商品詳細頁一致），四顆必然同尺寸；順手補回 section 1 漏掉的 `</button>`
+  - 詢價按鈕原為 fontello 字型圖示（`.icon-facon3` 有 `1em`+左右 `.2em` 邊距，比其他三顆寬）→ 三段都改用 `<img Enquiry-v2.svg>`（與其他三顆、與商品詳細頁一致），四顆必然同尺寸；順手補回 section 1 漏掉的 `</button>`
   - 桌機 grid（`#GridView` 無 `.pd-mobile`）`justify-content:space-between` 平均分佈滿卡片寬；手機 grid（`#GridView .pd-mobile`）`space-evenly` 邊距＝間距全等距、並移除原 pd-mobile 左右 13px padding；list 檢視（`#ListView`）維持靠左
 
 ## 4. 點擊「即將開通」提示

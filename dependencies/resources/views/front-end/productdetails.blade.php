@@ -657,7 +657,7 @@
                         <div class="boxlist-icon-img pd-mobile">
                             <a href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}"><button
                                     class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img
-                                        src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button>
+                                        src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button>
                             </a>
                             <button onclick="showNavCoparison({{$product[0]['pro_id']}} ,{{$product[0]['cate_id']}})"
                                 class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img
@@ -1014,7 +1014,7 @@
                         <a
                             href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}"><button
                                 class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img
-                                    src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button></a>
+                                    src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button></a>
                         <button onclick="showNavCoparison({{$product[0]['pro_id']}} ,{{$product[0]['cate_id']}})"
                             class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img
                                 src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>

@@ -12198,6 +12198,11 @@ a .title-new {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1)) !important;
 }
 
+/* 手機 footer「Follow us on social」(<p>，原繼承容器 #0087DC) 對齊桌機灰 */
+.footer-nav-mobile p {
+  color: rgb(150 150 150 / var(--tw-text-opacity, 1)) !important;
+}
+
 .footer-nav-mobile a:hover {
   text-decoration: none;
 }
@@ -15567,6 +15572,11 @@ input:checked+label {
     padding-right: 15px;
 }
 
+/* 手機 filter 列的漏斗 icon 是白色 SVG，淺底看不到；比照桌機 .bg-menu-filler img 轉黑 */
+.menu-filler-mobile-filter img {
+    filter: brightness(0);
+}
+
 .margin-p-left-card {
     margin: 12px 0px;
     width: 100%;
@@ -16056,7 +16066,11 @@ e.search-filter-action {
     font-size: 12px;
     font-weight: normal;
     width: 160px;
-    height: 32px;
+    /* 高度隨文字增長，避免德文等長字串換行被固定 32px 切掉 */
+    min-height: 32px;
+    height: auto;
+    padding: 5px 8px;
+    line-height: 1.25;
 }
 
 .btn-addremove-filer:hover {
