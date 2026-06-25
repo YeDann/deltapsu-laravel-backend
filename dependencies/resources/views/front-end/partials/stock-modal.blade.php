@@ -42,7 +42,7 @@
         text-decoration: none; cursor: pointer; transition: background .15s;
         width: 160px; text-align: center;   /* 固定寬度：Buy Now 與 Go to Distributor 等寬對齊（slide 19） */
     }
-    #stockModal .btn-buy:hover { background: #005a99; color: #fff; text-decoration: none; }
+    #stockModal .btn-buy:hover { background: #1E50C8; color: #fff; text-decoration: none; }
     #stockModal .btn-buy:disabled, #stockModal .btn-buy[disabled] { background: #c0c4cc; cursor: not-allowed; }
     /* 無購物車連結時改顯示聯絡鈕（文字走 Stock_contact、點擊 mailto 該經銷商）：外框藍字以別於實心藍 Buy Now；inset box-shadow 當外框不影響高度 */
     #stockModal .btn-buy.btn-buy-contact { background: #fff; color: #0087DC; box-shadow: inset 0 0 0 1px #0087DC; }
@@ -53,7 +53,7 @@
     #stockModal .modal-footer > * { margin: 0; }
     #stockModal .stock-footer-text { color: #666; font-size: 14px; }
     #stockModal .btn-contact { color: #0087DC; font-size: 14px; font-weight: 600; text-decoration: underline; white-space: nowrap; }
-    #stockModal .btn-contact:hover { color: #005a99; text-decoration: underline; }
+    #stockModal .btn-contact:hover { color: #1E50C8; text-decoration: underline; }
     #stockModal .stock-powered { color: #888; font-size: 13px; display: inline-flex; align-items: center; gap: 8px; }
     #stockModal .nc-logo { height: 22px; vertical-align: middle; }
     #stockModal .stock-footer-right { display: inline-flex; align-items: center; gap: 18px; }

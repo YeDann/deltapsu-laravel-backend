@@ -1427,6 +1427,7 @@ class FrontendController extends Controller
                 ->with('series', $series)
                 ->with('modeSeries', $modeSeries)
                 ->with('se_id', $seId)
+                ->with('showCompareTray', true)
                 ->with('head', $mainCategory->head ?? '');
         }
 
@@ -1821,6 +1822,7 @@ class FrontendController extends Controller
             ->with('external_link', $external_link)
             ->with('ec_link', $ec_link)
             ->with('product', $data)
+            ->with('showCompareTray', true)
             ->with('head', $pro->head ?? '');
     }
 
@@ -1862,17 +1864,36 @@ class FrontendController extends Controller
             ->distinct()
             ->orderBy('p.pro_code', 'asc')
             ->get();
+
+        // 跨類型開放後下拉涵蓋全目錄（數百筆）：合格判斷與 optional model 改批次查詢，避免逐筆造成 N+1
+        $qualifiedIds = DB::table('product_has_property')
+            ->whereIn('type_id', [4, 3, 8])
+            ->groupBy('product_id')
+            ->havingRaw('COUNT(*) >= 3')
+            ->pluck('product_id')
+            ->all();
+        $qualifiedSet = array_flip($qualifiedIds);
+
+        // 一次撈齊所有合格產品的 optional model，依母產品 pro_id 分組、排序
+        $optionalByProduct = [];
+        if (!empty($qualifiedIds)) {
+            $optionalRows = DB::table('product_optional_model as po')
+                ->join('products as p', 'p.pro_id', '=', 'po.product_id')
+                ->where('p.enable_pro', 1)
+                ->whereIn('po.product_id', $qualifiedIds)
+                ->select('p.*', 'po.optional_model as pro_code')
+                ->orderBy('po.id', 'asc')
+                ->get();
+            foreach ($optionalRows as $optional_model) {
+                $optionalByProduct[$optional_model->pro_id][] = $optional_model;
+            }
+        }
+
+        // 維持原本順序：pro_code asc 的母產品，緊接其 optional models
         foreach ($seachpro as $pro) {
-            if (self::checkContentPro($pro->pro_id)) {
+            if (isset($qualifiedSet[$pro->pro_id])) {
                 array_push($products, $pro);
-                $optional_product = DB::table('product_optional_model as po')
-                    ->join('products as p', 'p.pro_id', '=', 'po.product_id')
-                    ->where('p.enable_pro', 1)
-                    ->where('po.product_id', $pro->pro_id)
-                    ->select('p.*', 'po.optional_model as pro_code')
-                    ->orderBy('p.pro_code', 'asc')
-                    ->get();
-                foreach ($optional_product as $optional_model) {
+                foreach ($optionalByProduct[$pro->pro_id] ?? [] as $optional_model) {
                     array_push($products, $optional_model);
                 }
             }
