@@ -434,12 +434,7 @@
                                                         @endif --}}
 
                                                         @if($pro['content'][1]->status_input == 3)
-                                                        @if($pro['content'][1]->data_1 != null &&
-                                                        $pro['content'][1]->data_2 != null)
-                                                        {{$pro['content'][1]->data_1}}-{{$pro['content'][1]->data_2}}{{$pro['content'][1]->unit_name}}
-                                                        @else
-                                                        -
-                                                        @endif
+                                                        <?php echo showdata($pro['content'][1]->data_1 ,$pro['content'][1]->data_2 ,$pro['content'][1]->unit_name)?>
                                                         @else
                                                         <?php echo join(",",retextdata($datacheck1 , $pro['content'][1]->unit_name));?>
                                                         @endif
@@ -456,12 +451,7 @@
                                                         -
                                                         @endif --}}
                                                         @if($pro['content'][2]->status_input == 3)
-                                                        @if($pro['content'][2]->data_1 != null &&
-                                                        $pro['content'][2]->data_2 != null)
-                                                        {{$pro['content'][2]->data_1}}-{{$pro['content'][2]->data_2}}{{$pro['content'][2]->unit_name}}
-                                                        @else
-                                                        -
-                                                        @endif
+                                                        <?php echo showdata($pro['content'][2]->data_1 ,$pro['content'][2]->data_2 ,$pro['content'][2]->unit_name)?>
                                                         @else
                                                         <?php echo join(",",retextdata($datacheck2 , $pro['content'][2]->unit_name));?>
                                                         @endif
@@ -479,12 +469,7 @@
                                                         -
                                                         @endif --}}
                                                         @if($pro['content'][0]->status_input == 3)
-                                                        @if($pro['content'][0]->data_1 != null &&
-                                                        $pro['content'][0]->data_2 != null)
-                                                        {{$pro['content'][0]->data_1}}-{{$pro['content'][0]->data_2}}{{$pro['content'][0]->unit_name}}
-                                                        @else
-                                                        -
-                                                        @endif
+                                                        <?php echo showdata($pro['content'][0]->data_1 ,$pro['content'][0]->data_2 ,$pro['content'][0]->unit_name)?>
                                                         @else
                                                         <?php echo join(",",retextdata($datacheck3 , $pro['content'][0]->unit_name));?>
                                                         @endif

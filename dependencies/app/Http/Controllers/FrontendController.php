@@ -5629,8 +5629,13 @@ class FrontendController extends Controller
             }
             $stringText = join(',', $arrstri);
         } elseif (3 == $status) {
-            if ($dataarr[0] && $dataarr[1]) {
-                $stringText = $dataarr[0] . '-' . $dataarr[1] . $unit;
+            // 用明確空值判斷，避免 min 為 0 的 range（如 0-16.67A）被當成 falsy 而漏顯示
+            $min = $dataarr[0];
+            $max = $dataarr[1];
+            $hasMin = null !== $min && '' !== $min && 'null' !== $min;
+            $hasMax = null !== $max && '' !== $max && 'null' !== $max;
+            if ($hasMin && $hasMax) {
+                $stringText = $min . '-' . $max . $unit;
             }
         }
 
