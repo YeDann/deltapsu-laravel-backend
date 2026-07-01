@@ -49,13 +49,11 @@
     #stockModal .btn-buy.btn-buy-contact:hover { background: #0087DC; color: #fff; }
     #stockModal .stock-state { padding: 30px 0; text-align: center; }
     /* footer：其他購買選項 / 業務支援 + Contact Us（連 /contact/support） */
-    #stockModal .modal-footer { border-top: 1px solid #ececec; background: #f7f8fa; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; padding: 16px 28px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    #stockModal .modal-footer { border-top: 1px solid #ececec; background: #f7f8fa; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; padding: 16px 28px; display: flex; align-items: center; justify-content: flex-end; gap: 16px; }
     #stockModal .modal-footer > * { margin: 0; }
     #stockModal .stock-footer-text { color: #666; font-size: 14px; }
     #stockModal .btn-contact { color: #0087DC; font-size: 14px; font-weight: 600; text-decoration: underline; white-space: nowrap; }
     #stockModal .btn-contact:hover { color: #1E50C8; text-decoration: underline; }
-    #stockModal .stock-powered { color: #888; font-size: 13px; display: inline-flex; align-items: center; gap: 8px; }
-    #stockModal .nc-logo { height: 22px; vertical-align: middle; }
     #stockModal .stock-footer-right { display: inline-flex; align-items: center; gap: 18px; }
     /* 窄 modal（含平板 768–991：BS4 .modal-lg 要 ≥992 才 800px，否則退回 500px）縮小 padding / 字級 + 堆疊 header，
        避免桌機版 header（標題＋兩下拉並排＋×）與表格塞不下、× 被擠出 modal、Buy Now 被裁 */
@@ -113,7 +111,6 @@
                 </div>
             </div>
             <div class="modal-footer stock-footer">
-                <span class="stock-powered">{{ $staticContent['Stock_powered_by'] ?? 'Powered by' }} <a href="https://www.netcomponents.com" target="_blank" rel="noopener"><img class="nc-logo" src="{{ asset('frontend-asset/image/netcomponents-logo.svg') }}" alt="netCOMPONENTS"></a></span>
                 <span class="stock-footer-right">
                     <span class="stock-footer-text">{{ $staticContent['Stock_sales_support'] ?? 'For other purchasing options or sales support:' }}</span>
                     <a href="{{ route('contactSupport') }}" class="btn-contact">{{ $staticContent['contact_us'] ?? 'Contact Us' }}</a>
