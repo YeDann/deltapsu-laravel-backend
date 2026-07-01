@@ -91,10 +91,6 @@ tbody >tr > td:first-child{
     <div class="textcenter"> 
         PRODUCT COMPARISON
     </div>
-    <div class="texttype">
-       Type : {{$tyepname}} 
-    </div>
-
     <table  class="table table-coparision-detail " style="border:0px;">
         <tbody>
             <tr>

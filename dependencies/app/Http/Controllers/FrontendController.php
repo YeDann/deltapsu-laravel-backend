@@ -3222,9 +3222,8 @@ class FrontendController extends Controller
     {
         $contentCompare = $request->datacon;
         $string = $this->validateInput($request->arr_con, 'text', true);
-        $type_name = $this->validateInput($request->type_name, 'text', true);
         $myArray = explode(',', $string);
-        $rsp = self::GetCoparisonHeader($myArray, $type_name);
+        $rsp = self::GetCoparisonHeader($myArray);
 
         $rowall = $rsp['CSV'];
 
@@ -3266,7 +3265,6 @@ class FrontendController extends Controller
     {
         $contentCompare = $request->datacon;
         $string = $this->validateInput($request->arr_con, 'text', true);
-        $type_name = $this->validateInput($request->type_name, 'text', true);
         $myArray = explode(',', $string);
         // return dd($myArray);
         $lang = App::getLocale();
@@ -3310,7 +3308,6 @@ class FrontendController extends Controller
         ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
         ->get();
 
-        $data['tyepname'] = $type_name;
         $data['product1'] = $pro1;
         $data['product2'] = $pro2;
         $data['product3'] = $pro3;
@@ -5387,7 +5384,7 @@ class FrontendController extends Controller
                 ], 200);
     }
 
-    public function GetCoparisonHeader($arrInpro, $type_name)
+    public function GetCoparisonHeader($arrInpro)
     {
         $lang = App::getLocale();
         $pro1 = null;
@@ -5439,11 +5436,9 @@ class FrontendController extends Controller
             ->first();
         }
 
-        $typearr = ['Product Type', self::Checkdata($type_name)];
         $ModelName = ['Model Name', $pro1 ? self::Checkdata($pro1->pro_code) : '', $pro2 ? self::Checkdata($pro2->pro_code) : '', $pro3 ? self::Checkdata($pro3->pro_code) : ''];
 
         $Collect1 = [
-                $typearr,
                 $ModelName,
             ];
 
