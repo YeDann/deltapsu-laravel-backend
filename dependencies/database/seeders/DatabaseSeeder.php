@@ -54,5 +54,8 @@ class DatabaseSeeder extends Seeder
 
         // Phase II — Product Comparison：跨類選項（Industrial × Medical）標籤
         $this->call(ComparisonCrossKeywordSeeder::class);
+
+        // Phase II — 經銷商名錄更新匯入
+        $this->call(DistributorOfficeUpdateSeeder::class);
     }
 }
