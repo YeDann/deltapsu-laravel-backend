@@ -223,14 +223,12 @@
                     {{csrf_field()}}
                     <input type="hidden" name="datacon" id="comtentcompare">
                     <input type="hidden" name="arr_con" id="arr_con">
-                    <input type="hidden" name="type_name" id="typename">
                 </form>
 
                 <form id="ContentComparePDF" action="{{route('loadPdffilePDF')}}" method="POST">
                     {{csrf_field()}}
                     <input type="hidden" name="datacon" id="comtentcompare2">
                     <input type="hidden" name="arr_con" id="arr_con2">
-                    <input type="hidden" name="type_name" id="typename2">
                 </form>
             </div>
 
@@ -501,8 +499,6 @@
             alert('Please Select Model.');
          }else{
             $('#arr_con').val(arrcon);
-            var typename = 'All';
-            $('#typename').val(typename);
             $('#comtentcompare').val($('#comparison').html());
             document.getElementById("ContentCompare").submit();
          }
@@ -516,8 +512,6 @@
             alert('Please Select Model.');
          }else{
             $('#arr_con2').val(arrcon);
-            var typename = 'All';
-            $('#typename2').val(typename);
             $('#comtentcompare2').val($('#comparison').html());
             document.getElementById("ContentComparePDF").submit();
          }
