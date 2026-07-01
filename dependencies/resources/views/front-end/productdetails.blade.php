@@ -1827,13 +1827,7 @@
                                                     {{-- {{$pro['content'][1]->data_1}}{{$pro['content'][1]->unit_name}}
                                                     --}}
                                                     @if($proRelate['content'][1]->status_input == 3)
-                                                    @if($proRelate['content'][1]->data_1 != null &&
-                                                    $proRelate['content'][1]->data_2
-                                                    != null)
-                                                    {{$proRelate['content'][1]->data_1}}-{{$proRelate['content'][1]->data_2}}{{$proRelate['content'][1]->unit_name}}
-                                                    @else
-                                                    -
-                                                    @endif
+                                                    <?php echo showdata($proRelate['content'][1]->data_1 ,$proRelate['content'][1]->data_2 ,$proRelate['content'][1]->unit_name)?>
                                                     @else
                                                     @if($proRelate['content'][1]->data_1 != null)
                                                     <?php echo join(",",retextdata($datacheck1 , $proRelate['content'][1]->unit_name));?>
@@ -1849,13 +1843,7 @@
                                                     {{-- {{$pro['content'][2]->data_1}}{{$pro['content'][2]->unit_name}}
                                                     --}}
                                                     @if($proRelate['content'][2]->status_input == 3)
-                                                    @if($proRelate['content'][2]->data_1 != null &&
-                                                    $proRelate['content'][2]->data_2
-                                                    != null)
-                                                    {{$proRelate['content'][2]->data_1}}-{{$proRelate['content'][2]->data_2}}{{$proRelate['content'][2]->unit_name}}
-                                                    @else
-                                                    -
-                                                    @endif
+                                                    <?php echo showdata($proRelate['content'][2]->data_1 ,$proRelate['content'][2]->data_2 ,$proRelate['content'][2]->unit_name)?>
                                                     @else
                                                     @if($proRelate['content'][2]->data_1 != null)
                                                     <?php echo join(",",retextdata($datacheck2 , $proRelate['content'][2]->unit_name));?>
@@ -1871,13 +1859,7 @@
                                                 <h6 class="text-title-ft-sub">{{$staticContent['Output_Current']}}</h6>
                                                 <p class="text-ft-sub text-one">
                                                     @if($proRelate['content'][0]->status_input == 3)
-                                                    @if($proRelate['content'][0]->data_1 != null &&
-                                                    $proRelate['content'][0]->data_2
-                                                    != null)
-                                                    {{$proRelate['content'][0]->data_1}}-{{$proRelate['content'][0]->data_2}}{{$proRelate['content'][0]->unit_name}}
-                                                    @else
-                                                    -
-                                                    @endif
+                                                    <?php echo showdata($proRelate['content'][0]->data_1 ,$proRelate['content'][0]->data_2 ,$proRelate['content'][0]->unit_name)?>
                                                     @else
                                                     @if($proRelate['content'][0]->data_1 != null)
                                                     <?php echo join(",",retextdata($datacheck3 , $proRelate['content'][0]->unit_name));?>
