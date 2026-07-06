@@ -30,6 +30,10 @@ Route::group([
      'prefix' => LaravelLocalization::setLocale(),
     'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'HtmlMinifier', 'verifyLang'],
         ], function () {
+            // 庫存查詢端點：須在 /{page?} 萬用路由之前，否則單段路徑會被 index 攔截
+            Route::get('/stock-check', 'StockController@check')->name('stockCheck');
+            // 經銷商聯絡 email（無購物車連結時，前台「Contact」mailto 用）
+            Route::get('/stock-check/distributor', 'StockController@contact')->name('stockContact');
             Route::get('/{page?}', 'FrontendController@index')->name('index');
             Route::get('/download/{doc?}', 'FrontendController@oldDoc')->name('downloadDocData');
             Route::get('/download/resources-catalogs/{doc?}', 'FrontendController@downloadoldCatalogs')->name('downloadoldCatalogs');
@@ -64,7 +68,6 @@ Route::group([
             Route::post('/loadProduct', 'FrontendController@loadProduct')->name('loadProduct');
             Route::post('/checkProductSection', 'FrontendController@checkProductSection')->name('checkProductSection');
             Route::post('/RemovedataInSection', 'FrontendController@RemovedataInSection')->name('RemovedataInSection');
-            Route::post('/getProductByType', 'FrontendController@getProductByType')->name('getProductByType');
             Route::post('/loadImageProByArr', 'FrontendController@loadImageProByArr')->name('loadImageProByArr');
             Route::get('/searchAll/{key?}', 'FrontendController@searchAll')->name('searchAll');
             Route::get('/searchByTag/{key?}', 'FrontendController@searchByTag')->name('searchByTag');
@@ -79,6 +82,7 @@ Route::group([
             Route::get('/partners/marketing-resources/configurable-history', 'FrontendController@confighistory')->name('confighistory');
             Route::get('/partners/marketing-resources/product-launch-schedule', 'FrontendController@productLaunchSchedule')->name('productLaunchSchedule');
             Route::get('/partners/marketing-resources/marketing-resources-downloads', 'FrontendController@marketingResourcesDownloads')->name('marketingResourcesDownloads');
+            Route::get('/partners/marketing-resources/preview', 'FrontendController@previewMarketingResource')->name('previewMarketingResource');
             Route::get('/partners/marketing-resources/sale-kit', 'FrontendController@saleKit')->name('saleKit');
             Route::get('/partners/marketing-resources/product-cross-reference', 'FrontendController@productCrossReference')->name('productCrossReference');
             Route::get('/partners/marketing-resources/partnerinfo/{id?}/{name?}', 'FrontendController@partnerinfo')->name('partnerinfo');
@@ -454,6 +458,8 @@ Route::prefix('/backend')->group(function () {
     Route::post('update_MarketResourceCategories', 'MarketResourceCateController@update')->name('update_MarketResourceCategories');
     Route::post('delete_MarketResourceCategories', 'MarketResourceCateController@destroy')->name('delete_MarketResourceCategories');
 
+    Route::post('MarketResource/chunk', 'MarketResourceController@chunkUpload')->name('MarketResource.chunk');
+    Route::post('MarketResource/poster', 'MarketResourceController@savePoster')->name('MarketResource.poster');
     Route::resource('MarketResource', 'MarketResourceController');
     Route::get('editMarketResource/{id?}', 'MarketResourceController@edit')->name('editMarketResource');
     Route::post('update_MarketResource', 'MarketResourceController@update')->name('update_MarketResource');

@@ -287,6 +287,19 @@
         width: 130px;
     }
 
+    /* 表頭只在「軟連字號」處斷字（如德文 Ausgangs­spannung→Ausgangs-/spannung）；manual=不靠瀏覽器字典亂斷 */
+    .header-font-table {
+        -webkit-hyphens: manual;
+        hyphens: manual;
+    }
+
+    /* grid 卡片標籤：長德文字（Eingangsspannungsbereich）在 4 欄窄卡片會撐爆 —— 允許字內斷行縮 min-width + 德文音節斷 */
+    #cardGridList .text-title-ft-sub {
+        overflow-wrap: anywhere;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+    }
+
     .icon-inquiry-product {
         font-size: 25px;
         color: #ffffff;
@@ -375,7 +388,11 @@
         margin-top: 2px;
     }
     .add-hight{
-        margin-top:10px;
+        margin-top:14px;
+    }
+    /* Dimensions 區塊比照 Other Features(.add-hight) 補上方間距，與上方規格分開（grid 卡片；長標籤換 2 行也不擠）*/
+    .dimension{
+        margin-top:14px;
     }
     .text-editor-card {
         color: #5f5f5f;
@@ -617,13 +634,13 @@
         <div class="menu-filler-mobile-filter ">
             <div class=" d-flex justify-content-between h-100">
                 <div id="showfiler-mobile" class="my-auto">
-                    <div style="color:#fff;" id="filterMobile-btn" onclick="OpenFiiter();"
+                    <div style="color:#000;" id="filterMobile-btn" onclick="OpenFiiter();"
                         class="filter-mobile-link text-bold"><img
                             src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}"
                             alt="">{{$staticContent['filters']}}</div>
                 </div>
                 <div class="d-flex">
-                    <p class="text-white my-auto mr-2 text-card-detial text-bold">{{$staticContent['Sort_by']}}:</p>
+                    <p class="my-auto mr-2 text-card-detial text-bold" style="color:#000;">{{$staticContent['Sort_by']}}:</p>
                     <div class="input-label my-auto">
                         <select onchange="onselectSort();" class="form-control selectSort border-radius-6">
                             <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
@@ -745,6 +762,8 @@
 <input type="hidden" id="current_list_item" value="0">
 <input type="hidden" id="current_method" value="0">
 
+{{-- 經銷商庫存查詢 Modal（DILP）：桌機 grid / 手機 grid / list view 三段 render 共用同一份 --}}
+@include('front-end.partials.stock-modal')
 
 @endsection
 
@@ -903,7 +922,8 @@
         var categoryId = getProductCategoryId(product);
         showNavCoparison(productId, categoryId);
     }
-    
+
+
     // 生成詢價連結的函數，從產品分類資料獲取資訊
     function generateEnquiryLink(proCode, product) {
         var typeId = '';
@@ -2051,9 +2071,10 @@
 
         html += '<div class="w-100">';
         html += '<div class="boxlist-icon-img">';
-        html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></a>';
+        html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button></a>';
         html += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
         html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
+        html += '<button onclick="checkStock(\'' + pro['pro_code'] + '\')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
         html += '</div>';
         html += '</div>';
 
@@ -2149,9 +2170,10 @@
             html += '</div>';
             html += '<div class="w-100">';
             html += '<div class="boxlist-icon-img pd-mobile">';
-            html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
+            html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button></a>';
             html += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
             html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
+            html += '<button onclick="checkStock(\'' + pro['pro_code'] + '\')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
             html += '</div>';
             html += '</div>';
             html += '</div>';
@@ -2189,14 +2211,14 @@
         html1 += '<thead>';
         html1 += '<tr class="headder-bg-table">';
         html1 += '<th  id="sortdata1" class=" header-font-table w-tabfix"  onclick="selectTable(1)">{{$staticContent['Model_Name']}}</th>';
-        html1 += '<th id="sortdata2" class=" header-font-table w-tabfix w-120"  onclick="selectTable(2)">{{$staticContent['Output_Voltage']}}</th>';
-        html1 += '<th id="sortdata3" class=" header-font-table w-tabfix w-120"  onclick="selectTable(3)">{{$staticContent['Output_Current']}}</th>';
-        html1 += '<th id="sortdata4" class=" header-font-table w-tabfix w-120"  onclick="selectTable(4)">{{$staticContent['Output_Power']}} </th>';
-        html1 += '<th id="sortdata5" class=" header-font-table w-tabfix"  onclick="selectTable(5)">{{$staticContent['Input_Voltage']}}</th>';
+        html1 += '<th id="sortdata2" class=" header-font-table w-tabfix w-120"  onclick="selectTable(2)">{{$staticContent['ProductList_Output_Voltage']}}</th>';
+        html1 += '<th id="sortdata3" class=" header-font-table w-tabfix w-120"  onclick="selectTable(3)">{{$staticContent['ProductList_Output_Current']}}</th>';
+        html1 += '<th id="sortdata4" class=" header-font-table w-tabfix w-120"  onclick="selectTable(4)">{{$staticContent['ProductList_Output_Power']}} </th>';
+        html1 += '<th id="sortdata5" class=" header-font-table w-tabfix"  onclick="selectTable(5)">{{$staticContent['ProductList_Input_Voltage']}}</th>';
         if (isOtherFeature) {
             html1 += '<th  class="header-font-table" >{{$staticContent['product_highLights']}}</th>';
         } else {
-            html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['Dimensions']}}</th>';
+            html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['ProductList_Dimensions']}}</th>';
         }
 
         html1 += '</tr>';
@@ -2254,9 +2276,10 @@
             html1 += '</a>';
             html1 += '<div class="w-100">';
             html1 += '<div class="boxlist-icon-img">';
-            html1 += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><i class="icon-inquiry-product icon-facon3 icon-question"></i></button></a>';
+            html1 += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button></a>';
             html1 += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
             html1 += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
+            html1 += '<button onclick="checkStock(\'' + pro['pro_code'] + '\')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
             html1 += '</div>';
             html1 += '</div>';
             // html1 += '<div class="w-100">';

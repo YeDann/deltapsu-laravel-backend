@@ -657,7 +657,7 @@
                         <div class="boxlist-icon-img pd-mobile">
                             <a href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}"><button
                                     class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img
-                                        src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button>
+                                        src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button>
                             </a>
                             <button onclick="showNavCoparison({{$product[0]['pro_id']}} ,{{$product[0]['cate_id']}})"
                                 class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img
@@ -666,6 +666,9 @@
                                     class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img
                                         src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button>
                             </a>
+                            <button onclick="checkStock('{{$product[0]['pro_code']}}')"
+                                    class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img
+                                        src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>
 
                             @foreach ($ec_link as $item)
                             <a href="{{$item->link}}" target="_blank"><button
@@ -748,6 +751,7 @@
                             target="_blank">
                             <button class="btn btn-datasheet">{{$staticContent['data_sheet']}}</button>
                         </a>
+                        <button class="btn btn-datasheet" onclick="checkStock('{{$product[0]['pro_code']}}')">{{ $staticContent['Stock'] ?? 'Stock' }}</button>
                         @foreach ($ec_link as $item)
                         <a href="{{$item->link}}" target="_blank">
                             <button class="btn btn-buynow mr-2">{{$item->name}}</button>
@@ -1010,7 +1014,7 @@
                         <a
                             href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}"><button
                                 class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img
-                                    src="{{asset('/frontend-asset/image/Enquiry.svg')}}"></button></a>
+                                    src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button></a>
                         <button onclick="showNavCoparison({{$product[0]['pro_id']}} ,{{$product[0]['cate_id']}})"
                             class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img
                                 src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>
@@ -1018,6 +1022,9 @@
                             target="_blank"><button
                                 class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img
                                     src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>
+                        <button onclick="checkStock('{{$product[0]['pro_code']}}')"
+                                class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img
+                                    src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>
                         @foreach ($ec_link as $item)
                         <a href="{{ $item->link }}" target="_blank"><button
                                 class="btn img-btn-icon-pro tooltip2"><span>{{ $item->name }}</span><img
@@ -1094,6 +1101,7 @@
                 <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}" target="_blank">
                     <button class="btn btn-datasheet w-100 my-2">{{$staticContent['data_sheet']}}</button>
                 </a>
+                <button class="btn btn-datasheet w-100 my-2" onclick="checkStock('{{$product[0]['pro_code']}}')">{{ $staticContent['Stock'] ?? 'Stock' }}</button>
 
                 @foreach ($ec_link as $item)
                 <a href="{{$item->link}}" target="_blank">
@@ -1819,13 +1827,7 @@
                                                     {{-- {{$pro['content'][1]->data_1}}{{$pro['content'][1]->unit_name}}
                                                     --}}
                                                     @if($proRelate['content'][1]->status_input == 3)
-                                                    @if($proRelate['content'][1]->data_1 != null &&
-                                                    $proRelate['content'][1]->data_2
-                                                    != null)
-                                                    {{$proRelate['content'][1]->data_1}}-{{$proRelate['content'][1]->data_2}}{{$proRelate['content'][1]->unit_name}}
-                                                    @else
-                                                    -
-                                                    @endif
+                                                    <?php echo showdata($proRelate['content'][1]->data_1 ,$proRelate['content'][1]->data_2 ,$proRelate['content'][1]->unit_name)?>
                                                     @else
                                                     @if($proRelate['content'][1]->data_1 != null)
                                                     <?php echo join(",",retextdata($datacheck1 , $proRelate['content'][1]->unit_name));?>
@@ -1841,13 +1843,7 @@
                                                     {{-- {{$pro['content'][2]->data_1}}{{$pro['content'][2]->unit_name}}
                                                     --}}
                                                     @if($proRelate['content'][2]->status_input == 3)
-                                                    @if($proRelate['content'][2]->data_1 != null &&
-                                                    $proRelate['content'][2]->data_2
-                                                    != null)
-                                                    {{$proRelate['content'][2]->data_1}}-{{$proRelate['content'][2]->data_2}}{{$proRelate['content'][2]->unit_name}}
-                                                    @else
-                                                    -
-                                                    @endif
+                                                    <?php echo showdata($proRelate['content'][2]->data_1 ,$proRelate['content'][2]->data_2 ,$proRelate['content'][2]->unit_name)?>
                                                     @else
                                                     @if($proRelate['content'][2]->data_1 != null)
                                                     <?php echo join(",",retextdata($datacheck2 , $proRelate['content'][2]->unit_name));?>
@@ -1863,13 +1859,7 @@
                                                 <h6 class="text-title-ft-sub">{{$staticContent['Output_Current']}}</h6>
                                                 <p class="text-ft-sub text-one">
                                                     @if($proRelate['content'][0]->status_input == 3)
-                                                    @if($proRelate['content'][0]->data_1 != null &&
-                                                    $proRelate['content'][0]->data_2
-                                                    != null)
-                                                    {{$proRelate['content'][0]->data_1}}-{{$proRelate['content'][0]->data_2}}{{$proRelate['content'][0]->unit_name}}
-                                                    @else
-                                                    -
-                                                    @endif
+                                                    <?php echo showdata($proRelate['content'][0]->data_1 ,$proRelate['content'][0]->data_2 ,$proRelate['content'][0]->unit_name)?>
                                                     @else
                                                     @if($proRelate['content'][0]->data_1 != null)
                                                     <?php echo join(",",retextdata($datacheck3 , $proRelate['content'][0]->unit_name));?>
@@ -1918,6 +1908,8 @@
         </div>
     </div>
 </div>
+
+@include('front-end.partials.stock-modal')
 @endsection
 
 

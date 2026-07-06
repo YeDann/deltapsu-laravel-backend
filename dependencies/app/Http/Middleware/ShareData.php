@@ -211,6 +211,9 @@ class ShareData
         view()->share('logoUrl', $logo_url);
         view()->share('head', '');
 
+        // 比較 tray 跨頁還原：把 session 已選產品資料分享給前台 layout（空 session 不查 DB）
+        view()->share('compareInit', \App\Http\Controllers\FrontendController::comparisonList(App::getLocale(), session('product_comp') ?? []));
+
         return $next($request);
     }
 }

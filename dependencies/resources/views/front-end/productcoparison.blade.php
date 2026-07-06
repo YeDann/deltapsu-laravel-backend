@@ -206,21 +206,8 @@
         <div class="container">
             <h1 class="text-title-delta">{{$staticContent['product_comparison']}}</h1>
             <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
-            <p class="text-center text-sixteen-dark">{{$staticContent['Type']}}</p>
             <div class="d-flex mb-3">
-                <div class="mx-auto">
-                    <select id="proType" class="form-control pr-4 border-radius-6" onchange="chageProductType();">
-                        <option value="0">{{$staticContent['Please_Select']}}*</option>
-                        @foreach ($Categories as $item)
-                        <option {{($item->sub_pro_id == $cateid ?"selected":"")}}
-                            value="{{$item->sub_pro_id}}">{{$item->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                {{-- <button onclick="loadhtml();"
-                    class="downloade-pdf btn btn-subscribe">{{$staticContent['Download_AS_CSV']}}</button> --}}
-                <div class="dropdown">
+                <div class="dropdown ml-auto">
                     <button class="btn btn-subscribe dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{$staticContent['Downloads']}}
@@ -236,14 +223,12 @@
                     {{csrf_field()}}
                     <input type="hidden" name="datacon" id="comtentcompare">
                     <input type="hidden" name="arr_con" id="arr_con">
-                    <input type="hidden" name="type_name" id="typename">
                 </form>
 
                 <form id="ContentComparePDF" action="{{route('loadPdffilePDF')}}" method="POST">
                     {{csrf_field()}}
                     <input type="hidden" name="datacon" id="comtentcompare2">
                     <input type="hidden" name="arr_con" id="arr_con2">
-                    <input type="hidden" name="type_name" id="typename2">
                 </form>
             </div>
 
@@ -346,16 +331,6 @@
     <div class="container">
         <h3 class="text-title-delta">{{$staticContent['product_comparison']}}</h3>
         <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
-        <h5 class="text-center">{{$staticContent['Type']}}</h5>
-        <div class="d-flex justify-content-center mb-2">
-            <select id="proType_mobile" class="form-control w-100 pr-4 border-radius-6" onchange="chageProductTypeMobile();">
-                <option value="0">{{$staticContent['Please_Select']}}*</option>
-                @foreach ($Categories as $item)
-                <option {{($item->sub_pro_id == $cateid ?"selected":"")}} value="{{$item->sub_pro_id}}">{{$item->name}}
-                </option>
-                @endforeach
-            </select>
-        </div>
         <h5 class="text-center">{{$staticContent['Model']}}</h5>
         <div class="d-flex justify-content-between mb-2">
             <select onchange="onSelectPromobile()" id="procom-mobile1"
@@ -524,8 +499,6 @@
             alert('Please Select Model.');
          }else{
             $('#arr_con').val(arrcon);
-            var typename = $( "#proType option:selected" ).text();
-            $('#typename').val(typename);
             $('#comtentcompare').val($('#comparison').html());
             document.getElementById("ContentCompare").submit();
          }
@@ -539,8 +512,6 @@
             alert('Please Select Model.');
          }else{
             $('#arr_con2').val(arrcon);
-            var typename = $( "#proType option:selected" ).text();
-            $('#typename2').val(typename);
             $('#comtentcompare2').val($('#comparison').html());
             document.getElementById("ContentComparePDF").submit();
          }
@@ -670,13 +641,10 @@
             var html2 = '';
             var html3  = '';
 
-           var t_id = $('#proType_mobile').val();
-           var t_name = $('#proType_mobile option:selected').text();
            $.ajax({
            url: "{{route('loadImageProByArr')}}",
            data: {
           'arr_pro': arr,
-          'typeid':t_id,
            },
            type: 'POST',
            headers: {
@@ -687,15 +655,15 @@
                 html2 +=  '<div class="">';
                 html2 +=  '<img class="img-fluid w-75 mb-2" src="'+url+val['picture']+'" alt="">';
                 html2 +=  '  <p class="comparison-series-name">'+val['seName'] +'</p>';
-                html2 += '<a target="_blank" href="'+link+'/'+t_name.replace(/ /g,"_")+'/'+val['pro_code']+'">';
+                html2 += '<a target="_blank" href="'+link+'/'+(val['catename']||'').replace(/ /g,"_")+'/'+val['pro_code']+'">';
                 html2 +=    '<h5 class="text-color-delta">'+val['pro_code']+'</h5>';
                 html2 +=    '</a>';
-                html2 += '   <a class="btn btn-enquiry w-100" href="{{route('LinktoEnquiry')}}/'+t_id+'/'+t_name+'/'+val['pro_code']+'">{{$staticContent['Enquiry']}}</a>';
+                html2 += '   <a class="btn btn-enquiry w-100" href="{{route('LinktoEnquiry')}}/'+val['cateid']+'/'+(val['catename']||'').replace(/ /g,"_")+'/'+val['pro_code']+'">{{$staticContent['Enquiry']}}</a>';
                 html2 += '</div>';
 
                 html3 += ' <p class="comparison-series-name">'+val['seName'] +'</p>';
                 html3 += ' <h5 class="text-color-delta">'+val['pro_code']+'</h5>';
-                html3 += '<a class="btn btn-enquiry w-100" href="{{route('LinktoEnquiry')}}/'+t_id+'/'+t_name+'/'+val['pro_code']+'">{{$staticContent['Enquiry']}}</a>'
+                html3 += '<a class="btn btn-enquiry w-100" href="{{route('LinktoEnquiry')}}/'+val['cateid']+'/'+(val['catename']||'').replace(/ /g,"_")+'/'+val['pro_code']+'">{{$staticContent['Enquiry']}}</a>'
             });
 
 
@@ -705,90 +673,6 @@
            }
            });
      }
-    function firstloadProductType(){
-        contentLoad();
-        var typeId  =  $('#proType').val();
-        $.ajax({
-           url: "{{route('getProductByType')}}",
-           data: {
-          'typeId': typeId,
-           },
-           type: 'POST',
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           success: function (res) {
-            var html = '';
-            html += '<option value="0">Please Select*</option>';
-            $.each(res['data'], function(index,val){
-            html += ' <option  value="'+val['pro_id']+'">'+val['pro_code']+'</option>';
-            });
-            $('.onchagetype').html(html);
-           }
-           });
-    }
-
-    function chageProductType(){
-        pro1 = 0;
-        pro2  = 0;
-        pro3  = 0;
-        contentLoad();
-        setproimage(pro1 ,1);
-        setproimage(pro2 ,2);
-        setproimage(pro3 ,3);
-        var typeId  =  $('#proType').val();
-        $("#proType_mobile option[value="+typeId+"]").prop('selected', true);
-        $.ajax({
-           url: "{{route('getProductByType')}}",
-           data: {
-          'typeId': typeId,
-           },
-           type: 'POST',
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           success: function (res) {
-            var html = '';
-            html += '<option value="0">Please Select*</option>';
-            $.each(res['data'], function(index,val){
-            html += ' <option  value="'+val['pro_id']+'">'+val['pro_code']+'</option>';
-            });
-            $('.onchagetype').html(html);
-           }
-           });
-           chageProductTypeMobile();
-
-    }
-
-    function chageProductTypeMobile(){
-        pro1 = 0;
-        pro2  = 0;
-        pro3  = 0;
-        comArr = [pro1 ,pro2, pro3 ];
-        contentLoad();
-        var mobileType =  $('#proType_mobile').val();
-        $("#proType option[value="+mobileType+"]").prop('selected', true);
-        $.ajax({
-           url: "{{route('getProductByType')}}",
-           data: {
-          'typeId': mobileType,
-           },
-           type: 'POST',
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           },
-           success: function (res) {
-
-            var html = '';
-            html += '<option value="0">Please Select*</option>';
-            $.each(res['data'], function(index,val){
-            html += ' <option  value="'+val['pro_id']+'">'+val['pro_code']+'</option>';
-            });
-            $('.onchagetype_mobile').html(html);
-           }
-           });
-
-    }
     function chedup(proid){
          var index =  comArr.indexOf(proid);
 
@@ -1066,14 +950,10 @@
             var arr = [pro];
             var url = '{{config('app.url')}}/upload/thumbs/';
             var html2 = '';
-            var t_id = $('#proType').val();
-            var t_name = $('#proType option:selected').text();
-            console.log(arr ,t_id);
            $.ajax({
            url: "{{route('loadImageProByArr')}}",
            data: {
           'arr_pro': arr,
-          'typeid': t_id,
            },
            type: 'POST',
            headers: {
@@ -1084,11 +964,11 @@
             $.each(res['data'], function(index,val){
              html2 += '<img class="w-100" src="'+url+val['picture']+'" alt="" >';
              html2 += '<p class="text-center text-dark comparison-series-name">'+val['seName'] +'</p>';
-             html2 += '<a target="_blank" href="'+link+'/'+t_name.replace(/ /g,"_")+'/'+viewKey(val['pro_code'])+'">';
+             html2 += '<a target="_blank" href="'+link+'/'+(val['catename']||'').replace(/ /g,"_")+'/'+viewKey(val['pro_code'])+'">';
              html2 += '<p class="text-title-twentyfour-delta text-center">'+val['pro_code']+'</p>'
              html2 += '</a>';
              html2 += '<div class="btn-center">';
-             html2 += '<a href="{{route('LinktoEnquiry')}}/'+t_id+'/'+t_name+'/'+viewKey(val['pro_code'])+'">';
+             html2 += '<a href="{{route('LinktoEnquiry')}}/'+val['cateid']+'/'+(val['catename']||'').replace(/ /g,"_")+'/'+viewKey(val['pro_code'])+'">';
              html2 += '<button class="btn-enquiry">{{$staticContent['Enquiry']}}</button>';
              html2 += '</a>';
              html2 += ' </div>';

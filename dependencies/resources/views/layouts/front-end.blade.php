@@ -646,8 +646,20 @@ if (!Array.prototype.findIndex) {
         });
     </script>
     <script>
-        $("#nav-comparison").hide();
-        $("#nav-comparison-mobile").hide();
+        // 比較 tray 跨頁還原：載入時若 session 已有產品，還原縮圖+計數並顯示；否則隱藏。
+        // tray 只在商品列表頁/詳細頁顯示（showCompareTray 由 controller 標記）；其他頁面（含比較頁、Products Overview、Configurable Power）一律隱藏。
+        var compareInit = @json($compareInit ?? []);
+        var showCompareTray = @json($showCompareTray ?? false);
+        if (showCompareTray && compareInit && compareInit.length) {
+            loadcompareProduct(compareInit);
+            $('#numberselect').text(compareInit.length);
+            $('#numberselect-mobile').text(compareInit.length);
+            $("#nav-comparison").show();
+            $("#nav-comparison-mobile").show();
+        } else {
+            $("#nav-comparison").hide();
+            $("#nav-comparison-mobile").hide();
+        }
 
         function showNavCoparison(id ,cateid){
 
@@ -691,7 +703,14 @@ if (!Array.prototype.findIndex) {
             $('#numberselect-mobile').text(res['data'].length);
             loadcompareProduct(res['data']);
             $('#alertcomparetext').text(res['message']);
-             $('#modalCompareSection').modal('show');
+            if (res['data'].length === 0) {
+                // 刪到 0：關閉比較彈窗並隱藏底部 tray
+                $('#modalCompareSection').modal('hide');
+                $("#nav-comparison").hide();
+                $("#nav-comparison-mobile").hide();
+            } else {
+                $('#modalCompareSection').modal('show');
+            }
            }
            });
 

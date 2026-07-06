@@ -1427,6 +1427,7 @@ class FrontendController extends Controller
                 ->with('series', $series)
                 ->with('modeSeries', $modeSeries)
                 ->with('se_id', $seId)
+                ->with('showCompareTray', true)
                 ->with('head', $mainCategory->head ?? '');
         }
 
@@ -1821,6 +1822,7 @@ class FrontendController extends Controller
             ->with('external_link', $external_link)
             ->with('ec_link', $ec_link)
             ->with('product', $data)
+            ->with('showCompareTray', true)
             ->with('head', $pro->head ?? '');
     }
 
@@ -1852,36 +1854,46 @@ class FrontendController extends Controller
             $cateid = $data[0]->pro_categories_id;
         }
 
-        $Categories = DB::table('sub_pro_categories as sp')
-            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'sp.sub_pro_id')
-            ->where('spt.local', '=', $lang)
-            ->where('sp.status', '=', 1)
-            ->select('sp.*', 'spt.*')
-            ->orderBy('spt.name', 'asc')
-            ->get();
         $products = [];
+        // 產品比較開放跨類型：載入「所有」可比較產品（不再限單一分類），沒有的 spec 在表格留空
         $seachpro = DB::table('products as p')
             ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-            ->join('product_has_categories as phc', 'p.pro_id', '=', 'phc.product_id')
             ->where('pt.local', $lang)
             ->where('pt.showstatus', 1)
-            ->where('phc.categories_id', $cateid)
             ->select('p.*', 'pt.*')
+            ->distinct()
             ->orderBy('p.pro_code', 'asc')
             ->get();
+
+        // 跨類型開放後下拉涵蓋全目錄（數百筆）：合格判斷與 optional model 改批次查詢，避免逐筆造成 N+1
+        $qualifiedIds = DB::table('product_has_property')
+            ->whereIn('type_id', [4, 3, 8])
+            ->groupBy('product_id')
+            ->havingRaw('COUNT(*) >= 3')
+            ->pluck('product_id')
+            ->all();
+        $qualifiedSet = array_flip($qualifiedIds);
+
+        // 一次撈齊所有合格產品的 optional model，依母產品 pro_id 分組、排序
+        $optionalByProduct = [];
+        if (!empty($qualifiedIds)) {
+            $optionalRows = DB::table('product_optional_model as po')
+                ->join('products as p', 'p.pro_id', '=', 'po.product_id')
+                ->where('p.enable_pro', 1)
+                ->whereIn('po.product_id', $qualifiedIds)
+                ->select('p.*', 'po.optional_model as pro_code')
+                ->orderBy('po.id', 'asc')
+                ->get();
+            foreach ($optionalRows as $optional_model) {
+                $optionalByProduct[$optional_model->pro_id][] = $optional_model;
+            }
+        }
+
+        // 維持原本順序：pro_code asc 的母產品，緊接其 optional models
         foreach ($seachpro as $pro) {
-            if (self::checkContentPro($pro->pro_id)) {
+            if (isset($qualifiedSet[$pro->pro_id])) {
                 array_push($products, $pro);
-                $optional_product = DB::table('product_optional_model as po')
-                    ->join('products as p', 'p.pro_id', '=', 'po.product_id')
-                    ->join('product_has_categories as phc', 'p.pro_id', '=', 'phc.product_id')
-                    ->where('p.enable_pro', 1)
-                    ->where('phc.categories_id', $cateid)
-                    ->where('po.product_id', $pro->pro_id)
-                    ->select('p.*', 'po.optional_model as pro_code')
-                    ->orderBy('p.pro_code', 'asc')
-                    ->get();
-                foreach ($optional_product as $optional_model) {
+                foreach ($optionalByProduct[$pro->pro_id] ?? [] as $optional_model) {
                     array_push($products, $optional_model);
                 }
             }
@@ -1925,48 +1937,8 @@ class FrontendController extends Controller
             ->with('sess_arr', $sess_arr)
             ->with('data_re', $data)
             ->with('section', $section)
-            ->with('Categories', $Categories)
             ->with('pd_field', $pd_field)
             ->with('products', $pro_new);
-    }
-
-    public function getProductByType(Request $request)
-    {
-        $lang = App::getLocale();
-        $cateid = $this->validateInput($request->typeId, 'number', true);
-        $products = [];
-
-        $seachpro = DB::table('products as p')
-            ->join('product_has_categories as phc', 'p.pro_id', '=', 'phc.product_id')
-            ->where('p.enable_pro', 1)
-            ->where('phc.categories_id', $cateid)
-            ->select('p.*')
-            ->orderBy('p.pro_code', 'asc')
-            ->get();
-
-        foreach ($seachpro as $pro) {
-            if (self::checkContentPro($pro->pro_id)) {
-                array_push($products, $pro);
-                $optional_product = DB::table('product_optional_model as po')
-                    ->join('products as p', 'p.pro_id', '=', 'po.product_id')
-                    ->join('product_has_categories as phc', 'p.pro_id', '=', 'phc.product_id')
-                    ->where('p.enable_pro', 1)
-                    ->where('phc.categories_id', $cateid)
-                    ->where('po.product_id', $pro->pro_id)
-                    ->select('p.*', 'po.optional_model as pro_code')
-                    ->orderBy('p.pro_code', 'asc')
-                    ->get();
-                foreach ($optional_product as $optional_model) {
-                    array_push($products, $optional_model);
-                }
-            }
-        }
-
-        $pro_new = self::removeDuplicates($products, 'pro_code');
-
-        return response()->json([
-            'data' => $pro_new,
-        ], 200);
     }
 
     public function clearproductsection(Request $request)
@@ -1996,15 +1968,46 @@ class FrontendController extends Controller
         ->where('st.local', $lang)
         ->where('pt.showstatus', 1)
         ->whereIn('p.pro_id', $arr_pro)
-        ->where('phc.categories_id', $typeid)
-        ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
+        ->select('p.*', 'pt.*', 'spt.name as catename', 'phc.categories_id as cateid', 'st.title as seName')
         ->orderBy('p.created_at', 'desc')
         ->get();
 
+        // 跨類型比較：產品不再依傳入 typeid 限分類；一個產品可能屬多個分類，取一筆即可（連結/Enquiry 用其本身分類）
+        $products = self::removeDuplicates($products, 'pro_id');
+
         return response()->json([
             'data' => $products,
-            'type' => $typeid,
+            'type' => null,
         ], 200);
+    }
+
+    /**
+     * 比較清單：依產品 id 取得比較 tray/彈窗所需資料（跨類型、去重）。
+     * 供 checkProductSection / RemovedataInSection / ShareData 載入還原共用。
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public static function comparisonList($lang, $ids)
+    {
+        if (empty($ids)) {
+            return collect();
+        }
+
+        return DB::table('products as p')
+            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
+            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
+            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
+            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
+            ->where('pt.local', $lang)
+            ->where('spt.local', $lang)
+            ->where('st.local', $lang)
+            ->where('pt.showstatus', 1)
+            ->whereIn('p.pro_id', $ids)
+            ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
+            ->orderBy('p.created_at', 'desc')
+            ->get()
+            ->unique('pro_id')   // 多分類產品只留一筆
+            ->values();
     }
 
     public function checkProductSection(Request $request)
@@ -2012,176 +2015,41 @@ class FrontendController extends Controller
         $lang = App::getLocale();
         $data_id = $this->validateInput($request->data, 'number', true);
         $cateid = $this->validateInput($request->cateid, 'number', true);
-        $sess_arr = session('product_comp');
-        //  session(['product_comp' =>  []]);
+        $sess_arr = session('product_comp') ?? [];
 
-        $Newsproduct = DB::table('products as p')
-            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-            ->where('pt.local', $lang)
-            ->where('spt.local', $lang)
-            ->where('st.local', $lang)
-            ->where('pt.showstatus', 1)
-            ->where('p.pro_id', $data_id)
-            ->where('phc.categories_id', $cateid)
-            ->select('p.*', 'pt.*', 'phc.categories_id as pro_categories_id')
-            ->orderBy('p.created_at', 'desc')
-            ->first();
-        $data = [];
-
-        $dataFirst = DB::table('products as p')
-            ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-            ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-            ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-            ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-            ->where('pt.local', $lang)
-            ->where('spt.local', $lang)
-            ->where('st.local', $lang)
-            ->where('pt.showstatus', 1)
-            ->where('p.pro_id', $data_id)
-            ->where('phc.categories_id', $cateid)
-            ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
-            ->orderBy('p.created_at', 'desc')
-            ->get();
-
-        if (empty($sess_arr)) {
+        // 比較開放跨全類型：加入比較不再限制分類（任意產品，最多 3 個）
+        if (in_array($data_id, $sess_arr)) {
+            $msg = 'The selected model has been added to the Comparison list.';
+        } elseif (count($sess_arr) >= 3) {
+            $msg = 'Only 3 models can be added to the Comparison list.';
+        } else {
             array_push($sess_arr, $data_id);
             session(['product_comp' => $sess_arr]);
             session(['section_Cateid' => $cateid]);
-
-            return response()->json([
-                'section' => $sess_arr,
-                'data' => $dataFirst,
-                'message' => 'The selected model has been added to the Comparison list.',
-            ], 200);
+            $msg = 'The selected model has been added to the Comparison list.';
         }
-        $oldpro = DB::table('products as p')
-           ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-           ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-           ->where('pt.local', $lang)
-           ->where('pt.showstatus', 1)
-           ->whereIn('p.pro_id', $sess_arr)
-           ->where('phc.categories_id', $cateid)
-           ->select('p.*', 'pt.*', 'phc.categories_id as pro_categories_id')
-           ->orderBy('p.created_at', 'desc')
-           ->get();
-
-        if ((!in_array($data_id, $sess_arr)) && isset($oldpro[0]->pro_categories_id) && $Newsproduct->pro_categories_id == $oldpro[0]->pro_categories_id) {
-            if (count($sess_arr) < 3) {
-                array_push($sess_arr, $data_id);
-                session(['product_comp' => $sess_arr]);
-                $data = DB::table('products as p')
-                        ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-                        ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-                        ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-                        ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-                        ->where('pt.local', $lang)
-                        ->where('spt.local', $lang)
-                        ->where('st.local', $lang)
-                        ->where('phc.categories_id', $cateid)
-                        ->whereIn('p.pro_id', $sess_arr)
-                        ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
-                        ->orderBy('p.created_at', 'desc')
-                        ->get();
-
-                return response()->json([
-                            'section' => $sess_arr,
-                            'data' => $data,
-                            'cateid' => $cateid,
-                            'message' => 'The selected model has been added to the Comparison list.',
-                        ], 200);
-            }
-
-            $data = DB::table('products as p')
-                        ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-                        ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-                        ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-                        ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-                        ->where('pt.local', $lang)
-                        ->where('spt.local', $lang)
-                        ->where('st.local', $lang)
-                        ->where('phc.categories_id', $cateid)
-                        ->whereIn('p.pro_id', $sess_arr)
-                        ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
-                        ->orderBy('p.created_at', 'desc')
-                        ->get();
-
-            return response()->json([
-                        'section' => $sess_arr,
-                        'data' => $data,
-                        'cateid' => $cateid,
-                        'message' => 'Only 3 models can be added to the Comparison list.',
-                    ], 200);
-        } elseif (in_array($data_id, $sess_arr)) {
-            $data = DB::table('products as p')
-                        ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-                        ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-                        ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-                        ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-                        ->where('pt.local', $lang)
-                        ->where('spt.local', $lang)
-                        ->where('st.local', $lang)
-                        ->where('phc.categories_id', $cateid)
-                        ->whereIn('p.pro_id', $sess_arr)
-                        ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
-                        ->orderBy('p.created_at', 'desc')
-                        ->get();
-
-            return response()->json([
-                        'section' => $sess_arr,
-                        'data' => $data,
-                        'cateid' => $cateid,
-                        'message' => 'The selected model has been added to the Comparison list.',
-                    ], 200);
-        }
-        $catesection = session('section_Cateid');
-        $data = DB::table('products as p')
-                    ->join('products_translation as pt', 'p.pro_id', '=', 'pt.product_id')
-                    ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-                    ->join('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-                    ->join('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-                    ->where('pt.local', $lang)
-                    ->where('spt.local', $lang)
-                    ->where('st.local', $lang)
-                    ->where('phc.categories_id', $catesection)
-                    ->whereIn('p.pro_id', $sess_arr)
-                    ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
-                    ->orderBy('p.created_at', 'desc')
-                    ->get();
 
         return response()->json([
-                    'section' => $sess_arr,
-                    'data' => $data,
-                    'cateid' => $catesection,
-                    'message' => 'Please select the model in the same category',
-                ], 200);
+            'section' => $sess_arr,
+            'data'    => self::comparisonList($lang, $sess_arr),
+            'cateid'  => $cateid,
+            'message' => $msg,
+        ], 200);
     }
 
     public function RemovedataInSection(Request $request)
     {
         $lang = App::getLocale();
         $input = $request->data;
-        $sess_arr = session('product_comp');
-        $cateid = session('section_Cateid');
-        $arr_new = [];
+        $sess_arr = session('product_comp') ?? [];
         if (($key = array_search($input, $sess_arr)) !== false) {
             unset($sess_arr[$key]);
         }
+        $sess_arr = array_values($sess_arr);
         session(['product_comp' => $sess_arr]);
 
-        $data = DB::table('products as p')
-        ->join('series_translations as st', 'st.series_id', '=', 'p.series_id')
-        ->leftjoin('product_has_categories as phc', 'phc.product_id', '=', 'p.pro_id')
-        ->leftjoin('sub_pro_categories_translation as spt', 'spt.sub_pro_id', '=', 'phc.categories_id')
-        ->where('spt.local', $lang)
-        ->where('st.local', $lang)
-        ->whereIn('p.pro_id', $sess_arr)
-        ->where('phc.categories_id', $cateid)
-        ->select('p.*', 'spt.name as catename', 'st.title as seName')
-        ->orderBy('p.created_at', 'desc')
-        ->get();
+        // 跨類型比較：剩餘清單不限分類（與 checkProductSection 共用同一查詢）
+        $data = self::comparisonList($lang, $sess_arr);
 
         return response()->json([
             'section' => $sess_arr,
@@ -3003,10 +2871,80 @@ class FrontendController extends Controller
             ->select('mtp.*', 'mtpt.*')
             ->get();
 
+        // 僅「Product Images / Videos」分類提供圖片/影片預覽（以英文分類名定位 cate_id；含改名前後兩種名稱）
+        $previewCateId = DB::table('marketing_resource_cate_translations')
+            ->where('local', 'en')
+            ->whereIn('name', ['Product Images', 'Product Images / Videos'])
+            ->value('mk_fk_id');
+
         return view('front-end.marketing-resources-downloads')
             ->with('metatag', $metatag)
             ->with('margetCate', $margetCate)
+            ->with('previewCateId', $previewCateId)
             ->with('margeting', $margeting);
+    }
+
+    /**
+     * 行銷資源檔案的「彈窗預覽」端點：以 inline 方式回傳檔案（瀏覽器內顯示而非下載），
+     * 僅限可預覽類型（PDF / 圖片），並沿用與下載相同的合作夥伴權限檢查。
+     */
+    public function previewMarketingResource(Request $request)
+    {
+        $partnerId = session('partner_id');
+        $roleId = session('partner_role');
+        self::checkExpiryLogin();
+
+        // 預覽是塞在彈窗 iframe 內顯示，失敗時回傳「乾淨的小訊息」而非整頁網站（避免彈窗裡出現完整 404 網頁）
+        $notice = function ($text) {
+            $html = '<!doctype html><html lang="en"><head><meta charset="utf-8">'
+                . '<style>html,body{margin:0;height:100%}body{display:flex;align-items:center;justify-content:center;'
+                . 'font-family:Arial,"Microsoft JhengHei",sans-serif;color:#646464;font-size:16px;background:#f7f7f7}</style>'
+                . '</head><body><div>' . e($text) . '</div></body></html>';
+
+            return response($html, 200)->header('Content-Type', 'text/html; charset=utf-8');
+        };
+
+        if (null == $partnerId) {
+            return $notice('Please log in to preview.');
+        }
+
+        // basename 防路徑穿越；允許圖片與影片（範圍：只有 Product Images / Videos 分類做預覽）
+        $doc = basename($this->validateInput($request->doc, 'text', true));
+        $ext = strtolower(pathinfo($doc, PATHINFO_EXTENSION));
+        $previewable = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4', 'webm', 'mov'];
+        if (!in_array($ext, $previewable)) {
+            return $notice('This file type cannot be previewed.');
+        }
+
+        // 權限 + 範圍：此檔需屬於該 partner role 可存取、且為「Product Images / Videos」分類下的行銷資源
+        $allowed = DB::table('marketing_resource as mr')
+            ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
+            ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mr.cate_id')
+            ->join('marketing_resource_cate_translations as mct', function ($j) {
+                $j->on('mct.mk_fk_id', '=', 'mr.cate_id')->where('mct.local', '=', 'en');
+            })
+            ->where('mrt.file', $doc)
+            ->where('permar.permission_id', $roleId)
+            ->whereIn('mct.name', ['Product Images', 'Product Images / Videos'])
+            ->exists();
+
+        if (!$allowed) {
+            return $notice('You do not have access to preview this file.');
+        }
+
+        $path = base_path('../uploads_delta/partner/marketing_resources/') . $doc;
+        if (!file_exists($path)) {
+            return $notice('File not available for preview.');
+        }
+
+        // 影片：權限通過後轉址到靜態 URL（public/uploads_delta symlink），交給 web server 串流。
+        // 原生支援 HTTP Range、不吃 PHP max_execution_time，避免大影片用 response()->file() 串流逾時。
+        if (in_array($ext, ['mp4', 'webm', 'mov'])) {
+            return redirect(asset('uploads_delta/partner/marketing_resources/' . $doc));
+        }
+
+        // 圖片：inline 顯示（response()->file 預設 Content-Disposition: inline、自動帶 MIME）
+        return response()->file($path);
     }
 
     public function saleKit()
@@ -3284,9 +3222,8 @@ class FrontendController extends Controller
     {
         $contentCompare = $request->datacon;
         $string = $this->validateInput($request->arr_con, 'text', true);
-        $type_name = $this->validateInput($request->type_name, 'text', true);
         $myArray = explode(',', $string);
-        $rsp = self::GetCoparisonHeader($myArray, $type_name);
+        $rsp = self::GetCoparisonHeader($myArray);
 
         $rowall = $rsp['CSV'];
 
@@ -3328,7 +3265,6 @@ class FrontendController extends Controller
     {
         $contentCompare = $request->datacon;
         $string = $this->validateInput($request->arr_con, 'text', true);
-        $type_name = $this->validateInput($request->type_name, 'text', true);
         $myArray = explode(',', $string);
         // return dd($myArray);
         $lang = App::getLocale();
@@ -3372,7 +3308,6 @@ class FrontendController extends Controller
         ->select('p.*', 'pt.*', 'spt.name as catename', 'st.title as seName')
         ->get();
 
-        $data['tyepname'] = $type_name;
         $data['product1'] = $pro1;
         $data['product2'] = $pro2;
         $data['product3'] = $pro3;
@@ -3941,6 +3876,54 @@ class FrontendController extends Controller
                 ->limit($limit_other)
                 ->get();
 
+        $videos = DB::table('contents as c')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'video')
+                ->where('c.status', 1)
+                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->select('c.*', 'ct.*')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
+        $industryKnowHow = DB::table('contents as c')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'industry-know-how')
+                ->where('c.status', 1)
+                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->select('c.*', 'ct.*')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
+        $productNotices = DB::table('contents as c')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'product-notice')
+                ->where('c.status', 1)
+                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->select('c.*', 'ct.*')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
+        $eols = DB::table('contents as c')
+                ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.content_type', '=', 'eol')
+                ->where('c.status', 1)
+                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->select('c.*', 'ct.*')
+                ->orderBy('c.date_publish', 'desc')
+                ->distinct()
+                ->limit($limit_other)
+                ->get();
+
         $faqs = DB::table('faq as f')
                 ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
                 ->where('ft.local', '=', $lang)
@@ -4048,6 +4031,10 @@ class FrontendController extends Controller
             ->with('news', $news)
             ->with('events', $events)
             ->with('articles', $articles)
+            ->with('videos', $videos)
+            ->with('industryKnowHow', $industryKnowHow)
+            ->with('productNotices', $productNotices)
+            ->with('eols', $eols)
             ->with('offices', $offices)
             ->with('distributor', $distributor)
             ->with('continents_office', $continents_office)
@@ -4158,6 +4145,50 @@ class FrontendController extends Controller
             ->distinct()
             ->get();
 
+        $videos = DB::table('contents as c')
+            ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+            ->where('ct.local', $lang)
+            ->where('c.content_type', '=', 'video')
+            ->where('c.status', 1)
+            ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+            ->select('c.*', 'ct.*')
+            ->orderBy('c.date_publish', 'desc')
+            ->distinct()
+            ->get();
+
+        $industryKnowHow = DB::table('contents as c')
+            ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+            ->where('ct.local', $lang)
+            ->where('c.content_type', '=', 'industry-know-how')
+            ->where('c.status', 1)
+            ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+            ->select('c.*', 'ct.*')
+            ->orderBy('c.date_publish', 'desc')
+            ->distinct()
+            ->get();
+
+        $productNotices = DB::table('contents as c')
+            ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+            ->where('ct.local', $lang)
+            ->where('c.content_type', '=', 'product-notice')
+            ->where('c.status', 1)
+            ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+            ->select('c.*', 'ct.*')
+            ->orderBy('c.date_publish', 'desc')
+            ->distinct()
+            ->get();
+
+        $eols = DB::table('contents as c')
+            ->join('contents_translations as ct', 'ct.content_id', '=', 'c.id')
+            ->where('ct.local', $lang)
+            ->where('c.content_type', '=', 'eol')
+            ->where('c.status', 1)
+            ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+            ->select('c.*', 'ct.*')
+            ->orderBy('c.date_publish', 'desc')
+            ->distinct()
+            ->get();
+
         $faqs = DB::table('faq as f')
             ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
             ->where('ft.local', '=', $lang)
@@ -4257,6 +4288,10 @@ class FrontendController extends Controller
            ->with('news', $news)
            ->with('events', $events)
            ->with('articles', $articles)
+           ->with('videos', $videos)
+           ->with('industryKnowHow', $industryKnowHow)
+           ->with('productNotices', $productNotices)
+           ->with('eols', $eols)
            ->with('offices', $offices)
            ->with('distributor', $distributor)
            ->with('continents_office', $continents_office)
@@ -5349,7 +5384,7 @@ class FrontendController extends Controller
                 ], 200);
     }
 
-    public function GetCoparisonHeader($arrInpro, $type_name)
+    public function GetCoparisonHeader($arrInpro)
     {
         $lang = App::getLocale();
         $pro1 = null;
@@ -5401,11 +5436,9 @@ class FrontendController extends Controller
             ->first();
         }
 
-        $typearr = ['Product Type', self::Checkdata($type_name)];
         $ModelName = ['Model Name', $pro1 ? self::Checkdata($pro1->pro_code) : '', $pro2 ? self::Checkdata($pro2->pro_code) : '', $pro3 ? self::Checkdata($pro3->pro_code) : ''];
 
         $Collect1 = [
-                $typearr,
                 $ModelName,
             ];
 
@@ -5520,8 +5553,13 @@ class FrontendController extends Controller
             }
             $stringText = join(',', $arrstri);
         } elseif (3 == $status) {
-            if ($dataarr[0] && $dataarr[1]) {
-                $stringText = $dataarr[0] . '-' . $dataarr[1] . $unit;
+            // 用明確空值判斷，避免 min 為 0 的 range（如 0-16.67A）被當成 falsy 而漏顯示
+            $min = $dataarr[0];
+            $max = $dataarr[1];
+            $hasMin = null !== $min && '' !== $min && 'null' !== $min;
+            $hasMax = null !== $max && '' !== $max && 'null' !== $max;
+            if ($hasMin && $hasMax) {
+                $stringText = $min . '-' . $max . $unit;
             }
         }
 
