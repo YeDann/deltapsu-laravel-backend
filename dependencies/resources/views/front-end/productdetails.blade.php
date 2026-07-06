@@ -666,6 +666,9 @@
                                     class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img
                                         src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button>
                             </a>
+                            <button onclick="checkStock('{{$product[0]['pro_code']}}')"
+                                    class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img
+                                        src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>
 
                             @foreach ($ec_link as $item)
                             <a href="{{$item->link}}" target="_blank"><button
@@ -1019,6 +1022,9 @@
                             target="_blank"><button
                                 class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img
                                     src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>
+                        <button onclick="checkStock('{{$product[0]['pro_code']}}')"
+                                class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img
+                                    src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>
                         @foreach ($ec_link as $item)
                         <a href="{{ $item->link }}" target="_blank"><button
                                 class="btn img-btn-icon-pro tooltip2"><span>{{ $item->name }}</span><img
