@@ -3587,7 +3587,10 @@ class FrontendController extends Controller
                 ->where('ct.local', $lang)
                 ->where('c.content_type', '=', 'video')
                 ->where('c.status', 1)
-                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->select('c.*', 'ct.*')
                 ->orderBy('c.date_publish', 'desc')
                 ->distinct()
@@ -3599,7 +3602,10 @@ class FrontendController extends Controller
                 ->where('ct.local', $lang)
                 ->where('c.content_type', '=', 'industry-know-how')
                 ->where('c.status', 1)
-                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->select('c.*', 'ct.*')
                 ->orderBy('c.date_publish', 'desc')
                 ->distinct()
@@ -3611,7 +3617,10 @@ class FrontendController extends Controller
                 ->where('ct.local', $lang)
                 ->where('c.content_type', '=', 'product-notice')
                 ->where('c.status', 1)
-                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->select('c.*', 'ct.*')
                 ->orderBy('c.date_publish', 'desc')
                 ->distinct()
@@ -3623,7 +3632,10 @@ class FrontendController extends Controller
                 ->where('ct.local', $lang)
                 ->where('c.content_type', '=', 'eol')
                 ->where('c.status', 1)
-                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->select('c.*', 'ct.*')
                 ->orderBy('c.date_publish', 'desc')
                 ->distinct()
@@ -3634,7 +3646,10 @@ class FrontendController extends Controller
                 ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
                 ->where('ft.local', '=', $lang)
                 ->where('f.status', 1)
-                ->where('ft.title', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('ft.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ft.content', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->select('f.*', 'ft.*')
                 ->limit($limit_other)
                 ->get();
@@ -3647,8 +3662,12 @@ class FrontendController extends Controller
                 ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
                 ->where('oft.local', '=', $lang)
                 ->where('ct.local', '=', $lang)
-                ->where('oft.title', 'LIKE', '%' . $keysearch . '%')
-                ->Orwhere('ct.name', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('oft.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('oft.content', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('oft.sub_title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ct.name', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->where('f.type_id', '=', 1)
                 ->select('f.*', 'oft.*')
                 ->distinct()
@@ -3687,8 +3706,12 @@ class FrontendController extends Controller
                 ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
                 ->where('oft.local', '=', $lang)
                 ->where('ct.local', '=', $lang)
-                ->where('oft.title', 'LIKE', '%' . $keysearch . '%')
-                ->Orwhere('ct.name', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('oft.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('oft.content', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('oft.sub_title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ct.name', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->where('f.type_id', '=', 2)
                 ->select('f.*', 'oft.*')
                 ->distinct()
@@ -3706,7 +3729,11 @@ class FrontendController extends Controller
                 ->join('application_translation as apt', 'ap.id', '=', 'apt.app_id')
                 ->where('apt.local', '=', $lang)
                 ->select('ap.*', 'ap.id as applica_id', 'apt.name', 'apt.content', 'apt.overview')
-                ->where('apt.name', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('apt.name', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('apt.content', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('apt.overview', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->orderBy('ap.order_seq', 'asc')
                 ->limit($limit_other)
                 ->get();
@@ -3952,7 +3979,10 @@ class FrontendController extends Controller
                 ->where('ct.local', $lang)
                 ->where('c.content_type', '=', 'video')
                 ->where('c.status', 1)
-                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->select('c.*', 'ct.*')
                 ->orderBy('c.date_publish', 'desc')
                 ->distinct()
@@ -3964,7 +3994,10 @@ class FrontendController extends Controller
                 ->where('ct.local', $lang)
                 ->where('c.content_type', '=', 'industry-know-how')
                 ->where('c.status', 1)
-                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->select('c.*', 'ct.*')
                 ->orderBy('c.date_publish', 'desc')
                 ->distinct()
@@ -3976,7 +4009,10 @@ class FrontendController extends Controller
                 ->where('ct.local', $lang)
                 ->where('c.content_type', '=', 'product-notice')
                 ->where('c.status', 1)
-                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->select('c.*', 'ct.*')
                 ->orderBy('c.date_publish', 'desc')
                 ->distinct()
@@ -3988,7 +4024,10 @@ class FrontendController extends Controller
                 ->where('ct.local', $lang)
                 ->where('c.content_type', '=', 'eol')
                 ->where('c.status', 1)
-                ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->select('c.*', 'ct.*')
                 ->orderBy('c.date_publish', 'desc')
                 ->distinct()
@@ -3999,7 +4038,10 @@ class FrontendController extends Controller
                 ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
                 ->where('ft.local', '=', $lang)
                 ->where('f.status', 1)
-                ->where('ft.title', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('ft.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ft.content', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->select('f.*', 'ft.*')
                 ->limit($limit_other)
                 ->get();
@@ -4012,8 +4054,12 @@ class FrontendController extends Controller
                 ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
                 ->where('oft.local', '=', $lang)
                 ->where('ct.local', '=', $lang)
-                ->where('oft.title', 'LIKE', '%' . $keysearch . '%')
-                ->Orwhere('ct.name', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('oft.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('oft.content', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('oft.sub_title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ct.name', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->where('f.type_id', '=', 1)
                 ->select('f.*', 'oft.*')
                 ->distinct()
@@ -4052,8 +4098,12 @@ class FrontendController extends Controller
                 ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
                 ->where('oft.local', '=', $lang)
                 ->where('ct.local', '=', $lang)
-                ->where('oft.title', 'LIKE', '%' . $keysearch . '%')
-                ->Orwhere('ct.name', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('oft.title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('oft.content', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('oft.sub_title', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('ct.name', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->where('f.type_id', '=', 2)
                 ->select('f.*', 'oft.*')
                 ->distinct()
@@ -4071,7 +4121,11 @@ class FrontendController extends Controller
                 ->join('application_translation as apt', 'ap.id', '=', 'apt.app_id')
                 ->where('apt.local', '=', $lang)
                 ->select('ap.*', 'ap.id as applica_id', 'apt.name', 'apt.content', 'apt.overview')
-                ->where('apt.name', 'LIKE', '%' . $keysearch . '%')
+                ->where(function ($q) use ($keysearch) {
+                    $q->where('apt.name', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('apt.content', 'LIKE', '%' . $keysearch . '%')
+                        ->orWhere('apt.overview', 'LIKE', '%' . $keysearch . '%');
+                })
                 ->orderBy('ap.order_seq', 'asc')
                 ->limit($limit_other)
                 ->get();
@@ -4221,7 +4275,10 @@ class FrontendController extends Controller
             ->where('ct.local', $lang)
             ->where('c.content_type', '=', 'video')
             ->where('c.status', 1)
-            ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+            ->where(function ($q) use ($keysearch) {
+                $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+            })
             ->select('c.*', 'ct.*')
             ->orderBy('c.date_publish', 'desc')
             ->distinct()
@@ -4232,7 +4289,10 @@ class FrontendController extends Controller
             ->where('ct.local', $lang)
             ->where('c.content_type', '=', 'industry-know-how')
             ->where('c.status', 1)
-            ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+            ->where(function ($q) use ($keysearch) {
+                $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+            })
             ->select('c.*', 'ct.*')
             ->orderBy('c.date_publish', 'desc')
             ->distinct()
@@ -4243,7 +4303,10 @@ class FrontendController extends Controller
             ->where('ct.local', $lang)
             ->where('c.content_type', '=', 'product-notice')
             ->where('c.status', 1)
-            ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+            ->where(function ($q) use ($keysearch) {
+                $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+            })
             ->select('c.*', 'ct.*')
             ->orderBy('c.date_publish', 'desc')
             ->distinct()
@@ -4254,7 +4317,10 @@ class FrontendController extends Controller
             ->where('ct.local', $lang)
             ->where('c.content_type', '=', 'eol')
             ->where('c.status', 1)
-            ->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+            ->where(function ($q) use ($keysearch) {
+                $q->where('ct.title', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('ct.content', 'LIKE', '%' . $keysearch . '%');
+            })
             ->select('c.*', 'ct.*')
             ->orderBy('c.date_publish', 'desc')
             ->distinct()
@@ -4264,7 +4330,10 @@ class FrontendController extends Controller
             ->join('faq_translations as ft', 'f.id', '=', 'ft.faq_id')
             ->where('ft.local', '=', $lang)
             ->where('f.status', 1)
-            ->where('ft.title', 'LIKE', '%' . $keysearch . '%')
+            ->where(function ($q) use ($keysearch) {
+                $q->where('ft.title', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('ft.content', 'LIKE', '%' . $keysearch . '%');
+            })
             ->select('f.*', 'ft.*')
             ->get();
 
@@ -4276,8 +4345,12 @@ class FrontendController extends Controller
             ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
             ->where('oft.local', '=', $lang)
             ->where('ct.local', '=', $lang)
-            ->where('oft.title', 'LIKE', '%' . $keysearch . '%')
-            ->Orwhere('ct.name', 'LIKE', '%' . $keysearch . '%')
+            ->where(function ($q) use ($keysearch) {
+                $q->where('oft.title', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('oft.content', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('oft.sub_title', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('ct.name', 'LIKE', '%' . $keysearch . '%');
+            })
             ->where('f.type_id', '=', 1)
             ->select('f.*', 'oft.*')
             ->distinct()
@@ -4313,8 +4386,12 @@ class FrontendController extends Controller
             ->join('continents_translations as ct', 'c.id', '=', 'ct.cont_id')
             ->where('oft.local', '=', $lang)
             ->where('ct.local', '=', $lang)
-            ->where('oft.title', 'LIKE', '%' . $keysearch . '%')
-            ->Orwhere('ct.name', 'LIKE', '%' . $keysearch . '%')
+            ->where(function ($q) use ($keysearch) {
+                $q->where('oft.title', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('oft.content', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('oft.sub_title', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('ct.name', 'LIKE', '%' . $keysearch . '%');
+            })
             ->where('f.type_id', '=', 2)
             ->select('f.*', 'oft.*')
             ->distinct()
@@ -4331,7 +4408,11 @@ class FrontendController extends Controller
             ->join('application_translation as apt', 'ap.id', '=', 'apt.app_id')
             ->where('apt.local', '=', $lang)
             ->select('ap.*', 'ap.id as applica_id', 'apt.name', 'apt.content', 'apt.overview')
-            ->where('apt.name', 'LIKE', '%' . $keysearch . '%')
+            ->where(function ($q) use ($keysearch) {
+                $q->where('apt.name', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('apt.content', 'LIKE', '%' . $keysearch . '%')
+                    ->orWhere('apt.overview', 'LIKE', '%' . $keysearch . '%');
+            })
             ->orderBy('ap.order_seq', 'asc')
             ->get();
 
