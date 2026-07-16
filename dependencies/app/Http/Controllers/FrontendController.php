@@ -4394,9 +4394,15 @@ class FrontendController extends Controller
 
         if (0 != count($partner)) {
             $checkPas = false;
-            $inputpassword = $this->validateInput($request->password, 'password', true);
-            if (isset($inputpassword) && null != $inputpassword) {
-                $checkPas = Hash::check($inputpassword, $partner[0]->password);
+            // validateInput('password') 對空白／含空格的密碼會 abort(400)，登入頁不該因輸入格式
+            // 直接噴 400（Bad Request）；攔下該例外當成帳密錯誤處理，密碼驗證規則本身維持不變。
+            try {
+                $inputpassword = $this->validateInput($request->password, 'password', true);
+                if (isset($inputpassword) && null != $inputpassword) {
+                    $checkPas = Hash::check($inputpassword, $partner[0]->password);
+                }
+            } catch (\Symfony\Component\HttpKernel\Exception\HttpException $e) {
+                $checkPas = false;
             }
 
             if ($checkPas) {
@@ -4418,10 +4424,10 @@ class FrontendController extends Controller
                 return redirect()->route('index', 'partners')->with('flash_message', 'Login is Success');
             }
 
-            return back()->with('flash_message_eror', 'Password Not Correct');
+            return back()->with('flash_message_eror', 'Email or Password Not Correct');
         }
 
-        return back()->with('flash_message_eror', 'No user account found in the system.');
+        return back()->with('flash_message_eror', 'Email or Password Not Correct');
     }
 
     public function uploadmulImagestory(Request $request)
@@ -5705,9 +5711,15 @@ class FrontendController extends Controller
 
         if (0 != count($partner)) {
             $checkPas = false;
-            $inputpassword = $this->validateInput($request->password, 'password', true);
-            if (isset($inputpassword) && null != $inputpassword) {
-                $checkPas = Hash::check($inputpassword, $partner[0]->password);
+            // 同 partnerLogin：validateInput('password') 對空白／含空格密碼會 abort(400)，
+            // 攔下例外當成帳密錯誤，避免登入頁噴 400；密碼驗證規則維持不變。
+            try {
+                $inputpassword = $this->validateInput($request->password, 'password', true);
+                if (isset($inputpassword) && null != $inputpassword) {
+                    $checkPas = Hash::check($inputpassword, $partner[0]->password);
+                }
+            } catch (\Symfony\Component\HttpKernel\Exception\HttpException $e) {
+                $checkPas = false;
             }
             //return dd($checkPas);
             if ($checkPas) {
@@ -5769,10 +5781,10 @@ class FrontendController extends Controller
                 return back()->with('flash_message_eror', 'Permission Not Correct');
             }
 
-            return back()->with('flash_message_eror', 'Password Not Correct');
+            return back()->with('flash_message_eror', 'Email or Password Not Correct');
         }
 
-        return back()->with('flash_message_eror', 'No user account found in the system.');
+        return back()->with('flash_message_eror', 'Email or Password Not Correct');
 
         return back()->with('flash_message_eror', 'Eror');
     }
