@@ -1335,10 +1335,12 @@ class FrontendController extends Controller
                 "section_id" => null,
             ]);
         } else {
+            // 「Product Type」標題改讀後台 Static Word（Product_Type），隨語系顯示；查無則回退英文
+            $staticWords = view()->shared('staticContent', []);
             $filterPro = $filterPro->prepend([
                 "sub_pro_id" => null,
                 "field_id" => "product_type",
-                "title" => "Product Type",
+                "title" => $staticWords['Product_Type'] ?? 'Product Type',
                 "type" => "number",
                 "section_id" => null,
             ]);

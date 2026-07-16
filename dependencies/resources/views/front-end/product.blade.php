@@ -441,6 +441,12 @@
             width: 100% !important;
         }
     }
+
+    /* Product Selector 按鈕字級：Search / See More 18px、Add-Remove / Clear Filters 16px */
+    .btn-filters.btn-search { font-size: 18px; }
+    .btn.btn-boxen { font-size: 18px; display: inline-flex; align-items: center; justify-content: center; }
+    .btn-filters.btn-addremove-filer { font-size: 16px; }
+    .btn-filters.btn-clear-filer { font-size: 16px; }
 </style>
 
 @endsection
