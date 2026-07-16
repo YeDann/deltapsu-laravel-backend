@@ -157,6 +157,7 @@
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
                                 <input type="checkbox"
                                     onclick="selectProductcategories({{$sub->sub_pro_id}} ,'{{$sub->url_item}}')"
+                                    data-slug="{{$sub->url_item}}"
                                     class="custom-control-input" id="dataCate{{$sub->sub_pro_id}}"
                                     name="pro_categories[]" value="{{$sub->sub_pro_id}}" {{in_array($sub->sub_pro_id,
                                 $arrProcate) ? 'checked':''}} >
@@ -1044,12 +1045,12 @@
             }
         }
 
-        // 點選的分類、或商品既有任一分類，屬於 Industrial Battery Charging 主分類底下，就顯示 Short Features 欄
-        if(batteryCateSlugs.includes(slug) || arrProCateName.some(function(s){ return batteryCateSlugs.includes(s); })){
-               document.getElementById("box_cate_cate_battery").style.display =  "block";
-            }else{
-              document.getElementById("box_cate_cate_battery").style.display =  "none";
-        }
+        // 依「目前實際勾選」的分類判斷（掃 :checked），不看最後點的動作；任一已勾選分類屬 IBC 子分類就顯示 Short Features
+        var anyBatteryChecked = Array.prototype.some.call(
+            document.querySelectorAll('input[name="pro_categories[]"]:checked'),
+            function (cb) { return batteryCateSlugs.includes(cb.getAttribute('data-slug')); }
+        );
+        document.getElementById("box_cate_cate_battery").style.display = anyBatteryChecked ? "block" : "none";
         var  serieId = "{{$products[0]->series_id}}";
         $.ajax({
             url: "{{ (route('searhSeries')) }}" ,
