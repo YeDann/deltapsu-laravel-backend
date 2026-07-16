@@ -123,6 +123,11 @@
         padding: 7px;
         margin-top: -83px;
     }
+
+    /* Upcoming Events 卡片：read-more 往下移、縮小底部間距，避免與 2 行標題/內文重疊 */
+    .read-more {
+        bottom: 10px;
+    }
 </style>
 @endsection
 @section('meta')
