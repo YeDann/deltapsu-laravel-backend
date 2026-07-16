@@ -39,3 +39,6 @@ dependencies/storage/logs/laravel.log
 
 # Code review reports
 pr/
+
+# Claude Code 個人本機設定（settings.json 進版控，local 不進）
+.claude/settings.local.json
