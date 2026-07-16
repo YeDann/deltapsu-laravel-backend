@@ -156,6 +156,7 @@
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
                                 <input type="checkbox"
                                     onclick="selectProductcategories({{$sub->sub_pro_id}} , '{{$sub->url_item}}')"
+                                    data-slug="{{$sub->url_item}}"
                                     class=" custom-control-input" id="dataCate{{$sub->sub_pro_id}}"
                                     name="pro_categories[]" value="{{$sub->sub_pro_id}}">
                                 <label class="custom-control-label"
@@ -677,8 +678,11 @@
                 categorie.splice(index, 1);
             }
         }
-        // Industrial Battery Charging 主分類底下的子分類才顯示「Short Features」欄（slug 集合由 controller 傳入，不綁單一 slug）
-        let check = batteryCateSlugs.includes(slug);
+        // 依「目前實際勾選」的分類判斷（掃 :checked），不看最後點的 slug；任一已勾選分類屬 IBC 子分類就顯示 Short Features
+        let check = Array.prototype.some.call(
+            document.querySelectorAll('input[name="pro_categories[]"]:checked'),
+            function (cb) { return batteryCateSlugs.includes(cb.getAttribute('data-slug')); }
+        );
         document.getElementById("box_cate_cate_battery").style.display = check ? "block" : "none";
         $.ajax({
             url: "{{ (route('searhSeries')) }}",
