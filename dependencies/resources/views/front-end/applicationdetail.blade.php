@@ -53,6 +53,7 @@
         background-color: #0087DC;
         color: #ffffff !important;
         border-color: #0087DC;
+        font-size: 18px;
     }
 
     @media (max-width: 768px) {

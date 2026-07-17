@@ -23,6 +23,20 @@
         width: 270px;
     }
 
+    .box-search-input .searchinput-filters-input input {
+        font-size: 16px;
+    }
+
+    .box-search-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-search-border {
+        font-size: 18px;
+    }
+
     @media (max-width:375px) {
         .box-search-filter {
             width: 70%;

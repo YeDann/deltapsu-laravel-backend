@@ -32,6 +32,7 @@
         background-color: #0087DC;
         color: #ffffff;
         border-color: #0087DC;
+        font-size: 18px;
     }
 
     @media (max-width: 768px) {
@@ -43,6 +44,16 @@
 
     .box-search-input {
         width: 270px;
+    }
+
+    .box-search-input .searchinput-filters-input input {
+        font-size: 16px;
+    }
+
+    .box-search-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     @media (max-width:375px) {
