@@ -58,7 +58,13 @@
                             required>
                     </div>
                     @if(Session::has('flash_message_eror'))
-                    <h5 class="text-center" id="loginerormassage"> {!! Session('flash_message_eror') !!}</h5>
+                    <h5 class="text-center" id="loginerormassage">
+                        @if(Session('flash_message_eror') == 'Email or Password Not Correct')
+                            {{ $staticContent['Incorrect_Email_Or_Password'] ?? Session('flash_message_eror') }}
+                        @else
+                            {!! Session('flash_message_eror') !!}
+                        @endif
+                    </h5>
                     @endif
                     <div class="col-sm-4 text-center mx-auto my-4">
                         <button type="submit" class="btn-subscribe">{{$staticContent['Login']}}</button>
