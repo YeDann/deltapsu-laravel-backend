@@ -2089,7 +2089,8 @@
         html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button></a>';
         html += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
         html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
-        html += '<button onclick="checkStock(\'' + pro['pro_code'] + '\')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
+        // Stock Checking 暫時隱藏：正式站 netCOMPONENTS 白名單尚未核准，核准後移除本註解恢復
+        // html += '<button onclick="checkStock(\'' + pro['pro_code'] + '\')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
         html += '</div>';
         html += '</div>';
 
@@ -2188,7 +2189,8 @@
             html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button></a>';
             html += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
             html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
-            html += '<button onclick="checkStock(\'' + pro['pro_code'] + '\')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
+            // Stock Checking 暫時隱藏：正式站 netCOMPONENTS 白名單尚未核准，核准後移除本註解恢復
+            // html += '<button onclick="checkStock(\'' + pro['pro_code'] + '\')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
             html += '</div>';
             html += '</div>';
             html += '</div>';
@@ -2294,7 +2296,8 @@
             html1 += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button></a>';
             html1 += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
             html1 += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
-            html1 += '<button onclick="checkStock(\'' + pro['pro_code'] + '\')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
+            // Stock Checking 暫時隱藏：正式站 netCOMPONENTS 白名單尚未核准，核准後移除本註解恢復
+            // html1 += '<button onclick="checkStock(\'' + pro['pro_code'] + '\')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
             html1 += '</div>';
             html1 += '</div>';
             // html1 += '<div class="w-100">';
