@@ -441,6 +441,21 @@
             width: 100% !important;
         }
     }
+
+    /* Product Selector 按鈕字級：Search / See More 18px、Add-Remove / Clear Filters 16px */
+    /* Search / See More 另加大高度 40px、圓角 5px，並用 flex 垂直置中，避免 JP/SC/TC 長字被切或偏上 */
+    .btn-filters.btn-search,
+    .btn.btn-boxen {
+        height: 40px;
+        border-radius: 5px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn-filters.btn-search { font-size: 18px; }
+    .btn.btn-boxen { font-size: 18px; }
+    .btn-filters.btn-addremove-filer { font-size: 16px; border-radius: 5px; }
+    .btn-filters.btn-clear-filer { font-size: 16px; }
 </style>
 
 @endsection
