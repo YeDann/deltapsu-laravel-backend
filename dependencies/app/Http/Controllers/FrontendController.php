@@ -1739,6 +1739,15 @@ class FrontendController extends Controller
             ->select('p.*', 'pt.*', 'spt.name as catename', 'sp.url_item as url_item', 'spt.sub_pro_id as pro_categories_id', 'sp.unit_dimension', 'sp.unit_dimension_1')
             ->get();
 
+        // 關聯商品屬多分類時 join 會 fan-out 成多列（同商品重複卡）；每個 pro_id 只留一張，
+        // 優先保留與目前商品同分類的那筆（卡片連結 url_item slug 才與麵包屑一致），
+        // 其餘先以分類 id 定序，確保去重結果穩定（此查詢無 ORDER BY）
+        $product_related = $product_related
+            ->sortBy('pro_categories_id')
+            ->sortByDesc(fn ($relate) => (int) ($relate->pro_categories_id == $pro->pro_categories_id))
+            ->unique('pro_id')
+            ->values();
+
         $date = now();
         $datefor = date('Y-m-d H:i:s', strtotime($date) - ((24 * 3600 * 365) * 2));
 
