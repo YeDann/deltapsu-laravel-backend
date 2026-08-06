@@ -83,8 +83,13 @@ class MarketResourceController extends Controller
             // 檔案已由分塊上傳端點（chunkUpload）預先存好，表單只帶最終檔名；basename 防路徑穿越
             $imageName = $request->input('file_uploaded') ? basename($request->input('file_uploaded')) : '';
 
+            // 縮圖檔名（存 DB）：壓縮檔等→表單送的圖片存獨立檔；影片→已上傳的同名 poster；圖片/PDF→null
+            $thumbName = $request->hasFile('thumbnail')
+                ? $this->saveThumb($request->file('thumbnail'))
+                : $this->videoPosterName($imageName);
+
             // 主表 + 各語系 translation 包在同一交易，避免中途失敗留下半套資料（主表有、部分語系缺）
-            DB::transaction(function () use ($request, $langs, $imageName) {
+            DB::transaction(function () use ($request, $langs, $imageName, $thumbName) {
                 $id = DB::table('marketing_resource')->insertGetID(
                     [
                         "status" => $request->status,
@@ -99,6 +104,7 @@ class MarketResourceController extends Controller
                             "mr_id" => $id,
                             "name" => $request->name,
                             "file" => $imageName,
+                            "thumbnail" => $thumbName,
                             "local" => $lang,
                         ]
                     );
@@ -204,6 +210,8 @@ class MarketResourceController extends Controller
 
         // Product Images / Videos 分類採「一個共用檔（套用所有語系）」，其他分類維持逐語系
         $isGallery = $margeting->isNotEmpty() && $margeting[0]->cate_id == $this->galleryCateId();
+        // Catalogs/Sales Tool/Cross Reference：可上傳壓縮檔，故提供「縮圖」上傳欄位
+        $isArchiveCat = $margeting->isNotEmpty() && in_array((int) $margeting[0]->cate_id, $this->archiveCateIds(), true);
 
         return view('MarketResource.edit')
         ->with('name', 'Resource')
@@ -212,7 +220,8 @@ class MarketResourceController extends Controller
         ->with('margetCates', $margetCate)
         ->with('margeting', $margeting)
         ->with('language', $language)
-        ->with('isGallery', $isGallery);
+        ->with('isGallery', $isGallery)
+        ->with('isArchiveCat', $isArchiveCat);
     }
 
     /**
@@ -224,6 +233,61 @@ class MarketResourceController extends Controller
             ->where('local', 'en')
             ->whereIn('name', ['Product Images', 'Product Images / Videos'])
             ->value('mk_fk_id');
+    }
+
+    /**
+     * 縮圖網格中「非圖庫」的分類 id（Catalogs / Leaflets / Sales Tool；以英文名定位，不寫死 id）。
+     * 這些分類可放壓縮檔等非圖片/影片/PDF 檔，後台提供「縮圖」上傳欄位。
+     */
+    private function archiveCateIds()
+    {
+        return DB::table('marketing_resource_cate_translations')
+            ->where('local', 'en')
+            ->whereIn('name', ['Catalogs', 'Leaflets', 'Sales Tool'])
+            ->pluck('mk_fk_id')->map(fn ($v) => (int) $v)->all();
+    }
+
+    /**
+     * 存壓縮檔等的縮圖：隨表單送來的圖片檔，存成「主檔同名 .jpg」到行銷資源目錄，供前台當縮圖顯示。
+     * 圖片/影片/PDF 各有自動縮圖，不走此路；主檔為空或無縮圖則略過。
+     */
+    private function saveThumb($thumb)
+    {
+        if (!$thumb) {
+            return null;
+        }
+        $ext = strtolower($thumb->getClientOriginalExtension() ?: 'jpg');
+        $name = 'mrthumb'.uniqid().'.'.$ext;   // 獨立唯一檔名，不綁主檔（換主檔不影響）
+        $thumb->move(base_path('/../uploads_delta/partner/marketing_resources'), $name);
+
+        return $name;
+    }
+
+    /**
+     * 影片自動 poster 的檔名（影片同名 .jpg，由客戶端上傳）。存在才回傳，供寫進 DB thumbnail 欄。
+     */
+    private function videoPosterName($file)
+    {
+        if (!$file || !in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), ['mp4', 'webm', 'mov'])) {
+            return null;
+        }
+        $poster = pathinfo($file, PATHINFO_FILENAME).'.jpg';
+
+        return is_file(base_path('/../uploads_delta/partner/marketing_resources/').$poster) ? $poster : null;
+    }
+
+    /**
+     * 刪除獨立縮圖檔（壓縮檔等手動縮圖，mrthumb 開頭）。影片 poster 由 deleteResourceFile 處理，此處不碰。
+     */
+    private function deleteThumbFile($thumb)
+    {
+        if (!$thumb || strpos($thumb, 'mrthumb') !== 0) {
+            return;
+        }
+        $path = base_path('/../uploads_delta/partner/marketing_resources/').basename($thumb);
+        if (is_file($path)) {
+            @unlink($path);
+        }
     }
 
     private function fileformat($file){
@@ -274,6 +338,7 @@ class MarketResourceController extends Controller
         if (file_exists($dir.$file)) {
             unlink($dir.$file);
         }
+        // 影片自動 poster 以「影片同名 .jpg」存，刪影片時一併清掉（壓縮檔等的獨立縮圖走 deleteThumbFile）
         if (in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), ['mp4', 'webm', 'mov'])) {
             $poster = $dir.pathinfo($file, PATHINFO_FILENAME).'.jpg';
             if (file_exists($poster)) {
@@ -318,8 +383,24 @@ class MarketResourceController extends Controller
                     $oldVals = [$oldfile];
                 }
 
+                // 縮圖檔名（存 DB，交易外先算）：上傳新縮圖→存獨立檔並刪舊縮圖；影片→（可能新的）同名 poster；
+                // 其他（含只換主檔沒動縮圖）→ 保留既有欄位（換主檔縮圖自動沿用，不必 rename）
+                $oldThumbs = DB::table('marketing_resource_translations')->where('mr_id', $id)->pluck('thumbnail', 'local');
+                $thumbByLang = [];
+                foreach ($langs as $lang) {
+                    $newFile = $arrayfileName[$lang] ?? '';
+                    if ($request->hasFile('thumbnail.'.$lang)) {
+                        $this->deleteThumbFile($oldThumbs->get($lang));
+                        $thumbByLang[$lang] = $this->saveThumb($request->file('thumbnail.'.$lang));
+                    } elseif ($this->videoPosterName($newFile)) {
+                        $thumbByLang[$lang] = $this->videoPosterName($newFile);
+                    } else {
+                        $thumbByLang[$lang] = $oldThumbs->get($lang);
+                    }
+                }
+
                 // 主表 + 各語系 translation 包在同一交易，避免中途失敗留下半套資料
-                DB::transaction(function () use ($request, $id, $langs, $name, $arrayfileName) {
+                DB::transaction(function () use ($request, $id, $langs, $name, $arrayfileName, $thumbByLang) {
                     DB::table('marketing_resource')->where('id', $id)->update(
                         [
                             "status" => $request->status,
@@ -333,13 +414,14 @@ class MarketResourceController extends Controller
                             [
                                 "name" => $name[$lang],
                                 "file" => $arrayfileName[$lang],
+                                "thumbnail" => $thumbByLang[$lang],
                                 "local" => $lang,
                             ]
                         );
                     }
                 });
 
-                // DB 交易 commit 後才刪實體檔；避免「DB rollback 但舊檔已刪」的不一致
+                // DB 交易 commit 後才刪舊主檔實體檔；避免「DB rollback 但舊檔已刪」的不一致
                 $this->deleteOrphanFiles($oldVals);
 
                 return redirect()->route('MarketResource.index')->with('flash_message', 'Update Data successfully');
@@ -363,7 +445,10 @@ class MarketResourceController extends Controller
         ->get();
      foreach($margeting  as $mar){
         if (isset($mar->file)) {
-            $this->deleteResourceFile($mar->file);   // 刪主檔；影片連同縮圖一起刪
+            $this->deleteResourceFile($mar->file);   // 刪主檔；影片連同 poster 一起刪
+        }
+        if (isset($mar->thumbnail)) {
+            $this->deleteThumbFile($mar->thumbnail);   // 壓縮檔等的獨立縮圖
         }
      }
        
@@ -375,17 +460,20 @@ class MarketResourceController extends Controller
     }
 
     public function removefileMargeting($id ,$lang){
-        $file = DB::table('marketing_resource_translations')->where('local', $lang)->where('mr_id', $id)->value('file');
+        $row = DB::table('marketing_resource_translations')->where('local', $lang)->where('mr_id', $id)->first();
+        $file = $row->file ?? null;
+        $thumb = $row->thumbnail ?? null;
         if (DB::table('marketing_resource')->where('id', $id)->value('cate_id') == $this->galleryCateId()) {
             // Product Images / Videos 共用檔：清掉所有語系
-            DB::table('marketing_resource_translations')->where('mr_id', $id)->update(["file" => null]);
+            DB::table('marketing_resource_translations')->where('mr_id', $id)->update(["file" => null, "thumbnail" => null]);
         } else {
-            DB::table('marketing_resource_translations')->where('local' ,$lang)->where('mr_id' ,$id)->update(["file" => null]);
+            DB::table('marketing_resource_translations')->where('local' ,$lang)->where('mr_id' ,$id)->update(["file" => null, "thumbnail" => null]);
         }
-        // 解除引用後刪實體檔（影片含縮圖）；僅在已無其他語系/記錄引用該檔時才刪，避免誤刪共用檔
+        // 解除引用後刪實體檔（影片含 poster）；僅在已無其他語系/記錄引用該檔時才刪，避免誤刪共用檔
         if ($file) {
             $this->deleteOrphanFiles([$file]);
         }
+        $this->deleteThumbFile($thumb);
         return redirect()->back()->with('flash_message', 'Remove file Data successfully');
     }
 
