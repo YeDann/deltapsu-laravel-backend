@@ -1,4 +1,6 @@
-/* 行銷資源分塊上傳 + 影片縮圖擷取（create / edit 共用）。需先載入 jQuery 與 resumable.js。 */
+/* 行銷資源分塊上傳 + 影片縮圖擷取（create / edit 共用）。需先載入 jQuery 與 resumable.js。
+   註：壓縮檔等（非圖片/影片/PDF）的縮圖改由表單一起送出、後端存成主檔同名 .jpg（見 MarketResourceController），
+       此處只處理主檔分塊上傳與「影片自動截幀 poster」。 */
 window.MRChunkUpload = (function () {
     var pending = 0;                       // 進行中的上傳數（跨多個 input 共用，用來 gate 送出鈕）
     var SUBMIT = 'form button[type="submit"]';
@@ -45,11 +47,15 @@ window.MRChunkUpload = (function () {
         } catch (e) {}
     }
 
+    // 影片縮圖上傳（存成影片同名 .jpg）。上傳期間計入 pending 擋住送出，避免表單先送出、換頁把請求取消。
     function uploadPoster(posterUrl, csrf, videoFile, blob) {
         var fd = new FormData();
         fd.append('video', videoFile);
         fd.append('poster', blob, 'poster.jpg');
-        fetch(posterUrl, { method: 'POST', body: fd, credentials: 'same-origin', headers: { 'X-CSRF-TOKEN': csrf } });
+        pending++;
+        syncSubmit();
+        var done = function () { pending = Math.max(0, pending - 1); syncSubmit(); };
+        fetch(posterUrl, { method: 'POST', body: fd, credentials: 'same-origin', headers: { 'X-CSRF-TOKEN': csrf } }).then(done, done);
     }
 
     /**
