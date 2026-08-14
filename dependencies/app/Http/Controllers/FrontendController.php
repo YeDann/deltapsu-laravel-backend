@@ -1739,6 +1739,15 @@ class FrontendController extends Controller
             ->select('p.*', 'pt.*', 'spt.name as catename', 'sp.url_item as url_item', 'spt.sub_pro_id as pro_categories_id', 'sp.unit_dimension', 'sp.unit_dimension_1')
             ->get();
 
+        // 關聯商品屬多分類時 join 會 fan-out 成多列（同商品重複卡）；每個 pro_id 只留一張，
+        // 優先保留與目前商品同分類的那筆（卡片連結 url_item slug 才與麵包屑一致），
+        // 其餘先以分類 id 定序，確保去重結果穩定（此查詢無 ORDER BY）
+        $product_related = $product_related
+            ->sortBy('pro_categories_id')
+            ->sortByDesc(fn ($relate) => (int) ($relate->pro_categories_id == $pro->pro_categories_id))
+            ->unique('pro_id')
+            ->values();
+
         $date = now();
         $datefor = date('Y-m-d H:i:s', strtotime($date) - ((24 * 3600 * 365) * 2));
 
@@ -2944,16 +2953,19 @@ class FrontendController extends Controller
             ->select('mtp.*', 'mtpt.*')
             ->get();
 
-        // 僅「Product Images / Videos」分類提供圖片/影片預覽（以英文分類名定位 cate_id；含改名前後兩種名稱）
-        $previewCateId = DB::table('marketing_resource_cate_translations')
+        // 這些分類套用縮圖網格版型（縮圖＋預覽/下載 icon）；以英文分類名定位 cate_id，不寫死 id
+        $gridCateIds = DB::table('marketing_resource_cate_translations')
             ->where('local', 'en')
-            ->whereIn('name', ['Product Images', 'Product Images / Videos'])
-            ->value('mk_fk_id');
+            ->whereIn('name', ['Product Images', 'Product Images / Videos', 'Catalogs', 'Leaflets', 'Sales Tool'])
+            ->pluck('mk_fk_id')
+            ->map(fn ($v) => (int) $v)
+            ->values()
+            ->all();
 
         return view('front-end.marketing-resources-downloads')
             ->with('metatag', $metatag)
             ->with('margetCate', $margetCate)
-            ->with('previewCateId', $previewCateId)
+            ->with('gridCateIds', $gridCateIds)
             ->with('margeting', $margeting);
     }
 
@@ -2981,15 +2993,15 @@ class FrontendController extends Controller
             return $notice('Please log in to preview.');
         }
 
-        // basename 防路徑穿越；允許圖片與影片（範圍：只有 Product Images / Videos 分類做預覽）
+        // basename 防路徑穿越；允許圖片 / 影片 / PDF（PDF 供縮圖與彈窗預覽用）
         $doc = basename($this->validateInput($request->doc, 'text', true));
         $ext = strtolower(pathinfo($doc, PATHINFO_EXTENSION));
-        $previewable = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4', 'webm', 'mov'];
+        $previewable = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4', 'webm', 'mov', 'pdf'];
         if (!in_array($ext, $previewable)) {
             return $notice('This file type cannot be previewed.');
         }
 
-        // 權限 + 範圍：此檔需屬於該 partner role 可存取、且為「Product Images / Videos」分類下的行銷資源
+        // 權限 + 範圍：此檔需屬於該 partner role 可存取、且為套用縮圖網格版型的分類下的行銷資源
         $allowed = DB::table('marketing_resource as mr')
             ->join('marketing_resource_translations as mrt', 'mr.id', '=', 'mrt.mr_id')
             ->join('permission_marketcate as permar', 'permar.market_cate_id', '=', 'mr.cate_id')
@@ -2998,7 +3010,7 @@ class FrontendController extends Controller
             })
             ->where('mrt.file', $doc)
             ->where('permar.permission_id', $roleId)
-            ->whereIn('mct.name', ['Product Images', 'Product Images / Videos'])
+            ->whereIn('mct.name', ['Product Images', 'Product Images / Videos', 'Catalogs', 'Leaflets', 'Sales Tool'])
             ->exists();
 
         if (!$allowed) {

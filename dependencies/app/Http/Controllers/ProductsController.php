@@ -691,8 +691,10 @@ class ProductsController extends Controller
                 }
             }
 
+            // 全部移除時 select multiple 不送出 → $relatePros 為 null，delete 必須在 isset 外先無條件執行，
+            // 否則整段跳過會殘留舊關聯、前台不連動；再重插選中的（同 Part Number 的 delete-then-insert 模式）
+            DB::table('product_related')->where('product_id', $pro_id)->delete();
             if (isset($relatePros)) {
-                DB::table('product_related')->where('product_id', $pro_id)->delete();
                 foreach ($relatePros as $relatePro) {
                     DB::table('product_related')->insert(
                         [

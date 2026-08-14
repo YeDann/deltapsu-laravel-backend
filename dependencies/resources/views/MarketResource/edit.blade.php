@@ -111,6 +111,19 @@
                                         <small class="text-muted d-block mt-1" id="mr_status_{{$item->name}}"></small>
                                         <input type="hidden" name="file_uploaded[{{$item->name}}]" id="mr_uploaded_{{$item->name}}" value="">
                                     </div>
+                                    @if($isArchiveCat)
+                                    {{-- 壓縮檔縮圖（選填）：隨表單送出，後端存成該語系主檔同名 .jpg；沒選則保留既有、可事後補上傳 --}}
+                                    <div class="form-group">
+                                        <label for="mr_thumb_{{$item->name}}">Thumbnail <span class="text-muted">（壓縮檔等非圖片/影片/PDF 檔用，選填；隨表單一起上傳）</span></label>
+                                        <div class="custom-file" style="width:100%;">
+                                            <input type="file" name="thumbnail[{{$item->name}}]" class="custom-file-input" id="mr_thumb_{{$item->name}}" accept="image/*" data-toggle="custom-file-input">
+                                            <label class="custom-file-label" for="mr_thumb_{{$item->name}}">Choose thumbnail</label>
+                                        </div>
+                                        @if(!empty($current->thumbnail))
+                                        <small class="text-muted d-block mt-1">目前已有縮圖（<a href="{{config('app.url')}}/uploads_delta/partner/marketing_resources/{{$current->thumbnail}}" target="_blank">檢視</a>），沿用中；重選才會取代。</small>
+                                        @endif
+                                    </div>
+                                    @endif
                                     @endif
                                 </div>
                                 @endforeach

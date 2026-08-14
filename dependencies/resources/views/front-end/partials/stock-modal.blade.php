@@ -119,6 +119,10 @@
         </div>
     </div>
 </div>
+@php
+    // 站台語系 → 開窗時預設帶入的國家（ISO 國碼）；en 無對應單一國家 → 空字串＝不預設
+    $stockDefaultCountry = ['tw' => 'TW', 'cn' => 'CN', 'jp' => 'JP', 'de' => 'DE', 'tr' => 'TR'][app()->getLocale()] ?? '';
+@endphp
 <script>
     // 兩層（洲→國）篩選用：洲代碼 → 在地洲名（intl 無法在地化洲名，故改用後台靜態字；未知洲 fallback DILP 英文）
     var stockRegionLabels = {
@@ -133,6 +137,10 @@
     var stockCountryMeta = {};   // 本次查詢：國碼 → {name, region}
     var stockRegionMeta = {};    // 本次查詢：洲碼 → 顯示用在地洲名
     var stockAllCountriesLabel = '{{ addslashes($staticContent['Stock_all_countries'] ?? 'All Countries') }}';
+    // 站台語系預設帶入的國碼（見 partial 頂 @php）；空字串＝不預設，維持 All Countries
+    var stockDefaultCountry = '{{ $stockDefaultCountry }}';
+    // 台灣＝Delta 總部：接在台灣選項名稱後的後綴（各語系走後台 Static Word，缺則 fallback (HQ)）
+    var stockHqSuffix = '{{ addslashes($staticContent['Stock_hq_suffix'] ?? '(HQ)') }}';
     // 無購物車連結時的聯絡鈕（文字走 Stock_contact）：點擊向後端要該經銷商 email → mailto；拿不到則 fallback 我方業務支援
     var stockContactLabel = '{{ addslashes($staticContent['Stock_contact'] ?? 'Go to Distributor') }}';
     var stockContactUrl = '{{ route('stockContact') }}';
@@ -148,7 +156,10 @@
         codes.sort(function (a, b) {
             return stockCountryMeta[a].name.localeCompare(stockCountryMeta[b].name);
         }).forEach(function (code) {
-            $country.append($('<option>').val(code).text(stockCountryMeta[code].name));
+            // TW＝Delta 總部：顯示名接後綴（僅顯示，val 仍為國碼 'TW'，篩選不受影響）
+            var label = stockCountryMeta[code].name;
+            if (code === 'TW' && stockHqSuffix) { label += ' ' + stockHqSuffix; }
+            $country.append($('<option>').val(code).text(label));
         });
         $country.val('').toggle(codes.length > 0);
     }
@@ -233,6 +244,11 @@
                 $region.toggle($region.find('option').length > 1);
                 // 國下拉：先列全部國家（選洲後會連動縮窄）
                 rebuildStockCountryOptions('');
+                // 依站台語系預設帶入該國；該國不在本次結果（stockCountryMeta 無此碼）則不套用 → 自動留在 All Countries
+                if (stockDefaultCountry && stockCountryMeta[stockDefaultCountry]) {
+                    $country.val(stockDefaultCountry);
+                    applyStockFilter();
+                }
                 $wrap.show();
             })
             .fail(function () {
