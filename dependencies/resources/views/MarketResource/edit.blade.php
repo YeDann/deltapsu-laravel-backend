@@ -112,9 +112,9 @@
                                         <input type="hidden" name="file_uploaded[{{$item->name}}]" id="mr_uploaded_{{$item->name}}" value="">
                                     </div>
                                     @if($isArchiveCat)
-                                    {{-- 壓縮檔縮圖（選填）：隨表單送出，後端存成該語系主檔同名 .jpg；沒選則保留既有、可事後補上傳 --}}
+                                    {{-- 縮圖（選填）：隨表單送出、存成獨立檔；沒選則保留既有、可事後補上傳。PDF 不傳則前台自動 render 首頁 --}}
                                     <div class="form-group">
-                                        <label for="mr_thumb_{{$item->name}}">Thumbnail <span class="text-muted">（壓縮檔等非圖片/影片/PDF 檔用，選填；隨表單一起上傳）</span></label>
+                                        <label for="mr_thumb_{{$item->name}}">Thumbnail <span class="text-muted">（壓縮檔等非圖片/影片檔用，選填；PDF 不傳會自動抓首頁當縮圖）</span></label>
                                         <div class="custom-file" style="width:100%;">
                                             <input type="file" name="thumbnail[{{$item->name}}]" class="custom-file-input" id="mr_thumb_{{$item->name}}" accept="image/*" data-toggle="custom-file-input">
                                             <label class="custom-file-label" for="mr_thumb_{{$item->name}}">Choose thumbnail</label>

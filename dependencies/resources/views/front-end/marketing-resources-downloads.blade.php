@@ -215,7 +215,7 @@ function getDateformat($date){
                         @php $isGrid = in_array($cate->cate_id, $gridCateIds ?? []); @endphp
                         <div class="contentdatasearch">
                         @if($isGrid)
-                            {{-- 縮圖網格版型（縮圖 + 預覽/下載 icon）；PDF 走首頁縮圖 --}}
+                            {{-- 縮圖網格版型（縮圖 + 預覽/下載 icon）；PDF 未上傳縮圖時才用 PDF.js render 首頁 --}}
                             <div class="mr-image-grid">
                             @foreach ($margeting as $marget)
                             @if($marget->cate_id == $cate->cate_id)
@@ -241,10 +241,10 @@ function getDateformat($date){
                                 @elseif($isVideo)
                                 <video class="mr-video-thumb" muted preload="none" playsinline @if($mrPoster) poster="{{ $mrPoster }}" @endif data-src="{{ $mrSrc }}"></video>
                                 <span class="mr-video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
-                                @elseif($isPdf)
-                                <canvas class="mr-pdf-thumb" data-src="{{ $mrSrc }}" aria-label="{{$marget->name}}"></canvas>
                                 @elseif($mrPoster)
                                 <img class="mr-img-thumb lazyload" loading="lazy" alt="{{$marget->name}}" data-src="{{ $mrPoster }}">
+                                @elseif($isPdf)
+                                <canvas class="mr-pdf-thumb" data-src="{{ $mrSrc }}" aria-label="{{$marget->name}}"></canvas>
                                 @else
                                 <div class="mr-img-noimg">{{ strtoupper($ext) }}</div>
                                 @endif
@@ -379,6 +379,9 @@ function getDateformat($date){
                     var poster = value['thumbnail'] ? (mrStaticBase + value['thumbnail']) : (mrStaticBase + value['file'].replace(/\.[^.]+$/, '.jpg'));
                     html += '<video class="mr-video-thumb" muted preload="none" playsinline poster="'+poster+'" data-src="'+mrSrc+'"></video>';
                     html += '<span class="mr-video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>';
+                } else if (isPdf && value['thumbnail']) {
+                    // PDF 有人工縮圖就直接用，不載 PDF.js（省首頁解析）；縮圖檔不存在才退回 canvas render
+                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+(mrStaticBase + value['thumbnail'])+'" data-mr-pdf-src="'+mrSrc+'" onerror="mrPdfThumbFallback(this)">';
                 } else if (isPdf) {
                     html += '<canvas class="mr-pdf-thumb" data-src="'+mrSrc+'"></canvas>';
                 } else {
@@ -425,6 +428,14 @@ function getDateformat($date){
           d.className = 'mr-img-noimg';
           d.textContent = ext;
           img.replaceWith(d);
+      }
+      // PDF 人工縮圖載入失敗（DB 有值但實體檔不見）：換回 canvas 走 PDF.js 首頁，不掉成灰底佔位框
+      function mrPdfThumbFallback(img) {
+          var c = document.createElement('canvas');
+          c.className = 'mr-pdf-thumb';
+          c.setAttribute('data-src', img.getAttribute('data-mr-pdf-src') || '');
+          img.replaceWith(c);
+          mrObservePdfs();
       }
       $(document).on('click', '.mr-preview-trigger', function () {
           var file = $(this).attr('data-file');
