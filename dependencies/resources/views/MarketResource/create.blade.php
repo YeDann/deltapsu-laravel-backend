@@ -54,9 +54,9 @@
                                 <small class="text-muted d-block mt-1" id="mr_upload_status"></small>
                                 <input type="hidden" name="file_uploaded" id="mr_file_uploaded" value="">
                             </div>
-                            {{-- 壓縮檔（ZIP/7z）縮圖：選填。上傳後存成主檔同名 .jpg，前台當縮圖用；圖片/影片/PDF 免填 --}}
+                            {{-- 縮圖：選填，存成獨立檔供前台顯示。圖片/影片自動產生免填；PDF 未上傳則前台自動 render 首頁 --}}
                             <div class="form-group">
-                                <label for="mr_thumb_browse">Thumbnail <span class="text-muted">（壓縮檔等非圖片/影片/PDF 檔用，選填；隨表單一起上傳）</span></label>
+                                <label for="mr_thumb_browse">Thumbnail <span class="text-muted">（壓縮檔等非圖片/影片檔用，選填；PDF 不傳會自動抓首頁當縮圖）</span></label>
                                 <div class="custom-file" style="width:100%;">
                                     <input type="file" name="thumbnail" class="custom-file-input" id="mr_thumb_browse" accept="image/*" data-toggle="custom-file-input">
                                     <label class="custom-file-label" id="mr_thumb_label" for="mr_thumb_browse">Choose thumbnail</label>
