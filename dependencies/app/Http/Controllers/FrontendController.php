@@ -9,6 +9,7 @@ use App\Mail\Forgetpass;
 use App\Mail\SendPDF;
 use App\Mail\SendPDFFromFeedBack;
 use App\Mail\ThankFeedback;
+use App\Services\MarketingResource\Categories as MarketingResourceCategories;
 use DB;
 use Excel;
 use GuzzleHttp\Client;
@@ -2953,14 +2954,8 @@ class FrontendController extends Controller
             ->select('mtp.*', 'mtpt.*')
             ->get();
 
-        // 這些分類套用縮圖網格版型（縮圖＋預覽/下載 icon）；以英文分類名定位 cate_id，不寫死 id
-        $gridCateIds = DB::table('marketing_resource_cate_translations')
-            ->where('local', 'en')
-            ->whereIn('name', ['Product Images', 'Product Images / Videos', 'Catalogs', 'Leaflets', 'Sales Tool'])
-            ->pluck('mk_fk_id')
-            ->map(fn ($v) => (int) $v)
-            ->values()
-            ->all();
+        // 這些分類套用縮圖網格版型（縮圖＋預覽/下載 icon）；分類清單與後台共用同一份，見 Categories
+        $gridCateIds = MarketingResourceCategories::gridIds();
 
         return view('front-end.marketing-resources-downloads')
             ->with('metatag', $metatag)
@@ -3010,7 +3005,7 @@ class FrontendController extends Controller
             })
             ->where('mrt.file', $doc)
             ->where('permar.permission_id', $roleId)
-            ->whereIn('mct.name', ['Product Images', 'Product Images / Videos', 'Catalogs', 'Leaflets', 'Sales Tool'])
+            ->whereIn('mct.name', MarketingResourceCategories::GRID)
             ->exists();
 
         if (!$allowed) {

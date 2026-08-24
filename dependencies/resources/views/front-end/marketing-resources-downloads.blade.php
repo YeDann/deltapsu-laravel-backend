@@ -226,7 +226,8 @@ function getDateformat($date){
                                  $mrSrc = route('previewMarketingResource').'?doc='.urlencode($marget->file).'&v='.($marget->updated_at ? \Illuminate\Support\Carbon::parse($marget->updated_at)->timestamp : '1');
                                  $mrPoster = null;
                                  $mrDir = base_path('../uploads_delta/partner/marketing_resources/');
-                                 // 縮圖：優先用 DB 存的檔名；舊上線資料無此欄時 fallback 主檔同名 .jpg 慣例（影片/舊資料）
+                                 // 縮圖一律優先（含圖片、影片）；無此欄時 fallback 主檔同名 .jpg 慣例（影片自動 poster / 舊資料）。
+                                 // 圖片不吃同名 .jpg 慣例：主檔就是 .jpg 時會指到自己，等於繞過 previewMarketingResource 的權限檢查
                                  if (!empty($marget->thumbnail) && is_file($mrDir.$marget->thumbnail)) {
                                      $mrPoster = asset('uploads_delta/partner/marketing_resources/'.$marget->thumbnail);
                                  } elseif (!$isImage && !$isPdf) {
@@ -236,7 +237,7 @@ function getDateformat($date){
                                      }
                                  } @endphp
                             <div class="mr-img-card">
-                                @if($isImage)
+                                @if($isImage && !$mrPoster)
                                 <img class="mr-img-thumb lazyload" loading="lazy" alt="{{$marget->name}}" data-src="{{ $mrSrc }}">
                                 @elseif($isVideo)
                                 <video class="mr-video-thumb" muted preload="none" playsinline @if($mrPoster) poster="{{ $mrPoster }}" @endif data-src="{{ $mrSrc }}"></video>
@@ -371,9 +372,12 @@ function getDateformat($date){
             // 帶 updated_at 當 cache-buster：換檔後 v 改變、避免搜尋結果顯示舊快取圖（對齊初始 blade 的 &v）
             var mrSrc = mrPreviewBase+'?doc='+encodeURIComponent(value['file'])+'&v='+encodeURIComponent(value['updated_at']||'1');
             if (isProductImages) {
-                // Product Images / Videos：圖片→縮圖、影片→hover 播放+▶ 角標、其他→佔位；皆可下載
+                // 縮圖網格：有人工縮圖一律優先，否則圖片→原圖、影片→自動截幀 poster、PDF→首頁、其他→佔位；皆可下載
                 html += '<div class="mr-img-card">';
-                if (isImage) {
+                if (isImage && value['thumbnail']) {
+                    // 有人工縮圖就用它，省下為了 200px 的框去載全尺寸原圖；縮圖檔不存在才退回原圖
+                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+(mrStaticBase + value['thumbnail'])+'" data-mr-full-src="'+mrSrc+'" onerror="this.onerror=null; this.src=this.getAttribute(\'data-mr-full-src\')">';
+                } else if (isImage) {
                     html += '<img class="mr-img-thumb lazyload" loading="lazy" alt="'+value['name']+'" data-src="'+mrSrc+'">';
                 } else if (isVideo) {
                     var poster = value['thumbnail'] ? (mrStaticBase + value['thumbnail']) : (mrStaticBase + value['file'].replace(/\.[^.]+$/, '.jpg'));
