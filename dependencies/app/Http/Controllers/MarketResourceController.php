@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\MarketingResource\Categories as MarketingResourceCategories;
 use DB;
 use Illuminate\Http\Request;
 use Validator;
@@ -210,8 +211,8 @@ class MarketResourceController extends Controller
 
         // Product Images / Videos 分類採「一個共用檔（套用所有語系）」，其他分類維持逐語系
         $isGallery = $margeting->isNotEmpty() && $margeting[0]->cate_id == $this->galleryCateId();
-        // Catalogs/Sales Tool/Cross Reference：可上傳壓縮檔，故提供「縮圖」上傳欄位
-        $isArchiveCat = $margeting->isNotEmpty() && in_array((int) $margeting[0]->cate_id, $this->archiveCateIds(), true);
+        // 縮圖網格分類（含圖庫）：前台一律以縮圖優先，故都提供「縮圖」上傳欄位
+        $isGridCat = $margeting->isNotEmpty() && in_array((int) $margeting[0]->cate_id, MarketingResourceCategories::gridIds(), true);
 
         return view('MarketResource.edit')
         ->with('name', 'Resource')
@@ -221,7 +222,7 @@ class MarketResourceController extends Controller
         ->with('margeting', $margeting)
         ->with('language', $language)
         ->with('isGallery', $isGallery)
-        ->with('isArchiveCat', $isArchiveCat);
+        ->with('isGridCat', $isGridCat);
     }
 
     /**
@@ -229,22 +230,7 @@ class MarketResourceController extends Controller
      */
     private function galleryCateId()
     {
-        return DB::table('marketing_resource_cate_translations')
-            ->where('local', 'en')
-            ->whereIn('name', ['Product Images', 'Product Images / Videos'])
-            ->value('mk_fk_id');
-    }
-
-    /**
-     * 縮圖網格中「非圖庫」的分類 id（Catalogs / Leaflets / Sales Tool；以英文名定位，不寫死 id）。
-     * 這些分類可放壓縮檔等非圖片/影片/PDF 檔，後台提供「縮圖」上傳欄位。
-     */
-    private function archiveCateIds()
-    {
-        return DB::table('marketing_resource_cate_translations')
-            ->where('local', 'en')
-            ->whereIn('name', ['Catalogs', 'Leaflets', 'Sales Tool'])
-            ->pluck('mk_fk_id')->map(fn ($v) => (int) $v)->all();
+        return MarketingResourceCategories::galleryId();
     }
 
     /**
@@ -261,6 +247,15 @@ class MarketResourceController extends Controller
         $thumb->move(base_path('/../uploads_delta/partner/marketing_resources'), $name);
 
         return $name;
+    }
+
+    /**
+     * 是否為人工上傳的縮圖（saveThumb 產生的 mrthumb 前綴獨立檔）。
+     * 影片自動 poster 走「主檔同名 .jpg」，不算人工縮圖，故可被新的自動 poster 取代。
+     */
+    private function isManualThumb($thumb)
+    {
+        return $thumb && strpos($thumb, 'mrthumb') === 0;
     }
 
     /**
@@ -281,7 +276,7 @@ class MarketResourceController extends Controller
      */
     private function deleteThumbFile($thumb)
     {
-        if (!$thumb || strpos($thumb, 'mrthumb') !== 0) {
+        if (! $this->isManualThumb($thumb)) {
             return;
         }
         $path = base_path('/../uploads_delta/partner/marketing_resources/').basename($thumb);
@@ -386,12 +381,27 @@ class MarketResourceController extends Controller
                 // 縮圖檔名（存 DB，交易外先算）：上傳新縮圖→存獨立檔並刪舊縮圖；影片→（可能新的）同名 poster；
                 // 其他（含只換主檔沒動縮圖）→ 保留既有欄位（換主檔縮圖自動沿用，不必 rename）
                 $oldThumbs = DB::table('marketing_resource_translations')->where('mr_id', $id)->pluck('thumbnail', 'local');
+
+                // gallery 的縮圖與主檔一致，是「一張套用所有語系」，故表單送單一 thumbnail 而非逐語系陣列
+                $sharedThumb = null;
+                if (! is_array($uploaded) && $request->hasFile('thumbnail') && ! is_array($request->file('thumbnail'))) {
+                    foreach ($oldThumbs as $old) {
+                        $this->deleteThumbFile($old);
+                    }
+                    $sharedThumb = $this->saveThumb($request->file('thumbnail'));
+                }
+
                 $thumbByLang = [];
                 foreach ($langs as $lang) {
                     $newFile = $arrayfileName[$lang] ?? '';
-                    if ($request->hasFile('thumbnail.'.$lang)) {
+                    if ($sharedThumb) {
+                        $thumbByLang[$lang] = $sharedThumb;
+                    } elseif ($request->hasFile('thumbnail.'.$lang)) {
                         $this->deleteThumbFile($oldThumbs->get($lang));
                         $thumbByLang[$lang] = $this->saveThumb($request->file('thumbnail.'.$lang));
+                    } elseif ($this->isManualThumb($oldThumbs->get($lang))) {
+                        // 人工縮圖一律優先：只換主檔時不可被影片自動 poster 蓋掉
+                        $thumbByLang[$lang] = $oldThumbs->get($lang);
                     } elseif ($this->videoPosterName($newFile)) {
                         $thumbByLang[$lang] = $this->videoPosterName($newFile);
                     } else {
