@@ -1758,10 +1758,10 @@
                                      $color = '#76B900';
                                      $name_sta = 'NEW';
                                  }else if($stat == 3){
-                                     $color = '#337ab7';
+                                     $color = '#f0ad4e';
                                      $name_sta = 'NRND';
                                  }else if($stat == 4){
-                                     $color = '#f0ad4e';
+                                     $color = '#337ab7';
                                      $name_sta = 'EOL';
                                  }
                                  ?>
