@@ -79,7 +79,7 @@
     </div>
 </div>
 <div class="padding-top-content-breadcrumb visible-up-922"></div>
-<section>
+<section class="box-news my-5">
     <div class="container">
         <div class="row">
             <div class="col-md-12">

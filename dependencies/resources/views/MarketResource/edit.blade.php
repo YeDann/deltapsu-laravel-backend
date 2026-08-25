@@ -111,10 +111,10 @@
                                         <small class="text-muted d-block mt-1" id="mr_status_{{$item->name}}"></small>
                                         <input type="hidden" name="file_uploaded[{{$item->name}}]" id="mr_uploaded_{{$item->name}}" value="">
                                     </div>
-                                    @if($isArchiveCat)
-                                    {{-- 壓縮檔縮圖（選填）：隨表單送出，後端存成該語系主檔同名 .jpg；沒選則保留既有、可事後補上傳 --}}
+                                    @if($isGridCat)
+                                    {{-- 縮圖（選填）：隨表單送出、存成獨立檔；沒選則保留既有、可事後補上傳。PDF 不傳則前台自動 render 首頁 --}}
                                     <div class="form-group">
-                                        <label for="mr_thumb_{{$item->name}}">Thumbnail <span class="text-muted">（壓縮檔等非圖片/影片/PDF 檔用，選填；隨表單一起上傳）</span></label>
+                                        <label for="mr_thumb_{{$item->name}}">Thumbnail <span class="text-muted">（選填，有傳就一律用它；不傳則圖片用原圖、PDF 用首頁、其他顯示副檔名佔位）</span></label>
                                         <div class="custom-file" style="width:100%;">
                                             <input type="file" name="thumbnail[{{$item->name}}]" class="custom-file-input" id="mr_thumb_{{$item->name}}" accept="image/*" data-toggle="custom-file-input">
                                             <label class="custom-file-label" for="mr_thumb_{{$item->name}}">Choose thumbnail</label>
@@ -151,6 +151,18 @@
                             </div>
                             <small class="text-muted d-block mt-1" id="mr_status_shared"></small>
                             <input type="hidden" name="file_uploaded" id="mr_uploaded_shared" value="">
+                        </div>
+                        {{-- 共用縮圖（選填）：與主檔一樣套用所有語系。有傳則前台一律顯示這張，
+                             沒傳則圖片用原圖、影片用瀏覽器自動截的第一幀 --}}
+                        <div class="form-group">
+                            <label for="mr_thumb_shared">Thumbnail <span class="text-muted">（選填，套用所有語系；不傳則圖片用原圖、影片用自動截幀）</span></label>
+                            <div class="custom-file" style="width:100%;">
+                                <input type="file" name="thumbnail" class="custom-file-input" id="mr_thumb_shared" accept="image/*" data-toggle="custom-file-input">
+                                <label class="custom-file-label" for="mr_thumb_shared">Choose thumbnail</label>
+                            </div>
+                            @if(!empty($margeting[0]->thumbnail))
+                            <small class="text-muted d-block mt-1">目前已有縮圖（<a href="{{config('app.url')}}/uploads_delta/partner/marketing_resources/{{$margeting[0]->thumbnail}}" target="_blank">檢視</a>），沿用中；重選才會取代。</small>
+                            @endif
                         </div>
                         @endif
                         <div class="form-group">
