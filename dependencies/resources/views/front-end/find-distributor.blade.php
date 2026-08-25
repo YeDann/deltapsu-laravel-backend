@@ -15,7 +15,7 @@
     .fd-dropdowns-row { display: flex; margin-bottom: 20px; }
     .fd-dd { padding: 0 24px; min-width: 0; }
     .fd-dd:first-child { padding-left: 0; }
-    .fd-dd-label { font-weight: 700; font-size: 14px; color: #000; margin-bottom: 8px; }
+    .fd-dd-label { font-weight: 700; font-size: 18px; color: #000; margin-bottom: 8px; }
     .fd-select {
         width: 100%; height: 40px; padding: 0 34px 0 10px;
         border: 1px solid #ccc; border-radius: 4px; color: #333; cursor: pointer;
@@ -26,7 +26,7 @@
         background-size: 12px;
     }
     .fd-select:focus { outline: none; border-color: #0087DC; }
-    .fd-section-title { font-weight: 700; font-size: 14px; color: #000; margin: 0 0 12px; }
+    .fd-section-title { font-weight: 700; font-size: 18px; color: #000; margin: 0 0 12px; }
     /* 三欄並排（Specialized Applications｜Product Lines｜Services），欄間灰色分隔線（比照 mockup） */
     .fd-filter-columns { display: flex; }
     .fd-filter-col { padding: 0 24px; }
