@@ -2530,7 +2530,7 @@
     }
     /**
      * 將狀態 ID 轉換為色碼
-     * @param {Number} id 狀態 ID（2=NEW #76B900綠, 3=NRND #337ab7藍, 4=EOL #f0ad4e橘）
+     * @param {Number} id 狀態 ID（2=NEW #76B900綠, 3=NRND #f0ad4e橘, 4=EOL #337ab7藍）
      * @returns {String} Hex 色碼，未知 ID 回傳空字串
      */
     function set_sta_color(id) {
@@ -2538,9 +2538,9 @@
         if (id == 2) {
             color = '#76B900';
          } else if (id == 3) {
-            color = '#337ab7';
-         } else if (id == 4) {
             color = '#f0ad4e';
+         } else if (id == 4) {
+            color = '#337ab7';
          }
          return color;
     }
@@ -2589,7 +2589,7 @@
         var property_load = [];
         property_load = pro_perti;
         var doc_safety = documents_cate;
-        var status = [ {id:2, name:'New'}, {id:3, name:'NRND'}, {id:4, name:'EOL'}];
+        var status = [ {id:2, name:'NEW'}, {id:3, name:'NRND (Not Recommended for New Designs)'}, {id:4, name:'EOL'}];
         var certificates = [
             {id:1, name:'{{$staticContent['Industrial_filter']}}'},
             {id:2, name:'{{$staticContent['Medical_filter']}}'},
@@ -2692,7 +2692,7 @@
                 $.each(status, function(index_status, sta) {
                     html3 += '<div onchange="filterstatus('+"'"+fil_con['field_id']+"'"+','+sta['id']+');" class="box-input-checkbox">';
                     html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+index_status+'" type="checkbox" style="display: none;" />';
-                    html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+index_status+'"><span>';
+                    html3 += '<label class="cbx cbx-status cbx-status-'+sta['id']+'" for="cx-'+fil_con['field_id']+index_status+'"><span>';
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span class="">'+sta['name']+'</span></label>';
@@ -2833,7 +2833,7 @@
        var property_load = [];
        var doc_safety = [{id:2, name:'ABS'}, {id:3, name:'ATEX'}, {id:4, name:'BSMI'}];
        property_load = pro_perti;
-        var status = [ {id:2, name:'NEW'}, {id:3, name:'NRND'}, {id:4, name:'EOL'}];
+        var status = [ {id:2, name:'NEW'}, {id:3, name:'NRND (Not Recommended for New Designs)'}, {id:4, name:'EOL'}];
         var certificates = [ {id:1, name:'{{$staticContent['Industrial_filter']}}'}, {id:2, name:'{{$staticContent['Medical_filter']}}'}, {id:3, name:'{{$staticContent['Lighting_Signage_filter']}}'} , {id:4, name:'{{$staticContent['wireless_charging']}}'} ];
         var data_1 = [];
         var data_text = [];
@@ -2935,7 +2935,7 @@
                 $.each(status, function(index_status, sta) {
                     html3 += '<div class="box-input-checkbox">';
                     html3 += '<input onchange="filterstatus('+"'"+fil_con['field_id']+"'"+','+sta['id']+');" class="inp-cbx" id="cx-'+fil_con['field_id']+index_status+'_mobile" type="checkbox" style="display: none;" />';
-                    html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+index_status+'_mobile"><span>';
+                    html3 += '<label class="cbx cbx-status cbx-status-'+sta['id']+'" for="cx-'+fil_con['field_id']+index_status+'_mobile"><span>';
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
                     html3 += '</svg></span><span class="">'+sta['name']+'</span></label>';

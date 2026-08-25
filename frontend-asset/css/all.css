@@ -11228,7 +11228,7 @@ a:hover {
   border: 2px solid #ffffff;
   border-radius: 4px;
   background-color: #76B900;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   color: #FFFFFF;
 }
@@ -15788,7 +15788,7 @@ a.filter-mobile-link:hover {
     border-radius: 4px;
     background-color: #76B900;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
     color: #FFFFFF;
     z-index: 99;
@@ -15976,6 +15976,21 @@ e.search-filter-action {
     transform: scale(3.5);
     opacity: 0;
     transition: all 0.6s ease;
+}
+
+/* Status 篩選：NRND 全名較長會折行，checkbox 需固定寬度並對齊首行 */
+.cbx-status {
+    display: flex;
+    align-items: flex-start;
+}
+
+.cbx-status span:first-child {
+    flex: 0 0 auto;
+}
+
+/* 蓋掉 input:checked+label 的 #0087DC，NRND 勾選時改為橘色 */
+.inp-cbx:checked+.cbx-status-3 {
+    color: #F0AD4E;
 }
 
 @keyframes wave {
