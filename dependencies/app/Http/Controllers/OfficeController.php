@@ -78,6 +78,7 @@ class OfficeController extends Controller
         ->with('menu', $name)
         ->with('type_id', $type_id)
         ->with('conid', $conid)
+        ->with('categories', $this->distributorCategories($conid))
         ->with('language', $language);
     }
      private function fileformat($file){
@@ -87,6 +88,65 @@ class OfficeController extends Controller
         $string   =  $filename.uniqid().'.'.$file->getClientOriginalExtension();
       }
       return $string;
+    }
+
+    /**
+     * 取得經銷商五類分類選項（含英文名稱），供後台勾選使用。
+     * 傳入 $conid（所屬 continent/地區 id）時，Sales Territory 只列出該地區的銷售區域。
+     */
+    private function distributorCategories($conid = null)
+    {
+        $tables = array_keys(config('distributor.categories'));
+        $out = [];
+        foreach ($tables as $t) {
+            $out[$t] = DB::table($t . ' as c')
+                ->join($t . '_translation as ct', 'ct.fk_id', '=', 'c.id')
+                ->where('ct.local', 'en')
+                ->where('c.status', 1)
+                // Sales Territory 限定該經銷商所屬地區，避免跨區誤勾
+                ->when($t === 'distributor_sales_territory' && $conid, function ($q) use ($conid) {
+                    return $q->where('c.continent_id', $conid);
+                })
+                ->orderBy('c.order_seq')
+                ->select('c.id', 'c.slug', 'ct.name')
+                ->get();
+        }
+
+        return $out;
+    }
+
+    /**
+     * 取得某經銷商已勾選的分類 id（依三組 pivot）。
+     */
+    private function officeCategoryIds($officeId)
+    {
+        $out = [];
+        foreach (config('distributor.categories') as $key => $c) {
+            $out[$key] = DB::table($c['pivot'])->where('office_id', $officeId)->pluck('category_id')->toArray();
+        }
+        return $out;
+    }
+
+    /**
+     * 以先刪後插寫入各分類 pivot；請求欄位名 = config 的 field（即各分類資料表名，如 distributor_service[]）。
+     */
+    private function saveDistributorPivots($officeId, Request $request)
+    {
+        $map = [];
+        foreach (config('distributor.categories') as $c) {
+            $map[$c['field']] = $c['pivot'];
+        }
+        foreach ($map as $field => $pivot) {
+            DB::table($pivot)->where('office_id', $officeId)->delete();
+            foreach ((array) $request->input($field, []) as $cid) {
+                DB::table($pivot)->insert([
+                    'office_id' => $officeId,
+                    'category_id' => $cid,
+                    'created_at' => \Carbon\Carbon::now(),
+                    'updated_at' => \Carbon\Carbon::now(),
+                ]);
+            }
+        }
     }
 
     /**
@@ -112,12 +172,19 @@ class OfficeController extends Controller
             $File->move(base_path('/../medias/distributor'),$subfile);
         }
 
+        $logofile = '';
+        if ($request->hasFile("logo")) {
+            $LogoFile = $request->file("logo");
+            $logofile = preg_replace('/\s+/', '', self::fileformat($LogoFile));
+            $LogoFile->move(base_path('/../medias/distributor'), $logofile);
+        }
+
         $validate = Validator::make($request->all(), [
             'title' => 'required',
         ]);
         // return dd($validate->fails());
         if ($validate->fails()) {
-        
+
             return redirect()->back()->withErrors($validate->errors());
         } else {
             $id = DB::table('office')->insertGetID(
@@ -129,13 +196,20 @@ class OfficeController extends Controller
                     "lon" => $request->lon,
                     "file_cer" => $subfile,
                     "status_cer"=>$request->status_cer,
+                    // 經銷商（type_id=2）專屬欄位
+                    "logo" => $logofile ?: null,
+                    "website" => $request->website,
+                    "telephone" => $request->telephone,
+                    "email" => $request->email,
+                    "address" => $request->address,
+                    "google_maps" => $request->google_maps,
                     "created_at" => \Carbon\Carbon::now(),
                     "updated_at" => \Carbon\Carbon::now(),
                 ]
             );
                 foreach($langs as $lang){
                      DB::table('office_translations')->insert(
-                        [   
+                        [
                             "fk_office_id" => $id,
                             "title" => $request->title,
                             "sub_title" => $request->sub_title,
@@ -144,6 +218,7 @@ class OfficeController extends Controller
                         ]
                     );
                 }
+                $this->saveDistributorPivots($id, $request);
                 return redirect()->route('getOffices',[$con_id,$type_id ] )->with('flash_message', 'Insert Data successfully');
         }
         
@@ -192,6 +267,8 @@ class OfficeController extends Controller
             ->with('type_id', $type_id)
             ->with('conid', $conid)
             ->with('offices', $offices)
+            ->with('categories', $this->distributorCategories($conid))
+            ->with('selected', $this->officeCategoryIds($id))
             ->with('language', $language);
     }
 
@@ -228,12 +305,21 @@ class OfficeController extends Controller
             $subfile =  $oldfileCer;
         }
 
+        // logo：有上傳新檔則用新檔，否則保留舊檔
+        $oldLogo = $request->oldLogo;
+        $logofile = $oldLogo;
+        if ($request->hasFile("logo")) {
+            $LogoFile = $request->file("logo");
+            $logofile = preg_replace('/\s+/', '', self::fileformat($LogoFile));
+            $LogoFile->move(base_path('/../medias/distributor'), $logofile);
+        }
+
         $validate = Validator::make($request->all(), [
             'title' => 'required',
         ]);
         // return dd($validate->fails());
         if ($validate->fails()) {
-        
+
             return redirect()->back()->withErrors($validate->errors());
         } else {
            DB::table('office')->where('id',$id)->update(
@@ -243,6 +329,13 @@ class OfficeController extends Controller
                     "lon" => $request->lon,
                     "status_cer"=> $request->status_cer,
                     "file_cer" => $subfile,
+                    // 經銷商（type_id=2）專屬欄位
+                    "logo" => $logofile ?: null,
+                    "website" => $request->website,
+                    "telephone" => $request->telephone,
+                    "email" => $request->email,
+                    "address" => $request->address,
+                    "google_maps" => $request->google_maps,
                     "updated_at" => \Carbon\Carbon::now(),
                 ]
             );
@@ -253,7 +346,7 @@ class OfficeController extends Controller
                             [   
                                 "title" => $title[$lang],
                                 "sub_title" => $sub_title[$lang],
-                                "content" => $content[$lang],
+                                "content" => $content[$lang] ?? null,
                             ]
                         );
                     }else{
@@ -262,13 +355,14 @@ class OfficeController extends Controller
                                 "fk_office_id" => $id,
                                 "title" => $title[$lang],
                                 "sub_title" => $sub_title[$lang],
-                                "content" => $content[$lang],
+                                "content" => $content[$lang] ?? null,
                                 "local" => $lang,
                             ]
                         );
                     }
                    
                 }
+                $this->saveDistributorPivots($id, $request);
                 return redirect()->route('getOffices',[$con_id,$type_id ])->with('flash_message', 'Update Data successfully');
         }
     }

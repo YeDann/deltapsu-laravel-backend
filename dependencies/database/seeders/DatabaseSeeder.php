@@ -38,10 +38,24 @@ class DatabaseSeeder extends Seeder
         // Phase II — Stock Modal 無購物車連結時的「Go to Distributor」按鈕標籤
         $this->call(StockContactKeywordSeeder::class);
 
+        // Phase II — Distributor Filter（只建分類結構與標籤；經銷商資料、洲別名稱由後台維護）
+        $this->call(DistributorCategorySeeder::class);
+        $this->call(DistributorLabelSeeder::class);
+        $this->call(DistributorServicesOfferedLabelSeeder::class);
+
+        // Phase II — 經銷商名錄匯入（2025 Excel；須在 DistributorCategorySeeder 之後）
+        $this->call(DistributorOfficeSeeder::class);
+
+        // Phase II — Find a Distributor：Certificate 按鈕 static word + Certifications→Expertise 顯示值
+        $this->call(DistributorExpertiseKeywordSeeder::class);
+
         // Phase II — Configurable Power Selector：Dual Output 上限說明文字（多語模板）
         $this->call(ConfigurableDualLimitSeeder::class);
 
         // Phase II — Product Comparison：跨類選項（Industrial × Medical）標籤
         $this->call(ComparisonCrossKeywordSeeder::class);
+
+        // Phase II — 經銷商名錄更新匯入
+        $this->call(DistributorOfficeUpdateSeeder::class);
     }
 }

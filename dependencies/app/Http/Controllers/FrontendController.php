@@ -1037,7 +1037,7 @@ class FrontendController extends Controller
             ->get();
 
         // dd($mainCategories);
-        
+
         $subCategories = DB::table('categories_has_main_pro as chmp')
             ->join('sub_pro_categories as sc', 'chmp.cate_id', '=', 'sc.sub_pro_id')
             ->join('sub_pro_categories_translation as sct', 'sct.sub_pro_id', '=', 'sc.sub_pro_id')
@@ -1345,7 +1345,7 @@ class FrontendController extends Controller
                 "section_id" => null,
             ]);
         }
-        
+
         // 取得 商品欄位資料
         $pdField = DB::table('product_field as pf')
             ->join('product_field_translation as pft', 'pf.id', '=', 'pft.product_field_id')
@@ -1738,6 +1738,15 @@ class FrontendController extends Controller
             ->where('p.enable_pro', 1)
             ->select('p.*', 'pt.*', 'spt.name as catename', 'sp.url_item as url_item', 'spt.sub_pro_id as pro_categories_id', 'sp.unit_dimension', 'sp.unit_dimension_1')
             ->get();
+
+        // 關聯商品屬多分類時 join 會 fan-out 成多列（同商品重複卡）；每個 pro_id 只留一張，
+        // 優先保留與目前商品同分類的那筆（卡片連結 url_item slug 才與麵包屑一致），
+        // 其餘先以分類 id 定序，確保去重結果穩定（此查詢無 ORDER BY）
+        $product_related = $product_related
+            ->sortBy('pro_categories_id')
+            ->sortByDesc(fn ($relate) => (int) ($relate->pro_categories_id == $pro->pro_categories_id))
+            ->unique('pro_id')
+            ->values();
 
         $date = now();
         $datefor = date('Y-m-d H:i:s', strtotime($date) - ((24 * 3600 * 365) * 2));
@@ -2659,8 +2668,76 @@ class FrontendController extends Controller
             ->where('f.type_id', 2)
             ->where('oft.local', '=', $lang)
             ->where('f.status', 1)
-            ->select('f.*', 'oft.*')
+            ->select('f.*', 'oft.title', 'oft.sub_title', 'oft.content', 'oft.local')
             ->get();
+
+        // 三類分類選項（當前語系），供篩選 UI 與卡片標籤
+        $catLists = [];
+        foreach (['distributor_specialized_application', 'distributor_product_line', 'distributor_service'] as $t) {
+            $catLists[config("distributor.categories.{$t}.field")] = DB::table($t . ' as c')
+                ->join($t . '_translation as ct', 'ct.fk_id', '=', 'c.id')
+                ->where('ct.local', $lang)
+                ->where('c.status', 1)
+                ->orderBy('c.order_seq')
+                ->select('c.id', 'c.slug', 'ct.name')
+                ->get();
+        }
+
+        // 每家經銷商已勾選的分類 slug（供前端比對篩選與卡片顯示）
+        $pivotSlugs = function ($pivot, $table) {
+            return DB::table($pivot . ' as p')
+                ->join($table . ' as c', 'c.id', '=', 'p.category_id')
+                ->select('p.office_id', 'c.slug')
+                ->get()
+                ->groupBy('office_id');
+        };
+        // territory / expertise 為下拉，顯示當前語系名稱
+        // 只取啟用中(status=1)的分類，讓卡片與篩選下拉一致：設 Hide 的標籤不會出現在卡片
+        $pivotNames = function ($pivot, $table) use ($lang) {
+            return DB::table($pivot . ' as p')
+                ->join($table . ' as c', 'c.id', '=', 'p.category_id')
+                ->join($table . '_translation as t', 't.fk_id', '=', 'c.id')
+                ->where('t.local', $lang)
+                ->where('c.status', 1)
+                ->select('p.office_id', 't.name')
+                ->get()
+                ->groupBy('office_id');
+        };
+        $cats = config('distributor.categories');
+        $sa = $pivotSlugs($cats['distributor_specialized_application']['pivot'], 'distributor_specialized_application');
+        $pl = $pivotSlugs($cats['distributor_product_line']['pivot'], 'distributor_product_line');
+        $sv = $pivotSlugs($cats['distributor_service']['pivot'], 'distributor_service');
+        $terr = $pivotNames($cats['distributor_sales_territory']['pivot'], 'distributor_sales_territory');
+        $cert = $pivotNames($cats['distributor_expertise']['pivot'], 'distributor_expertise');
+        foreach ($offices as $o) {
+            $o->apps = isset($sa[$o->id]) ? $sa[$o->id]->pluck('slug')->toArray() : [];
+            $o->lines = isset($pl[$o->id]) ? $pl[$o->id]->pluck('slug')->toArray() : [];
+            $o->services = isset($sv[$o->id]) ? $sv[$o->id]->pluck('slug')->toArray() : [];
+            $o->territories = isset($terr[$o->id]) ? $terr[$o->id]->pluck('name')->toArray() : [];
+            $o->certs = isset($cert[$o->id]) ? $cert[$o->id]->pluck('name')->toArray() : [];
+        }
+
+        // Sales Territory 下拉：依所屬地區（continent_id）分組（管理端設定為準）
+        $territoryByContinent = DB::table('distributor_sales_territory as c')
+            ->join('distributor_sales_territory_translation as t', 't.fk_id', '=', 'c.id')
+            ->where('t.local', $lang)
+            ->where('c.status', 1)
+            ->whereNotNull('c.continent_id')
+            ->orderBy('c.order_seq')
+            ->select('c.continent_id', 't.name')
+            ->get()
+            ->groupBy('continent_id')
+            ->map(function ($g) {
+                return $g->pluck('name')->values();
+            });
+
+        // Certifications 下拉選項：列出所有啟用中的認證
+        $certList = DB::table('distributor_expertise as c')
+            ->join('distributor_expertise_translation as t', 't.fk_id', '=', 'c.id')
+            ->where('t.local', $lang)
+            ->where('c.status', 1)
+            ->orderBy('c.order_seq')
+            ->pluck('t.name');
 
         $metatag = DB::table('meta_tag_page as mtp')
             ->join('meta_tag_page_translations as mtpt', 'mtp.id', '=', 'mtpt.meta_id')
@@ -2672,13 +2749,16 @@ class FrontendController extends Controller
         return view('front-end.find-distributor')
             ->with('metatag', $metatag)
             ->with('offices', $offices)
+            ->with('catLists', $catLists)
+            ->with('territoryByContinent', $territoryByContinent)
+            ->with('certList', $certList)
             ->with('continents', $continents);
     }
 
     public function redirectOldProductUrl($main_cate, $cate_id)
     {
         $lang = app()->getLocale();
-        
+
         // 根據 subcategory ID 找到對應的 main_cateid，優先選擇 main_cateid = 2 (Industrial Power)
         $categoryInfo = DB::table('sub_pro_categories as spc')
             ->join('categories_has_main_pro as chmp', 'spc.sub_pro_id', '=', 'chmp.cate_id')
@@ -2691,19 +2771,19 @@ class FrontendController extends Controller
             // 如果找不到對應的商品分類，直接返回 404
             return response()->view('errors.404', [], 404);
         }
-        
+
         $main_cate_id = $categoryInfo->main_cate_id;
-        
+
         // 建構新的 URL 格式：/{lang}/product/{main_cate_id}/{main_cate}/{cate_id}
         $newUrl = "/{$lang}/product/{$main_cate_id}/{$main_cate}/{$cate_id}";
-        
+
         return redirect($newUrl, 301);
     }
 
     public function redirectOldProductDetailUrl($main_cate, $cate_id, $se_name, $se_id)
     {
         $lang = app()->getLocale();
-        
+
         // 根據 subcategory ID 找到對應的 main_cateid，優先選擇 main_cateid = 2 (Industrial Power)
         $categoryInfo = DB::table('sub_pro_categories as spc')
             ->join('categories_has_main_pro as chmp', 'spc.sub_pro_id', '=', 'chmp.cate_id')
@@ -2716,12 +2796,12 @@ class FrontendController extends Controller
             // 如果找不到對應的商品分類，直接返回 404
             return response()->view('errors.404', [], 404);
         }
-        
+
         $main_cate_id = $categoryInfo->main_cate_id;
-        
+
         // 建構新的 URL 格式：/{lang}/product/{main_cate_id}/{main_cate}/{cate_id}/{se_name}/{se_id}
         $newUrl = "/{$lang}/product/{$main_cate_id}/{$main_cate}/{$cate_id}/{$se_name}/{$se_id}";
-        
+
         return redirect($newUrl, 301);
     }
 
@@ -3399,12 +3479,12 @@ class FrontendController extends Controller
                         END",
                         ['%' . $cleanQueryString . '%']
                     )
-                    ->orderByRaw('CASE 
-                        WHEN p.status_product = 2 THEN 1 
-                        WHEN p.status_product = 1 OR p.status_product IS NULL OR p.status_product NOT IN (2,3,4) THEN 2 
-                        WHEN p.status_product = 3 THEN 3 
-                        WHEN p.status_product = 4 THEN 4 
-                        ELSE 5 
+                    ->orderByRaw('CASE
+                        WHEN p.status_product = 2 THEN 1
+                        WHEN p.status_product = 1 OR p.status_product IS NULL OR p.status_product NOT IN (2,3,4) THEN 2
+                        WHEN p.status_product = 3 THEN 3
+                        WHEN p.status_product = 4 THEN 4
+                        ELSE 5
                         END')
                     ->orderBy('p.pro_code', 'asc')
                     ->limit($limit_product);
