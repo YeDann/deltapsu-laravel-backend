@@ -241,9 +241,7 @@ $langch = str_replace('_', '-', app()->getLocale());
       data-cwcid="9aZemFwhn82pm3Z4wtV79sGZ"></script>
     @endif
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" 
-            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" 
-            crossorigin="anonymous"></script>
+    <script src="{{asset('/frontend-asset/js/jquery-3.7.1.min.js')}}"></script>
 
     <!-- Google Tag Manager -->
     <script async defer>
