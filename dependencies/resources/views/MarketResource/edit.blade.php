@@ -82,7 +82,7 @@
                                             value="{{isset($current->name)? $current->name:""}}"
                                             placeholder="Enter name...">
                                     </div>
-                                    {{-- 非 Media Library：逐語系各自的檔（Old File + 上傳）。gallery 改用下方共用檔 --}}
+                                    {{-- 非 Marketing Materials：逐語系各自的檔（Old File + 上傳）。gallery 改用下方共用檔 --}}
                                     @if(!$isGallery)
                                     <div class="form-group">
                                         <label for="example-select"> Old File</label>
@@ -130,7 +130,7 @@
                             </div>
 
                         </div>
-                        {{-- Media Library：一個共用檔（換檔套用所有語系）。其他分類用上方逐語系檔 --}}
+                        {{-- Marketing Materials：一個共用檔（換檔套用所有語系）。其他分類用上方逐語系檔 --}}
                         @if($isGallery)
                         <div class="form-group">
                             <label for="example-select"> Old File</label>
@@ -213,7 +213,7 @@
 <script>
     $(function () {
 @if($isGallery)
-        // Media Library：一個共用檔上傳器，送出時套用所有語系
+        // Marketing Materials：一個共用檔上傳器，送出時套用所有語系
         MRChunkUpload.init({
             input: document.getElementById('mr_browse_shared'),
             chunkUrl: '{{ route('MarketResource.chunk') }}',

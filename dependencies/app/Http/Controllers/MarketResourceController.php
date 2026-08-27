@@ -209,7 +209,7 @@ class MarketResourceController extends Controller
 
         $language = DB::table('language')->get();
 
-        // Media Library 分類採「一個共用檔（套用所有語系）」，其他分類維持逐語系
+        // Marketing Materials 分類採「一個共用檔（套用所有語系）」，其他分類維持逐語系
         $isGallery = $margeting->isNotEmpty() && $margeting[0]->cate_id == $this->galleryCateId();
         // 縮圖網格分類（含圖庫）：前台一律以縮圖優先，故都提供「縮圖」上傳欄位
         $isGridCat = $margeting->isNotEmpty() && in_array((int) $margeting[0]->cate_id, MarketingResourceCategories::gridIds(), true);
@@ -226,7 +226,7 @@ class MarketResourceController extends Controller
     }
 
     /**
-     * Media Library 分類 id（以英文名定位，含更名前後）。
+     * Marketing Materials 分類 id（以英文名定位，含更名前後）。
      */
     private function galleryCateId()
     {
@@ -366,7 +366,7 @@ class MarketResourceController extends Controller
             return redirect()->back()->withErrors($validate->errors());
         } else {
       
-                // Media Library（gallery）：file_uploaded 是單一字串 → 共用檔套用所有語系；
+                // Marketing Materials（gallery）：file_uploaded 是單一字串 → 共用檔套用所有語系；
                 // 其他分類：file_uploaded[locale] 是陣列 → 逐語系（純讀 request，可在交易外先算好）
                 if (is_array($uploaded)) {
                     $arrayfileName = $this->applyChunkedFiles($uploaded, $langs, (array) $oldfile);
@@ -474,7 +474,7 @@ class MarketResourceController extends Controller
         $file = $row->file ?? null;
         $thumb = $row->thumbnail ?? null;
         if (DB::table('marketing_resource')->where('id', $id)->value('cate_id') == $this->galleryCateId()) {
-            // Media Library 共用檔：清掉所有語系
+            // Marketing Materials 共用檔：清掉所有語系
             DB::table('marketing_resource_translations')->where('mr_id', $id)->update(["file" => null, "thumbnail" => null]);
         } else {
             DB::table('marketing_resource_translations')->where('local' ,$lang)->where('mr_id' ,$id)->update(["file" => null, "thumbnail" => null]);

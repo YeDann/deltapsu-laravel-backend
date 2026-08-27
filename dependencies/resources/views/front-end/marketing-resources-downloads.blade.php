@@ -51,7 +51,7 @@
         margin: 0;
     }
 
-    /* Media Library 縮圖網格（媒體中心樣式：縮圖 + 預覽/下載 icon） */
+    /* Marketing Materials 縮圖網格（媒體中心樣式：縮圖 + 預覽/下載 icon） */
     .mr-image-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     @media (max-width: 991px) { .mr-image-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 575px) { .mr-image-grid { grid-template-columns: 1fr; } }
