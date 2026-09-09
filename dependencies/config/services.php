@@ -55,6 +55,9 @@ return [
         'cache_ttl' => (int) env('DILP_CACHE_TTL', 300),   // 庫存查詢結果短快取秒數
         'mock'      => (bool) env('DILP_MOCK', false),     // 測試環境空庫存時回 fixture
         'debug'     => (bool) env('DILP_DEBUG', false),    // 開啟時把每次請求/原始回應記到 log（除錯用）
+        // 只顯示這些國家（ISO 兩碼，逗號分隔）的經銷商庫存；留空 = 不限國家。
+        // 客戶要求先只開放美國；日後解禁把 DILP_COUNTRIES 設成空值即可，毋須改程式。
+        'countries' => env('DILP_COUNTRIES', 'US'),
     ],
 
 ];

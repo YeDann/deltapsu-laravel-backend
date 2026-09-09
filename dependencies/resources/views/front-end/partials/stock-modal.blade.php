@@ -120,8 +120,15 @@
     </div>
 </div>
 @php
-    // 站台語系 → 開窗時預設帶入的國家（ISO 國碼）；en 無對應單一國家 → 空字串＝不預設
-    $stockDefaultCountry = ['tw' => 'TW', 'cn' => 'CN', 'jp' => 'JP', 'de' => 'DE', 'tr' => 'TR'][app()->getLocale()] ?? '';
+    // 後端限定的國家（config services.dilp.countries，現為只開放美國）
+    $stockLockedCountries = array_values(array_filter(array_map(
+        fn ($c) => strtoupper(trim((string) $c)),
+        explode(',', (string) config('services.dilp.countries', ''))
+    )));
+    // 限定單一國家 → 開窗就鎖在該國（含所屬洲）；否則退回「站台語系 → 該國」，en 無對應單一國家 → 空字串＝不預設
+    $stockDefaultCountry = count($stockLockedCountries) === 1
+        ? $stockLockedCountries[0]
+        : (['tw' => 'TW', 'cn' => 'CN', 'jp' => 'JP', 'de' => 'DE', 'tr' => 'TR'][app()->getLocale()] ?? '');
 @endphp
 <script>
     // 兩層（洲→國）篩選用：洲代碼 → 在地洲名（intl 無法在地化洲名，故改用後台靜態字；未知洲 fallback DILP 英文）
@@ -244,8 +251,14 @@
                 $region.toggle($region.find('option').length > 1);
                 // 國下拉：先列全部國家（選洲後會連動縮窄）
                 rebuildStockCountryOptions('');
-                // 依站台語系預設帶入該國；該國不在本次結果（stockCountryMeta 無此碼）則不套用 → 自動留在 All Countries
+                // 預設帶入國家（限定國家 or 站台語系）：連同所屬洲一起選起來，兩個下拉才不會停在 All。
+                // 該國不在本次結果（stockCountryMeta 無此碼）則不套用 → 自動留在 All Countries。
                 if (stockDefaultCountry && stockCountryMeta[stockDefaultCountry]) {
+                    var defaultRegion = stockCountryMeta[stockDefaultCountry].region || '';
+                    if (defaultRegion) {
+                        $region.val(defaultRegion);
+                        rebuildStockCountryOptions(defaultRegion);   // 會把國下拉重設為 All，故 val 要在這之後設
+                    }
                     $country.val(stockDefaultCountry);
                     applyStockFilter();
                 }
