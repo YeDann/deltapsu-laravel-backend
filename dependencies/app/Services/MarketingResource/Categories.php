@@ -15,11 +15,8 @@ use Illuminate\Support\Facades\DB;
  */
 class Categories
 {
-    /** 套用縮圖網格版型（縮圖 + 預覽/下載 icon）的分類英文名。 */
+    /** 套用縮圖網格版型（縮圖 + 預覽/下載 icon）的分類英文名；含歷次更名前後的名稱。 */
     public const GRID = ['Marketing Materials', 'Media Library', 'Product Images', 'Product Images / Videos', 'Catalogs', 'Leaflets', 'Sales Tool'];
-
-    /** 圖庫分類：一個共用檔（含縮圖）套用所有語系；含歷次更名前後的名稱。 */
-    public const GALLERY = ['Marketing Materials', 'Media Library', 'Product Images', 'Product Images / Videos'];
 
     /**
      * 縮圖網格分類的 cate_id。
@@ -29,14 +26,6 @@ class Categories
     public static function gridIds(): array
     {
         return self::idsFor(self::GRID);
-    }
-
-    /**
-     * 圖庫分類的 cate_id；查無回 null。
-     */
-    public static function galleryId(): ?int
-    {
-        return self::idsFor(self::GALLERY)[0] ?? null;
     }
 
     /**
