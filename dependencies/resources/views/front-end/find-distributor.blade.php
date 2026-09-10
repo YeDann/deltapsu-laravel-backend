@@ -254,7 +254,9 @@
                             <div class="fd-card-sec-title">{{ $staticContent['Services_Offered'] ?? 'Services Offered' }}</div>
                             <div class="fd-card-grid">
                                 @foreach($catLists['distributor_service'] as $c)@if(in_array($c->slug, $office->services))
-                                <div class="fd-card-chk fd-svc"><img class="fd-svc-icon" src="{{asset('frontend-asset/image/distributor-service/'.$c->slug.'.svg')}}" onerror="this.remove()">{{ $c->name }}</div>
+                                @php $svcIcon = 'frontend-asset/image/distributor-service/'.$c->slug.'.svg'; @endphp
+                                {{-- 沒有對應 svg 的服務項目直接不輸出 img（原本靠 onerror 移除，改後端判斷才不會閃一下破圖，且無 inline handler） --}}
+                                <div class="fd-card-chk fd-svc">@if(is_file(public_path($svcIcon)))<img class="fd-svc-icon" src="{{asset($svcIcon)}}">@endif{{ $c->name }}</div>
                                 @endif @endforeach
                             </div>
                         </div>
