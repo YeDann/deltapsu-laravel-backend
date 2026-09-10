@@ -214,9 +214,7 @@ class MarketResourceController extends Controller
 
         $language = DB::table('language')->get();
 
-        // Marketing Materials 分類採「一個共用檔（套用所有語系）」，其他分類維持逐語系
-        $isGallery = $margeting->isNotEmpty() && $margeting[0]->cate_id == $this->galleryCateId();
-        // 縮圖網格分類（含圖庫）：前台一律以縮圖優先，故都提供「縮圖」上傳欄位
+        // 縮圖網格分類：前台一律以縮圖優先，故都提供「縮圖」上傳欄位
         $isGridCat = $margeting->isNotEmpty() && in_array((int) $margeting[0]->cate_id, MarketingResourceCategories::gridIds(), true);
 
         return view('MarketResource.edit')
@@ -226,16 +224,7 @@ class MarketResourceController extends Controller
         ->with('margetCates', $margetCate)
         ->with('margeting', $margeting)
         ->with('language', $language)
-        ->with('isGallery', $isGallery)
         ->with('isGridCat', $isGridCat);
-    }
-
-    /**
-     * Marketing Materials 分類 id（以英文名定位，含更名前後）。
-     */
-    private function galleryCateId()
-    {
-        return MarketingResourceCategories::galleryId();
     }
 
     /**
@@ -346,6 +335,20 @@ class MarketResourceController extends Controller
     }
 
     /**
+     * 刪除「已無任何語系/記錄引用」的人工縮圖。
+     * 各語系可各自換縮圖，但同一張仍可能被其他語系共用（舊資料七個語系縮圖相同），
+     * 直接刪實體檔會讓其他語系的縮圖失效，故與主檔一樣先確認沒人引用。
+     */
+    private function deleteOrphanThumbs(array $thumbs)
+    {
+        foreach (array_unique(array_filter($thumbs)) as $t) {
+            if (! DB::table('marketing_resource_translations')->where('thumbnail', $t)->exists()) {
+                $this->deleteThumbFile($t);
+            }
+        }
+    }
+
+    /**
      * 刪除行銷資源檔案；若為影片，一併刪同名縮圖（poster）。
      */
     private function deleteResourceFile($file)
@@ -390,38 +393,20 @@ class MarketResourceController extends Controller
             return redirect()->back()->withErrors($validate->errors());
         } else {
       
-                // Marketing Materials（gallery）：file_uploaded 是單一字串 → 共用檔套用所有語系；
-                // 其他分類：file_uploaded[locale] 是陣列 → 逐語系（純讀 request，可在交易外先算好）
-                if (is_array($uploaded)) {
-                    $arrayfileName = $this->applyChunkedFiles($uploaded, $langs, (array) $oldfile);
-                    $oldVals = (array) $oldfile;
-                } else {
-                    $newFile = ($uploaded && '' !== $uploaded) ? basename($uploaded) : (is_string($oldfile) ? $oldfile : '');
-                    $arrayfileName = [];
-                    foreach ($langs as $lang) { $arrayfileName[$lang] = $newFile; }
-                    $oldVals = [$oldfile];
-                }
+                // file_uploaded[locale] 逐語系（純讀 request，可在交易外先算好）
+                $arrayfileName = $this->applyChunkedFiles((array) $uploaded, $langs, (array) $oldfile);
+                $oldVals = (array) $oldfile;
 
                 // 縮圖檔名（存 DB，交易外先算）：上傳新縮圖→存獨立檔並刪舊縮圖；影片→（可能新的）同名 poster；
                 // 其他（含只換主檔沒動縮圖）→ 保留既有欄位（換主檔縮圖自動沿用，不必 rename）
                 $oldThumbs = DB::table('marketing_resource_translations')->where('mr_id', $id)->pluck('thumbnail', 'local');
 
-                // gallery 的縮圖與主檔一致，是「一張套用所有語系」，故表單送單一 thumbnail 而非逐語系陣列
-                $sharedThumb = null;
-                if (! is_array($uploaded) && $request->hasFile('thumbnail') && ! is_array($request->file('thumbnail'))) {
-                    foreach ($oldThumbs as $old) {
-                        $this->deleteThumbFile($old);
-                    }
-                    $sharedThumb = $this->saveThumb($request->file('thumbnail'));
-                }
-
                 $thumbByLang = [];
+                $replacedThumbs = [];   // 舊縮圖延後刪：等交易 commit 後才知道有沒有其他語系仍引用
                 foreach ($langs as $lang) {
                     $newFile = $arrayfileName[$lang] ?? '';
-                    if ($sharedThumb) {
-                        $thumbByLang[$lang] = $sharedThumb;
-                    } elseif ($request->hasFile('thumbnail.'.$lang)) {
-                        $this->deleteThumbFile($oldThumbs->get($lang));
+                    if ($request->hasFile('thumbnail.'.$lang)) {
+                        $replacedThumbs[] = $oldThumbs->get($lang);
                         $thumbByLang[$lang] = $this->saveThumb($request->file('thumbnail.'.$lang));
                     } elseif ($this->isManualThumb($oldThumbs->get($lang))) {
                         // 人工縮圖一律優先：只換主檔時不可被影片自動 poster 蓋掉
@@ -457,15 +442,11 @@ class MarketResourceController extends Controller
 
                 // DB 交易 commit 後才刪舊主檔實體檔；避免「DB rollback 但舊檔已刪」的不一致
                 $this->deleteOrphanFiles($oldVals);
+                $this->deleteOrphanThumbs($replacedThumbs);
 
-                // 欄位形狀與上方一致：gallery 是單一縮圖，其他分類是逐語系陣列
-                if (is_array($uploaded)) {
-                    $dropped = false;
-                    foreach ($langs as $lang) {
-                        $dropped = $dropped || $this->thumbDropped($request, 'thumbnail_selected.'.$lang, 'thumbnail.'.$lang);
-                    }
-                } else {
-                    $dropped = $this->thumbDropped($request, 'thumbnail_selected', 'thumbnail');
+                $dropped = false;
+                foreach ($langs as $lang) {
+                    $dropped = $dropped || $this->thumbDropped($request, 'thumbnail_selected.'.$lang, 'thumbnail.'.$lang);
                 }
 
                 $redirect = redirect()->route('MarketResource.index')->with('flash_message', 'Update Data successfully');
@@ -512,17 +493,12 @@ class MarketResourceController extends Controller
         $row = DB::table('marketing_resource_translations')->where('local', $lang)->where('mr_id', $id)->first();
         $file = $row->file ?? null;
         $thumb = $row->thumbnail ?? null;
-        if (DB::table('marketing_resource')->where('id', $id)->value('cate_id') == $this->galleryCateId()) {
-            // Marketing Materials 共用檔：清掉所有語系
-            DB::table('marketing_resource_translations')->where('mr_id', $id)->update(["file" => null, "thumbnail" => null]);
-        } else {
-            DB::table('marketing_resource_translations')->where('local' ,$lang)->where('mr_id' ,$id)->update(["file" => null, "thumbnail" => null]);
-        }
+        DB::table('marketing_resource_translations')->where('local' ,$lang)->where('mr_id' ,$id)->update(["file" => null, "thumbnail" => null]);
         // 解除引用後刪實體檔（影片含 poster）；僅在已無其他語系/記錄引用該檔時才刪，避免誤刪共用檔
         if ($file) {
             $this->deleteOrphanFiles([$file]);
         }
-        $this->deleteThumbFile($thumb);
+        $this->deleteOrphanThumbs([$thumb]);
         return redirect()->back()->with('flash_message', 'Remove file Data successfully');
     }
 
