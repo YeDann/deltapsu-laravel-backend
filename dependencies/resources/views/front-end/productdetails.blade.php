@@ -666,8 +666,8 @@
                                     class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img
                                         src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button>
                             </a>
-                            <button onclick="checkStock('{{$product[0]['pro_code']}}')"
-                                    class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img
+                            <button data-pro-code="{{$product[0]['pro_code']}}"
+                                    class="btn img-btn-icon-pro tooltip2 js-check-stock"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img
                                         src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>
 
                             @foreach ($ec_link as $item)
@@ -751,7 +751,7 @@
                             target="_blank">
                             <button class="btn btn-datasheet">{{$staticContent['data_sheet']}}</button>
                         </a>
-                        <button class="btn btn-datasheet" onclick="checkStock('{{$product[0]['pro_code']}}')">{{ $staticContent['Stock'] ?? 'Stock' }}</button>
+                        <button class="btn btn-datasheet js-check-stock" data-pro-code="{{$product[0]['pro_code']}}">{{ $staticContent['Stock'] ?? 'Stock' }}</button>
                         @foreach ($ec_link as $item)
                         <a href="{{$item->link}}" target="_blank">
                             <button class="btn btn-buynow mr-2">{{$item->name}}</button>
@@ -1022,8 +1022,8 @@
                             target="_blank"><button
                                 class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img
                                     src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>
-                        <button onclick="checkStock('{{$product[0]['pro_code']}}')"
-                                class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img
+                        <button data-pro-code="{{$product[0]['pro_code']}}"
+                                class="btn img-btn-icon-pro tooltip2 js-check-stock"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img
                                     src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>
                         @foreach ($ec_link as $item)
                         <a href="{{ $item->link }}" target="_blank"><button
@@ -1101,7 +1101,7 @@
                 <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}" target="_blank">
                     <button class="btn btn-datasheet w-100 my-2">{{$staticContent['data_sheet']}}</button>
                 </a>
-                <button class="btn btn-datasheet w-100 my-2" onclick="checkStock('{{$product[0]['pro_code']}}')">{{ $staticContent['Stock'] ?? 'Stock' }}</button>
+                <button class="btn btn-datasheet w-100 my-2 js-check-stock" data-pro-code="{{$product[0]['pro_code']}}">{{ $staticContent['Stock'] ?? 'Stock' }}</button>
 
                 @foreach ($ec_link as $item)
                 <a href="{{$item->link}}" target="_blank">

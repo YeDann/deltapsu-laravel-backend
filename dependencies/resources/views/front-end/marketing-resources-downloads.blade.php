@@ -376,7 +376,7 @@ function getDateformat($date){
                 html += '<div class="mr-img-card">';
                 if (isImage && value['thumbnail']) {
                     // 有人工縮圖就用它，省下為了 200px 的框去載全尺寸原圖；縮圖檔不存在才退回原圖
-                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+(mrStaticBase + value['thumbnail'])+'" data-mr-full-src="'+mrSrc+'" onerror="this.onerror=null; this.src=this.getAttribute(\'data-mr-full-src\')">';
+                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+(mrStaticBase + value['thumbnail'])+'" data-mr-full-src="'+mrSrc+'">';
                 } else if (isImage) {
                     html += '<img class="mr-img-thumb lazyload" loading="lazy" alt="'+value['name']+'" data-src="'+mrSrc+'">';
                 } else if (isVideo) {
@@ -385,13 +385,13 @@ function getDateformat($date){
                     html += '<span class="mr-video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>';
                 } else if (isPdf && value['thumbnail']) {
                     // PDF 有人工縮圖就直接用，不載 PDF.js（省首頁解析）；縮圖檔不存在才退回 canvas render
-                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+(mrStaticBase + value['thumbnail'])+'" data-mr-pdf-src="'+mrSrc+'" onerror="mrPdfThumbFallback(this)">';
+                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+(mrStaticBase + value['thumbnail'])+'" data-mr-pdf-src="'+mrSrc+'">';
                 } else if (isPdf) {
                     html += '<canvas class="mr-pdf-thumb" data-src="'+mrSrc+'"></canvas>';
                 } else {
                     // 其他檔（壓縮檔等）：優先用 DB 縮圖，否則試主檔同名 .jpg；載入失敗則置換佔位框
                     var thumb = value['thumbnail'] ? (mrStaticBase + value['thumbnail']) : (mrStaticBase + value['file'].replace(/\.[^.]+$/, '.jpg'));
-                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+thumb+'" onerror="mrThumbFallback(this,\''+ext.toUpperCase()+'\')">';
+                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+thumb+'" data-mr-ext="'+ext.toUpperCase()+'">';
                 }
 
                 html += '<div class="mr-img-bar"><span class="mr-img-name" title="'+value['name']+'"><span class="mr-img-fname"><span class="mr-img-fname-inner">'+value['name']+'</span></span><span class="mr-img-ext">['+ext.toUpperCase()+']</span></span><div class="mr-img-bar-actions">';
@@ -441,6 +441,21 @@ function getDateformat($date){
           img.replaceWith(c);
           mrObservePdfs();
       }
+      // 縮圖載入失敗統一在此分流（取代 img 的 inline onerror，CSP 目標為移除 script-src 的 unsafe-inline）。
+      // error 事件不冒泡，jQuery 的 .on('error') 對動態插入的 img 收不到，必須用原生捕獲階段攔截。
+      document.addEventListener('error', function (e) {
+          var img = e.target;
+          if (!img || img.tagName !== 'IMG' || !img.classList.contains('mr-img-thumb')) { return; }
+          if (img.getAttribute('data-mr-fallback-done')) { return; }   // 只退一次，避免退路本身也失敗時無限重試
+          img.setAttribute('data-mr-fallback-done', '1');
+          if (img.getAttribute('data-mr-full-src')) {
+              img.src = img.getAttribute('data-mr-full-src');          // 人工縮圖不存在 → 退回原圖
+          } else if (img.getAttribute('data-mr-pdf-src')) {
+              mrPdfThumbFallback(img);                                 // PDF 人工縮圖不存在 → 退回 canvas 走 PDF.js
+          } else if (img.getAttribute('data-mr-ext')) {
+              mrThumbFallback(img, img.getAttribute('data-mr-ext'));   // 壓縮檔等縮圖不存在 → 置換佔位框
+          }
+      }, true);
       $(document).on('click', '.mr-preview-trigger', function () {
           var file = $(this).attr('data-file');
           var name = $(this).attr('data-name') || '';
