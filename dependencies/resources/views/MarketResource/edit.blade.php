@@ -82,8 +82,8 @@
                                             value="{{isset($current->name)? $current->name:""}}"
                                             placeholder="Enter name...">
                                     </div>
-                                    {{-- 非 Marketing Materials：逐語系各自的檔（Old File + 上傳）。gallery 改用下方共用檔 --}}
-                                    @if(!$isGallery)
+                                    {{-- 逐語系各自的檔（Old File + 上傳）：同一筆資源的各語系可放不同檔，
+                                         例如 PDF 內容本身就分語言。建立時先共用一個檔，之後在這裡逐語系替換 --}}
                                     <div class="form-group">
                                         <label for="example-select"> Old File</label>
                                         <a
@@ -116,55 +116,22 @@
                                     <div class="form-group">
                                         <label for="mr_thumb_{{$item->name}}">Thumbnail <span class="text-muted">（選填，有傳就一律用它；不傳則圖片用原圖、PDF 用首頁、其他顯示副檔名佔位）</span></label>
                                         <div class="custom-file" style="width:100%;">
-                                            <input type="file" name="thumbnail[{{$item->name}}]" class="custom-file-input" id="mr_thumb_{{$item->name}}" accept="image/*" data-toggle="custom-file-input">
+                                            <input type="file" name="thumbnail[{{$item->name}}]" class="custom-file-input mr-thumb-input" id="mr_thumb_{{$item->name}}" data-locale="{{$item->name}}" accept="image/*" data-toggle="custom-file-input">
                                             <label class="custom-file-label" for="mr_thumb_{{$item->name}}">Choose thumbnail</label>
                                         </div>
+                                        {{-- 壓縮結果提示；flag 供後端判斷「有選縮圖卻沒收到」（被主機上限擋下） --}}
+                                        <small class="text-muted d-block mt-1" id="mr_thumb_status_{{$item->name}}"></small>
+                                        <input type="hidden" name="thumbnail_selected[{{$item->name}}]" id="mr_thumb_selected_{{$item->name}}" value="">
                                         @if(!empty($current->thumbnail))
                                         <small class="text-muted d-block mt-1">目前已有縮圖（<a href="{{config('app.url')}}/uploads_delta/partner/marketing_resources/{{$current->thumbnail}}" target="_blank">檢視</a>），沿用中；重選才會取代。</small>
                                         @endif
                                     </div>
-                                    @endif
                                     @endif
                                 </div>
                                 @endforeach
                             </div>
 
                         </div>
-                        {{-- Marketing Materials：一個共用檔（換檔套用所有語系）。其他分類用上方逐語系檔 --}}
-                        @if($isGallery)
-                        <div class="form-group">
-                            <label for="example-select"> Old File</label>
-                            <a href="{{config('app.url')}}/uploads_delta/partner/marketing_resources/{{$margeting[0]->file ?? ''}}">{{$margeting[0]->file ?? ''}}</a>
-                            @if(!empty($margeting[0]->file))
-                            <a href="{{route('removefileMargeting',[$margeting[0]->id, $margeting[0]->local])}}" class="btn btn btn-danger"><i class="fa fa-trash"></i> </a>
-                            @endif
-                            <input type="hidden" name="oldfile" value="{{$margeting[0]->file ?? ''}}">
-                        </div>
-                        <div class="form-group">
-                            <label for="example-select">File <span class="req-fed">* Max File Size 2 GB（分塊上傳，套用所有語系）</span></label>
-                            <div class="custom-file " style="width:100%;">
-                                <input type="file" class="custom-file-input" id="mr_browse_shared" data-toggle="custom-file-input">
-                                <label class="custom-file-label" id="mr_lable_shared" for="mr_browse_shared">Choose file</label>
-                            </div>
-                            <div class="progress mt-2 d-none" id="mr_progress_shared" style="height:20px;">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width:0%">0%</div>
-                            </div>
-                            <small class="text-muted d-block mt-1" id="mr_status_shared"></small>
-                            <input type="hidden" name="file_uploaded" id="mr_uploaded_shared" value="">
-                        </div>
-                        {{-- 共用縮圖（選填）：與主檔一樣套用所有語系。有傳則前台一律顯示這張，
-                             沒傳則圖片用原圖、影片用瀏覽器自動截的第一幀 --}}
-                        <div class="form-group">
-                            <label for="mr_thumb_shared">Thumbnail <span class="text-muted">（選填，套用所有語系；不傳則圖片用原圖、影片用自動截幀）</span></label>
-                            <div class="custom-file" style="width:100%;">
-                                <input type="file" name="thumbnail" class="custom-file-input" id="mr_thumb_shared" accept="image/*" data-toggle="custom-file-input">
-                                <label class="custom-file-label" for="mr_thumb_shared">Choose thumbnail</label>
-                            </div>
-                            @if(!empty($margeting[0]->thumbnail))
-                            <small class="text-muted d-block mt-1">目前已有縮圖（<a href="{{config('app.url')}}/uploads_delta/partner/marketing_resources/{{$margeting[0]->thumbnail}}" target="_blank">檢視</a>），沿用中；重選才會取代。</small>
-                            @endif
-                        </div>
-                        @endif
                         <div class="form-group">
                             <label for="example-select">Select Categories <span class="req-fed">*</span></label>
                             <select class="js-select2 form-control" name="mr_categories" data-placeholder="Choose one.."
@@ -209,24 +176,11 @@
 @endsection
 @section('js')
 <script src="{{ asset('backend-asset/js/resumable.js') }}"></script>
-<script src="{{ asset('backend-asset/js/mr-chunk-upload.js') }}"></script>
+{{-- 帶 mtime 版號：backend-asset 沒有 cache busting，改版後舊分頁會抓到 30 天前的快取 --}}
+<script src="{{ asset('backend-asset/js/mr-chunk-upload.js') }}?v={{ @filemtime(public_path('backend-asset/js/mr-chunk-upload.js')) ?: 1 }}"></script>
 <script>
     $(function () {
-@if($isGallery)
-        // Marketing Materials：一個共用檔上傳器，送出時套用所有語系
-        MRChunkUpload.init({
-            input: document.getElementById('mr_browse_shared'),
-            chunkUrl: '{{ route('MarketResource.chunk') }}',
-            posterUrl: '{{ route('MarketResource.poster') }}',
-            csrf: '{{ csrf_token() }}',
-            label: $('#mr_lable_shared'),
-            progress: $('#mr_progress_shared'),
-            bar: $('#mr_progress_shared .progress-bar'),
-            status: $('#mr_status_shared'),
-            hidden: $('#mr_uploaded_shared')
-        });
-@else
-        // 其他分類：每個語系一個 file input，各自分塊上傳到 file_uploaded[locale]
+        // 每個語系一個 file input，各自分塊上傳到 file_uploaded[locale]
         document.querySelectorAll('.mr-chunk-input').forEach(function (input) {
             var loc = input.dataset.locale;
             MRChunkUpload.init({
@@ -241,7 +195,15 @@
                 hidden: $('#mr_uploaded_' + loc)
             });
         });
-@endif
+        // 縮圖欄位只在縮圖網格分類（isGridCat）才 render，沒有時這圈自然跑空
+        document.querySelectorAll('.mr-thumb-input').forEach(function (input) {
+            var loc = input.dataset.locale;
+            MRChunkUpload.initThumb({
+                input: input,
+                status: $('#mr_thumb_status_' + loc),
+                flag: $('#mr_thumb_selected_' + loc)
+            });
+        });
         MRChunkUpload.guardSubmit($('form'));
     });
 </script>

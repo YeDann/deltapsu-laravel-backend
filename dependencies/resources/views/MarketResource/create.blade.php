@@ -61,6 +61,9 @@
                                     <input type="file" name="thumbnail" class="custom-file-input" id="mr_thumb_browse" accept="image/*" data-toggle="custom-file-input">
                                     <label class="custom-file-label" id="mr_thumb_label" for="mr_thumb_browse">Choose thumbnail</label>
                                 </div>
+                                {{-- 壓縮結果提示；flag 供後端判斷「有選縮圖卻沒收到」（被主機上限擋下） --}}
+                                <small class="text-muted d-block mt-1" id="mr_thumb_status"></small>
+                                <input type="hidden" name="thumbnail_selected" id="mr_thumb_selected" value="">
                             </div>
                             <div class="form-group">
                                 <label for="example-select">Select Categories <span class="req-fed">*</span></label>
@@ -100,7 +103,8 @@
 @endsection
 @section('js')
 <script src="{{ asset('backend-asset/js/resumable.js') }}"></script>
-<script src="{{ asset('backend-asset/js/mr-chunk-upload.js') }}"></script>
+{{-- 帶 mtime 版號：backend-asset 沒有 cache busting，改版後舊分頁會抓到 30 天前的快取 --}}
+<script src="{{ asset('backend-asset/js/mr-chunk-upload.js') }}?v={{ @filemtime(public_path('backend-asset/js/mr-chunk-upload.js')) ?: 1 }}"></script>
 <script>
     $(function () {
         MRChunkUpload.init({
@@ -113,6 +117,11 @@
             bar: $('#mr_upload_progress .progress-bar'),
             status: $('#mr_upload_status'),
             hidden: $('#mr_file_uploaded')
+        });
+        MRChunkUpload.initThumb({
+            input: document.getElementById('mr_thumb_browse'),
+            status: $('#mr_thumb_status'),
+            flag: $('#mr_thumb_selected')
         });
         MRChunkUpload.guardSubmit($('form'));
     });
