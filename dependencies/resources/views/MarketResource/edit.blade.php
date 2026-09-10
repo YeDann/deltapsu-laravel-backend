@@ -116,9 +116,12 @@
                                     <div class="form-group">
                                         <label for="mr_thumb_{{$item->name}}">Thumbnail <span class="text-muted">（選填，有傳就一律用它；不傳則圖片用原圖、PDF 用首頁、其他顯示副檔名佔位）</span></label>
                                         <div class="custom-file" style="width:100%;">
-                                            <input type="file" name="thumbnail[{{$item->name}}]" class="custom-file-input" id="mr_thumb_{{$item->name}}" accept="image/*" data-toggle="custom-file-input">
+                                            <input type="file" name="thumbnail[{{$item->name}}]" class="custom-file-input mr-thumb-input" id="mr_thumb_{{$item->name}}" data-locale="{{$item->name}}" accept="image/*" data-toggle="custom-file-input">
                                             <label class="custom-file-label" for="mr_thumb_{{$item->name}}">Choose thumbnail</label>
                                         </div>
+                                        {{-- 壓縮結果提示；flag 供後端判斷「有選縮圖卻沒收到」（被主機上限擋下） --}}
+                                        <small class="text-muted d-block mt-1" id="mr_thumb_status_{{$item->name}}"></small>
+                                        <input type="hidden" name="thumbnail_selected[{{$item->name}}]" id="mr_thumb_selected_{{$item->name}}" value="">
                                         @if(!empty($current->thumbnail))
                                         <small class="text-muted d-block mt-1">目前已有縮圖（<a href="{{config('app.url')}}/uploads_delta/partner/marketing_resources/{{$current->thumbnail}}" target="_blank">檢視</a>），沿用中；重選才會取代。</small>
                                         @endif
@@ -160,6 +163,9 @@
                                 <input type="file" name="thumbnail" class="custom-file-input" id="mr_thumb_shared" accept="image/*" data-toggle="custom-file-input">
                                 <label class="custom-file-label" for="mr_thumb_shared">Choose thumbnail</label>
                             </div>
+                            {{-- 壓縮結果提示；flag 供後端判斷「有選縮圖卻沒收到」（被主機上限擋下） --}}
+                            <small class="text-muted d-block mt-1" id="mr_thumb_status_shared"></small>
+                            <input type="hidden" name="thumbnail_selected" id="mr_thumb_selected_shared" value="">
                             @if(!empty($margeting[0]->thumbnail))
                             <small class="text-muted d-block mt-1">目前已有縮圖（<a href="{{config('app.url')}}/uploads_delta/partner/marketing_resources/{{$margeting[0]->thumbnail}}" target="_blank">檢視</a>），沿用中；重選才會取代。</small>
                             @endif
@@ -209,7 +215,8 @@
 @endsection
 @section('js')
 <script src="{{ asset('backend-asset/js/resumable.js') }}"></script>
-<script src="{{ asset('backend-asset/js/mr-chunk-upload.js') }}"></script>
+{{-- 帶 mtime 版號：backend-asset 沒有 cache busting，改版後舊分頁會抓到 30 天前的快取 --}}
+<script src="{{ asset('backend-asset/js/mr-chunk-upload.js') }}?v={{ @filemtime(public_path('backend-asset/js/mr-chunk-upload.js')) ?: 1 }}"></script>
 <script>
     $(function () {
 @if($isGallery)
@@ -225,6 +232,11 @@
             status: $('#mr_status_shared'),
             hidden: $('#mr_uploaded_shared')
         });
+        MRChunkUpload.initThumb({
+            input: document.getElementById('mr_thumb_shared'),
+            status: $('#mr_thumb_status_shared'),
+            flag: $('#mr_thumb_selected_shared')
+        });
 @else
         // 其他分類：每個語系一個 file input，各自分塊上傳到 file_uploaded[locale]
         document.querySelectorAll('.mr-chunk-input').forEach(function (input) {
@@ -239,6 +251,15 @@
                 bar: $('#mr_progress_' + loc + ' .progress-bar'),
                 status: $('#mr_status_' + loc),
                 hidden: $('#mr_uploaded_' + loc)
+            });
+        });
+        // 縮圖欄位只在縮圖網格分類（isGridCat）才 render，沒有時這圈自然跑空
+        document.querySelectorAll('.mr-thumb-input').forEach(function (input) {
+            var loc = input.dataset.locale;
+            MRChunkUpload.initThumb({
+                input: input,
+                status: $('#mr_thumb_status_' + loc),
+                flag: $('#mr_thumb_selected_' + loc)
             });
         });
 @endif
