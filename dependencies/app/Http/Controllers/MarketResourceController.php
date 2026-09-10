@@ -112,7 +112,12 @@ class MarketResourceController extends Controller
                 }
             });
 
-            return redirect()->route('MarketResource.index')->with('flash_message', 'Insert Data successfully');
+            $redirect = redirect()->route('MarketResource.index')->with('flash_message', 'Insert Data successfully');
+            if ($this->thumbDropped($request, 'thumbnail_selected', 'thumbnail')) {
+                $redirect->with('error_message', $this->thumbDroppedMessage());
+            }
+
+            return $redirect;
         }
 
 
@@ -247,6 +252,25 @@ class MarketResourceController extends Controller
         $thumb->move(base_path('/../uploads_delta/partner/marketing_resources'), $name);
 
         return $name;
+    }
+
+    /**
+     * 縮圖是否「有選但沒送達」。
+     * 縮圖走一般表單上傳（主檔才走分塊），超過 php.ini upload_max_filesize 的檔案會被 PHP 在進入 Laravel
+     * 之前丟棄，hasFile() 只回 false —— 不比對前端送的 thumbnail_selected 旗標就會靜默跳過。
+     */
+    private function thumbDropped(Request $request, $flagKey, $fileKey)
+    {
+        return (bool) $request->input($flagKey) && ! $request->hasFile($fileKey);
+    }
+
+    /**
+     * 縮圖被主機上限擋下時給編輯者的提示（其餘欄位已存檔，只有縮圖沒進來）。
+     */
+    private function thumbDroppedMessage()
+    {
+        return 'Thumbnail was not saved: the image exceeded the server upload limit ('
+            .ini_get('upload_max_filesize').'). All other fields were saved — please edit and upload a smaller image.';
     }
 
     /**
@@ -434,7 +458,22 @@ class MarketResourceController extends Controller
                 // DB 交易 commit 後才刪舊主檔實體檔；避免「DB rollback 但舊檔已刪」的不一致
                 $this->deleteOrphanFiles($oldVals);
 
-                return redirect()->route('MarketResource.index')->with('flash_message', 'Update Data successfully');
+                // 欄位形狀與上方一致：gallery 是單一縮圖，其他分類是逐語系陣列
+                if (is_array($uploaded)) {
+                    $dropped = false;
+                    foreach ($langs as $lang) {
+                        $dropped = $dropped || $this->thumbDropped($request, 'thumbnail_selected.'.$lang, 'thumbnail.'.$lang);
+                    }
+                } else {
+                    $dropped = $this->thumbDropped($request, 'thumbnail_selected', 'thumbnail');
+                }
+
+                $redirect = redirect()->route('MarketResource.index')->with('flash_message', 'Update Data successfully');
+                if ($dropped) {
+                    $redirect->with('error_message', $this->thumbDroppedMessage());
+                }
+
+                return $redirect;
         }
     }
     /**
