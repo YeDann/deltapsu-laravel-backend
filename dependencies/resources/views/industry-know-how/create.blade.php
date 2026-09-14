@@ -204,7 +204,7 @@
 <script src="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.js')}}"></script>
 <script src="{{asset('backend-asset/js/plugins/ckeditor/ckeditor.js')}}"></script>
 <script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script> --}}
-<script>
+<script @cspNonce>
     // jQuery(function () {
     //     Dashmix.helpers(['datepicker', 'summernote', 'simplemde', 'ckeditor']);
     // });
@@ -250,7 +250,7 @@ $(document).on('change', '#file_input', function () {
     });
 
 </script>
-<script type="text/javascript">
+<script type="text/javascript" @cspNonce>
     function countCharacter(id){
            var str = $('#input-'+id).val();
           $('#count-'+id).text(str.length);

@@ -63,7 +63,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteDistCat(id) {
         swal({
             title: "Confirm Delete",

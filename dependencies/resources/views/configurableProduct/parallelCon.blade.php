@@ -159,7 +159,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
 
    function createData(){
        $('.block-title').text('Create Parallel Connection(s)');

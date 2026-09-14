@@ -364,7 +364,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     $('.jssummernote').summernote({
       tabsize: 2,
       height: 200,
@@ -448,7 +448,7 @@
                     });
                 }
 </script>
-<script>
+<script @cspNonce>
     var previewImage = function (input, block) {
         var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/

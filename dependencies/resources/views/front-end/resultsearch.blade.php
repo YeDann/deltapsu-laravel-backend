@@ -1035,7 +1035,7 @@
 
 
 @section('js')
-<script>
+<script @cspNonce>
     function viewKey(key){
             var newkey = key.replace(/[/]/g,'@');
               event.preventDefault();
@@ -1054,7 +1054,7 @@
               window.location = '{{route('productsDetailsByType')}}/'+new_cate+'/'+ new_product_code +'?optional_model='+newkey;
     }
 </script>
-<script>
+<script @cspNonce>
     function filterSearchSections(val) {
         $('.tab-pane').removeClass('show active');
         $('#' + val).addClass('show active');

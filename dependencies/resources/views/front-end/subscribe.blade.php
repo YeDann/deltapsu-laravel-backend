@@ -114,7 +114,7 @@
     </div>
     @endsection
     @section('js')
-    <script>
+    <script @cspNonce>
         function submitsubscribeFrompage(){
     //  alert(document.formsub.accept.value );
     if(document.formsub.accept.value == 0 || document.formsub.accept.value == null) {

@@ -261,7 +261,7 @@
 
 @section('js')
 
-<script>
+<script @cspNonce>
     var AllsuccessStory = <?= json_encode($AllsuccessStory);?>;
       var sectionId = <?= json_encode($sectionId);?>;
       var image_story = <?= json_encode($image_story);?>;

@@ -610,7 +610,7 @@
 @endsection
 @section('js')
 
-<script>
+<script @cspNonce>
     $(".js-example-tags").select2({
           tags: true
          });

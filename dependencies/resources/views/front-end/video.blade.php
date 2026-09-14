@@ -358,7 +358,7 @@ function getDateformat($date){
 
 
 @section('js')
-<script>
+<script @cspNonce>
     var video_type =  <?= json_encode($video_type);?>;
     function selectDatavideos(){
         var value_tab = document.getElementById("select-videos").value;

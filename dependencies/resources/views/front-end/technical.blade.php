@@ -109,7 +109,7 @@
 
 
 @section('js')
-<script>
+<script @cspNonce>
     var news =  <?= json_encode($news);?>;
         $( document).ready(function () {
             clicktabFist(0);

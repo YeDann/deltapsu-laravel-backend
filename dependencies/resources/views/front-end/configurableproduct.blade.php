@@ -1150,7 +1150,7 @@
 
 @section('js')
 <script type="text/javascript" src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>
-<script>
+<script @cspNonce>
 	$(document).ready(function() {
 		msieversion();
 	});
@@ -1178,7 +1178,7 @@
 	}
 </script>
 
-<script type="text/javascript">
+<script type="text/javascript" @cspNonce>
 	var verifyCallback = function(response) {
 	  $('#keyrecap').val(response);
 	};
@@ -1206,7 +1206,7 @@
 	@endif
 </script>
 <script src="{{asset('/frontend-asset/js/jquery.steps.min.js')}}"></script>
-<script>
+<script @cspNonce>
 	@if(Session::has('message'))
 	$(document).ready(function() {
 			$("#sendConfigpdf").modal();
@@ -1245,7 +1245,7 @@
         });
    }
 </script>
-<script>
+<script @cspNonce>
 	$("#sale-enquiry").hide();
 	$("#cx-sale-en").click(function(){
   	  	$("#sale-enquiry").toggle();

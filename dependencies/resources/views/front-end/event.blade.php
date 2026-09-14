@@ -331,7 +331,7 @@
 
 
 @section('js')
-<script>
+<script @cspNonce>
     // var eventData = [
     //   {"date":"2019-01-01","badge":true,"title":"Example 1"},
     //   {"date":"2019-03-02","badge":true,"title":"Example 2"}
@@ -339,7 +339,7 @@
   
 </script>
 
-<script>
+<script @cspNonce>
     var events =  <?= json_encode($events2);?>;
     var total;
     var years;

@@ -561,14 +561,14 @@
 </div>
 @endsection
 @section('js')
-<script type="text/javascript">
+<script type="text/javascript" @cspNonce>
     // Industrial Battery Charging 主分類底下子分類的 slug 清單（決定是否顯示 Short Features 欄）
     var batteryCateSlugs = <?= json_encode($batteryCateSlugs ?? []); ?>;
     $(document).ready(function () {
            document.getElementById("box_cate_cate_battery").style.display =  "none";
     });
 </script>
-<script>
+<script @cspNonce>
     $('.jssummernote').summernote({
         tabsize: 2,
         height: 200
@@ -635,7 +635,7 @@
        })
      }
 </script>
-<script>
+<script @cspNonce>
     var previewImage = function (input, block) {
         var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/

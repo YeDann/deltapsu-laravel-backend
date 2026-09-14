@@ -79,7 +79,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteNewstype(id) {
         swal({
             title: "Confirm Delete",

@@ -109,7 +109,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function ondelelete(id){
          $('#itemId').val(id);
 

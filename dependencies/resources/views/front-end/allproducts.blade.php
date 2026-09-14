@@ -484,7 +484,7 @@
                                         data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
                                         class="icon btn-icon-app itemhorver{{$item->id}}"
                                         style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
-                                    <script>
+                                    <script @cspNonce>
                                         $(".itemhorver{{$item->id}}").hover(function(){
                                                     $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
                                                     }, function(){
@@ -561,7 +561,7 @@
                                         data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
                                         class="icon btn-icon-app itemhorver{{$item->id}}"
                                         style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
-                                    <script>
+                                    <script @cspNonce>
                                         $(".itemhorver{{$item->id}}").hover(function(){
                                                     $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
                                                     }, function(){
@@ -824,7 +824,7 @@
                                     data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
                                     class="icon btn-icon-app itemhorver{{$item->id}}"
                                     style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
-                                <script>
+                                <script @cspNonce>
                                     $(".itemhorver{{$item->id}}").hover(function(){
                                         $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
                                     }, function(){
@@ -899,7 +899,7 @@
                                     data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
                                     class="icon btn-icon-app itemhorver{{$item->id}}"
                                     style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
-                                <script>
+                                <script @cspNonce>
                                     $(".itemhorver{{$item->id}}").hover(function(){
                                                 $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
                                                 }, function(){
@@ -928,7 +928,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     $(function () {
      $('[data-toggle="tooltip"]').tooltip()
     })
@@ -984,7 +984,7 @@
    
 </script>
 
-<script>
+<script @cspNonce>
     $(document).ready(function () {
         $("#slide-banner-products").owlCarousel({
             loop: true,

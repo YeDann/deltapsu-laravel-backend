@@ -785,12 +785,12 @@
 
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-<script>
+<script @cspNonce>
     $('.js-example-basic-single').select2({
         placeholder: '{{$staticContent['Model_Name']}}'
     });
 </script>
-<script type="text/javascript">
+<script type="text/javascript" @cspNonce>
     $(document).ready(function () {
         $("#slide-banner-products-type").owlCarousel({
             navigation: true,
@@ -802,7 +802,7 @@
 
     });
 </script>
-<script type="text/javascript">
+<script type="text/javascript" @cspNonce>
     /**
      *
      * 1. 初始化與篩選邏輯

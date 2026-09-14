@@ -271,7 +271,7 @@
 @endsection
 
 @section('js')
-<script>
+<script @cspNonce>
 $(function () {
     var $cards = $('.fd-card');
     var activeContinent = $('#fd-region-tabs .fd-region-tab.active').data('continent');

@@ -374,7 +374,7 @@
 
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-<script>
+<script @cspNonce>
     $('.js-example-basic-single').select2({
         placeholder: 'Model Name'
     });
@@ -382,7 +382,7 @@
         placeholder: 'Search By Tag'
     });
 </script>
-<script>
+<script @cspNonce>
     var series =  <?= json_encode($series);?>;
         var products =  <?= json_encode($products);?>;
         var tags_data =  <?= json_encode($Protags);?>;

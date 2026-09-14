@@ -226,7 +226,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function playyourtest(){
        var link =  $('#linkyoutube').val();
        var regex = RegExp('https://youtu.be/');

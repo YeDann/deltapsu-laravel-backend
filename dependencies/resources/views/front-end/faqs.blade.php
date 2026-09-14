@@ -137,7 +137,7 @@
 
 
 @section('js')
-<script>
+<script @cspNonce>
     var faqs = <?= json_encode($faqs);?>;
      
     $(document).ready(function () {

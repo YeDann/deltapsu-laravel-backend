@@ -218,7 +218,7 @@ function getDateformat($date){
 @endsection
 
 @section('js')
-<script>
+<script @cspNonce>
     var currentCateId = 1; // เก็บ category id ปัจจุบัน
     var margeting = <?= json_encode($margeting);?>;
 

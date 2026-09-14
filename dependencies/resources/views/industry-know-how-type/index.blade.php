@@ -79,7 +79,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteIndustryKnowHowType(id) {
         swal({
             title: "Confirm Delete",

@@ -83,7 +83,7 @@
 
 
     @section('js')
-    <script>
+    <script @cspNonce>
         function comfirmNewPass()
     {
         //Store the password field objects into variables ...
@@ -110,7 +110,7 @@
     
    
     </script>
-    <script>
+    <script @cspNonce>
         function resetPassFunction(){
     var  formData = {
                     'pin': $("#pin").val(),

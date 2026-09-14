@@ -171,7 +171,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
   function editContent(id , model ,remark){
      $('#itemId').val(id);
      $('#modelName').val(model);

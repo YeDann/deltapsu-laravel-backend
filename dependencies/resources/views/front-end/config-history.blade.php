@@ -208,7 +208,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     $( document ).ready(function() {
         $(".moreBox").slice(0, 8).show();
     });

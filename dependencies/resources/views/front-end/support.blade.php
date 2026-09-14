@@ -380,7 +380,7 @@
 @section('js')
 
 
-<script type="text/javascript">
+<script type="text/javascript" @cspNonce>
     function onacceptionPolicy(){
         $('#acceptcookiebot').click();
       }
@@ -399,7 +399,7 @@
       }
 </script>
 
-<script>
+<script @cspNonce>
     $('select').change(function(){
              $(this).parent().attr('style','--color:'+$(this).find(':selected').data('color'));
         })

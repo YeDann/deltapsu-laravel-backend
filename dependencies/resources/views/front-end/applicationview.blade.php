@@ -112,11 +112,11 @@
 
 
 @section('js')
-<script>
+<script @cspNonce>
 
 
 </script>
-<script>
+<script @cspNonce>
     $(document).ready(function () {
         $('#nav-two').removeClass('scrolled');
     });

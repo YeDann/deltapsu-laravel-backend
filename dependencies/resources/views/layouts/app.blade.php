@@ -77,7 +77,7 @@
         </main>
     </div>
 
-<script>
+<script @cspNonce>
     // 取代登出連結上原本的 inline onclick（CSP 目標為移除 script-src 的 unsafe-inline）。
     // 此 layout 未載入 jQuery，故用原生事件委派。
     document.addEventListener('click', function (e) {

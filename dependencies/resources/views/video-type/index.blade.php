@@ -79,7 +79,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteVideoType(id) {
         swal({
             title: "Confirm Delete",

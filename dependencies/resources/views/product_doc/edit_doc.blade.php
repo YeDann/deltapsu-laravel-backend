@@ -187,7 +187,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     $(document).on('change', '.custom-file-input', function () {
         // alert(this.files[0].size);
         var FileSize = this.files[0].size / 1024 / 1024; // in MB
@@ -198,7 +198,7 @@
         };
     }
 </script>
-<script>
+<script @cspNonce>
  
     var doc_has_pros = <?= json_encode($doc_has_pros);?>;
     $(document).ready(function() {

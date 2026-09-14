@@ -289,7 +289,7 @@
 
 @section('js')
 
-<script>
+<script @cspNonce>
     var today = new Date();
     var isYears = today.getFullYear();
     document.getElementById("count-year").innerHTML = isYears;

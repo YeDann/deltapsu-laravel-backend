@@ -146,7 +146,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function getFiler(){
         var value =  $('#pro_categories').val();
         if(value == 0){

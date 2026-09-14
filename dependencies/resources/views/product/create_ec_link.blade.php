@@ -97,7 +97,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
 $(document).ready(function() {
     $('.js-select2').select2({
         placeholder: "Choose products..",

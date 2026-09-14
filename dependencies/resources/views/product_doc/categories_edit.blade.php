@@ -110,7 +110,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     $(document).on('change', '#file_input', function () {
         // alert(this.files[0].size);
         var FileSize = this.files[0].size / 1024 / 1024; // in MB
