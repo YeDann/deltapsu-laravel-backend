@@ -79,7 +79,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteEolType(id) {
         swal({
             title: "Confirm Delete",

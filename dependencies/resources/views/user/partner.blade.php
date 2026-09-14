@@ -118,7 +118,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function checkdata(id){
         $.ajax({
                 url: "{{ (route('updatestatuspartner')) }}/" + id,
@@ -134,7 +134,7 @@
             });
     }
 </script>
-<script>
+<script @cspNonce>
     function ondelelete(id){
        $('#itemId').val(id);
     }

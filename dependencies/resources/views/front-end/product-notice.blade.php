@@ -362,7 +362,7 @@ function getDateformat($date){
 
 
 @section('js')
-<script>
+<script @cspNonce>
     var news_type =  <?= json_encode($news_type);?>;
     function selectDataProductNotice(){
         var value_tab = document.getElementById("select-product-notice").value;

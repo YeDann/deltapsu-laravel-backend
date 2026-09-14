@@ -736,7 +736,7 @@
 
 
                     @section('js')
-                    <script>
+                    <script @cspNonce>
                         $(document).ready(function() {
         $("#slide-application").owlCarousel({
             loop: true,

@@ -102,7 +102,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteEol(id) {
         swal({
             title: "Confirm Delete",

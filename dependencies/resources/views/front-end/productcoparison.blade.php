@@ -399,7 +399,7 @@
 
 @section('js')
 
-<script>
+<script @cspNonce>
     $("#collapse-output").collapse('show');
      $("#collapse-input").collapse('show');
      $("#collapse-mechanical").collapse('show');

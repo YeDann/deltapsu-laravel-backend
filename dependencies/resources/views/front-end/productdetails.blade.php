@@ -941,7 +941,7 @@
                                     data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
                                     class="icon btn-icon-app itemhorver{{$item->id}}"
                                     style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
-                                <script>
+                                <script @cspNonce>
                                     $(".itemhorver{{$item->id}}").hover(function(){
                                                 $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
                                                 }, function(){
@@ -1241,7 +1241,7 @@
                                     data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
                                     class="icon btn-icon-app itemhorver{{$item->id}}"
                                     style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
-                                <script>
+                                <script @cspNonce>
                                     $(".itemhorver{{$item->id}}").hover(function(){
                                                 $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
                                                 }, function(){
@@ -1914,7 +1914,7 @@
 
 
 @section('js')
-<script>
+<script @cspNonce>
     function viewKey(key){
             var newkey = key.replace(/[/]/g,'@');
               event.preventDefault();
@@ -1926,7 +1926,7 @@
               window.location = '{{route('productsDetailsByType' ,['cateid'=> preg_replace('/\s+/', '-', $product[0]['url_item']) ,'pro_code' => setTextpro($product[0]['pro_code']) ])}}?optional_model='+newkey;
     }
 </script>
-<script>
+<script @cspNonce>
     $(function () {
      $('[data-toggle="tooltip"]').tooltip()
     })
@@ -2019,7 +2019,7 @@
         });
 </script>
 
-<script>
+<script @cspNonce>
     @if(Session::has('messageGUI'))
         $(document).ready(function() {
             var file =  '{{Session::get('messageGUI')}}';

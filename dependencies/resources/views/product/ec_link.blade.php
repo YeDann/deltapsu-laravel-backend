@@ -86,7 +86,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
 $(document).ready(function () {
     $('#dataTables').DataTable({
         "paging": true,

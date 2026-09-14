@@ -77,7 +77,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteIndex(id) {
         swal({
             title: "Confirm Delete",

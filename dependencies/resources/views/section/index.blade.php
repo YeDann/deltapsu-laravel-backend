@@ -152,7 +152,7 @@
 <!--End Modal Language-->
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteSection(id) {
         swal({
             title: "Confirm Delete",

@@ -92,7 +92,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
       function selectnumber(id){
            if(id == 1){
             $('#unitinput').addClass('d-none');

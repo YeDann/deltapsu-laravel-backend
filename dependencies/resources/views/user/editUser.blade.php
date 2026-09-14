@@ -200,7 +200,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
 function validateInput() {
     var pass = $('#password').val();
     var confipass = $('#password-confirm').val();

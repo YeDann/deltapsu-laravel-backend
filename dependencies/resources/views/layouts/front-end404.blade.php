@@ -221,7 +221,7 @@ $shareData->handle($request, function ($req) { return $req; });
             font-family: 'DeltaSans' !important;
         }
     </style>
-    <script>
+    <script @cspNonce>
         window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments)};
     // console.log('test')
@@ -244,16 +244,19 @@ $shareData->handle($request, function ($req) { return $req; });
     <script src="{{asset('/frontend-asset/js/jquery-3.7.1.min.js')}}"></script>
 
     <!-- Google Tag Manager -->
-    <script async defer>
+    <script async defer @cspNonce>
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+          // 把本次請求的 nonce 掛到 gtm.js 上，GTM 會傳遞給自己注入的標籤
+          j.setAttribute('nonce','{{ $cspNonce ?? '' }}');
+          f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','GTM-MKT8KMQ6');
     </script>
     <!-- End Google Tag Manager -->
 
-    <script type="text/javascript">
+    <script type="text/javascript" @cspNonce>
         function cwcCookieWrapper() {
       if (window?.cwcIsUserAccept === undefined) return
       // console.log(window.cwcIsUserAccept('analytics'),'window.cwcIsUserAccep');
@@ -331,7 +334,7 @@ $shareData->handle($request, function ($req) { return $req; });
     <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
     </script>
-    <script>
+    <script @cspNonce>
         if ('loading' in HTMLImageElement.prototype) {
     const images = document.querySelectorAll('img[loading="lazy"]');
     images.forEach(img => {
@@ -355,7 +358,7 @@ $shareData->handle($request, function ($req) { return $req; });
   }
     </script>
 
-    <script type="text/javascript">
+    <script type="text/javascript" @cspNonce>
         var verifyCallbackData = function(response) {
       $('#keyrecapgui').val(response);
     };
@@ -443,7 +446,7 @@ $shareData->handle($request, function ($req) { return $req; });
 
     @yield('js')
 
-    <script>
+    <script @cspNonce>
         // https://tc39.github.io/ecma262/#sec-array.prototype.findIndex
 if (!Array.prototype.findIndex) {
   Object.defineProperty(Array.prototype, 'findIndex', {
@@ -489,7 +492,7 @@ if (!Array.prototype.findIndex) {
   });
 }
     </script>
-    <script>
+    <script @cspNonce>
         var w = document.documentElement.clientWidth;
         var h = document.documentElement.clientHeight;
 
@@ -509,7 +512,7 @@ if (!Array.prototype.findIndex) {
          return false;
        });
     </script>
-    <script>
+    <script @cspNonce>
         function subscribe() {
               document.getElementById("inp3").focus();
               $('#cxacceptPrivacy_data').val(0);
@@ -534,7 +537,7 @@ if (!Array.prototype.findIndex) {
             });
     </script>
 
-    <script>
+    <script @cspNonce>
         /* navbar */
               $('#nav-two').addClass('scrolled');
             $(document).ready(function() {
@@ -582,7 +585,7 @@ if (!Array.prototype.findIndex) {
 
 
     </script>
-    <script>
+    <script @cspNonce>
         $('.btn-sidenav').css('visibility','hidden');
 
          function toggle_visibility(id) {
@@ -678,13 +681,13 @@ if (!Array.prototype.findIndex) {
             document.getElementById("filterMobileClose").style.display ="none";
           }
     </script>
-    <script>
+    <script @cspNonce>
         $('select[name*="state"]').prop('disabled', true);
         $('select[name*="country"]').on('change', function() {
           $('select[name*="state"]').prop('disabled', false);
         });
     </script>
-    <script>
+    <script @cspNonce>
         $("#nav-comparison").hide();
         $("#nav-comparison-mobile").hide();
 
@@ -841,7 +844,7 @@ if (!Array.prototype.findIndex) {
         }
 
     </script>
-    <script>
+    <script @cspNonce>
         $( "#formseachall" ).submit(function( event ) {
               var key = $('#searchinput').val();
               var newkey = key.replace(/[/]/g,'@');
@@ -858,7 +861,7 @@ if (!Array.prototype.findIndex) {
 
 
     </script>
-    <script>
+    <script @cspNonce>
         $(document).ready(function() {
             //  checkCookie();
           });
@@ -925,7 +928,7 @@ if (!Array.prototype.findIndex) {
 
           }
     </script>
-    <script>
+    <script @cspNonce>
         $("div.sp-dropdown" ).on("mouseleave", function() {
              $('#nav-uderline').removeClass('active');
               $('.sp-dropdown').removeClass('show');
@@ -935,7 +938,7 @@ if (!Array.prototype.findIndex) {
         })
 
     </script>
-    <script>
+    <script @cspNonce>
         function downloadGUI(file , procode ,proCate){
           $('#procodeGui').val(procode);
           $('#procateGui').val(proCate);
@@ -987,7 +990,7 @@ if (!Array.prototype.findIndex) {
         @endif
 
     </script>
-    <script>
+    <script @cspNonce>
         navigator.sayswho= (function(){
             var ua= navigator.userAgent, tem,
             M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];

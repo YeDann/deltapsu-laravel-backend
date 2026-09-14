@@ -130,7 +130,7 @@
         ? $stockLockedCountries[0]
         : (['tw' => 'TW', 'cn' => 'CN', 'jp' => 'JP', 'de' => 'DE', 'tr' => 'TR'][app()->getLocale()] ?? '');
 @endphp
-<script>
+<script @cspNonce>
     // 兩層（洲→國）篩選用：洲代碼 → 在地洲名（intl 無法在地化洲名，故改用後台靜態字；未知洲 fallback DILP 英文）
     var stockRegionLabels = {
         'AM': '{{ addslashes($staticContent['Stock_region_am'] ?? 'North America') }}',

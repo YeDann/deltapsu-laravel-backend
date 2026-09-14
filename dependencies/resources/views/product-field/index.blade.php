@@ -162,7 +162,7 @@
 <!--End Modal Language-->
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteProductfield(id) {
         swal({
             title: "Confirm Delete",

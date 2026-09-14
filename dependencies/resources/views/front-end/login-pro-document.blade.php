@@ -267,12 +267,12 @@
 
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-<script>
+<script @cspNonce>
     $('.js-example-basic-single').select2({
         placeholder: '{{$staticContent['Search_By_Model_Name']}}'
 });
 </script>
-<script>
+<script @cspNonce>
     var series =  <?= json_encode($series);?>;
         var products =  <?= json_encode($products);?>;
         var domainUrl = '{{config('app.url')}}';

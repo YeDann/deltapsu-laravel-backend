@@ -119,7 +119,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function checkdata(id){
         $.ajax({
                 url: "{{ (route('updatestatusbackend')) }}/" + id,

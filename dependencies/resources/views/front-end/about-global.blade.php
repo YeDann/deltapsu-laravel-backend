@@ -141,7 +141,7 @@
 
 
 @section('js')
-<script type="text/javascript">
+<script type="text/javascript" @cspNonce>
     $(function(){
      var fp_ratio = 1.9259,
          img_fp = $('img.img-line'),

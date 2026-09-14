@@ -77,7 +77,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function taskRequest(task){
       $('#td_'+task).addClass('tick_ok-downloading');
       $('#btn_add_otg'+task).addClass('d-none');

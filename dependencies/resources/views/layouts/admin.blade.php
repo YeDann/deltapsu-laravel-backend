@@ -201,7 +201,7 @@
     <script
         src="https://cdn.jsdelivr.net/npm/@dsvllc/summernote-image-attributes@1.0.0/summernote-image-attributes.min.js">
     </script>
-    <script>
+    <script @cspNonce>
         jQuery(function () {
             Dashmix.helpers(['datepicker', 'colorpicker', 'select2', 'summernote']);
         });
@@ -233,7 +233,7 @@
         }
     </style>
 
-    <script>
+    <script @cspNonce>
         // Inline 事件屬性（寫在標籤上的 onclick 等）的通用替代，目的是移除 CSP 的 'unsafe-inline'。
         // 與前台 layouts/front-end 使用同一份實作：
         //   data-fn-<事件> 放全域函式名；data-fn-args 放 json_encode 出來的引數陣列
@@ -296,7 +296,7 @@
 
     @yield('js')
 
-    <script>
+    <script @cspNonce>
         $(document).on('change', '.note-image-input', function () {
 
             var FileSize = this.files[0].size / 1024 / 1024; // in MB
@@ -314,7 +314,7 @@
 });
     </script>
     --}}
-    <script>
+    <script @cspNonce>
         $(document).ready(function () {
             $('.jsnotenew').summernote({
                 height: 400,

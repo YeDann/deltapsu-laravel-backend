@@ -393,14 +393,14 @@
 @section('js')
 <script type="text/javascript" src="{{asset('/frontend-asset/js/dropzone.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-<script>
+<script @cspNonce>
     $(document).ready(function() {
     $('.js-example-basic-multiple').select2({
         placeholder: "Select Models",
     });
 });
 </script>
-<script>
+<script @cspNonce>
     var image = [];
     Dropzone.autoDiscover = false;
     var myDropzone = new Dropzone("#my-awesome-dropzone", { 

@@ -182,7 +182,7 @@
 </div>
 @endsection
 @section('js')
-<script type="text/javascript">
+<script type="text/javascript" @cspNonce>
     function countCharacter(id){
            var str = $('#input-'+id).val();
           $('#count-'+id).text(str.length);

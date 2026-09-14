@@ -27,7 +27,11 @@ class ContentSecurityPolicy
 
         $cspDirectives = [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' https://*.google.com https://*.googleapis.com https://*.googletagmanager.com https://*.gstatic.com https://cdn.jsdelivr.net https://code.jquery.com https://cdnjs.cloudflare.com https://cookiecdn.com https://snap.licdn.com https://*.youtube.com https://s.ytimg.com https://*.youtube-nocookie.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://sc.lfeeder.com",
+            // 已移除 'unsafe-inline'：站內 inline <script> 一律由 @cspNonce 帶上本次請求的 nonce，
+            // 事件屬性（onclick 等）已全面改為 data-fn-* 事件委派。白名單網域不受 nonce 影響，照常放行。
+            "script-src 'self' 'nonce-{$nonce}' https://*.google.com https://*.googleapis.com https://*.googletagmanager.com https://*.gstatic.com https://cdn.jsdelivr.net https://code.jquery.com https://cdnjs.cloudflare.com https://cookiecdn.com https://snap.licdn.com https://*.youtube.com https://s.ytimg.com https://*.youtube-nocookie.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://sc.lfeeder.com",
+            // style-src 暫時保留 'unsafe-inline'：後台所見即所得編輯器產生的 style="" 存在資料庫
+            // （約 9400 筆內容），不在程式碼內、無法以 nonce 覆蓋（nonce 對屬性無效）。
             "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
             "img-src 'self' data:{$dev} https://*.google.com https://*.google.com.tw https://*.googleapis.com https://*.youtube.com https://*.ytimg.com https://*.linkedin.com https://cookiecdn.com https://*.deltapsu.com https://filecenter.deltaww.com https://*.googletagmanager.com https://www.gstatic.com https://*.youtube-nocookie.com https://*.lfeeder.com",
             "font-src 'self' https://filecenter.deltaww.com",

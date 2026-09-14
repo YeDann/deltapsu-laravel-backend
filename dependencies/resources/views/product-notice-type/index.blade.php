@@ -78,7 +78,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteProductNoticeType(id) {
         swal({
             title: "Confirm Delete",

@@ -430,7 +430,7 @@ function retextdata($arr ,$unit){
                                 data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
                                 class="icon btn-icon-app itemhorver{{$item->id}}"
                                 style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
-                            <script>
+                            <script @cspNonce>
                                 $(".itemhorver{{$item->id}}").hover(function(){
                                             $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
                                             }, function(){
@@ -506,7 +506,7 @@ function retextdata($arr ,$unit){
                                 data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
                                 class="icon btn-icon-app itemhorver{{$item->id}}"
                                 style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
-                            <script>
+                            <script @cspNonce>
                                 $(".itemhorver{{$item->id}}").hover(function(){
                                             $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
                                             }, function(){
@@ -891,7 +891,7 @@ function retextdata($arr ,$unit){
 @endsection
 @section('js')
 
-<script>
+<script @cspNonce>
     $(document).ready(function () {
         $('#nav-two').removeClass('scrolled');
 
@@ -952,7 +952,7 @@ function retextdata($arr ,$unit){
     });
 
 </script>
-<script>
+<script @cspNonce>
     $.fn.moveIt = function () {
         var $window = $(window);
         var instances = [];
@@ -985,7 +985,7 @@ function retextdata($arr ,$unit){
     });
 
 </script>
-<script>
+<script @cspNonce>
     $(document).ready(function () {
         $("#producttype").owlCarousel({
             loop: false,

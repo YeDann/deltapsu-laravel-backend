@@ -88,7 +88,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteLanguage(id) {
         swal({
             title: "Confirm Delete",

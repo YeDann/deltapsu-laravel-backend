@@ -106,7 +106,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteNews(id) {
         swal({
             title: "Confirm Delete",

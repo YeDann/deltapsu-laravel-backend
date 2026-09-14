@@ -184,7 +184,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function edit(id ,name, fulname){
         //  console.log(id);
          $('#langId').val(id);

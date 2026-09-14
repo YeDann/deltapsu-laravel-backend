@@ -322,7 +322,7 @@ function getDateformat($date){
 @section('js')
 
 <script type="text/javascript" src="{{asset('/frontend-asset/js/pdfjs/pdf.min.js')}}"></script>
-<script>
+<script @cspNonce>
     // PDF.js worker 自帶同源（CSP worker-src 會 fallback 到 default-src 'self'，不能吃 CDN）
     if (window.pdfjsLib) { pdfjsLib.GlobalWorkerOptions.workerSrc = '{{asset('/frontend-asset/js/pdfjs/pdf.worker.min.js')}}'; }
     function selectdocumentType(){

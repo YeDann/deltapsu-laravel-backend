@@ -843,12 +843,14 @@ html[html_lang="en"] [data-i18n="hero.upcomingLabel"], html[html_lang="jp"] [dat
     .pill-din-pro:hover { background: rgba(5,163,247,0.22) !important; border-color: #05a3f7 !important; }
     .pill-din-eco:hover { background: rgba(0,241,205,0.2) !important; border-color: #00f1cd !important; }
 </style>
-<script>window._serverLang = '{{ $htmlLang }}'; window._csrfToken = '{{ csrf_token() }}'; window._locale = '{{ App::getLocale() }}';</script>
+<script @cspNonce>window._serverLang = '{{ $htmlLang }}'; window._csrfToken = '{{ csrf_token() }}'; window._locale = '{{ App::getLocale() }}';</script>
 <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<script @cspNonce>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+j.setAttribute('nonce','{{ $cspNonce ?? '' }}');
+f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-MKT8KMQ6');</script>
 <!-- End Google Tag Manager -->
 </head>
@@ -860,7 +862,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MKT8KMQ6"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-<script>
+<script @cspNonce>
 function subscribe(){document.getElementById("inp3").focus();$('#cxacceptPrivacy_data').val(0);$("#cxacceptPrivacy_data").prop("checked",false);}
 function toggle_visibility(id){var e=document.getElementById(id);if(e.style.visibility=='visible'){$('#in-sidenav').css('visibility','visible');e.style.visibility='hidden';}else{e.style.visibility='visible';$('#in-sidenav').css('visibility','hidden');}}
 function toggle_only(e,id){e.preventDefault();e.stopPropagation();toggle_visibility(id);}
@@ -1128,7 +1130,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 </div>
 </div>
 </div>
-<script>
+<script @cspNonce>
 (function syncHeroCountdown() {
   function tick() {
     var _l = document.documentElement.lang;
@@ -1159,7 +1161,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
   tick();
   setInterval(tick, 1000);
 })();
-</script><!-- mini video player removed --><script>
+</script><!-- mini video player removed --><script @cspNonce>
 (function initMiniPlayer() {
   // disabled
   return;
@@ -1389,7 +1391,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 
 <div style="position:absolute;bottom:0;left:0;width:100%;height:2px;background:#05a3f7;pointer-events:none;">&nbsp;</div>
 </div>
-<script>
+<script @cspNonce>
 (function() {
   var ytPlayer = null;
   var playerReady = false;
@@ -2147,7 +2149,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 <div class="uk-margin"><label class="notify-checkbox"><input id="nf-agree" type="checkbox" /> <span data-i18n="notify.agree">I agree to receive updates and marketing communications</span></label> <span class="cf-error" id="nf-agree-err"></span></div>
 <div class="uk-margin"><label class="notify-checkbox"><input id="py-agree" type="checkbox" /> <span data-i18n="notify.privacyAgree">I have read and agree to the <a href="https://psu.deltaww.com/en/etc/privacy-policy" target="_blank" style="color:#05a3f7;">Privacy Policy</a>.</span></label> <span class="cf-error" id="py-agree-err"></span></div>
 <button class="btn-cyber uk-width-1-1" data-i18n="notify.subscribe" id="notify-submit-btn" type="button">SUBSCRIBE NOW</button></form>
-<script>
+<script @cspNonce>
 document.getElementById('notify-submit-btn').addEventListener('click', function() {
   var lang = document.documentElement.lang || 'en';
   var msgRequired = lang === 'zh-TW' ? '此欄位為必填' : lang === 'zh-CN' ? '此字段为必填项' : lang === 'ja' ? 'この項目は必須です' : 'This field is required';
@@ -2418,7 +2420,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 </style>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit-icons.min.js"></script>
-<script>
+<script @cspNonce>
 (function(){
   function tick(){
     var _l = document.documentElement.lang;
@@ -2447,7 +2449,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
   document.addEventListener('DOMContentLoaded', function(){ tick(); setInterval(tick,1000); });
 })();
 </script>
-<script>
+<script @cspNonce>
 (function() {
   'use strict';
 
@@ -3121,7 +3123,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 <script src="{{ asset('frontend-asset/js/popper.min.js') }}"></script>
 <script src="{{ asset('frontend-asset/js/bootstrap.min.js') }}"></script>
 
-<script>
+<script @cspNonce>
     // 這頁是獨立 HTML（不套用 layouts/front-end），故在此自帶一份 data-fn-* 事件委派。
     // 內容與 layout 版本一致：用 JSON.parse 而非 eval，"$event" / "$this" 會被代換。
     ['click', 'change', 'keyup', 'keydown', 'submit', 'input', 'focus', 'blur', 'mouseover', 'mouseout'].forEach(function (evt) {

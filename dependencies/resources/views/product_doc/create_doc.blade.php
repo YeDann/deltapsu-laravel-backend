@@ -105,7 +105,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function checkmaxsize(id ,lableid){
         console.log(lableid);
        var file =  $('#'+id)[0].files[0];
@@ -121,7 +121,7 @@
 
     }
 </script>
-<script>
+<script @cspNonce>
     function selectDocCate() {
       var cateid = $("#catedocId").val();
         $.ajax({
