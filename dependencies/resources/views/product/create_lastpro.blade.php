@@ -32,7 +32,7 @@
                         <span class="req-fed">*Plase select option</span>
                         <div class="form-group">
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="radio" class="custom-control-input" onchange="selectdataOption(1);"
+                                <input type="radio" class="custom-control-input" data-fn-change="selectdataOption" data-fn-args='[1]'
                                     id="status-1" name="status" value="1" required>
                                 <label class="custom-control-label" for="status-1">1. Auto System push Product to Banner
                                     Option</label>
@@ -52,7 +52,7 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                                <input type="radio" class="custom-control-input" onchange="selectdataOption(2);"
+                                <input type="radio" class="custom-control-input" data-fn-change="selectdataOption" data-fn-args='[2]'
                                     id="status-2" name="status" value="2" required>
                                 <label class="custom-control-label" for="status-2">2. Customize Option</label>
                             </div>

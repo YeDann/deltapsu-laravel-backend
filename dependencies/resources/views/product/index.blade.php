@@ -91,8 +91,8 @@
                             Models</a>
 
                         <a href="{{route('editproduct' ,$item->pro_id)}}" class="btn btn-primary mt-2">Edit</a>
-                        <button type="button" class="btn btn-danger mt-2" onclick="ondelelete({{$item->pro_id}});"
-                            data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                        <button type="button" class="btn btn-danger mt-2 js-delete-item"
+                            data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item->pro_id}}">Delete</button>
 
                     </td>
                     </tr>

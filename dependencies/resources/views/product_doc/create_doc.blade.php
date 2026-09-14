@@ -43,7 +43,7 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label for="example-select"><span class="req-fed">*</span> Select Document Types</label>
-                            <select class="js-select2 form-control" id="catedocId" onchange="selectDocCate();"
+                            <select class="js-select2 form-control" id="catedocId" data-fn-change="selectDocCate"
                                 name="doc_categories" data-placeholder="Choose one.." required>
                                 <option></option>
                                 @foreach ($categories as $main)
@@ -67,7 +67,7 @@
                             <label for="example-select">File <span class="req-fed">* Max File Size 80 MB</span></label>
                             <div class="custom-file " style="width:100%;">
                                 <input type="file" class="custom-file-input" id="file_input{{$item->name}}"
-                                    onchange="checkmaxsize(`file_inputen` ,'file_lableen')" name="fileGU[en]"
+                                    data-fn-change="checkmaxsize" data-fn-args='["file_inputen","file_lableen"]' name="fileGU[en]"
                                     data-toggle="custom-file-input">
                                 <label class="custom-file-label file_lableen" for="fileImage">Choose file</label>
                             </div>

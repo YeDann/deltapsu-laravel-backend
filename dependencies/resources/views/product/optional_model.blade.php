@@ -72,9 +72,10 @@
           <td class="text-center">
 
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-block-update-optional"
-              onclick="editContent({{$item->id}} ,'{{$item->optional_model}}','{{$item->remark}}')">Edit</button>
-            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});" data-toggle="modal"
-              data-target="#modal-block-delete-file">Delete</button>
+              data-fn-click="editContent" data-fn-args='[{{$item->id}},{{ json_encode($item->optional_model) }},{{ json_encode($item->remark) }}]'>Edit</button>
+            <button type="button" class="btn btn-danger js-delete-item" data-toggle="modal"
+              data-target="#modal-block-delete-file" data-id="{{$item->id}}"
+              data-target-field="itemIdDelete">Delete</button>
 
           </td>
           </tr>

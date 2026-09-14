@@ -34,7 +34,7 @@
                             <i class="far fa-fw fa-user mr-1"></i> Profile
                         </a>
                         <div role="separator" class="dropdown-divider"></div>
-                        <a href="{{ route('logout') }}"  class="dropdown-item" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+                        <a href="{{ route('logout') }}"  class="dropdown-item js-submit-form" data-form-target="frm-logout">
                                 <i class="far fa-fw fa-arrow-alt-circle-left mr-1"></i> Sign Out
                         </a>
                         <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">

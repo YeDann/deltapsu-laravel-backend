@@ -72,7 +72,7 @@
                             <a href="{{route('editEcLink', $item->id)}}" class="btn btn-primary" title="Edit">
                                 Edit
                             </a>
-                            <button type="button" class="btn btn-danger" data-toggle="tooltip" title="Delete" onclick="deleteEcLink({{$item->id}})">
+                            <button type="button" class="btn btn-danger" data-toggle="tooltip" title="Delete" data-fn-click="deleteEcLink" data-fn-args='[{{$item->id}}]'>
                                 Delete
                             </button>
                         </td>

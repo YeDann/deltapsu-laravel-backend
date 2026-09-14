@@ -43,7 +43,7 @@
     <div class="block block-rounded block-bordered">
         <div class="block-header block-header-default">
             <div class="Absolute-Center">
-                <select onchange="getFiler()" class="js-select2 form-control" id="pro_categories" name="categories_doc"
+                <select data-fn-change="getFiler" class="js-select2 form-control" id="pro_categories" name="categories_doc"
                     data-placeholder="Filter By.." required>
                     <option></option>
                     <option value="0" {{isset($selecValue) && $selecValue=='All' ? 'selected' :'' }}>All</option>

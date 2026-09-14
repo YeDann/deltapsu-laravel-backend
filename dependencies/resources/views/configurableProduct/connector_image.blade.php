@@ -61,7 +61,7 @@
                     <tr>
                        <td class="text-center">{{$item->code}}</td>
                         <td class="text-center">
-                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                            <button type="button" class="btn btn-danger js-delete-item" data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item->id}}">Delete</button>
                             <a href="{{route('edit_connectorimage' ,[$productId ,$item->id])}}" class="btn btn-primary">Edit</a>
                         </td>
                     </tr>

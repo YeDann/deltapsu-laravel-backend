@@ -63,9 +63,9 @@
                     <td class="text-center">{{$loop->iteration}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->month}}</td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-info" onclick="onedit({{$item->pl_m_id}});">Edit</button>
+                        <button type="button" class="btn btn-info" data-fn-click="onedit" data-fn-args='[{{$item->pl_m_id}}]'>Edit</button>
                         <a href="{{route('launch_datail',$item->pl_m_id)}}" class="btn btn-outline-info">Product Launch Deatail</a>
-                        <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->pl_m_id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                        <button type="button" class="btn btn-danger js-delete-item" data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item->pl_m_id}}">Delete</button>
                     </td>
                     </tr>
                     @endforeach

@@ -62,8 +62,8 @@
                     <td class="d-none d-sm-table-cell">{{$item->name}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->full_name}}</td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-primary" onclick="edit({{$item->id}} ,'{{$item->name}}','{{$item->full_name}}' );" data-toggle="modal" data-target="#modal-block-edit">Edit</button>
-                        <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}},'{{$item->name}}');" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                        <button type="button" class="btn btn-primary" data-fn-click="edit" data-fn-args='[{{$item->id}},{{ json_encode($item->name) }},{{ json_encode($item->full_name) }}]' data-toggle="modal" data-target="#modal-block-edit">Edit</button>
+                        <button type="button" class="btn btn-danger js-delete-item" data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item->id}}" data-name="{{$item->name}}">Delete</button>
                        
                     </td>
                     </tr>

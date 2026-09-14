@@ -158,7 +158,7 @@
                             <span>Recommended 70-155 Character</span>
                             <div id="item-wrap">
                                 <textarea rows="4" id="input-metaDescription-en"
-                                    onkeyup="countCharacter('metaDescription-en')" name="metaDescription"
+                                    data-fn-keyup="countCharacter" data-fn-args='["metaDescription-en"]' name="metaDescription"
                                     class="form-control"></textarea>
                                 <div class="text-count">Count Character :
                                     <span id="count-metaDescription-en">

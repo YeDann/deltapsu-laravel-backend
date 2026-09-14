@@ -82,7 +82,7 @@
 
                             <a href="{{route('technical.edit',$item->id)}}" class="btn btn-primary">Edit  </a>
                             <button type="button" class="btn btn-danger" data-toggle="tooltip" id="delbutton"
-                                title="Delete" onclick="deleteIndex({{$item->id}})">
+                                title="Delete" data-fn-click="deleteIndex" data-fn-args='[{{$item->id}}]'>
                                 Delete 
                             </button>
                         </div>

@@ -68,11 +68,11 @@
                     <td class="text-center">
                         <div class="btn-group">
                             <button class="btn btn-secondary btn-sm"  
-                                data-target="#modal-block-popin-2"  data-toggle="modal" onclick="sendId({{$item->contact_zone_id}})" >Duplicate <i class="far fa-clone"></i> </button>
+                                data-target="#modal-block-popin-2"  data-toggle="modal" data-fn-click="sendId" data-fn-args='[{{$item->contact_zone_id}}]' >Duplicate <i class="far fa-clone"></i> </button>
                                 <a href="{{route('contactzoneEdit',['id' =>$item->contact_zone_id,'type'=>$type ])}}" class="btn btn-primary btn-sm">Edit <i
                                     class="fa fa-pencil-alt"></i> </a>
                             <button type="button" class="btn btn-sm btn-danger" data-toggle="tooltip" id="delbutton"
-                                title="Delete" onclick="deleteIndex({{$item->contact_zone_id}})">
+                                title="Delete" data-fn-click="deleteIndex" data-fn-args='[{{$item->contact_zone_id}}]'>
                                 Delete <i class="fa fa-trash"></i>
                             </button>
                         </div>
