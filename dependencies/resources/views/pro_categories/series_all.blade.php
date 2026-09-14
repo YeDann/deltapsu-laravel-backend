@@ -69,7 +69,7 @@
                     <td class="text-center">
                         <div class="">
                                 <a href="{{route('editSeries' ,['id'=>$item->se_id ,'cateId'=>0 ])}}" class="btn btn-primary">Edit</a>
-                                <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->se_id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                                <button type="button" class="btn btn-danger js-delete-item" data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item->se_id}}">Delete</button>
                             </div>
                     </td>
                     </tr>

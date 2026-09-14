@@ -79,7 +79,7 @@
                    <td class="text-center">{{$item->order_sq}}</td>
                     <td class="d-none d-sm-table-cell">{{$item->title}}</td>
                     <td class="text-center">
-                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                            <button type="button" class="btn btn-danger js-delete-item" data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item->id}}">Delete</button>
                     </td>
                     </tr>
                     @endforeach

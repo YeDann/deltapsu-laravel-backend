@@ -66,13 +66,13 @@
                     <td class="text-center">
                         {{-- <a href="{{route('set' ,$item->sub_pro_id)}}" class="btn btn-primary">Show</a> --}}
                         <div class="custom-control custom-switch custom-control-lg mb-2">
-                                <input type="checkbox" class="custom-control-input" id="statusCate{{$item->id}}" onchange="checkdata({{$item->id}});"  {{($item->status== 1)?'checked':''}}  {{($item->name == 'en')?'disabled':''}}>
+                                <input type="checkbox" class="custom-control-input" id="statusCate{{$item->id}}" data-fn-change="checkdata" data-fn-args='[{{$item->id}}]'  {{($item->status== 1)?'checked':''}}  {{($item->name == 'en')?'disabled':''}}>
                         <label class="custom-control-label" id="lablestatusCate{{$item->id}}" for="statusCate{{$item->id}}">{{$item->status == 1?'Show':'Hide'}}</label>
                             </div>
                     </td>
                     <td class="text-center">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-danger"  onclick="deleteLanguage({{$item->id}})" {{$item->name == 'en'?'disabled':''}} >
+                            <button type="button" class="btn btn-sm btn-danger"  data-fn-click="deleteLanguage" data-fn-args='[{{$item->id}}]' {{$item->name == 'en'?'disabled':''}} >
                                 Delete 
                             </button>
                         </div>

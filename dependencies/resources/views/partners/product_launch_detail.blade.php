@@ -73,7 +73,7 @@
                     <td class="text-center">
                         <a href="{{route('pro_lauch_DetailEdit',[$headId,$item->re_id ])}}" class="btn btn-primary">Edit</a>
                  
-                        <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->re_id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                        <button type="button" class="btn btn-danger js-delete-item" data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item->re_id}}">Delete</button>
                     </td>
                     </tr>
                     @endforeach

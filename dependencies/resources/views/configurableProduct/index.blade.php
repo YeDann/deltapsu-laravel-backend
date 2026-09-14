@@ -69,7 +69,7 @@
                         <a href="{{route('ParallelConnection' ,$item->translate_id)}}" class="btn btn-primary mb-2">Parallel Connection(s)</a>
                        
                             <a href="{{route('editConfigProduct' ,$item->translate_id)}}" class="btn btn-primary mb-2">Edit</a>
-                            <button type="button" class="btn btn-danger mb-2" onclick="ondelelete({{$item->translate_id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                            <button type="button" class="btn btn-danger mb-2 js-delete-item" data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item->translate_id}}">Delete</button>
                        
                     </td>
                     </tr>

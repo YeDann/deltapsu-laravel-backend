@@ -56,9 +56,8 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item js-submit-form" href="{{ route('logout') }}"
+                                       data-form-target="logout-form">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -77,5 +76,17 @@
             @yield('content')
         </main>
     </div>
+
+<script>
+    // 取代登出連結上原本的 inline onclick（CSP 目標為移除 script-src 的 unsafe-inline）。
+    // 此 layout 未載入 jQuery，故用原生事件委派。
+    document.addEventListener('click', function (e) {
+        var a = e.target.closest ? e.target.closest('.js-submit-form') : null;
+        if (!a) { return; }
+        e.preventDefault();
+        var form = document.getElementById(a.getAttribute('data-form-target'));
+        if (form) { form.submit(); }
+    });
+</script>
 </body>
 </html>

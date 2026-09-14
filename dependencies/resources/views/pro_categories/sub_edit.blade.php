@@ -300,7 +300,7 @@
                     </div>
                     <div class="col-lg-8">
                         <label for="example-select"><span class="req-fed">*</span> Main Categories</label>
-                        <select onchange="orderAddPro();" class="js-select2 form-control" name="main_categories[]"
+                        <select data-fn-change="orderAddPro" class="js-select2 form-control" name="main_categories[]"
                             data-placeholder="Choose many.." multiple>
                             <option></option>
                             @foreach ($mainCategories as $main)

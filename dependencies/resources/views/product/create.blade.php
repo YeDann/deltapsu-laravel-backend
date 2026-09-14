@@ -141,7 +141,7 @@
                         {{-- <div class="form-group">
                             <label for="example-select"> <span class="req-fed">*</span></label>
                             <select class="js-select2 form-control" id="pro_categories" name="pro_categories"
-                                onchange="selectProductcategories()" data-placeholder="Choose one.." required>
+                                data-fn-change="selectProductcategories" data-fn-args="[]" data-placeholder="Choose one.." required>
                                 <option></option>
                                 @foreach($subCategories as $sub)
                                 <option value="{{$sub->sub_pro_id}}">{{$sub->name}}</option>
@@ -155,7 +155,7 @@
                             @foreach($subCategories as $sub)
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
                                 <input type="checkbox"
-                                    onclick="selectProductcategories({{$sub->sub_pro_id}} , '{{$sub->url_item}}')"
+                                    data-fn-click="selectProductcategories" data-fn-args='[{{$sub->sub_pro_id}},{{ json_encode($sub->url_item) }}]'
                                     data-slug="{{$sub->url_item}}"
                                     class=" custom-control-input" id="dataCate{{$sub->sub_pro_id}}"
                                     name="pro_categories[]" value="{{$sub->sub_pro_id}}">
@@ -223,10 +223,10 @@
                                 <div class="part-number-row d-flex mb-2" data-index="0">
                                     <input type="text" class="form-control mr-2" name="partNumber[no][0]" placeholder="No">
                                     <input type="text" class="form-control mr-2" name="partNumber[text][0]" placeholder="Text">
-                                    <button type="button" class="btn btn-danger btn-sm" onclick="removePartNumber(this)">-</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-fn-click="removePartNumber" data-fn-args='["$this"]'>-</button>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-secondary btn-sm mt-2" onclick="addPartNumber()">+ Add</button>
+                            <button type="button" class="btn btn-secondary btn-sm mt-2" data-fn-click="addPartNumber">+ Add</button>
                         </div>
                         <div class="form-group">
                             <label class="d-block">Status <span class="req-fed">*</span></label>
@@ -309,7 +309,7 @@
                                     <span>Recommended 70-155 Character</span>
                                     <div id="item-wrap">
                                         <textarea rows="4" id="input-metaDescription-en"
-                                            onkeyup="countCharacter('metaDescription-en')" name="metaDescription"
+                                            data-fn-keyup="countCharacter" data-fn-args='["metaDescription-en"]' name="metaDescription"
                                             class="form-control"></textarea>
                                         <div class="text-count">Count Character :
                                             <span id="count-metaDescription-en">
@@ -414,7 +414,7 @@
                                                 <div
                                                     class="custom-control custom-radio custom-control-inline custom-control-primary">
                                                     <input type="radio" class="custom-control-input"
-                                                        onchange="selectinputtype({{$field->pd_field_id}} ,1);"
+                                                        data-fn-change="selectinputtype" data-fn-args='[{{$field->pd_field_id}},1]'
                                                         id="status_input_sig{{$field->pd_field_id}}"
                                                         name="status_input[{{$field->pd_field_id}}]" value="1" checked>
                                                     <label class="custom-control-label"
@@ -423,7 +423,7 @@
                                                 <div
                                                     class="custom-control custom-radio custom-control-inline custom-control-primary">
                                                     <input type="radio" class="custom-control-input"
-                                                        onchange="selectinputtype({{$field->pd_field_id}} ,2);"
+                                                        data-fn-change="selectinputtype" data-fn-args='[{{$field->pd_field_id}},2]'
                                                         id="status_input_Mutl{{$field->pd_field_id}}"
                                                         name="status_input[{{$field->pd_field_id}}]" value="2">
                                                     <label class="custom-control-label"
@@ -432,7 +432,7 @@
                                                 <div
                                                     class="custom-control custom-radio custom-control-inline custom-control-primary">
                                                     <input type="radio" class="custom-control-input"
-                                                        onchange="selectinputtype({{$field->pd_field_id}} ,3);"
+                                                        data-fn-change="selectinputtype" data-fn-args='[{{$field->pd_field_id}},3]'
                                                         id="status_input_Rang{{$field->pd_field_id}}"
                                                         name="status_input[{{$field->pd_field_id}}]" value="3">
                                                     <label class="custom-control-label"
@@ -447,7 +447,7 @@
                                                         <input name="inputNumber[{{$field->pd_field_id}}][m][1]"
                                                             type="number" class="form-control">
                                                         <span class="input-group-addon number_type_remove p-r"
-                                                            onclick="deletemutifield({{$field->pd_field_id}} , 1);">-</span>
+                                                            data-fn-click="deletemutifield" data-fn-args='[{{$field->pd_field_id}},1]'>-</span>
                                                     </div>
                                                 </div>
                                                 <div class="product-custom-field addfield2">
@@ -456,7 +456,7 @@
                                                         <input name="inputNumber[{{$field->pd_field_id}}][m][2]"
                                                             type="number" step="any" class="form-control">
                                                         <span class="input-group-addon number_type_remove p-r"
-                                                            onclick="deletemutifield({{$field->pd_field_id}} , 2);">-</span>
+                                                            data-fn-click="deletemutifield" data-fn-args='[{{$field->pd_field_id}},2]'>-</span>
                                                     </div>
                                                 </div>
                                                 <div class="product-custom-field addfield3">
@@ -465,13 +465,13 @@
                                                         <input name="inputNumber[{{$field->pd_field_id}}][m][3]"
                                                             type="number" step="any" class="form-control">
                                                         <span class="input-group-addon number_type_remove p-r"
-                                                            onclick="deletemutifield({{$field->pd_field_id}} , 3);">-</span>
+                                                            data-fn-click="deletemutifield" data-fn-args='[{{$field->pd_field_id}},3]'>-</span>
                                                     </div>
                                                 </div>
                                                 <div class="btn-add-input">
                                                     <div class="form-group input-group">
                                                         <button type="button" class="btn"
-                                                            onclick="addMutlple({{$field->pd_field_id}});">
+                                                            data-fn-click="addMutlple" data-fn-args='[{{$field->pd_field_id}}]'>
                                                             Add
                                                         </button>
                                                     </div>
@@ -614,7 +614,7 @@
             html += '<div class="form-group input-group">';
             html += ' <span class="input-group-addon p-l">'+(numItems+1)+'</span>';
             html += '<input name="inputNumber['+id+'][m]['+(numItems+1)+']" type="number"  step="any" class="form-control">';
-            html += '<span class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+id+','+(numItems+1)+');">-</span></div>';
+            html += '<span class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+id+','+(numItems+1)+']">-</span></div>';
             html += '</div>';
             $('.mulltiple-box'+id).append(html)
             $('.mulltiple-box'+id +' .btn-add-input').insertAfter('.mulltiple-box'+id+' .product-custom-field:last-child')
@@ -717,7 +717,7 @@
         var html = '<div class="part-number-row d-flex mb-2" data-index="' + index + '">'
             + '<input type="text" class="form-control mr-2" name="partNumber[no][' + index + ']" placeholder="No">'
             + '<input type="text" class="form-control mr-2" name="partNumber[text][' + index + ']" placeholder="Text">'
-            + '<button type="button" class="btn btn-danger btn-sm" onclick="removePartNumber(this)">-</button>'
+            + '<button type="button" class="btn btn-danger btn-sm js-remove-part-number">-</button>'
             + '</div>';
         list.append(html);
     }
@@ -731,5 +731,10 @@
             $(this).find('input[placeholder="Text"]').attr('name', 'partNumber[text][' + i + ']');
         });
     }
+
+    // 動態產生的移除鈕：不能在 JS 字串裡用單引號屬性（會把字串提前結束），改用 class + 委派
+    $(document).on('click', '.js-remove-part-number', function () {
+        removePartNumber(this);
+    });
 </script>
 @endsection

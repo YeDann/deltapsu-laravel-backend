@@ -43,7 +43,7 @@
                 
                 </div>
                 <div class="block-options-item">
-                    <button type="button" class="btn btn-success"  onclick="createData();" data-toggle="modal" data-target="#modal-block-create_code">Create</button>
+                    <button type="button" class="btn btn-success"  data-fn-click="createData" data-toggle="modal" data-target="#modal-block-create_code">Create</button>
                 </div>
             </div>
         </div>
@@ -64,8 +64,8 @@
                         <td class="text-center">{{$item->slot_using}}</td>
                         {{-- <td class="text-center">{{$item->condition_slot}}</td> --}}
                         <td class="text-center">
-                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
-                            <button type="button" class="btn btn-primary" onclick="edit({{$item->id}});" data-toggle="modal" data-target="#modal-block-create_code">Edit</button>
+                            <button type="button" class="btn btn-danger js-delete-item" data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item->id}}">Delete</button>
+                            <button type="button" class="btn btn-primary" data-fn-click="edit" data-fn-args='[{{$item->id}}]' data-toggle="modal" data-target="#modal-block-create_code">Edit</button>
                         </td>
                     </tr>
                     @endforeach

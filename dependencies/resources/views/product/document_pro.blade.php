@@ -101,7 +101,7 @@
                         @else 
                         <button type="button" class="btn btn-default">No file</button>
                         @endif
-                        <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                        <button type="button" class="btn btn-danger js-delete-item" data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item->id}}">Delete</button>
                     </td>
                     </tr>
                     @endforeach
