@@ -171,7 +171,7 @@ function getDateformat($date){
     <div class="container">
         <h2 class="text-title-delta visible-tablets-up">{{$staticContent['Marketing_Resources_Downloads']}}</h2>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['Marketing_Resources_Downloads']}}</h3>
-        <select id="select-catalogs" onchange="selectdocumentType();" class="form-control invisible-up-922 border-radius-6">
+        <select id="select-catalogs" data-fn-change="selectdocumentType" class="form-control invisible-up-922 border-radius-6">
             @foreach ($margetCate as $cate)
             <option value="{{$cate->cate_id}}">{{$cate->name}}</option>
             @endforeach
@@ -182,7 +182,7 @@ function getDateformat($date){
                     role="tablist">
                     @foreach ($margetCate as $cate)
                     <a class="nav-item nav-link font-size-tab {{$loop->iteration == 1?'active':'' }}"
-                        onclick="setdatainput({{$cate->cate_id}});" id="pop-tab{{$cate->cate_id}}" data-toggle="tab"
+                        data-fn-click="setdatainput" data-fn-args='[{{$cate->cate_id}}]' id="pop-tab{{$cate->cate_id}}" data-toggle="tab"
                         href="#pop{{$cate->cate_id}}" role="tab" aria-controls="pop{{$cate->cate_id}}"
                         aria-selected="true" data-val="{{$cate->cate_id}}">{{$cate->name}}
                     </a>
@@ -194,7 +194,7 @@ function getDateformat($date){
                     @foreach ($margetCate as $cate)
                     <div class="tab-pane fade {{$loop->iteration == 1?'show active':'' }} " id="pop{{$cate->cate_id}}"
                         role="tabpanel" aria-labelledby="pop{{$cate->cate_id}}-tab">
-                        <form onsubmit="searchmarketingbycate()">
+                        <form data-fn-submit="searchmarketingbycate">
                             <div class="search-space d-flex justify-content-center w-100">
                                 <div class="box-search-input  mr-3">
 

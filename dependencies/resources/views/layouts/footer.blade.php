@@ -47,7 +47,7 @@
                                 </span>
                                 <span class="border"></span>
                             </label>
-                            <button class="btn btn-subscribe shadow-radius-box" onclick="resetfield();" data-toggle="modal"
+                            <button class="btn btn-subscribe shadow-radius-box" data-fn-click="resetfield" data-toggle="modal"
                                 data-target="#subscribe-modal">{{isset($staticContent['Subscribe'])?$staticContent['Subscribe']:"Subscribe"}}</button>
                         </div>
                     </div>
@@ -403,7 +403,7 @@
                 </label>
             </div>
 
-            <button class="btn btn-subscribe" onclick="resetfield();" data-toggle="modal"
+            <button class="btn btn-subscribe" data-fn-click="resetfield" data-toggle="modal"
                     data-target="#subscribe-modal"> {{$staticContent['Subscribe']}}</button>
         </div>
     </div>
@@ -616,7 +616,7 @@
             </div>
             <div class="modal-body px-4 mb-4">
                 <form name="frmMr" id="subscribeform" action="{{route('subscribe')}}"
-                    onsubmit="return submitsubscribe()" method="POST">
+                    data-fn-submit="submitsubscribe" method="POST">
                     {{csrf_field()}}
                     <img class="brand-image my-3" src="{{asset('frontend-asset/image/DeltaPSU-Logo.svg')}}">
                     <p class="text-one">
@@ -660,7 +660,7 @@
                         the information you provide on this form to be in touch with you."}}</p>
                     <div class="box-input-checkbox my-3 p-3 bg-light-blue">
                         <input name="accept" value="0" class="inp-cbx" id="cxacceptPrivacy_data"
-                            onclick="checkacceptPolicy();" type="checkbox" style="display: none;" />
+                            data-fn-click="checkacceptPolicy" type="checkbox" style="display: none;" />
                         <label class="cbx w-100" for="cxacceptPrivacy_data">
                             <span class="">
                                 <svg width="12px" height="10px" viewbox="0 0 12 10">
@@ -695,7 +695,7 @@
                 <a href="{{route('privacyPolicy')}}" class="text-underline text-bold">
                     {{isset($staticContent['Privacy_Policy'])?$staticContent['Privacy_Policy']:"Privacy Policy"}}</a>.
                 </p>
-                <a class="btn btn-subscribe" onclick="setcokie();"
+                <a class="btn btn-subscribe" data-fn-click="setcokie"
                     href="#">{{isset($staticContent['Accept'])?$staticContent['Accept']:"Accept"}}</a>
             </div>
         </div>

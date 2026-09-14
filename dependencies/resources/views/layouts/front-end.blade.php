@@ -404,6 +404,51 @@ $langch = str_replace('_', '-', app()->getLocale());
           height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
+    <script>
+        // Inline 事件屬性（onclick="fn(...)" 等）的通用替代，目的是移除 CSP 的 'unsafe-inline'。
+        // 用法：data-fn-click="viewKey" 搭配 data-fn-args 放 json_encode 出來的引數陣列。
+        //   - data-fn-<事件> 放函式名（該函式須為全域，與原本 inline 屬性的解析環境一致）
+        //   - data-fn-args   放 JSON 陣列當引數；省略代表無引數
+        // 走 JSON.parse 而非 eval，才不會又需要 'unsafe-eval'；型別（數字 / 布林）也因此得以保留。
+        // this 綁定與回傳值語意比照原本的 inline 屬性：回傳 false 即阻止預設行為。
+        // 引數裡的兩個保留字串會被代換，對應原本 inline 屬性可直接取用的變數：
+        //   "$event" → 事件物件（原本把 event 當引數傳的情形）
+        //   "$this"  → 觸發事件的元素（原本把 this 當引數傳的情形）
+        ['click', 'change', 'keyup', 'keydown', 'submit', 'input', 'focus', 'blur', 'mouseover', 'mouseout'].forEach(function (evt) {
+            $(document).on(evt, '[data-fn-' + evt + ']', function (e) {
+                var el = this;
+                var name = el.getAttribute('data-fn-' + evt);
+                var fn = window[name];
+                if (typeof fn !== 'function') {
+                    console.warn('[csp] 找不到全域函式:', name);
+                    return;
+                }
+                var raw = el.getAttribute('data-fn-args');
+                var args = [];
+                if (raw) {
+                    try {
+                        args = JSON.parse(raw);
+                    } catch (err) {
+                        console.warn('[csp] data-fn-args 不是合法 JSON:', name, raw);
+                        return;
+                    }
+                }
+                args = args.map(function (a) {
+                    if (a === '$event') return e;
+                    if (a === '$this') return el;
+                    return a;
+                });
+                return fn.apply(el, args);
+            });
+        });
+
+        // 搜尋框的清除鈕：原本是寫在 a 上的 inline 運算式（非函式呼叫），沒有現成全域函式可掛
+        $(document).on('click', '.js-clear-searchinput', function () {
+            var input = document.getElementById('searchinput');
+            if (input) { input.value = ''; }
+        });
+    </script>
+
     @yield('js')
 
     <script>
@@ -726,7 +771,7 @@ if (!Array.prototype.findIndex) {
               html += '<p class="mb-0 text-to-comparison">'+value['seName']+' SERIES</p>';
               html += ' <h6 class="mt-0 mb-0 text-number-to-comparison">'+value['pro_code']+'</h6>';
               html += '</div>';
-              html += '<div class="delete-to-comparison" onclick="deleteComparison('+value['pro_id']+');"> <i class="zmdi zmdi-close"></i></div>';
+              html += '<div class="delete-to-comparison" data-fn-click="deleteComparison" data-fn-args="['+value['pro_id']+']"> <i class="zmdi zmdi-close"></i></div>';
               html += '</div>';
               html += '<div class="line-coparispon"></div>';
           });
@@ -737,7 +782,7 @@ if (!Array.prototype.findIndex) {
             text += '<p class="mb-0 text-to-comparison">'+value['seName']+' SERIES</p>';
             text += '<h6 class="mt-0 mb-0 text-color-delta">'+value['pro_code']+'</h6>';
             text += '</div>';
-            text += '<div class="delete-to-comparison" onclick="deleteComparison('+value['pro_id']+');"> <i class="zmdi zmdi-close"></i></div>';
+            text += '<div class="delete-to-comparison" data-fn-click="deleteComparison" data-fn-args="['+value['pro_id']+']"> <i class="zmdi zmdi-close"></i></div>';
             text += '</div>';
           });
 

@@ -109,7 +109,7 @@
                         <h5 class="text-dark pb-2">{{$mainCate->name}}</h5>
                         @foreach ($subCategories as $subCate)
                         @if($subCate->main_cateid == $mainCate->main_id)
-                        <div onclick="scollto({{$subCate->sub_pro_id}} ,{{$mainCate->main_id}})">
+                        <div data-fn-click="scollto" data-fn-args="[{{$subCate->sub_pro_id}},{{$mainCate->main_id}}]">
                             <p class="text-dark-gray text-one pb-2">{{$subCate->name}}</p>
                         </div>
                         @endif
@@ -119,13 +119,13 @@
                     @if($mainCate->main_id == 3)
                     <div class="col-4">
                         <h5 class="text-dark pb-2">{{$mainCate->name}}</h5>
-                        <div onclick="scolltoLed(1 ,{{$mainCate->main_id}})">
+                        <div data-fn-click="scolltoLed" data-fn-args="[1,{{$mainCate->main_id}}]">
                             <p class="text-dark-gray text-one pb-2">{{$staticContent['CC_Cv_Mode']}}</p>
                         </div>
-                        <div onclick="scolltoLed(2 ,{{$mainCate->main_id}})">
+                        <div data-fn-click="scolltoLed" data-fn-args="[2,{{$mainCate->main_id}}]">
                             <p class="text-dark-gray text-one pb-2">{{$staticContent['CC_Mode']}}</p>
                         </div>
-                        <div onclick="scolltoLed(3,{{$mainCate->main_id}})">
+                        <div data-fn-click="scolltoLed" data-fn-args="[3,{{$mainCate->main_id}}]">
                             <p class="text-dark-gray text-one pb-2">{{$staticContent['CV_Mode']}}</p>
                         </div>
                     </div>
@@ -249,7 +249,7 @@
                         @foreach ($subCategories as $subCate)
                         @if($subCate->main_cateid == $mainCate->main_id)
                         <div class="bar-product-type-list-item">
-                            <a href="#" onclick="scollto({{$subCate->sub_pro_id}} ,{{$mainCate->main_id}})"
+                            <a href="#" data-fn-click="scollto" data-fn-args="[{{$subCate->sub_pro_id}},{{$mainCate->main_id}}]"
                                 class="deltaItem" tabindex="0" style="text-decoration:none">
                                 <div class="carousel__item-thumb">
                                     @if($mainCate->main_id == 1)
@@ -601,7 +601,7 @@
         <h6 class="text-color-delta pb-2">{{$mainCate->name}}</h6>
         @foreach ($subCategories as $subCate)
         @if($subCate->main_cateid == $mainCate->main_id)
-        <h6 class="text-dark-gray pb-2" onclick="scolltoMobile({{$subCate->sub_pro_id}} ,{{$mainCate->main_id}})">
+        <h6 class="text-dark-gray pb-2" data-fn-click="scolltoMobile" data-fn-args="[{{$subCate->sub_pro_id}},{{$mainCate->main_id}}]">
             {{$subCate->name}}</h6>
 
         @endif
@@ -611,11 +611,11 @@
 
         @if($mainCate->main_id == 3)
         <h6 class="text-color-delta pb-2">{{$mainCate->name}}</h6>
-        <h6 class="text-dark-gray pb-2" onclick="scolltoMobileled(1 ,{{$mainCate->main_id}})">
+        <h6 class="text-dark-gray pb-2" data-fn-click="scolltoMobileled" data-fn-args="[1,{{$mainCate->main_id}}]">
             {{$staticContent['CC_Cv_Mode']}}</h6>
-        <h6 class="text-dark-gray pb-2" onclick="scolltoMobileled(2 ,{{$mainCate->main_id}})">
+        <h6 class="text-dark-gray pb-2" data-fn-click="scolltoMobileled" data-fn-args="[2,{{$mainCate->main_id}}]">
             {{$staticContent['CC_Mode']}}</h6>
-        <h6 class="text-dark-gray pb-2" onclick="scolltoMobileled(3 ,{{$mainCate->main_id}})">
+        <h6 class="text-dark-gray pb-2" data-fn-click="scolltoMobileled" data-fn-args="[3,{{$mainCate->main_id}}]">
             {{$staticContent['CV_Mode']}}</h6>
 
         <hr>

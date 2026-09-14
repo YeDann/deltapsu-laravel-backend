@@ -288,7 +288,7 @@
                         </label>
                     </div>
                     <div class="search-filter-action-btn text-center">
-                        <button onclick="keySearch();"
+                        <button data-fn-click="keySearch"
                             class="btn-filters btn-search">{{$staticContent['Search']}}</button>
                     </div>
 
@@ -323,7 +323,7 @@
                 <div class="datasheet-select border-2px border-radius-6">
                     <p class="text-dark text-bold mr-b-1">{{$staticContent['Type']}}</p>
 
-                    <select id="type_id" onchange="selectType();" class="form-control border-radius-6">
+                    <select id="type_id" data-fn-change="selectType" class="form-control border-radius-6">
                         @foreach ($subCategories as $sub)
                         @if($loop->iteration == 1)
                         <option value="{{$sub->sub_pro_id}}" selected>{{$sub->name}}</option>
@@ -335,13 +335,13 @@
 
                     <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Series']}}</p>
 
-                    <select id="serie_id" onchange="onSelectSeries();" class="form-control border-radius-6">
+                    <select id="serie_id" data-fn-change="onSelectSeries" class="form-control border-radius-6">
                         <option value="0">{{$staticContent['Please_Select']}}*</option>
                     </select>
 
                     <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Model']}}</p>
 
-                    <select id="model_id" onchange="onSelectProduct();" class="form-control border-radius-6">
+                    <select id="model_id" data-fn-change="onSelectProduct" class="form-control border-radius-6">
                         <option value="0">{{$staticContent['Please_Select']}}*</option>
                     </select>
 
@@ -795,7 +795,7 @@
                 html2 += '<p class="text-dark">{{$staticContent['Uploaded_on']}} '+setformatdate(doc['created_at']) +'</p>';
                 html2 += '</div>';
 
-                html2 += '<button class="btn-downlode" data-toggle="modal" data-target="#downloadgui-modal" onclick="downloadGUI('+"'"+ doc['file']+"'"+','+"'"+procode+"'"+','+"'"+catename+"'"+')">{{$staticContent['Downloads']}}</button>';
+                html2 += '<button class="btn-downlode js-download-gui" data-toggle="modal" data-target="#downloadgui-modal" data-gui-file="'+doc['file']+'" data-gui-procode="'+procode+'" data-gui-catename="'+catename+'">{{$staticContent['Downloads']}}</button>';
                 html2 += ' </div>' ;
                  }
                 }
@@ -870,6 +870,13 @@
         @endif
 
 
+
+  // 取代原本寫在按鈕上的 inline onclick（CSP 目標為移除 script-src 的 unsafe-inline）。
+  // 按鈕由搜尋結果的 JS 動態產生，故綁在 document 委派；downloadGUI 定義在 layout（全域）。
+  $(document).on('click', '.js-download-gui', function () {
+      var $b = $(this);
+      downloadGUI($b.attr('data-gui-file'), $b.attr('data-gui-procode'), $b.attr('data-gui-catename'));
+  });
 </script>
 
 @endsection

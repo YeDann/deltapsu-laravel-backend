@@ -153,7 +153,7 @@ function getDateformat($date){
         <h3 class="text-title-delta visible-mobile">{{$staticContent['Marketing_Resources_Downloads']}}</h3>
         <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem;">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
 
-        <select id="select-catalogs" onchange="selectdocumentType();" class="select-minimize invisible-up-922">
+        <select id="select-catalogs" data-fn-change="selectdocumentType" class="select-minimize invisible-up-922">
             @foreach ($margetCate as $cate)
             <option value="{{$cate->cate_id}}">{{$cate->name}}</option>
             @endforeach
@@ -165,7 +165,7 @@ function getDateformat($date){
                     role="tablist">
                     @foreach ($margetCate as $cate)
                     <a class="nav-item nav-link font-size-tab {{$loop->iteration == 1?'active':'' }}"
-                        onclick="setdatainput({{$cate->cate_id}});" id="pop-tab{{$cate->cate_id}}" data-toggle="tab"
+                        data-fn-click="setdatainput" data-fn-args='[{{$cate->cate_id}}]' id="pop-tab{{$cate->cate_id}}" data-toggle="tab"
                         href="#pop{{$cate->cate_id}}" role="tab" aria-controls="pop{{$cate->cate_id}}"
                         aria-selected="true" data-val="{{$cate->cate_id}}">{{$cate->name}}
                     </a>
@@ -177,7 +177,7 @@ function getDateformat($date){
                     <div class="tab-pane fade {{$loop->iteration == 1?'show active':'' }} " id="pop{{$cate->cate_id}}"
                         role="tabpanel" aria-labelledby="pop{{$cate->cate_id}}-tab">
 
-                        <form onsubmit="searchmarketingbycate(event, {{$cate->cate_id}})">
+                        <form data-fn-submit="searchmarketingbycate" data-fn-args='["$event",{{$cate->cate_id}}]'>
                             <div class="search-space d-flex justify-content-center w-100">
                                 <div class="box-search-input mr-3">
                                     <div class="box-search-icon" style="border-top-left-radius: 6px;border-bottom-left-radius: 6px;">
