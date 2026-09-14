@@ -250,7 +250,7 @@ function getDateformat($date){
 <section class="box-news">
     <div class="container">
         <h1 class="text-title-delta ">{{$staticContent['Videos']}}</h1>
-        <select id="select-videos" onchange="selectDatavideos();" class="form-control invisible-up-922 mb-4 w-75 m-auto border-radius-6">
+        <select id="select-videos" data-fn-change="selectDatavideos" class="form-control invisible-up-922 mb-4 w-75 m-auto border-radius-6">
             <option value="0" {{$type_id==0 ? 'selected' :''}}>{{$staticContent['All']}}</option>
             @foreach ($video_type as $type)
             <option value="{{$type->id}}" {{$type_id==$type->id ? 'selected' :''}} >{{$type->typename}}</option>

@@ -576,7 +576,7 @@
         <div class="row">
             <div class="col-lg-2 pr-0 col-xl-4 col-md-2 my-auto">
                 <div id="showfiler">
-                    <a href="#sidebar" data-toggle="collapse" onclick="onclickshow(2);">
+                    <a href="#sidebar" data-toggle="collapse" data-fn-click="onclickshow" data-fn-args='[2]'>
                         <img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt="">
                         {{$staticContent['Show_Filters']}}
                     </a>
@@ -587,12 +587,12 @@
                     <div class="text-lable my-auto">
                         {{$staticContent['Display_Options']}} :
                     </div>
-                    <div class="grid-icon icon-grid" onclick="onclickGridViewloadData();">
+                    <div class="grid-icon icon-grid" data-fn-click="onclickGridViewloadData">
                         <img src="{{asset('frontend-asset/image/icon/grid-icon.svg')}}" alt="">
                         {{-- <i class="fa fa-th icon-size-grid"></i> --}} {{-- Grid View --}}
                     </div>
 
-                    <div class="grid-icon icon-list visible-upper-mobile" onclick="onclickListViewloadData();">
+                    <div class="grid-icon icon-list visible-upper-mobile" data-fn-click="onclickListViewloadData">
                         <img src="{{asset('frontend-asset/image/icon/list-icon.svg')}}" alt="">
                         {{-- <i class="fa fa-list icon-size-grid"></i> --}} {{-- List View --}}
                     </div>
@@ -600,7 +600,7 @@
                         {{$staticContent['Sort_by']}} :
                     </div>
                     <div class="input-label">
-                        <select id="selectSortDestop" onchange="onselectSortDestop();" class="form-control border-radius-6">
+                        <select id="selectSortDestop" data-fn-change="onselectSortDestop" class="form-control border-radius-6">
                             <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
                             <option value="2">{{$staticContent['Output_Voltage_low_to_high']}}</option>
                             <option value="3">{{$staticContent['Output_Current _low_to_high']}}</option>
@@ -641,7 +641,7 @@
                         </select>
                     </label>
                 </div>
-                <button onclick="onsearchProductMobile();"
+                <button data-fn-click="onsearchProductMobile"
                     class="btn-filters btn-search search-btn-product-mobile">{{$staticContent['Search']}}</button>
             </div>
 
@@ -649,7 +649,7 @@
         <div class="menu-filler-mobile-filter ">
             <div class=" d-flex justify-content-between h-100">
                 <div id="showfiler-mobile" class="my-auto">
-                    <div style="color:#000;" id="filterMobile-btn" onclick="OpenFiiter();"
+                    <div style="color:#000;" id="filterMobile-btn" data-fn-click="OpenFiiter"
                         class="filter-mobile-link text-bold"><img
                             src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}"
                             alt="">{{$staticContent['filters']}}</div>
@@ -657,7 +657,7 @@
                 <div class="d-flex">
                     <p class="my-auto mr-2 text-card-detial text-bold" style="color:#000;">{{$staticContent['Sort_by']}}:</p>
                     <div class="input-label my-auto">
-                        <select onchange="onselectSort();" class="form-control selectSort border-radius-6">
+                        <select data-fn-change="onselectSort" class="form-control selectSort border-radius-6">
                             <option value="1">{{$staticContent['Model_Name_A-Z']}}</option>
                             <option value="2">{{$staticContent['Output_Voltage_low_to_high']}}</option>
                             <option value="3">{{$staticContent['Output_Current _low_to_high']}}</option>
@@ -671,7 +671,7 @@
     </div>
 
     <div class="filter-mobilenav" id="filterMobile">
-        <div id="filterMobileClose" onclick="closeNavFilter()"></div>
+        <div id="filterMobileClose" data-fn-click="closeNavFilter"></div>
         <div class="filter-mobile-list" id="filterMobileLdist">
 
             <div class="accordion_mobile mx-3">
@@ -684,7 +684,7 @@
                 </div>
                 <div class="box-btn-filters btn-box-clear-filer text-center">
                     <button class="btn-filters btn-clear-filer"
-                        onclick="resetAllTab();">{{$staticContent['Clear_Filters']}}</button>
+                        data-fn-click="resetAllTab">{{$staticContent['Clear_Filters']}}</button>
                 </div>
             </div>
         </div>
@@ -744,7 +744,7 @@
                                 </label>
                             </div>
                             <div class="search-filter-action-btn text-center">
-                                <button onclick="onsearchProduct();"
+                                <button data-fn-click="onsearchProduct"
                                     class="btn-filters btn-search">{{$staticContent['Search']}}</button>
                             </div>
                         </div>
@@ -762,7 +762,7 @@
                             {{$staticContent['Remove_Filter']}}</button>
                     </div>
                     <div class="box-btn-filters btn-box-clear-filer text-center">
-                        <button class="btn-filters btn-clear-filer" onclick="resetAllTab();">
+                        <button class="btn-filters btn-clear-filer" data-fn-click="resetAllTab">
                             {{$staticContent['Clear_Filters']}}</button>
                     </div>
                 </div>
@@ -878,7 +878,7 @@
                 $("#sidebar").addClass("show");
             }
 
-            var html = '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(1);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> {{$staticContent['hide_filters']}}</a>';
+            var html = '<a href="#sidebar" data-toggle="collapse" data-fn-click="onclickshow" data-fn-args="[1]" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> {{$staticContent['hide_filters']}}</a>';
             document.getElementById("showfiler").innerHTML = html;
 
         } else {
@@ -889,7 +889,7 @@
                 $("#sidebar").removeClass("show");
             }
 
-            var html = '<a href="#sidebar" data-toggle="collapse" onclick="onclickshow(2);" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> {{$staticContent['Show_Filters']}}</a>';
+            var html = '<a href="#sidebar" data-toggle="collapse" data-fn-click="onclickshow" data-fn-args="[2]" ><img src="{{asset('frontend-asset/image/icon/filter-icon.svg')}}" alt=""> {{$staticContent['Show_Filters']}}</a>';
             document.getElementById("showfiler").innerHTML = html;
         }
     }
@@ -2007,7 +2007,7 @@
         html += '<div id="cardGridList" class="row">';
         $.each(productarray, function(index_pro, pro) {
         html += '<div class=" col-xl-3 col-lg-4 col-md-4">';
-        html += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'" onclick="saveFiltersToLocalStorage()">';
+        html += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'" data-fn-click="saveFiltersToLocalStorage">';
         html += '<div class=" margin-p-left-card item card moreBox"  style="display: none;">';
         if (pro['status_product'] != 1) {
         html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
@@ -2081,13 +2081,13 @@
 
 
         // html += '<div><a class="btn btn-datasheet w-50 mr-2 mt-2" href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" > {{$staticContent['data_sheet']}}</a></div>';
-        // html += '<div href="#" class="btn btn-ft mt-2" onclick="showNavCoparison('+pro['pro_id']+' , {{$cateid}})" >{{$staticContent['Add_to_Compare']}}</div>';
+        // html += '<div href="#" class="btn btn-ft mt-2" data-fn-click="showNavCoparison" data-fn-args="['+pro['pro_id']+',{{$cateid}}]" >{{$staticContent['Add_to_Compare']}}</div>';
         // html += '<div class="btn-enq-d mt-2"><a class="btn btn-enquiry w-50 mr-2" href="{{route('LinktoEnquiry')}}/'+cateid+'/'+catename+'/'+productKey(pro['pro_code'])+'">{{$staticContent['Enquiry']}}</a></div>';
 
         html += '<div class="w-100">';
         html += '<div class="boxlist-icon-img">';
         html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button></a>';
-        html += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
+        html += '<button data-fn-click="addToComparison" data-fn-args="['+pro['pro_id']+']" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
         html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
         html += '<button data-pro-code="' + pro['pro_code'] + '" class="btn img-btn-icon-pro tooltip2 js-check-stock"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
         html += '</div>';
@@ -2100,7 +2100,7 @@
          });
         html += '</div>';
         html += '</div>';
-        html += ' <div class="text-center mb-2" id="loadMore" style="" onclick="loadeMore(event, 4)">';
+        html += ' <div class="text-center mb-2" id="loadMore" style="" data-fn-click="loadeMore" data-fn-args="[&quot;$event&quot;,4]">';
         html += '<a href="#"  class="btn btn-boxen"> {{$staticContent['See_More']}}</a>';
         html += '</div>';
         html += '</div>';
@@ -2112,7 +2112,7 @@
         $.each(productarray, function(index_pro, pro) {
             html += '<div class="margin-p-left-card column-grid-card-mobile moreBox_mobile"  style="display: none;">';
             html += '<div class="item card border-radius-6">';
-            html += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'" onclick="saveFiltersToLocalStorage()">';
+            html += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'" data-fn-click="saveFiltersToLocalStorage">';
             if (pro['status_product'] != 1) {
                 html += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="new-tag">'+statuspro(pro['status_product'])+'</div>';
             }
@@ -2186,7 +2186,7 @@
             html += '<div class="w-100">';
             html += '<div class="boxlist-icon-img pd-mobile">';
             html += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button></a>';
-            html += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
+            html += '<button data-fn-click="addToComparison" data-fn-args="['+pro['pro_id']+']" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
             html += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
             html += '<button data-pro-code="' + pro['pro_code'] + '" class="btn img-btn-icon-pro tooltip2 js-check-stock"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
             html += '</div>';
@@ -2197,7 +2197,7 @@
 
         html += '</div>';
         html += '</div>';
-        html += ' <div class="text-center my-3" id="loadMore_mobile" style="" onclick="loadeMoreMobile(event, 4)">';
+        html += ' <div class="text-center my-3" id="loadMore_mobile" style="" data-fn-click="loadeMoreMobile" data-fn-args="[&quot;$event&quot;,4]">';
         html += '<a href="#"  class="btn btn-boxen"> {{$staticContent['See_More']}} </a>';
         html += '</div>';
         html += '</div>';
@@ -2225,15 +2225,15 @@
         html1 += '<table id="dtBasicExample" class="table" cellspacing="1em" width="100%">';
         html1 += '<thead>';
         html1 += '<tr class="headder-bg-table">';
-        html1 += '<th  id="sortdata1" class=" header-font-table w-tabfix"  onclick="selectTable(1)">{{$staticContent['Model_Name']}}</th>';
-        html1 += '<th id="sortdata2" class=" header-font-table w-tabfix w-120"  onclick="selectTable(2)">{{$staticContent['ProductList_Output_Voltage']}}</th>';
-        html1 += '<th id="sortdata3" class=" header-font-table w-tabfix w-120"  onclick="selectTable(3)">{{$staticContent['ProductList_Output_Current']}}</th>';
-        html1 += '<th id="sortdata4" class=" header-font-table w-tabfix w-120"  onclick="selectTable(4)">{{$staticContent['ProductList_Output_Power']}} </th>';
-        html1 += '<th id="sortdata5" class=" header-font-table w-tabfix"  onclick="selectTable(5)">{{$staticContent['ProductList_Input_Voltage']}}</th>';
+        html1 += '<th  id="sortdata1" class=" header-font-table w-tabfix"  data-fn-click="selectTable" data-fn-args="[1]">{{$staticContent['Model_Name']}}</th>';
+        html1 += '<th id="sortdata2" class=" header-font-table w-tabfix w-120"  data-fn-click="selectTable" data-fn-args="[2]">{{$staticContent['ProductList_Output_Voltage']}}</th>';
+        html1 += '<th id="sortdata3" class=" header-font-table w-tabfix w-120"  data-fn-click="selectTable" data-fn-args="[3]">{{$staticContent['ProductList_Output_Current']}}</th>';
+        html1 += '<th id="sortdata4" class=" header-font-table w-tabfix w-120"  data-fn-click="selectTable" data-fn-args="[4]">{{$staticContent['ProductList_Output_Power']}} </th>';
+        html1 += '<th id="sortdata5" class=" header-font-table w-tabfix"  data-fn-click="selectTable" data-fn-args="[5]">{{$staticContent['ProductList_Input_Voltage']}}</th>';
         if (isOtherFeature) {
             html1 += '<th  class="header-font-table" >{{$staticContent['product_highLights']}}</th>';
         } else {
-            html1 += '<th id="sortdata6" class="header-font-table w-tabfix" onclick="selectTable(6)" >{{$staticContent['ProductList_Dimensions']}}</th>';
+            html1 += '<th id="sortdata6" class="header-font-table w-tabfix" data-fn-click="selectTable" data-fn-args="[6]" >{{$staticContent['ProductList_Dimensions']}}</th>';
         }
 
         html1 += '</tr>';
@@ -2242,7 +2242,7 @@
         html1 += '</tbody>';
         html1 += ' </table>';
         html1 += '</div>';
-        html1 += ' <div class="text-center mb-2" id="loadlistview" style="" onclick="loadlistview(event, 4)">';
+        html1 += ' <div class="text-center mb-2" id="loadlistview" style="" data-fn-click="loadlistview" data-fn-args="[&quot;$event&quot;,4]">';
         html1 += '<a href="#"  class="btn btn-boxen">{{$staticContent['See_More']}}</a>';
         html1 += '</div>';
         $('#contentProList').html(html1);
@@ -2278,7 +2278,7 @@
             html1 += '<td class="border-radius-6">';
             html1 += '<div class="cardlist-toadd">';
             html1 += '<div class="cardlist-view hover01">';
-            html1 += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'" onclick="saveFiltersToLocalStorage()">';
+            html1 += '<a href="{{route('productsDetailsByType')}}/'+(getCateUrlById(pro['cate_ids']) || '{{ preg_replace('/\s+/', '-', $subCate->url_item)}}')+'/'+viewKey(pro['pro_code']) +'" data-fn-click="saveFiltersToLocalStorage">';
             if (pro['status_product'] != 1) {
                 html1 += '<div style="background-color:'+set_sta_color(pro['status_product']) +';" class="text-over-cardlist"> '+ statuspro(pro['status_product'])+'';
                 html1 += '</div>';
@@ -2292,13 +2292,13 @@
             html1 += '<div class="w-100">';
             html1 += '<div class="boxlist-icon-img">';
             html1 += '<a href="' + generateEnquiryLink(pro['pro_code'], pro) + '" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button></a>';
-            html1 += '<button onclick="addToComparison('+pro['pro_id']+')" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
+            html1 += '<button data-fn-click="addToComparison" data-fn-args="['+pro['pro_id']+']" class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>';
             html1 += '<a href="{{route('downloadFIle')}}/Datasheet/'+productKey(pro['pro_code'])+'" target="_blank" ><button class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>';
             html1 += '<button data-pro-code="' + pro['pro_code'] + '" class="btn img-btn-icon-pro tooltip2 js-check-stock"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>';
             html1 += '</div>';
             html1 += '</div>';
             // html1 += '<div class="w-100">';
-            // html1 += '<div class="btn btn-ft" onclick="showNavCoparison('+pro['pro_id']+' , {{$cateid}})"> + {{$staticContent['Add_to_Compare']}}</div>';
+            // html1 += '<div class="btn btn-ft" data-fn-click="showNavCoparison" data-fn-args="['+pro['pro_id']+',{{$cateid}}]"> + {{$staticContent['Add_to_Compare']}}</div>';
             html1 += '</div>';
             html1 += '</td>';
             var content = onlycontent(pro['content']);
@@ -2614,7 +2614,7 @@
             // 新增 product type 的 filter 區塊
             if (fil_con['field_id'] == 'product_type') {
                 $.each(categoriesHasMainPro, function(index_category, category) {
-                    html3 += '<div onchange="product_type_filter('+"'"+fil_con['field_id']+"'"+','+category['cate_id']+');" class="box-input-checkbox">';
+                    html3 += '<div data-fn-change="product_type_filter" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,'+category['cate_id']+']" class="box-input-checkbox">';
                     html3 += '<input class="inp-cbx" id="cx-'+fil_con['field_id']+category['cate_id']+'" type="checkbox" style="display: none;" >';
                     html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+category['cate_id']+'"><span>';
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
@@ -2631,7 +2631,7 @@
                     {id: 3, title: 'CV Mode'}
                 ];
                 $.each(hardcodedModeSeries, function(index_mode, mode) {
-                    html3 += '<div onchange="mode_series_filter('+"'"+fil_con['field_id']+"'"+','+mode['id']+');" class="box-input-checkbox">';
+                    html3 += '<div data-fn-change="mode_series_filter" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,'+mode['id']+']" class="box-input-checkbox">';
                     html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+mode['id']+'" type="checkbox" style="display: none;" >';
                     html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+mode['id']+'"><span>';
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
@@ -2679,7 +2679,7 @@
 
 
                 $.each(filteredSeries, function(index_serie, serie) {
-                    html3 += '<div onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="box-input-checkbox">';
+                    html3 += '<div data-fn-change="series_filter" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,'+serie['se_id']+']" class="box-input-checkbox">';
                     html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+serie['se_id']+'" type="checkbox" style="display: none;" >';
                     html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+serie['se_id']+'"><span>';
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
@@ -2690,7 +2690,7 @@
             }
             if (fil_con['field_id'] == 'status02') {
                 $.each(status, function(index_status, sta) {
-                    html3 += '<div onchange="filterstatus('+"'"+fil_con['field_id']+"'"+','+sta['id']+');" class="box-input-checkbox">';
+                    html3 += '<div data-fn-change="filterstatus" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,'+sta['id']+']" class="box-input-checkbox">';
                     html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+index_status+'" type="checkbox" style="display: none;" />';
                     html3 += '<label class="cbx cbx-status cbx-status-'+sta['id']+'" for="cx-'+fil_con['field_id']+index_status+'"><span>';
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
@@ -2701,7 +2701,7 @@
             }
             if (fil_con['field_id'] == 'safety03') {
                 $.each(doc_safety, function(id_doc, safety) {
-                    html3 += '<div onchange="filtersafety('+"'"+fil_con['field_id']+"'"+','+safety['id']+');" class="box-input-checkbox">';
+                    html3 += '<div data-fn-change="filtersafety" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,'+safety['id']+']" class="box-input-checkbox">';
                     html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+id_doc+'" type="checkbox" style="display: none;" />';
                     html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+id_doc+'"><span>';
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
@@ -2712,7 +2712,7 @@
             }
             if (fil_con['field_id'] == 'certifi04') {
                 $.each(certificates, function(index_cer, certi) {
-                    html3 += '<div onchange="filterCerti('+"'"+fil_con['field_id']+"'"+','+certi['id']+');" class="box-input-checkbox">';
+                    html3 += '<div data-fn-change="filterCerti" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,'+certi['id']+']" class="box-input-checkbox">';
                     html3 += '<input  class="inp-cbx" id="cx-'+fil_con['field_id']+index_cer+'" type="checkbox" style="display: none;" />';
                     html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+index_cer+'"><span>';
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
@@ -2779,7 +2779,7 @@
                             }
                             if (containsObject(object, data_1)) {
                                 data_1.push(object);
-                                html3 += '<div onchange="fillerNumber('+"'"+fil_con['field_id']+"'"+','+ppt['data_1']+','+ppt['data_2']+','+ppt['data_3'] +','+ppt['data_4'] +','+ppt['data_5']+');" class="box-input-checkbox">';
+                                html3 += '<div data-fn-change="fillerNumber" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,'+ppt['data_1']+','+ppt['data_2']+','+ppt['data_3'] +','+ppt['data_4'] +','+ppt['data_5']+']" class="box-input-checkbox">';
                                 html3 += '<input  class="inp-cbx" id="cx-normalnum'+fil_con['field_id']+index_per+'" type="checkbox" style="display: none;" />';
                                 html3 += '<label class="cbx" for="cx-normalnum'+fil_con['field_id']+index_per+'"><span>';
                                 html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
@@ -2790,7 +2790,7 @@
                         } else if (ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != '' && typeof ppt['value_text']  != 'undefined') {
                             if (containsObjectText(object, data_text)) {
                                 data_text.push(object);
-                                html3 += '<div onchange="fillerInputText('+"'"+fil_con['field_id']+"'"+','+"'"+ppt['value_text']+"'"+');" class="box-input-checkbox">';
+                                html3 += '<div data-fn-change="fillerInputText" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,&quot;'+ppt['value_text']+'&quot;]" class="box-input-checkbox">';
                                 html3 += '<input   class="inp-cbx" id="cx-normaltext'+fil_con['field_id']+index_per+'" type="checkbox" style="display: none;" />';
                                 html3 += '<label class="cbx" for="cx-normaltext'+fil_con['field_id']+index_per+'"><span>';
                                 html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
@@ -2804,7 +2804,7 @@
             }
 
             html3 += '</div>';
-            html3 += '<button onclick="resetformById('+"'"+fil_con['field_id']+"'"+');" class="btn-reset" type="button">{{$staticContent['Clear']}}</button>';
+            html3 += '<button data-fn-click="resetformById" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;]" class="btn-reset" type="button">{{$staticContent['Clear']}}</button>';
             html3 +=  '</form>';
             if (fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['field_id'] != 'mode_series' && fil_con['type'] == 'number'  ) {
                 html3 +=  '<div class="slidebar-value-box mb-4 mt-4">';
@@ -2854,7 +2854,7 @@
             if (fil_con['field_id'] == 'product_type') {
                 $.each(categoriesHasMainPro, function(index_category, category) {
                     html3 += '<div class="box-input-checkbox">';
-                    html3 += '<input onchange="product_type_filter('+"'"+fil_con['field_id']+"'"+','+category['cate_id']+');" class="inp-cbx" id="cx-'+fil_con['field_id']+category['cate_id']+'_mobile" type="checkbox" style="display: none;" >';
+                    html3 += '<input data-fn-change="product_type_filter" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,'+category['cate_id']+']" class="inp-cbx" id="cx-'+fil_con['field_id']+category['cate_id']+'_mobile" type="checkbox" style="display: none;" >';
                     html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+category['cate_id']+'_mobile"><span>';
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
@@ -2873,7 +2873,7 @@
                 ];
                 $.each(hardcodedModeSeries, function(index_mode, mode) {
                     html3 += '<div class="box-input-checkbox">';
-                    html3 += '<input onchange="mode_series_filter('+"'"+fil_con['field_id']+"'"+','+mode['id']+');" class="inp-cbx" id="cx-'+fil_con['field_id']+mode['id']+'_mobile" type="checkbox" style="display: none;" >';
+                    html3 += '<input data-fn-change="mode_series_filter" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,'+mode['id']+']" class="inp-cbx" id="cx-'+fil_con['field_id']+mode['id']+'_mobile" type="checkbox" style="display: none;" >';
                     html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+mode['id']+'_mobile"><span>';
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
@@ -2922,7 +2922,7 @@
 
                 $.each(filteredSeries, function(index_serie, serie) {
                     html3 += '<div class="box-input-checkbox">';
-                    html3 += '<input onchange="series_filter('+"'"+fil_con['field_id']+"'"+','+serie['se_id']+');" class="inp-cbx" id="cx-'+fil_con['field_id']+serie['se_id']+'_mobile" type="checkbox" style="display: none;" >';
+                    html3 += '<input data-fn-change="series_filter" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,'+serie['se_id']+']" class="inp-cbx" id="cx-'+fil_con['field_id']+serie['se_id']+'_mobile" type="checkbox" style="display: none;" >';
                     html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+serie['se_id']+'_mobile"><span>';
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
@@ -2934,7 +2934,7 @@
              if (fil_con['field_id'] == 'status02') {
                 $.each(status, function(index_status, sta) {
                     html3 += '<div class="box-input-checkbox">';
-                    html3 += '<input onchange="filterstatus('+"'"+fil_con['field_id']+"'"+','+sta['id']+');" class="inp-cbx" id="cx-'+fil_con['field_id']+index_status+'_mobile" type="checkbox" style="display: none;" />';
+                    html3 += '<input data-fn-change="filterstatus" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,'+sta['id']+']" class="inp-cbx" id="cx-'+fil_con['field_id']+index_status+'_mobile" type="checkbox" style="display: none;" />';
                     html3 += '<label class="cbx cbx-status cbx-status-'+sta['id']+'" for="cx-'+fil_con['field_id']+index_status+'_mobile"><span>';
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
@@ -2946,7 +2946,7 @@
              if (fil_con['field_id'] == 'safety03') {
                 $.each(doc_safety, function(id_doc, safety) {
                     html3 += '<div class="box-input-checkbox">';
-                    html3 += '<input onchange="filtersafety('+"'"+fil_con['field_id']+"'"+','+safety['id']+');" class="inp-cbx" id="cx-'+fil_con['field_id']+id_doc+'_mobile" type="checkbox" style="display: none;" />';
+                    html3 += '<input data-fn-change="filtersafety" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,'+safety['id']+']" class="inp-cbx" id="cx-'+fil_con['field_id']+id_doc+'_mobile" type="checkbox" style="display: none;" />';
                     html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+id_doc+'_mobile"><span>';
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
@@ -2959,7 +2959,7 @@
              if (fil_con['field_id'] == 'certifi04') {
                 $.each(certificates, function(index_cer, certi) {
                     html3 += '<div class="box-input-checkbox">';
-                    html3 += '<input onchange="filterCerti('+"'"+fil_con['field_id']+"'"+','+certi['id']+');" class="inp-cbx" id="cx-'+fil_con['field_id']+index_cer+'_mobile" type="checkbox" style="display: none;" />';
+                    html3 += '<input data-fn-change="filterCerti" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,'+certi['id']+']" class="inp-cbx" id="cx-'+fil_con['field_id']+index_cer+'_mobile" type="checkbox" style="display: none;" />';
                     html3 += '<label class="cbx" for="cx-'+fil_con['field_id']+index_cer+'_mobile"><span>';
                     html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                     html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
@@ -3025,10 +3025,10 @@
                             if (containsObject(object, data_1)) {
                                 data_1.push(object);
                                 html3 += '<div class="box-input-checkbox ">';
-                                html3 += '<input onchange="fillerNumber('+"'"+fil_con['field_id']+"'"+','
+                                html3 += '<input data-fn-change="fillerNumber" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,'
                                 +ppt['data_1']+','+ppt['data_2']+','+ppt['data_3'] +','+ppt['data_4'] +','+ppt['data_5']+','+ppt['data_6']+','+ppt['data_7']
                                 +','+ppt['data_8']+','+ppt['data_9']+','+ppt['data_10']+','+ppt['data_11']+','+ppt['data_12']+
-                                ');" class="inp-cbx" id="cx-normalnumber'+fil_con['field_id']+index_per+'_mobile" type="checkbox" style="display: none;" />';
+                                ']" class="inp-cbx" id="cx-normalnumber'+fil_con['field_id']+index_per+'_mobile" type="checkbox" style="display: none;" />';
                                 html3 += '<label class="cbx" for="cx-normalnumber'+fil_con['field_id']+index_per+'_mobile"><span>';
                                 html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                                 html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
@@ -3039,7 +3039,7 @@
                             if (containsObjectText(object, data_text)) {
                                 data_text.push(object);
                                 html3 += '<div class="box-input-checkbox">';
-                                html3 += '<input  onchange="fillerInputText('+"'"+fil_con['field_id']+"'"+','+"'"+ppt['value_text']+"'"+');" class="inp-cbx" id="cx-'+fil_con['field_id']+index_per+'_mobile" type="checkbox" style="display: none;" />';
+                                html3 += '<input  data-fn-change="fillerInputText" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;,&quot;'+ppt['value_text']+'&quot;]" class="inp-cbx" id="cx-'+fil_con['field_id']+index_per+'_mobile" type="checkbox" style="display: none;" />';
                                 html3 += '<label class="cbx" for="cx-normaltext'+fil_con['field_id']+index_per+'_mobile"><span>';
                                 html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
                                 html3 += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
@@ -3052,7 +3052,7 @@
             }
 
             html3 += '</div>';
-            html3 += '<button onclick="resetformById('+"'"+fil_con['field_id']+"'"+');" class="btn-reset" type="button">CLEAR</button>';
+            html3 += '<button data-fn-click="resetformById" data-fn-args="[&quot;'+fil_con['field_id']+'&quot;]" class="btn-reset" type="button">CLEAR</button>';
             html3 +=  '</form>';
             if (fil_con['field_id'] != 'series01' && fil_con['field_id'] != 'status02' && fil_con['field_id'] != 'certifi04' && fil_con['field_id'] != 'safety03' && fil_con['field_id'] != 'mode_series' && fil_con['type'] == 'number'  ) {
             html3 +=  '<div class="slidebar-value-box mb-4 mt-4">';
@@ -3249,7 +3249,7 @@
         var html = '';
         $.each(uniqueSeries, function(index_serie, serie) {
             var isChecked = ser_arr.indexOf(serie.se_id) !== -1 ? 'checked' : '';
-            html += '<div onchange="series_filter(\'series01\','+serie['se_id']+');" class="box-input-checkbox">';
+            html += '<div data-fn-change="series_filter" data-fn-args="[&quot;series01&quot;,'+serie['se_id']+']" class="box-input-checkbox">';
             html += '<input class="inp-cbx" id="cx-series01'+serie['se_id']+'" type="checkbox" style="display: none;" '+isChecked+'>';
             html += '<label class="cbx" for="cx-series01'+serie['se_id']+'"><span>';
             html += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
@@ -3265,7 +3265,7 @@
         $.each(uniqueSeries, function(index_serie, serie) {
             var isChecked = ser_arr.indexOf(serie.se_id) !== -1 ? 'checked' : '';
             htmlMobile += '<div class="box-input-checkbox">';
-            htmlMobile += '<input onchange="series_filter(\'series01\','+serie['se_id']+');" class="inp-cbx" id="cx-series01'+serie['se_id']+'_mobile" type="checkbox" style="display: none;" '+isChecked+'>';
+            htmlMobile += '<input data-fn-change="series_filter" data-fn-args="[&quot;series01&quot;,'+serie['se_id']+']" class="inp-cbx" id="cx-series01'+serie['se_id']+'_mobile" type="checkbox" style="display: none;" '+isChecked+'>';
             htmlMobile += '<label class="cbx" for="cx-series01'+serie['se_id']+'_mobile"><span>';
             htmlMobile += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
             htmlMobile += '<polyline points="1.5 6 4.5 9 10.5 1"></polyline>';
@@ -3876,10 +3876,10 @@
                         }
                         if (containsObject(object, data_1)) {
                             data_1.push(object);
-                            html3 += '<div onchange="fillerNumber('+"'"+ppt['type_id']+"'"+','+ppt['data_1']+','+ppt['data_2']+','+ppt['data_3']
+                            html3 += '<div data-fn-change="fillerNumber" data-fn-args="[&quot;'+ppt['type_id']+'&quot;,'+ppt['data_1']+','+ppt['data_2']+','+ppt['data_3']
                             +','+ppt['data_4'] +','+ppt['data_5'] +','+ppt['data_6'] +','+ppt['data_7'] +','+ppt['data_8'] +','+ppt['data_9']
                             +','+ppt['data_10'] +','+ppt['data_11'] +','+ppt['data_12']
-                            +');" class="box-input-checkbox new-filter">';
+                            +']" class="box-input-checkbox new-filter">';
                             html3 += '<input  class="inp-cbx" id="cx-'+ppt['type_id']+index_per+'" type="checkbox" style="display: none;" />';
                             html3 += '<label class="cbx" for="cx-'+ppt['type_id']+index_per+'"><span>';
                             html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
@@ -3887,9 +3887,9 @@
 
                             html3 += '</svg></span ><span class="'+ppt['product_id']+'">'+ checkNull(dataarr, ppt['unit_name'], ppt['status_input']) +'</span></label>';
                             html3 += '</div>' ;
-                            htmlmobile += '<div onchange="fillerNumber('+"'"+ppt['type_id']+"'"+','+ppt['data_1']+','+ppt['data_2']+','+ppt['data_3'] +','+ppt['data_4'] +','+ppt['data_5']
+                            htmlmobile += '<div data-fn-change="fillerNumber" data-fn-args="[&quot;'+ppt['type_id']+'&quot;,'+ppt['data_1']+','+ppt['data_2']+','+ppt['data_3'] +','+ppt['data_4'] +','+ppt['data_5']
                             +','+ppt['data_6']+','+ppt['data_7']+','+ppt['data_8'] +','+ppt['data_9'] +','+ppt['data_10'] +','+ppt['data_11'] +','+ppt['data_12']
-                            +');" class="box-input-checkbox">';
+                            +']" class="box-input-checkbox">';
                             htmlmobile += '<input  class="inp-cbx" id="cx-mobile'+ppt['type_id']+index_per+'" type="checkbox" style="display: none;" />';
                             htmlmobile += '<label class="cbx" for="cx-mobile'+ppt['type_id']+index_per+'"><span>';
                             htmlmobile += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
@@ -3905,7 +3905,7 @@
                     // } else if (ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != '') {
                     //     if (containsObjectText(object, data_text)) {
                     //         data_text.push(object);
-                    //         html3 += '<div onchange="fillerInputText('+"'"+ppt['type_id']+"'"+','+"'"+ppt['value_text']+"'"+');" class="box-input-checkbox">';
+                    //         html3 += '<div data-fn-change="fillerInputText" data-fn-args="[&quot;'+ppt['type_id']+'&quot;,&quot;'+ppt['value_text']+'&quot;]" class="box-input-checkbox">';
                     //         html3 += '<input   class="inp-cbx" id="cx-text'+ppt['type_id']+index_per+'" type="checkbox" style="display: none;" />';
                     //         html3 += '<label class="cbx" for="cx-text'+ppt['type_id']+index_per+'"><span>';
                     //         html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
@@ -3913,7 +3913,7 @@
                     //         html3 += '</svg></span><span>'+ppt['value_text'] +'</span></label>';
                     //         html3 += '</div>' ;
 
-                    //         htmlmobile += '<div onchange="fillerInputText('+"'"+ppt['type_id']+"'"+','+"'"+ppt['value_text']+"'"+');" class="box-input-checkbox">';
+                    //         htmlmobile += '<div data-fn-change="fillerInputText" data-fn-args="[&quot;'+ppt['type_id']+'&quot;,&quot;'+ppt['value_text']+'&quot;]" class="box-input-checkbox">';
                     //         htmlmobile += '<input   class="inp-cbx" id="cx-mobiletext'+ppt['type_id']+index_per+'" type="checkbox" style="display: none;" />';
                     //         htmlmobile += '<label class="cbx" for="cx-mobiletext'+ppt['type_id']+index_per+'"><span>';
                     //         htmlmobile += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
@@ -3961,7 +3961,7 @@
                     if (ppt['type_value'] == 'text' && ppt['value_text'] != null && ppt['value_text'] != '' && typeof ppt['value_text']  != 'undefined') {
                         if (containsObjectText(object, data_text)) {
                             data_text.push(object);
-                            html3 += '<div onchange="fillerInputText('+"'"+ppt['type_id']+"'"+','+"'"+ppt['value_text']+"'"+');" class="box-input-checkbox">';
+                            html3 += '<div data-fn-change="fillerInputText" data-fn-args="[&quot;'+ppt['type_id']+'&quot;,&quot;'+ppt['value_text']+'&quot;]" class="box-input-checkbox">';
                             html3 += '<input   class="inp-cbx" id="cx-text'+ppt['type_id']+index_per+'" type="checkbox" style="display: none;" />';
                             html3 += '<label class="cbx" for="cx-text'+ppt['type_id']+index_per+'"><span>';
                             html3 += '<svg width="12px" height="10px" viewbox="0 0 12 10">';
@@ -3969,7 +3969,7 @@
                             html3 += '</svg></span><span>'+ppt['value_text'] +'</span></label>';
                             html3 += '</div>' ;
 
-                            htmlmobile += '<div onchange="fillerInputText('+"'"+ppt['type_id']+"'"+','+"'"+ppt['value_text']+"'"+');" class="box-input-checkbox">';
+                            htmlmobile += '<div data-fn-change="fillerInputText" data-fn-args="[&quot;'+ppt['type_id']+'&quot;,&quot;'+ppt['value_text']+'&quot;]" class="box-input-checkbox">';
                             htmlmobile += '<input   class="inp-cbx" id="cx-mobiletext'+ppt['type_id']+index_per+'" type="checkbox" style="display: none;" />';
                             htmlmobile += '<label class="cbx" for="cx-mobiletext'+ppt['type_id']+index_per+'"><span>';
                             htmlmobile += '<svg width="12px" height="10px" viewbox="0 0 12 10">';

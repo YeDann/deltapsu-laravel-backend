@@ -314,7 +314,7 @@
                                                     @foreach ($pro['tags'] as $tag)
                                                     <a
                                                         class="text-tag {{$pro['tag_m'] == $tag->tag ?'hightlight':'' }}"><span
-                                                            onclick="viewKey('{{$tag->tag}}')">{{$tag->tag}}{{
+                                                            data-fn-click="viewKey" data-fn-args='[{{ json_encode($tag->tag) }}]'>{{$tag->tag}}{{
                                                             $loop->last ? '' : ',' }} </span></a>
                                                     @endforeach
                                                 </div>
@@ -323,13 +323,13 @@
                                                     @foreach ($pro['optional_models'] as $optional)
                                                     <a
                                                         class="text-tag {{$pro['tag_m'] == $optional->optional_model ?'hightlight':'' }}"><span
-                                                            onclick="viewOptionalModel('{{$optional->optional_model}}' ,'{{$pro['url_item']}}'  ,'{{$pro['pro_code']}}')">{{$optional->optional_model}}{{$loop->iteration
+                                                            data-fn-click="viewOptionalModel" data-fn-args='[{{ json_encode($optional->optional_model) }},{{ json_encode($pro['url_item']) }},{{ json_encode($pro['pro_code']) }}]'>{{$optional->optional_model}}{{$loop->iteration
                                                             != $loop->count?',':'' }} </span></a>
                                                     @endforeach
                                                 </div>
 
                                                 <div class="btn btn-ft mt-2"
-                                                    onclick="showNavCoparison({{$pro['pro_id']}} ,{{$pro['cateid']}})">
+                                                    data-fn-click="showNavCoparison" data-fn-args='[{{$pro['pro_id']}},{{$pro['cateid']}}]'>
                                                     {{$staticContent['Add_to_Compare']}} </div>
                                             </div>
 
@@ -509,20 +509,20 @@
                                                 <h6 class="text-title-ft-sub mt-2">Tags</h6>
                                                 @foreach ($pro['tags'] as $tag)
                                                 <a class="text-tag {{$pro['tag_m'] == $tag->tag ?'hightlight':'' }}"><span
-                                                        onclick="viewKey('{{$tag->tag}}')">{{$tag->tag}}{{
+                                                        data-fn-click="viewKey" data-fn-args='[{{ json_encode($tag->tag) }}]'>{{$tag->tag}}{{
                                                         $loop->last ? '' : ',' }}</span></a>
                                                 @endforeach
                                                 <h6 class="text-title-ft-sub mt-2">Optional Models</h6>
                                                 @foreach ($pro['optional_models'] as $optional)
                                                 <a
                                                     class="text-tag {{$pro['tag_m'] == $optional->optional_model ?'hightlight':'' }}"><span
-                                                        onclick="viewOptionalModel('{{$optional->optional_model}}' ,'{{$pro['url_item']}}'  ,'{{$pro['pro_code']}}')">{{$optional->optional_model}}{{$loop->iteration
+                                                        data-fn-click="viewOptionalModel" data-fn-args='[{{ json_encode($optional->optional_model) }},{{ json_encode($pro['url_item']) }},{{ json_encode($pro['pro_code']) }}]'>{{$optional->optional_model}}{{$loop->iteration
                                                         != $loop->count?',':'' }} </span></a>
                                                 @endforeach
                                             </div>
                                         </div>
                                         <div class="btn btn-ft"
-                                            onclick="showNavCoparison({{$pro['pro_id']}},{{$pro['cateid']}})">
+                                            data-fn-click="showNavCoparison" data-fn-args='[{{$pro['pro_id']}},{{$pro['cateid']}}]'>
                                             {{$staticContent['Add_to_Compare']}}</div>
 
                                     </div>

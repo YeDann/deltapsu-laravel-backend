@@ -42,7 +42,7 @@
     <div class="box-login pb-5">
         <div class="container">
             <h1 class="text-title-delta">Change Your Password</h1>
-            <form id="loginform" onsubmit="resetPassFunction()">
+            <form id="loginform" data-fn-submit="resetPassFunction">
                 <div class="center">
                     <div id="requestpin" class="col-sm-6 w-100 mx-auto mb-3">
                         <label class="text-title-detail-dark">Pin*</label>
@@ -57,10 +57,9 @@
                     </div>
                     <div id="requestpasswordConfrim" class="col-sm-6 w-100 mx-auto mb-3">
                         <label class="text-title-detail-dark">*Confirm Password</label>
-                        <input type="password" class="input-login" on name="confrimpassword" id="confrimpassword"
+                        <input type="password" class="input-login js-confirm-newpass" on name="confrimpassword" id="confrimpassword"
                             placeholder="Confirm Password" minlength="8" pattern="{8,}"
-                            title="Must contain at least 8 or more characters" required
-                            onkeyup="comfirmNewPass(); return false;">
+                            title="Must contain at least 8 or more characters" required>
                         <div id="confirmMessage3"></div>
                     </div>
                     <h5 class="text-center" id="loginerormassage"></h5>
@@ -153,7 +152,13 @@
        
          
     }
-    </script>
+    
+  // 取代原本的 inline onkeyup（原為多段陳述 comfirmNewPass(); return false;）
+  $(document).on('keyup', '.js-confirm-newpass', function () {
+      comfirmNewPass();
+      return false;
+  });
+</script>
 
 
     @endsection

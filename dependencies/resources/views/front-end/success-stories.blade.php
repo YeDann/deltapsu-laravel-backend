@@ -194,9 +194,9 @@
         <div class="visible-up-922">
             <div class="my-3">
                 <a class="btn btn-subscribe mr-3" href="{{route('addSuccessStories')}}">+{{$staticContent['add']}}</a>
-                <div class="btn btn-boxen mystoriesbtn" onclick="loadMystoryContent();">{{$staticContent['My_Stories']}}
+                <div class="btn btn-boxen mystoriesbtn" data-fn-click="loadMystoryContent">{{$staticContent['My_Stories']}}
                 </div>
-                <div class="btn btn-boxen mystoriesbtnAll d-none" onclick="loadContent();">
+                <div class="btn btn-boxen mystoriesbtnAll d-none" data-fn-click="loadContent">
                     {{$staticContent['All_Stories']}} </div>
             </div>
             <table id="" class="table " cellspacing="5em" width="100%">
@@ -215,7 +215,7 @@
                 </tbody>
             </table>
             <div class="text-center mt-5" style="">
-                <div id="loadMore" class="btn btn-boxen" onclick="loadeMore(event,4)">{{$staticContent['See_More']}}
+                <div id="loadMore" class="btn btn-boxen" data-fn-click="loadeMore" data-fn-args='["$event",4]'>{{$staticContent['See_More']}}
                 </div>
             </div>
         </div>
@@ -224,16 +224,16 @@
                 <div>
                     <a class="btn btn-subscribe mr-3"
                         href="{{route('addSuccessStories')}}">+{{$staticContent['add']}}</a>
-                    <div class="btn btn-boxen mystoriesbtn" onclick="loadMystoryContent();">
+                    <div class="btn btn-boxen mystoriesbtn" data-fn-click="loadMystoryContent">
                         {{$staticContent['My_Stories']}}</div>
-                    <div class="btn btn-boxen mystoriesbtnAll d-none" onclick="loadContent();">
+                    <div class="btn btn-boxen mystoriesbtnAll d-none" data-fn-click="loadContent">
                         {{$staticContent['All_Stories']}}</div>
                 </div>
             </div>
             <div id="contentloadmobile">
             </div>
             <div class="text-center mt-5" style="">
-                <div id="loadMore_mobile" onclick="loadeMoreMobile(event,4)" class="btn btn-boxen">
+                <div id="loadMore_mobile" data-fn-click="loadeMoreMobile" data-fn-args='["$event",4]' class="btn btn-boxen">
                     {{$staticContent['See_More']}}</div>
             </div>
         </div>
@@ -248,8 +248,8 @@
                 <h5 class="modal-title"> {{$staticContent['Are_you_sure_to_delete_image']}}</h5>
             </div>
             <div class="modal-footer">
-                <div class="btn btn-boxen" onclick="closedeleteStory();">{{$staticContent['Cancel']}}</div>
-                <div class="btn btn-subscribe" onclick="onconfirmdeleteStories();">{{$staticContent['Delete']}}</div>
+                <div class="btn btn-boxen" data-fn-click="closedeleteStory">{{$staticContent['Cancel']}}</div>
+                <div class="btn btn-subscribe" data-fn-click="onconfirmdeleteStories">{{$staticContent['Delete']}}</div>
             </div>
         </div>
     </div>
@@ -321,7 +321,7 @@
              html +=  '<td class="text-middle-td">';
              html += '<i class="fa fa-check-circle icon-check"></i>';
              html += '</td>';
-             html += '<td class="text-middle-td"><button id="btn_view'+story['id']+'" onclick="checkcolapes('+story['id']+');"  class="btn btn-ft w-100" type="button"  data-toggle="collapse" data-target="#collapseExample'+story['id']+'" aria-expanded="false" aria-controls="collapseExample" >{{$staticContent['View']}}</button ></td>';
+             html += '<td class="text-middle-td"><button id="btn_view'+story['id']+'" data-story-id="'+story['id']+'"  class="btn btn-ft w-100 js-check-colapes" type="button"  data-toggle="collapse" data-target="#collapseExample'+story['id']+'" aria-expanded="false" aria-controls="collapseExample" >{{$staticContent['View']}}</button ></td>';
              html += '</tr>';
              html +='<tr class="collapse"  id="collapseExample'+story['id']+'">';
              html +='<td class=" bg-color-suces" colspan="7">';  
@@ -403,7 +403,7 @@
                 html += '';
              }
              html += '</td>';
-             html += '<td class="text-middle-td"><button id="btn_view'+story['id']+'" onclick="checkcolapes('+story['id']+');"  class="btn btn-ft w-100" type="button"  data-toggle="collapse" data-target="#collapseExample'+story['id']+'" aria-expanded="false" aria-controls="collapseExample" >{{$staticContent['View']}}</button ></td>';
+             html += '<td class="text-middle-td"><button id="btn_view'+story['id']+'" data-story-id="'+story['id']+'"  class="btn btn-ft w-100 js-check-colapes" type="button"  data-toggle="collapse" data-target="#collapseExample'+story['id']+'" aria-expanded="false" aria-controls="collapseExample" >{{$staticContent['View']}}</button ></td>';
              html += '</tr>';
              html +='<tr class="collapse"  id="collapseExample'+story['id']+'">';
              html +='<td class=" bg-color-suces" colspan="6">';  
@@ -423,7 +423,7 @@
                 html += '';
                }else{
                 html += '<a href="{{route('editSuccessStories')}}/'+story['id'] +'" class="btn btn-subscribe mb-2">'+'{{$staticContent['edit']}}'+'</a>';
-                html += '<div onclick="deletestory('+story['id'] +');" class="btn btn-boxen">'+'{{$staticContent['Delete']}}'+'</div>';
+                html += '<div data-story-id="'+story['id'] +'" class="btn btn-boxen js-delete-story">'+'{{$staticContent['Delete']}}'+'</div>';
                }
              html +='</td>';
              html +='</tr>';
@@ -485,8 +485,14 @@
       }
   }
 
-
-  
+  // 取代原本寫在標籤上的 inline 事件屬性（CSP 目標為移除 script-src 的 unsafe-inline）。
+  // 這兩種按鈕都是搜尋結果由 JS 動態產生，故綁在 document 委派。
+  $(document).on('click', '.js-check-colapes', function () {
+      checkcolapes($(this).attr('data-story-id'));
+  });
+  $(document).on('click', '.js-delete-story', function () {
+      deletestory($(this).attr('data-story-id'));
+  });
 
 </script>
 @endsection

@@ -403,6 +403,44 @@ $shareData->handle($request, function ($req) { return $req; });
           height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
+    <script @cspNonce>
+        // Inline 事件屬性的通用替代（與 layouts/front-end 同一份實作）。
+        // 此 layout 也會 include header-front / footer，那裡的 data-fn-* 需要這段才會生效。
+        ['click', 'change', 'keyup', 'keydown', 'submit', 'input', 'focus', 'blur', 'mouseover', 'mouseout'].forEach(function (evt) {
+            $(document).on(evt, '[data-fn-' + evt + ']', function (e) {
+                var el = this;
+                var name = el.getAttribute('data-fn-' + evt);
+                var fn = window[name];
+                if (typeof fn !== 'function') {
+                    console.warn('[csp] 找不到全域函式:', name);
+                    return;
+                }
+                var raw = el.getAttribute('data-fn-args');
+                var args = [];
+                if (raw) {
+                    try {
+                        args = JSON.parse(raw);
+                    } catch (err) {
+                        console.warn('[csp] data-fn-args 不是合法 JSON:', name, raw);
+                        return;
+                    }
+                }
+                args = args.map(function (a) {
+                    if (a === '$event') return e;
+                    if (a === '$this') return el;
+                    return a;
+                });
+                return fn.apply(el, args);
+            });
+        });
+
+        // 搜尋框清除鈕（header-front 用，與 front-end layout 一致）
+        $(document).on('click', '.js-clear-searchinput', function () {
+            var input = document.getElementById('searchinput');
+            if (input) { input.value = ''; }
+        });
+    </script>
+
     @yield('js')
 
     <script>
@@ -710,7 +748,7 @@ if (!Array.prototype.findIndex) {
               html += '<p class="mb-0 text-to-comparison">'+value['seName']+' SERIES</p>';
               html += ' <h6 class="mt-0 mb-0 text-number-to-comparison">'+value['pro_code']+'</h6>';
               html += '</div>';
-              html += '<div class="delete-to-comparison" onclick="deleteComparison('+value['pro_id']+');"> <i class="zmdi zmdi-close"></i></div>';
+              html += '<div class="delete-to-comparison" data-fn-click="deleteComparison" data-fn-args="['+value['pro_id']+']"> <i class="zmdi zmdi-close"></i></div>';
               html += '</div>';
               html += '<div class="line-coparispon"></div>';
           });
@@ -721,7 +759,7 @@ if (!Array.prototype.findIndex) {
             text += '<p class="mb-0 text-to-comparison">'+value['seName']+' SERIES</p>';
             text += '<h6 class="mt-0 mb-0 text-color-delta">'+value['pro_code']+'</h6>';
             text += '</div>';
-            text += '<div class="delete-to-comparison" onclick="deleteComparison('+value['pro_id']+');"> <i class="zmdi zmdi-close"></i></div>';
+            text += '<div class="delete-to-comparison" data-fn-click="deleteComparison" data-fn-args="['+value['pro_id']+']"> <i class="zmdi zmdi-close"></i></div>';
             text += '</div>';
           });
 

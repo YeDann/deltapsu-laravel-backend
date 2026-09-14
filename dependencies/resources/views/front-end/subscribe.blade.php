@@ -58,7 +58,7 @@
             Subscribe to DeltaPSU newsletter and be the first to know about our new product releases and industry
             knowledge.
         </div>
-        <form action="{{route('subscribe')}}" name="formsub" onsubmit="return submitsubscribeFrompage()" method="POST">
+        <form action="{{route('subscribe')}}" name="formsub" data-fn-submit="submitsubscribeFrompage" method="POST">
             {{csrf_field()}}
             <div class="container">
                 <div class="row mt-3 mb-3 justify-content-center">
@@ -92,7 +92,7 @@
                             <div class="subscribe-text"> You understand and agree to our <a href="{{route('privacyPolicy')}}"
                                     class="text-underline text-bold"> {{$staticContent['Privacy_Policy']}}</a>.</div>
                             <div class="box-input-checkbox mb-4">
-                                <input class="inp-cbx" name="accept" id="cx-sign-up-sub" onclick="chagedata()" value="0"
+                                <input class="inp-cbx" name="accept" id="cx-sign-up-sub" data-fn-click="chagedata" value="0"
                                     type="checkbox" style="display: none;" />
                                 <label class="cbx" for="cx-sign-up-sub"><span>
                                         <svg width="12px" height="10px" viewbox="0 0 12 10">
