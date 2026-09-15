@@ -272,7 +272,7 @@
                             class="red">*</span></label>
                     {{-- <input type="text" class="form-control" name="model" placeholder="{{$staticContent['Model']}}"
                         required> --}}
-                    <select class="js-example-basic-multiple form-control" name="model[]" onchange="selectModel();"
+                    <select class="js-example-basic-multiple form-control" name="model[]" data-fn-change="selectModel"
                         id="model" multiple="multiple" required>
                         <option></option>
                         @foreach ($products as $item)
@@ -287,7 +287,7 @@
                     <label class="text-title-detail-dark">{{$staticContent['Applications']}}<span
                             class="red">*</span></label>
 
-                    <input type="text" onkeyup="keycheck();" class="form-control" name="application" id="application"
+                    <input type="text" data-fn-keyup="keycheck" class="form-control" name="application" id="application"
                         placeholder="Enter application " required>
                 </div>
             </div>
@@ -295,7 +295,7 @@
                 <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
                     <label class="text-title-detail-dark">{{$staticContent['End_Customer']}}<span
                             class="red">*</span></label>
-                    <input type="text" onkeyup="keycheck();" class="form-control" name="endCustomer" id="endCustomer"
+                    <input type="text" data-fn-keyup="keycheck" class="form-control" name="endCustomer" id="endCustomer"
                         placeholder="{{$staticContent['End_Customer']}}" required>
                     {{-- <label for="email">Email Address</label> --}}
                 </div>
@@ -303,7 +303,7 @@
                 <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
                     <label class="text-title-detail-dark">{{$staticContent['Country']}}<span
                             class="red">*</span></label>
-                    <select name="country" onchange="keycontry()" class="form-control" id="country" required>
+                    <select name="country" data-fn-change="keycontry" class="form-control" id="country" required>
                         @foreach ($countryemails as $email)
                         <option value="{{$email->country}}">{{$email->country}}</option>
                         @endforeach
@@ -316,7 +316,7 @@
                     <label class="text-title-detail-dark">{{$staticContent['Message']}}<span
                             class="red">*</span></label>
                     <div class="input-label">
-                        <textarea name="message" onkeyup="keycheck();" id="message" class="w-100 text-area"
+                        <textarea name="message" data-fn-keyup="keycheck" id="message" class="w-100 text-area"
                             placeholder="{{$staticContent['Message']}}" rows="10" style="padding: .75rem;"
                             required></textarea>
                     </div>
@@ -350,14 +350,14 @@
             <div class="col-lg-12 text-center">
                 <p>By submitting this form, You understand and agree to our <a target="_blank" class="text-a-link"
                         href="{{route('privacyPolicy')}}">Privacy Policy</a>.</p>
-                <button type="button" onclick="onclickSubmitform()"
+                <button type="button" data-fn-click="onclickSubmitform"
                     class="btn-subscribe mt-4">{{isset($staticContent['Submit']) ? $staticContent['Submit'] : "Submit"
                     }}</button>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12 text-center">
-                <button type="button" onclick="onclickSaveDraft()"
+                <button type="button" data-fn-click="onclickSaveDraft"
                     class="btn btn-boxen mt-4">{{isset($staticContent['SaveDraft']) ? $staticContent['SaveDraft'] :
                     "SaveDraft" }}</button>
             </div>
@@ -379,8 +379,8 @@
                 </p>
             </div>
             <div class="modal-footer">
-                <div class="btn btn-boxen" onclick="calcel();">{{$staticContent['Cancel']}}</div>
-                <div class="btn btn-subscribe mb-2" onclick="onsubmitContent();">{{$staticContent['Submit']}}</div>
+                <div class="btn btn-boxen" data-fn-click="calcel">{{$staticContent['Cancel']}}</div>
+                <div class="btn btn-subscribe mb-2" data-fn-click="onsubmitContent">{{$staticContent['Submit']}}</div>
 
             </div>
         </div>
@@ -393,14 +393,14 @@
 @section('js')
 <script type="text/javascript" src="{{asset('/frontend-asset/js/dropzone.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-<script>
+<script @cspNonce>
     $(document).ready(function() {
     $('.js-example-basic-multiple').select2({
         placeholder: "Select Models",
     });
 });
 </script>
-<script>
+<script @cspNonce>
     var image = [];
     Dropzone.autoDiscover = false;
     var myDropzone = new Dropzone("#my-awesome-dropzone", { 

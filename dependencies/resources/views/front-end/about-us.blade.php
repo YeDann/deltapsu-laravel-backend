@@ -61,7 +61,7 @@
 
 
 @section('js')
-<script>
+<script @cspNonce>
 
 
 </script>

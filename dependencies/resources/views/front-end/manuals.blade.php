@@ -216,7 +216,7 @@
                         </label>
                     </div>
                     <div class="search-filter-action-btn text-center">
-                        <button onclick="keySearch();"
+                        <button data-fn-click="keySearch"
                             class="btn-filters btn-search">{{$staticContent['Search']}}</button>
                     </div>
                 </div>
@@ -224,7 +224,7 @@
                 <div class="datasheet-select border-2px border-radius-6">
                     <p class="text-dark text-bold mr-b-1">{{$staticContent['Type']}}</p>
 
-                    <select id="type_id" onchange="selectType();" class="form-control border-radius-6">
+                    <select id="type_id" data-fn-change="selectType" class="form-control border-radius-6">
                         @foreach ($subCategories as $sub)
                         @if($loop->iteration == 1)
                         <option value="{{$sub->sub_pro_id}}" selected>{{$sub->name}}</option>
@@ -236,13 +236,13 @@
 
                     <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Series']}}</p>
 
-                    <select id="serie_id" onchange="onSelectSeries();" class="form-control border-radius-6">
+                    <select id="serie_id" data-fn-change="onSelectSeries" class="form-control border-radius-6">
                         <option value="0">{{$staticContent['Please_Select']}}*</option>
                     </select>
 
                     <p class="text-dark text-bold mr-b-1 mt-3">{{$staticContent['Model']}}</p>
 
-                    <select id="model_id" onchange="onSelectProduct();" class="form-control border-radius-6">
+                    <select id="model_id" data-fn-change="onSelectProduct" class="form-control border-radius-6">
                         <option value="0">{{$staticContent['Please_Select']}}*</option>
                     </select>
                     <input type="hidden" id="modelme1">
@@ -259,7 +259,7 @@
                 <div class="d-flex">
                     @foreach ($showlangOb as $ob)
                     <div class="tab-box-lang {{$loop->iteration == 1 ?'active':''}} tab{{$ob['langName']}}"
-                        id="tabdata{{$ob['langName']}}" onclick="changeTablang('{{$ob['langName']}}');">
+                        id="tabdata{{$ob['langName']}}" data-fn-click="changeTablang" data-fn-args='[{{ json_encode($ob['langName']) }}]'>
                         {{$ob['langFull']}}</div>
                     @endforeach
 
@@ -278,12 +278,12 @@
 
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-<script>
+<script @cspNonce>
     $('.js-example-basic-single').select2({
         placeholder: '{{$staticContent['Search_By_Model_Name']}}'
 });
 </script>
-<script>
+<script @cspNonce>
     var series =  <?= json_encode($series);?>;
         var products =  <?= json_encode($products);?>;
         var showlang =  <?= json_encode($showlangOb);?>;

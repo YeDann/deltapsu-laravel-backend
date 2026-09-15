@@ -45,7 +45,7 @@
         <div class="block-header block-header-default">
             
             <div class="Absolute-Center">
-                <select onchange="getFiler()" class="js-select2 form-control" id="pro_categories" name="categories_doc" data-placeholder="Filter By.." required>
+                <select data-fn-change="getFiler" class="js-select2 form-control" id="pro_categories" name="categories_doc" data-placeholder="Filter By.." required>
                     <option></option>
                     @foreach($categories as $cate)
                     <option value="{{$cate->id}}" {{isset($selecValue) &&  $selecValue == $cate->id ? 'selected':'' }}  >{{$cate->title}}</option>
@@ -102,7 +102,7 @@
                            
                            
                             <a href="{{route('editDocMutidoc' ,$item['doc_id'])}}" class="btn btn-primary">Edit</a>
-                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item['doc_id']}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                            <button type="button" class="btn btn-danger js-delete-item" data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item['doc_id']}}">Delete</button>
                     </td>
                     </tr>
                     @endforeach
@@ -146,7 +146,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function getFiler(){
         var value =  $('#pro_categories').val();
         if(value == 0){

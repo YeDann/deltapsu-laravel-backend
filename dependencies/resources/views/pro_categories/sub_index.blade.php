@@ -69,8 +69,8 @@
                         <a href="{{route('series_index' ,$item->sub_pro_id)}}"
                             class="btn btn-outline-primary">Series</a>
                         <a href="{{route('editSubCategories' ,$item->sub_pro_id)}}" class="btn btn-primary">Edit</a>
-                        <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->sub_pro_id}});"
-                            data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                        <button type="button" class="btn btn-danger js-delete-item"
+                            data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item->sub_pro_id}}">Delete</button>
 
                     </td>
                     </tr>
@@ -116,7 +116,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function ondelelete(id){
          $('#itemId').val(id);
 

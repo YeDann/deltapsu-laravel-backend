@@ -73,7 +73,7 @@
             <div class="col-lg-9 col-md-6"></div>
             <div class="col-lg-3 col-md-6">
                 <div class="form-group">
-                    <select class="form-control" id="filterData" onchange="filterData(this.value)">
+                    <select class="form-control js-filter-data" id="filterData">
                         <option value="">Default</option>
                         <option value="desc">Newest - Oldest</option>
                         <option value="asc">Oldest - Newest</option>
@@ -165,7 +165,7 @@
         @endforeach
         <div class="row">
             <div class="col-lg-12 text-center">
-                <div id="loadMore" class="btn btn-boxen" onclick="loadeMore(event,4)">{{$staticContent['See_More']}}
+                <div id="loadMore" class="btn btn-boxen" data-fn-click="loadeMore" data-fn-args='["$event",4]'>{{$staticContent['See_More']}}
                 </div>
             </div>
         </div>
@@ -208,7 +208,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     $( document ).ready(function() {
         $(".moreBox").slice(0, 8).show();
     });
@@ -256,5 +256,10 @@
 
     }
         
+
+  // 取代原本的 inline onchange（引數是 this.value，dispatcher 不支援屬性存取，故用專用委派）
+  $(document).on('change', '.js-filter-data', function () {
+      filterData(this.value);
+  });
 </script>
 @endsection

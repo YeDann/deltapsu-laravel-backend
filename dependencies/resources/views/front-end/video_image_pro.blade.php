@@ -75,9 +75,9 @@
                     <td class="d-none d-sm-table-cell">{{$item->created_at}}</td>
                     <td class="text-center">
 
-                        <button class="btn btn-info" onclick="editContent({{$item->id}} ,{{$item->type}})">Edit</button>
-                        <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});"
-                            data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                        <button class="btn btn-info" data-fn-click="editContent" data-fn-args='[{{$item->id}},{{$item->type}}]'>Edit</button>
+                        <button type="button" class="btn btn-danger js-delete-item"
+                            data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item->id}}">Delete</button>
 
                     </td>
                     </tr>
@@ -144,7 +144,7 @@
                             <p>Example Link https://youtu.be/aovZiyKb4NE </p>
                             <p id="text_arr" style="color:red"></p>
                             <input type="text" class="form-control" name="link" value="" id="linkyoutube"
-                                onkeyup="playyourtest()" placeholder="Enter LInk...">
+                                data-fn-keyup="playyourtest" placeholder="Enter LInk...">
                             <input type="hidden" name="pro_image_id" id="video_id">
                             <input type="hidden" name="type" value="2">
                             <input type="hidden" name="pro_id" value="{{$products[0]->pro_id}}">
@@ -220,7 +220,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function playyourtest(){
        var link =  $('#linkyoutube').val();
        var regex = RegExp('https://youtu.be/');

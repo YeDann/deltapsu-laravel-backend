@@ -142,7 +142,7 @@
                             <label for="">Meta - Title</label>
                             <span>Recommended 30-60 Character</span>
                             <div id="item-wrap">
-                                <input id="input-metaTitle-en" onkeyup="countCharacter('metaTitle-en')" type="text"
+                                <input id="input-metaTitle-en" data-fn-keyup="countCharacter" data-fn-args='["metaTitle-en"]' type="text"
                                     class="form-control" name="metaTitle" value="">
                                 <div class="text-count">Count Character :
                                     <span id="count-metaTitle-en">0</span>
@@ -154,7 +154,7 @@
                             <span>Recommended 70-155 Character</span>
                             <div id="item-wrap">
                                 <textarea rows="4" id="input-metaDescription-en"
-                                    onkeyup="countCharacter('metaDescription-en')" name="metaDescription"
+                                    data-fn-keyup="countCharacter" data-fn-args='["metaDescription-en"]' name="metaDescription"
                                     class="form-control"></textarea>
                                 <div class="text-count">Count Character :
                                     <span id="count-metaDescription-en">
@@ -190,7 +190,7 @@
 <script src="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.js')}}"></script>
 <script src="{{asset('backend-asset/js/plugins/ckeditor/ckeditor.js')}}"></script>
 <script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script> --}}
-<script>
+<script @cspNonce>
     // jQuery(function () {
     //     Dashmix.helpers(['datepicker', 'summernote', 'simplemde', 'ckeditor']);
     // });
@@ -237,7 +237,7 @@ $(document).on('change', '#file_input', function () {
 
 
 </script>
-<script type="text/javascript">
+<script type="text/javascript" @cspNonce>
     function countCharacter(id){
            var str = $('#input-'+id).val();
           $('#count-'+id).text(str.length);

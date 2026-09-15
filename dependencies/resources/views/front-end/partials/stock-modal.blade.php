@@ -1,6 +1,6 @@
 {{--
     經銷商庫存查詢 Modal（共用 partial）— 列表頁 product.blade.php 與詳情頁 productdetails.blade.php 共用。
-    Stock 按鈕 onclick="checkStock(proCode)" 即可開啟；後端走 /stock-check（DilpClient → netCOMPONENTS DILP）。
+    Stock 按鈕加 class="js-check-stock" 與 data-pro-code="料號" 即可開啟；後端走 /stock-check（DilpClient → netCOMPONENTS DILP）。
     需 jQuery（layout 於 container 前已載）；.modal('show') 為點擊才呼叫，屆時 bootstrap.js 已載。
     含洲→國兩層篩選、多語（國名 intl／洲名 static word）、手機版版型。
 --}}
@@ -119,7 +119,18 @@
         </div>
     </div>
 </div>
-<script>
+@php
+    // 後端限定的國家（config services.dilp.countries，現為只開放美國）
+    $stockLockedCountries = array_values(array_filter(array_map(
+        fn ($c) => strtoupper(trim((string) $c)),
+        explode(',', (string) config('services.dilp.countries', ''))
+    )));
+    // 限定單一國家 → 開窗就鎖在該國（含所屬洲）；否則退回「站台語系 → 該國」，en 無對應單一國家 → 空字串＝不預設
+    $stockDefaultCountry = count($stockLockedCountries) === 1
+        ? $stockLockedCountries[0]
+        : (['tw' => 'TW', 'cn' => 'CN', 'jp' => 'JP', 'de' => 'DE', 'tr' => 'TR'][app()->getLocale()] ?? '');
+@endphp
+<script @cspNonce>
     // 兩層（洲→國）篩選用：洲代碼 → 在地洲名（intl 無法在地化洲名，故改用後台靜態字；未知洲 fallback DILP 英文）
     var stockRegionLabels = {
         'AM': '{{ addslashes($staticContent['Stock_region_am'] ?? 'North America') }}',
@@ -133,6 +144,10 @@
     var stockCountryMeta = {};   // 本次查詢：國碼 → {name, region}
     var stockRegionMeta = {};    // 本次查詢：洲碼 → 顯示用在地洲名
     var stockAllCountriesLabel = '{{ addslashes($staticContent['Stock_all_countries'] ?? 'All Countries') }}';
+    // 站台語系預設帶入的國碼（見 partial 頂 @php）；空字串＝不預設，維持 All Countries
+    var stockDefaultCountry = '{{ $stockDefaultCountry }}';
+    // 台灣＝Delta 總部：接在台灣選項名稱後的後綴（各語系走後台 Static Word，缺則 fallback (HQ)）
+    var stockHqSuffix = '{{ addslashes($staticContent['Stock_hq_suffix'] ?? '(HQ)') }}';
     // 無購物車連結時的聯絡鈕（文字走 Stock_contact）：點擊向後端要該經銷商 email → mailto；拿不到則 fallback 我方業務支援
     var stockContactLabel = '{{ addslashes($staticContent['Stock_contact'] ?? 'Go to Distributor') }}';
     var stockContactUrl = '{{ route('stockContact') }}';
@@ -148,7 +163,10 @@
         codes.sort(function (a, b) {
             return stockCountryMeta[a].name.localeCompare(stockCountryMeta[b].name);
         }).forEach(function (code) {
-            $country.append($('<option>').val(code).text(stockCountryMeta[code].name));
+            // TW＝Delta 總部：顯示名接後綴（僅顯示，val 仍為國碼 'TW'，篩選不受影響）
+            var label = stockCountryMeta[code].name;
+            if (code === 'TW' && stockHqSuffix) { label += ' ' + stockHqSuffix; }
+            $country.append($('<option>').val(code).text(label));
         });
         $country.val('').toggle(codes.length > 0);
     }
@@ -233,6 +251,17 @@
                 $region.toggle($region.find('option').length > 1);
                 // 國下拉：先列全部國家（選洲後會連動縮窄）
                 rebuildStockCountryOptions('');
+                // 預設帶入國家（限定國家 or 站台語系）：連同所屬洲一起選起來，兩個下拉才不會停在 All。
+                // 該國不在本次結果（stockCountryMeta 無此碼）則不套用 → 自動留在 All Countries。
+                if (stockDefaultCountry && stockCountryMeta[stockDefaultCountry]) {
+                    var defaultRegion = stockCountryMeta[stockDefaultCountry].region || '';
+                    if (defaultRegion) {
+                        $region.val(defaultRegion);
+                        rebuildStockCountryOptions(defaultRegion);   // 會把國下拉重設為 All，故 val 要在這之後設
+                    }
+                    $country.val(stockDefaultCountry);
+                    applyStockFilter();
+                }
                 $wrap.show();
             })
             .fail(function () {
@@ -240,6 +269,15 @@
                 $error.show();
             });
     }
+
+    // Stock 按鈕走事件委派而非 inline onclick（CSP 目標為移除 script-src 的 unsafe-inline）。
+    // 綁在 document：列表頁的按鈕是篩選後才由 JS 產生，委派才吃得到。
+    $(document).on('click', '.js-check-stock', function () {
+        var proCode = $(this).attr('data-pro-code');
+        if (proCode) {
+            checkStock(proCode);
+        }
+    });
 
     // Modal 關閉時先移除焦點，避免 Bootstrap 把 aria-hidden 套在仍持有焦點的關閉鈕上（無障礙警告）
     $('#stockModal').on('hide.bs.modal', function () {

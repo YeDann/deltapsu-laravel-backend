@@ -75,7 +75,7 @@
                                 data-target="#modal-block-popin-2"  data-toggle="modal" onclick="sendId({{$item->id}})" >Duplicate <i class="far fa-clone"></i> </button> --}}
                                     <a href="{{route('event.edit',$item->id)}}" class="btn btn-primary btn-sm">Edit </a>
                             <button type="button" class="btn btn-sm btn-danger" data-toggle="tooltip" id="delbutton"
-                                title="Delete" onclick="deleteIndex({{$item->id}})">
+                                title="Delete" data-fn-click="deleteIndex" data-fn-args='[{{$item->id}}]'>
                                 Delete
                             </button>
                         </div>
@@ -167,7 +167,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteIndex(id) {
         swal({
             title: "Confirm Delete",

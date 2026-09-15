@@ -198,7 +198,7 @@
                         </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button onclick="validateInput();" type="button" class="btn btn-primary">
+                                <button data-fn-click="validateInput" type="button" class="btn btn-primary">
                                        Save
                                 </button>
                             </div>
@@ -213,7 +213,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
 function validateInput() {
     var pass = $('#password').val();
     var confipass = $('#password-confirm').val();

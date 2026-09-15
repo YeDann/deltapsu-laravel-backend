@@ -223,7 +223,7 @@
         <h3 class="text-title-delta visible-mobile">{{$staticContent['what_type_of_support']}}</h3>
         <p>{{$staticContent['support_from_up_text']}}</p>
 
-        <form id="submitSupport" onsubmit="return validateForm(this)" action="{{route('SubmitContact')}}" method="POST">
+        <form id="submitSupport" data-fn-submit="validateForm" data-fn-args='["$this"]' action="{{route('SubmitContact')}}" method="POST">
             {{csrf_field()}}
             <div class="add-space-mobile">
                 <div class="row">
@@ -268,7 +268,7 @@
                     <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
                         <label class="text-title-detail-dark">{{$staticContent['Product_Type']}}<span
                                 class="red">*</span></label>
-                        <select id="type_id" name="type_id" class="form-control border-radius-6" onchange="selectType();" required>
+                        <select id="type_id" name="type_id" class="form-control border-radius-6" data-fn-change="selectType" required>
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Type']}}</option>
                             @foreach ($subCategories as $sub)
                             @if(in_array($sub->sub_pro_id, $arr_settype))
@@ -285,7 +285,7 @@
                     <div class="col-lg-6 col-md-12  select input-label w-100 mb-4">
                         <label class="text-title-detail-dark">{{$staticContent['Country']}}<span
                                 class="red">*</span></label>
-                        <select name="country" class="form-control required border-radius-6" onchange="selectCountry();"
+                        <select name="country" class="form-control required border-radius-6" data-fn-change="selectCountry"
                             id="countryemailId" required>
                             <option value="">{{$staticContent['Select']}} {{$staticContent['Country']}}</option>
                             @foreach ($countryemails as $email)
@@ -331,7 +331,7 @@
 
                         <div class="box-input-checkbox">
                             <input class="inp-cbx" name="prichk" id="privacycheck" value="1"
-                                onclick="onacceptionPolicy()" type="checkbox" style="display: none;" />
+                                data-fn-click="onacceptionPolicy" type="checkbox" style="display: none;" />
                             <label class="cbx" for="privacycheck"><span>
                                     <svg width="12px" height="10px" viewbox="0 0 12 10">
                                         <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
@@ -380,7 +380,7 @@
 @section('js')
 
 
-<script type="text/javascript">
+<script type="text/javascript" @cspNonce>
     function onacceptionPolicy(){
         $('#acceptcookiebot').click();
       }
@@ -399,7 +399,7 @@
       }
 </script>
 
-<script>
+<script @cspNonce>
     $('select').change(function(){
              $(this).parent().attr('style','--color:'+$(this).find(':selected').data('color'));
         })

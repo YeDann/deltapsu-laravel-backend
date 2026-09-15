@@ -51,12 +51,14 @@
         margin: 0;
     }
 
-    /* Product Images 縮圖網格（媒體中心樣式：縮圖 + 預覽/下載 icon） */
+    /* Marketing Materials 縮圖網格（媒體中心樣式：縮圖 + 預覽/下載 icon） */
     .mr-image-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     @media (max-width: 991px) { .mr-image-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 575px) { .mr-image-grid { grid-template-columns: 1fr; } }
     .mr-img-card { position: relative; border: 1px solid #e3e3e3; border-radius: 6px; overflow: hidden; background: #fff; }
     .mr-img-thumb { width: 100%; height: 200px; object-fit: cover; display: block; background: #f2f2f2; }
+    /* PDF 首頁縮圖（PDF.js 於前端 render 到此 canvas）：顯示頁面上緣、裁切成與圖片同框 */
+    .mr-pdf-thumb { width: 100%; height: 200px; object-fit: cover; object-position: top; display: block; background: #f2f2f2; }
     .mr-img-noimg { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center;
         text-align: center; padding: 12px; color: #888; font-size: 14px; background: #f7f7f7; }
     /* hover 時底部滑出小 bar：左邊檔名、右邊預覽/下載 icon */
@@ -64,7 +66,14 @@
         justify-content: space-between; gap: 10px; padding: 8px 12px; background: rgba(0,0,0,.62); color: #fff;
         transform: translateY(100%); transition: transform .35s ease; }
     .mr-img-card:hover .mr-img-bar { transform: translateY(0); }
-    .mr-img-fname { font-size: 13px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    /* 檔名區：檔名可捲、副檔名 [EXT] 固定在後永遠可見（長檔名也看得到檔型） */
+    .mr-img-name { display: flex; align-items: baseline; gap: 4px; min-width: 0; flex: 1 1 auto; overflow: hidden; font-size: 13px; line-height: 1.3; }
+    .mr-img-fname { flex: 0 1 auto; min-width: 0; overflow: hidden; }
+    .mr-img-fname-inner { display: inline-block; white-space: nowrap; }
+    .mr-img-ext { flex: 0 0 auto; opacity: .72; font-weight: 400; }
+    /* 長檔名 hover 跑馬燈：JS 量測溢出後設 --mr-shift/--mr-dur 觸發；未溢出 shift=0 不動 */
+    .mr-img-fname:hover .mr-img-fname-inner { animation: mr-marquee var(--mr-dur, 3s) linear infinite alternate; }
+    @keyframes mr-marquee { to { transform: translateX(var(--mr-shift, 0px)); } }
     .mr-img-bar-actions { display: flex; gap: 6px; flex: 0 0 auto; }
     .mr-img-bar-actions form { margin: 0; }
     .mr-icon-btn { width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.92); border: none;
@@ -162,7 +171,7 @@ function getDateformat($date){
     <div class="container">
         <h2 class="text-title-delta visible-tablets-up">{{$staticContent['Marketing_Resources_Downloads']}}</h2>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['Marketing_Resources_Downloads']}}</h3>
-        <select id="select-catalogs" onchange="selectdocumentType();" class="form-control invisible-up-922 border-radius-6">
+        <select id="select-catalogs" data-fn-change="selectdocumentType" class="form-control invisible-up-922 border-radius-6">
             @foreach ($margetCate as $cate)
             <option value="{{$cate->cate_id}}">{{$cate->name}}</option>
             @endforeach
@@ -173,7 +182,7 @@ function getDateformat($date){
                     role="tablist">
                     @foreach ($margetCate as $cate)
                     <a class="nav-item nav-link font-size-tab {{$loop->iteration == 1?'active':'' }}"
-                        onclick="setdatainput({{$cate->cate_id}});" id="pop-tab{{$cate->cate_id}}" data-toggle="tab"
+                        data-fn-click="setdatainput" data-fn-args='[{{$cate->cate_id}}]' id="pop-tab{{$cate->cate_id}}" data-toggle="tab"
                         href="#pop{{$cate->cate_id}}" role="tab" aria-controls="pop{{$cate->cate_id}}"
                         aria-selected="true" data-val="{{$cate->cate_id}}">{{$cate->name}}
                     </a>
@@ -185,7 +194,7 @@ function getDateformat($date){
                     @foreach ($margetCate as $cate)
                     <div class="tab-pane fade {{$loop->iteration == 1?'show active':'' }} " id="pop{{$cate->cate_id}}"
                         role="tabpanel" aria-labelledby="pop{{$cate->cate_id}}-tab">
-                        <form onsubmit="searchmarketingbycate()">
+                        <form data-fn-submit="searchmarketingbycate">
                             <div class="search-space d-flex justify-content-center w-100">
                                 <div class="box-search-input  mr-3">
 
@@ -203,37 +212,47 @@ function getDateformat($date){
 
                             </div>
                         </form>
-                        @php $isProductImages = (isset($previewCateId) && $cate->cate_id == $previewCateId); @endphp
+                        @php $isGrid = in_array($cate->cate_id, $gridCateIds ?? []); @endphp
                         <div class="contentdatasearch">
-                        @if($isProductImages)
-                            {{-- Product Images：圖片縮圖網格（縮圖 + 預覽/下載 icon） --}}
+                        @if($isGrid)
+                            {{-- 縮圖網格版型（縮圖 + 預覽/下載 icon）；PDF 未上傳縮圖時才用 PDF.js render 首頁 --}}
                             <div class="mr-image-grid">
                             @foreach ($margeting as $marget)
                             @if($marget->cate_id == $cate->cate_id)
                             @php $ext = strtolower(pathinfo($marget->file, PATHINFO_EXTENSION));
                                  $isImage = in_array($ext, ['jpg','jpeg','png','gif','webp']);
                                  $isVideo = in_array($ext, ['mp4','webm','mov']);
+                                 $isPdf = ($ext === 'pdf');
                                  $mrSrc = route('previewMarketingResource').'?doc='.urlencode($marget->file).'&v='.($marget->updated_at ? \Illuminate\Support\Carbon::parse($marget->updated_at)->timestamp : '1');
                                  $mrPoster = null;
-                                 if ($isVideo) {
+                                 $mrDir = base_path('../uploads_delta/partner/marketing_resources/');
+                                 // 縮圖一律優先（含圖片、影片）；無此欄時 fallback 主檔同名 .jpg 慣例（影片自動 poster / 舊資料）。
+                                 // 圖片不吃同名 .jpg 慣例：主檔就是 .jpg 時會指到自己，等於繞過 previewMarketingResource 的權限檢查
+                                 if (!empty($marget->thumbnail) && is_file($mrDir.$marget->thumbnail)) {
+                                     $mrPoster = asset('uploads_delta/partner/marketing_resources/'.$marget->thumbnail);
+                                 } elseif (!$isImage && !$isPdf) {
                                      $posterName = pathinfo($marget->file, PATHINFO_FILENAME).'.jpg';
-                                     if (is_file(base_path('../uploads_delta/partner/marketing_resources/').$posterName)) {
+                                     if (is_file($mrDir.$posterName)) {
                                          $mrPoster = asset('uploads_delta/partner/marketing_resources/'.$posterName);
                                      }
                                  } @endphp
                             <div class="mr-img-card">
-                                @if($isImage)
+                                @if($isImage && !$mrPoster)
                                 <img class="mr-img-thumb lazyload" loading="lazy" alt="{{$marget->name}}" data-src="{{ $mrSrc }}">
                                 @elseif($isVideo)
                                 <video class="mr-video-thumb" muted preload="none" playsinline @if($mrPoster) poster="{{ $mrPoster }}" @endif data-src="{{ $mrSrc }}"></video>
                                 <span class="mr-video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+                                @elseif($mrPoster)
+                                <img class="mr-img-thumb lazyload" loading="lazy" alt="{{$marget->name}}" data-src="{{ $mrPoster }}">
+                                @elseif($isPdf)
+                                <canvas class="mr-pdf-thumb" data-src="{{ $mrSrc }}" aria-label="{{$marget->name}}"></canvas>
                                 @else
                                 <div class="mr-img-noimg">{{ strtoupper($ext) }}</div>
                                 @endif
                                 <div class="mr-img-bar">
-                                    <span class="mr-img-fname" title="{{$marget->name}}">{{$marget->name}}</span>
+                                    <span class="mr-img-name" title="{{$marget->name}}"><span class="mr-img-fname"><span class="mr-img-fname-inner">{{$marget->name}}</span></span><span class="mr-img-ext">[{{ strtoupper($ext) }}]</span></span>
                                     <div class="mr-img-bar-actions">
-                                        @if($isImage || $isVideo)
+                                        @if($isImage || $isVideo || $isPdf)
                                         <button type="button" class="mr-icon-btn mr-preview-trigger" title="{{$staticContent['Preview'] ?? 'Preview'}}"
                                             data-file="{{$marget->file}}" data-name="{{$marget->name}}">
                                             <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -302,7 +321,10 @@ function getDateformat($date){
 
 @section('js')
 
-<script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/pdfjs/pdf.min.js')}}"></script>
+<script @cspNonce>
+    // PDF.js worker 自帶同源（CSP worker-src 會 fallback 到 default-src 'self'，不能吃 CDN）
+    if (window.pdfjsLib) { pdfjsLib.GlobalWorkerOptions.workerSrc = '{{asset('/frontend-asset/js/pdfjs/pdf.worker.min.js')}}'; }
     function selectdocumentType(){
         var typetab =  $('#select-catalogs').val();
         $('#pop-tab'+typetab).click();
@@ -336,7 +358,7 @@ function getDateformat($date){
            });
 
 
-        var isProductImages = (mrPreviewCateId && cateid == mrPreviewCateId);
+        var isProductImages = (mrGridCateIds.indexOf(parseInt(cateid, 10)) > -1);
         var eyeSvg = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
         var dlSvg = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 21h14"/></svg>';
         var dlBase = '{{config('app.url')}}/file_doc_2/marketing_resources/';
@@ -346,22 +368,34 @@ function getDateformat($date){
             var ext = (value['file']||'').split('.').pop().toLowerCase();
             var isImage = ['jpg','jpeg','png','gif','webp'].indexOf(ext) > -1;
             var isVideo = ['mp4','webm','mov'].indexOf(ext) > -1;
+            var isPdf = ext === 'pdf';
             // 帶 updated_at 當 cache-buster：換檔後 v 改變、避免搜尋結果顯示舊快取圖（對齊初始 blade 的 &v）
             var mrSrc = mrPreviewBase+'?doc='+encodeURIComponent(value['file'])+'&v='+encodeURIComponent(value['updated_at']||'1');
             if (isProductImages) {
-                // Product Images / Videos：圖片→縮圖、影片→hover 播放+▶ 角標、其他→佔位；皆可下載
+                // 縮圖網格：有人工縮圖一律優先，否則圖片→原圖、影片→自動截幀 poster、PDF→首頁、其他→佔位；皆可下載
                 html += '<div class="mr-img-card">';
-                if (isImage) {
+                if (isImage && value['thumbnail']) {
+                    // 有人工縮圖就用它，省下為了 200px 的框去載全尺寸原圖；縮圖檔不存在才退回原圖
+                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+(mrStaticBase + value['thumbnail'])+'" data-mr-full-src="'+mrSrc+'">';
+                } else if (isImage) {
                     html += '<img class="mr-img-thumb lazyload" loading="lazy" alt="'+value['name']+'" data-src="'+mrSrc+'">';
                 } else if (isVideo) {
-                    var poster = mrStaticBase + value['file'].replace(/\.[^.]+$/, '.jpg');   // 縮圖不存在則瀏覽器自動略過
+                    var poster = value['thumbnail'] ? (mrStaticBase + value['thumbnail']) : (mrStaticBase + value['file'].replace(/\.[^.]+$/, '.jpg'));
                     html += '<video class="mr-video-thumb" muted preload="none" playsinline poster="'+poster+'" data-src="'+mrSrc+'"></video>';
                     html += '<span class="mr-video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>';
+                } else if (isPdf && value['thumbnail']) {
+                    // PDF 有人工縮圖就直接用，不載 PDF.js（省首頁解析）；縮圖檔不存在才退回 canvas render
+                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+(mrStaticBase + value['thumbnail'])+'" data-mr-pdf-src="'+mrSrc+'">';
+                } else if (isPdf) {
+                    html += '<canvas class="mr-pdf-thumb" data-src="'+mrSrc+'"></canvas>';
                 } else {
-                    html += '<div class="mr-img-noimg">'+ext.toUpperCase()+'</div>';
+                    // 其他檔（壓縮檔等）：優先用 DB 縮圖，否則試主檔同名 .jpg；載入失敗則置換佔位框
+                    var thumb = value['thumbnail'] ? (mrStaticBase + value['thumbnail']) : (mrStaticBase + value['file'].replace(/\.[^.]+$/, '.jpg'));
+                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+thumb+'" data-mr-ext="'+ext.toUpperCase()+'">';
                 }
-                html += '<div class="mr-img-bar"><span class="mr-img-fname" title="'+value['name']+'">'+value['name']+'</span><div class="mr-img-bar-actions">';
-                if (isImage || isVideo) {
+
+                html += '<div class="mr-img-bar"><span class="mr-img-name" title="'+value['name']+'"><span class="mr-img-fname"><span class="mr-img-fname-inner">'+value['name']+'</span></span><span class="mr-img-ext">['+ext.toUpperCase()+']</span></span><div class="mr-img-bar-actions">';
+                if (isImage || isVideo || isPdf) {
                     html += '<button type="button" class="mr-icon-btn mr-preview-trigger" data-file="'+value['file']+'" data-name="'+value['name']+'" title="Preview">'+eyeSvg+'</button>';
                 }
                 html += '<a class="mr-icon-btn" href="'+dlBase+value['file']+'" title="Download">'+dlSvg+'</a>';
@@ -382,15 +416,46 @@ function getDateformat($date){
         $pane.find('.contentdatasearch').html(html);
         mrObserveVideos();   // 搜尋後動態注入的影片也要 lazy-load / 手機捲動播放
         mrLoadImages();      // 動態注入的圖片：全站 lazyload 只處理初始 DOM、不接動態節點，手動把 data-src 載入
+        mrObservePdfs();     // 動態注入的 PDF canvas 也要納入觀察、捲入視窗時 render 首頁
 
       }
 
       // 點檔名/標題區塊 → 彈窗預覽（僅 PDF / 圖片）。事件委派，含搜尋後動態項目
       var mrPreviewBase = @json(route('previewMarketingResource'));
-      var mrPreviewCateId = @json($previewCateId ?? null);
+      var mrGridCateIds = @json($gridCateIds ?? []);
       function mrNotice(text) {
           return '<div style="padding:48px 24px;text-align:center;color:#646464">' + text + '</div>';
       }
+      // 搜尋渲染的壓縮檔縮圖若不存在（img onerror），置換成佔位框（初始 blade 已用 is_file 判斷，不需此路）
+      function mrThumbFallback(img, ext) {
+          var d = document.createElement('div');
+          d.className = 'mr-img-noimg';
+          d.textContent = ext;
+          img.replaceWith(d);
+      }
+      // PDF 人工縮圖載入失敗（DB 有值但實體檔不見）：換回 canvas 走 PDF.js 首頁，不掉成灰底佔位框
+      function mrPdfThumbFallback(img) {
+          var c = document.createElement('canvas');
+          c.className = 'mr-pdf-thumb';
+          c.setAttribute('data-src', img.getAttribute('data-mr-pdf-src') || '');
+          img.replaceWith(c);
+          mrObservePdfs();
+      }
+      // 縮圖載入失敗統一在此分流（取代 img 的 inline onerror，CSP 目標為移除 script-src 的 unsafe-inline）。
+      // error 事件不冒泡，jQuery 的 .on('error') 對動態插入的 img 收不到，必須用原生捕獲階段攔截。
+      document.addEventListener('error', function (e) {
+          var img = e.target;
+          if (!img || img.tagName !== 'IMG' || !img.classList.contains('mr-img-thumb')) { return; }
+          if (img.getAttribute('data-mr-fallback-done')) { return; }   // 只退一次，避免退路本身也失敗時無限重試
+          img.setAttribute('data-mr-fallback-done', '1');
+          if (img.getAttribute('data-mr-full-src')) {
+              img.src = img.getAttribute('data-mr-full-src');          // 人工縮圖不存在 → 退回原圖
+          } else if (img.getAttribute('data-mr-pdf-src')) {
+              mrPdfThumbFallback(img);                                 // PDF 人工縮圖不存在 → 退回 canvas 走 PDF.js
+          } else if (img.getAttribute('data-mr-ext')) {
+              mrThumbFallback(img, img.getAttribute('data-mr-ext'));   // 壓縮檔等縮圖不存在 → 置換佔位框
+          }
+      }, true);
       $(document).on('click', '.mr-preview-trigger', function () {
           var file = $(this).attr('data-file');
           var name = $(this).attr('data-name') || '';
@@ -475,7 +540,55 @@ function getDateformat($date){
               if (!img.getAttribute('src')) { img.src = img.dataset.src; }
           });
       }
+
+      // PDF 首頁縮圖：只在 canvas 捲入視窗（含隱藏分頁被切到）時才用 PDF.js render 第一頁，避免一次解析整頁 PDF 拖慢
+      var mrPdfObserver = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+              if (!e.isIntersecting) { return; }
+              var c = e.target;
+              mrPdfObserver.unobserve(c);
+              mrRenderPdf(c);
+          });
+      }, { rootMargin: '300px' }) : null;
+
+      function mrRenderPdf(canvas) {
+          if (!window.pdfjsLib || !canvas.dataset.src || canvas.dataset.mrRendered) { return; }
+          canvas.dataset.mrRendered = '1';
+          pdfjsLib.getDocument({ url: canvas.dataset.src, withCredentials: true }).promise.then(function (pdf) {
+              return pdf.getPage(1);
+          }).then(function (page) {
+              var targetW = canvas.clientWidth || 260;
+              var base = page.getViewport({ scale: 1 });
+              var vp = page.getViewport({ scale: targetW / base.width });
+              canvas.width = vp.width;
+              canvas.height = vp.height;
+              return page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+          }).catch(function () { /* 失敗保持空框，眼睛預覽 / 下載仍可用 */ });
+      }
+
+      function mrObservePdfs() {
+          document.querySelectorAll('.mr-pdf-thumb[data-src]').forEach(function (c) {
+              if (c.dataset.mrObserved) { return; }
+              c.dataset.mrObserved = '1';
+              if (mrPdfObserver) { mrPdfObserver.observe(c); } else { mrRenderPdf(c); }
+          });
+      }
+
+      // 長檔名 hover 跑馬燈：進入時量測溢出量，設 CSS 變數觸發 :hover 動畫（未溢出則不動）。事件委派含搜尋後動態項目
+      $(document).on('mouseenter', '.mr-img-fname', function () {
+          var inner = this.querySelector('.mr-img-fname-inner');
+          if (!inner) { return; }
+          var overflow = inner.scrollWidth - this.clientWidth;
+          if (overflow > 4) {
+              this.style.setProperty('--mr-shift', (-overflow) + 'px');
+              this.style.setProperty('--mr-dur', Math.max(2, overflow / 40) + 's');
+          } else {
+              this.style.setProperty('--mr-shift', '0px');
+          }
+      });
+
       mrObserveVideos();
+      mrObservePdfs();
 </script>
 
 @endsection

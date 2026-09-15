@@ -252,7 +252,7 @@ function getDateformat($date){
 <section class="box-news">
     <div class="container">
         <h1 class="text-title-delta ">{{$staticContent['Industry_Know_How'] ?? 'Industry Know-How'}}</h1>
-        <select id="select-news" onchange="selectDatanews();" class="form-control invisible-up-922 mb-4 w-75 m-auto border-radius-6">
+        <select id="select-news" data-fn-change="selectDatanews" class="form-control invisible-up-922 mb-4 w-75 m-auto border-radius-6">
             <option value="0" {{$type_id==0 ? 'selected' :''}}>{{$staticContent['All']}}</option>
             @foreach ($news_type as $type)
             <option value="{{$type->id}}" {{$type_id==$type->id ? 'selected' :''}} >{{$type->typename}}</option>
@@ -341,7 +341,7 @@ function getDateformat($date){
 
 
 @section('js')
-<script>
+<script @cspNonce>
     var news_type =  <?= json_encode($news_type);?>;
     function selectDatanews(){
         var value_tab = document.getElementById("select-news").value;

@@ -72,7 +72,7 @@
                             <a href="{{route('product-field.edit',$item->pd_field_id)}}"
                                 class="btn btn-primary">Edit </a>
                             <button type="button" class="btn btn-danger" data-toggle="tooltip" id="delbutton"
-                                title="Delete" onclick="deleteProductfield({{$item->pd_field_id}})">
+                                title="Delete" data-fn-click="deleteProductfield" data-fn-args='[{{$item->pd_field_id}}]'>
                                 Delete 
                             </button>
                         </div>
@@ -162,7 +162,7 @@
 <!--End Modal Language-->
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteProductfield(id) {
         swal({
             title: "Confirm Delete",

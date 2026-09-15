@@ -23,6 +23,8 @@ class DilpClient
     private int $cacheTtl;
     private bool $mock;
     private bool $debug;
+    /** @var array<int, string> 限定顯示的國碼（大寫）；空陣列＝不限國家 */
+    private array $countries;
 
     public function __construct()
     {
@@ -34,10 +36,26 @@ class DilpClient
         $this->cacheTtl = (int) ($cfg['cache_ttl'] ?? 300);
         $this->mock     = (bool) ($cfg['mock'] ?? false);
         $this->debug    = (bool) ($cfg['debug'] ?? false);
+        $this->countries = $this->parseCountries($cfg['countries'] ?? '');
+    }
+
+    /**
+     * 解析限定國家設定（"US" 或 "US,CA"，亦接受陣列）成大寫國碼陣列；空值＝不限國家。
+     *
+     * @param mixed $value
+     * @return array<int, string>
+     */
+    private function parseCountries($value): array
+    {
+        $list = is_array($value) ? $value : explode(',', (string) $value);
+        $codes = array_map(static fn ($c): string => strtoupper(trim((string) $c)), $list);
+
+        return array_values(array_unique(array_filter($codes, static fn (string $c): bool => $c !== '')));
     }
 
     /**
      * 查詢某料號在各經銷商的即時庫存，回傳整理後陣列（查無庫存回空陣列）。
+     * 結果會依 config('services.dilp.countries') 限縮國家（現設為只開放美國）。
      *
      * @return array<int, array{part:string, distributor:string, distributorId:?string, availability:int|string, buyUrl:?string, countries:array<int, array{code:string, name:string, region:?string, regionName:?string}>, uploadDate:?string}>
      */
@@ -49,14 +67,51 @@ class DilpClient
         }
 
         if ($this->mock) {
-            return $this->mockRows($partNumber);
+            return $this->filterByCountries($this->mockRows($partNumber));
         }
 
         // 結果短快取（每料號 × 每語系），降低呼叫量；失敗會丟例外故不會被快取。
         // ⚠️ key 必須帶語系：快取值已含在地化的國名/洲名，不分語系會讓先查到的語系污染其他語系。
-        return Cache::remember('dilp_stock_' . app()->getLocale() . '_' . md5($partNumber), $this->cacheTtl, function () use ($partNumber, $clientIp) {
+        $rows = Cache::remember('dilp_stock_' . app()->getLocale() . '_' . md5($partNumber), $this->cacheTtl, function () use ($partNumber, $clientIp) {
             return $this->fetchFromApi($partNumber, $clientIp);
         });
+
+        // 國家限定刻意在快取「之後」才套用：快取存的是完整結果，改 DILP_COUNTRIES 立即生效、不必清快取。
+        return $this->filterByCountries($rows);
+    }
+
+    /**
+     * 依 config('services.dilp.countries') 限縮結果：
+     * 只留在限定國家有據點的經銷商，且該列的國家清單同步縮成限定國家
+     * （否則跨國經銷商如 DigiKey(DE/HK/US) 會讓前台洲/國下拉冒出非限定的選項）。
+     * 未設定限定國家時原樣回傳。
+     *
+     * @param array<int, array<string, mixed>> $rows
+     * @return array<int, array<string, mixed>>
+     */
+    private function filterByCountries(array $rows): array
+    {
+        if ($this->countries === []) {
+            return $rows;
+        }
+
+        $out = [];
+        foreach ($rows as $row) {
+            $kept = array_values(array_filter(
+                $row['countries'] ?? [],
+                fn (array $c): bool => in_array(strtoupper((string) ($c['code'] ?? '')), $this->countries, true)
+            ));
+
+            // 在限定國家沒有據點（或 DILP 根本沒給國別）→ 整列不顯示
+            if ($kept === []) {
+                continue;
+            }
+
+            $row['countries'] = $kept;
+            $out[] = $row;
+        }
+
+        return $out;
     }
 
     /**

@@ -41,7 +41,7 @@
         <div class="block block-rounded block-bordered">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Dropzone</h3>
-                <button onclick="funreload();" class="btn">
+                <button data-fn-click="funreload" class="btn">
                     Reload DropZone
                 </button>
             </div>
@@ -92,7 +92,7 @@
                                 <img src="{{config('app.url')}}/medias/categories/{{$data->image_name}}" width="120px;">
                             </td>
                             <td>
-                                <button type="button" class="btn btn-hero-danger" onclick="deleteItem({{$data->id}});"
+                                <button type="button" class="btn btn-hero-danger" data-fn-click="deleteItem" data-fn-args='[{{$data->id}}]'
                                     data-toggle="modal" data-target="#modal-block-vcenter"><i
                                         class="far fa-trash-alt"></i></button>
                             </td>
@@ -146,7 +146,7 @@
 @section('js')
 
 
-<script>
+<script @cspNonce>
     Dropzone.autoDiscover = false;
         var myDropzone = new Dropzone("#my-awesome-dropzone", { 
             url: "{{route('uploadImagemultiple')}}"}
@@ -160,7 +160,7 @@
          }
     
 </script>
-<script>
+<script @cspNonce>
     var previewImage = function (input, block) {
             var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
             var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
@@ -185,7 +185,7 @@
       
     
 </script>
-<script>
+<script @cspNonce>
     function deleteItem(id) {
             $('#itemId').val(id);
         } 

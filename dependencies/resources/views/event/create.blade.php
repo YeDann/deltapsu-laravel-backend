@@ -158,7 +158,7 @@
                             <span>Recommended 70-155 Character</span>
                             <div id="item-wrap">
                                 <textarea rows="4" id="input-metaDescription-en"
-                                    onkeyup="countCharacter('metaDescription-en')" name="metaDescription"
+                                    data-fn-keyup="countCharacter" data-fn-args='["metaDescription-en"]' name="metaDescription"
                                     class="form-control"></textarea>
                                 <div class="text-count">Count Character :
                                     <span id="count-metaDescription-en">
@@ -189,7 +189,7 @@
 @endsection
 @section('js')
 
-<script>
+<script @cspNonce>
     var previewImage = function (input, block) {
         var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
@@ -237,7 +237,7 @@ $(document).on('change', '#file_input', function () {
     });
 
 </script>
-<script type="text/javascript">
+<script type="text/javascript" @cspNonce>
     function countCharacter(id){
            var str = $('#input-'+id).val();
           $('#count-'+id).text(str.length);

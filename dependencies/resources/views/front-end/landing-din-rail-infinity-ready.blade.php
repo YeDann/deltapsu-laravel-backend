@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="{{ asset('frontend-asset/css/all.css') }}" />
 <link rel="stylesheet" href="{{ asset('frontend-asset/css/fontello3.css') }}" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/css/uikit.min.css" />
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="{{ asset('frontend-asset/js/jquery-3.7.1.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <style>
@@ -838,13 +838,19 @@ section p { font-size: clamp(0.85rem, 1.3vw, 1.4rem) !important; line-height: 1.
 #hero-time-row { display: none !important; }
 #hero-countdown-wrap { display: none !important; }
 html[html_lang="en"] [data-i18n="hero.upcomingLabel"], html[html_lang="jp"] [data-i18n="hero.upcomingLabel"], html[lang="en"] [data-i18n="hero.upcomingLabel"], html[lang="ja"] [data-i18n="hero.upcomingLabel"] { display: none !important; }
+
+    /* 取代原本寫在 a 上的 onmouseover/onmouseout 換色（CSP 目標為移除 unsafe-inline） */
+    .pill-din-pro:hover { background: rgba(5,163,247,0.22) !important; border-color: #05a3f7 !important; }
+    .pill-din-eco:hover { background: rgba(0,241,205,0.2) !important; border-color: #00f1cd !important; }
 </style>
-<script>window._serverLang = '{{ $htmlLang }}'; window._csrfToken = '{{ csrf_token() }}'; window._locale = '{{ App::getLocale() }}';</script>
+<script @cspNonce>window._serverLang = '{{ $htmlLang }}'; window._csrfToken = '{{ csrf_token() }}'; window._locale = '{{ App::getLocale() }}';</script>
 <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<script @cspNonce>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+j.setAttribute('nonce','{{ $cspNonce ?? '' }}');
+f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-MKT8KMQ6');</script>
 <!-- End Google Tag Manager -->
 </head>
@@ -856,7 +862,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MKT8KMQ6"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-<script>
+<script @cspNonce>
 function subscribe(){document.getElementById("inp3").focus();$('#cxacceptPrivacy_data').val(0);$("#cxacceptPrivacy_data").prop("checked",false);}
 function toggle_visibility(id){var e=document.getElementById(id);if(e.style.visibility=='visible'){$('#in-sidenav').css('visibility','visible');e.style.visibility='hidden';}else{e.style.visibility='visible';$('#in-sidenav').css('visibility','hidden');}}
 function toggle_only(e,id){e.preventDefault();e.stopPropagation();toggle_visibility(id);}
@@ -1098,7 +1104,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="reveal-up delay-200" id="hero-time-row" style="margin:0 0 clamp(16px,2.5vh,28px) 0;font-size:clamp(1.6rem,1.7vw,1.4rem);color:rgba(255,255,255,0.85);letter-spacing:0.5px;white-space:nowrap;"><span data-i18n="hero.onlineEventAt" style="color:rgba(255,255,255,0.85);">Online Launch Event at</span> <span data-i18n="overview.videoExpiry" style="color:#00f2ff;font-weight:700;letter-spacing:1px;white-space:nowrap;">2026.05.20 (Wed.) | 03:30 PM (UTC +8)</span></div>
 <!-- Row 5: Register Now + Countdown side by side -->
 
-<div class="reveal-up delay-250" style="display:flex;flex-direction:row;align-items:center;gap:clamp(10px,2vw,20px);flex-wrap:wrap;justify-content:center;margin-bottom:clamp(20px,3vh,40px);"><!-- Register Now button --><button class="btn-notify" onclick="UIkit.modal('#notify-modal').show()" style="min-width:160px;justify-content:center;padding:clamp(8px,1.4vw,12px) clamp(18px,2.5vw,30px);font-size:clamp(0.75rem,1.4vw,1rem);border-radius:8px;" type="button"><span data-i18n="hero.register" style="color:#fff!important;">Register Now</span></button><!-- Countdown -->
+<div class="reveal-up delay-250" style="display:flex;flex-direction:row;align-items:center;gap:clamp(10px,2vw,20px);flex-wrap:wrap;justify-content:center;margin-bottom:clamp(20px,3vh,40px);"><!-- Register Now button --><button class="btn-notify js-uikit-show" data-uikit-target="notify-modal" style="min-width:160px;justify-content:center;padding:clamp(8px,1.4vw,12px) clamp(18px,2.5vw,30px);font-size:clamp(0.75rem,1.4vw,1rem);border-radius:8px;" type="button"><span data-i18n="hero.register" style="color:#fff!important;">Register Now</span></button><!-- Countdown -->
 
 <div id="hero-countdown-wrap" style="display:flex;gap:6px;align-items:center;">
 <div class="cd-block"><span class="cd-num" id="cd-days-hero">00</span><span class="cd-label">DAYS</span></div>
@@ -1120,11 +1126,11 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 
 <div style="display:flex;flex-direction:column;align-items:center;gap:8px;justify-content:center;"><span data-i18n="hero.dinRailLabel" style="color:#00f2ff;font-weight:700;font-size:clamp(1.4rem,1.5vw,1.1rem);">DIN Rail Power Supplies</span>
 
-<div style="display:flex;flex-direction:row;align-items:center;gap:12px;flex-wrap:nowrap;justify-content:center;"><a href="#din-pro" onmouseout="this.style.background='rgba(5,163,247,0.1)';this.style.borderColor='rgba(5,163,247,0.55)'" onmouseover="this.style.background='rgba(5,163,247,0.22)';this.style.borderColor='#05a3f7'" style="display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:7px 16px;border-radius:50px;border:2px solid rgba(5,163,247,0.55);background:rgba(5,163,247,0.1);color:#fff !important;font-weight:700;font-size:1rem;letter-spacing:1px;text-decoration:none;transition:all 0.2s;backdrop-filter:blur(8px);white-space:nowrap;"><span data-i18n="nav.dinpro" style="color:#fff !important;">DIN Pro</span> <svg fill="none" height="11" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="11"><polyline points="9 18 15 12 9 6"></polyline></svg></a> <a href="#din-eco" onmouseout="this.style.background='rgba(0,241,205,0.08)';this.style.borderColor='rgba(0,241,205,0.55)'" onmouseover="this.style.background='rgba(0,241,205,0.2)';this.style.borderColor='#00f1cd'" style="display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:7px 16px;border-radius:50px;border:2px solid rgba(0,241,205,0.55);background:rgba(0,241,205,0.08);color:#fff !important;font-weight:700;font-size:1rem;letter-spacing:1px;text-decoration:none;transition:all 0.2s;backdrop-filter:blur(8px);white-space:nowrap;"><span data-i18n="nav.dineco" style="color:#fff !important;">DIN Eco</span> <svg fill="none" height="11" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="11"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
+<div style="display:flex;flex-direction:row;align-items:center;gap:12px;flex-wrap:nowrap;justify-content:center;"><a href="#din-pro" class="pill-din-pro" style="display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:7px 16px;border-radius:50px;border:2px solid rgba(5,163,247,0.55);background:rgba(5,163,247,0.1);color:#fff !important;font-weight:700;font-size:1rem;letter-spacing:1px;text-decoration:none;transition:all 0.2s;backdrop-filter:blur(8px);white-space:nowrap;"><span data-i18n="nav.dinpro" style="color:#fff !important;">DIN Pro</span> <svg fill="none" height="11" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="11"><polyline points="9 18 15 12 9 6"></polyline></svg></a> <a href="#din-eco" class="pill-din-eco" style="display:inline-flex;align-items:center;justify-content:center;gap:4px;padding:7px 16px;border-radius:50px;border:2px solid rgba(0,241,205,0.55);background:rgba(0,241,205,0.08);color:#fff !important;font-weight:700;font-size:1rem;letter-spacing:1px;text-decoration:none;transition:all 0.2s;backdrop-filter:blur(8px);white-space:nowrap;"><span data-i18n="nav.dineco" style="color:#fff !important;">DIN Eco</span> <svg fill="none" height="11" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="11"><polyline points="9 18 15 12 9 6"></polyline></svg></a></div>
 </div>
 </div>
 </div>
-<script>
+<script @cspNonce>
 (function syncHeroCountdown() {
   function tick() {
     var _l = document.documentElement.lang;
@@ -1155,7 +1161,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
   tick();
   setInterval(tick, 1000);
 })();
-</script><!-- mini video player removed --><script>
+</script><!-- mini video player removed --><script @cspNonce>
 (function initMiniPlayer() {
   // disabled
   return;
@@ -1385,7 +1391,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 
 <div style="position:absolute;bottom:0;left:0;width:100%;height:2px;background:#05a3f7;pointer-events:none;">&nbsp;</div>
 </div>
-<script>
+<script @cspNonce>
 (function() {
   var ytPlayer = null;
   var playerReady = false;
@@ -1461,7 +1467,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="uk-grid uk-grid-large uk-flex-middle" uk-grid="">
 <div class="uk-width-1-3@l reveal-up">
 <div class="uk-flex uk-flex-column uk-flex-middle uk-text-center">
-<div class="wattage-filter pro-theme uk-margin-medium-bottom"><button class="watt-btn active" onclick="switchProductImage('pro','all',this,event)" type="button">All</button><button class="watt-btn" onclick="switchProductImage('pro','120w',this,event)" type="button">120W</button><button class="watt-btn" onclick="switchProductImage('pro','240w',this,event)" type="button">240W</button><button class="watt-btn" onclick="switchProductImage('pro','480w',this,event)" type="button">480W</button><button class="watt-btn" onclick="switchProductImage('pro','960w',this,event)" type="button">960W</button></div>
+<div class="wattage-filter pro-theme uk-margin-medium-bottom"><button class="watt-btn active" data-fn-click="switchProductImage" data-fn-args='["pro","all","$this","$event"]' type="button">All</button><button class="watt-btn" data-fn-click="switchProductImage" data-fn-args='["pro","120w","$this","$event"]' type="button">120W</button><button class="watt-btn" data-fn-click="switchProductImage" data-fn-args='["pro","240w","$this","$event"]' type="button">240W</button><button class="watt-btn" data-fn-click="switchProductImage" data-fn-args='["pro","480w","$this","$event"]' type="button">480W</button><button class="watt-btn" data-fn-click="switchProductImage" data-fn-args='["pro","960w","$this","$event"]' type="button">960W</button></div>
 
 <div class="product-img-wrap" style="width:100%;max-width:520px;margin:0 auto;height:400px;display:flex;align-items:center;justify-content:center;"><img alt="DIN Pro" class="static-product-img" id="pro-img" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202604231000027622.png" style="width:100%;height:100%;object-fit:contain;display:block;" /></div>
 
@@ -1563,7 +1569,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 <div class="uk-grid uk-grid-large uk-flex-middle" uk-grid="">
 <div class="uk-width-1-3@l reveal-up">
 <div class="uk-flex uk-flex-column uk-flex-middle uk-text-center">
-<div class="wattage-filter eco-theme uk-margin-medium-bottom"><button class="watt-btn active" onclick="switchProductImage('eco','all',this,event)" type="button">All</button><button class="watt-btn" onclick="switchProductImage('eco','120w',this,event)" type="button">120W</button><button class="watt-btn" onclick="switchProductImage('eco','240w',this,event)" type="button">240W</button><button class="watt-btn" onclick="switchProductImage('eco','480w',this,event)" type="button">480W</button><button class="watt-btn" onclick="switchProductImage('eco','960w',this,event)" type="button">960W</button></div>
+<div class="wattage-filter eco-theme uk-margin-medium-bottom"><button class="watt-btn active" data-fn-click="switchProductImage" data-fn-args='["eco","all","$this","$event"]' type="button">All</button><button class="watt-btn" data-fn-click="switchProductImage" data-fn-args='["eco","120w","$this","$event"]' type="button">120W</button><button class="watt-btn" data-fn-click="switchProductImage" data-fn-args='["eco","240w","$this","$event"]' type="button">240W</button><button class="watt-btn" data-fn-click="switchProductImage" data-fn-args='["eco","480w","$this","$event"]' type="button">480W</button><button class="watt-btn" data-fn-click="switchProductImage" data-fn-args='["eco","960w","$this","$event"]' type="button">960W</button></div>
 
 <div class="product-img-wrap" style="width:100%;max-width:520px;margin:0 auto;height:400px;display:flex;align-items:center;justify-content:center;"><img alt="DIN Eco" class="static-product-img" id="eco-img" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202604230959225538.png" style="width:100%;height:100%;object-fit:contain;display:block;" /></div>
 
@@ -1761,7 +1767,7 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
 </div>
 </div>
 
-<div style="text-align:center;margin-top:50px;"><button class="btn-cyber" data-i18n="cert.learnMore" onclick="var m=document.getElementById('cert-modal');m.style.display='flex';document.body.style.overflow='hidden';" type="button">LEARN MORE CERTIFICATIONS</button></div>
+<div style="text-align:center;margin-top:50px;"><button class="btn-cyber" data-i18n="cert.learnMore" data-modal-action="open" data-modal-target="cert-modal" data-modal-lock="1" type="button">LEARN MORE CERTIFICATIONS</button></div>
 </div>
 </section>
 <!-- ===== CERT MODAL ===== -->
@@ -1809,8 +1815,8 @@ html[lang="zh-CN"] #intro [data-i18n="hero.title"] { white-space: normal !import
   .cert-emc-card-list { line-height: 1.5; }
 }
 </style>
-<div id="cert-modal" onclick="if(event.target===this){document.getElementById('cert-modal').style.display='none';document.body.style.overflow='';}" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:9999;overflow:hidden;align-items:center;justify-content:center;">
-<div id="cert-modal-dialog" onclick="event.stopPropagation()"><button onclick="event.preventDefault();document.getElementById('cert-modal').style.display='none';document.body.style.overflow='';" style="position:absolute;top:14px;right:18px;background:transparent;border:none;color:#05a3f7;font-size:1.6rem;cursor:pointer;z-index:10;line-height:1;" type="button">&times;</button>
+<div id="cert-modal" data-modal-backdrop="1" data-modal-target="cert-modal" data-modal-lock="1" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:9999;overflow:hidden;align-items:center;justify-content:center;">
+<div id="cert-modal-dialog" class="js-stop-propagation"><button data-modal-action="close" data-modal-target="cert-modal" data-modal-lock="1" data-modal-prevent="1" style="position:absolute;top:14px;right:18px;background:transparent;border:none;color:#05a3f7;font-size:1.6rem;cursor:pointer;z-index:10;line-height:1;" type="button">&times;</button>
 <h2 class="cert-modal-title" data-i18n="cert.modalTitle" style="font-weight: bold;">Additional Certifications</h2>
 
 <div id="cert-modal-scroll">
@@ -1990,7 +1996,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 
 <div class="compare-data-cell"><span>120W / 240W / 480W</span></div>
 
-<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro" data-i18n="compare.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/force-gt/108" data-cn-url="https://www.deltapsu.cn/product/din-rail-power-supply/1/force-gt/109" href="{{ App::getLocale() === 'cn' ? 'https://www.deltapsu.cn/product/din-rail-power-supply/1/force-gt/109' : 'https://psu.deltaww.com/'.App::getLocale().'/product/2/din-rail-power-supply/1/force-gt/108' }}" onclick="try{localStorage.setItem('productFilters',JSON.stringify({arr_inputtxt:[{type:'31',value_text:'90-264 Vac'}]}))}catch(e){}" target="_blank">LEARN MORE</a></div>
+<div class="compare-data-cell compare-data-cell-btn"><a class="compare-learn-more compare-learn-more-pro js-preset-filter" data-i18n="compare.learnMore" data-url-template="https://psu.deltaww.com/{locale}/product/2/din-rail-power-supply/1/force-gt/108" data-cn-url="https://www.deltapsu.cn/product/din-rail-power-supply/1/force-gt/109" href="{{ App::getLocale() === 'cn' ? 'https://www.deltapsu.cn/product/din-rail-power-supply/1/force-gt/109' : 'https://psu.deltaww.com/'.App::getLocale().'/product/2/din-rail-power-supply/1/force-gt/108' }}" target="_blank">LEARN MORE</a></div>
 </div>
 </div>
 </div>
@@ -2006,43 +2012,43 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 
 <p data-i18n="solutions.desc">Standard power modules ready for volume shipment.</p>
 
-<div class="uk-flex uk-flex-center uk-margin-top" style="gap:10px;flex-wrap:wrap;"><button class="filter-pill active" data-i18n="solutions.all" onclick="filterProducts('all',this,event)" type="button">All products</button><button class="filter-pill" onclick="filterProducts('din-pro',this,event)" type="button">DIN Pro</button><button class="filter-pill" onclick="filterProducts('din-eco',this,event)" type="button">DIN Eco</button></div>
+<div class="uk-flex uk-flex-center uk-margin-top" style="gap:10px;flex-wrap:wrap;"><button class="filter-pill active" data-i18n="solutions.all" data-fn-click="filterProducts" data-fn-args='["all","$this","$event"]' type="button">All products</button><button class="filter-pill" data-fn-click="filterProducts" data-fn-args='["din-pro","$this","$event"]' type="button">DIN Pro</button><button class="filter-pill" data-fn-click="filterProducts" data-fn-args='["din-eco","$this","$event"]' type="button">DIN Eco</button></div>
 </div>
 
 <div class="product-grid-container">
 <div id="product-grid">
 <div data-category="din-pro">
-<div class="solution-card-new" onclick="showSalesKitModal('sol.cobotArm')">
+<div class="solution-card-new" data-fn-click="showSalesKitModal" data-fn-args='["sol.cobotArm"]'>
 <div class="sol-title-bar" data-i18n="sol.cobotArm">Cobot</div>
 <img alt="Cobot" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603301009033361.jpg" /></div>
 </div>
 
 <div data-category="din-pro">
-<div class="solution-card-new" onclick="showSalesKitModal('sol.semiconductor')">
+<div class="solution-card-new" data-fn-click="showSalesKitModal" data-fn-args='["sol.semiconductor"]'>
 <div class="sol-title-bar" data-i18n="sol.semiconductor">Semiconductor</div>
 <img alt="Semiconductor" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603301010196755.jpg" /></div>
 </div>
 
 <div data-category="din-pro din-eco">
-<div class="solution-card-new" onclick="showSalesKitModal('sol.dataCenter')">
+<div class="solution-card-new" data-fn-click="showSalesKitModal" data-fn-args='["sol.dataCenter"]'>
 <div class="sol-title-bar" data-i18n="sol.dataCenter">Data Center</div>
 <img alt="Data Center" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603301009201859.jpg" /></div>
 </div>
 
 <div data-category="din-pro din-eco">
-<div class="solution-card-new" onclick="showSalesKitModal('sol.evCharger')">
+<div class="solution-card-new" data-fn-click="showSalesKitModal" data-fn-args='["sol.evCharger"]'>
 <div class="sol-title-bar" data-i18n="sol.evCharger">EV Charger</div>
 <img alt="EV Charger" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603301009342843.jpg" /></div>
 </div>
 
 <div data-category="din-eco">
-<div class="solution-card-new eco" onclick="showSalesKitModal('sol.greenEnergy')">
+<div class="solution-card-new eco" data-fn-click="showSalesKitModal" data-fn-args='["sol.greenEnergy"]'>
 <div class="sol-title-bar" data-i18n="sol.greenEnergy">Green Energy</div>
 <img alt="Green Energy" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202604301150474205.jpg" /></div>
 </div>
 
 <div data-category="din-eco">
-<div class="solution-card-new eco" onclick="showSalesKitModal('sol.processAuto')">
+<div class="solution-card-new eco" data-fn-click="showSalesKitModal" data-fn-args='["sol.processAuto"]'>
 <div class="sol-title-bar" data-i18n="sol.processAuto">Process Automation</div>
 <img alt="Process Automation" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202603311704373374.jpg" /></div>
 </div>
@@ -2065,7 +2071,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 
 <p class="disclaimer-note" data-i18n="contact.disclaimer" style="display:none;">&nbsp;</p>
 
-<div style="margin-top:16px;"><button onclick="document.getElementById('offices-modal').classList.add('is-open')" style="background:transparent;border:1px solid rgba(5,163,247,0.5);color:#05a3f7;border-radius:8px;padding:8px 20px;font-size:0.9rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all 0.3s;" type="button"><span uk-icon="icon:world;ratio:1"></span><span data-i18n="contact.globalOffices" style="color:#fff;">Contact Us</span></button></div>
+<div style="margin-top:16px;"><button data-modal-action="open" data-modal-target="offices-modal" data-modal-mode="class" style="background:transparent;border:1px solid rgba(5,163,247,0.5);color:#05a3f7;border-radius:8px;padding:8px 20px;font-size:0.9rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all 0.3s;" type="button"><span uk-icon="icon:world;ratio:1"></span><span data-i18n="contact.globalOffices" style="color:#fff;">Contact Us</span></button></div>
 </div>
 
 <div class="uk-width-1-2@l reveal-up delay-100">
@@ -2092,7 +2098,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 <div class="uk-width-1-1" style="margin-top:12px;display:flex;align-items:flex-start;gap:10px;"><input id="cf-privacy" style="margin-top:3px;flex-shrink:0;accent-color:#05a3f7;width:16px;height:16px;cursor:pointer;" type="checkbox" /><label data-i18n="contact.privacyAgree" for="cf-privacy" style="color:#aaa;font-size:0.85rem;cursor:pointer;line-height:1.4;">I have read and agree to the <a href="https://psu.deltaww.com/en/etc/privacy-policy" target="_blank" style="color:#05a3f7;">Privacy Policy</a>.</label></div>
 <span id="cf-privacy-err" style="color:#ff4444;font-size:0.8rem;margin-top:-4px;margin-bottom:0;display:none;"></span>
 
-<div class="uk-width-1-1 uk-margin-medium-top"><button class="btn-cyber uk-width-1-1" data-i18n="contact.send" id="cf-submit-btn" onclick="submitContactForm()" type="button">Send Request</button></div>
+<div class="uk-width-1-1 uk-margin-medium-top"><button class="btn-cyber uk-width-1-1" data-i18n="contact.send" id="cf-submit-btn" data-fn-click="submitContactForm" type="button">Send Request</button></div>
 </form>
 </div>
 </div>
@@ -2102,22 +2108,22 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 </main>
 <!-- ===== PATCH 1: Language Switcher (fixed position, top-right) ===== -->
 
-<div class="lang-switcher" id="langSwitcher" style="position:fixed;top:18px;right:24px;z-index:999;"><button class="lang-switcher-btn" onclick="toggleLangDropdown(event)" type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="flex-shrink:0;" viewbox="0 0 24 24" width="14"> <circle cx="12" cy="12" r="10"></circle> <line x1="2" x2="22" y1="12" y2="12"></line> <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path> </svg> <span id="langCurrentName">EN</span> <svg class="lang-caret" fill="none" height="10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="10"> <polyline points="6 9 12 15 18 9"></polyline> </svg></button>
+<div class="lang-switcher" id="langSwitcher" style="position:fixed;top:18px;right:24px;z-index:999;"><button class="lang-switcher-btn" data-fn-click="toggleLangDropdown" data-fn-args='["$event"]' type="button"><svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="flex-shrink:0;" viewbox="0 0 24 24" width="14"> <circle cx="12" cy="12" r="10"></circle> <line x1="2" x2="22" y1="12" y2="12"></line> <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path> </svg> <span id="langCurrentName">EN</span> <svg class="lang-caret" fill="none" height="10" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="10"> <polyline points="6 9 12 15 18 9"></polyline> </svg></button>
 
 <div class="lang-dropdown">
-<div class="lang-option active" data-lang="en" data-lang-url="{{ $langUrls['en'] }}" onclick="switchLang('en',this)"><span class="lang-name">English</span> <svg class="lang-check" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+<div class="lang-option active" data-lang="en" data-lang-url="{{ $langUrls['en'] }}" data-fn-click="switchLang" data-fn-args='["en","$this"]'><span class="lang-name">English</span> <svg class="lang-check" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
 
-<div class="lang-option" data-lang="zh-TW" data-lang-url="{{ $langUrls['zh-TW'] }}" onclick="switchLang('zh-TW',this)"><span class="lang-name">繁體中文</span> <svg class="lang-check" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+<div class="lang-option" data-lang="zh-TW" data-lang-url="{{ $langUrls['zh-TW'] }}" data-fn-click="switchLang" data-fn-args='["zh-TW","$this"]'><span class="lang-name">繁體中文</span> <svg class="lang-check" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
 
-<div class="lang-option" data-lang="zh-CN" data-lang-url="{{ $langUrls['zh-CN'] }}" onclick="switchLang('zh-CN',this)"><span class="lang-name">简体中文</span> <svg class="lang-check" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+<div class="lang-option" data-lang="zh-CN" data-lang-url="{{ $langUrls['zh-CN'] }}" data-fn-click="switchLang" data-fn-args='["zh-CN","$this"]'><span class="lang-name">简体中文</span> <svg class="lang-check" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
 
-<div class="lang-option" data-lang="ja" data-lang-url="{{ $langUrls['ja'] }}" onclick="switchLang('ja',this)"><span class="lang-name">日本語</span> <svg class="lang-check" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+<div class="lang-option" data-lang="ja" data-lang-url="{{ $langUrls['ja'] }}" data-fn-click="switchLang" data-fn-args='["ja","$this"]'><span class="lang-name">日本語</span> <svg class="lang-check" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
 </div>
 </div>
 <!-- ===== NOTIFY MODAL ===== -->
 
-<div class="uk-modal" id="notify-modal" onclick="if(event.target===this||event.target.classList.contains('uk-modal'))UIkit.modal(this).hide()" uk-modal="bg-close:true;esc-close:true">
-<div class="uk-modal-dialog uk-modal-body notify-modal-content"><button class="uk-modal-close-default" onclick="UIkit.modal(document.getElementById('notify-modal')).hide()" type="button" uk-close=""></button>
+<div class="uk-modal js-uikit-backdrop" id="notify-modal" uk-modal="bg-close:true;esc-close:true">
+<div class="uk-modal-dialog uk-modal-body notify-modal-content"><button class="uk-modal-close-default js-uikit-hide" data-uikit-target="notify-modal" type="button" uk-close=""></button>
 
 <div class="uk-text-center">
 <div class="notify-icon"><span uk-icon="icon:bell;ratio:3"></span></div>
@@ -2143,7 +2149,7 @@ IEC61000-4-2/3/4/5/6/8/11</div>
 <div class="uk-margin"><label class="notify-checkbox"><input id="nf-agree" type="checkbox" /> <span data-i18n="notify.agree">I agree to receive updates and marketing communications</span></label> <span class="cf-error" id="nf-agree-err"></span></div>
 <div class="uk-margin"><label class="notify-checkbox"><input id="py-agree" type="checkbox" /> <span data-i18n="notify.privacyAgree">I have read and agree to the <a href="https://psu.deltaww.com/en/etc/privacy-policy" target="_blank" style="color:#05a3f7;">Privacy Policy</a>.</span></label> <span class="cf-error" id="py-agree-err"></span></div>
 <button class="btn-cyber uk-width-1-1" data-i18n="notify.subscribe" id="notify-submit-btn" type="button">SUBSCRIBE NOW</button></form>
-<script>
+<script @cspNonce>
 document.getElementById('notify-submit-btn').addEventListener('click', function() {
   var lang = document.documentElement.lang || 'en';
   var msgRequired = lang === 'zh-TW' ? '此欄位為必填' : lang === 'zh-CN' ? '此字段为必填项' : lang === 'ja' ? 'この項目は必須です' : 'This field is required';
@@ -2203,9 +2209,9 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 </div>
 <!-- ===== SALES KIT MODAL ===== -->
 
-<div id="saleskit-modal-overlay" onclick="closeSalesKitModal(event)" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:9998;background:rgba(0,0,0,0.7);backdrop-filter:blur(5px);">&nbsp;</div>
+<div id="saleskit-modal-overlay" data-fn-click="closeSalesKitModal" data-fn-args='["$event"]' style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:9998;background:rgba(0,0,0,0.7);backdrop-filter:blur(5px);">&nbsp;</div>
 
-<div id="saleskit-modal-dialog" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:linear-gradient(135deg,#0a0a0a,#1a1a2e);border:1px solid rgba(0,242,255,0.3);border-radius:16px;padding:40px;width:90%;max-width:600px;"><button onclick="closeSalesKitModal(event)" style="position:absolute;top:15px;right:15px;background:transparent;border:none;color:#05a3f7;font-size:24px;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all 0.3s;" type="button"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:20px;height:20px;" viewbox="0 0 24 24"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
+<div id="saleskit-modal-dialog" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:linear-gradient(135deg,#0a0a0a,#1a1a2e);border:1px solid rgba(0,242,255,0.3);border-radius:16px;padding:40px;width:90%;max-width:600px;"><button data-fn-click="closeSalesKitModal" data-fn-args='["$event"]' style="position:absolute;top:15px;right:15px;background:transparent;border:none;color:#05a3f7;font-size:24px;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all 0.3s;" type="button"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="width:20px;height:20px;" viewbox="0 0 24 24"><line x1="18" x2="6" y1="6" y2="18"></line><line x1="6" x2="18" y1="6" y2="18"></line></svg></button>
 
 <div style="text-align:center;">
 <div style="margin-bottom:20px;"><span uk-icon="icon:file-text;ratio:3" style="color:#05a3f7;"></span></div>
@@ -2232,14 +2238,14 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 <footer class="site-footer uk-text-center">
 <div style="margin:0 0 16px 0;padding-top:24px;display:flex;justify-content:center;"><img alt="Delta Industrial" loading="lazy" src="https://filecenter.deltaww.com/about/images/about-202604271156079769.png" style="height:40px;display:block;" /></div>
 
-<div style="display:flex;justify-content:center;align-items:center;gap:30px;margin:10px 0 18px 0;"><a href="https://psu.deltaww.com/en" id="footer-globe-link" style="color:#fff;" target="_blank"><span uk-icon="icon:world;ratio:1.8"></span></a> <a href="https://www.youtube.com/@DeltaPSU" style="color:#fff;" target="_blank"><span uk-icon="icon:youtube;ratio:1.8"></span></a> <a href="https://www.linkedin.com/showcase/deltapsu/" style="color:#fff;" target="_blank"><span uk-icon="icon:linkedin;ratio:1.8"></span></a> <a href="https://www.facebook.com/DeltaPSU" style="color:#fff;" target="_blank"><span uk-icon="icon:facebook;ratio:1.8"></span></a> <a href="#" onclick="document.getElementById('wechat-modal').style.display='flex';return false;" style="color:#fff;cursor:pointer;"><svg fill="currentColor" height="32" viewbox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.497 4.02 6.345 4.02a9.18 9.18 0 0 0 2.956-.479.8.8 0 0 1 .672.067l1.42.83a.316.316 0 0 0 .32-.308.31.31 0 0 0-.052-.168l-.36-1.21a.61.61 0 0 1 .208-.677C23.01 17.495 24 15.768 24 13.892c0-3.324-3.013-5.981-7.063-6.034zm-2.72 3.274c.55 0 .997.45.997 1.002a1 1 0 0 1-.997 1.002 1 1 0 0 1-.997-1.002c0-.552.448-1.002.997-1.002zm5.44 0c.55 0 .997.45.997 1.002a1 1 0 0 1-.997 1.002 1 1 0 0 1-.997-1.002c0-.552.448-1.002.997-1.002z"></path></svg></a></div>
+<div style="display:flex;justify-content:center;align-items:center;gap:30px;margin:10px 0 18px 0;"><a href="https://psu.deltaww.com/en" id="footer-globe-link" style="color:#fff;" target="_blank"><span uk-icon="icon:world;ratio:1.8"></span></a> <a href="https://www.youtube.com/@DeltaPSU" style="color:#fff;" target="_blank"><span uk-icon="icon:youtube;ratio:1.8"></span></a> <a href="https://www.linkedin.com/showcase/deltapsu/" style="color:#fff;" target="_blank"><span uk-icon="icon:linkedin;ratio:1.8"></span></a> <a href="https://www.facebook.com/DeltaPSU" style="color:#fff;" target="_blank"><span uk-icon="icon:facebook;ratio:1.8"></span></a> <a href="#" data-modal-action="open" data-modal-target="wechat-modal" data-modal-prevent="1" style="color:#fff;cursor:pointer;"><svg fill="currentColor" height="32" viewbox="0 0 24 24" width="32" xmlns="http://www.w3.org/2000/svg"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.497 4.02 6.345 4.02a9.18 9.18 0 0 0 2.956-.479.8.8 0 0 1 .672.067l1.42.83a.316.316 0 0 0 .32-.308.31.31 0 0 0-.052-.168l-.36-1.21a.61.61 0 0 1 .208-.677C23.01 17.495 24 15.768 24 13.892c0-3.324-3.013-5.981-7.063-6.034zm-2.72 3.274c.55 0 .997.45.997 1.002a1 1 0 0 1-.997 1.002 1 1 0 0 1-.997-1.002c0-.552.448-1.002.997-1.002zm5.44 0c.55 0 .997.45.997 1.002a1 1 0 0 1-.997 1.002 1 1 0 0 1-.997-1.002c0-.552.448-1.002.997-1.002z"></path></svg></a></div>
 
 <p style="font-size:0.8rem;color:#555;margin:0 0 30px 0;">&copy; 2026 Delta Electronics. Power &amp; System BG.</p>
 </footer>
 <!-- ===== WECHAT MODAL ===== -->
 
-<div id="wechat-modal" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:9999;justify-content:center;align-items:center;">
-<div style="background:#1a2235;border:1px solid rgba(0,242,255,0.2);border-radius:16px;padding:32px;text-align:center;max-width:320px;position:relative;"><button onclick="document.getElementById('wechat-modal').style.display='none'" style="position:absolute;top:12px;right:16px;background:none;border:none;color:#aaa;font-size:1.4rem;cursor:pointer;line-height:1;" type="button">&times;</button><svg fill="#07C160" height="40" style="margin-bottom:12px;" viewbox="0 0 24 24" width="40" xmlns="http://www.w3.org/2000/svg"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.497 4.02 6.345 4.02a9.18 9.18 0 0 0 2.956-.479.8.8 0 0 1 .672.067l1.42.83a.316.316 0 0 0 .32-.308.31.31 0 0 0-.052-.168l-.36-1.21a.61.61 0 0 1 .208-.677C23.01 17.495 24 15.768 24 13.892c0-3.324-3.013-5.981-7.063-6.034zm-2.72 3.274c.55 0 .997.45.997 1.002a1 1 0 0 1-.997 1.002 1 1 0 0 1-.997-1.002c0-.552.448-1.002.997-1.002zm5.44 0c.55 0 .997.45.997 1.002a1 1 0 0 1-.997 1.002 1 1 0 0 1-.997-1.002c0-.552.448-1.002.997-1.002z"></path></svg>
+<div id="wechat-modal" data-modal-backdrop="1" data-modal-target="wechat-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:9999;justify-content:center;align-items:center;">
+<div style="background:#1a2235;border:1px solid rgba(0,242,255,0.2);border-radius:16px;padding:32px;text-align:center;max-width:320px;position:relative;"><button data-modal-action="close" data-modal-target="wechat-modal" style="position:absolute;top:12px;right:16px;background:none;border:none;color:#aaa;font-size:1.4rem;cursor:pointer;line-height:1;" type="button">&times;</button><svg fill="#07C160" height="40" style="margin-bottom:12px;" viewbox="0 0 24 24" width="40" xmlns="http://www.w3.org/2000/svg"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.497 4.02 6.345 4.02a9.18 9.18 0 0 0 2.956-.479.8.8 0 0 1 .672.067l1.42.83a.316.316 0 0 0 .32-.308.31.31 0 0 0-.052-.168l-.36-1.21a.61.61 0 0 1 .208-.677C23.01 17.495 24 15.768 24 13.892c0-3.324-3.013-5.981-7.063-6.034zm-2.72 3.274c.55 0 .997.45.997 1.002a1 1 0 0 1-.997 1.002 1 1 0 0 1-.997-1.002c0-.552.448-1.002.997-1.002zm5.44 0c.55 0 .997.45.997 1.002a1 1 0 0 1-.997 1.002 1 1 0 0 1-.997-1.002c0-.552.448-1.002.997-1.002z"></path></svg>
 
 <p data-i18n="wechat.scan" style="color:#fff;font-size:1rem;font-weight:600;margin:0 0 16px;">Scan to add WeChat</p>
 
@@ -2251,7 +2257,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 <!-- ===== YOUTUBE MODAL ===== -->
 
 <div id="yt-modal">
-<div id="yt-dialog"><button id="yt-close" onclick="closeYoutubeModal()" type="button">&times;</button><iframe allow="encrypted-media" allowfullscreen="" id="yt-iframe" src="about:blank"></iframe></div>
+<div id="yt-dialog"><button id="yt-close" data-fn-click="closeYoutubeModal" type="button">&times;</button><iframe allow="encrypted-media" allowfullscreen="" id="yt-iframe" src="about:blank"></iframe></div>
 </div>
 <!-- ===== PROMO MODAL ===== -->
 
@@ -2263,8 +2269,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 </div> --}}
 <!-- ===== GLOBAL OFFICES MODAL ===== -->
 
-<div id="offices-modal" onclick="document.getElementById('offices-modal').classList.remove('is-open')">
-<div id="offices-dialog" onclick="event.stopPropagation()"><button onclick="document.getElementById('offices-modal').classList.remove('is-open')" style="position:absolute;top:8px;right:12px;background:none;border:none;color:#aaa;font-size:1.2rem;cursor:pointer;line-height:1;z-index:1;" type="button">&times;</button>
+<div id="offices-modal" data-modal-backdrop="1" data-modal-target="offices-modal" data-modal-mode="class">
+<div id="offices-dialog" class="js-stop-propagation"><button data-modal-action="close" data-modal-target="offices-modal" data-modal-mode="class" style="position:absolute;top:8px;right:12px;background:none;border:none;color:#aaa;font-size:1.2rem;cursor:pointer;line-height:1;z-index:1;" type="button">&times;</button>
 
 <h2 data-i18n="offices.title">Global Operations &amp; Service Locations</h2>
 
@@ -2414,7 +2420,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 </style>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit-icons.min.js"></script>
-<script>
+<script @cspNonce>
 (function(){
   function tick(){
     var _l = document.documentElement.lang;
@@ -2443,7 +2449,7 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
   document.addEventListener('DOMContentLoaded', function(){ tick(); setInterval(tick,1000); });
 })();
 </script>
-<script>
+<script @cspNonce>
 (function() {
   'use strict';
 
@@ -3116,5 +3122,86 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 
 <script src="{{ asset('frontend-asset/js/popper.min.js') }}"></script>
 <script src="{{ asset('frontend-asset/js/bootstrap.min.js') }}"></script>
+
+<script @cspNonce>
+    // 這頁是獨立 HTML（不套用 layouts/front-end），故在此自帶一份 data-fn-* 事件委派。
+    // 內容與 layout 版本一致：用 JSON.parse 而非 eval，"$event" / "$this" 會被代換。
+    ['click', 'change', 'keyup', 'keydown', 'submit', 'input', 'focus', 'blur', 'mouseover', 'mouseout'].forEach(function (evt) {
+        $(document).on(evt, '[data-fn-' + evt + ']', function (e) {
+            var el = this;
+            var name = el.getAttribute('data-fn-' + evt);
+            var fn = window[name];
+            if (typeof fn !== 'function') {
+                console.warn('[csp] 找不到全域函式:', name);
+                return;
+            }
+            var raw = el.getAttribute('data-fn-args');
+            var args = [];
+            if (raw) {
+                try {
+                    args = JSON.parse(raw);
+                } catch (err) {
+                    console.warn('[csp] data-fn-args 不是合法 JSON:', name, raw);
+                    return;
+                }
+            }
+            args = args.map(function (a) {
+                if (a === '$event') return e;
+                if (a === '$this') return el;
+                return a;
+            });
+            return fn.apply(el, args);
+        });
+    });
+
+    // 以下取代原本寫在標籤上的 inline 事件屬性（CSP 目標為移除 script-src 的 unsafe-inline）。
+    // modal 的開關統一由 data-modal-* 描述：
+    //   data-modal-action="open|close"  data-modal-target=<元素 id>
+    //   data-modal-mode="class"         改用 classList 的 is-open（預設是 style.display）
+    //   data-modal-lock="1"             一併鎖住 body 捲動
+    //   data-modal-prevent="1"          阻止預設行為（原本寫 return false / preventDefault 的情形）
+    //   data-modal-backdrop="1"         只有點到背景本身才關閉
+    function landingToggleModal(el, target, open) {
+        var m = document.getElementById(target);
+        if (!m) { return; }
+        if (el.getAttribute('data-modal-mode') === 'class') {
+            m.classList[open ? 'add' : 'remove']('is-open');
+        } else {
+            m.style.display = open ? 'flex' : 'none';
+        }
+        if (el.getAttribute('data-modal-lock')) {
+            document.body.style.overflow = open ? 'hidden' : '';
+        }
+    }
+    $(document).on('click', '[data-modal-action]', function (e) {
+        if (this.getAttribute('data-modal-prevent')) { e.preventDefault(); }
+        landingToggleModal(this, this.getAttribute('data-modal-target'), this.getAttribute('data-modal-action') === 'open');
+    });
+    $(document).on('click', '[data-modal-backdrop]', function (e) {
+        if (e.target !== this) { return; }   // 點到內容區不關閉
+        landingToggleModal(this, this.getAttribute('data-modal-target'), false);
+    });
+    // modal 內容區：擋住冒泡，避免點內容觸發背景的關閉
+    $(document).on('click', '.js-stop-propagation', function (e) {
+        e.stopPropagation();
+    });
+    // UIkit 版 modal
+    $(document).on('click', '.js-uikit-show', function () {
+        UIkit.modal(document.getElementById(this.getAttribute('data-uikit-target'))).show();
+    });
+    $(document).on('click', '.js-uikit-hide', function () {
+        UIkit.modal(document.getElementById(this.getAttribute('data-uikit-target'))).hide();
+    });
+    $(document).on('click', '.js-uikit-backdrop', function (e) {
+        if (e.target !== this && !e.target.classList.contains('uk-modal')) { return; }
+        UIkit.modal(this).hide();
+    });
+    // 「查看 90-264 Vac 機種」：先把預設篩選寫進 localStorage 再導頁
+    $(document).on('click', '.js-preset-filter', function () {
+        try {
+            localStorage.setItem('productFilters', JSON.stringify({ arr_inputtxt: [{ type: '31', value_text: '90-264 Vac' }] }));
+        } catch (err) { /* 無痕模式等寫入失敗時略過，比照原本的 try/catch */ }
+    });
+</script>
 </body>
 </html>

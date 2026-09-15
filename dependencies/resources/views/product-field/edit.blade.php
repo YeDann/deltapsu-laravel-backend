@@ -84,20 +84,20 @@
                         <label class="d-block">Type</label>
                         @if($item->type == "text")
                         <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                            <input type="radio" class="custom-control-input" id="status-line-1" name="type" value="text" checked onchange="selectnumber(1);">
+                            <input type="radio" class="custom-control-input" id="status-line-1" name="type" value="text" checked data-fn-change="selectnumber" data-fn-args='[1]'>
                             <label class="custom-control-label" for="status-line-1">Text</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                            <input type="radio" class="custom-control-input" id="status-line-2" name="type" value="number" onchange="selectnumber(0);">
+                            <input type="radio" class="custom-control-input" id="status-line-2" name="type" value="number" data-fn-change="selectnumber" data-fn-args='[0]'>
                             <label class="custom-control-label" for="status-line-2">Number</label>
                         </div>
                         @elseif($item->type == "number")
                         <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                            <input type="radio" class="custom-control-input" id="status-line-1" name="type" value="text" onchange="selectnumber(1);">
+                            <input type="radio" class="custom-control-input" id="status-line-1" name="type" value="text" data-fn-change="selectnumber" data-fn-args='[1]'>
                             <label class="custom-control-label" for="status-line-1">Text</label>
                         </div>
                         <div class="custom-control custom-radio custom-control-inline custom-control-primary">
-                            <input type="radio" class="custom-control-input" id="status-line-2" name="type" value="number" checked onchange="selectnumber(0);">
+                            <input type="radio" class="custom-control-input" id="status-line-2" name="type" value="number" checked data-fn-change="selectnumber" data-fn-args='[0]'>
                             <label class="custom-control-label" for="status-line-2">Number</label>
                         </div>
                         @endif
@@ -137,7 +137,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
         function selectnumber(id){
              if(id == 1){
               $('#unitinput').addClass('d-none');

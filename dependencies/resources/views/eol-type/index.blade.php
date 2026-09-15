@@ -64,7 +64,7 @@
                             <div class="">
                                 <a href="{{route('eol-type.edit',$item->id)}}" class="btn btn-primary">Edit </a>
                                 <button type="button" class="btn btn-danger" data-toggle="tooltip" id="delbutton"
-                                    title="Delete" onclick="deleteEolType({{$item->id}})">
+                                    title="Delete" data-fn-click="deleteEolType" data-fn-args='[{{$item->id}}]'>
                                     Delete
                                 </button>
                             </div>
@@ -79,7 +79,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteEolType(id) {
         swal({
             title: "Confirm Delete",

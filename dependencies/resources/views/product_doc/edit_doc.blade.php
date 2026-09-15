@@ -44,7 +44,7 @@
                     <div class="col-lg-12">
                             <div class="form-group">
                                     <label for="example-select"><span class="req-fed">*</span> Select Document Types</label>
-                            <select class="js-select2 form-control" id="catedocId" onchange="selectDocCate();" name="doc_categories" data-placeholder="Choose one.." required>
+                            <select class="js-select2 form-control" id="catedocId" data-fn-change="selectDocCate" name="doc_categories" data-placeholder="Choose one.." required>
                                 <option></option>
                                 @foreach ($categories as $main)
                                 @if($main->id == $docs[0]->cate_id)
@@ -96,7 +96,7 @@
                                         <div class="form-group">
                                             <label for="example-select">New File <span class="req-fed">* Max File Size 80 MB</span></label>
                                             <div class="custom-file " style="width:100%;">
-                                                <input type="file" class="custom-file-input" id="file_input{{$item2->name}}" onchange="checkmaxsize(`file_input{{$item2->name}}` ,'file_lable{{$item2->name}}')" name="fileGU[{{$item2->name}}]"
+                                                <input type="file" class="custom-file-input" id="file_input{{$item2->name}}" data-fn-change="checkmaxsize" data-fn-args='[{{ json_encode('file_input'.$item2->name) }},{{ json_encode('file_lable'.$item2->name) }}]' name="fileGU[{{$item2->name}}]"
                                                     data-toggle="custom-file-input">
                                                 <label class="custom-file-label file_lable{{$item2->name}}" for="fileImage">Choose file</label>
                                             </div>
@@ -147,7 +147,7 @@
                                         <div class="form-group">
                                             <label for="example-select">New File <span class="req-fed">* Max File Size 80 MB</span></label>
                                             <div class="custom-file " style="width:100%;">
-                                                <input type="file" class="custom-file-input" id="file_input{{$item3->name}}" onchange="checkmaxsize(`file_input{{$item3->name}}` ,'file_lable{{$item3->name}}')" name="fileGU[{{$item3->name}}]"
+                                                <input type="file" class="custom-file-input" id="file_input{{$item3->name}}" data-fn-change="checkmaxsize" data-fn-args='[{{ json_encode('file_input'.$item3->name) }},{{ json_encode('file_lable'.$item3->name) }}]' name="fileGU[{{$item3->name}}]"
                                                     data-toggle="custom-file-input">
                                                 <label class="custom-file-label file_lable{{$item3->name}}" for="fileImage">Choose file</label>
                                             </div>
@@ -187,7 +187,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     $(document).on('change', '.custom-file-input', function () {
         // alert(this.files[0].size);
         var FileSize = this.files[0].size / 1024 / 1024; // in MB
@@ -198,7 +198,7 @@
         };
     }
 </script>
-<script>
+<script @cspNonce>
  
     var doc_has_pros = <?= json_encode($doc_has_pros);?>;
     $(document).ready(function() {

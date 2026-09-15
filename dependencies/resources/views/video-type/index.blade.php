@@ -64,7 +64,7 @@
                         <div class="">
                                 <a href="{{route('video-type.edit',$item->id)}}" class="btn btn-primary">Edit </a>
                             <button type="button" class="btn btn-danger" data-toggle="tooltip" id="delbutton"
-                                title="Delete" onclick="deleteVideoType({{$item->id}})">
+                                title="Delete" data-fn-click="deleteVideoType" data-fn-args='[{{$item->id}}]'>
                                 Delete
                             </button>
                         </div>
@@ -79,7 +79,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteVideoType(id) {
         swal({
             title: "Confirm Delete",

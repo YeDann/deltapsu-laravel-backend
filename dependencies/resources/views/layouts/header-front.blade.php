@@ -644,7 +644,7 @@
             </a>
             {{-- <span class="fs-front">|</span> --}}
             @endif
-            <a class="d-flex" onclick="subscribe()" data-toggle="modal" data-target="#subscribe-modal">
+            <a class="d-flex" data-fn-click="subscribe" data-toggle="modal" data-target="#subscribe-modal">
                 {{-- <img class="mr-1" src="{{asset('frontend-asset/image/sub-new.svg')}}" alt=""> --}}
                 <div class="link-nav-first">
                     {{isset($staticContent['Subscribe']) ? $staticContent['Subscribe']:'' }}
@@ -705,7 +705,7 @@
                             ?>
 
                             <li>
-                                <a href="javascript:void(0);" onclick="clickLangLocationmobile('{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}');">
+                                <a href="javascript:void(0);" data-fn-click="clickLangLocationmobile" data-fn-args='[{{ json_encode(LaravelLocalization::getLocalizedURL($current, null, [], true)) }}]'>
                                     @if($current == 'cn')
                                         简中
                                     @elseif($current == 'tw')
@@ -739,7 +739,7 @@
 
 
                 <div class="icon-clear">
-                    <a onclick="document.getElementById('searchinput').value = ''">
+                    <a class="js-clear-searchinput">
                         <i class="zmdi zmdi-close icon-size-close"></i>
                     </a>
                 </div>
@@ -774,7 +774,7 @@
                             </div>
                             {{-- Sub1 工業電源及模組（Industrial_Power）--}}
                             <div class="dropdown-submenu">
-                                <a id="sub1" class="sub-menu dropdown-item" onmouseover="mainCate('sub1')" tabindex="-1" href="{{ (isset($navcategories2) && count($navcategories2) > 0) ? route('productList', [$navcategories2->first()->main_cateid]) : '#' }}">
+                                <a id="sub1" class="sub-menu dropdown-item" data-fn-mouseover="mainCate" data-fn-args='["sub1"]' tabindex="-1" href="{{ (isset($navcategories2) && count($navcategories2) > 0) ? route('productList', [$navcategories2->first()->main_cateid]) : '#' }}">
                                     {{ isset($staticContent['Industrial_Power']) ? $staticContent['Industrial_Power'] : 'Industrial Power' }}
                                     <i class="zmdi zmdi-chevron-right"></i>
                                 </a>
@@ -787,25 +787,25 @@
                                         @php($navcategories2Href = route('productList' ,[$subCate->main_cateid, slugifyHead($subCate->url_item), $subCate->sub_pro_id]))
                                         @if($subCate->main_cateid == 1)
                                         <li>
-                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}', 2)"
+                                            <a tabindex="-1" class="" data-fn-mouseover="bigImg" data-fn-args='[{{ json_encode($subCate->image_type1) }},2]'
                                                 href="{{$navcategories2Href}}">{{$subCate->name}}
                                             </a>
                                         </li>
                                         @elseif($subCate->main_cateid == 2)
                                         <li>
-                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type2}}', 2)"
+                                            <a tabindex="-1" class="" data-fn-mouseover="bigImg" data-fn-args='[{{ json_encode($subCate->image_type2) }},2]'
                                                 href="{{$navcategories2Href}}">{{$subCate->name}}
                                             </a>
                                         </li>
                                         @elseif($subCate->main_cateid == 3)
                                         <li>
-                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}', 2)"
+                                            <a tabindex="-1" class="" data-fn-mouseover="bigImg" data-fn-args='[{{ json_encode($subCate->image_type3) }},2]'
                                                 href="{{$navcategories2Href}}">{{$subCate->name}}
                                             </a>
                                         </li>
                                         @else
                                         <li>
-                                            <a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}', 2)"
+                                            <a tabindex="-1" class="" data-fn-mouseover="bigImg" data-fn-args='[{{ json_encode($subCate->image) }},2]'
                                                 href="{{$navcategories2Href}}">{{$subCate->name}}
                                             </a>
                                         </li>
@@ -826,7 +826,7 @@
 
                             {{-- Sub2 醫療電源（Medical Power Supplies）--}}
                             <div class="dropdown-submenu">
-                                <a id="sub2" class="sub-menu" onmouseover="mainCate('sub2')" tabindex="-1" href="{{ (isset($navcategories1) && count($navcategories1) > 0) ? route('productList', [$navcategories1->first()->main_cateid]) : '#' }}">
+                                <a id="sub2" class="sub-menu" data-fn-mouseover="mainCate" data-fn-args='["sub2"]' tabindex="-1" href="{{ (isset($navcategories1) && count($navcategories1) > 0) ? route('productList', [$navcategories1->first()->main_cateid]) : '#' }}">
                                     {{ isset($staticContent['Medical_Power']) ? $staticContent['Medical_Power'] :'Medical Power' }} 
                                     <i class="zmdi zmdi-chevron-right"></i>
                                 </a>
@@ -835,22 +835,22 @@
                                     @foreach ($navcategories1 as $subCate)
                                     @php($navcategories1Href = route('productList' ,[$subCate->main_cateid, slugifyHead($subCate->url_item),$subCate->sub_pro_id]))
                                     @if($subCate->main_cateid == 1)
-                                    <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}',1)"
+                                    <li><a tabindex="-1" class="" data-fn-mouseover="bigImg" data-fn-args='[{{ json_encode($subCate->image_type1) }},1]'
                                             href="{{$navcategories1Href}}">{{$subCate->name}}
                                         </a>
                                     </li>
                                     @elseif($subCate->main_cateid == 2)
-                                    <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type2}}',1)"
+                                    <li><a tabindex="-1" class="" data-fn-mouseover="bigImg" data-fn-args='[{{ json_encode($subCate->image_type2) }},1]'
                                             href="{{$navcategories1Href}}">{{$subCate->name}}
                                         </a>
                                     </li>
                                     @elseif($subCate->main_cateid == 3)
-                                    <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}',1)"
+                                    <li><a tabindex="-1" class="" data-fn-mouseover="bigImg" data-fn-args='[{{ json_encode($subCate->image_type3) }},1]'
                                             href="{{$navcategories1Href}}">{{$subCate->name}}
                                         </a>
                                     </li>
                                     @else
-                                    <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}',1)"
+                                    <li><a tabindex="-1" class="" data-fn-mouseover="bigImg" data-fn-args='[{{ json_encode($subCate->image) }},1]'
                                             href="{{$navcategories1Href}}">{{$subCate->name}}
                                         </a>
                                     </li>
@@ -876,7 +876,7 @@
                             {{-- Sub4 工業電池充電器（Industrial_Battery_Charging）--}}
                             <div class="dropdown-submenu">
                                 @if(isset($navcategories4) && count($navcategories4) > 0 )
-                                <a id="sub4" class="sub-menu dropdown-item " onmouseover="mainCate('sub4')" tabindex="-1"
+                                <a id="sub4" class="sub-menu dropdown-item " data-fn-mouseover="mainCate" data-fn-args='["sub4"]' tabindex="-1"
                                     href="{{ route('productList', [$navcategories4->first()->main_cateid]) }}">{{ isset($staticContent['wireless_charging'])?
                                     $staticContent['wireless_charging'] :'Industrial Battery Charging' }} <i
                                         class="zmdi zmdi-chevron-right"></i></a>
@@ -886,27 +886,27 @@
                                     @foreach ($navcategories4 as $subCate)
                                     @php($navcategories4Href = route('productList' ,[$subCate->main_cateid, preg_replace('/\s+/', '-', $subCate->url_item),$subCate->sub_pro_id]))
                                     @if($subCate->main_cateid == 1)
-                                    <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type1}}',4)"
+                                    <li><a tabindex="-1" class="" data-fn-mouseover="bigImg" data-fn-args='[{{ json_encode($subCate->image_type1) }},4]'
                                             href="{{$navcategories4Href}}">{{$subCate->name}}
                                         </a>
                                     </li>
                                     @elseif($subCate->main_cateid == 2)
-                                    <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type2}}',4)"
+                                    <li><a tabindex="-1" class="" data-fn-mouseover="bigImg" data-fn-args='[{{ json_encode($subCate->image_type2) }},4]'
                                             href="{{$navcategories4Href}}">{{$subCate->name}}
                                         </a>
                                     </li>
                                     @elseif($subCate->main_cateid == 3)
-                                    <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image_type3}}',4)"
+                                    <li><a tabindex="-1" class="" data-fn-mouseover="bigImg" data-fn-args='[{{ json_encode($subCate->image_type3) }},4]'
                                             href="{{$navcategories4Href}}">{{$subCate->name}}
                                         </a>
                                     </li>
                                     @elseif($subCate->main_cateid == 4)
-                                    <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}',4)"
+                                    <li><a tabindex="-1" class="" data-fn-mouseover="bigImg" data-fn-args='[{{ json_encode($subCate->image) }},4]'
                                             href="{{$navcategories4Href}}">{{$subCate->name}}
                                         </a>
                                     </li>
                                     @else
-                                    <li><a tabindex="-1" class="" onmouseover="bigImg('{{$subCate->image}}',4)"
+                                    <li><a tabindex="-1" class="" data-fn-mouseover="bigImg" data-fn-args='[{{ json_encode($subCate->image) }},4]'
                                             href="{{$navcategories4Href}}">{{$subCate->name}}
                                         </a>
                                     </li>
@@ -924,7 +924,7 @@
 
                             {{-- Sub3 LED電源（LED Driver）--}}
                             <div class="dropdown-submenu">
-                                <a id="sub3" class="sub-menu" onmouseover="mainCate('sub3')" tabindex="-1"
+                                <a id="sub3" class="sub-menu" data-fn-mouseover="mainCate" data-fn-args='["sub3"]' tabindex="-1"
                                     href="{{ (isset($navcategories3) && count($navcategories3) > 0) ? route('productList', [$navcategories3->first()->main_cateid]) : '#' }}">{{isset($staticContent['LED_Power'])?
                                     $staticContent['LED_Power'] :'LED Driver' }} <i
                                         class="zmdi zmdi-chevron-right"></i></a>
@@ -1133,14 +1133,14 @@
                     {{-- <i class="fa fa-search icon-serch" aria-hidden="true"></i> --}}
                 </div>
 
-                <a class="navbar-brand-mobile" href="#" onclick="openNav();">
+                <a class="navbar-brand-mobile" href="#" data-fn-click="openNav">
                     <div class="menu-buger">
                         <div class="bar"></div>
                         <div class="bar"></div>
                         <div class="bar"></div>
                     </div>
                 </a>
-                {{-- <select name="" id="select-mobile-lang" onchange="changeLangLocationmobile();"
+                {{-- <select name="" id="select-mobile-lang" data-fn-change="changeLangLocationmobile" data-fn-args="[]"
                     class="select-language text-uppercase">
                     @if(isset($language))
                     @foreach ($language as $item)
@@ -1198,22 +1198,22 @@
     <div id="Sidenav" class="sidenav d-flex">
 
         <div class="in-sidenav pad-ar-24px " id="in-sidenav" style="visibility:hidden">
-            {{-- <div id="sidenavClose" class="" onclick="closeNav()">
+            {{-- <div id="sidenavClose" class="" data-fn-click="closeNav" data-fn-args="[]">
                 X
             </div> --}}
-            <a tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav1')">{{isset($staticContent['Products'])?
+            <a tabindex="-1" href="#" data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav1"]'>{{isset($staticContent['Products'])?
                 $staticContent['Products'] :'Products' }}<i class="zmdi zmdi-chevron-right"></i></a>
             <a class="" tabindex="-1" href="#"
-                onclick="toggle_visibility('btn-sidenav3')">{{isset($staticContent['Applications'])?
+                data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav3"]'>{{isset($staticContent['Applications'])?
                 $staticContent['Applications'] :'Applications' }}<i class="zmdi zmdi-chevron-right"></i></a>
             <a class="" tabindex="-1" href="#"
-                onclick="toggle_visibility('btn-sidenav2')">{{isset($staticContent['Technical_Support'])?
+                data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav2"]'>{{isset($staticContent['Technical_Support'])?
                 $staticContent['Technical_Support'] :'Technical Support' }}<i class="zmdi zmdi-chevron-right"></i></a>
             <a class="" tabindex="-1" href="#"
-                onclick="toggle_visibility('btn-sidenav5')">{{isset($staticContent['Updates'])?
+                data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav5"]'>{{isset($staticContent['Updates'])?
                 $staticContent['Updates'] :'Updates' }}<i class="zmdi zmdi-chevron-right"></i></a>
             <a class="" tabindex="-1" href="#"
-                onclick="toggle_visibility('btn-sidenav7')">{{isset($staticContent['Where_to_Buy'])?
+                data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav7"]'>{{isset($staticContent['Where_to_Buy'])?
                 $staticContent['Where_to_Buy'] :'Where_to_Buy' }} <i class="zmdi zmdi-chevron-right"></i></a>
             <div class="d-flex">
                 {{-- <img src="{{asset('frontend-asset/image/person-login-dark.svg')}}" alt="" class="mr-2"> --}}
@@ -1231,7 +1231,7 @@
             </div>
             <div class="d-flex">
                 {{-- <img src="{{asset('frontend-asset/image/sub-new-dark.svg')}}" alt="" class="mr-2"> --}}
-                <a class="a-link-hover" tabindex="-1" onclick="subscribe()" data-toggle="modal"
+                <a class="a-link-hover" tabindex="-1" data-fn-click="subscribe" data-toggle="modal"
                     data-target="#subscribe-modal">
                     {{isset($staticContent['Subscribe']) ? $staticContent['Subscribe'] : 'Subscribe' }}
                 </a>
@@ -1264,7 +1264,7 @@
                             ?>
 
                             <li>
-                                <a href="javascript:void(0);" onclick="clickLangLocationmobile('{{ LaravelLocalization::getLocalizedURL($current, null, [], true) }}');">
+                                <a href="javascript:void(0);" data-fn-click="clickLangLocationmobile" data-fn-args='[{{ json_encode(LaravelLocalization::getLocalizedURL($current, null, [], true)) }}]'>
                                     @if($current == 'cn')
                                         简中
                                     @elseif($current == 'tw')
@@ -1283,7 +1283,7 @@
         </div>
         {{-- PRODUCTS --}}
         <div id="btn-sidenav1" class="btn-sidenav pad-ar-24px">
-            <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav1')"><i
+            <a class="text-color-delta" tabindex="-1" href="#" data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav1"]'><i
                     class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Products']) ?
                 $staticContent['Products'] : 'Products' }}</a>
 
@@ -1294,7 +1294,7 @@
             <a class="text-normal pl-3" href="{{ (isset($navcategories2) && count($navcategories2) > 0) ? route('productList', [$navcategories2->first()->main_cateid]) : '#' }}">
                 {{ isset($staticContent['Industrial_Power']) ? $staticContent['Industrial_Power'] : 'Industrial Power' }}
                 <span class="sidenav-toggle"
-                        onclick="toggle_only(event, 'btn-sidenav-sub1')">
+                        data-fn-click="toggle_only" data-fn-args='["$event","btn-sidenav-sub1"]'>
                     <i class="zmdi zmdi-chevron-right"></i>
                 </span>
             </a>
@@ -1302,7 +1302,7 @@
             <a class="text-normal pl-3" href="{{ (isset($navcategories1) && count($navcategories1) > 0) ? route('productList', [$navcategories1->first()->main_cateid]) : '#' }}">
                 {{ isset($staticContent['Medical_Power']) ? $staticContent['Medical_Power'] : 'Medical Power' }}
                 <span class="sidenav-toggle"
-                        onclick="toggle_only(event, 'btn-sidenav-sub2')">
+                        data-fn-click="toggle_only" data-fn-args='["$event","btn-sidenav-sub2"]'>
                     <i class="zmdi zmdi-chevron-right"></i>
                 </span>
             </a>
@@ -1318,7 +1318,7 @@
             <a class="text-normal pl-3" href="{{ route('productList', [$navcategories4->first()->main_cateid]) }}">
                 {{ isset($staticContent['wireless_charging']) ? $staticContent['wireless_charging'] : 'Industrial Battery Charging' }}
                 <span class="sidenav-toggle"
-                        onclick="toggle_only(event, 'btn-sidenav-sub4')">
+                        data-fn-click="toggle_only" data-fn-args='["$event","btn-sidenav-sub4"]'>
                     <i class="zmdi zmdi-chevron-right"></i>
                 </span>
             </a>
@@ -1331,7 +1331,7 @@
             <a class="text-normal pl-3" href="{{ (isset($navcategories3) && count($navcategories3) > 0) ? route('productList', [$navcategories3->first()->main_cateid]) : '#' }}">
                 {{ isset($staticContent['LED_Power']) ? $staticContent['LED_Power'] : 'LED Driver' }}
                 <span class="sidenav-toggle"
-                        onclick="toggle_only(event, 'btn-sidenav-sub3')">
+                        data-fn-click="toggle_only" data-fn-args='["$event","btn-sidenav-sub3"]'>
                     <i class="zmdi zmdi-chevron-right"></i>
                 </span>
             </a>
@@ -1341,7 +1341,7 @@
                 $staticContent['LED_Power'] : 'LED Driver' }}<i class="zmdi zmdi-chevron-right"></i></a> --}}
         </div>
         <div id="btn-sidenav-sub1" class="btn-sidenav  pad-ar-24px">
-            <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub1')">
+            <a class="text-color-delta" tabindex="-1" href="#" data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav-sub1"]'>
                 <i class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Industrial_Power']) ?
                 $staticContent['Industrial_Power'] : 'Industrial Power'}}</a>
             @if(isset($navcategories2))
@@ -1353,7 +1353,7 @@
         </div>
 
         <div id="btn-sidenav-sub2" class="btn-sidenav  pad-ar-24px">
-            <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub2')"><i
+            <a class="text-color-delta" tabindex="-1" href="#" data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav-sub2"]'><i
                     class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Medical_Power'])?
                 $staticContent['Medical_Power'] :'Medical Power' }}</a>
             @if(isset($navcategories1))
@@ -1364,7 +1364,7 @@
             @endif
         </div>
         <div id="btn-sidenav-sub3" class="btn-sidenav  pad-ar-24px">
-            <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub3')"><i
+            <a class="text-color-delta" tabindex="-1" href="#" data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav-sub3"]'><i
                     class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['LED_Power']) ?
                 $staticContent['LED_Power']
                 :'LED Driver' }}</a>
@@ -1382,7 +1382,7 @@
 
         </div>
         <div id="btn-sidenav-sub4" class="btn-sidenav  pad-ar-24px">
-            <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub4')"><i
+            <a class="text-color-delta" tabindex="-1" href="#" data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav-sub4"]'><i
                     class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['wireless_charging'])?
                 $staticContent['wireless_charging'] :'Industrial Battery Charging' }}</a>
             @if(isset($navcategories4))
@@ -1395,7 +1395,7 @@
 
         {{-- TECHNICAL SUPPORT --}}
         <div id="btn-sidenav2" class="btn-sidenav pad-ar-24px">
-            <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav2')"><i
+            <a class="text-color-delta" tabindex="-1" href="#" data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav2"]'><i
                     class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Technical_Support'])? $staticContent['Technical_Support'] :
                 'Technical Support'}}</a>
             
@@ -1434,7 +1434,7 @@
         </div>
         {{-- APPLICATION --}}
         <div id="btn-sidenav3" class="btn-sidenav pad-ar-24px">
-            <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav3')"><i
+            <a class="text-color-delta" tabindex="-1" href="#" data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav3"]'><i
                     class="zmdi zmdi-chevron-left mr-1"></i> {{isset($staticContent['Applications'])?
                 $staticContent['Applications'] :'Applications' }}</a>
 
@@ -1457,11 +1457,11 @@
         </div> --}}
         {{-- UPDATES --}}
         <div id="btn-sidenav5" class="btn-sidenav pad-ar-24px">
-            <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav5')"><i
+            <a class="text-color-delta" tabindex="-1" href="#" data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav5"]'><i
                     class="zmdi zmdi-chevron-left mr-1"></i> {{isset($staticContent['Updates'])?
                 $staticContent['Updates'] :'Updates' }}</a>
             
-            <a class="text-normal pl-3" href="#" onclick="toggle_visibility('btn-sidenav-sub5')">
+            <a class="text-normal pl-3" href="#" data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav-sub5"]'>
                 {{isset($staticContent['Product_News']) ? $staticContent['Product_News'] : 'Product_News' }}
                 <i class="zmdi zmdi-chevron-right"></i>
             </a>
@@ -1471,7 +1471,7 @@
                 $staticContent['Events'] :'Events' }}</a>
         </div>
         <div id="btn-sidenav-sub5" class="btn-sidenav pad-ar-24px">
-             <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav-sub5')"><i
+             <a class="text-color-delta" tabindex="-1" href="#" data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav-sub5"]'><i
                     class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Product_News']) ? $staticContent['Product_News'] : 'Product_News' }}</a>
             
             <a class="text-normal pl-3" href="{{route('index', ['page' => 'news'])}}">
@@ -1489,7 +1489,7 @@
 
         {{-- WHERE TO BUY --}}
         <div id="btn-sidenav7" class="btn-sidenav pad-ar-24px">
-            <a class="text-color-delta" tabindex="-1" href="#" onclick="toggle_visibility('btn-sidenav7')"><i
+            <a class="text-color-delta" tabindex="-1" href="#" data-fn-click="toggle_visibility" data-fn-args='["btn-sidenav7"]'><i
                     class="zmdi zmdi-chevron-left mr-1"></i>{{isset($staticContent['Where_to_Buy'])?
                 $staticContent['Where_to_Buy'] :'Where_to_Buy' }}</a>
             <a class="text-normal pl-3" href="{{route('contactSupport')}}">{{isset($staticContent['contact_us'])?
@@ -1501,9 +1501,9 @@
                 href="{{route('contactSalesOffices')}}">{{isset($staticContent['sales_offices'])?
                 $staticContent['sales_offices'] :'Sales Offices' }}</a>
         </div>
-        {{-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><img
+        {{-- <a href="javascript:void(0)" class="closebtn" data-fn-click="closeNav" data-fn-args="[]"><img
                 src="{{asset('frontend-asset/image/close-white.svg')}}" alt=""></a> --}}
-        <div class="bg-backslidenav" id="bg-backslidenav" onclick="closeNav();">
+        <div class="bg-backslidenav" id="bg-backslidenav" data-fn-click="closeNav">
         </div>
     </div>
 
@@ -1513,7 +1513,7 @@
                 <h5>(<span id="numberselect-mobile"></span>/3) {{isset($staticContent['Item(s)_selected'])?
                     $staticContent['Item(s)_selected'] :'Item(s)_selected' }}</h5>
                 <a class="text-two text-color-gray" id="editList"
-                    onclick="showListCoparison()">{{isset($staticContent['Edit_List'])?
+                    data-fn-click="showListCoparison">{{isset($staticContent['Edit_List'])?
                     $staticContent['Edit_List'] :'Edit_List' }}</a>
             </div>
             <a href="{{route('productCoparison')}}"
@@ -1527,12 +1527,12 @@
                     <p class="mb-0 text-to-comparison text-uppercase">AA</p>
                     <h6 class="mt-0 mb-0 text-color-delta">CCC</h6>
                 </div>
-                <div class="delete-to-comparison" onclick="deleteComparison('+value['pro_id']+');"> <i
+                <div class="delete-to-comparison" data-fn-click="deleteComparison" data-fn-args="['+value['pro_id']+']"> <i
                         class="zmdi zmdi-close"></i></div>
             </div> --}}
         </div>
         <div class="d-flex text-center my-3">
-            <a class="btn btn-boxen" onclick="hideListCoparison()">Done</a>
+            <a class="btn btn-boxen" data-fn-click="hideListCoparison">Done</a>
         </div>
     </div>
 </div>
@@ -1541,7 +1541,7 @@
 <div class="container">
     <a id="scrollUp"></a>
 
-    {{-- <button onclick="topFunction()" id="scrollTop" title="Go to top"></button>
+    {{-- <button data-fn-click="topFunction" data-fn-args="[]" id="scrollTop" title="Go to top"></button>
     <p id="text-scrollTop">Go to Top</p> --}}
 </div>
 
@@ -1616,7 +1616,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="submitGuiDownload" onsubmit="return validateFormGUI(this)" action="{{route('downloadGui')}}"
+            <form id="submitGuiDownload" data-fn-submit="validateFormGUI" data-fn-args='["$this"]' action="{{route('downloadGui')}}"
                 method="POST">
                 <div class="modal-body px-4 mb-4">
 

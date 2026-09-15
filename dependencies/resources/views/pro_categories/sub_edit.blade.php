@@ -300,7 +300,7 @@
                     </div>
                     <div class="col-lg-8">
                         <label for="example-select"><span class="req-fed">*</span> Main Categories</label>
-                        <select onchange="orderAddPro();" class="js-select2 form-control" name="main_categories[]"
+                        <select data-fn-change="orderAddPro" class="js-select2 form-control" name="main_categories[]"
                             data-placeholder="Choose many.." multiple>
                             <option></option>
                             @foreach ($mainCategories as $main)
@@ -364,7 +364,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     $('.jssummernote').summernote({
       tabsize: 2,
       height: 200,
@@ -448,7 +448,7 @@
                     });
                 }
 </script>
-<script>
+<script @cspNonce>
     var previewImage = function (input, block) {
         var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/

@@ -87,7 +87,7 @@
                                     --}}
                                     <a href="{{route('industry-know-how.edit',$item->id)}}" class="btn btn-primary">Edit  </a>
                             <button type="button" class="btn btn-danger" data-toggle="tooltip" id="delbutton"
-                                title="Delete" onclick="deleteIndustryKnowHow({{$item->id}})">
+                                title="Delete" data-fn-click="deleteIndustryKnowHow" data-fn-args='[{{$item->id}}]'>
                                 Delete
                             </button>
                         </div>
@@ -106,7 +106,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteIndustryKnowHow(id) {
         swal({
             title: "Confirm Delete",

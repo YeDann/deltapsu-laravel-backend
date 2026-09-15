@@ -201,7 +201,7 @@
     <script
         src="https://cdn.jsdelivr.net/npm/@dsvllc/summernote-image-attributes@1.0.0/summernote-image-attributes.min.js">
     </script>
-    <script>
+    <script @cspNonce>
         jQuery(function () {
             Dashmix.helpers(['datepicker', 'colorpicker', 'select2', 'summernote']);
         });
@@ -233,9 +233,70 @@
         }
     </style>
 
+    <script @cspNonce>
+        // Inline 事件屬性（寫在標籤上的 onclick 等）的通用替代，目的是移除 CSP 的 'unsafe-inline'。
+        // 與前台 layouts/front-end 使用同一份實作：
+        //   data-fn-<事件> 放全域函式名；data-fn-args 放 json_encode 出來的引數陣列
+        //   引數裡的 "$event" / "$this" 會被代換成事件物件與觸發元素
+        // 走 JSON.parse 而非 eval，才不會又需要 'unsafe-eval'；型別（數字 / 布林）因此得以保留。
+        ['click', 'change', 'keyup', 'keydown', 'submit', 'input', 'focus', 'blur', 'mouseover', 'mouseout'].forEach(function (evt) {
+            $(document).on(evt, '[data-fn-' + evt + ']', function (e) {
+                var el = this;
+                var name = el.getAttribute('data-fn-' + evt);
+                var fn = window[name];
+                if (typeof fn !== 'function') {
+                    console.warn('[csp] 找不到全域函式:', name);
+                    return;
+                }
+                var raw = el.getAttribute('data-fn-args');
+                var args = [];
+                if (raw) {
+                    try {
+                        args = JSON.parse(raw);
+                    } catch (err) {
+                        console.warn('[csp] data-fn-args 不是合法 JSON:', name, raw);
+                        return;
+                    }
+                }
+                args = args.map(function (a) {
+                    if (a === '$event') return e;
+                    if (a === '$this') return el;
+                    return a;
+                });
+                return fn.apply(el, args);
+            });
+        });
+
+        // 登出連結：阻止導頁，改送出隱藏的 POST 表單（取代原本的 inline onclick）
+        $(document).on('click', '.js-submit-form', function (e) {
+            e.preventDefault();
+            var form = document.getElementById($(this).attr('data-form-target'));
+            if (form) { form.submit(); }
+        });
+
+        // 原本在表單上寫「submit 時回傳 false」的情形（Dashboard 的示範表單，不實際送出）
+        $(document).on('submit', '.js-no-submit', function (e) {
+            e.preventDefault();
+        });
+
+        // 後台刪除確認：把列項 id 寫進共用 Warning modal（#modal-block-vcenter）的隱藏欄位。
+        // 原本各頁是寫在按鈕上的 inline 事件屬性，改事件委派以利日後移除 CSP 的 'unsafe-inline'。
+        // modal 的開啟仍由 Bootstrap 的 data-toggle/data-target 負責，各頁的表單、action
+        // 與額外 hidden 欄位一律維持原樣，這裡只接手「把 id 填進去」這一步。
+        $(document).on('click', '.js-delete-item', function () {
+            var $btn = $(this);
+            // 預設寫入 #itemId；product/optional_model 的刪除 modal 用 #itemIdDelete，以 data-target-field 指定
+            $('#' + ($btn.attr('data-target-field') || 'itemId')).val($btn.attr('data-id'));
+            // product_doc/special_lang 的刪除表單還要一併帶名稱
+            if ($btn.attr('data-name') !== undefined) {
+                $('#itemName').val($btn.attr('data-name'));
+            }
+        });
+    </script>
+
     @yield('js')
 
-    <script>
+    <script @cspNonce>
         $(document).on('change', '.note-image-input', function () {
 
             var FileSize = this.files[0].size / 1024 / 1024; // in MB
@@ -253,7 +314,7 @@
 });
     </script>
     --}}
-    <script>
+    <script @cspNonce>
         $(document).ready(function () {
             $('.jsnotenew').summernote({
                 height: 400,

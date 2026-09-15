@@ -126,8 +126,7 @@
                                     <span>Recommended 30-60 Character</span>
                                     <div id="item-wrap">
                                         <input id="input-metaTitle-{{$item->name}}"
-                                            onkeyup="countCharacter('metaTitle-{{$item->name}}')"
-                                            type="meta_title[{{$item->name}}]" class="form-control"
+                                            data-fn-keyup="countCharacter" data-fn-args='[{{ json_encode('metaTitle-'.$item->name) }}]' type="meta_title[{{$item->name}}]" class="form-control"
                                             name="meta_title[{{$item->name}}]"
                                             value="{{isset($current->meta_title) ? $current->meta_title :''}}">
                                         <div class="text-count">Count Character :
@@ -141,8 +140,7 @@
                                     <span>Recommended 70-155 Character</span>
                                     <div id="item-wrap">
                                         <textarea rows="4" id="input-meta_des-{{$item->name}}"
-                                            onkeyup="countCharacter('meta_des-{{$item->name}}')"
-                                            name="meta_des[{{$item->name}}]"
+                                            data-fn-keyup="countCharacter" data-fn-args='[{{ json_encode('meta_des-'.$item->name) }}]' name="meta_des[{{$item->name}}]"
                                             class="form-control ">{{isset($current->meta_description) ? $current->meta_description :''}}</textarea>
                                         <div class="text-count">Count Character :
                                             <span id="count-meta_des-{{$item->name}}">
@@ -240,7 +238,7 @@
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
 <script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-<script>
+<script @cspNonce>
     var previewImage = function (input, block) {
         var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/
@@ -279,7 +277,7 @@
     });
 
 </script>
-<script type="text/javascript">
+<script type="text/javascript" @cspNonce>
     function countCharacter(id){
            var str = $('#input-'+id).val();
           $('#count-'+id).text(str.length);

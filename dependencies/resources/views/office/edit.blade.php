@@ -125,7 +125,7 @@
                                 {{-- 選檔後即時縮圖預覽 + 超過上限即時提醒（門檻 = 伺服器 upload_max_filesize），存檔成功會在上方 Current Logo 顯示 --}}
                                 <div class="mt-2"><img id="logo_preview" src="" alt="" style="max-height:60px;display:none;border:1px solid #e3e3e3;border-radius:4px;"></div>
                             </div>
-                            <script>
+                            <script @cspNonce>
                                 (function () {
                                     var inp = document.getElementById('logo_input'), prev = document.getElementById('logo_preview'), max = {{ $logoMaxBytes }};
                                     if (!inp || !prev) { return; }
@@ -254,7 +254,7 @@
 <script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyCPBj3pIdKpOMbIL4cChrzX_OJZSkaxIvM
 &sensor=false&libraries=places'></script>
     <script src="https://cdn.jsdelivr.net/gh/Logicify/jquery-locationpicker-plugin@master/dist/locationpicker.jquery.min.js"></script>
-<script>
+<script @cspNonce>
     var lat = '{{$offices[0]->lat}}';
     var lon = '{{$offices[0]->lon}}';
 
