@@ -170,7 +170,7 @@
                     </div>
                     <div class="col-lg-8">
                         <label for="example-select"><span class="req-fed">*</span> Main Categories</label>
-                        <select onchange="selectdata()" id="maincateId" class="js-select2 form-control"
+                        <select data-fn-change="selectdata" id="maincateId" class="js-select2 form-control"
                             name="main_categories[]" data-placeholder="Choose many.." required multiple>
                             <option></option>
                             @foreach ($mainCategories as $main)
@@ -231,7 +231,7 @@
 @section('js')
 
 
-<script>
+<script @cspNonce>
     var previewImage = function (input, block) {
         var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/

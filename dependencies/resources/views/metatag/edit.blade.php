@@ -98,7 +98,7 @@
                                         <span>Recommended 20-70 characters</span>
                                         <div id="item-wrap">
                                             <input id="input-h1-{{$item->name}}"
-                                                onkeyup="countCharacter('h1-{{$item->name}}')" type="text"
+                                                data-fn-keyup="countCharacter" data-fn-args='[{{ json_encode('h1-'.$item->name) }}]' type="text"
                                                 class="form-control" name="h1_title[{{$item->name}}]" maxlength="70"
                                                 value="{{isset($current->h1)?$current->h1 :''}}">
                                             <div class="text-count">Count Character :
@@ -112,8 +112,7 @@
                                         <span>Recommended 30-60 Character</span>
                                         <div id="item-wrap">
                                             <input id="input-metaTitle-{{$item->name}}"
-                                                onkeyup="countCharacter('metaTitle-{{$item->name}}')"
-                                                type="meta_title[{{$item->name}}]" class="form-control"
+                                                data-fn-keyup="countCharacter" data-fn-args='[{{ json_encode('metaTitle-'.$item->name) }}]' type="meta_title[{{$item->name}}]" class="form-control"
                                                 name="meta_title[{{$item->name}}]"
                                                 value="{{isset($current->title) ? $current->title :''}}">
                                             <div class="text-count">Count Character :
@@ -127,8 +126,7 @@
                                         <span>Recommended 70-155 Character</span>
                                         <div id="item-wrap">
                                             <textarea rows="4" id="input-metaDescription-{{$item->name}}"
-                                                onkeyup="countCharacter('metaDescription-{{$item->name}}')"
-                                                name="metaDescription[{{$item->name}}]"
+                                                data-fn-keyup="countCharacter" data-fn-args='[{{ json_encode('metaDescription-'.$item->name) }}]' name="metaDescription[{{$item->name}}]"
                                                 class="form-control">{{isset($current->description)?$current->description :''}}</textarea>
                                             <div class="text-count">Count Character :
                                                 <span id="count-metaDescription-{{$item->name}}">
@@ -184,7 +182,7 @@
 </div>
 @endsection
 @section('js')
-<script type="text/javascript">
+<script type="text/javascript" @cspNonce>
     function countCharacter(id){
            var str = $('#input-'+id).val();
           $('#count-'+id).text(str.length);

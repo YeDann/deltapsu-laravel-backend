@@ -51,7 +51,7 @@
                         <td>{{ $item->status ? 'Show' : 'Hide' }}</td>
                         <td class="text-center">
                             <a href="{{route('distributorCategory.edit', [$type, $item->id])}}" class="btn btn-primary">Edit</a>
-                            <button type="button" class="btn btn-danger" onclick="deleteDistCat({{$item->id}})">Delete</button>
+                            <button type="button" class="btn btn-danger js-del-dist-cat" data-id="{{$item->id}}">Delete</button>
                         </td>
                     </tr>
                     @endforeach
@@ -63,7 +63,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteDistCat(id) {
         swal({
             title: "Confirm Delete",
@@ -77,5 +77,10 @@
             }
         });
     }
+
+    // 走事件委派而非 inline onclick（CSP 目標為移除 script-src 的 unsafe-inline）
+    $(document).on('click', '.js-del-dist-cat', function () {
+        deleteDistCat($(this).attr('data-id'));
+    });
 </script>
 @endsection

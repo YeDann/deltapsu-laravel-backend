@@ -67,14 +67,14 @@
                     <td class="d-none d-sm-table-cell">{{$item->email}}</td>
                     <td class="d-none d-sm-table-cell">
                         <div class="custom-control custom-switch custom-control-lg mb-2">
-                            <input type="checkbox" class="custom-control-input" id="statusCate{{$item->id}}" onchange="checkdata({{$item->id}});"  {{($item->status== 1)?'checked':''}}>
+                            <input type="checkbox" class="custom-control-input" id="statusCate{{$item->id}}" data-fn-change="checkdata" data-fn-args='[{{$item->id}}]'  {{($item->status== 1)?'checked':''}}>
                     <label class="custom-control-label" id="lablestatusCate{{$item->id}}" for="statusCate{{$item->id}}">{{$item->status == 1?'Active':'Deactive'}}</label>
                         </div>
                       
                     </td>
                     <td class="text-center">
                         <a href="{{route('backendUser.edit',$item->id)}}" class="btn btn-primary">Edit </a>
-                        <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                        <button type="button" class="btn btn-danger js-delete-item" data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item->id}}">Delete</button>
                     </td>
                     </tr>
                     @endforeach
@@ -119,7 +119,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function checkdata(id){
         $.ajax({
                 url: "{{ (route('updatestatusbackend')) }}/" + id,

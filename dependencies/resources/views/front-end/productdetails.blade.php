@@ -659,15 +659,15 @@
                                     class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img
                                         src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button>
                             </a>
-                            <button onclick="showNavCoparison({{$product[0]['pro_id']}} ,{{$product[0]['cate_id']}})"
+                            <button data-fn-click="showNavCoparison" data-fn-args='[{{$product[0]['pro_id']}},{{$product[0]['cate_id']}}]'
                                 class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img
                                     src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>
                             <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}" target="_blank"><button
                                     class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img
                                         src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button>
                             </a>
-                            <button onclick="checkStock('{{$product[0]['pro_code']}}')"
-                                    class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img
+                            <button data-pro-code="{{$product[0]['pro_code']}}"
+                                    class="btn img-btn-icon-pro tooltip2 js-check-stock"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img
                                         src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>
 
                             @foreach ($ec_link as $item)
@@ -691,7 +691,7 @@
                         <div class="col-3  product-show-list" id="preview">
 
                             <div>
-                                <a onclick="clickImage('{{config('app.url')}}/upload/thumbs/{{$product[0]['picture']}}')"
+                                <a data-fn-click="clickImage" data-fn-args='[{{ json_encode(config('app.url').'/upload/thumbs/'.$product[0]['picture']) }}]'
                                     src="{{config('app.url')}}/upload/thumbs/{{$product[0]['picture']}}">
                                     <img class="py-1"
                                         src="{{config('app.url')}}/upload/thumbs/{{$product[0]['picture']}}" alt="">
@@ -705,7 +705,7 @@
                              $whatIWant = substr($data, strpos($data, "embed/") + 1);
                                ?>
                             <div>
-                                <a onclick="clickYoutube('{{$item->content}}');">
+                                <a data-fn-click="clickYoutube" data-fn-args='[{{ json_encode($item->content) }}]'>
                                     <img class="img-video w-100" src="https://img.youtube.com/vi/{{$whatIWant}}/0.jpg"
                                         alt="">
                                     <img class="play-button"
@@ -714,7 +714,7 @@
                             </div>
                             @else
                             <div>
-                                <a onclick="clickImage('{{config('app.url')}}/uploads_delta/{{$item->content}}')"
+                                <a data-fn-click="clickImage" data-fn-args='[{{ json_encode(config('app.url').'/uploads_delta/'.$item->content) }}]'
                                     src="{{config('app.url')}}/uploads_delta/{{$item->content}}">
                                     <img class="py-1" src="{{config('app.url')}}/uploads_delta/{{$item->content}}"
                                         alt="">
@@ -746,12 +746,12 @@
                             <button class="btn btn-enquiry">{{$staticContent['Enquiry']}}</button>
                         </a>
                         <button class="btn btn-addcompare"
-                            onclick="showNavCoparison({{$product[0]['pro_id']}}, {{$product[0]['cate_id']}})">{{$staticContent['Add_to_Compare']}}</button>
+                            data-fn-click="showNavCoparison" data-fn-args='[{{$product[0]['pro_id']}},{{$product[0]['cate_id']}}]'>{{$staticContent['Add_to_Compare']}}</button>
                         <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}"
                             target="_blank">
                             <button class="btn btn-datasheet">{{$staticContent['data_sheet']}}</button>
                         </a>
-                        <button class="btn btn-datasheet" onclick="checkStock('{{$product[0]['pro_code']}}')">{{ $staticContent['Stock'] ?? 'Stock' }}</button>
+                        <button class="btn btn-datasheet js-check-stock" data-pro-code="{{$product[0]['pro_code']}}">{{ $staticContent['Stock'] ?? 'Stock' }}</button>
                         @foreach ($ec_link as $item)
                         <a href="{{$item->link}}" target="_blank">
                             <button class="btn btn-buynow mr-2">{{$item->name}}</button>
@@ -901,7 +901,7 @@
                                             <tr>
                                                 <td class="text-center">
                                                     <span class="text-tag"
-                                                        onclick="viewOptionalModel('{{$optional->optional_model}}')">{{$optional->optional_model}}</span>
+                                                        data-fn-click="viewOptionalModel" data-fn-args='[{{ json_encode($optional->optional_model) }}]'>{{$optional->optional_model}}</span>
                                                 </td>
                                                 <td class="text-center">{!!$optional->remark!!}</td>
                                             </tr>
@@ -917,7 +917,7 @@
                             <h5 class="text-color-delta mt-4">{{$staticContent['Tags']}} </h5>
 
                             @foreach ($tags_pro as $tag)
-                            <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}}{{
+                            <span data-fn-click="viewKey" data-fn-args='[{{ json_encode($tag->tag) }}]' class="text-tag">{{$tag->tag}}{{
                                 $loop->last ? '' : ',' }}</span>
                             @endforeach
                             @endif
@@ -941,7 +941,7 @@
                                     data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
                                     class="icon btn-icon-app itemhorver{{$item->id}}"
                                     style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
-                                <script>
+                                <script @cspNonce>
                                     $(".itemhorver{{$item->id}}").hover(function(){
                                                 $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
                                                 }, function(){
@@ -1015,15 +1015,15 @@
                             href="{{route('LinktoEnquiry',[$product[0]['cate_id'] , $product[0]['cate_name'],setTextpro($product[0]['pro_code']) ])}}"><button
                                 class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Enquiry']}}</span><img
                                     src="{{asset('/frontend-asset/image/Enquiry-v2.svg')}}"></button></a>
-                        <button onclick="showNavCoparison({{$product[0]['pro_id']}} ,{{$product[0]['cate_id']}})"
+                        <button data-fn-click="showNavCoparison" data-fn-args='[{{$product[0]['pro_id']}},{{$product[0]['cate_id']}}]'
                             class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Add_to_Compare']}}</span><img
                                 src="{{asset('/frontend-asset/image/Compare.svg')}}"></button>
                         <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}"
                             target="_blank"><button
                                 class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['data_sheet']}}</span><img
                                     src="{{asset('/frontend-asset/image/Datasheet.svg')}}"></button></a>
-                        <button onclick="checkStock('{{$product[0]['pro_code']}}')"
-                                class="btn img-btn-icon-pro tooltip2"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img
+                        <button data-pro-code="{{$product[0]['pro_code']}}"
+                                class="btn img-btn-icon-pro tooltip2 js-check-stock"><span>{{$staticContent['Stock'] ?? 'Stock'}}</span><img
                                     src="{{asset('/frontend-asset/image/Stock.svg')}}"></button>
                         @foreach ($ec_link as $item)
                         <a href="{{ $item->link }}" target="_blank"><button
@@ -1048,7 +1048,7 @@
 
             <div class="col-12 product-show-list" id="preview-mobile">
                 <div>
-                    <a onclick="clickImage('{{config('app.url')}}/upload/thumbs/{{$product[0]['picture']}}')"
+                    <a data-fn-click="clickImage" data-fn-args='[{{ json_encode(config('app.url').'/upload/thumbs/'.$product[0]['picture']) }}]'
                         src="{{config('app.url')}}/upload/thumbs/{{$product[0]['picture']}}">
                         <img class="p-1" src="{{config('app.url')}}/upload/thumbs/{{$product[0]['picture']}}" alt="">
                     </a>
@@ -1061,7 +1061,7 @@
                 $whatIWant = substr($data, strpos($data, "embed/") + 1);
                   ?>
                 <div>
-                    <a onclick="clickYoutube('{{$item->content}}');">
+                    <a data-fn-click="clickYoutube" data-fn-args='[{{ json_encode($item->content) }}]'>
                         <img class="img-video w-100" src="https://img.youtube.com/vi/{{$whatIWant}}/0.jpg" alt="">
                         <img class="play-button" src="{{asset('frontend-asset/image/product-detail/play-button.png')}}"
                             alt="">
@@ -1069,7 +1069,7 @@
                 </div>
                 @else
                 <div>
-                    <a onclick="clickImage('{{config('app.url')}}/uploads_delta/{{$item->content}}')"
+                    <a data-fn-click="clickImage" data-fn-args='[{{ json_encode(config('app.url').'/uploads_delta/'.$item->content) }}]'
                         src="{{config('app.url')}}/uploads_delta/{{$item->content}}">
                         <img class="p-1" src="{{config('app.url')}}/uploads_delta/{{$item->content}}" alt="">
                     </a>
@@ -1097,11 +1097,11 @@
                 </a>
 
                 <button class="btn btn-addcompare w-100 my-2"
-                    onclick="showNavCoparison({{$product[0]['pro_id']}} ,{{$product[0]['cate_id']}})">{{$staticContent['Add_to_Compare']}}</button>
+                    data-fn-click="showNavCoparison" data-fn-args='[{{$product[0]['pro_id']}},{{$product[0]['cate_id']}}]'>{{$staticContent['Add_to_Compare']}}</button>
                 <a href="{{route('downloadFIle')}}/Datasheet/{{setTextpro($product[0]['pro_code'])}}" target="_blank">
                     <button class="btn btn-datasheet w-100 my-2">{{$staticContent['data_sheet']}}</button>
                 </a>
-                <button class="btn btn-datasheet w-100 my-2" onclick="checkStock('{{$product[0]['pro_code']}}')">{{ $staticContent['Stock'] ?? 'Stock' }}</button>
+                <button class="btn btn-datasheet w-100 my-2 js-check-stock" data-pro-code="{{$product[0]['pro_code']}}">{{ $staticContent['Stock'] ?? 'Stock' }}</button>
 
                 @foreach ($ec_link as $item)
                 <a href="{{$item->link}}" target="_blank">
@@ -1241,7 +1241,7 @@
                                     data-toggle="tooltip" data-placement="top" title="{{$item->name}}"
                                     class="icon btn-icon-app itemhorver{{$item->id}}"
                                     style="background-image: url('{{config('app.url')}}/medias/categories/{{$item->icon}}'); "></a>
-                                <script>
+                                <script @cspNonce>
                                     $(".itemhorver{{$item->id}}").hover(function(){
                                                 $(this).css("background-image", "url('{{config('app.url')}}/medias/categories/{{$item->blue_outline_icon}}')");
                                                 }, function(){
@@ -1280,7 +1280,7 @@
                                         <tr>
                                             <td class="text-center">
                                                 <span class="text-tag"
-                                                    onclick="viewOptionalModel('{{$optional->optional_model}}')">{{$optional->optional_model}}</span>
+                                                    data-fn-click="viewOptionalModel" data-fn-args='[{{ json_encode($optional->optional_model) }}]'>{{$optional->optional_model}}</span>
                                             </td>
                                             <td class="text-center">{!!$optional->remark!!}</td>
                                         </tr>
@@ -1295,7 +1295,7 @@
                         <h5 class="text-color-delta mt-4">{{$staticContent['Tags']}}</h5>
 
                         @foreach ($tags_pro as $tag)
-                        <span onclick="viewKey('{{$tag->tag}}')" class="text-tag">{{$tag->tag}}{{
+                        <span data-fn-click="viewKey" data-fn-args='[{{ json_encode($tag->tag) }}]' class="text-tag">{{$tag->tag}}{{
                             $loop->last ? '' : ',' }}</span>
                         @endforeach
                         @endif
@@ -1519,7 +1519,7 @@
                                 <p class="text-dark">{{$staticContent['Uploaded_on']}} {{$date2['d'] . '-' . $date2['m'] . '-'.$date2['y']}}</p>
                             </div>
                             <a data-toggle="modal" data-target="#downloadgui-modal"
-                                onclick="downloadGUI('{{$item->file}}', '{{setTextpro($product[0]['pro_code'])}}', '{{$product[0]['cate_name']}}')"
+                                data-fn-click="downloadGUI" data-fn-args='[{{ json_encode($item->file) }},{{ json_encode(setTextpro($product[0]['pro_code'])) }},{{ json_encode($product[0]['cate_name']) }}]'
                                 {{-- href="{{route('downloadFIle',[$item->slug, setTextpro($product[0]['pro_code'])])}}" --}}
                                 target="_blank">
                                 <button class="btn-downlode">{{$staticContent['Downloads']}}</button>
@@ -1541,7 +1541,7 @@
     <div class="container">
         <h4 class="text-color-delta visible-up-922">{{$staticContent['Tech_Specs']}}</h4>
         <h3 class="text-color-delta text-center invisible-up-922">{{$staticContent['Tech_Specs']}}</h3>
-        <select id="select-tech" onchange="selectproduct();" class="form-control invisible-up-922">
+        <select id="select-tech" data-fn-change="selectproduct" class="form-control invisible-up-922">
             @foreach ($section as $sec)
             <option value="{{$sec->id}}">{{$sec->sortname}}</option>
             @endforeach
@@ -1550,7 +1550,7 @@
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 @foreach ($section as $sec)
                 <a class="nav-item nav-link {{($loop->iteration == 1) ?'active':''}}"
-                    onclick="popSection({{$sec->id}});" id="nav-output-tab{{$sec->id}}" data-toggle="tab"
+                    data-fn-click="popSection" data-fn-args='[{{$sec->id}}]' id="nav-output-tab{{$sec->id}}" data-toggle="tab"
                     href="#nav-tabspec{{$sec->id}}" role="tab" aria-controls="nav-output-tab{{$sec->id}}"
                     aria-selected="true" data-val="{{$sec->id}}">{{$sec->sortname}}
                 </a>
@@ -1717,7 +1717,7 @@
                     <p class="widget-text"></p>
 
                     <a href="javascript:void(0);">
-                        <button class="btn btn-subscribe" onclick="resetfield();" data-toggle="modal" data-target="#subscribe-modal">
+                        <button class="btn btn-subscribe" data-fn-click="resetfield" data-toggle="modal" data-target="#subscribe-modal">
                             {{isset($staticContent['Subscribe'])?$staticContent['Subscribe']:"Subscribe"}}
                         </button>
                     </a>
@@ -1895,7 +1895,7 @@
                                             iconv_substr(strip_tags($proRelate['dimensionL']),0,20,'UTF-8') !!}</h6>
                                         @endif
                                         <div class="btn btn-ft mt-2"
-                                            onclick="showNavCoparison({{$proRelate['pro_id']}} ,{{$proRelate['cate_id']}})">
+                                            data-fn-click="showNavCoparison" data-fn-args='[{{$proRelate['pro_id']}},{{$proRelate['cate_id']}}]'>
                                             {{$staticContent['Add_to_Compare']}}</div>
                                     </div>
                                 </div>
@@ -1914,7 +1914,7 @@
 
 
 @section('js')
-<script>
+<script @cspNonce>
     function viewKey(key){
             var newkey = key.replace(/[/]/g,'@');
               event.preventDefault();
@@ -1926,7 +1926,7 @@
               window.location = '{{route('productsDetailsByType' ,['cateid'=> preg_replace('/\s+/', '-', $product[0]['url_item']) ,'pro_code' => setTextpro($product[0]['pro_code']) ])}}?optional_model='+newkey;
     }
 </script>
-<script>
+<script @cspNonce>
     $(function () {
      $('[data-toggle="tooltip"]').tooltip()
     })
@@ -2019,7 +2019,7 @@
         });
 </script>
 
-<script>
+<script @cspNonce>
     @if(Session::has('messageGUI'))
         $(document).ready(function() {
             var file =  '{{Session::get('messageGUI')}}';

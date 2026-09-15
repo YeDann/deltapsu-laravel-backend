@@ -80,7 +80,7 @@
                             <div class="row">
                                 <div class="col-lg-3">
                                     <label for="example-select">Select Categories <span class="req-fed">*</span></label>
-                                    <select onchange="selectProductcategories();" class="js-select2 form-control" id="cateId" name="cateId"
+                                    <select data-fn-change="selectProductcategories" class="js-select2 form-control" id="cateId" name="cateId"
                                         data-placeholder="Choose one.." required >
                                         <option></option>
                                         @foreach($subCategories as $cate)
@@ -141,7 +141,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
       
     function selectProductcategories() {
 
@@ -176,7 +176,7 @@
 @section('js')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<script>
+<script @cspNonce>
         $( function() {
           $( "#sortable" ).sortable();
           $( "#sortable" ).disableSelection();

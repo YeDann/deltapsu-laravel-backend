@@ -236,7 +236,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
 
 </script>
 @endsection

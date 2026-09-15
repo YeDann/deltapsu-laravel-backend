@@ -174,7 +174,7 @@
 <script src="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.js')}}"></script>
 <script src="{{asset('backend-asset/js/plugins/ckeditor/ckeditor.js')}}"></script>
 <script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-<script>
+<script @cspNonce>
     jQuery(function () {
         Dashmix.helpers(['datepicker', 'summernote', 'simplemde', 'ckeditor']);
     });

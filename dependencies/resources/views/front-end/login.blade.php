@@ -152,7 +152,7 @@
 @section('js')
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
 <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script> --}}
-<script>
+<script @cspNonce>
     //  function loginFunction(){
 //      console.log();
 

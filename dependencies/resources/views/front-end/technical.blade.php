@@ -59,7 +59,7 @@
 <section class="box-news ">
     <div class="container">
         <h1 class="text-title-delta ">{{$staticContent['Technical_Articles']}}</h1>
-        <select id="select-news" onchange="selectDatanews();" class="form-control invisible-up-922 mb-4 border-radius-6">
+        <select id="select-news" data-fn-change="selectDatanews" class="form-control invisible-up-922 mb-4 border-radius-6">
             <option value="0">{{$staticContent['All']}}</option>
             @foreach ($news_type as $type)
             <option value="{{$type->id}}">{{$type->name}}</option>
@@ -69,11 +69,11 @@
             <div class="col-md-12 ">
                 <div class=" nav nav-tabs d-flex justify-content-between border-b-2px visible-up-922 mb-5" id="nav-tab"
                     role="tablist">
-                    <a class="nav-item nav-link font-size-tab active" onclick="clicktabFist(0);" id="pop0-tab"
+                    <a class="nav-item nav-link font-size-tab active" data-fn-click="clicktabFist" data-fn-args='[0]' id="pop0-tab"
                         data-toggle="tab" href="#pop0" role="tab" aria-controls="pop0" aria-selected="true"
                         data-val="0">{{$staticContent['All']}}</a>
                     @foreach ($news_type as $type)
-                    <a class="nav-item nav-link font-size-tab" onclick="clicktab({{$type->id}});"
+                    <a class="nav-item nav-link font-size-tab" data-fn-click="clicktab" data-fn-args='[{{$type->id}}]'
                         id="pop{{$type->id}}-tab" data-toggle="tab" href="#pop{{$type->id}}" role="tab"
                         aria-controls="pop{{$type->id}}" aria-selected="true" data-val="0">{{$type->name}}</a>
                     @endforeach
@@ -83,7 +83,7 @@
                     <div class="tab-pane fade show active" id="pop0" role="tabpanel" aria-labelledby="pop0-tab">
                         <div class="grid-news" id="contentByType0">
                         </div>
-                        <div class="text-center mt-5" id="loadMore0" style="" onclick="loadeMore(event,0)">
+                        <div class="text-center mt-5" id="loadMore0" style="" data-fn-click="loadeMore" data-fn-args='["$event",0]'>
                             <div class="btn btn-boxen">{{$staticContent['See_More']}}</div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                         <div class="grid-news" id="contentByType{{$type->id}}">
                         </div>
                         <div class="text-center mt-5" id="loadMore{{$type->id}}" style=""
-                            onclick="loadeMore(event,{{$type->id}})">
+                            data-fn-click="loadeMore" data-fn-args='["$event",{{$type->id}}]'>
                             <div class="btn btn-boxen">{{$staticContent['See_More']}}</div>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
 
 
 @section('js')
-<script>
+<script @cspNonce>
     var news =  <?= json_encode($news);?>;
         $( document).ready(function () {
             clicktabFist(0);

@@ -202,7 +202,7 @@
       </div>
      </div>
      <div class="block-content block-content-full block-content-sm bg-body-dark">
-      <form action="be_pages_dashboard.html" method="POST" onsubmit="return false;">
+      <form action="be_pages_dashboard.html" method="POST" class="js-no-submit">
        <input type="text" class="form-control form-control-alt" placeholder="Search Users..">
       </form>
      </div>
@@ -345,7 +345,7 @@
       </div>
      </div>
      <div class="block-content block-content-full block-content-sm bg-body-dark">
-      <form action="be_pages_dashboard.html" method="POST" onsubmit="return false;">
+      <form action="be_pages_dashboard.html" method="POST" class="js-no-submit">
        <input type="text" class="form-control form-control-alt" placeholder="Search Purchases..">
       </form>
      </div>

@@ -392,7 +392,7 @@
 					<div class="col-12">
 						<div class="row justify-content-center">
 							<div class="form-group col-12 col-lg-4">
-								<select name="" class="form-control border-radius-6" onchange="loadData();" id="model"></select>
+								<select name="" class="form-control border-radius-6" data-fn-change="loadData" id="model"></select>
 							</div>
 						</div>
 					</div>
@@ -440,7 +440,7 @@
 								<div class="slot ">
 								</div>
 								<button class="btn btn-subscribe btn-xs mt-2 ml-mobile-6px" id="addmore"
-									onclick="addSlotOutput()">
+								 data-fn-click="addSlotOutput">
 									<i class="zmdi zmdi-plus"></i>
 									{{$staticContent['Add_More_Output']}}
 								</button>
@@ -476,8 +476,7 @@
 												</span>
 											</h5>
 										</label>
-										<select class="form-control border-radius-6" id="terminal"
-											onchange="getToSummary();getToTerimal();">
+										<select class="form-control border-radius-6 js-terminal-change" id="terminal">
 											<option value="1">{{$staticContent['t_for_american_terminal']}}</option>
 											<option value="2">{{$staticContent['e_for_european_terminal']}}</option>
 											<option value="3">{{$staticContent['c_for_c14']}}</option>
@@ -494,7 +493,7 @@
 												</span>
 											</h5>
 										</label>
-										<select class="form-control border-radius-6" id="bus" onchange="getToSummary()">
+										<select class="form-control border-radius-6" id="bus" data-fn-change="getToSummary">
 											{{-- <option selected="selected" value="0">Default PMBus</option>
 											<option value="1">RS232 adapter</option>
 											<option value="2">USB adapter</option>
@@ -515,7 +514,7 @@
 												</span>
 											</h5>
 										</label>
-										<select class="form-control border-radius-6" id="logic" onchange="getToSummary()">
+										<select class="form-control border-radius-6" id="logic" data-fn-change="getToSummary">
 											<option selected="selected" value="0">
 												{!!$staticContent['Normal_Logic_&_Normal_Fan_Direction']!!}
 											</option>
@@ -986,7 +985,7 @@
 						</div> --}}
 					</div>
 				</div>
-				<button id="savedataauto" onclick="addToiframe()" class="d-none">Save to pdf</button>
+				<button id="savedataauto" data-fn-click="addToiframe" class="d-none">Save to pdf</button>
 
 
 			</section>
@@ -1005,7 +1004,7 @@
 				</button>
 			</div>
 			<form id="submitSupport" name="configform" action="{{route('SubmitContact')}}"
-				onsubmit="return checkConfigFilefrom()" method="POST">
+			 data-fn-submit="checkConfigFilefrom" method="POST">
 				<div class="modal-body">
 					{{csrf_field()}}
 					<input type="hidden" name="config_id" id="con_id">
@@ -1020,7 +1019,7 @@
 								<h6> Country <span style="color: red">*</span> :</h6>
 							</label>
 							<div class="">
-								<select name="country" class="form-control border-radius-6" onchange="selectCountry();"
+								<select name="country" class="form-control border-radius-6" data-fn-change="selectCountry"
 									id="countryemailId" required>
 									<option value="0">{{$staticContent['Select']}} {{$staticContent['Country']}}
 									</option>
@@ -1102,7 +1101,7 @@
 						</div>
 					</div>
 					<div class="col-12">
-						<input class="inp-cbx" value="0" name="checkData" onchange="checkdata();" id="checkdataSub"
+						<input class="inp-cbx" value="0" name="checkData" data-fn-change="checkdata" id="checkdataSub"
 							type="checkbox" style="display: none;" />
 						<label class="cbx" for="checkdataSub"><span>
 								<svg width="12px" height="10px" viewbox="0 0 12 10">
@@ -1111,7 +1110,7 @@
 
 						<div class="box-input-checkbox">
 							<input class="inp-cbx" name="prichk" id="privacycheck" value="1"
-								onclick="onacceptionPolicy()" type="checkbox" style="display: none;" />
+							 data-fn-click="onacceptionPolicy" type="checkbox" style="display: none;" />
 							<label class="cbx" for="privacycheck"><span>
 									<svg width="12px" height="10px" viewbox="0 0 12 10">
 										<polyline points="1.5 6 4.5 9 10.5 1"></polyline>
@@ -1151,7 +1150,7 @@
 
 @section('js')
 <script type="text/javascript" src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>
-<script>
+<script @cspNonce>
 	$(document).ready(function() {
 		msieversion();
 	});
@@ -1179,7 +1178,7 @@
 	}
 </script>
 
-<script type="text/javascript">
+<script type="text/javascript" @cspNonce>
 	var verifyCallback = function(response) {
 	  $('#keyrecap').val(response);
 	};
@@ -1207,7 +1206,7 @@
 	@endif
 </script>
 <script src="{{asset('/frontend-asset/js/jquery.steps.min.js')}}"></script>
-<script>
+<script @cspNonce>
 	@if(Session::has('message'))
 	$(document).ready(function() {
 			$("#sendConfigpdf").modal();
@@ -1246,7 +1245,7 @@
         });
    }
 </script>
-<script>
+<script @cspNonce>
 	$("#sale-enquiry").hide();
 	$("#cx-sale-en").click(function(){
   	  	$("#sale-enquiry").toggle();
@@ -1356,7 +1355,7 @@
 				$('a[href$="previous"]').removeClass("btn-previous-border");
 				$('a[href$="previous"]').addClass("resetenqu");
 				$('a[href$="previous"]').attr('id','submitenquiry');
-				$('a[href$="previous"]').html('<button class="btn-enquiry" id="SbtRequest1" onclick="linktosupport();">{{$staticContent['Enquiry']}}</button>');
+				$('a[href$="previous"]').html('<button class="btn-enquiry" id="SbtRequest1" data-fn-click="linktosupport">{{$staticContent['Enquiry']}}</button>');
 				$('a[href$="previous"]').attr("href" ,'#');
 
 				var val = $('input[name=parallel]:checked').val();
@@ -1690,11 +1689,11 @@
 		text +='</div>';
 		text +='<div class="col-9">';
 		text +='<div class="form-check form-check-inline">';
-		text +='<input class="form-check-input" type="radio" onchange="getSelecter(this);" name="slot-type-'+index+'" id="single'+index+'" value="1">';
+		text +='<input class="form-check-input js-get-selecter" type="radio" name="slot-type-'+index+'" id="single'+index+'" value="1">';
 		text +='<label class="form-check-label" for="single'+index+'">{{$staticContent['Single_Slot']}}</label>';
 		text +='</div>';
 		text +='<div class="form-check form-check-inline">';
-		text +='<input class="form-check-input" type="radio" onchange="getSelecter(this);" name="slot-type-'+index+'" id="dual'+index+'" value="2">';
+		text +='<input class="form-check-input js-get-selecter" type="radio" name="slot-type-'+index+'" id="dual'+index+'" value="2">';
 		text +='<label class="form-check-label" for="dual'+index+'">{{$staticContent['Dual_Slot']}}</label>';
 		var _dualTip = dualLimitText();
 		text += _dualTip ? '<img class="dual-limit-tip align-baseline ml-1" src="{{asset('frontend-asset/image/tooltip.svg')}}" data-toggle="tooltip" data-placement="top" title="'+_dualTip+'">' : '';
@@ -1734,7 +1733,7 @@
 		for(var i = 0 ; i < type ; i++){
 			text += '<div class="w-100 select-box my-1 d-flex flex-wrap" id="select-box'+i+'">';
 			text += '<div class="voltage col-4 column-select">';
-			text += '<select class="form-control border-radius-6" onchange="getSelectCurrent(this,'+type+'); getToSum('+i+');" id="volt'+i+'">';
+			text += '<select class="form-control border-radius-6 js-volt-select" data-cfg-type="'+type+'" data-cfg-index="'+i+'" id="volt'+i+'">';
 			text += '<option value="-1">';
 			text += '{{$staticContent['voltage']}} '+index;
 			text += (type == 2) ? '.'+(i+1):'';
@@ -1757,10 +1756,10 @@
 			text += '</div>';
 			text += '<div class=" col-1 column-back">';
 			if(i==0){
-				text += '<div class="btn-undo-icon" onclick="resetData('+index+')">';
+				text += '<div class="btn-undo-icon js-reset-data" data-cfg-index="'+index+'">';
 				text += '</div>';
 				if(index != 1){
-					text += '<div class="btn-remove" onclick="removeData(this);"">';
+					text += '<div class="btn-remove js-remove-data">';
 					text += '</div>';
 				}
 			}
@@ -1800,7 +1799,7 @@
 		var array_a = (type == 1) ? ss_a : do_a;
 
 
-		text += '<select class="form-control border-radius-6" onchange="currentChange(this,'+type+')" >';
+		text += '<select class="form-control border-radius-6 js-current-change" data-cfg-type="'+type+'" >';
 		text += '<option value="'+array_a[value]+'">';
 		text += parseFloat(array_a[value]).toFixed(2)+'A';
 		text += '</option>';
@@ -2492,6 +2491,29 @@
 					});
 
        }
+
+    // 以下四段取代原本寫在標籤上的 inline 事件屬性（CSP 目標為移除 script-src 的 unsafe-inline）。
+    // 這些元素多半是 JS 動態產生，故綁在 document 委派；型別用 Number() 還原，比照原本傳入數字字面量的語意。
+    $(document).on('change', '.js-terminal-change', function () {
+        getToSummary();
+        getToTerimal();
+    });
+    $(document).on('change', '.js-volt-select', function () {
+        getSelectCurrent(this, Number($(this).attr('data-cfg-type')));
+        getToSum(Number($(this).attr('data-cfg-index')));
+    });
+    $(document).on('click', '.js-reset-data', function () {
+        resetData(Number($(this).attr('data-cfg-index')));
+    });
+    $(document).on('change', '.js-current-change', function () {
+        currentChange(this, Number($(this).attr('data-cfg-type')));
+    });
+    $(document).on('change', '.js-get-selecter', function () {
+        getSelecter(this);
+    });
+    $(document).on('click', '.js-remove-data', function () {
+        removeData(this);
+    });
 
 </script>
 

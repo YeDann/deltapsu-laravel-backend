@@ -1,4 +1,4 @@
-<script>
+<script @cspNonce>
     $(document).ready(function() {
         // 1. Hover behavior (Products, etc.) - Exclude .news-submenu
         $('.dropdown-submenu').not('.news-submenu').mouseenter(function() {

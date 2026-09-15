@@ -66,7 +66,7 @@
                 <?php $i = 1?>
                 @foreach ($taskarr as $item)
                 <li id="td_{{$i}}" class="mb-5">{{$i}}.{{$item}} <button id="btn_add_otg{{$i}}"
-                        class="ml-5 btn btn-success" onclick="taskRequest({{$i}})">Add English language</button></li>
+                        class="ml-5 btn btn-success" data-fn-click="taskRequest" data-fn-args='[{{$i}}]'>Add English language</button></li>
                 <?php $i++?>
                 @endforeach
             </ul>
@@ -77,7 +77,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function taskRequest(task){
       $('#td_'+task).addClass('tick_ok-downloading');
       $('#btn_add_otg'+task).addClass('d-none');

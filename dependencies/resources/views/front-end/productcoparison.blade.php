@@ -165,7 +165,7 @@
                         </td>
                         <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
                             <div>
-                                <select onchange="selectprocom1('procomnav1')" id="procomnav1"
+                                <select data-fn-change="selectprocom1" data-fn-args='["procomnav1"]' id="procomnav1"
                                     class="form-control w-100 pr-4 onchagetype border-radius-6">
                                     <option value="0">Please Select*</option>
                                     @foreach ($products as $item)
@@ -176,7 +176,7 @@
                         </td>
                         <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
                             <div>
-                                <select onchange="selectprocom2('procomnav2')" id="procomnav2"
+                                <select data-fn-change="selectprocom2" data-fn-args='["procomnav2"]' id="procomnav2"
                                     class="form-control w-100 pr-4 onchagetype border-radius-6">
                                     <option value="0">Please Select*</option>
                                     @foreach ($products as $item)
@@ -187,7 +187,7 @@
                         </td>
                         <td class="col-xs-3 cc-box" style="padding-right:0px !important;  position:relative">
                             <div class="">
-                                <select onchange="selectprocom3('procomnav3')" id="procomnav3"
+                                <select data-fn-change="selectprocom3" data-fn-args='["procomnav3"]' id="procomnav3"
                                     class="form-control w-100 pr-4 onchagetype border-radius-6">
                                     <option value="0">Please Select*</option>
                                     @foreach ($products as $item)
@@ -214,9 +214,9 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#"
-                            onclick="loadhtml();">{{$staticContent['Download_AS_CSV']}}</a>
+                            data-fn-click="loadhtml">{{$staticContent['Download_AS_CSV']}}</a>
                         <a class="dropdown-item" href="#"
-                            onclick="loadhtmlPDF();">{{$staticContent['Download_AS_PDF']}}</a>
+                            data-fn-click="loadhtmlPDF">{{$staticContent['Download_AS_PDF']}}</a>
                     </div>
                 </div>
                 <form id="ContentCompare" action="{{route('loadPdffile')}}" method="POST">
@@ -270,11 +270,11 @@
                         <thead>
                             <tr>
                                 <td class="col-xs-3 text-center">
-                                    <div onclick="clearProduct();" class="clr-com">{{$staticContent['Clear_All']}}</div>
+                                    <div data-fn-click="clearProduct" class="clr-com">{{$staticContent['Clear_All']}}</div>
                                 </td>
                                 <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
                                     <div>
-                                        <select onchange="selectprocom1('procom1')" id="procom1"
+                                        <select data-fn-change="selectprocom1" data-fn-args='["procom1"]' id="procom1"
                                             class="form-control w-100 pr-4 onchagetype border-radius-6">
                                             <option value="0">{{$staticContent['Please_Select']}}*</option>
                                             @foreach ($products as $item)
@@ -285,7 +285,7 @@
                                 </td>
                                 <td class="col-xs-3 cc-box" style="padding-bottom:0px; position:relative">
                                     <div>
-                                        <select onchange="selectprocom2('procom2')" id="procom2"
+                                        <select data-fn-change="selectprocom2" data-fn-args='["procom2"]' id="procom2"
                                             class="form-control w-100 pr-4 onchagetype border-radius-6">
                                             <option value="0">{{$staticContent['Please_Select']}}*</option>
                                             @foreach ($products as $item)
@@ -296,7 +296,7 @@
                                 </td>
                                 <td class="col-xs-3 cc-box" style="padding-right:0px !important;  position:relative">
                                     <div>
-                                        <select onchange="selectprocom3('procom3')" id="procom3"
+                                        <select data-fn-change="selectprocom3" data-fn-args='["procom3"]' id="procom3"
                                             class="form-control w-100 pr-4 onchagetype border-radius-6">
                                             <option value="0">{{$staticContent['Please_Select']}}*</option>
                                             @foreach ($products as $item)
@@ -333,7 +333,7 @@
         <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>
         <h5 class="text-center">{{$staticContent['Model']}}</h5>
         <div class="d-flex justify-content-between mb-2">
-            <select onchange="onSelectPromobile()" id="procom-mobile1"
+            <select data-fn-change="onSelectPromobile" id="procom-mobile1"
                 class="form-control w-100 pr-4 mr-2 onchagetype_mobile border-radius-6">
                 <option value="0">{{$staticContent['Please_Select']}}*</option>
                 @foreach ($products as $item)
@@ -341,7 +341,7 @@
                 @endforeach
             </select>
             <input type="hidden" id="mobileindex" name="mobileindex" value="">
-            <select onchange="onSelectPromobile2()" id="procom-mobile2"
+            <select data-fn-change="onSelectPromobile2" id="procom-mobile2"
                 class="form-control w-100 pr-4 ml-2 onchagetype_mobile border-radius-6">
                 <option value="0">{{$staticContent['Please_Select']}}*</option>
                 @foreach ($products as $item)
@@ -352,7 +352,7 @@
         </div>
         <div class="product-comparison-selected-mobile">
             <div class="icon-pointer icon-prev">
-                <a id="predata" onclick="BackData()" class="p-4"><i class="zmdi zmdi-chevron-left"
+                <a id="predata" data-fn-click="BackData" class="p-4"><i class="zmdi zmdi-chevron-left"
                         aria-hidden="true"></i></a>
             </div>
             <div class="d-flex justify-content-between mb-3 ">
@@ -369,7 +369,7 @@
                 </div>
             </div>
             <div class="icon-pointer icon-next">
-                <a id="nextdata" onclick="NextData()" class="p-4"><i class="zmdi zmdi-chevron-right"
+                <a id="nextdata" data-fn-click="NextData" class="p-4"><i class="zmdi zmdi-chevron-right"
                         aria-hidden="true"></i></a>
             </div>
         </div>
@@ -386,8 +386,8 @@
                     {{$staticContent['Downloads']}}
                 </button>
                 <div class="dropdown-menu  w-100" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#" onclick="loadhtml();">{{$staticContent['Download_AS_CSV']}}</a>
-                    <a class="dropdown-item" href="#" onclick="loadhtmlPDF();">{{$staticContent['Download_AS_PDF']}}</a>
+                    <a class="dropdown-item" href="#" data-fn-click="loadhtml">{{$staticContent['Download_AS_CSV']}}</a>
+                    <a class="dropdown-item" href="#" data-fn-click="loadhtmlPDF">{{$staticContent['Download_AS_PDF']}}</a>
                 </div>
             </div>
         </div>
@@ -399,7 +399,7 @@
 
 @section('js')
 
-<script>
+<script @cspNonce>
     $("#collapse-output").collapse('show');
      $("#collapse-input").collapse('show');
      $("#collapse-mechanical").collapse('show');

@@ -171,7 +171,7 @@ function getDateformat($date){
     <div class="container">
         <h2 class="text-title-delta visible-tablets-up">{{$staticContent['Marketing_Resources_Downloads']}}</h2>
         <h3 class="text-title-delta visible-mobile">{{$staticContent['Marketing_Resources_Downloads']}}</h3>
-        <select id="select-catalogs" onchange="selectdocumentType();" class="form-control invisible-up-922 border-radius-6">
+        <select id="select-catalogs" data-fn-change="selectdocumentType" class="form-control invisible-up-922 border-radius-6">
             @foreach ($margetCate as $cate)
             <option value="{{$cate->cate_id}}">{{$cate->name}}</option>
             @endforeach
@@ -182,7 +182,7 @@ function getDateformat($date){
                     role="tablist">
                     @foreach ($margetCate as $cate)
                     <a class="nav-item nav-link font-size-tab {{$loop->iteration == 1?'active':'' }}"
-                        onclick="setdatainput({{$cate->cate_id}});" id="pop-tab{{$cate->cate_id}}" data-toggle="tab"
+                        data-fn-click="setdatainput" data-fn-args='[{{$cate->cate_id}}]' id="pop-tab{{$cate->cate_id}}" data-toggle="tab"
                         href="#pop{{$cate->cate_id}}" role="tab" aria-controls="pop{{$cate->cate_id}}"
                         aria-selected="true" data-val="{{$cate->cate_id}}">{{$cate->name}}
                     </a>
@@ -194,7 +194,7 @@ function getDateformat($date){
                     @foreach ($margetCate as $cate)
                     <div class="tab-pane fade {{$loop->iteration == 1?'show active':'' }} " id="pop{{$cate->cate_id}}"
                         role="tabpanel" aria-labelledby="pop{{$cate->cate_id}}-tab">
-                        <form onsubmit="searchmarketingbycate()">
+                        <form data-fn-submit="searchmarketingbycate">
                             <div class="search-space d-flex justify-content-center w-100">
                                 <div class="box-search-input  mr-3">
 
@@ -322,7 +322,7 @@ function getDateformat($date){
 @section('js')
 
 <script type="text/javascript" src="{{asset('/frontend-asset/js/pdfjs/pdf.min.js')}}"></script>
-<script>
+<script @cspNonce>
     // PDF.js worker 自帶同源（CSP worker-src 會 fallback 到 default-src 'self'，不能吃 CDN）
     if (window.pdfjsLib) { pdfjsLib.GlobalWorkerOptions.workerSrc = '{{asset('/frontend-asset/js/pdfjs/pdf.worker.min.js')}}'; }
     function selectdocumentType(){
@@ -376,7 +376,7 @@ function getDateformat($date){
                 html += '<div class="mr-img-card">';
                 if (isImage && value['thumbnail']) {
                     // 有人工縮圖就用它，省下為了 200px 的框去載全尺寸原圖；縮圖檔不存在才退回原圖
-                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+(mrStaticBase + value['thumbnail'])+'" data-mr-full-src="'+mrSrc+'" onerror="this.onerror=null; this.src=this.getAttribute(\'data-mr-full-src\')">';
+                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+(mrStaticBase + value['thumbnail'])+'" data-mr-full-src="'+mrSrc+'">';
                 } else if (isImage) {
                     html += '<img class="mr-img-thumb lazyload" loading="lazy" alt="'+value['name']+'" data-src="'+mrSrc+'">';
                 } else if (isVideo) {
@@ -385,13 +385,13 @@ function getDateformat($date){
                     html += '<span class="mr-video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>';
                 } else if (isPdf && value['thumbnail']) {
                     // PDF 有人工縮圖就直接用，不載 PDF.js（省首頁解析）；縮圖檔不存在才退回 canvas render
-                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+(mrStaticBase + value['thumbnail'])+'" data-mr-pdf-src="'+mrSrc+'" onerror="mrPdfThumbFallback(this)">';
+                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+(mrStaticBase + value['thumbnail'])+'" data-mr-pdf-src="'+mrSrc+'">';
                 } else if (isPdf) {
                     html += '<canvas class="mr-pdf-thumb" data-src="'+mrSrc+'"></canvas>';
                 } else {
                     // 其他檔（壓縮檔等）：優先用 DB 縮圖，否則試主檔同名 .jpg；載入失敗則置換佔位框
                     var thumb = value['thumbnail'] ? (mrStaticBase + value['thumbnail']) : (mrStaticBase + value['file'].replace(/\.[^.]+$/, '.jpg'));
-                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+thumb+'" onerror="mrThumbFallback(this,\''+ext.toUpperCase()+'\')">';
+                    html += '<img class="mr-img-thumb" alt="'+value['name']+'" src="'+thumb+'" data-mr-ext="'+ext.toUpperCase()+'">';
                 }
 
                 html += '<div class="mr-img-bar"><span class="mr-img-name" title="'+value['name']+'"><span class="mr-img-fname"><span class="mr-img-fname-inner">'+value['name']+'</span></span><span class="mr-img-ext">['+ext.toUpperCase()+']</span></span><div class="mr-img-bar-actions">';
@@ -441,6 +441,21 @@ function getDateformat($date){
           img.replaceWith(c);
           mrObservePdfs();
       }
+      // 縮圖載入失敗統一在此分流（取代 img 的 inline onerror，CSP 目標為移除 script-src 的 unsafe-inline）。
+      // error 事件不冒泡，jQuery 的 .on('error') 對動態插入的 img 收不到，必須用原生捕獲階段攔截。
+      document.addEventListener('error', function (e) {
+          var img = e.target;
+          if (!img || img.tagName !== 'IMG' || !img.classList.contains('mr-img-thumb')) { return; }
+          if (img.getAttribute('data-mr-fallback-done')) { return; }   // 只退一次，避免退路本身也失敗時無限重試
+          img.setAttribute('data-mr-fallback-done', '1');
+          if (img.getAttribute('data-mr-full-src')) {
+              img.src = img.getAttribute('data-mr-full-src');          // 人工縮圖不存在 → 退回原圖
+          } else if (img.getAttribute('data-mr-pdf-src')) {
+              mrPdfThumbFallback(img);                                 // PDF 人工縮圖不存在 → 退回 canvas 走 PDF.js
+          } else if (img.getAttribute('data-mr-ext')) {
+              mrThumbFallback(img, img.getAttribute('data-mr-ext'));   // 壓縮檔等縮圖不存在 → 置換佔位框
+          }
+      }, true);
       $(document).on('click', '.mr-preview-trigger', function () {
           var file = $(this).attr('data-file');
           var name = $(this).attr('data-name') || '';

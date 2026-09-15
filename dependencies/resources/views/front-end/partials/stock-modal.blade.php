@@ -1,6 +1,6 @@
 {{--
     經銷商庫存查詢 Modal（共用 partial）— 列表頁 product.blade.php 與詳情頁 productdetails.blade.php 共用。
-    Stock 按鈕 onclick="checkStock(proCode)" 即可開啟；後端走 /stock-check（DilpClient → netCOMPONENTS DILP）。
+    Stock 按鈕加 class="js-check-stock" 與 data-pro-code="料號" 即可開啟；後端走 /stock-check（DilpClient → netCOMPONENTS DILP）。
     需 jQuery（layout 於 container 前已載）；.modal('show') 為點擊才呼叫，屆時 bootstrap.js 已載。
     含洲→國兩層篩選、多語（國名 intl／洲名 static word）、手機版版型。
 --}}
@@ -130,7 +130,7 @@
         ? $stockLockedCountries[0]
         : (['tw' => 'TW', 'cn' => 'CN', 'jp' => 'JP', 'de' => 'DE', 'tr' => 'TR'][app()->getLocale()] ?? '');
 @endphp
-<script>
+<script @cspNonce>
     // 兩層（洲→國）篩選用：洲代碼 → 在地洲名（intl 無法在地化洲名，故改用後台靜態字；未知洲 fallback DILP 英文）
     var stockRegionLabels = {
         'AM': '{{ addslashes($staticContent['Stock_region_am'] ?? 'North America') }}',
@@ -269,6 +269,15 @@
                 $error.show();
             });
     }
+
+    // Stock 按鈕走事件委派而非 inline onclick（CSP 目標為移除 script-src 的 unsafe-inline）。
+    // 綁在 document：列表頁的按鈕是篩選後才由 JS 產生，委派才吃得到。
+    $(document).on('click', '.js-check-stock', function () {
+        var proCode = $(this).attr('data-pro-code');
+        if (proCode) {
+            checkStock(proCode);
+        }
+    });
 
     // Modal 關閉時先移除焦點，避免 Bootstrap 把 aria-hidden 套在仍持有焦點的關閉鈕上（無障礙警告）
     $('#stockModal').on('hide.bs.modal', function () {

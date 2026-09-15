@@ -70,7 +70,7 @@
                                         <a target="_blank"
                                             href="{{config('app.url')}}/medias/categories/{{$item->file}}">{{$item->file}}</a>
                                         <a href="{{route('removefileMainCategoriesDoc',[$mainId,$item->local])}}"
-                                            onclick="return confirm('Are you sure?');">
+                                            data-fn-click="confirm" data-fn-args='["Are you sure?"]'>
                                             <button type="button" class="btn btn-sm btn-danger"
                                                 style="margin: 10px 0px 10px 10px;"><i class="fa fa-trash"></i></button>
                                         </a>
@@ -109,7 +109,7 @@
                                         <a target="_blank"
                                             href="{{config('app.url')}}/medias/categories/{{$item->file}}">{{$item->file}}</a>
                                         <a href="{{route('removefileMainCategoriesDoc',[$mainId,$item->local])}}"
-                                            onclick="return confirm('Are you sure?');">
+                                            data-fn-click="confirm" data-fn-args='["Are you sure?"]'>
                                             <button type="button" class="btn btn-sm btn-danger"
                                                 style="margin: 10px 0px 10px 10px;"><i class="fa fa-trash"></i> </button>
                                         </a>
@@ -196,7 +196,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
 var previewImage = function (input, block) {
     var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp'];
     var extension = input.files[0].name.split('.').pop().toLowerCase();

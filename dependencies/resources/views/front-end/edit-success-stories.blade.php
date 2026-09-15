@@ -297,7 +297,7 @@
                     <label class="text-title-detail-dark">{{$staticContent['Applications']}}<span
                             class="red">*</span></label>
 
-                    <input type="text" onkeyup="keycheck();" class="form-control" name="application" id="application"
+                    <input type="text" data-fn-keyup="keycheck" class="form-control" name="application" id="application"
                         placeholder="Enter application " value="{{$AllsuccessStory[0]->application}}">
                 </div>
             </div>
@@ -305,7 +305,7 @@
                 <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
                     <label class="text-title-detail-dark">{{$staticContent['End_Customer']}}<span
                             class="red">*</span></label>
-                    <input type="text" onkeyup="keycheck();" class="form-control" name="endCustomer" id="endCustomer"
+                    <input type="text" data-fn-keyup="keycheck" class="form-control" name="endCustomer" id="endCustomer"
                         placeholder="{{$staticContent['End_Customer']}}" value="{{$AllsuccessStory[0]->endCustomer}}">
                     {{-- <label for="email">Email Address</label> --}}
                 </div>
@@ -313,7 +313,7 @@
                 <div class="col-lg-6 col-md-12 input-label w-100 mb-4">
                     <label class="text-title-detail-dark">{{$staticContent['Country']}}<span
                             class="red">*</span></label>
-                    <select name="country" onchange="keycontry()" class="form-control" id="country">
+                    <select name="country" data-fn-change="keycontry" class="form-control" id="country">
                         <option value="">Please Select</option>
                         @foreach ($countries as $country)
                         @if($AllsuccessStory[0]->country == $country->name )
@@ -330,7 +330,7 @@
                     <label class="text-title-detail-dark">{{$staticContent['Message']}}<span
                             class="red">*</span></label>
                     <div class="input-label">
-                        <textarea name="message" onkeyup="keycheck();" id="message" class="w-100 text-area"
+                        <textarea name="message" data-fn-keyup="keycheck" id="message" class="w-100 text-area"
                             placeholder="{{$staticContent['Message']}}" rows="10"
                             style="padding: .75rem;">{{$AllsuccessStory[0]->message}}</textarea>
                     </div>
@@ -347,7 +347,7 @@
                 <div class="col-2" id="oldimg{{$item->id}}">
                     <img class="w-100"
                         src="{{config('app.url')}}/uploads_delta/partner/marketing_resources/{{$item->image}}">
-                    <button class="delete_img" type="button" onclick="deleteImage({{$item->id}})">X</button>
+                    <button class="delete_img" type="button" data-fn-click="deleteImage" data-fn-args='[{{$item->id}}]'>X</button>
                 </div>
 
                 @endforeach
@@ -378,13 +378,13 @@
             <div class="col-lg-12 text-center">
                 <p>{{$staticContent['By_submitting_this_form']}} <a target="_blank" class="text-a-link"
                         href="{{route('privacyPolicy')}}">{{$staticContent['Privacy_Policy']}}</a>.</p>
-                <button type="button" onclick="onclickSubmitform()"
+                <button type="button" data-fn-click="onclickSubmitform"
                     class="btn-subscribe mt-4">{{$staticContent['Submit']}}</button>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12 text-center">
-                <button type="button" onclick="onclickSaveDraft()" class="btn btn-boxen mt-4">{{$staticContent['Save
+                <button type="button" data-fn-click="onclickSaveDraft" class="btn btn-boxen mt-4">{{$staticContent['Save
                     Draft']}}</button>
             </div>
         </div>
@@ -400,8 +400,8 @@
                 <h5 class="modal-title">{{$staticContent['Are_you_sure_to_delete_image']}}</h5>
             </div>
             <div class="modal-footer">
-                <div class="btn btn-boxen" onclick="closedeleteImage();">{{$staticContent['Cancel']}}</div>
-                <div class="btn btn-subscribe" onclick="onconfirmdeleteImage();">{{$staticContent['Delete']}}</div>
+                <div class="btn btn-boxen" data-fn-click="closedeleteImage">{{$staticContent['Cancel']}}</div>
+                <div class="btn btn-subscribe" data-fn-click="onconfirmdeleteImage">{{$staticContent['Delete']}}</div>
 
             </div>
         </div>
@@ -420,8 +420,8 @@
                     Do you want to continue?</p>
             </div>
             <div class="modal-footer">
-                <div class="btn btn-boxen" onclick="calcel();">{{$staticContent['Cancel']}}</div>
-                <div class="btn btn-subscribe" onclick="onsubmitContent();">{{$staticContent['Submit']}}</div>
+                <div class="btn btn-boxen" data-fn-click="calcel">{{$staticContent['Cancel']}}</div>
+                <div class="btn btn-subscribe" data-fn-click="onsubmitContent">{{$staticContent['Submit']}}</div>
 
             </div>
         </div>
@@ -434,14 +434,14 @@
 @section('js')
 <script type="text/javascript" src="{{asset('/frontend-asset/js/dropzone.js')}}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-<script>
+<script @cspNonce>
     $(document).ready(function() {
     $('.js-example-basic-multiple').select2({
         placeholder: "Select Models",
     });
 });
 </script>
-<script>
+<script @cspNonce>
     var image = [];
     Dropzone.autoDiscover = false;
     var myDropzone = new Dropzone("#my-awesome-dropzone", { 

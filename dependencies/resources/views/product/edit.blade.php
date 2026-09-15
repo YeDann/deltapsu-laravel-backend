@@ -143,7 +143,7 @@
                             <label for="example-select">Select Product Category <span
                                     class="req-fed">*</span></label><br>
                             {{-- <select class="js-select2 form-control" id="pro_categories" name="pro_categories"
-                                onchange="selectProductcategories()" data-placeholder="Choose one.." required>
+                                data-fn-change="selectProductcategories" data-fn-args="[]" data-placeholder="Choose one.." required>
                                 <option></option>
                                 @foreach($subCategories as $sub)
                                 @if($products[0]->pro_categories_id == $sub->sub_pro_id)
@@ -156,7 +156,7 @@
                             @foreach($subCategories as $sub)
                             <div class="custom-control custom-radio custom-control-inline custom-control-primary">
                                 <input type="checkbox"
-                                    onclick="selectProductcategories({{$sub->sub_pro_id}} ,'{{$sub->url_item}}')"
+                                    data-fn-click="selectProductcategories" data-fn-args='[{{$sub->sub_pro_id}},{{ json_encode($sub->url_item) }}]'
                                     data-slug="{{$sub->url_item}}"
                                     class="custom-control-input" id="dataCate{{$sub->sub_pro_id}}"
                                     name="pro_categories[]" value="{{$sub->sub_pro_id}}" {{in_array($sub->sub_pro_id,
@@ -250,18 +250,18 @@
                                     <div class="part-number-row d-flex mb-2" data-index="{{ $i }}">
                                         <input type="text" class="form-control mr-2" name="partNumber[no][{{ $i }}]" value="{{ $pn->no }}" placeholder="No">
                                         <input type="text" class="form-control mr-2" name="partNumber[text][{{ $i }}]" value="{{ $pn->text }}" placeholder="Text">
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="removePartNumber(this)">-</button>
+                                        <button type="button" class="btn btn-danger btn-sm" data-fn-click="removePartNumber" data-fn-args='["$this"]'>-</button>
                                     </div>
                                     @endforeach
                                 @else
                                     <div class="part-number-row d-flex mb-2" data-index="0">
                                         <input type="text" class="form-control mr-2" name="partNumber[no][0]" placeholder="No">
                                         <input type="text" class="form-control mr-2" name="partNumber[text][0]" placeholder="Text">
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="removePartNumber(this)">-</button>
+                                        <button type="button" class="btn btn-danger btn-sm" data-fn-click="removePartNumber" data-fn-args='["$this"]'>-</button>
                                     </div>
                                 @endif
                             </div>
-                            <button type="button" class="btn btn-secondary btn-sm mt-2" onclick="addPartNumber()">+ Add</button>
+                            <button type="button" class="btn btn-secondary btn-sm mt-2" data-fn-click="addPartNumber">+ Add</button>
                         </div>
                         <div class="form-group">
                             <label class="d-block">Status <span class="req-fed">*</span></label>
@@ -383,8 +383,7 @@
                                         <span>Recommended 70-155 Character</span>
                                         <div id="item-wrap">
                                             <textarea rows="4" id="input-metaDescription-{{$item->local}}"
-                                                onkeyup="countCharacter('metaDescription-{{$item->local}}')"
-                                                name="metaDescription[{{$item->local}}]"
+                                                data-fn-keyup="countCharacter" data-fn-args='[{{ json_encode('metaDescription-'.$item->local) }}]' name="metaDescription[{{$item->local}}]"
                                                 class="form-control">{{$item->meta_description}}</textarea>
                                             <div class="text-count">Count Character :
                                                 <span id="count-metaDescription-{{$item->local}}">
@@ -440,8 +439,7 @@
                                         <span>Recommended 70-155 Character</span>
                                         <div id="item-wrap">
                                             <textarea rows="4" id="input-metaDescription-{{$item->local}}"
-                                                onkeyup="countCharacter('metaDescription-{{$item->local}}')"
-                                                name="metaDescription[{{$item->local}}]"
+                                                data-fn-keyup="countCharacter" data-fn-args='[{{ json_encode('metaDescription-'.$item->local) }}]' name="metaDescription[{{$item->local}}]"
                                                 class="form-control">{{$item->meta_description}}</textarea>
                                             <div class="text-count">Count Character :
                                                 <span id="count-metaDescription-{{$item->local}}">
@@ -612,7 +610,7 @@
 @endsection
 @section('js')
 
-<script>
+<script @cspNonce>
     $(".js-example-tags").select2({
           tags: true
          });
@@ -680,20 +678,20 @@
                         html2 +=  '<div class="form-group">';
                         html2 +=  '<label class="d-block">'+proper['field_name']+'</label>';
                         html2 +=  '<div class="custom-control custom-radio custom-control-inline custom-control-primary">';
-                        html2 +=  '<input type="radio" class="custom-control-input" onchange="selectinputtype('+proper['pd_field_id']+',1);"';
+                        html2 +=  '<input type="radio" class="custom-control-input" data-fn-change="selectinputtype" data-fn-args="['+proper['pd_field_id']+',1]"';
                         html2 +=  'id="status_input_sig'+proper['pd_field_id']+'" name="status_input['+proper['pd_field_id']+']"';
                         html2 +=  'value="1"  '+ ((proper['status_input'] == 1 || proper['data_1'] == null )  ? "checked" : " ") + '>';
                         html2 +=  '<label class="custom-control-label"for="status_input_sig'+proper['pd_field_id']+'">Single</label>';
                         html2 +=  '</div>';
                         html2 +=  '<div class="custom-control custom-radio custom-control-inline custom-control-primary">'
-                        html2 +=  '<input type="radio" class="custom-control-input"  onchange="selectinputtype('+proper['pd_field_id']+',2);"';
+                        html2 +=  '<input type="radio" class="custom-control-input"  data-fn-change="selectinputtype" data-fn-args="['+proper['pd_field_id']+',2]"';
                         html2 +=  'id="status_input_Mutl'+proper['pd_field_id']+'"  name="status_input['+proper['pd_field_id']+']"';
                         html2 +=  'value="2" '+ ((proper['status_input'] == 2)  ? "checked" : " ") + '>';
                         html2 +=  '<label class="custom-control-label"';
                         html2 +=  'for="status_input_Mutl'+proper['pd_field_id']+'">Multiple</label>';
                         html2 +=  '</div>';
                         html2 +=  '<div class="custom-control custom-radio custom-control-inline custom-control-primary">';
-                        html2 +=  ' <input type="radio" class="custom-control-input"  onchange="selectinputtype('+proper['pd_field_id']+' ,3);"';
+                        html2 +=  ' <input type="radio" class="custom-control-input"  data-fn-change="selectinputtype" data-fn-args="['+proper['pd_field_id']+' ,3]"';
                         html2 +=  ' id="status_input_Rang'+proper['pd_field_id']+'" name="status_input['+proper['pd_field_id']+']" value="3" '+ ((proper['status_input'] == 3)  ? "checked" : " ") + '>';
                         html2 +=  ' <label class="custom-control-label"  for="status_input_Rang'+proper['pd_field_id']+'">Range</label></div>';
                         html2 +=  ' </div>';
@@ -702,7 +700,7 @@
                         html2 += ' <div class="form-group input-group">';
                         html2 += ' <span class="input-group-addon p-l">1</span>';
                         html2 += ' <input name="inputNumber['+proper['pd_field_id']+'][m][1]" value="'+proper['data_1']+'" type="number" step="any"   class="form-control">';
-                        html2 += ' <span  class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+proper['pd_field_id']+' , 1);">-</span>';
+                        html2 += ' <span  class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+proper['pd_field_id']+' , 1]">-</span>';
                         html2 += '</div>';
                         html2 += ' </div>';
                         html2 += ' <div class="product-custom-field addfield2">';
@@ -710,7 +708,7 @@
                         html2 += '<span class="input-group-addon p-l">2</span>';
                         html2 += ' <input name="inputNumber['+proper['pd_field_id']+'][m][2]" value="'+proper['data_2']+'" type="number" step="any"   class="form-control">';
                         html2 += '<span';
-                        html2 += ' class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+proper['pd_field_id']+' , 2);">-</span>';
+                        html2 += ' class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+proper['pd_field_id']+' , 2]">-</span>';
                         html2 += '</div>';
                         html2 += '</div>';
 
@@ -720,7 +718,7 @@
                         html2 += '<input name="inputNumber['+proper['pd_field_id']+'][m][3]" value="'+proper['data_3']+'" type="number" step="any" ';
                         html2 += ' class="form-control">';
                         html2 += '<span';
-                        html2 += ' class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+proper['pd_field_id']+', 3);">-</span>';
+                        html2 += ' class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+proper['pd_field_id']+', 3]">-</span>';
                         html2 += '</div>';
                         html2 += '</div>';
                         if(proper['data_4'] != null && proper['data_4'] != ''){
@@ -730,7 +728,7 @@
                         html2 += '<input name="inputNumber['+proper['pd_field_id']+'][m][4]" value="'+proper['data_4']+'" type="number" step="any" ';
                         html2 += ' class="form-control">';
                         html2 += '<span';
-                        html2 += ' class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+proper['pd_field_id']+',4);">-</span>';
+                        html2 += ' class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+proper['pd_field_id']+',4]">-</span>';
                         html2 += '</div>';
                         html2 += '</div>';
                         }
@@ -741,7 +739,7 @@
                         html2 += '<input name="inputNumber['+proper['pd_field_id']+'][m][5]" value="'+proper['data_5']+'" type="number" step="any" ';
                         html2 += ' class="form-control">';
                         html2 += '<span';
-                        html2 += ' class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+proper['pd_field_id']+', 5);">-</span>';
+                        html2 += ' class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+proper['pd_field_id']+', 5]">-</span>';
                         html2 += '</div>';
                         html2 += '</div>';
                         }
@@ -753,7 +751,7 @@
                         html2 += '<input name="inputNumber['+proper['pd_field_id']+'][m][6]" value="'+proper['data_6']+'" type="number" step="any" ';
                         html2 += ' class="form-control">';
                         html2 += '<span';
-                        html2 += ' class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+proper['pd_field_id']+', 6);">-</span>';
+                        html2 += ' class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+proper['pd_field_id']+', 6]">-</span>';
                         html2 += '</div>';
                         html2 += '</div>';
                         }
@@ -764,7 +762,7 @@
                         html2 += '<input name="inputNumber['+proper['pd_field_id']+'][m][7]" value="'+proper['data_7']+'" type="number" step="any" ';
                         html2 += ' class="form-control">';
                         html2 += '<span';
-                        html2 += ' class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+proper['pd_field_id']+', 7);">-</span>';
+                        html2 += ' class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+proper['pd_field_id']+', 7]">-</span>';
                         html2 += '</div>';
                         html2 += '</div>';
                         }
@@ -776,7 +774,7 @@
                         html2 += '<input name="inputNumber['+proper['pd_field_id']+'][m][8]" value="'+proper['data_8']+'" type="number" step="any" ';
                         html2 += ' class="form-control">';
                         html2 += '<span';
-                        html2 += ' class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+proper['pd_field_id']+', 8);">-</span>';
+                        html2 += ' class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+proper['pd_field_id']+', 8]">-</span>';
                         html2 += '</div>';
                         html2 += '</div>';
                         }
@@ -788,7 +786,7 @@
                         html2 += '<input name="inputNumber['+proper['pd_field_id']+'][m][9]" value="'+proper['data_9']+'" type="number" step="any" ';
                         html2 += ' class="form-control">';
                         html2 += '<span';
-                        html2 += ' class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+proper['pd_field_id']+', 9);">-</span>';
+                        html2 += ' class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+proper['pd_field_id']+', 9]">-</span>';
                         html2 += '</div>';
                         html2 += '</div>';
                         }
@@ -799,7 +797,7 @@
                         html2 += '<input name="inputNumber['+proper['pd_field_id']+'][m][10]" value="'+proper['data_10']+'" type="number" step="any" ';
                         html2 += ' class="form-control">';
                         html2 += '<span';
-                        html2 += ' class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+proper['pd_field_id']+', 10);">-</span>';
+                        html2 += ' class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+proper['pd_field_id']+', 10]">-</span>';
                         html2 += '</div>';
                         html2 += '</div>';
                         }
@@ -811,7 +809,7 @@
                         html2 += '<input name="inputNumber['+proper['pd_field_id']+'][m][11]" value="'+proper['data_11']+'" type="number" step="any" ';
                         html2 += ' class="form-control">';
                         html2 += '<span';
-                        html2 += ' class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+proper['pd_field_id']+', 11);">-</span>';
+                        html2 += ' class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+proper['pd_field_id']+', 11]">-</span>';
                         html2 += '</div>';
                         html2 += '</div>';
                         }
@@ -823,7 +821,7 @@
                         html2 += '<input name="inputNumber['+proper['pd_field_id']+'][m][12]" value="'+proper['data_12']+'" type="number" step="any" ';
                         html2 += ' class="form-control">';
                         html2 += '<span';
-                        html2 += ' class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+proper['pd_field_id']+', 12);">-</span>';
+                        html2 += ' class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+proper['pd_field_id']+', 12]">-</span>';
                         html2 += '</div>';
                         html2 += '</div>';
                         }
@@ -831,7 +829,7 @@
 
                         html2 += '<div class="btn-add-input">'
                         html2 += '<div class="form-group input-group">';
-                        html2 += '<button type="button" class="btn" onclick="addMutlple('+proper['pd_field_id']+');">';
+                        html2 += '<button type="button" class="btn" data-fn-click="addMutlple" data-fn-args="['+proper['pd_field_id']+']">';
                         html2 += ' Add </button>';
                         html2 += '</div></div></div>';
                         html2 += '<div class="range-box'+proper['pd_field_id']+' '+ ((proper['status_input'] == 3)  ? "d-block" : "d-none") + '">';
@@ -883,20 +881,20 @@
                         html2 +=  '<div class="form-group">';
                         html2 +=  '<label class="d-block">'+feild['field_name']+'</label>';
                         html2 +=  '<div class="custom-control custom-radio custom-control-inline custom-control-primary">';
-                        html2 +=  '<input type="radio" class="custom-control-input" onchange="selectinputtype('+feild['pd_field_id']+',1);"';
+                        html2 +=  '<input type="radio" class="custom-control-input" data-fn-change="selectinputtype" data-fn-args="['+feild['pd_field_id']+',1]"';
                         html2 +=  'id="status_input_sig'+feild['pd_field_id']+'" name="status_input['+feild['pd_field_id']+']"';
                         html2 +=  'value="1"  checked >';
                         html2 +=  '<label class="custom-control-label"for="status_input_sig'+feild['pd_field_id']+'">Single</label>';
                         html2 +=  '</div>';
                         html2 +=  '<div class="custom-control custom-radio custom-control-inline custom-control-primary">'
-                        html2 +=  '<input type="radio" class="custom-control-input"  onchange="selectinputtype('+feild['pd_field_id']+',2);"';
+                        html2 +=  '<input type="radio" class="custom-control-input"  data-fn-change="selectinputtype" data-fn-args="['+feild['pd_field_id']+',2]"';
                         html2 +=  'id="status_input_Mutl'+feild['pd_field_id']+'"  name="status_input['+feild['pd_field_id']+']"';
                         html2 +=  'value="2" >';
                         html2 +=  '<label class="custom-control-label"';
                         html2 +=  'for="status_input_Mutl'+feild['pd_field_id']+'">Multiple</label>';
                         html2 +=  '</div>';
                         html2 +=  '<div class="custom-control custom-radio custom-control-inline custom-control-primary">';
-                        html2 +=  ' <input type="radio" class="custom-control-input"  onchange="selectinputtype('+feild['pd_field_id']+' ,3);"';
+                        html2 +=  ' <input type="radio" class="custom-control-input"  data-fn-change="selectinputtype" data-fn-args="['+feild['pd_field_id']+' ,3]"';
                         html2 +=  ' id="status_input_Rang'+feild['pd_field_id']+'" name="status_input['+feild['pd_field_id']+']" value="3" >';
                         html2 +=  ' <label class="custom-control-label"  for="status_input_Rang'+feild['pd_field_id']+'">Range</label></div>';
                         html2 +=  ' </div>';
@@ -905,7 +903,7 @@
                         html2 += ' <div class="form-group input-group">';
                         html2 += ' <span class="input-group-addon p-l">1</span>';
                         html2 += ' <input name="inputNumber['+feild['pd_field_id']+'][m][1]"  type="number" step="any"  class="form-control">';
-                        html2 += ' <span  class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+feild['pd_field_id']+' , 1);">-</span>';
+                        html2 += ' <span  class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+feild['pd_field_id']+' , 1]">-</span>';
                         html2 += '</div>';
                         html2 += ' </div>';
                         html2 += ' <div class="product-custom-field addfield2">';
@@ -913,7 +911,7 @@
                         html2 += '<span class="input-group-addon p-l">2</span>';
                         html2 += ' <input name="inputNumber['+feild['pd_field_id']+'][m][2]" type="number" step="any"   class="form-control">';
                         html2 += '<span';
-                        html2 += ' class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+feild['pd_field_id']+' , 2);">-</span>';
+                        html2 += ' class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+feild['pd_field_id']+' , 2]">-</span>';
                         html2 += '</div>';
                         html2 += '</div>';
                         html2 += '<div class="product-custom-field addfield3">';
@@ -922,12 +920,12 @@
                         html2 += '<input name="inputNumber['+feild['pd_field_id']+'][m][3]"  type="number" step="any" ';
                         html2 += ' class="form-control">';
                         html2 += '<span';
-                        html2 += ' class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+feild['pd_field_id']+', 1);">-</span>';
+                        html2 += ' class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+feild['pd_field_id']+', 1]">-</span>';
                         html2 += '</div>';
                         html2 += '</div>';
                         html2 += '<div class="btn-add-input">'
                         html2 += '<div class="form-group input-group">';
-                        html2 += '<button type="button" class="btn" onclick="addMutlple('+feild['pd_field_id']+');">';
+                        html2 += '<button type="button" class="btn" data-fn-click="addMutlple" data-fn-args="['+feild['pd_field_id']+']">';
                         html2 += ' Add </button>';
                         html2 += '</div></div></div>';
                         html2 += '<div class="range-box'+feild['pd_field_id']+' d-none">';
@@ -1001,7 +999,7 @@
             html += '<div class="form-group input-group">';
             html += ' <span class="input-group-addon p-l">'+(numItems+1)+'</span>';
             html += '<input name="inputNumber['+id+'][m]['+(numItems+1)+']" type="number" step="any"  class="form-control">';
-            html += '<span class="input-group-addon number_type_remove p-r" onclick="deletemutifield('+id+','+(numItems+1)+');">-</span></div>';
+            html += '<span class="input-group-addon number_type_remove p-r" data-fn-click="deletemutifield" data-fn-args="['+id+','+(numItems+1)+']">-</span></div>';
             html += '</div>';
 
             $('.mulltiple-box'+id).append(html)
@@ -1121,7 +1119,7 @@
         var html = '<div class="part-number-row d-flex mb-2" data-index="' + index + '">'
             + '<input type="text" class="form-control mr-2" name="partNumber[no][' + index + ']" placeholder="No">'
             + '<input type="text" class="form-control mr-2" name="partNumber[text][' + index + ']" placeholder="Text">'
-            + '<button type="button" class="btn btn-danger btn-sm" onclick="removePartNumber(this)">-</button>'
+            + '<button type="button" class="btn btn-danger btn-sm js-remove-part-number">-</button>'
             + '</div>';
         list.append(html);
     }
@@ -1136,6 +1134,11 @@
         });
     }
 
+
+    // 動態產生的移除鈕：不能在 JS 字串裡用單引號屬性（會把字串提前結束），改用 class + 委派
+    $(document).on('click', '.js-remove-part-number', function () {
+        removePartNumber(this);
+    });
 </script>
 
 @endsection

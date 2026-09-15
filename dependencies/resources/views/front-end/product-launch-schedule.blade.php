@@ -196,11 +196,11 @@
         <h1 class="text-title-delta visible-up-922">{{$staticContent['Product_launch_Schedule']}}</h1>
         <h3 class="text-title-delta invisible-up-922">{{$staticContent['Product_launch_Schedule']}}</h3>
         <div class="calendar-year-tab d-flex justify-content-center mr-24px">
-            <a id="last-year" onclick="Years(-1)"></a>
+            <a id="last-year" data-fn-click="Years" data-fn-args='[-1]'></a>
             <h3 id="count-year">2019</h3>
-            <a id="next-year" onclick="Years(1)"></a>
+            <a id="next-year" data-fn-click="Years" data-fn-args='[1]'></a>
         </div>
-        <select id="select-events" onchange="selectMonthPicker();" class="select-minimize invisible-up-922 mb-4 border-radius-6">
+        <select id="select-events" data-fn-change="selectMonthPicker" class="select-minimize invisible-up-922 mb-4 border-radius-6">
             <option value="00">JAN</option>
             <option value="01">FEB</option>
             <option value="02">MAR</option>
@@ -215,29 +215,29 @@
             <option value="11">DEC</option>
         </select>
         <div class="calendar-month-tab visible-up-922">
-            <input type="radio" name="tabs" id="tab00" value="00" onchange=" addCalendar(00)" />
+            <input type="radio" name="tabs" id="tab00" value="00" data-fn-change="addCalendar" data-fn-args='[0]' />
             <label for="tab00" class="text-bold">JAN</label>
-            <input type="radio" name="tabs" id="tab01" value="01" onchange="  addCalendar(01)" />
+            <input type="radio" name="tabs" id="tab01" value="01" data-fn-change="addCalendar" data-fn-args='[1]' />
             <label for="tab01" class="text-bold">FEB</label>
-            <input type="radio" name="tabs" id="tab02" value="02" onchange=" addCalendar(02)" />
+            <input type="radio" name="tabs" id="tab02" value="02" data-fn-change="addCalendar" data-fn-args='[2]' />
             <label for="tab02" class="text-bold">MAR</label>
-            <input type="radio" name="tabs" id="tab03" value="03" onchange="  addCalendar(03)" />
+            <input type="radio" name="tabs" id="tab03" value="03" data-fn-change="addCalendar" data-fn-args='[3]' />
             <label for="tab03" class="text-bold">APR</label>
-            <input type="radio" name="tabs" id="tab04" value="04" onchange=" addCalendar(04)" />
+            <input type="radio" name="tabs" id="tab04" value="04" data-fn-change="addCalendar" data-fn-args='[4]' />
             <label for="tab04" class="text-bold">MAY</label>
-            <input type="radio" name="tabs" id="tab05" value="05" onchange="  addCalendar(05)" />
+            <input type="radio" name="tabs" id="tab05" value="05" data-fn-change="addCalendar" data-fn-args='[5]' />
             <label for="tab05" class="text-bold">JUN</label>
-            <input type="radio" name="tabs" id="tab06" value="06" onchange="addCalendar(06)" />
+            <input type="radio" name="tabs" id="tab06" value="06" data-fn-change="addCalendar" data-fn-args='[6]' />
             <label for="tab06" class="text-bold">JUL</label>
-            <input type="radio" name="tabs" id="tab07" value="07" onchange=" addCalendar(07)" />
+            <input type="radio" name="tabs" id="tab07" value="07" data-fn-change="addCalendar" data-fn-args='[7]' />
             <label for="tab07" class="text-bold">AUG</label>
-            <input type="radio" name="tabs" id="tab08" value="08" onchange=" addCalendar(08)" />
+            <input type="radio" name="tabs" id="tab08" value="08" data-fn-change="addCalendar" data-fn-args='[8]' />
             <label for="tab08" class="text-bold">SEP</label>
-            <input type="radio" name="tabs" id="tab09" value="09" onchange="  addCalendar(09)" />
+            <input type="radio" name="tabs" id="tab09" value="09" data-fn-change="addCalendar" data-fn-args='[9]' />
             <label for="tab09" class="text-bold">OCT</label>
-            <input type="radio" name="tabs" id="tab10" value="10" onchange="  addCalendar(10)" />
+            <input type="radio" name="tabs" id="tab10" value="10" data-fn-change="addCalendar" data-fn-args='[10]' />
             <label for="tab10" class="text-bold">NOV</label>
-            <input type="radio" name="tabs" id="tab11" value="11" onchange=" addCalendar(11)" />
+            <input type="radio" name="tabs" id="tab11" value="11" data-fn-change="addCalendar" data-fn-args='[11]' />
             <label for="tab11" class="text-bold">DEC</label>
 
         </div>
@@ -289,7 +289,7 @@
 
 @section('js')
 
-<script>
+<script @cspNonce>
     var today = new Date();
     var isYears = today.getFullYear();
     document.getElementById("count-year").innerHTML = isYears;

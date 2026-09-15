@@ -96,7 +96,7 @@
         <h4 class="d-flex justify-content-center mb-4 text-center" style="margin-top: -1rem">{{isset($metatag[0]->h1)? $metatag[0]->h1 :''}}</h4>    
         <div class="in-div-center">
             <div class="mb-5">
-                <select id="catefaqId" class="form-control border-radius-6" onchange="selectCategories();">
+                <select id="catefaqId" class="form-control border-radius-6" data-fn-change="selectCategories">
                     <option value="0">{{$staticContent['All_Categories']}}</option>
                     @foreach ($faq_categories as $item)
                     <option value="{{$item->cate_id}}">{{$item->name}}</option>
@@ -137,7 +137,7 @@
 
 
 @section('js')
-<script>
+<script @cspNonce>
     var faqs = <?= json_encode($faqs);?>;
      
     $(document).ready(function () {

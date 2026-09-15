@@ -77,7 +77,7 @@
                                 <label for="">H1</label>
                                 <span>Recommended 20-70 characters</span>
                                 <div id="item-wrap">
-                                    <input id="input-h1-en" onkeyup="countCharacter('h1-en')" type="text"
+                                    <input id="input-h1-en" data-fn-keyup="countCharacter" data-fn-args='["h1-en"]' type="text"
                                         class="form-control" name="h1_title" maxlength="70" value="">
                                     <div class="text-count">Count Character :
                                         <span id="count-h1-en">
@@ -89,7 +89,7 @@
                                 <label for="">Meta - title</label>
                                 <span>Recommended 30-60 characters</span>
                                 <div id="item-wrap">
-                                    <input id="input-metaTitle-en" onkeyup="countCharacter('metaTitle-en')" type="text"
+                                    <input id="input-metaTitle-en" data-fn-keyup="countCharacter" data-fn-args='["metaTitle-en"]' type="text"
                                         class="form-control" name="metaTitle" maxlength="70" value="">
                                     <div class="text-count">Count Character :
                                         <span id="count-metaTitle-en">
@@ -102,7 +102,7 @@
                                 <span>Recommended 70-155 Character</span>
                                 <div id="item-wrap">
                                     <textarea rows="4" id="input-metaDescription-en"
-                                        onkeyup="countCharacter('metaDescription-en')" maxlength="155"
+                                        data-fn-keyup="countCharacter" data-fn-args='["metaDescription-en"]' maxlength="155"
                                         name="metaDescription" class="form-control"></textarea>
                                     <div class="text-count">Count Character :
                                         <span id="count-metaDescription-en">
@@ -275,7 +275,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     var previewImage = function (input, block) {
         var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];
         var extension = input.files[0].name.split('.').pop().toLowerCase(); /*se preia extensia*/

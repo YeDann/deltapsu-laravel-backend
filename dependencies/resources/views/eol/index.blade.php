@@ -87,7 +87,7 @@
                                 --}}
                                 <a href="{{route('eol.edit',$item->id)}}" class="btn btn-primary">Edit </a>
                                 <button type="button" class="btn btn-danger" data-toggle="tooltip" id="delbutton"
-                                    title="Delete" onclick="deleteEol({{$item->id}})">
+                                    title="Delete" data-fn-click="deleteEol" data-fn-args='[{{$item->id}}]'>
                                     Delete
                                 </button>
                             </div>
@@ -102,7 +102,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteEol(id) {
         swal({
             title: "Confirm Delete",

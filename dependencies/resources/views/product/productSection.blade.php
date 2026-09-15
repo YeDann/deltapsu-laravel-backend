@@ -64,7 +64,7 @@
                     <td class="d-none d-sm-table-cell">{{$item->name}}</td>
                     <td class="text-center">
                         <div class="custom-control custom-switch custom-control-lg mb-2">
-                            <input type="checkbox" class="custom-control-input" id="statusCate{{$item->main_id}}" onchange="checkdata({{$item->main_id}});"  {{($item->active== 1)?'checked':''}}>
+                            <input type="checkbox" class="custom-control-input" id="statusCate{{$item->main_id}}" data-fn-change="checkdata" data-fn-args='[{{$item->main_id}}]'  {{($item->active== 1)?'checked':''}}>
                             <label class="custom-control-label" id="lablestatusCate{{$item->main_id}}" for="statusCate{{$item->main_id}}">{{$item->active == 1?'Show':'Hide'}}</label>
                         </div>
                     </td>
@@ -112,7 +112,7 @@
 @endsection
 @section('js')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
+<script @cspNonce>
         $( function() {
           $( "#sortable" ).sortable();
           $( "#sortable" ).disableSelection();
@@ -146,7 +146,7 @@
         });
 
     </script>
-<script>
+<script @cspNonce>
 
 
     function ondelelete(id){

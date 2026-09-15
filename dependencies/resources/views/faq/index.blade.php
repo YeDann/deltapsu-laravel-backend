@@ -65,7 +65,7 @@
                     <td class="d-none d-sm-table-cell">{{$item->cateName}}</td>
                     <td class="text-center">
                             <a href="{{route('editFaq' ,$item->id)}}" class="btn btn-primary">Edit</a>
-                            <button type="button" class="btn btn-danger" onclick="ondelelete({{$item->id}});" data-toggle="modal" data-target="#modal-block-vcenter">Delete</button>
+                            <button type="button" class="btn btn-danger js-delete-item" data-toggle="modal" data-target="#modal-block-vcenter" data-id="{{$item->id}}">Delete</button>
                        
                     </td>
                     </tr>
@@ -110,7 +110,7 @@
 
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
 
 
     function ondelelete(id){

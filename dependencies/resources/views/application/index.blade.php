@@ -72,7 +72,7 @@
                                 <a href="{{route('addMoreImage',$item->app_id)}}" class="btn btn-outline-info btn-sm">Image Content</a>
                                 <a href="{{route('application-view.edit',$item->app_id)}}" class="btn btn-primary btn-sm">Edit </a>
                             <button type="button" class="btn btn-sm btn-danger" data-toggle="tooltip" id="delbutton"
-                                title="Delete" onclick="deleteIndex({{$item->app_id}})">
+                                title="Delete" data-fn-click="deleteIndex" data-fn-args='[{{$item->app_id}}]'>
                                 Delete
                             </button>
                         </div>
@@ -165,7 +165,7 @@
 @endsection
 @section('js')
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
+<script @cspNonce>
     function deleteIndex(id) {
         swal({
             title: "Confirm Delete",
@@ -195,7 +195,7 @@
     }
 
 </script>
-<script>
+<script @cspNonce>
     $( function() {
       $( "#sortable" ).sortable();
       $( "#sortable" ).disableSelection();

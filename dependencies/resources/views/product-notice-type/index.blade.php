@@ -63,7 +63,7 @@
                         <div class="">
                                 <a href="{{route('product-notice-type.edit',$item->id)}}" class="btn btn-primary">Edit </a>
                                 <button type="button" class="btn btn-danger" data-toggle="tooltip" id="delbutton"
-                                title="Delete" onclick="deleteProductNoticeType({{$item->id}})">
+                                title="Delete" data-fn-click="deleteProductNoticeType" data-fn-args='[{{$item->id}}]'>
                                 Delete
                             </button>
                         </div>
@@ -78,7 +78,7 @@
 </div>
 @endsection
 @section('js')
-<script>
+<script @cspNonce>
     function deleteProductNoticeType(id) {
         swal({
             title: "Confirm Delete",
