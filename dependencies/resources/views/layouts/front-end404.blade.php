@@ -332,7 +332,8 @@ $shareData->handle($request, function ($req) { return $req; });
     <script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
+    {{-- nonce 不是為了放行 api.js 本身（網域已在白名單），而是讓 reCAPTCHA 傳遞給它執行期注入的 inline script；缺了會導致 onloadCallback 不執行 --}}
+    <script @cspNonce src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
     </script>
     <script @cspNonce>
         if ('loading' in HTMLImageElement.prototype) {
