@@ -55,10 +55,10 @@
 </div>
 @endsection
 @section('js')
-<script src="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.min.js')}}"></script>
-<script src="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.js')}}"></script>
-<script src="{{asset('backend-asset/js/plugins/ckeditor/ckeditor.js')}}"></script>
-<script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.min.js')}}" @cspNonce></script>
+<script src="{{asset('backend-asset/js/plugins/simplemde/simplemde.min.js')}}" @cspNonce></script>
+<script src="{{asset('backend-asset/js/plugins/ckeditor/ckeditor.js')}}" @cspNonce></script>
+<script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}" @cspNonce></script>
 <script @cspNonce>
     jQuery(function () {
         Dashmix.helpers(['datepicker', 'summernote', 'simplemde', 'ckeditor']);

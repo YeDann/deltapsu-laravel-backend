@@ -85,9 +85,9 @@
                 </main>
                 <!-- END Main Container -->
             </div>
-    <script src="{{asset('backend-asset/js/dashmix.core.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/dashmix.app.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/pages/op_auth_signin.min.js')}}"></script>
+    <script src="{{asset('backend-asset/js/dashmix.core.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/dashmix.app.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/plugins/jquery-validation/jquery.validate.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/pages/op_auth_signin.min.js')}}" @cspNonce></script>
 </body>
 </html>

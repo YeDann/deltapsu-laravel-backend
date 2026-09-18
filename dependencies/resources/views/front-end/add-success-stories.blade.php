@@ -391,8 +391,8 @@
 
 
 @section('js')
-<script type="text/javascript" src="{{asset('/frontend-asset/js/dropzone.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/dropzone.js')}}" @cspNonce></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js" @cspNonce></script>
 <script @cspNonce>
     $(document).ready(function() {
     $('.js-example-basic-multiple').select2({

@@ -234,10 +234,10 @@
 @endsection
 @section('js')
 
-<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript" @cspNonce></script>
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
-<script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}" @cspNonce></script>
 <script @cspNonce>
     var previewImage = function (input, block) {
         var fileTypes = ['jpg', 'jpeg', 'png', 'gif', 'svg','webp'];

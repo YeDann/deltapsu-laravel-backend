@@ -236,12 +236,12 @@ $shareData->handle($request, function ($req) { return $req; });
 
     <!-- Cookie Consent by https://www.cookiewow.com -->
     @if(config('app.environment') == 'production')
-    <script type="text/javascript" src=https://cookiecdn.com/cwc.js></script>
+    <script type="text/javascript" src=https://cookiecdn.com/cwc.js @cspNonce></script>
     <script id="cookieWow" type="text/javascript" src=https://cookiecdn.com/configs/9aZemFwhn82pm3Z4wtV79sGZ 
-      data-cwcid="9aZemFwhn82pm3Z4wtV79sGZ"></script>
+      data-cwcid="9aZemFwhn82pm3Z4wtV79sGZ" @cspNonce></script>
     @endif
 
-    <script src="{{asset('/frontend-asset/js/jquery-3.7.1.min.js')}}"></script>
+    <script src="{{asset('/frontend-asset/js/jquery-3.7.1.min.js')}}" @cspNonce></script>
 
     <!-- Google Tag Manager -->
     <script async defer @cspNonce>
@@ -320,18 +320,18 @@ $shareData->handle($request, function ($req) { return $req; });
     @yield('container')
     @include('layouts.footer')
 
-    <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('/frontend-asset/js/popper.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap-select.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('/frontend-asset/js/map.js')}}"></script>
-    <script type="text/javascript" src="{{asset('/frontend-asset/js/product.js')}}"></script>
-    <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.js')}}"></script>
-    <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/nouislider.min.js')}}" @cspNonce></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/datatables.min.js')}}" @cspNonce></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/popper.min.js')}}" @cspNonce></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap.min.js')}}" @cspNonce></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/bootstrap-select.min.js')}}" @cspNonce></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/map.js')}}" @cspNonce></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/product.js')}}" @cspNonce></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.js')}}" @cspNonce></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/owl.carousel.min.js')}}" @cspNonce></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/slick.min.js')}}" @cspNonce></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/zabuto_calendar.min.js')}}" @cspNonce></script>
+    <script type="text/javascript" src="{{asset('/frontend-asset/js/mb5.js')}}" @cspNonce></script>
     {{-- nonce 不是為了放行 api.js 本身（網域已在白名單），而是讓 reCAPTCHA 傳遞給它執行期注入的 inline script；缺了會導致 onloadCallback 不執行 --}}
     <script @cspNonce src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
     </script>

@@ -102,9 +102,9 @@
 </div>
 @endsection
 @section('js')
-<script src="{{ asset('backend-asset/js/resumable.js') }}"></script>
+<script src="{{ asset('backend-asset/js/resumable.js') }}" @cspNonce></script>
 {{-- 帶 mtime 版號：backend-asset 沒有 cache busting，改版後舊分頁會抓到 30 天前的快取 --}}
-<script src="{{ asset('backend-asset/js/mr-chunk-upload.js') }}?v={{ @filemtime(public_path('backend-asset/js/mr-chunk-upload.js')) ?: 1 }}"></script>
+<script src="{{ asset('backend-asset/js/mr-chunk-upload.js') }}?v={{ @filemtime(public_path('backend-asset/js/mr-chunk-upload.js')) ?: 1 }}" @cspNonce></script>
 <script @cspNonce>
     $(function () {
         MRChunkUpload.init({

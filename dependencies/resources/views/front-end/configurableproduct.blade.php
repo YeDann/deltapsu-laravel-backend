@@ -1149,7 +1149,7 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/jspdf.debug.js')}}" @cspNonce></script>
 <script @cspNonce>
 	$(document).ready(function() {
 		msieversion();
@@ -1205,7 +1205,7 @@
 	});
 	@endif
 </script>
-<script src="{{asset('/frontend-asset/js/jquery.steps.min.js')}}"></script>
+<script src="{{asset('/frontend-asset/js/jquery.steps.min.js')}}" @cspNonce></script>
 <script @cspNonce>
 	@if(Session::has('message'))
 	$(document).ready(function() {

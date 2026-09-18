@@ -187,8 +187,8 @@
 @endsection
 @section('js')
 <script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyCPBj3pIdKpOMbIL4cChrzX_OJZSkaxIvM
-&sensor=false&libraries=places'></script>
-    <script src="https://cdn.jsdelivr.net/gh/Logicify/jquery-locationpicker-plugin@master/dist/locationpicker.jquery.min.js"></script>
+&sensor=false&libraries=places' @cspNonce></script>
+    <script src="https://cdn.jsdelivr.net/gh/Logicify/jquery-locationpicker-plugin@master/dist/locationpicker.jquery.min.js" @cspNonce></script>
 <script @cspNonce>
     $('#us2').locationpicker({
         location:{
