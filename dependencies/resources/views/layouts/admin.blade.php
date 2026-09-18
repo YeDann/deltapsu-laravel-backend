@@ -182,24 +182,24 @@
         <!-- END Main Container -->
 
     </div>
-    <script src="{{asset('backend-asset/js/sweetalert.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/jquery.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/jquery.js')}}"></script>
-    <script src="{{asset('backend-asset/js/dashmix.core.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/dashmix.app.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/pages/op_auth_signin.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/plugins/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/plugins/datatables/buttons/dataTables.buttons.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/plugins/select2/js/select2.full.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/pages/be_tables_datatables.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
-    <script src="{{asset('backend-asset/js/plugins/dropzone/dropzone.min.js')}}"></script>
+    <script src="{{asset('backend-asset/js/sweetalert.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/jquery.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/jquery.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/dashmix.core.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/dashmix.app.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/plugins/jquery-validation/jquery.validate.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/pages/op_auth_signin.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/plugins/datatables/jquery.dataTables.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/plugins/datatables/dataTables.bootstrap4.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/plugins/datatables/buttons/dataTables.buttons.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/plugins/select2/js/select2.full.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/pages/be_tables_datatables.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/plugins/summernote/summernote-bs4.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}" @cspNonce></script>
+    <script src="{{asset('backend-asset/js/plugins/dropzone/dropzone.min.js')}}" @cspNonce></script>
     <script
-        src="https://cdn.jsdelivr.net/npm/@dsvllc/summernote-image-attributes@1.0.0/summernote-image-attributes.min.js">
+        src="https://cdn.jsdelivr.net/npm/@dsvllc/summernote-image-attributes@1.0.0/summernote-image-attributes.min.js" @cspNonce>
     </script>
     <script @cspNonce>
         jQuery(function () {
@@ -207,8 +207,8 @@
         });
 
     </script>
-    <script src="{{asset('/backend-asset/addons/js/datatables.min.js')}}"></script>
-    <script src="{{asset('/backend-asset/addons/js/datatables-select.min.js')}}"></script>
+    <script src="{{asset('/backend-asset/addons/js/datatables.min.js')}}" @cspNonce></script>
+    <script src="{{asset('/backend-asset/addons/js/datatables-select.min.js')}}" @cspNonce></script>
     <style>
         .select2-container--default .select2-selection--multiple {
             position: relative;

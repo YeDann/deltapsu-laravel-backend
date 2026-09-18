@@ -27,9 +27,16 @@ class ContentSecurityPolicy
 
         $cspDirectives = [
             "default-src 'self'",
-            // 已移除 'unsafe-inline'：站內 inline <script> 一律由 @cspNonce 帶上本次請求的 nonce，
-            // 事件屬性（onclick 等）已全面改為 data-fn-* 事件委派。白名單網域不受 nonce 影響，照常放行。
-            "script-src 'self' 'nonce-{$nonce}' https://*.google.com https://*.googleapis.com https://*.googletagmanager.com https://*.gstatic.com https://cdn.jsdelivr.net https://code.jquery.com https://cdnjs.cloudflare.com https://cookiecdn.com https://snap.licdn.com https://*.youtube.com https://s.ytimg.com https://*.youtube-nocookie.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://sc.lfeeder.com",
+            // 已移除 'unsafe-inline'：站內所有 <script>（含 src）一律由 @cspNonce 帶上本次請求的
+            // nonce，事件屬性（onclick 等）已全面改為 data-fn-* 事件委派。
+            //
+            // 'strict-dynamic'：讓帶 nonce 的 script 所「動態建立」的 script 一併受信任。
+            // CookieWow、GTM 這類第三方 SDK 會在執行期自行注入 inline script，那些內容不在
+            // 我們的程式碼內、無法逐一標記 nonce，少了這個關鍵字就會被擋掉。
+            // 代價是支援 strict-dynamic 的瀏覽器會忽略下方網域白名單（故所有 src 都要帶 nonce）；
+            // 白名單保留是給不支援 strict-dynamic 的舊瀏覽器作為 fallback。
+            // 注意：innerHTML / document.write 注入的 script 仍會被擋，XSS 防護不受影響。
+            "script-src 'self' 'nonce-{$nonce}' 'strict-dynamic' https://*.google.com https://*.googleapis.com https://*.googletagmanager.com https://*.gstatic.com https://cdn.jsdelivr.net https://code.jquery.com https://cdnjs.cloudflare.com https://cookiecdn.com https://snap.licdn.com https://*.youtube.com https://s.ytimg.com https://*.youtube-nocookie.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://sc.lfeeder.com",
             // style-src 暫時保留 'unsafe-inline'：後台所見即所得編輯器產生的 style="" 存在資料庫
             // （約 9400 筆內容），不在程式碼內、無法以 nonce 覆蓋（nonce 對屬性無效）。
             "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",

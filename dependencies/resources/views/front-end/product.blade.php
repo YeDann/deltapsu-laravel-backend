@@ -784,7 +784,7 @@
 
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js" @cspNonce></script>
 <script @cspNonce>
     $('.js-example-basic-single').select2({
         placeholder: '{{$staticContent['Model_Name']}}'

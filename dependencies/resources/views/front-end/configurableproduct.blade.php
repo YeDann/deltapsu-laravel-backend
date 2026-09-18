@@ -323,10 +323,13 @@
 	#configurable .describe-list .text-detail-describe {
 		font-size: 18px;
 	}
-	/* 模組預覽圖格子內文字（Slot 標籤 + 電壓/電流/瓦數） */
+	/* 模組預覽圖格子內文字（Slot 標籤 + 電壓/電流/瓦數）
+	   格子是 78px 固定寬、高度由兩側機殼圖鎖住（max-height:100%），放大字級後雙輸出的
+	   內容會撐破格子，故同時收緊行高；18px/1.1 在雙輸出情境剛好塞滿不溢出。 */
 	#configurable #port .fix-height,
 	#configurable #port02 .fix-height {
 		font-size: 18px;
+		line-height: 1.1;
 	}
 
 	#configurable #data_table2_con td {
@@ -1149,7 +1152,7 @@
 @endsection
 
 @section('js')
-<script type="text/javascript" src="{{asset('/frontend-asset/js/jspdf.debug.js')}}"></script>
+<script type="text/javascript" src="{{asset('/frontend-asset/js/jspdf.debug.js')}}" @cspNonce></script>
 <script @cspNonce>
 	$(document).ready(function() {
 		msieversion();
@@ -1205,7 +1208,7 @@
 	});
 	@endif
 </script>
-<script src="{{asset('/frontend-asset/js/jquery.steps.min.js')}}"></script>
+<script src="{{asset('/frontend-asset/js/jquery.steps.min.js')}}" @cspNonce></script>
 <script @cspNonce>
 	@if(Session::has('message'))
 	$(document).ready(function() {
@@ -1246,6 +1249,33 @@
    }
 </script>
 <script @cspNonce>
+	// 取代原本寫在標籤上的 inline 事件屬性（CSP 目標為移除 script-src 的 unsafe-inline）。
+	// 這些元素多半是 JS 動態產生，故綁在 document 委派；型別用 Number() 還原，比照原本傳入數字字面量的語意。
+	//
+	// ★ 必須放在整個 script 的最前面：selectionGenerate() → loadData() → addSlotOutput() 會在初始化時
+	//   以 .click() 觸發 radio 的 change 來產生下拉；委派若晚於那段註冊，初始化當下沒有監聽者，
+	//   Slot 1 的電壓/電流下拉就不會生成（inline 屬性沒有這個時序問題，故原本不會發生）。
+	$(document).on('change', '.js-terminal-change', function () {
+		getToSummary();
+		getToTerimal();
+	});
+	$(document).on('change', '.js-volt-select', function () {
+		getSelectCurrent(this, Number($(this).attr('data-cfg-type')));
+		getToSum(Number($(this).attr('data-cfg-index')));
+	});
+	$(document).on('click', '.js-reset-data', function () {
+		resetData(Number($(this).attr('data-cfg-index')));
+	});
+	$(document).on('change', '.js-current-change', function () {
+		currentChange(this, Number($(this).attr('data-cfg-type')));
+	});
+	$(document).on('change', '.js-get-selecter', function () {
+		getSelecter(this);
+	});
+	$(document).on('click', '.js-remove-data', function () {
+		removeData(this);
+	});
+
 	$("#sale-enquiry").hide();
 	$("#cx-sale-en").click(function(){
   	  	$("#sale-enquiry").toggle();
@@ -1454,7 +1484,9 @@
 		$('#port').empty();
 
 		for(var i = 0 ; i < model_alldata[index]['max_slot']; i++){
-			$('#port').append('<div class="fix-height col-2  bg-gray" id="port1">Blank</div>');
+			// 用 blank 而非 col-2：格子寬度由 .bg-sixslot .blank 決定，掛 col-2 會吃到 Bootstrap
+			// 網格寬度，與稍後 setModelPreview() 重畫出來的版型對不上（文字被截斷、機殼圖沒對齊）。
+			$('#port').append('<div class="fix-height blank bg-gray">Blank</div>');
 		}
 		$('#bg-slot').addClass("bg-sixslot");
 		$('#bg-slot02').addClass("bg-sixslot");
@@ -2043,6 +2075,26 @@
 		}
 		$('#port').append('<div class="fix-col-box2 order-15"></div>');
 		$('#port02').append('<div class="fix-col-box2 order-15"></div>');
+		fitPreviewText();
+	}
+
+	/**
+	 * 讓模組預覽格子內的文字塞得進固定尺寸的格子。
+	 * 格子寬 78px、高度被兩側機殼圖鎖死（max-height:100%），內容長度卻隨語系與雙輸出而變：
+	 * 例如 Slot 標籤 en「Slot」、jp「スロット」、de「Steckplatz」長度差很多，固定字級無法通吃。
+	 * 故逐格從 CSS 的字級往下調，塞得下就停；空格子（Blank）不受影響維持原字級。
+	 */
+	function fitPreviewText() {
+		$('#port .fix-height, #port02 .fix-height').each(function () {
+			var el = this;
+			el.style.fontSize = '';                                   // 先還原成 CSS 值再量，避免沿用上一次縮過的字級
+			var size = parseFloat(window.getComputedStyle(el).fontSize);
+			var guard = 0;
+			while (el.scrollHeight > el.clientHeight && size > 11 && guard++ < 20) {
+				size -= 1;
+				el.style.fontSize = size + 'px';
+			}
+		});
 	}
 
 	function resetData(index){
@@ -2492,28 +2544,6 @@
 
        }
 
-    // 以下四段取代原本寫在標籤上的 inline 事件屬性（CSP 目標為移除 script-src 的 unsafe-inline）。
-    // 這些元素多半是 JS 動態產生，故綁在 document 委派；型別用 Number() 還原，比照原本傳入數字字面量的語意。
-    $(document).on('change', '.js-terminal-change', function () {
-        getToSummary();
-        getToTerimal();
-    });
-    $(document).on('change', '.js-volt-select', function () {
-        getSelectCurrent(this, Number($(this).attr('data-cfg-type')));
-        getToSum(Number($(this).attr('data-cfg-index')));
-    });
-    $(document).on('click', '.js-reset-data', function () {
-        resetData(Number($(this).attr('data-cfg-index')));
-    });
-    $(document).on('change', '.js-current-change', function () {
-        currentChange(this, Number($(this).attr('data-cfg-type')));
-    });
-    $(document).on('change', '.js-get-selecter', function () {
-        getSelecter(this);
-    });
-    $(document).on('click', '.js-remove-data', function () {
-        removeData(this);
-    });
 
 </script>
 

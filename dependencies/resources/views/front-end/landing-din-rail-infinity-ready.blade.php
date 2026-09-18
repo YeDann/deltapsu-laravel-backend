@@ -7,9 +7,9 @@
 <link rel="stylesheet" href="{{ asset('frontend-asset/css/all.css') }}" />
 <link rel="stylesheet" href="{{ asset('frontend-asset/css/fontello3.css') }}" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/css/uikit.min.css" />
-<script src="{{ asset('frontend-asset/js/jquery-3.7.1.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="{{ asset('frontend-asset/js/jquery-3.7.1.min.js') }}" @cspNonce></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" @cspNonce></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" @cspNonce></script>
 <style>
 /* =============================================
    FONTS
@@ -2418,8 +2418,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
   .cd-sep { font-size: clamp(0.8rem,4.5vw,1.2rem); padding-top: 3px; }
 }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit-icons.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit.min.js" @cspNonce></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit-icons.min.js" @cspNonce></script>
 <script @cspNonce>
 (function(){
   function tick(){
@@ -3120,8 +3120,8 @@ document.getElementById('notify-submit-btn').addEventListener('click', function(
 </script>
 
 
-<script src="{{ asset('frontend-asset/js/popper.min.js') }}"></script>
-<script src="{{ asset('frontend-asset/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('frontend-asset/js/popper.min.js') }}" @cspNonce></script>
+<script src="{{ asset('frontend-asset/js/bootstrap.min.js') }}" @cspNonce></script>
 
 <script @cspNonce>
     // 這頁是獨立 HTML（不套用 layouts/front-end），故在此自帶一份 data-fn-* 事件委派。
