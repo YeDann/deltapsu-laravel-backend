@@ -1767,7 +1767,7 @@
         if (arr_status.length > 0) {
             resultstatus =  filterStatusAll(resultSegment);
         } else {
-            resultstatus  = resultSegment;
+            resultstatus  = hideEolUnlessSelected(resultSegment);
         }
 
 
@@ -1787,9 +1787,10 @@
         findresultfeildbypro(productFilter); // 更新篩選器選項（基於 series/type 篩選結果，非 spec filter 結果）
         productFilter = summaryResult; // 保留 checkbox-only 結果供 findDataRage() 使用
     } else {
-        // 若無額外篩選條件，顯示基礎篩選結果
-        listItemFiler(productFilter);
+        // 若無額外篩選條件，顯示基礎篩選結果（已排除預設隱藏的 EOL）
+        listItemFiler(summaryResult);
         findresultfeildbypro(productFilter);
+        productFilter = summaryResult; // 桌面版排序 onselectSortDestop() 直接拿 productFilter 重繪，需同步排除 EOL
     }
 
       // 清空搜尋框內容
@@ -1940,6 +1941,20 @@
         });
 
         return arr_pro_doc;
+    }
+    /**
+     * 預設隱藏 EOL 產品：Status 篩選有勾 EOL 才保留
+     * @param {Array} arrFilter 產品陣列
+     * @returns {Array}
+     */
+    function hideEolUnlessSelected(arrFilter) {
+        if (arr_status.indexOf(4) > -1) {
+            return arrFilter;
+        }
+        // status_product 可能是字串，用 != 比對
+        return arrFilter.filter(function(data) {
+            return data.status_product != 4;
+        });
     }
     function filterStatusAll(arrFilter) {
         var filter = [];
@@ -4190,7 +4205,7 @@
      * 注意：會重建整個產品陣列，忽略現有篩選條件
      */
     function onselectSort() {
-        var arr_val = loadData(products, product_has_property);
+        var arr_val = hideEolUnlessSelected(loadData(products, product_has_property));
         var arr_result = [];
        var type_se = $('.selectSort').val();
        var typesor = 0;

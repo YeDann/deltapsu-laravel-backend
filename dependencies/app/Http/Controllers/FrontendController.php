@@ -3427,13 +3427,14 @@ class FrontendController extends Controller
                     ->where('st.local', $lang)
                     ->where('p.enable_pro', 1)
                     ->where(function ($q) use ($cleanQueryString) {
-                        $q->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
-                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(st.title, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
-                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(ptag.tag, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
-                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(op.optional_model, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        // 欄位先 CONVERT 成 utf8mb4：正式站部分欄位是 latin1，直接拿中日文參數比對會報 collation 3988 錯誤
+                        $q->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(CONVERT(p.pro_code USING utf8mb4), '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(CONVERT(st.title USING utf8mb4), '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(CONVERT(ptag.tag USING utf8mb4), '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(CONVERT(op.optional_model USING utf8mb4), '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
                         // 分類名 spt.name 與 Highlights & Features(content_1) 也納入搜尋；沿用去空白/連字號比對
-                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(spt.name, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
-                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(pt.content_1, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%');
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(CONVERT(spt.name USING utf8mb4), '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(CONVERT(pt.content_1 USING utf8mb4), '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%');
                         // ->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%')
                         // ->orWhere('op.optional_model', 'LIKE', '%' . $keypro . '%');
                         // foreach ($keyParts as $part) {
@@ -3472,7 +3473,7 @@ class FrontendController extends Controller
                     ->orderByRaw(
                         "
                         CASE
-                            WHEN REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','') LIKE ? THEN 1
+                            WHEN REPLACE(REPLACE(REPLACE(CONVERT(p.pro_code USING utf8mb4), '-', ''), '/', ''),' ','') LIKE ? THEN 1
                             ELSE 2
                         END",
                         ['%' . $cleanQueryString . '%']
@@ -3839,10 +3840,11 @@ class FrontendController extends Controller
                     ->where('st.local', $lang)
                     ->where('p.enable_pro', 1)
                     ->where(function ($q) use ($cleanQueryString) {
-                        $q->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(p.pro_code, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
-                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(st.title, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
-                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(ptag.tag, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
-                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(op.optional_model, '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%');
+                        // 欄位先 CONVERT 成 utf8mb4：正式站部分欄位是 latin1，直接拿中日文參數比對會報 collation 3988 錯誤
+                        $q->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(CONVERT(p.pro_code USING utf8mb4), '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(CONVERT(st.title USING utf8mb4), '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(CONVERT(ptag.tag USING utf8mb4), '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%')
+                        ->orWhere(DB::raw("REPLACE(REPLACE(REPLACE(CONVERT(op.optional_model USING utf8mb4), '-', ''), '/', ''),' ','')"), 'LIKE', '%' . $cleanQueryString . '%');
                         // ->orWhere('ptag.tag', 'LIKE', '%' . $keypro . '%')
                         // ->orWhere('op.optional_model', 'LIKE', '%' . $keypro . '%');
                         // foreach ($keyParts as $part) {
@@ -3880,7 +3882,7 @@ class FrontendController extends Controller
                     ->orderByRaw(
                         "
                         CASE
-                            WHEN REPLACE(REPLACE(REPLACE(GROUP_CONCAT(DISTINCT ptag.tag), '-', ''), '/', ''),' ','') LIKE ? THEN 1
+                            WHEN REPLACE(REPLACE(REPLACE(CONVERT(GROUP_CONCAT(DISTINCT ptag.tag) USING utf8mb4), '-', ''), '/', ''),' ','') LIKE ? THEN 1
                             ELSE 2
                         END",
                         ['%' . $cleanQueryString . '%']
